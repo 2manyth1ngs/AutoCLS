@@ -1,0 +1,53 @@
+# =====================================================================
+# CLS 策略空间唯一真源（AutoCL Table 1；TECHNICAL_DESIGN.md 第 4 节）
+# 铁律 1：任何代码不得硬编码取值集合，一切以本文件为准。
+# 字段顺序即 CLS dataclass 与向量编码的规范顺序。
+#
+# type 语义（cls_encoder.py 按此编码）：
+#   numeric      → 线性归一化到 [0,1]（1 维）
+#   log_numeric  → log10 后归一化到 [0,1]（1 维，跨多个数量级的字段）
+#   categorical  → one-hot（len(choices) 维；无效档 None → 全零）
+#   bool         → 0/1（1 维）
+# =====================================================================
+
+# 6 个增强比率与 2 个嵌入变换比率共用的 11 档（0.0 = 不启用）
+ratio_levels: &ratio_levels
+  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95]
+
+fields:
+  # ---- 数据增强：6 个增强各一个比率参数 + 施加顺序 ----
+  - {name: resize,     type: numeric, choices: *ratio_levels}
+  - {name: rescale,    type: numeric, choices: *ratio_levels}
+  - {name: jitter,     type: numeric, choices: *ratio_levels}
+  - {name: point_mask, type: numeric, choices: *ratio_levels}
+  - {name: freq_mask,  type: numeric, choices: *ratio_levels}
+  - {name: crop,       type: numeric, choices: *ratio_levels}
+  # AutoCL Table 8 的 5 种预设增强顺序，取预设索引
+  - {name: order,      type: categorical, choices: [0, 1, 2, 3, 4]}
+
+  # ---- 嵌入变换 ----
+  - {name: emb_jitter, type: numeric, choices: *ratio_levels}
+  - {name: emb_mask,   type: numeric, choices: *ratio_levels}
+  - {name: norm,       type: categorical, choices: ["none", "layer_norm", "l2"]}
+
+  # ---- 对比对构造 ----
+  # instance 对比恒开启（AutoCL：最不可或缺的对比维度），保证至少一个维度启用
+  - {name: instance,     type: bool, choices: [true]}
+  - {name: temporal,     type: bool, choices: [true, false]}
+  - {name: cross_scale,  type: bool, choices: [true, false]}
+  - {name: kernel,       type: categorical, choices: [0, 2, 3, 5]}
+  - {name: pool,         type: categorical, choices: ["avg", "max"]}
+  - {name: adj_neighbor, type: bool, choices: [true, false]}
+
+  # ---- 对比损失 ----
+  - {name: loss_type,   type: categorical, choices: ["info_nce", "triplet"]}
+  - {name: sim_func,    type: categorical, choices: ["dot", "cosine", "euclidean"]}
+  - {name: temperature, type: log_numeric, choices: [0.01, 0.1, 1.0, 10.0, 100.0]}
+
+constraints:
+  # 第 4 节合法性约束：kernel / pool / adj_neighbor 仅在 temporal 或
+  # cross_scale 开启时有意义；关闭时置为无效档 null（而非随机值），
+  # 避免比较器学到噪声。
+  - when_any: [temporal, cross_scale]
+    gated_fields: [kernel, pool, adj_neighbor]
+    inactive_value: null
