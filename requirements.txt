@@ -1,4 +1,7 @@
-# M0（space/encoder 模块）依赖；后续里程碑（torch 等）到对应模块时再补
+# M0（space/encoder 模块）依赖
 numpy
 pyyaml
 pytest
+# M1（contrastive/encoders/downstream/data 模块）依赖
+torch
+scikit-learn

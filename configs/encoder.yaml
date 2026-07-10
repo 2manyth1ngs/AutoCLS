@@ -1,0 +1,19 @@
+# 固定 encoder 选择与超参（TECHNICAL_DESIGN.md 关键决策 2）。
+# "固定"= 架构固定、每个 CLS 各自重新预训练一份权重，不是权重冻结。
+# encoder: dilated_cnn（默认，TS2Vec 式，AutoCL B.3 超参）/ transformer（轻量）
+
+encoder: dilated_cnn
+
+dilated_cnn:
+  hidden_dims: 64     # AutoCL B.3: hidden 64
+  output_dims: 320    # AutoCL B.3: 输出嵌入 320
+  depth: 10           # AutoCL B.3: 10 层 dilated CNN
+  kernel_size: 3
+
+transformer:
+  d_model: 64
+  output_dims: 320
+  nhead: 4
+  num_layers: 4
+  dim_feedforward: 128
+  dropout: 0.0        # encoder 前向必须确定（扰动类操作属于 CLS 字段）

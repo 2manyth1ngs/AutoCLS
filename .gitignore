@@ -7,7 +7,7 @@ __pycache__/
 reference/
 
 # 数据集（原始下载与预处理产物），由 scripts/1_prepare_data.py 重建，不入库
-data/
+/data/
 autocls/data/HAR/
 
 # IDE
