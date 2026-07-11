@@ -18,7 +18,7 @@
 | 搜索空间编码 | 双 DAG + Hyper 节点 → 邻接/特征矩阵 | **CLS 向量 → MLP 编码**（方案 A） |
 | 任务表示 | TS2Vec + 两层 Set-Transformer | **完全复用**（时序通用） |
 | 比较器 | T-AHC：(task, ah₁, ah₂) → 二值 | **T-CLSC**：(task, cls₁, cls₂) → 二值 |
-| 训练标签 | early-validation（k=5 epoch 训练预测模型） | **early-validation**（k epoch 对比预训练 + 下游评估） |
+| 训练标签 | early-validation（k=5 epoch 训练预测模型） | **early-validation**（early_iters=575 对比预训练 + 下游评估） |
 | 被评估的模型 | 完整 ST-block 预测模型 | **固定 encoder + CLS 预训练 → 线性/SVM 下游评估** |
 | 零样本目标 | 未见数据集 / 预测设置 | 未见数据集 / 下游任务 |
 
@@ -40,7 +40,7 @@
       ┌───────────────────┼────────────────────┐
       │                   │                    │
    TS2Vec+SetTF        采样 CLS 候选        对每个(t_i, cls)算 label
-   得任务嵌入 E_i      cls∈策略空间         固定encoder按cls预训练k epoch
+   得任务嵌入 E_i      cls∈策略空间         固定encoder按cls预训练575 iters
       │                   │                → 下游acc = R'(cls)  (early-val)
       │                   │                    │
       └──────► 组装样本 (E_i, cls_a, cls_b, y) ◄┘   y=1 若 R'(cls_a)>R'(cls_b)
@@ -54,7 +54,7 @@
 策略空间 ──进化算法+N* 两两比较──> CLS 排名 ──取 top-K──> 每个真正预训练+评估──> 选最优 cls*
 ```
 
-**必须牢记**：T-CLSC 训练阶段用 early-validation（只预训练 k≈5 epoch）快速造 label；只有最终输出的 top-K 才做完整预训练。这是 AutoCTS++ 效率的核心，不能省。
+**必须牢记**：T-CLSC 训练阶段用 early-validation（只预训练 early_iters=575，≈5 epoch 等量）快速造 label；只有最终输出的 top-K 才做完整预训练。这是 AutoCTS++ 效率的核心，不能省。
 
 ---
 
@@ -179,7 +179,7 @@ AutoCL 无源码，照论文正文 2.2 节 + 附录 A 从零实现。
 - `augmentations.py`：6 个增强（jitter=`x+N(0,p)`；point mask=`x⊙m`, `m~Bernoulli(1-p)`；freq mask=DFT→掩频→IDFT；crop=带共享子序列的两段裁剪；resize/rescale=幅度/长度乘 `1+N(0,p)` 类缩放）+ order（Table 8 的 5 种顺序）。**附录 A 中 resize/rescale 公式被截断，需按论文语义补全并在注释标注。**
 - `pair_construction.py`：instance/temporal/cross-scale 三类对比 + 层级 pooling（avg/max × kernel size）+ temporal 可选纳入相邻 embedding。
 - `losses.py`：InfoNCE / Triplet，相似度 Dot/Cosine/负 Euclidean，温度参数。
-- `cl_trainer.py`：输入 `(cls, encoder, D_train)` 输出预训练好的 encoder。**必须支持 `max_epochs` 参数**（early-val 传 k≈5，最终评估传完整轮数）。
+- `cl_trainer.py`：输入 `(cls, encoder, D_train)` 输出预训练好的 encoder。**必须支持 `max_iters` 参数**（参数更新次数；early-val 传 `early_iters=575`，最终评估传 `full_iters=4600`，见 `configs/train.yaml`）。计量用 iters 而非 epoch：切片任务大小不同时 epoch 截断会让训练量不一致，污染跨任务 label（与 AutoCL 附录 B.3 一致）。
 **验收**：各增强输出形状正确；p=0 恒等；p 边界不崩。
 
 ### 模块 4：固定 encoder `encoders/`
@@ -204,7 +204,7 @@ AutoCL 无源码，照论文正文 2.2 节 + 附录 A 从零实现。
 1. `task_slicer.py` 从 HAR/Epilepsy 切子任务（时间连续切片 + 随机采样通道）。
 2. 每任务算 E_i。
 3. 采样 CLS：L 个 shared（所有任务共用）+ L 个 random（每任务独立），支持 curriculum。
-4. 对每 (task, cls) 用 `cl_trainer` 做 **k=5 epoch** early-val 预训练 → `linear_eval` 得 R'。
+4. 对每 (task, cls) 用 `cl_trainer` 做 **early_iters=575** early-val 预训练 → `linear_eval` 得 R'。
 5. 两两配对成 y。
 **工程要求**：支持断点续跑、结果落盘缓存（每个 (task,cls) 的 R' 存下复用）、可并行。缓存设计决定迭代速度。
 
@@ -240,7 +240,7 @@ AutoCL 无源码，照论文正文 2.2 节 + 附录 A 从零实现。
 ## 8. 全局约定
 
 1. `space.yaml` 是策略空间唯一真源，任何代码不得硬编码取值集合。
-2. `cl_trainer` 的 `max_epochs` 必须显式传入，禁止在 early-validation 和最终评估间混用。
+2. `cl_trainer` 的 `max_iters`（参数更新次数）必须显式传入，禁止在 early-validation 和最终评估间混用；跨任务训练量必须用 iters 而非 epoch 保证一致（early=575, full=4600，源自 M2 第一步换算，固化在 `configs/train.yaml`）。
 3. 所有 (task, cls) → R' 结果必须落盘缓存，脚本支持 `--resume`。
 4. 任务嵌入相关代码必须先读 AutoCTS++ 真实源码再适配，注释标注对应原文件与公式编号。
 5. 每个模块配套 `tests/`，M0 阶段先写测试再写实现。

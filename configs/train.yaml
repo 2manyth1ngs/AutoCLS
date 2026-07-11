@@ -1,0 +1,16 @@
+# =====================================================================
+# 训练量标准常量（CLAUDE.md 铁律 2；TECHNICAL_DESIGN.md 模块 3）
+# 计量单位：iters = optimizer.step() 参数更新次数（非 epoch）。
+# 跨任务（大小不同的切片任务）训练量必须用 iters 保证精确一致——按 epoch
+# 截断时 step 数随任务大小漂移，会污染跨任务 early-val label；与 AutoCL
+# 附录 B.3 的 iteration 计量一致。
+#
+# 换算来源（M2 第一步实测基准）：HAR N=7352、batch_size=64
+#   → 1 epoch = ⌈7352/64⌉ = 115 steps
+#   full_iters  = 原 40 epoch × 115 = 4600（M1 验收 / M2 full 训练量）
+#   early_iters = 原  5 epoch × 115 =  575（early-validation，M2 ρ=0.85 达标）
+# =====================================================================
+full_iters: 4600
+early_iters: 575
+batch_size: 64
+lr: 1.0e-3

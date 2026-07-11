@@ -1,7 +1,10 @@
 """对比预训练循环（TECHNICAL_DESIGN.md 模块 3：给定 (cls, encoder, D_train) 训练 encoder）。
 
-铁律 2：max_epochs 为 keyword-only 且无默认值——early-validation（k≈5）与最终
-完整评估必须由调用方显式区分，禁止混用。
+铁律 2：max_iters（optimizer.step() 参数更新次数）为 keyword-only 且无默认值——
+early-validation（575 iters）与最终完整评估（4600 iters）必须由调用方显式区分，
+禁止混用。计量单位用 iters 而非 epoch：不同大小的切片任务若按 epoch 截断，
+实际参数更新次数不一致，会污染跨任务 early-val label（与 AutoCL 附录 B.3 的
+iteration 计量一致）。
 
 单个 batch 的流程（AutoCL Fig.1 的 CLS 四维度依次生效）：
     x ─augment_two_views(数据增强×order)→ (v1, v2, 共享段切片)
@@ -30,14 +33,18 @@ def pretrain_encoder(
     cls_cfg: CLS,
     X_train: np.ndarray,
     *,
-    max_epochs: int,  # 必须显式传参（铁律 2）
+    max_iters: int,  # 参数更新次数，必须显式传参（铁律 2）
     batch_size: int = 64,
     lr: float = 1e-3,
     device: Optional[str] = None,
     seed: int = 0,
     verbose: bool = False,
 ) -> list[float]:
-    """按 cls_cfg 对 encoder 做对比预训练（就地更新权重），返回每个 epoch 的平均损失。
+    """按 cls_cfg 对 encoder 做对比预训练（就地更新权重），返回每遍数据的平均损失。
+
+    恰好执行 max_iters 次 optimizer.step() 后停止；因 <2 样本被跳过的 batch 不计入。
+    每完整遍历一遍数据后用同一 generator 重新 randperm 洗牌，故当 max_iters 为
+    整遍步数的整数倍时，与旧的按 epoch 训练逐位等价。
 
     X_train: (N, T, C) float32。数据增强在 CPU 上执行（逐 batch 采样坐标/噪声），
     两个视图再搬运到 device 前向。
@@ -52,13 +59,16 @@ def pretrain_encoder(
     N = X.shape[0]
     gen = torch.Generator().manual_seed(seed)  # 增强/打乱共用，保证可复现
 
-    epoch_losses: list[float] = []
-    for epoch in range(max_epochs):
+    pass_losses: list[float] = []
+    step = 0
+    while step < max_iters:
         perm = torch.randperm(N, generator=gen)
         batch_losses: list[float] = []
         for start in range(0, N, batch_size):
+            if step >= max_iters:
+                break
             idx = perm[start : start + batch_size]
-            if idx.numel() < 2:  # B=1 无负样本实例，损失恒 0，跳过
+            if idx.numel() < 2:  # B=1 无负样本实例，损失恒 0，跳过（不计入 step）
                 continue
             x = X[idx]
             v1, v2, sl1, sl2 = augment_two_views(x, aug_params, order=cls_cfg.order, generator=gen)
@@ -72,10 +82,13 @@ def pretrain_encoder(
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+            step += 1
             batch_losses.append(loss.item())
 
-        mean_loss = float(np.mean(batch_losses)) if batch_losses else float("nan")
-        epoch_losses.append(mean_loss)
+        if not batch_losses:  # 整遍数据无一 batch 可训练，step 永不推进
+            raise ValueError(f"N={N}, batch_size={batch_size}: 所有 batch 均 <2 样本，无法训练")
+        mean_loss = float(np.mean(batch_losses))
+        pass_losses.append(mean_loss)
         if verbose:
-            print(f"[cl_trainer] epoch {epoch + 1}/{max_epochs} loss={mean_loss:.4f}")
-    return epoch_losses
+            print(f"[cl_trainer] iter {step}/{max_iters} loss={mean_loss:.4f}")
+    return pass_losses
