@@ -1,7 +1,9 @@
 """M2 探针（临时脚本）：early-validation 排名相关性验证（TECHNICAL_DESIGN.md M2 闸口）。
 
-回答的问题：k iters 对比预训练的下游 acc 排名，能否代表完整训练（4600 iters，与 M1
+回答的问题：k iters 对比预训练的下游 acc 排名，能否代表完整训练（full_iters，与 M1
 验收一致）的排名？这是 early-validation 造 label 能否成立的隐含前提。
+【口径注记】M2 结论（k:full=1:8 时 ρ=0.85）在 575/4600@bs=64 口径下取得；2026-07
+口径更正后标准为 290/2320@bs=128（configs/train.yaml），1:8 比例不变。
 
 训练量计量单位为 iters（参数更新次数，见 configs/train.yaml）：跨任务时 epoch
 截断会让 step 数随任务大小漂移，故统一按 iters。早期缓存（epoch 计量，5/40）由
@@ -20,7 +22,7 @@ load_cache 按 1 epoch = 115 steps（HAR N=7352, bs=64）自动换算，逐位�
 - 输出：Spearman ρ、Kendall τ、top-5 重合度、散点图 png。
 
 用法（在仓库根目录）：
-    python scripts/m2_probe_correlation.py                  # 首跑 k=575（=原 5 epoch）
+    python scripts/m2_probe_correlation.py                  # k=configs/train.yaml early_iters
     python scripts/m2_probe_correlation.py --resume         # 断点续跑
     python scripts/m2_probe_correlation.py --resume --k 1150  # 追加更大 k（full 缓存复用）
 """

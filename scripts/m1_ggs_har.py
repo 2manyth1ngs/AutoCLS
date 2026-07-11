@@ -16,11 +16,11 @@ adj_neighbor=False, loss=InfoNCE, sim=Distance(负欧氏), temperature=1.0。
   首/末 pass 平均损失 5.5671 / 2.9563。
   epoch→iters 迁移的逐位回归口径：--iters 2320 --batch-size 128 应精确复现上述值
   （max_iters 为整遍步数的整数倍时与旧 epoch 训练逐位等价）。
-- 标准口径（configs/train.yaml）：--iters 4600 --batch-size 64（即默认值）。
+- 标准口径（configs/train.yaml，2026-07 口径更正后）：--iters 2320 --batch-size 128
+  （即默认值），与上述 M1 验收配置一致；旧标准 4600/bs=64 基于错误的 bs=64 假设，已废弃。
 
 用法（在仓库根目录）：
-    python scripts/m1_ggs_har.py                                # 标准口径 4600 iters, bs=64
-    python scripts/m1_ggs_har.py --iters 2320 --batch-size 128  # 迁移逐位校验
+    python scripts/m1_ggs_har.py    # 标准口径 2320 iters, bs=128，应复现 ACC 0.9372
 """
 from __future__ import annotations
 

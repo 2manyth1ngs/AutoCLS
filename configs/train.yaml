@@ -5,12 +5,14 @@
 # 截断时 step 数随任务大小漂移，会污染跨任务 early-val label；与 AutoCL
 # 附录 B.3 的 iteration 计量一致。
 #
-# 换算来源（M2 第一步实测基准）：HAR N=7352、batch_size=64
-#   → 1 epoch = ⌈7352/64⌉ = 115 steps
-#   full_iters  = 原 40 epoch × 115 = 4600（M1 验收 / M2 full 训练量）
-#   early_iters = 原  5 epoch × 115 =  575（early-validation，M2 ρ=0.85 达标）
+# 换算来源（M1 实测验证配置，2026-07 口径更正）：
+#   基准为 M1 验收实测 batch_size=128（HAR N=7352 → ⌈7352/128⌉=58 steps/epoch，
+#   ACC 0.9372），非早期 bs=64 误算（旧值 575/4600 基于错误的 bs=64 假设）。
+#   full_iters  = 40 epoch × 58 = 2320（M1 验收 / M2 full 训练量）
+#   early_iters = full_iters / 8 =  290（early-validation，保持 M2 第一步
+#                 验证的 1:8 比例；M2 ρ=0.85 达标结论在该比例下成立）
 # =====================================================================
-full_iters: 4600
-early_iters: 575
-batch_size: 64
+full_iters: 2320
+early_iters: 290
+batch_size: 128
 lr: 1.0e-3

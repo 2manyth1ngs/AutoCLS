@@ -1,7 +1,8 @@
 """对比预训练循环（TECHNICAL_DESIGN.md 模块 3：给定 (cls, encoder, D_train) 训练 encoder）。
 
 铁律 2：max_iters（optimizer.step() 参数更新次数）为 keyword-only 且无默认值——
-early-validation（575 iters）与最终完整评估（4600 iters）必须由调用方显式区分，
+early-validation（290 iters）与最终完整评估（2320 iters，见 configs/train.yaml，
+基准 bs=128）必须由调用方显式区分，
 禁止混用。计量单位用 iters 而非 epoch：不同大小的切片任务若按 epoch 截断，
 实际参数更新次数不一致，会污染跨任务 early-val label（与 AutoCL 附录 B.3 的
 iteration 计量一致）。
@@ -34,7 +35,7 @@ def pretrain_encoder(
     X_train: np.ndarray,
     *,
     max_iters: int,  # 参数更新次数，必须显式传参（铁律 2）
-    batch_size: int = 64,
+    batch_size: int = 128,  # STD_BATCH_SIZE（configs/train.yaml），M1 验证配置
     lr: float = 1e-3,
     device: Optional[str] = None,
     seed: int = 0,
