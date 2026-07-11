@@ -230,6 +230,8 @@ class TS2VecWrapper:
     4. batch_size 默认 128 = STD_BATCH_SIZE（configs/train.yaml；原码默认 16）。
     5. fit 只接受数据不接受标签（无监督），训练量按 n_iters（参数更新次数）
        精确截断——与铁律 2 的 iters 口径一致。
+    6. 新增 freeze()：共享任务嵌入编码器语义（铁律 6）——在源池上训完后冻结，
+       冻结后 fit 报错，防误再训练/防 zero-shot 数据泄漏。
 
     原码保留项：SWA AveragedModel 权重平均、随机双段裁剪 + 层级对比损失、
     binomial 掩码、AdamW。
@@ -263,6 +265,20 @@ class TS2VecWrapper:
         self.net.update_parameters(self._net)
 
         self.n_iters = 0  # 已执行的参数更新次数（跨多次 fit 累计，同原码）
+        self.frozen = False  # freeze() 后为 True，fit 拒绝执行（差异 6）
+
+    @property
+    def input_dims(self) -> int:
+        return self._net.input_dims
+
+    @property
+    def output_dims(self) -> int:
+        return self._net.output_dims
+
+    def freeze(self) -> None:
+        """冻结（差异 6）：此后 fit 报错。共享任务嵌入编码器在源池训完后必须
+        冻结，目标池/未见数据集绝不参与训练（铁律 6，防 zero-shot 数据泄漏）。"""
+        self.frozen = True
 
     def fit(self, train_data: np.ndarray, *, n_iters: int, verbose: bool = False) -> list[float]:
         """无监督对比训练（← ts2vec.py::TS2Vec.fit，删减见类 docstring）。
@@ -271,6 +287,11 @@ class TS2VecWrapper:
         n_iters: 目标参数更新次数（含历史累计），必须显式传参。
         返回每完整遍历一遍数据的平均损失（末尾不足一遍的不计入，同原码）。
         """
+        if self.frozen:
+            raise RuntimeError(
+                "TS2Vec 已冻结（共享任务嵌入编码器，铁律 6）：禁止再训练，"
+                "防 zero-shot 数据泄漏。新任务请直接 encode。"
+            )
         assert train_data.ndim == 3
         # 差异 3：搬运代码（binomial 掩码、裁剪坐标）依赖全局 np.random，
         # 这里统一设全局种子保证可复现（原码由 init_dl_program 承担）

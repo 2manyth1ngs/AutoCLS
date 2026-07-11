@@ -190,6 +190,7 @@ AutoCL 无源码，照论文正文 2.2 节 + 附录 A 从零实现。
 适配 AutoCTS++ 的 `Ts2vec_model/` 与 `AHC/set_encoder/`：`E = SetTransformer(TS2Vec(sliding_windows(D)))`。
 分类任务的"窗口"直接用样本序列长度（不同于预测里的 S=P+Q），保留接口但简化窗口逻辑并注释差异。
 **要求**：先读 AutoCTS++ 真实源码再适配，不要凭论文臆造 Set-Transformer 细节。
+**定稿（2026-07-11）**：TS2Vec 为**单变量共享冻结**编码器（AutoCTS++ `generate_task_feature.py` 原味）——`fit_shared_ts2vec(source_data)` 在源池上训一份 `input_dims=1` 的 TS2Vec 后冻结；所有任务经 `embed_task(X, shared_ts2vec)` 编码：通道当独立实例、表征跨通道取均值，原生支持任意通道数（无零填充）。"每任务重训 TS2Vec"路径已移除：诊断表明 E 被对比表征的基任意性（训练随机性）主导、区分力≈0（`results/task_embed_sanity/`）。验收（HAR，600 iters）：同构任务 TS2Vec 级 cos 0.99、类别子集间 0.65、通道子集间 0.92，同构 > 一切异构对。泄漏防护见 CLAUDE.md 铁律 6。
 
 ### 模块 6：比较器 T-CLSC `comparator/`（核心创新）
 改造 T-AHC，输入 `(E, cls_a, cls_b)` 输出二值 y。结构对齐 AutoCTS++ Fig.4：

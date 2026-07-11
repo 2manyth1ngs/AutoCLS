@@ -23,6 +23,7 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 3. 所有 `(task, cls) → R'` 结果必须落盘缓存，脚本支持 `--resume`。这是最贵的一步。
 4. `task_embed/` 相关代码必须先读 AutoCTS++ 真实源码再适配，注释标注对应原文件+公式号。
 5. 先写 `tests/` 再写实现。与论文有出入的补全须注释标注"论文未给全，按 X 语义补全"（如附录 A 的 resize/rescale 公式被截断）。
+6. 共享 TS2Vec 仅在【源池】训练、冻结后编码所有任务；目标池/未见数据集绝不参与 TS2Vec 训练，防 zero-shot 数据泄漏。API 上由 `fit_shared_ts2vec(source_data)` 显式传入训练数据，`embed_task` 只接受已冻结的单变量编码器。
 
 ## 复用 AutoCTS++（repo: decisionintelligence/AutoCTS_plusplus）
 - `Ts2vec_model/` → `autocls/task_embed/ts2vec_wrapper.py`
