@@ -12,6 +12,7 @@ fit_shared_ts2vec 只能吃源池数据。全部用合成标签/数据，CPU 秒
 import numpy as np
 import pytest
 
+from autocls.data.slice_strategies import RandomClassSubsetSlicer
 from autocls.data.task_slicer import (
     SlicedTask,
     assert_tasks_disjoint,
@@ -107,13 +108,21 @@ class TestSlicePoolTasks:
         subsets = [frozenset(t.classes) for t in tasks]
         assert len(set(subsets)) == len(subsets)
 
-    def test_subset_sizes_in_range(self):
-        for t in self._tasks(n_tasks=10, n_classes_range=(3, 5), n_channels_range=(4, 9)):
-            assert 3 <= len(t.classes) <= 5
+    def test_subset_sizes_default_range(self):
+        # 默认策略 RandomClassSubsetSlicer，n_classes_range 默认 (2,4)（已定决策）
+        for t in self._tasks(n_tasks=10, n_channels_range=(4, 9)):
+            assert 2 <= len(t.classes) <= 4
             assert 4 <= len(t.channels) <= 9
             assert list(t.classes) == sorted(set(t.classes))
             assert list(t.channels) == sorted(set(t.channels))
             assert all(0 <= c < 9 for c in t.channels)
+
+    def test_strategy_range_override(self):
+        # n_classes_range 属于策略、不属于核心：经 strategy 参数注入
+        tasks = self._tasks(
+            n_tasks=10, strategy=RandomClassSubsetSlicer(n_classes_range=(3, 5))
+        )
+        assert all(3 <= len(t.classes) <= 5 for t in tasks)
 
     def test_min_samples_enforced(self):
         for t in self._tasks(n_tasks=8):
@@ -125,13 +134,14 @@ class TestSlicePoolTasks:
         with pytest.raises(ValueError, match="min_samples"):
             slice_pool_tasks(
                 y, pool, pool_name="source", n_tasks=2, seed=0,
-                n_classes_range=(3, 3), n_samples=64, min_samples=50,
+                strategy=RandomClassSubsetSlicer(n_classes_range=(3, 3)),
+                n_samples=64, min_samples=50,
             )
 
     def test_too_many_distinct_subsets_raises(self):
-        # (6,6) 只有 1 种类别组合，要 2 个任务必然重复 → 显式报错
+        # (6,6) 只有 1 种类别组合，要 2 个任务必然重复 → 策略显式报错
         with pytest.raises(ValueError, match="类别组合"):
-            self._tasks(n_tasks=2, n_classes_range=(6, 6))
+            self._tasks(n_tasks=2, strategy=RandomClassSubsetSlicer(n_classes_range=(6, 6)))
 
     def test_reproducible_same_seed(self):
         a = self._tasks(n_tasks=6, seed=7)

@@ -6,17 +6,22 @@
 退化成"忽略任务输入"，须在此拦截并回报讨论。
 
 流程：
-1. split_pools 把 HAR train 分层划成源池(70%)/留出池(30%)，切 16 源任务 + 8 留出任务；
+1. split_pools 把 HAR train 分层划成源池(70%)/留出池(30%)，切 16 源任务 + 8 留出任务。
+   切片策略可选（--strategy）：stratified=动/静三档分层（HAR 专用，默认；诊断表明
+   任务相似度由动/静构成驱动 pearson≈-0.87，主动往极端推才能拉开），
+   random=随机类别子集（旧行为，对照用）；
 2. fit_shared_ts2vec 只用 X[source_indices]（铁律 6：留出池零参与）；
 3. 对每个源任务 materialize 后走 embed_task 算 E（共享 SetTF 权重）——同时给
    TS2Vec 级基线（full_series 池化跨窗口均值，不过 SetTF）；
-4. 两两余弦矩阵（两级）+ off-diagonal min/mean/max；判据参照 task_embed 定稿：
-   TS2Vec 级为关键信号（未训练 SetTF 把 E 级 raw cos 压到 0.99 附近属已知可接受），
-   类别差异大的对应落 0.65~0.85 量级、整体 mean 明显 < 0.95；
+4. 两两余弦矩阵（两级）+ off-diagonal min/mean/max + **三档交叉相似度**
+   （纯动 vs 纯静应最低、落 0.65~0.80 量级；混合档不得退化回 0.97）；判据参照
+   task_embed 定稿：TS2Vec 级为关键信号（未训练 SetTF 把 E 级 raw cos 压到 0.99
+   附近属已知可接受），整体 mean 明显 < 0.95；
 5. 泄漏自检：两池零交集、任务样本各归其池、TS2Vec 训练数据 == 源池。
 
 用法（在仓库根目录）：
-    python scripts/sanity_task_slicer.py            # iters=600（与 task_embed 验收同量）
+    python scripts/sanity_task_slicer.py            # stratified，iters=600
+    python scripts/sanity_task_slicer.py --strategy random         # 旧行为对照
     python scripts/sanity_task_slicer.py --iters 50 --device cpu   # 快速冒烟
 """
 from __future__ import annotations
@@ -36,11 +41,19 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from autocls.data.datasets import load_har  # noqa: E402
+from autocls.data.slice_strategies import (  # noqa: E402
+    DynamicStaticStratifiedSlicer,
+    RandomClassSubsetSlicer,
+)
 from autocls.data.task_slicer import (  # noqa: E402
     assert_tasks_disjoint,
     make_leaveout_split,
     materialize_task,
 )
+
+# HAR 类别语义（动/静分层策略的依据，仅 HAR 分类适用）
+HAR_DYNAMIC = (0, 1, 2)  # 走 / 上楼 / 下楼
+HAR_STATIC = (3, 4, 5)   # 坐 / 站 / 躺
 from autocls.task_embed import (  # noqa: E402
     TaskSetEncoder,
     embed_task,
@@ -60,27 +73,40 @@ def main() -> None:
     ap.add_argument("--n-source", type=int, default=16)
     ap.add_argument("--n-holdout", type=int, default=8)
     ap.add_argument("--sample-num", type=int, default=100)
-    # 多样性探针用：更小的类别子集（如 2 3）→ 子集间重叠更少、分布更"纯"
-    ap.add_argument("--n-classes-range", type=int, nargs=2, default=(3, 5))
+    ap.add_argument("--strategy", choices=("stratified", "random"), default="stratified",
+                    help="stratified=动/静三档分层（HAR 专用，默认）；random=随机类别子集（对照）")
+    ap.add_argument("--n-classes-range", type=int, nargs=2, default=(2, 4))
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--data", type=Path, default=ROOT / "data" / "HAR" / "har.npz")
-    ap.add_argument("--outdir", type=Path, default=ROOT / "results" / "task_slicer_sanity")
+    ap.add_argument("--outdir", type=Path, default=None,
+                    help="默认 results/task_slicer_sanity/<strategy>")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     args = ap.parse_args()
+    if args.outdir is None:
+        args.outdir = ROOT / "results" / "task_slicer_sanity" / args.strategy
     args.outdir.mkdir(parents=True, exist_ok=True)
+
+    rng_range = tuple(args.n_classes_range)
+    strategy = (
+        DynamicStaticStratifiedSlicer(
+            dynamic_classes=HAR_DYNAMIC, static_classes=HAR_STATIC,
+            n_classes_range=rng_range,
+        )
+        if args.strategy == "stratified"
+        else RandomClassSubsetSlicer(n_classes_range=rng_range)
+    )
 
     X, y, _, _ = load_har(args.data)  # (7352, 128, 9)；y 只用于切片定义，不进编码
     sp = make_leaveout_split(
         y, n_source_tasks=args.n_source, n_holdout_tasks=args.n_holdout,
-        holdout_ratio=0.3, seed=args.seed,
-        n_classes_range=tuple(args.n_classes_range),
+        holdout_ratio=0.3, seed=args.seed, strategy=strategy,
     )
     print(f"HAR train: X={X.shape} → 源池 {len(sp.source_indices)} / "
           f"留出池 {len(sp.holdout_indices)}；源任务 {len(sp.source_tasks)} / "
-          f"留出任务 {len(sp.holdout_tasks)}")
+          f"留出任务 {len(sp.holdout_tasks)}（策略 {args.strategy}）")
     for t in sp.source_tasks:
         print(f"  {t.task_id}: classes={t.classes} channels={t.channels} "
-              f"n={len(t.sample_indices)}")
+              f"n={len(t.sample_indices)}" + (f" tag={t.tag}" if t.tag else ""))
 
     # ---- 泄漏自检（铁律 6）----
     assert len(np.intersect1d(sp.source_indices, sp.holdout_indices)) == 0, "两池索引重叠"
@@ -147,9 +173,41 @@ def main() -> None:
         v = by_overlap[k]
         print(f"  {k}: n={len(v)} mean={np.mean(v):.4f} min={np.min(v):.4f} max={np.max(v):.4f}")
 
+    # 三档交叉相似度（分层策略专属报告）：纯动 vs 纯静应最低（0.65~0.80 量级），
+    # 混合档与两纯档、混合档内部都不得退化回 0.97 一片
+    tier_stats: dict[str, dict[str, float]] = {}
+    tiers: dict[str, list[int]] = {}
+    for i, t in enumerate(sp.source_tasks):
+        if t.tag:
+            tiers.setdefault(t.tag, []).append(i)
+    if len(tiers) > 1:
+        print("\n三档交叉 TS2Vec 级相似度（对角=档内、非对角=档间）：")
+        tier_names = sorted(tiers)
+        for a_i, ta in enumerate(tier_names):
+            for tb in tier_names[a_i:]:
+                if ta == tb:
+                    vals = [mat_b[i, j] for i, j in combinations(tiers[ta], 2)]
+                else:
+                    vals = [mat_b[i, j] for i in tiers[ta] for j in tiers[tb]]
+                if not vals:
+                    continue
+                key = f"{ta} × {tb}"
+                tier_stats[key] = {
+                    "n": len(vals), "min": float(np.min(vals)),
+                    "mean": float(np.mean(vals)), "max": float(np.max(vals)),
+                }
+                s = tier_stats[key]
+                print(f"  {key}: n={s['n']} mean={s['mean']:.4f} "
+                      f"min={s['min']:.4f} max={s['max']:.4f}")
+
     stats_b = off_diag_stats(mat_b)
     verdict = "达标" if stats_b["mean"] < 0.95 else "多样性不足（mean>=0.95，需回报讨论）"
     print(f"\n判据（TS2Vec 级 off-diagonal mean < 0.95）：{stats_b['mean']:.4f} → {verdict}")
+    extreme_key = "pure_dynamic × pure_static"
+    if extreme_key in tier_stats:
+        em = tier_stats[extreme_key]["mean"]
+        flag = "符合预期（0.65~0.80 量级）" if em < 0.85 else "偏高，需回报讨论"
+        print(f"动/静极端对（{extreme_key}）mean={em:.4f} → {flag}")
 
     out = {
         "config": {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
@@ -163,6 +221,7 @@ def main() -> None:
         "off_diag_e": off_diag_stats(mat_e),
         "off_diag_ts2vec": stats_b,
         "by_class_overlap_ts2vec": {k: v for k, v in by_overlap.items()},
+        "tier_cross_ts2vec": tier_stats,
         "verdict": verdict,
     }
     path = args.outdir / "sanity_results.json"

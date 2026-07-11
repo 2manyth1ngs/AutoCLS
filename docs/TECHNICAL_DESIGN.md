@@ -202,7 +202,7 @@ AutoCL 无源码，照论文正文 2.2 节 + 附录 A 从零实现。
 
 ### 模块 7：Label 生成 `scripts/2_generate_labels.py`（最耗算力）
 照 AutoCTS++ 3.2.4：
-1. `task_slicer.py` 从 HAR/Epilepsy 切子任务（时间连续切片 + 随机采样通道）。
+1. `task_slicer.py` 从 HAR/Epilepsy 切子任务。分类语义改"类别子集 × 通道子集 × 样本子集"（原文预测任务为时间连续切片+随机通道，差异注释在模块内）；"怎么选类别"是可插拔策略（`slice_strategies.py`）：HAR 用 `DynamicStaticStratifiedSlicer` 动/静三档分层（纯动/纯静/混合 ≈4/4/8，n_classes_range=(2,4)；随机子集采不到动/静极端对，16 任务 TS2Vec 级 mean 0.973 拉不开 → 分层后 0.883，极端对 0.64，见 `results/task_slicer_sanity/`）；将来预测/异常检测各写自己的策略接入，核心零改动。
 2. 每任务算 E_i。
 3. 采样 CLS：L 个 shared（所有任务共用）+ L 个 random（每任务独立），支持 curriculum。
 4. 对每 (task, cls) 用 `cl_trainer` 做 **early_iters=290** early-val 预训练 → `linear_eval` 得 R'。

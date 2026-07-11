@@ -6,9 +6,19 @@
    留出池 → 切"留出任务"（仅 M3 测试 comparator）。
 2. `slice_pool_tasks`：在池内切任务。每个任务 = (类别子集, 通道子集, 样本索引)。
    类别子集是制造多样性的主力维度（task_embed 定稿实验：类别子集间余弦 ≈0.65
-   区分度最强，通道子集间 ≈0.92 较弱），同池内类别组合互不重复；通道子集辅助
-   （单变量共享 TS2Vec 原生支持任意通道数，无需零填充）。长度维不切（HAR 定长
-   128；可选扩展：对样本做重采样/裁剪引入长度多样性，本阶段不做）。
+   区分度最强，通道子集间 ≈0.92 较弱）；通道子集辅助（单变量共享 TS2Vec 原生
+   支持任意通道数，无需零填充）。长度维不切（HAR 定长 128；可选扩展：对样本做
+   重采样/裁剪引入长度多样性，本阶段不做）。
+
+可插拔策略架构（核心与任务类型解耦）：
+- 本模块（核心）只负责通用逻辑：池划分、样本采样、通道子集、泄漏防护、任务记录；
+- "怎么选类别子集"这类**任务类型相关**的逻辑下放到 `SliceStrategy` 策略
+  （接口契约：`propose(y, pool_indices, n_tasks, rng) -> list[TaskSpec]`，
+  鸭子类型即可）。分类策略在 `slice_strategies.py`：通用的
+  RandomClassSubsetSlicer（默认）与 HAR 专用的 DynamicStaticStratifiedSlicer
+  （动/静分层，**不适用于预测/异常检测**）；
+- 扩展点：将来预测/异常检测任务接入时各写自己的策略（如预测按数据集+horizon
+  产出 TaskSpec），核心与既有分类策略零改动，详见 slice_strategies.py docstring。
 
 与 AutoCTS++ 3.2.4 的差异：原文对预测任务"时间连续切片 + 随机采样通道"；分类
 任务无时间轴上的任务边界，改在"类别 × 通道 × 样本子集"维度切，语义对应
@@ -26,7 +36,7 @@ batch 口径：任务样本数下限 `min_samples` 默认 128 = STD_BATCH_SIZE
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from math import comb
+from typing import Protocol
 
 import numpy as np
 
@@ -40,6 +50,7 @@ class SlicedTask:
 
     sample_indices 是**原始数据集全局索引**（升序 tuple），配合 materialize_task
     取数据；classes/channels 均为升序 tuple。pool 标记所属池，防源/留出混用。
+    tag 为切片策略的自由标注（如动/静分层的档位），核心不解释其语义。
     """
 
     task_id: str
@@ -47,6 +58,36 @@ class SlicedTask:
     classes: tuple[int, ...]
     channels: tuple[int, ...]
     sample_indices: tuple[int, ...]
+    tag: str = ""
+
+
+@dataclass(frozen=True)
+class TaskSpec:
+    """策略产出的单任务选择规格（SliceStrategy → 核心的接口契约）。
+
+    classes: 记录进 SlicedTask.classes（分类语义；将来预测策略可传空 tuple）。
+    eligible: 该任务可采样的**池内全局索引**——泄漏防护由核心复核（⊆ pool_indices），
+    采样本身也由核心执行（策略只圈定范围，不做采样）。
+    tag: 策略自由标注（如分层档位），透传到 SlicedTask.tag。
+    """
+
+    classes: tuple[int, ...]
+    eligible: np.ndarray = field(compare=False, repr=False)
+    tag: str = ""
+
+
+class SliceStrategy(Protocol):
+    """切片策略接口（扩展点）：任务类型相关的"选数据"逻辑都在策略里。
+
+    实现只需鸭子类型提供 propose；必须无状态（同一实例会在源/留出两池各调一次）。
+    分类策略见 slice_strategies.py；新任务类型（预测/异常检测）的接入方式见
+    该文件模块 docstring。
+    """
+
+    def propose(
+        self, y: np.ndarray, pool_indices: np.ndarray, n_tasks: int,
+        rng: np.random.Generator,
+    ) -> list[TaskSpec]: ...
 
 
 @dataclass(frozen=True)
@@ -96,55 +137,54 @@ def slice_pool_tasks(
     *,
     pool_name: str,
     n_tasks: int,
-    n_classes_range: tuple[int, int] = (3, 5),
+    strategy: SliceStrategy | None = None,
     n_channels_range: tuple[int, int] = (4, 9),
     n_total_channels: int = 9,
     n_samples: int = 1024,
     min_samples: int = 128,   # STD_BATCH_SIZE：保证 cl_trainer 至少一个满 batch
     seed: int = 0,
 ) -> list[SlicedTask]:
-    """在一个池内切 n_tasks 个任务（类别子集互不重复；样本只从 pool_indices 采）。
+    """在一个池内切 n_tasks 个任务（"选哪些数据"由策略决定，采样/防护在核心）。
 
-    每任务：随机类别子集（主力多样性维度）× 随机通道子集 × 随机采
-    min(n_samples, 可用数) 个样本；可用数 < min_samples 报错。固定 seed 可复现。
+    strategy 缺省为 RandomClassSubsetSlicer()（随机不重复类别子集，range 默认
+    (2,4)）。每任务：策略给出 (classes, eligible) → 核心复核 eligible ⊆ 池
+    （铁律 6，策略不可信任）→ 随机通道子集 × 随机采 min(n_samples, 可用数) 个
+    样本；可用数 < min_samples 报错。固定 seed 可复现（策略与核心共用一个 rng）。
     """
     rng = np.random.default_rng(seed)
-    classes = np.unique(y[pool_indices])
-    lo, hi = n_classes_range
-    n_subsets = sum(comb(len(classes), k) for k in range(lo, hi + 1))
-    if n_tasks > n_subsets:
-        raise ValueError(
-            f"n_tasks={n_tasks} 超过可用的不重复类别组合数 {n_subsets}"
-            f"（{len(classes)} 类取 {lo}~{hi}）"
-        )
+    if strategy is None:
+        from .slice_strategies import RandomClassSubsetSlicer  # 惰性导入避免循环依赖
+        strategy = RandomClassSubsetSlicer()
+    specs = strategy.propose(y, pool_indices, n_tasks, rng)
+    if len(specs) != n_tasks:
+        raise ValueError(f"策略产出 {len(specs)} 个规格 ≠ n_tasks={n_tasks}")
 
     tasks: list[SlicedTask] = []
-    seen_subsets: set[frozenset] = set()
-    while len(tasks) < n_tasks:
-        k = int(rng.integers(lo, hi + 1))
-        cls_subset = tuple(sorted(rng.choice(classes, size=k, replace=False).tolist()))
-        if frozenset(cls_subset) in seen_subsets:
-            continue  # 类别组合互不重复（多样性主力维度）；上限已在前面保证可行
-        seen_subsets.add(frozenset(cls_subset))
+    for i, spec in enumerate(specs):
+        stray = np.setdiff1d(np.asarray(spec.eligible), pool_indices)
+        if len(stray):
+            raise ValueError(
+                f"策略产出的 eligible 越池 {len(stray)} 个索引"
+                f"（如 {stray[:5].tolist()}）——违反铁律 6 泄漏边界"
+            )
+        if len(spec.eligible) < min_samples:
+            raise ValueError(
+                f"池 {pool_name!r} 中类别子集 {spec.classes} 仅 {len(spec.eligible)} 样本 "
+                f"< min_samples={min_samples}"
+            )
 
         kc = int(rng.integers(n_channels_range[0], n_channels_range[1] + 1))
         channels = tuple(sorted(rng.choice(n_total_channels, size=kc, replace=False).tolist()))
-
-        avail = pool_indices[np.isin(y[pool_indices], cls_subset)]
-        if len(avail) < min_samples:
-            raise ValueError(
-                f"池 {pool_name!r} 中类别子集 {cls_subset} 仅 {len(avail)} 样本 "
-                f"< min_samples={min_samples}"
-            )
-        m = min(n_samples, len(avail))
-        sample_idx = tuple(np.sort(rng.choice(avail, size=m, replace=False)).tolist())
+        m = min(n_samples, len(spec.eligible))
+        sample_idx = tuple(np.sort(rng.choice(spec.eligible, size=m, replace=False)).tolist())
 
         tasks.append(SlicedTask(
-            task_id=f"{pool_name}_{len(tasks):02d}",
+            task_id=f"{pool_name}_{i:02d}",
             pool=pool_name,
-            classes=cls_subset,
+            classes=spec.classes,
             channels=channels,
             sample_indices=sample_idx,
+            tag=spec.tag,
         ))
     return tasks
 
@@ -156,22 +196,24 @@ def make_leaveout_split(
     n_holdout_tasks: int,
     holdout_ratio: float = 0.3,
     seed: int = 0,
+    strategy: SliceStrategy | None = None,
     **task_kw,
 ) -> LeaveOutSplit:
     """两级划分一步到位：分池 → 各池切任务 → 断言零重叠（铁律 6 的接口防护）。
 
     fit_shared_ts2vec 只能吃 `X[split.source_indices]`；留出任务仅供 M3 测试
-    comparator。task_kw 透传给 slice_pool_tasks（两池同参）。
+    comparator。task_kw 透传给 slice_pool_tasks（两池同参、同一策略实例——
+    策略须无状态，见 SliceStrategy）。
     """
     source_idx, holdout_idx = split_pools(y, holdout_ratio=holdout_ratio, seed=seed)
     # 两池用不同派生种子，避免"同 seed 同序采样"造成源/留出任务结构镜像
     source_tasks = slice_pool_tasks(
         y, source_idx, pool_name=POOL_SOURCE, n_tasks=n_source_tasks,
-        seed=seed, **task_kw,
+        seed=seed, strategy=strategy, **task_kw,
     )
     holdout_tasks = slice_pool_tasks(
         y, holdout_idx, pool_name=POOL_HOLDOUT, n_tasks=n_holdout_tasks,
-        seed=seed + 1_000_003, **task_kw,
+        seed=seed + 1_000_003, strategy=strategy, **task_kw,
     )
     assert_tasks_disjoint(source_tasks, holdout_tasks)
     return LeaveOutSplit(
