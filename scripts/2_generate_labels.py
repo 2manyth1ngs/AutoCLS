@@ -15,6 +15,17 @@
 6. 配对：δ 过滤同分噪声 + y=is_better(R'_a, R'_b, task_type)（铁律 8），
    写 pairs.jsonl + summary.json（各档样本量分布、δ 弃样比例）。
 
+--pool holdout：对留出池任务造 label（rprime_cache_holdout.jsonl /
+pairs_holdout.jsonl / summary_holdout.json），仅供 M3 测 T-CLSC 的配对准确率，
+绝不参与训练。TS2Vec 仍只在源池训练（必须已落盘，本模式禁止重训，铁律 6）；
+每个 (task, cls) 的对比预训练是任务内独立评估协议，不构成跨池泄漏。
+CLS 采样按 source+holdout 全 id 做：random 流按位置派生，追加 holdout 不改变
+源任务取值（tests/test_labeling.py::test_prefix_stable_when_task_ids_appended）。
+
+【定位（路线 B）】留出任务与源任务同分布（同一 HAR 切片协议），本数据只能
+验证"泛化到新任务切片"的机制成立性，不构成 zero-shot（跨数据集）证据——
+真 zero-shot 结果由路线 A（多 UEA 数据集、源/目标池分离）产出。
+
 用法（在仓库根目录；全量很贵，先小规模试跑验证链路）：
     python scripts/2_generate_labels.py --max-tasks 4 --max-shared 3 --max-random 2   # 试跑
     python scripts/2_generate_labels.py --resume                                      # 全量/续跑
@@ -190,10 +201,11 @@ def run_one(task, cls_cfg, X, y, train_cfg: dict, labels_cfg: dict, device: str)
 
 def build_pairs_and_summary(
     active_tasks, sampling, cache: dict, labels_cfg: dict, train_cfg: dict, outdir: Path,
+    *, suffix: str = "",
 ) -> None:
-    """从缓存生成 pairs.jsonl（幂等重建）+ summary.json（各档分布、δ 弃样比例）。"""
+    """从缓存生成 pairs{suffix}.jsonl（幂等重建）+ summary{suffix}.json（各档分布、δ 弃样比例）。"""
     early_iters = train_cfg["early_iters"]
-    pairs_path = outdir / "pairs.jsonl"
+    pairs_path = outdir / f"pairs{suffix}.jsonl"
     per_task, per_tier = {}, {}
     with open(pairs_path, "w", encoding="utf-8") as fh:
         for task in active_tasks:
@@ -229,7 +241,7 @@ def build_pairs_and_summary(
         "delta_drop_frac": (total.get("n_delta_dropped", 0) / total["n_candidates"])
         if total.get("n_candidates") else None,
     }
-    (outdir / "summary.json").write_text(
+    (outdir / f"summary{suffix}.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
 
     print(f"\n配对完成 → {pairs_path}", flush=True)
@@ -254,6 +266,9 @@ def main() -> None:
     ap.add_argument("--outdir", type=Path, default=ROOT / "results" / "labels")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     ap.add_argument("--resume", action="store_true", help="跳过缓存中已完成的 (task, cls)")
+    ap.add_argument("--pool", choices=["source", "holdout"], default="source",
+                    help="holdout：对留出池造 label（仅供 M3 测 T-CLSC，独立缓存/配对文件；"
+                         "TS2Vec 必须已在源池训好落盘，本模式禁止重训）")
     ap.add_argument("--max-tasks", type=int, default=None,
                     help="试跑：只处理前 N 个源任务（CLS 采样仍按全任务做，缓存与全量兼容）")
     ap.add_argument("--tasks", nargs="+", default=None,
@@ -270,9 +285,13 @@ def main() -> None:
     args.outdir.mkdir(parents=True, exist_ok=True)
     feat_dir = args.outdir / "task_features"
     feat_dir.mkdir(exist_ok=True)
-    cache_path = args.outdir / "rprime_cache.jsonl"
+    suffix = "" if args.pool == "source" else "_holdout"
+    cache_path = args.outdir / f"rprime_cache{suffix}.jsonl"
     if cache_path.exists() and not args.resume:
         sys.exit(f"{cache_path} 已存在：加 --resume 续跑，或删除后重跑")
+    if args.pool == "holdout" and not (args.outdir / "shared_ts2vec.pt").exists():
+        sys.exit("--pool holdout 要求 shared_ts2vec.pt 已存在（TS2Vec 只在源池训练，"
+                 "留出池运行禁止触发重训，铁律 6）：先跑一次 source 池")
 
     # ---- 1. 数据与两级切片（策略经 task_type 分发，铁律 7）----
     X, y = load_dataset(labels_cfg["dataset"], args.data_dir)
@@ -286,16 +305,17 @@ def main() -> None:
     leak_checks(split, X, ts2vec_train)
 
     source_tasks = list(split.source_tasks)
+    pool_tasks = source_tasks if args.pool == "source" else list(split.holdout_tasks)
     if args.tasks:
-        by_id = {t.task_id: t for t in source_tasks}
+        by_id = {t.task_id: t for t in pool_tasks}
         unknown = set(args.tasks) - set(by_id)
         if unknown:
             sys.exit(f"未知 task_id: {sorted(unknown)}（可选: {sorted(by_id)}）")
         active_tasks = [by_id[tid] for tid in args.tasks]
     else:
-        active_tasks = source_tasks[: args.max_tasks] if args.max_tasks else source_tasks
-    print(f"数据 {labels_cfg['dataset']}: X={X.shape} → 源任务 {len(source_tasks)} "
-          f"(本次处理 {len(active_tasks)}) / 留出任务 {len(split.holdout_tasks)}（只记录不造 label）",
+        active_tasks = pool_tasks[: args.max_tasks] if args.max_tasks else pool_tasks
+    print(f"数据 {labels_cfg['dataset']}: X={X.shape} → 源任务 {len(source_tasks)} / "
+          f"留出任务 {len(split.holdout_tasks)} | 本次处理 {args.pool} 池 {len(active_tasks)} 个",
           flush=True)
     (args.outdir / "tasks.json").write_text(json.dumps({
         "source_tasks": [dataclasses.asdict(t) for t in split.source_tasks],
@@ -308,10 +328,12 @@ def main() -> None:
     for t in active_tasks:
         ensure_task_features(t, X, y, shared, set_enc, labels_cfg, feat_dir)
 
-    # ---- 4. CLS 采样（按全部源任务采样：试跑与全量共享同一批候选与缓存）----
+    # ---- 4. CLS 采样（source+holdout 全 id：random 流按位置派生，追加 holdout
+    #      不改变源任务取值——前缀稳定性有测试护栏；两池共享同一批 shared CLS，
+    #      留出池测试因此能直接对比"同一 CLS 在新任务上的排名"）----
     space = CLSSpace.from_yaml()
     sampling = sample_cls_sets(
-        space, [t.task_id for t in source_tasks],
+        space, [t.task_id for t in source_tasks] + [t.task_id for t in split.holdout_tasks],
         n_shared=labels_cfg["n_shared_cls"], n_random=labels_cfg["n_random_cls"],
         seed=labels_cfg["cls_seed"],
     )
@@ -356,7 +378,8 @@ def main() -> None:
               flush=True)
 
     # ---- 6. 配对 + 汇总（幂等重建，跑到哪配到哪）----
-    build_pairs_and_summary(active_tasks, sampling, cache, labels_cfg, train_cfg, args.outdir)
+    build_pairs_and_summary(
+        active_tasks, sampling, cache, labels_cfg, train_cfg, args.outdir, suffix=suffix)
 
 
 if __name__ == "__main__":

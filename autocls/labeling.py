@@ -27,6 +27,8 @@ from typing import Optional
 
 import numpy as np
 
+from .comparator.tclsc_engine import ClsRecord, Pair, with_reversed
+from .space.cls_encoder import CLSEncoder
 from .space.cls_space import CLS, CLSSpace
 from .task_types import TASK_CLASSIFICATION, is_better, validate_task_type
 
@@ -229,6 +231,65 @@ def delta_decision_curve(
             "agreement": n_agree / n_comparable if n_comparable else float("nan"),
         })
     return rows
+
+
+# ---------------------------------------------------------------------------
+# 比较器桥接：R' 缓存 → T-CLSC 引擎数据结构（scripts/3_pretrain_tclsc.py 的
+# 可测核心）。方向语义（is_better/make_pairs）留在本模块，comparator 保持
+# 任务无关（铁律 7/8）。
+# ---------------------------------------------------------------------------
+
+
+def comparator_records(
+    cache: dict[tuple[str, str, int], dict], encoder: CLSEncoder, *, iters: int
+) -> list[ClsRecord]:
+    """缓存 → ClsRecord 列表：只取指定 iters 口径（铁律 2）的有限 R' 记录。
+
+    失败 CLS（r_prime 为 None/NaN）剔除；vec 用 CLSEncoder 现算（缓存里存的是
+    cls 字段字典，向量化规则以 space.yaml 当前定义为准）。
+    """
+    out: list[ClsRecord] = []
+    for (tid, key, it), rec in cache.items():
+        if it != iters:
+            continue
+        r = rec.get("r_prime")
+        if r is None or not np.isfinite(r):
+            continue
+        out.append(ClsRecord(
+            task_id=tid, key=key, origin=rec["origin"],
+            vec=encoder.encode(CLS(**rec["cls"])), r=float(r),
+        ))
+    return out
+
+
+def comparator_eval_pairs(
+    cache: dict[tuple[str, str, int], dict],
+    encoder: CLSEncoder,
+    *,
+    task_type: str,
+    delta: float,
+    iters: int,
+) -> list[Pair]:
+    """缓存 → 静态双向评估对：逐任务 make_pairs（δ 过滤 + is_better 方向，
+    铁律 8）后接反向出样（← random_search.py::generate_task_pairs 双向语义）。
+
+    与训练侧动态配对不同，评估对固定且穷举全部有效无序对——留出任务的
+    配对准确率必须在同一集合上可复现比较（含 E 消融三档）。
+    """
+    recs = comparator_records(cache, encoder, iters=iters)
+    by_task: dict[str, list[ClsRecord]] = {}
+    for r in recs:
+        by_task.setdefault(r.task_id, []).append(r)
+
+    pairs: list[Pair] = []
+    for tid, rs in by_task.items():
+        rprime = {r.key: r.r for r in rs}
+        origin = {r.key: r.origin for r in rs}
+        vec = {r.key: r.vec for r in rs}
+        raw, _ = make_pairs(rprime, task_type, delta=delta, origin=origin)
+        pairs += [Pair(task_id=tid, vec_a=vec[p["a"]], vec_b=vec[p["b"]],
+                       y=p["y"], kind=p["kind"]) for p in raw]
+    return with_reversed(pairs)
 
 
 # ---------------------------------------------------------------------------

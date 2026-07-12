@@ -77,6 +77,74 @@ class TestSampleClsSets:
         s6 = sample_cls_sets(space, self.TASKS, n_shared=6, n_random=2, seed=7)
         assert s6.shared[:3] == s3.shared
 
+    def test_prefix_stable_when_task_ids_appended(self, space):
+        # 留出池造 label（M3 测 T-CLSC）的前提：task_ids 追加 holdout 不改变
+        # 源任务的 shared/random 取值（random 流按位置 [seed, 1+i] 派生），
+        # 否则源池 R' 缓存作废
+        src = sample_cls_sets(space, self.TASKS, n_shared=3, n_random=2, seed=7)
+        both = sample_cls_sets(
+            space, self.TASKS + ["holdout_00", "holdout_01"], n_shared=3, n_random=2, seed=7
+        )
+        assert both.shared == src.shared
+        for t in self.TASKS:
+            assert both.random[t] == src.random[t]
+        # holdout 的 random 批是新的独立流，不与任何源任务撞车
+        src_rnd = {cls_key(c) for t in self.TASKS for c in src.random[t]}
+        hold_rnd = {cls_key(c) for t in ("holdout_00", "holdout_01") for c in both.random[t]}
+        assert not (hold_rnd & src_rnd)
+
+
+# ---------------------------------------------------------------- 比较器桥接
+class TestComparatorBridge:
+    """R' 缓存 → T-CLSC 引擎数据结构（scripts/3_pretrain_tclsc.py 的可测核心）。"""
+
+    @staticmethod
+    def _cache_row(task_id, key, origin, r, cls_cfg, iters=290):
+        import dataclasses
+        return (task_id, key, iters), {
+            "task_id": task_id, "cls_key": key, "origin": origin, "iters": iters,
+            "r_prime": r, "cls": dataclasses.asdict(cls_cfg),
+        }
+
+    def test_comparator_records_filters_and_encodes(self, space, make_cls):
+        from autocls.labeling import comparator_records
+        from autocls.space.cls_encoder import CLSEncoder
+        enc = CLSEncoder(space)
+        c1, c2, c3 = make_cls(), make_cls(jitter=0.5), make_cls(jitter=0.7)
+        cache = dict([
+            self._cache_row("t0", "k1", "shared", 0.9, c1),
+            self._cache_row("t0", "k2", "random", None, c2),      # 失败 CLS → 剔除
+            self._cache_row("t0", "k3", "shared", 0.8, c3, iters=2320),  # 口径不符 → 剔除
+        ])
+        recs = comparator_records(cache, enc, iters=290)
+        assert [r.key for r in recs] == ["k1"]
+        assert recs[0].task_id == "t0" and recs[0].origin == "shared" and recs[0].r == 0.9
+        np.testing.assert_array_equal(recs[0].vec, enc.encode(c1))
+
+    def test_comparator_eval_pairs_directed_delta_and_kind(self, space, make_cls):
+        from autocls.labeling import comparator_eval_pairs
+        from autocls.space.cls_encoder import CLSEncoder
+        enc = CLSEncoder(space)
+        ca, cb, cc = make_cls(), make_cls(jitter=0.5), make_cls(jitter=0.7)
+        cache = dict([
+            self._cache_row("t0", "ka", "shared", 0.90, ca),
+            self._cache_row("t0", "kb", "random", 0.50, cb),
+            self._cache_row("t0", "kc", "shared", 0.895, cc),  # 与 ka 近平局 → δ 弃样
+        ])
+        pairs = comparator_eval_pairs(
+            cache, enc, task_type=TASK_CLASSIFICATION, delta=0.02, iters=290)
+        # 有效无序对：(ka,kb) 与 (kb,kc)，双向出样 → 4 条
+        assert len(pairs) == 4
+        fwd, rev = pairs[: len(pairs) // 2], pairs[len(pairs) // 2:]
+        for p, q in zip(fwd, rev):
+            assert q.y == 1 - p.y
+            np.testing.assert_array_equal(q.vec_a, p.vec_b)
+        # y 方向经 is_better（铁律 8）：ka(0.90) 优于 kb(0.50) → 正向 y=1
+        ka_first = [p for p in fwd if np.array_equal(p.vec_a, enc.encode(ca))]
+        assert len(ka_first) == 1 and ka_first[0].y == 1
+        assert {p.kind for p in fwd} == {"random-shared"}
+        assert all(p.task_id == "t0" for p in pairs)
+
 
 # ---------------------------------------------------------------- 任务内划分
 class TestSplitTaskTrainEval:

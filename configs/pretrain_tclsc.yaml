@@ -1,0 +1,15 @@
+# =====================================================================
+# T-CLSC 预训练超参（scripts/3_pretrain_tclsc.py；TECHNICAL_DESIGN.md 模块 6）
+# 引擎超参对齐 AutoCTS++ exps/random_search.py 默认值：
+#   lr ← --ahc_lr 1e-4；batch_size ← --batch_size 64；
+#   embedding_dim ← --d_model 128（原 GIN 输出维，此处 CLS MLP 输出维）；
+#   fz ← ahc_engine.py::AHC.fz=128。
+# δ 与任务嵌入维 nz 不在此定义——configs/labels.yaml 是唯一真源。
+# =====================================================================
+lr: 1.0e-4
+batch_size: 64
+epochs: 200
+curriculum_epochs: 40   # 前 40 epoch 只用 shared CLS 配对（AutoCTS++ 3.2.4 先易后难）
+embedding_dim: 128
+fz: 128
+seed: 0
