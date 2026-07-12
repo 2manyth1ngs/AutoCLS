@@ -10,15 +10,20 @@
    支持任意通道数，无需零填充）。长度维不切（HAR 定长 128；可选扩展：对样本做
    重采样/裁剪引入长度多样性，本阶段不做）。
 
-可插拔策略架构（核心与任务类型解耦）：
-- 本模块（核心）只负责通用逻辑：池划分、样本采样、通道子集、泄漏防护、任务记录；
+可插拔策略架构（核心与任务类型解耦，铁律 7）：
+- 本模块（核心）只负责通用逻辑：池划分、样本采样、通道子集、泄漏防护、任务记录，
+  不含任何任务类型假设（动/静等语义只存在于策略与其 tag）；
 - "怎么选类别子集"这类**任务类型相关**的逻辑下放到 `SliceStrategy` 策略
   （接口契约：`propose(y, pool_indices, n_tasks, rng) -> list[TaskSpec]`，
-  鸭子类型即可）。分类策略在 `slice_strategies.py`：通用的
-  RandomClassSubsetSlicer（默认）与 HAR 专用的 DynamicStaticStratifiedSlicer
-  （动/静分层，**不适用于预测/异常检测**）；
+  鸭子类型即可）。分类策略在 `slice_strategies.py`：RandomClassSubsetSlicer
+  （通用分类）与 HAR 专用的 DynamicStaticStratifiedSlicer（动/静分层，
+  **不适用于预测/异常检测**）；
+- 策略缺省经 task_type 显式分发（`resolve_slice_strategy`，铁律 7 的分发点）：
+  classification → 动/静三档分层（阶段一 HAR 已拍板）；每个 SlicedTask 记录
+  显式 task_type 字段（取值唯一真源 autocls/task_types.py）；
 - 扩展点：将来预测/异常检测任务接入时各写自己的策略（如预测按数据集+horizon
-  产出 TaskSpec），核心与既有分类策略零改动，详见 slice_strategies.py docstring。
+  产出 TaskSpec）并在 resolve_slice_strategy 加 case，核心与既有分类策略
+  零改动，详见 slice_strategies.py docstring。
 
 与 AutoCTS++ 3.2.4 的差异：原文对预测任务"时间连续切片 + 随机采样通道"；分类
 任务无时间轴上的任务边界，改在"类别 × 通道 × 样本子集"维度切，语义对应
@@ -40,6 +45,8 @@ from typing import Protocol
 
 import numpy as np
 
+from ..task_types import TASK_CLASSIFICATION, validate_task_type
+
 POOL_SOURCE = "source"
 POOL_HOLDOUT = "holdout"
 
@@ -51,6 +58,9 @@ class SlicedTask:
     sample_indices 是**原始数据集全局索引**（升序 tuple），配合 materialize_task
     取数据；classes/channels 均为升序 tuple。pool 标记所属池，防源/留出混用。
     tag 为切片策略的自由标注（如动/静分层的档位），核心不解释其语义。
+    task_type 为显式任务类型（铁律 7，取值唯一真源 autocls/task_types.py；
+    当前恒 classification）——下游按任务类型分发的逻辑（评估器、R' 优劣方向等）
+    从这里读，禁止隐式假设。
     """
 
     task_id: str
@@ -59,6 +69,7 @@ class SlicedTask:
     channels: tuple[int, ...]
     sample_indices: tuple[int, ...]
     tag: str = ""
+    task_type: str = TASK_CLASSIFICATION
 
 
 @dataclass(frozen=True)
@@ -137,6 +148,7 @@ def slice_pool_tasks(
     *,
     pool_name: str,
     n_tasks: int,
+    task_type: str = TASK_CLASSIFICATION,
     strategy: SliceStrategy | None = None,
     n_channels_range: tuple[int, int] = (4, 9),
     n_total_channels: int = 9,
@@ -146,15 +158,19 @@ def slice_pool_tasks(
 ) -> list[SlicedTask]:
     """在一个池内切 n_tasks 个任务（"选哪些数据"由策略决定，采样/防护在核心）。
 
-    strategy 缺省为 RandomClassSubsetSlicer()（随机不重复类别子集，range 默认
-    (2,4)）。每任务：策略给出 (classes, eligible) → 核心复核 eligible ⊆ 池
-    （铁律 6，策略不可信任）→ 随机通道子集 × 随机采 min(n_samples, 可用数) 个
-    样本；可用数 < min_samples 报错。固定 seed 可复现（策略与核心共用一个 rng）。
+    strategy 缺省经 task_type 分发（铁律 7）：resolve_slice_strategy(task_type)，
+    classification → 动/静三档分层（阶段一 HAR 已拍板默认）；显式传 strategy 则
+    绕过分发（如通用分类用 RandomClassSubsetSlicer），但 task_type 仍会校验并
+    记录到每个 SlicedTask。每任务：策略给出 (classes, eligible) → 核心复核
+    eligible ⊆ 池（铁律 6，策略不可信任）→ 随机通道子集 × 随机采
+    min(n_samples, 可用数) 个样本；可用数 < min_samples 报错。固定 seed 可复现
+    （策略与核心共用一个 rng）。
     """
+    validate_task_type(task_type)
     rng = np.random.default_rng(seed)
     if strategy is None:
-        from .slice_strategies import RandomClassSubsetSlicer  # 惰性导入避免循环依赖
-        strategy = RandomClassSubsetSlicer()
+        from .slice_strategies import resolve_slice_strategy  # 惰性导入避免循环依赖
+        strategy = resolve_slice_strategy(task_type)
     specs = strategy.propose(y, pool_indices, n_tasks, rng)
     if len(specs) != n_tasks:
         raise ValueError(f"策略产出 {len(specs)} 个规格 ≠ n_tasks={n_tasks}")
@@ -185,6 +201,7 @@ def slice_pool_tasks(
             channels=channels,
             sample_indices=sample_idx,
             tag=spec.tag,
+            task_type=task_type,
         ))
     return tasks
 
@@ -196,24 +213,25 @@ def make_leaveout_split(
     n_holdout_tasks: int,
     holdout_ratio: float = 0.3,
     seed: int = 0,
+    task_type: str = TASK_CLASSIFICATION,
     strategy: SliceStrategy | None = None,
     **task_kw,
 ) -> LeaveOutSplit:
     """两级划分一步到位：分池 → 各池切任务 → 断言零重叠（铁律 6 的接口防护）。
 
     fit_shared_ts2vec 只能吃 `X[split.source_indices]`；留出任务仅供 M3 测试
-    comparator。task_kw 透传给 slice_pool_tasks（两池同参、同一策略实例——
-    策略须无状态，见 SliceStrategy）。
+    comparator。task_type/task_kw 透传给 slice_pool_tasks（两池同参、同一策略
+    实例——策略须无状态，见 SliceStrategy）。
     """
     source_idx, holdout_idx = split_pools(y, holdout_ratio=holdout_ratio, seed=seed)
     # 两池用不同派生种子，避免"同 seed 同序采样"造成源/留出任务结构镜像
     source_tasks = slice_pool_tasks(
         y, source_idx, pool_name=POOL_SOURCE, n_tasks=n_source_tasks,
-        seed=seed, strategy=strategy, **task_kw,
+        seed=seed, task_type=task_type, strategy=strategy, **task_kw,
     )
     holdout_tasks = slice_pool_tasks(
         y, holdout_idx, pool_name=POOL_HOLDOUT, n_tasks=n_holdout_tasks,
-        seed=seed + 1_000_003, strategy=strategy, **task_kw,
+        seed=seed + 1_000_003, task_type=task_type, strategy=strategy, **task_kw,
     )
     assert_tasks_disjoint(source_tasks, holdout_tasks)
     return LeaveOutSplit(

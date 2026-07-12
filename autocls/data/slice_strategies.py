@@ -29,7 +29,26 @@ from math import comb
 
 import numpy as np
 
-from .task_slicer import TaskSpec
+from ..task_types import TASK_CLASSIFICATION, validate_task_type
+from .task_slicer import SliceStrategy, TaskSpec
+
+
+def resolve_slice_strategy(task_type: str) -> SliceStrategy:
+    """按 task_type 分发默认切片策略（铁律 7 在 task_slicer 的分发点）。
+
+    classification → DynamicStaticStratifiedSlicer（阶段一只有 HAR，动/静三档
+    分层已拍板为源任务默认；其他分类数据集若无动/静语义分组，应显式传
+    RandomClassSubsetSlicer，或将来把本分发细化到数据集维度）。
+    扩展点：forecasting 接入时新增其策略类（如按数据集+horizon 产出 TaskSpec
+    的 ForecastHorizonSlicer）并在此加 case——核心与既有分类策略零改动。
+    """
+    validate_task_type(task_type)
+    if task_type == TASK_CLASSIFICATION:
+        return DynamicStaticStratifiedSlicer()
+    raise NotImplementedError(
+        f"task_type={task_type!r} 的切片策略未实现——接入时新增策略类并在"
+        "resolve_slice_strategy 加 case（扩展点见模块 docstring）"
+    )
 
 
 def _eligible(y: np.ndarray, pool_indices: np.ndarray, subset: tuple[int, ...]) -> np.ndarray:

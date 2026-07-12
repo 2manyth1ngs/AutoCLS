@@ -17,7 +17,9 @@ import pytest
 from autocls.data.slice_strategies import (
     DynamicStaticStratifiedSlicer,
     RandomClassSubsetSlicer,
+    resolve_slice_strategy,
 )
+from autocls.task_types import TASK_CLASSIFICATION, TASK_FORECASTING
 from autocls.data.task_slicer import (
     TaskSpec,
     make_leaveout_split,
@@ -159,6 +161,23 @@ class TestDynamicStaticStratifiedSlicer:
         _, a = self._specs(n_tasks=12, seed=7)
         _, b = self._specs(n_tasks=12, seed=7)
         assert [(s.classes, s.tag) for s in a] == [(s.classes, s.tag) for s in b]
+
+
+# ------------------------------------------------- task_type → 策略分发（铁律 7）
+class TestResolveSliceStrategy:
+    def test_classification_resolves_to_stratified(self):
+        # 阶段一仅 HAR：classification 默认 = 动/静三档分层（已拍板）
+        strat = resolve_slice_strategy(TASK_CLASSIFICATION)
+        assert isinstance(strat, DynamicStaticStratifiedSlicer)
+
+    def test_forecasting_is_stub(self):
+        # 扩展点：预测接入时新增策略类（按数据集+horizon）并在分发点加 case
+        with pytest.raises(NotImplementedError, match="切片策略"):
+            resolve_slice_strategy(TASK_FORECASTING)
+
+    def test_unknown_task_type_rejected(self):
+        with pytest.raises(ValueError, match="task_type"):
+            resolve_slice_strategy("segmentation")
 
 
 # ------------------------------------------------------- 核心可插拔性（解耦自检）

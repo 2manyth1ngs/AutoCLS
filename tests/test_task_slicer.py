@@ -13,6 +13,7 @@ import numpy as np
 import pytest
 
 from autocls.data.slice_strategies import RandomClassSubsetSlicer
+from autocls.task_types import TASK_CLASSIFICATION, TASK_FORECASTING
 from autocls.data.task_slicer import (
     SlicedTask,
     assert_tasks_disjoint,
@@ -109,7 +110,7 @@ class TestSlicePoolTasks:
         assert len(set(subsets)) == len(subsets)
 
     def test_subset_sizes_default_range(self):
-        # 默认策略 RandomClassSubsetSlicer，n_classes_range 默认 (2,4)（已定决策）
+        # 缺省策略经 task_type 分发（classification → 动/静分层），range 恒 (2,4)（已定决策）
         for t in self._tasks(n_tasks=10, n_channels_range=(4, 9)):
             assert 2 <= len(t.classes) <= 4
             assert 4 <= len(t.channels) <= 9
@@ -212,6 +213,55 @@ class TestMaterializeTask:
         np.testing.assert_array_equal(
             Xt, X[np.array(t.sample_indices)][:, :, list(t.channels)]
         )
+
+
+# ---------------------------------------------------------------- task_type 分发（铁律 7）
+class TestTaskTypeDispatch:
+    def _pool(self, y):
+        pool, _ = split_pools(y, holdout_ratio=0.3, seed=0)
+        return pool
+
+    def test_task_type_recorded_default_classification(self):
+        # task 数据结构必须带显式 task_type（当前恒 classification）
+        y = _toy_labels()
+        tasks = slice_pool_tasks(
+            y, self._pool(y), pool_name="source", n_tasks=6, seed=0, **TASK_KW
+        )
+        assert all(t.task_type == TASK_CLASSIFICATION for t in tasks)
+
+    def test_task_type_flows_through_leaveout_split(self):
+        sp = make_leaveout_split(
+            _toy_labels(), n_source_tasks=6, n_holdout_tasks=3,
+            holdout_ratio=0.3, seed=0, **TASK_KW,
+        )
+        for t in sp.source_tasks + sp.holdout_tasks:
+            assert t.task_type == TASK_CLASSIFICATION
+
+    def test_unknown_task_type_rejected(self):
+        y = _toy_labels()
+        with pytest.raises(ValueError, match="task_type"):
+            slice_pool_tasks(
+                y, self._pool(y), pool_name="source", n_tasks=4, seed=0,
+                task_type="segmentation", **TASK_KW,
+            )
+
+    def test_forecasting_dispatch_is_stub(self):
+        # 扩展点：forecasting 尚无切片策略，分发点显式拒绝而非隐式当分类处理
+        y = _toy_labels()
+        with pytest.raises(NotImplementedError, match="切片策略"):
+            slice_pool_tasks(
+                y, self._pool(y), pool_name="source", n_tasks=4, seed=0,
+                task_type=TASK_FORECASTING, **TASK_KW,
+            )
+
+    def test_explicit_strategy_still_stamps_task_type(self):
+        # 显式传策略时不走分发，但 task_type 仍必须记录在任务上
+        y = _toy_labels()
+        tasks = slice_pool_tasks(
+            y, self._pool(y), pool_name="source", n_tasks=6, seed=0,
+            strategy=RandomClassSubsetSlicer(), **TASK_KW,
+        )
+        assert all(t.task_type == TASK_CLASSIFICATION for t in tasks)
 
 
 # ---------------------------------------------------------------- 泄漏守卫

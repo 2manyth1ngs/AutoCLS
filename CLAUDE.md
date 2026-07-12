@@ -24,6 +24,8 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 4. `task_embed/` 相关代码必须先读 AutoCTS++ 真实源码再适配，注释标注对应原文件+公式号。
 5. 先写 `tests/` 再写实现。与论文有出入的补全须注释标注"论文未给全，按 X 语义补全"（如附录 A 的 resize/rescale 公式被截断）。
 6. 共享 TS2Vec 仅在【源池】训练、冻结后编码所有任务；目标池/未见数据集绝不参与 TS2Vec 训练，防 zero-shot 数据泄漏。API 上由 `fit_shared_ts2vec(source_data)` 显式传入训练数据，`embed_task` 只接受已冻结的单变量编码器。
+7. **任务类型显式分发**：项目支持多种下游任务类型（当前仅 `classification`，将来加 `forecasting` 等）。task 数据结构必须带显式 `task_type` 字段（当前恒为 `classification`）；凡按任务类型不同而行为不同的逻辑，必须通过 `task_type` 显式分发，禁止隐式假设"就是分类"。已知分发点：task_slicer 切片策略、task_embed 窗口逻辑、downstream 评估器、early-val 的 R' 优劣方向。任务无关模块（cls_space/cls_encoder/contrastive/encoders/comparator/search）绝不能引入任务类型假设，保持纯粹。新增任务类型时应是"在各分发点加 case"，而非重构核心。`autocls/task_types.py` 是 task_type 取值唯一真源。
+8. **R' 优劣方向抽象**：early-val 的 R' 优劣方向随任务类型不同（分类 ACC 越大越优；预测 MSE 越小越优）。造 label 时 y 的定义禁止写死方向，必须经统一比较函数 `is_better(r1, r2, task_type)`（`autocls/task_types.py`）判定，把"什么叫更优"交给任务类型。当前 classification: 大者优；forecasting: 小者优的分支留 stub 接口。
 
 ## 复用 AutoCTS++（repo: decisionintelligence/AutoCTS_plusplus）
 - `Ts2vec_model/` → `autocls/task_embed/ts2vec_wrapper.py`
