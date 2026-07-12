@@ -1,0 +1,38 @@
+# =====================================================================
+# T-CLSC 训练 label 生成配置（scripts/2_generate_labels.py；模块 7）
+# 训练量口径（early_iters/batch_size/lr）不在此定义——configs/train.yaml
+# 是唯一真源（铁律 2），造 label 一律 early_iters。
+# =====================================================================
+task_type: classification   # 取值唯一真源 autocls/task_types.py（铁律 7）
+dataset: har                # 阶段一：HAR 分类
+
+# --- 任务切片（已验收组合：DynamicStaticStratifiedSlicer 经 task_type 分发，
+#     seed=0 → 16 源任务 = 纯动 4 / 纯静 4 / 混合 8，见 results/task_slicer_sanity）---
+n_source_tasks: 16
+n_holdout_tasks: 8          # 留出任务本脚本只记录不造 label（M3 测 T-CLSC 用）
+holdout_ratio: 0.3
+slice_seed: 0
+
+# --- 共享任务嵌入（铁律 6：TS2Vec 只在源池 fit；与 task_slicer 验收同口径）---
+ts2vec_iters: 600
+sample_num: 100             # 每任务编码窗口数（generate_task_feature.py --sample_num）
+nz: 256                     # 任务嵌入维（ahc_engine.py self.nz）
+embed_seed: 0
+
+# --- CLS 采样（AutoCTS++ 3.2.4 shared+random；generate_seeds.py noisy_seeds
+#     口径即 20 shared + 20 random）---
+n_shared_cls: 20
+n_random_cls: 20
+cls_seed: 42
+
+# --- R' 评估协议 ---
+eval_ratio: 0.3             # 任务内 train/eval 分层划分；1024 样本 → eval ≈307，
+                            # acc 量子 1/307 ≈ 0.0033
+
+# --- δ 过滤（"几乎相等"弃样，独立于 is_better 的严格平局）---
+# 标定依据（scripts/calibrate_delta.py 于 results/m2_probe/cache.jsonl，20 CLS
+# ×190 配对）：full acc 几乎相同（|Δfull|<0.003）的配对，其 early R' 伪差值
+# （纯噪声）p90≈0.017、p95≈0.020；方向一致率 δ=0.005→89.1%、0.01→93.3%、
+# 0.02→98.1%、0.03→97.9%（饱和）。取噪声上界略高处 0.02。详见
+# results/delta_calibration/calibration.json。
+delta: 0.02

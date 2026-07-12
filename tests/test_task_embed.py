@@ -70,6 +70,23 @@ class TestTS2VecWrapper:
         after = w.encode(X)
         assert not np.allclose(before, after)
 
+    def test_save_load_roundtrip(self, tmp_path):
+        # generate_labels 续跑一致性：GPU 重训 TS2Vec 非确定（±漂移），共享编码器
+        # 必须落盘复用而非 resume 时重训，否则前后任务特征口径不一致
+        X = _toy()
+        w = TS2VecWrapper(input_dims=3, device="cpu", seed=0, **TINY)
+        w.fit(X, n_iters=3)
+        w.freeze()
+        path = tmp_path / "shared_ts2vec.pt"
+        w.save(path)
+
+        w2 = TS2VecWrapper.load(path, device="cpu")
+        np.testing.assert_allclose(w.encode(X), w2.encode(X), atol=1e-6)
+        assert w2.frozen and w2.n_iters == 3
+        assert w2.input_dims == 3 and w2.output_dims == TINY["output_dims"]
+        with pytest.raises(RuntimeError, match="冻结"):
+            w2.fit(X, n_iters=1)
+
 
 # ---------------------------------------------------------------- TaskSetEncoder
 class TestTaskSetEncoder:

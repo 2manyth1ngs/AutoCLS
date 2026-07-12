@@ -254,6 +254,12 @@ class TS2VecWrapper:
         self.batch_size = batch_size
         self.seed = seed
         self.temporal_unit = 0  # 原码默认：短序列无需减层
+        # save/load 用的完整构造参数（device 除外：加载方按自身环境指定）
+        self._config = dict(
+            input_dims=input_dims, output_dims=output_dims,
+            hidden_dims=hidden_dims, depth=depth,
+            lr=lr, batch_size=batch_size, seed=seed,
+        )
 
         torch.manual_seed(seed)  # 权重初始化可复现（差异 3）
         self._net = TSEncoder(
@@ -279,6 +285,33 @@ class TS2VecWrapper:
         """冻结（差异 6）：此后 fit 报错。共享任务嵌入编码器在源池训完后必须
         冻结，目标池/未见数据集绝不参与训练（铁律 6，防 zero-shot 数据泄漏）。"""
         self.frozen = True
+
+    def save(self, path) -> None:
+        """落盘共享编码器（权重+训练状态）。generate_labels 续跑必须 load 复用
+        而非重训：GPU 训练非确定，重训会让续跑前后的任务特征口径不一致。"""
+        torch.save(
+            {
+                "config": self._config,
+                "net": self.net.state_dict(),      # SWA 平均权重（encode 用）
+                "_net": self._net.state_dict(),
+                "n_iters": self.n_iters,
+                "frozen": self.frozen,
+            },
+            path,
+        )
+
+    @classmethod
+    def load(cls, path, *, device: Optional[str] = None) -> "TS2VecWrapper":
+        """从 save 的文件重建（device 按加载方环境指定，不随文件走）。"""
+        ckpt = torch.load(path, map_location="cpu", weights_only=True)
+        w = cls(**ckpt["config"], device=device)
+        w._net.load_state_dict(ckpt["_net"])
+        w.net.load_state_dict(ckpt["net"])
+        w._net.to(w.device)
+        w.net.to(w.device)
+        w.n_iters = ckpt["n_iters"]
+        w.frozen = ckpt["frozen"]
+        return w
 
     def fit(self, train_data: np.ndarray, *, n_iters: int, verbose: bool = False) -> list[float]:
         """无监督对比训练（← ts2vec.py::TS2Vec.fit，删减见类 docstring）。

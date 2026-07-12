@@ -30,6 +30,7 @@ from typing import Optional
 import numpy as np
 import torch
 
+from ..task_types import TASK_CLASSIFICATION, validate_task_type
 from .set_transformer import TaskSetEncoder
 from .ts2vec_wrapper import TS2VecWrapper
 
@@ -39,7 +40,26 @@ __all__ = [
     "fit_shared_ts2vec",
     "encode_task_windows",
     "embed_task",
+    "task_windows",
 ]
+
+
+def task_windows(X: np.ndarray, task_type: str) -> np.ndarray:
+    """按 task_type 分发任务窗口构造（铁律 7 分发点：task_embed 窗口逻辑）。
+
+    classification: 窗口 = 样本序列本身（分类样本天然是定长分段，无 P+Q 滑窗
+    语义），原样返回；forecasting: 应做 S=P+Q 滑窗（AutoCTS++
+    generate_task_feature.py 的 sample_split 语义）——未实现，接入时在此补分支。
+    调用方（scripts/2_generate_labels.py 等）必须经本函数取窗口再喂
+    encode_task_windows/embed_task，禁止隐式假设"就是分类"。
+    """
+    validate_task_type(task_type)
+    if task_type == TASK_CLASSIFICATION:
+        return X
+    raise NotImplementedError(
+        f"task_type={task_type!r} 的窗口逻辑未实现——forecasting 为 S=P+Q 滑窗"
+        "（generate_task_feature.py sample_split 语义），接入时在此补分支"
+    )
 
 
 def fit_shared_ts2vec(
