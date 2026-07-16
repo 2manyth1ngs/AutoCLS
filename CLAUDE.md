@@ -27,6 +27,17 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 7. **任务类型显式分发**：项目支持多种下游任务类型（当前仅 `classification`，将来加 `forecasting` 等）。task 数据结构必须带显式 `task_type` 字段（当前恒为 `classification`）；凡按任务类型不同而行为不同的逻辑，必须通过 `task_type` 显式分发，禁止隐式假设"就是分类"。已知分发点：task_slicer 切片策略、task_embed 窗口逻辑、downstream 评估器、early-val 的 R' 优劣方向。任务无关模块（cls_space/cls_encoder/contrastive/encoders/comparator/search）绝不能引入任务类型假设，保持纯粹。新增任务类型时应是"在各分发点加 case"，而非重构核心。`autocls/task_types.py` 是 task_type 取值唯一真源。
 8. **R' 优劣方向抽象**：early-val 的 R' 优劣方向随任务类型不同（分类 ACC 越大越优；预测 MSE 越小越优）。造 label 时 y 的定义禁止写死方向，必须经统一比较函数 `is_better(r1, r2, task_type)`（`autocls/task_types.py`）判定，把"什么叫更优"交给任务类型。当前 classification: 大者优；forecasting: 小者优的分支留 stub 接口。
 
+## 已知 limitation（encoder 适用边界）
+- **L≥50 是固定 encoder 的适用边界**（路线 A 探针实证，`results/route_a_probe`）。根因：默认
+  encoder 是 10 层膨胀 CNN，dilation 逐层翻倍到 2^9=512，感受野为 **L≥100** 设计；序列过短时
+  被 padding 主导，任何 CLS（含破坏性增强）都收敛到同一贴顶表征，R' 与 CLS 质量**零相关**
+  （PenDigits L=8：CLS spread SNR 0.39，比正常长度窄 ~20×）。**L<50 的数据集只产噪声 label，
+  一律不入源池**（编码长度口径：变长数据集 pad 到 ≥50 且 SNR>1 的可留，如 SpokenArabicDigits
+  真实 4–93 → pad 93 → SNR 2.24）。L 在 30–50 之间须先过 SNR 检查再入池。写论文时列为 limitation。
+- **δ 非全局常数**：R' 噪声随 n_eval 变小 / R' 离天花板而涨（探针实测 0.0075→0.0495，4× 跨度），
+  δ=0.02 是 HAR 特调值。改 **per-dataset δ**（`configs/labels.yaml: delta_per_dataset`）。
+- 源池重排（L≥50 剔除 PenDigits/LSST 后）见 `results/route_a_pool/REPORT.md`。
+
 ## 复用 AutoCTS++（repo: decisionintelligence/AutoCTS_plusplus）
 - `Ts2vec_model/` → `autocls/task_embed/ts2vec_wrapper.py`
 - `AHC/set_encoder/` → `autocls/task_embed/set_transformer.py`

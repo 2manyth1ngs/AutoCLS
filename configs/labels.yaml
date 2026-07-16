@@ -30,9 +30,34 @@ eval_ratio: 0.3             # 任务内 train/eval 分层划分；1024 样本 �
                             # acc 量子 1/307 ≈ 0.0033
 
 # --- δ 过滤（"几乎相等"弃样，独立于 is_better 的严格平局）---
-# 标定依据（scripts/calibrate_delta.py 于 results/m2_probe/cache.jsonl，20 CLS
-# ×190 配对）：full acc 几乎相同（|Δfull|<0.003）的配对，其 early R' 伪差值
-# （纯噪声）p90≈0.017、p95≈0.020；方向一致率 δ=0.005→89.1%、0.01→93.3%、
-# 0.02→98.1%、0.03→97.9%（饱和）。取噪声上界略高处 0.02。详见
-# results/delta_calibration/calibration.json。
+# 路线 B（HAR 单数据集）标定：scripts/calibrate_delta.py 于 results/m2_probe/cache.jsonl，
+# 20 CLS×190 配对；full acc 几乎相同（|Δfull|<0.003）的配对其 early R' 伪差值（纯噪声）
+# p90≈0.017、p95≈0.020；方向一致率 δ=0.005→89.1%、0.01→93.3%、0.02→98.1%、0.03→97.9%
+# （饱和）。取噪声上界略高处 0.02。详见 results/delta_calibration/calibration.json。
+#
+# delta 为路线 B / 回退默认值（scripts/2_generate_labels.py 直接读 labels_cfg["delta"]，
+# 保持不破坏）。路线 A 造 label 按 delta_per_dataset 查表，缺项回退到 delta。
 delta: 0.02
+
+# --- per-dataset δ（路线 A；探针 results/route_a_probe 定案，见 results/route_a_pool/REPORT.md）---
+# 铁律 2 之外的可靠性口径：δ=0.02 是 HAR 特调值，UEA 噪声随 n_eval/离天花板 4× 跨度，
+# 全局单值会在噪声大的数据集放行噪声 label。改按数据集查表。
+# 带 * 注释 = 探针实测（SNR>1、label 正确率≥95%）；其余 = N/C 阶梯推测初值，上云 step 0
+# 的 SNR 预探针后按实测 R' 分布微调（探针 §2.2：δ 取达 95% 正确率处）。
+delta_per_dataset:
+  # 探针实测（填死）
+  SpokenArabicDigits: 0.03      # * 实测 SNR2.24（N/C=880）
+  PhonemeSpectra:     0.05      # * 实测 SNR2.03（N/C=171）
+  Cricket:            0.08      # * 实测 SNR1.40（N/C=15，crop256）
+  # N/C 阶梯推测初值（未实测，须过 SNR 预探针）—— δ 随 N/C 降而升，锚点 880→0.03/171→0.05/15→0.08
+  CharacterTrajectories:     0.05   # N/C=143
+  EthanolConcentration:      0.05   # N/C=131
+  SelfRegulationSCP1:        0.05   # N/C=281
+  SelfRegulationSCP2:        0.05   # N/C=190
+  MotorImagery:              0.05   # N/C=189
+  UWaveGestureLibrary:       0.06   # N/C=55
+  NATOPS:                    0.06   # N/C=60
+  ERing:                     0.06   # N/C=50
+  HandMovementDirection:     0.06   # N/C=59
+  Handwriting:               0.07   # N/C=38
+  ArticularyWordRecognition: 0.08   # N/C=23
