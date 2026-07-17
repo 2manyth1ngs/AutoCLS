@@ -73,6 +73,62 @@ def _to_seq_list(X) -> list[np.ndarray]:
     return [np.asarray(x).T for x in X]                # 逐条 (C, L_i) → (L_i, C)
 
 
+def _parse_ts_tolerant(path: str | Path) -> tuple[list[np.ndarray], np.ndarray]:
+    """容错解析 .ts：对"同 case 内各通道长度不一"的文件也能加载（aeon 会 fail-fast）。
+
+    论文/aeon 未给全，按"对齐到 case 内最短真实观测"语义补全：把该 case 各通道**截断
+    到最短通道长**（截断非填充，不造假值），得 (T_i, C)。仅 CharacterTrajectories
+    这类 21/1422 例 ragged 的档案走此路，其余仍走 aeon（见 _load_raw_seqs 回退）。
+    缺失标记 '?' → NaN（本项目源池档案实测无 '?'，仅作稳健处理）。
+    """
+    lines = Path(path).read_text(encoding="utf-8", errors="replace").splitlines()
+    start = 0
+    for i, ln in enumerate(lines):
+        if ln.strip().lower() == "@data":
+            start = i + 1
+            break
+    seqs: list[np.ndarray] = []
+    labels: list[str] = []
+    for ln in lines[start:]:
+        ln = ln.strip()
+        if not ln or ln.startswith(("#", "@")):
+            continue
+        parts = ln.split(":")
+        label = parts[-1].strip()
+        chans = []
+        for cs in parts[:-1]:
+            vals = [np.nan if v.strip() == "?" else float(v)
+                    for v in cs.split(",") if v.strip() != ""]
+            chans.append(np.asarray(vals, dtype=np.float64))
+        if not chans:
+            continue
+        lmin = min(len(c) for c in chans)          # 截断到 case 内最短通道长
+        seqs.append(np.stack([c[:lmin] for c in chans], axis=1))  # (lmin, C)
+        labels.append(label)
+    return seqs, np.asarray(labels)
+
+
+def _load_raw_seqs(
+    name: str, split: str, cache_dir: str | Path
+) -> tuple[list[np.ndarray], np.ndarray]:
+    """经 aeon 本地解析取一个切分的原始序列列表 (list[(T_i, C)]) + 原始标签 y。
+
+    加载不等长/含缺失一律用最宽松开关；填充/标准化/标签编码由调用方统一做（不依赖
+    aeon 的 pad 行为，保证填充值与统计口径可控）。aeon 对"同 case 内通道长度不一"的
+    档案 fail-fast（OSError，如 CharacterTrajectories）→ 回退容错解析。
+    """
+    from aeon.datasets import load_classification  # 惰性导入：核心管线不依赖 aeon
+
+    try:
+        X, y = load_classification(
+            name, split=split, extract_path=str(cache_dir),
+            load_equal_length=False, load_no_missing=False,
+        )
+        return _to_seq_list(X), np.asarray(y)
+    except OSError:
+        return _parse_ts_tolerant(Path(cache_dir) / name / f"{name}_{split}.ts")
+
+
 def load_uea_cached(
     name: str,
     split: str = "TRAIN",
@@ -82,16 +138,33 @@ def load_uea_cached(
     """从 `data/uea_cache` 经 aeon 本地解析加载一个 UEA 数据集的一个切分。
 
     返回 X (N, T, C) float32（等长/已填充/已裁剪）、y (N,) int64（0..k-1）。
-    加载不等长/含缺失一律用最宽松开关，填充与标准化由本模块统一处理（不依赖
-    aeon 的 pad 行为，保证填充值与统计口径可控）。
     """
-    from aeon.datasets import load_classification  # 惰性导入：核心管线不依赖 aeon
+    seqs, y = _load_raw_seqs(name, split, cache_dir)
+    Xt = pad_and_zscore(seqs, crop_len=crop_len)
+    yi, _ = encode_labels(y)
+    return Xt, yi
 
-    X, y = load_classification(
-        name, split=split, extract_path=str(cache_dir),
-        load_equal_length=False, load_no_missing=False,
-    )
-    seqs = _to_seq_list(X)
+
+def load_uea_merged(
+    name: str,
+    *,
+    cache_dir: str | Path = DEFAULT_CACHE,
+    crop_len: int | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    """加载 TRAIN+TEST 合并的整数据集（路线 A 源池"把整档案当源候选"口径）。
+
+    合并原始序列后一次性 pad_and_zscore + encode_labels：z-score 统计量与目标长度
+    在**合并真实步**上统一计算（比按切分各自处理更一致），标签编码也在合并集上做
+    一次（防两切分类别顺序不同导致 id 错配）。不等长两切分各自 L_max 不同也由此
+    对齐到统一 T。返回 X (N, T, C) float32、y (N,) int64（0..k-1）。
+
+    注意：本函数不带任何"源/目标"角色判断——泄漏防护（铁律 6）在 source_pool 层做，
+    该层拒绝对目标池数据集调用本函数。
+    """
+    seqs, y = _load_raw_seqs(name, "TRAIN", cache_dir)
+    seqs_te, y_te = _load_raw_seqs(name, "TEST", cache_dir)
+    seqs = seqs + seqs_te
+    y = np.concatenate([y, y_te])
     Xt = pad_and_zscore(seqs, crop_len=crop_len)
     yi, _ = encode_labels(y)
     return Xt, yi

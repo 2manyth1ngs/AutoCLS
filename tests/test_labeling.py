@@ -17,12 +17,14 @@ from autocls.labeling import (
     append_jsonl,
     cls_key,
     delta_decision_curve,
+    evaluate_rprime,
     load_rprime_cache,
     make_pairs,
     run_seed_for,
     sample_cls_sets,
     split_task_train_eval,
 )
+from autocls.data.task_slicer import SlicedTask
 from autocls.space.cls_space import CLSSpace
 from autocls.task_types import TASK_CLASSIFICATION, TASK_FORECASTING
 
@@ -331,3 +333,48 @@ class TestTaskTypeDispatchPoints:
 
         with pytest.raises(ValueError, match="task_type"):
             resolve_evaluator("segmentation")
+
+
+# ---------------------------------------------------------------- evaluate_rprime
+# 单条 (task, cls) → R' 的共享助手（generate_labels 与 step0 共用，不 fork 第 3 份）。
+# 显式 weight_seed/split_seed 让 step0 能同时跑 canonical（对齐全量缓存）与噪声种子。
+class TestEvaluateRprime:
+    def _tiny_task_data(self, n=80, T=32, C=2, seed=0):
+        rng = np.random.default_rng(seed)
+        X = rng.standard_normal((n, T, C)).astype(np.float32)
+        y = np.array([0, 1] * (n // 2), dtype=np.int64)
+        X[y == 1] += 2.5  # 可分：early-val 后 acc 应明显 off-chance
+        task = SlicedTask(
+            task_id="src_00", pool="source", classes=(0, 1),
+            channels=tuple(range(C)), sample_indices=tuple(range(n)),
+            tag="", task_type=TASK_CLASSIFICATION,
+        )
+        return task, X, y
+
+    def test_returns_finite_r_prime_and_fields(self, make_cls):
+        task, X, y = self._tiny_task_data()
+        rec = evaluate_rprime(
+            task, make_cls(), X, y,
+            weight_seed=run_seed_for("src_00", "k"),
+            split_seed=run_seed_for("src_00", "split"),
+            iters=30, batch_size=32, device="cpu",
+        )
+        assert rec["error"] is None
+        assert np.isfinite(rec["r_prime"])
+        assert 0.0 <= rec["r_prime"] <= 1.0
+        assert rec["n_train"] > 0 and rec["n_eval"] > 0
+
+    def test_deterministic_for_fixed_seeds(self, make_cls):
+        task, X, y = self._tiny_task_data()
+        kw = dict(weight_seed=123, split_seed=456, iters=30, batch_size=32, device="cpu")
+        r1 = evaluate_rprime(task, make_cls(), X, y, **kw)["r_prime"]
+        r2 = evaluate_rprime(task, make_cls(), X, y, **kw)["r_prime"]
+        assert r1 == r2  # 同缓存键同权重初始化/划分 → 逐位一致（CPU 确定）
+
+    def test_split_seed_changes_partition(self, make_cls):
+        # 不同 split_seed → 不同 eval 划分 → R' 通常不同（step0 噪声测量的前提）
+        task, X, y = self._tiny_task_data()
+        base = dict(weight_seed=123, iters=30, batch_size=32, device="cpu")
+        r1 = evaluate_rprime(task, make_cls(), X, y, split_seed=1, **base)["r_prime"]
+        r2 = evaluate_rprime(task, make_cls(), X, y, split_seed=2, **base)["r_prime"]
+        assert np.isfinite(r1) and np.isfinite(r2)

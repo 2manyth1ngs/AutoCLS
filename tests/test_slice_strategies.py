@@ -77,6 +77,28 @@ class TestRandomClassSubsetSlicer:
         with pytest.raises(ValueError, match="类别组合"):
             self._specs(n_tasks=2, n_classes_range=(6, 6))
 
+    def test_allow_repeat_exceeds_unique_combos(self):
+        # 路线 A 低类数数据集（如 2 类 EEG）：类别组合不够 n_tasks 时，允许重复类别
+        # 子集，多样性由核心的通道/样本子集承担（核心已支持，见 test_custom_dummy_strategy）。
+        # 2 类只有 1 个 (2,2) 子集，但要 4 个任务 → allow_repeat 不再报错。
+        y = np.tile([0, 1], 300).astype(np.int64)
+        strat = RandomClassSubsetSlicer(n_classes_range=(2, 2), allow_repeat=True)
+        specs = strat.propose(y, _pool(y), 4, np.random.default_rng(0))
+        assert len(specs) == 4
+        assert all(s.classes == (0, 1) for s in specs)
+
+    def test_allow_repeat_prefers_unique_first(self):
+        # allow_repeat=True 但组合充裕时，仍先出满不重复子集（最大化类别多样性），
+        # 仅在耗尽后才重复。6 类 (2,2)=15 个组合，取 4 个应全不重复。
+        _, _, specs = self._specs(n_tasks=4, n_classes_range=(2, 2), allow_repeat=True)
+        subsets = [frozenset(s.classes) for s in specs]
+        assert len(set(subsets)) == 4  # 未耗尽 → 全不重复
+
+    def test_allow_repeat_false_is_default_and_still_raises(self):
+        # 默认 allow_repeat=False：组合不足即报错的护栏语义不变（6 类取 6 只有 1 个组合）。
+        with pytest.raises(ValueError, match="类别组合"):
+            self._specs(n_tasks=4, n_classes_range=(6, 6), allow_repeat=False)
+
     def test_reproducible(self):
         _, _, a = self._specs(n_tasks=6, seed=7)
         _, _, b = self._specs(n_tasks=6, seed=7)

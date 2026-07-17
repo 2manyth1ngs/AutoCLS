@@ -37,6 +37,11 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 - **δ 非全局常数**：R' 噪声随 n_eval 变小 / R' 离天花板而涨（探针实测 0.0075→0.0495，4× 跨度），
   δ=0.02 是 HAR 特调值。改 **per-dataset δ**（`configs/labels.yaml: delta_per_dataset`）。
 - 源池重排（L≥50 剔除 PenDigits/LSST 后）见 `results/route_a_pool/REPORT.md`。
+- **长序列端与 EEG 域在源池耦合**：EthanolConcentration（唯一非 EEG 长锚，Spectro/L1024）
+  降为 reserve 后，源池长序列端（L>800：SCP1 896 / SCP2 1152 及 MotorImagery 512）**全为
+  EEG/MEG 域**。"长序列"与"EEG 域"两个因子在源池中共线，比较器可能难分辨它偏好的是**长度**
+  还是**域**。写论文时列为 limitation；若需解耦，从 reserve 回填 Ethanol 补一个非 EEG 长锚。
+  源/目标/reserve 池组成的唯一真源为 `configs/source_pool.yaml`（δ 仍在 labels.yaml）。
 
 ## 复用 AutoCTS++（repo: decisionintelligence/AutoCTS_plusplus）
 - `Ts2vec_model/` → `autocls/task_embed/ts2vec_wrapper.py`

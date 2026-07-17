@@ -13,7 +13,13 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from autocls.data.uea import encode_labels, load_uea_cached, pad_and_zscore
+from autocls.data.uea import (
+    _parse_ts_tolerant,
+    encode_labels,
+    load_uea_cached,
+    load_uea_merged,
+    pad_and_zscore,
+)
 
 CACHE = Path(__file__).resolve().parents[1] / "data" / "uea_cache"
 
@@ -133,3 +139,101 @@ def test_load_uea_cached_crop_len():
         pytest.skip("Cricket 缓存缺失")
     X, y = load_uea_cached(name, split="TRAIN", cache_dir=CACHE, crop_len=256)
     assert X.shape[1] == 256                           # 长序列裁到 CROP
+
+
+# ---- load_uea_merged：TRAIN+TEST 合并（路线 A 源池"整数据集当候选"口径）----
+
+def test_load_uea_merged_concatenates_both_splits():
+    name = "ERing"
+    if not (CACHE / name / f"{name}_TRAIN.ts").exists():
+        pytest.skip(f"{name} 缓存缺失")
+    Xtr, ytr = load_uea_cached(name, split="TRAIN", cache_dir=CACHE)
+    Xte, yte = load_uea_cached(name, split="TEST", cache_dir=CACHE)
+    X, y = load_uea_merged(name, cache_dir=CACHE)
+    assert X.shape[0] == len(ytr) + len(yte)           # 合并样本数 = TRAIN + TEST
+    assert X.ndim == 3 and X.shape[2] == Xtr.shape[2]  # 通道数一致
+    assert X.dtype == np.float32 and y.dtype == np.int64
+    assert set(y.tolist()) == set(range(len(set(ytr.tolist()) | set(yte.tolist()))))
+    assert not np.isnan(X).any()
+
+
+def test_load_uea_merged_common_length_for_ragged_splits():
+    # 不等长数据集两切分各自 L_max 可能不同（如 SpokenArabicDigits）——合并后必须
+    # 对齐到统一 T（否则无法 concat / 后续切片崩）。
+    name = "SpokenArabicDigits"
+    if not (CACHE / name / f"{name}_TRAIN.ts").exists():
+        pytest.skip(f"{name} 缓存缺失")
+    X, y = load_uea_merged(name, cache_dir=CACHE)
+    assert X.shape[0] == X.shape[0]                    # 单一等长块
+    assert X.ndim == 3
+    assert not np.isnan(X).any()
+
+
+def test_load_uea_merged_crop_len():
+    name = "Cricket"
+    if not (CACHE / name / f"{name}_TRAIN.ts").exists():
+        pytest.skip("Cricket 缓存缺失")
+    X, _ = load_uea_merged(name, cache_dir=CACHE, crop_len=256)
+    assert X.shape[1] == 256
+
+
+# ---- 变长数据集经 cl_trainer 不崩 + 中性零填充（路线 A 验收 5：无显式 mask，
+#      填充=z-score 后通道均值 0，探针实测 SpokenArabicDigits SNR 2.24 已证够用）----
+
+# ---- 容错 .ts 解析（CharacterTrajectories 21/1422 例"同 case 内通道长度不一"，
+#      aeon 拒载；回退：各通道截断到 case 内最短通道长，截断非填充不造假值）----
+
+def test_parse_ts_tolerant_truncates_ragged_channels(tmp_path):
+    ts = tmp_path / "R" / "R_TRAIN.ts"
+    ts.parent.mkdir()
+    ts.write_text(
+        "@problemName R\n@classLabel true 1 2\n@data\n"
+        "1.0,2.0,3.0:4.0,5.0:7\n"          # ragged：通道长 3 与 2 → 截断到 2
+        "1.0,2.0:3.0,4.0:9\n",              # 齐整：通道长 2、2
+        encoding="utf-8",
+    )
+    seqs, y = _parse_ts_tolerant(ts)
+    assert len(seqs) == 2
+    assert seqs[0].shape == (2, 2)          # 截断到 case 最短通道长 2
+    assert seqs[1].shape == (2, 2)
+    # 截断保留前缀真实值（通道 0 前 2 步 = 1,2；通道 1 = 4,5）
+    np.testing.assert_allclose(seqs[0], [[1.0, 4.0], [2.0, 5.0]])
+    assert list(y) == ["7", "9"]
+
+
+def test_load_uea_merged_character_trajectories_via_fallback():
+    # aeon 拒载 → uea 自动回退容错解析，CharacterTrajectories 可加载入源池
+    name = "CharacterTrajectories"
+    if not (CACHE / name / f"{name}_TRAIN.ts").exists():
+        pytest.skip(f"{name} 缓存缺失")
+    X, y = load_uea_merged(name, cache_dir=CACHE)
+    assert X.shape[1] == 182 and X.shape[2] == 3   # pad 到 L_max=182、3 通道
+    assert set(y.tolist()) == set(range(20))       # 20 类
+    assert not np.isnan(X).any()
+
+
+@pytest.mark.parametrize("name,pad_L", [
+    ("SpokenArabicDigits", 93),        # 不等长 4-93 → pad 93
+    ("CharacterTrajectories", 182),    # 不等长 60-182 → pad 182（经容错回退加载）
+])
+def test_variable_length_pretrain_no_crash(name, pad_L, make_cls):
+    if not (CACHE / name / f"{name}_TRAIN.ts").exists():
+        pytest.skip(f"{name} 缓存缺失")
+    from autocls.contrastive.cl_trainer import pretrain_encoder
+    from autocls.encoders.registry import build_encoder
+
+    X, y = load_uea_merged(name, cache_dir=CACHE)
+    assert X.shape[1] == pad_L
+    assert not np.isnan(X).any()                       # 填充不产 NaN
+    # 中性零填充存在：变长数据集有整段全零时间步（z-score 后 = 通道均值 0）
+    padded_steps = (X == 0).all(axis=2).sum()
+    assert padded_steps > 0, "变长数据集应有零填充步"
+    # 取 2 类一批喂 cl_trainer：变长 + 填充步不致崩、损失有限（填充步不主导 → 不发散）
+    cls0 = np.unique(y)[:2]
+    idx = np.where(np.isin(y, cls0))[0][:96]
+    enc = build_encoder(input_dims=X.shape[-1])
+    losses = pretrain_encoder(
+        enc, make_cls(), X[idx].astype(np.float32),
+        max_iters=20, batch_size=32, device="cpu", seed=0,
+    )
+    assert losses and all(np.isfinite(v) for v in losses)

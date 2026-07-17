@@ -63,9 +63,16 @@ class RandomClassSubsetSlicer:
     n_classes_range 默认 (2, 4)：多样性探针（results/task_slicer_sanity/probe_cls23）
     表明更小子集分布更"纯"、任务间更易拉开；上限 4 保留任务难度，避免 2 类过简
     导致 R' 贴天花板（M2 已知高分簇内分辨力弱）。
+
+    allow_repeat（路线 A 低类数数据集）：默认 False——类别组合数 < n_tasks 即报错
+    （护栏，防误配）。置 True 时先出满不重复子集（最大化类别多样性），耗尽后允许
+    重复类别子集，剩余多样性由核心的通道/样本子集承担（核心已支持重复子集，见
+    tests/test_slice_strategies.py::test_custom_dummy_strategy）。为 2 类 EEG 源
+    （MotorImagery/SCP1/SCP2 仅 1 个 (2,2) 组合却要多任务）而设。
     """
 
     n_classes_range: tuple[int, int] = (2, 4)
+    allow_repeat: bool = False
 
     def propose(
         self, y: np.ndarray, pool_indices: np.ndarray, n_tasks: int,
@@ -74,19 +81,21 @@ class RandomClassSubsetSlicer:
         classes = np.unique(y[pool_indices])
         lo, hi = self.n_classes_range
         n_subsets = sum(comb(len(classes), k) for k in range(lo, hi + 1))
-        if n_tasks > n_subsets:
+        if n_tasks > n_subsets and not self.allow_repeat:
             raise ValueError(
                 f"n_tasks={n_tasks} 超过可用的不重复类别组合数 {n_subsets}"
-                f"（{len(classes)} 类取 {lo}~{hi}）"
+                f"（{len(classes)} 类取 {lo}~{hi}）；低类数源池数据集应传 allow_repeat=True"
             )
         specs: list[TaskSpec] = []
         seen: set[frozenset] = set()
         while len(specs) < n_tasks:
             k = int(rng.integers(lo, hi + 1))
             subset = tuple(sorted(rng.choice(classes, size=k, replace=False).tolist()))
-            if frozenset(subset) in seen:
-                continue  # 类别组合互不重复（多样性主力维度）；可行性已在上面保证
-            seen.add(frozenset(subset))
+            fs = frozenset(subset)
+            # 不重复优先：仅当已耗尽全部组合（allow_repeat）才接受重复子集
+            if fs in seen and (not self.allow_repeat or len(seen) < n_subsets):
+                continue  # 类别组合互不重复是多样性主力维度
+            seen.add(fs)
             specs.append(TaskSpec(classes=subset, eligible=_eligible(y, pool_indices, subset)))
         return specs
 

@@ -325,3 +325,72 @@ def run_seed_for(task_id: str, key: str, base: int = 0) -> int:
     """(task, cls) 的确定性运行种子：与执行顺序/续跑无关，同缓存键同权重初始化。"""
     h = hashlib.md5(f"{base}:{task_id}:{key}".encode()).hexdigest()
     return int(h[:8], 16) % (2**31 - 1)
+
+
+# ---------------------------------------------------------------------------
+# 单条 (task, cls) → R' 的共享评估助手（scripts/2_generate_labels.py 与
+# scripts/step0_snr_gate.py 共用，避免第 3 份 fork）。weight_seed/split_seed 显式
+# 传入：全量造 label 用 (run_seed_for(tid,key), run_seed_for(tid,'train_eval_split'))
+# 的 canonical 口径；step0 噪声测量则每个种子派生不同的 weight/split（探针协议）。
+# torch/encoder 惰性导入——保持 labeling 纯函数（make_pairs 等）可无 GPU 依赖测试。
+# ---------------------------------------------------------------------------
+
+
+def evaluate_rprime(
+    task,
+    cls_cfg: CLS,
+    X: np.ndarray,
+    y: np.ndarray,
+    *,
+    weight_seed: int,
+    split_seed: int,
+    iters: int,
+    eval_ratio: float = 0.3,
+    batch_size: int = 128,
+    lr: float = 1e-3,
+    device: Optional[str] = None,
+) -> dict:
+    """对 (task, cls) 跑 iters 对比预训练 + 任务内分层 train/eval 下游评估得 R'。
+
+    通道数按任务适配（build_encoder(input_dims=|channels|)）；task_type 分发评估器与
+    划分方式（铁律 7）。训练发散/异常记 r_prime=NaN + error，不中断（对齐既有
+    run_one 语义）。返回逐条缓存所需字段（r_prime/n_train/n_eval/seconds/error 等）。
+    """
+    import time
+
+    import torch
+
+    from .contrastive.cl_trainer import pretrain_encoder
+    from .data.task_slicer import materialize_task
+    from .downstream import resolve_evaluator
+    from .encoders.registry import build_encoder
+
+    Xt, yt = materialize_task(task, X, y)
+    tr_idx, ev_idx = split_task_train_eval(
+        yt, task.task_type, eval_ratio=eval_ratio, seed=split_seed,
+    )
+    rec: dict = {"seconds": None, "error": None, "r_prime": float("nan")}
+    t0 = time.perf_counter()
+    try:
+        torch.manual_seed(weight_seed)  # 权重初始化可复现
+        encoder = build_encoder(input_dims=Xt.shape[-1])
+        pretrain_encoder(
+            encoder, cls_cfg, Xt[tr_idx], max_iters=iters,
+            batch_size=batch_size, lr=lr, device=device, seed=weight_seed,
+        )
+        evaluator = resolve_evaluator(task.task_type)  # 铁律 7 分发点
+        metrics = evaluator(
+            encoder, Xt[tr_idx], yt[tr_idx], Xt[ev_idx], yt[ev_idx],
+            device=device, seed=weight_seed,
+        )
+        rec.update(metrics)
+        rec["r_prime"] = float(metrics["r_prime"])
+    except Exception as e:  # 训练发散等视作该 CLS 的坏结果，不中断实验
+        rec["error"] = f"{type(e).__name__}: {e}"
+        rec["r_prime"] = float("nan")
+    rec["seconds"] = round(time.perf_counter() - t0, 1)
+    rec.update({
+        "n_train": int(len(tr_idx)), "n_eval": int(len(ev_idx)),
+        "weight_seed": int(weight_seed), "split_seed": int(split_seed),
+    })
+    return rec
