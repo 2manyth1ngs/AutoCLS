@@ -122,8 +122,15 @@ def test_delta_for_per_dataset(labels_cfg):
 
 
 def test_delta_for_fallback_to_default(labels_cfg):
-    # reserve 数据集不在 delta_per_dataset → 回退默认 delta（并入源池时再补）
-    assert delta_for("Heartbeat", labels_cfg) == labels_cfg["delta"]
+    # 表外数据集 → 回退默认 delta（reserve 三个已按 C1 全覆盖，用池外名测回退分支）
+    assert delta_for("PenDigits", labels_cfg) == labels_cfg["delta"]
+
+
+def test_delta_covers_all_source_and_reserve(registry, labels_cfg):
+    # checklist C1：13 活跃源 + 3 reserve 全部有 per-dataset δ（骨干实测、其余 N/C 阶梯初值）
+    table = labels_cfg["delta_per_dataset"]
+    for e in registry.source + registry.reserve:
+        assert e.name in table, f"{e.name} 缺 per-dataset δ（C1）"
 
 
 # ---- build_slice_strategy ----

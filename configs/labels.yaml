@@ -78,3 +78,6 @@ delta_per_dataset:
   HandMovementDirection:     0.06   # N/C=59
   Handwriting:               0.07   # N/C=38
   ArticularyWordRecognition: 0.08   # N/C=23
+  # reserve（回填时启用；checklist C1 要求 13 源 + 3 reserve 全覆盖，Ethanol 在上）
+  Heartbeat:                 0.05   # N/C≈204
+  FingerMovements:           0.05   # N/C≈208
