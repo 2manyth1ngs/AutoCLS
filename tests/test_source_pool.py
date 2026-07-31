@@ -23,11 +23,14 @@ from autocls.data.source_pool import (
     TargetPoolLeakageError,
     build_slice_kwargs,
     build_slice_strategy,
+    dataset_of_task_id,
     default_channel_range,
     delta_for,
     load_registry,
     load_source_dataset,
+    pool_name_for,
     remaining_task_count,
+    slice_source_tasks,
     task_count_gate,
 )
 from autocls.data.task_slicer import slice_pool_tasks, split_pools
@@ -179,6 +182,47 @@ def test_build_slice_kwargs_drives_core_slicing(registry):
     for t in tasks:
         assert 12 <= len(t.channels) <= 24
         assert all(0 <= c < 24 for c in t.channels)
+
+
+# ---- 共用切片入口 + 档标（step0 重探/阶段2 恢复档的 canonical 缓存键前提）----
+
+def test_pool_name_default_range_is_bare_name(registry):
+    entry = registry.get("NATOPS")
+    assert pool_name_for(entry, (3, 6)) == "NATOPS"
+
+
+def test_pool_name_override_range_is_tagged(registry):
+    # 档变则任务定义变：不打标会与默认档任务同 id → canonical 缓存键互撞（铁律 3）
+    entry = registry.get("NATOPS")
+    assert pool_name_for(entry, (5, 6)) == "NATOPS+c5-6"
+
+
+def test_dataset_of_task_id_strips_tag_and_index():
+    assert dataset_of_task_id("NATOPS_03") == "NATOPS"
+    assert dataset_of_task_id("NATOPS+c5-6_03") == "NATOPS"
+    assert dataset_of_task_id("SelfRegulationSCP1_00") == "SelfRegulationSCP1"
+
+
+def test_slice_source_tasks_default_matches_registry(registry):
+    rng = np.random.default_rng(0)
+    y = rng.integers(0, 6, size=2400).astype(np.int64)
+    entry = registry.get("NATOPS")
+    eff, tasks = slice_source_tasks(entry, registry, y)
+    assert eff is entry
+    assert len(tasks) == entry.planned_tasks
+    assert all(t.task_id.startswith("NATOPS_") for t in tasks)
+
+
+def test_slice_source_tasks_override_range_changes_ids_and_difficulty(registry):
+    rng = np.random.default_rng(0)
+    y = rng.integers(0, 6, size=2400).astype(np.int64)
+    entry = registry.get("NATOPS")
+    _, base = slice_source_tasks(entry, registry, y)
+    eff, hard = slice_source_tasks(entry, registry, y, n_classes_range=(5, 6))
+    assert eff.n_classes_range == (5, 6)
+    assert all(t.task_id.startswith("NATOPS+c5-6_") for t in hard)
+    assert all(len(t.classes) >= 5 for t in hard)          # 更难档生效
+    assert {t.task_id for t in base} & {t.task_id for t in hard} == set()  # 键不撞
 
 
 # ---- 源池任务下限闸 ----

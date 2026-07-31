@@ -39,6 +39,23 @@ eval_ratio: 0.3             # 任务内 train/eval 分层划分；1024 样本 �
 # 保持不破坏）。路线 A 造 label 按 delta_per_dataset 查表，缺项回退到 delta。
 delta: 0.02
 
+# --- 路线 A 阶段2 造 label（scripts/2b_generate_labels_route_a.py）---
+# CLS 口径 = 20/任务（10 shared + 10 random，用户拍板；非路线 B 的 40——40 会让
+# 算力 ×2 超 1 天）。shared 10 = step0 探针目录（results/route_a_probe/
+# probe_cls_catalog.json）前 10，保 step0 canonical R' 逐键复用；random 每任务由
+# task_id 派生（autocls/labeling.py: sample_random_cls，与池组成无关，铁律 3）。
+# 嵌入参数与路线 B 同口径（ts2vec_iters/sample_num/nz/embed_seed）。
+route_a:
+  n_shared_cls: 10
+  n_random_cls: 10
+  cls_seed: 42
+  ts2vec_iters: 600
+  sample_num: 100
+  nz: 256
+  embed_seed: 0
+  ts2vec_max_instances_per_dataset: 4096   # 共享 TS2Vec 单变量实例池每数据集封顶（省内存；
+                                           # 600 iters × bs128 仅消费 ~77k 实例）
+
 # --- per-dataset δ（路线 A；探针 results/route_a_probe 定案，见 results/route_a_pool/REPORT.md）---
 # 铁律 2 之外的可靠性口径：δ=0.02 是 HAR 特调值，UEA 噪声随 n_eval/离天花板 4× 跨度，
 # 全局单值会在噪声大的数据集放行噪声 label。改按数据集查表。

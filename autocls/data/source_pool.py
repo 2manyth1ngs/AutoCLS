@@ -15,7 +15,7 @@
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from math import comb
 from pathlib import Path
 
@@ -24,6 +24,7 @@ import yaml
 
 from ..task_types import TASK_CLASSIFICATION
 from .slice_strategies import RandomClassSubsetSlicer
+from .task_slicer import SlicedTask, slice_pool_tasks
 from .uea import DEFAULT_CACHE, load_uea_merged
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -212,6 +213,47 @@ def build_slice_kwargs(entry: DatasetEntry, registry: SourcePoolRegistry) -> dic
         "min_samples": registry.min_samples,
         "seed": registry.slice_seed,
     }
+
+
+def pool_name_for(entry: DatasetEntry, n_classes_range: tuple[int, int]) -> str:
+    """任务 id 前缀：注册表默认档 = 数据集名；覆盖档（天花板重探/恢复档）打 +c<lo>-<hi> 标。
+
+    task_id 只由 pool_name+序号构成（task_slicer），类别档变则任务定义变——不打标
+    会与默认档任务同 id，canonical R' 缓存键 (task_id, cls_key, iters) 互撞（铁律 3）。
+    step0 重探轮与阶段2 恢复档共用此约定，重探 R' 因此可被阶段2 逐键复用。
+    """
+    rng = tuple(n_classes_range)
+    if rng == entry.n_classes_range:
+        return entry.name
+    return f"{entry.name}+c{rng[0]}-{rng[1]}"
+
+
+def dataset_of_task_id(task_id: str) -> str:
+    """task_id → 所属数据集名（剥掉 _NN 序号与 +c 档标）。"""
+    return task_id.rsplit("_", 1)[0].split("+", 1)[0]
+
+
+def slice_source_tasks(
+    entry: DatasetEntry,
+    registry: SourcePoolRegistry,
+    y: np.ndarray,
+    *,
+    n_classes_range: tuple[int, int] | None = None,
+) -> tuple[DatasetEntry, list[SlicedTask]]:
+    """按注册表（或覆盖档）切全部 planned_tasks——step0 与 2b 唯一共用切片入口。
+
+    切片参数全走 build_slice_kwargs（注册表唯一真源）；n_classes_range 覆盖注册表档
+    （天花板重探/analysis.json 的恢复档），此时 pool_name 打档标（见 pool_name_for）。
+    两脚本调同一函数、同一参数 → 任务定义逐字段一致，canonical R' 缓存跨两处复用
+    不失效（铁律 3）。返回 (生效 entry, 全部 planned_tasks 任务)。
+    """
+    eff = entry if n_classes_range is None else replace(
+        entry, n_classes_range=tuple(n_classes_range))
+    kw = build_slice_kwargs(eff, registry)
+    tasks = slice_pool_tasks(
+        y, np.arange(len(y)), pool_name=pool_name_for(entry, eff.n_classes_range),
+        n_tasks=entry.planned_tasks, **kw)
+    return eff, tasks
 
 
 def remaining_task_count(

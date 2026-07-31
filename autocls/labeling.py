@@ -74,6 +74,35 @@ def _sample_unique(
     return tuple(out)
 
 
+def load_probe_cls(
+    catalog_path: str | Path, n_cls: int
+) -> tuple[list[tuple[CLS, str]], dict[str, int]]:
+    """探针 CLS 目录前 n_cls 个 → [(CLS, cls_key)] + {cls_key: har_rank}。
+
+    step0 预探针与 2b 造 label 的 shared CLS 共用此唯一入口（路线 A 拍板：shared 10
+    = 探针目录前 10）——step0 的 canonical R'（键 = 探针 cls_key + early_iters +
+    canonical 种子）在阶段2 因此逐字段命中复用。
+    """
+    cat = json.loads(Path(catalog_path).read_text(encoding="utf-8"))["cls"][:n_cls]
+    cls_list = [(CLS(**cd["cls"]), cd["cls_key"]) for cd in cat]
+    har_rank = {cd["cls_key"]: cd["har_rank"] for cd in cat}
+    return cls_list, har_rank
+
+
+def sample_random_cls(
+    space: CLSSpace, task_id: str, *, n: int, seed: int, exclude_keys: set[str]
+) -> tuple[CLS, ...]:
+    """路线 A 每任务 random CLS：rng 由 (seed, task_id 哈希) 派生。
+
+    与路线 B sample_cls_sets 的按池内位置派生不同——跨数据集源池成员随 step0
+    过闸浮动（踢/留/reserve 回填），按位置派生会让既有 (task, cls) → R' 缓存整体
+    失效（铁律 3）；按 task_id 派生则与池组成无关。与 shared（探针 CLS）去重；
+    逐个接受制保证前缀稳定（加大 n 不改变前 n' 个取值，小规模试跑与全量共享缓存）。
+    """
+    rng = np.random.default_rng([seed, run_seed_for(task_id, "random_cls")])
+    return _sample_unique(space, rng, n, set(exclude_keys))
+
+
 def sample_cls_sets(
     space: CLSSpace,
     task_ids: list[str],
@@ -325,6 +354,20 @@ def run_seed_for(task_id: str, key: str, base: int = 0) -> int:
     """(task, cls) 的确定性运行种子：与执行顺序/续跑无关，同缓存键同权重初始化。"""
     h = hashlib.md5(f"{base}:{task_id}:{key}".encode()).hexdigest()
     return int(h[:8], 16) % (2**31 - 1)
+
+
+def mark_inflight(path: str | Path, task_id: str, cls_key_: str, iters: int) -> None:
+    """开跑一条 R' 前打点（Part A-3 看门狗协议）：进程在这条上被杀时，看门狗读此
+    文件累计 (task, cls) 崩溃次数，≥FAIL_LIMIT 写永久隔离记录防死循环。"""
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    Path(path).write_text(f"{task_id}\t{cls_key_}\t{iters}", encoding="utf-8")
+
+
+def clear_inflight(path: str | Path) -> None:
+    """该条 R' 已落盘缓存 → 清空打点（正常完成不算崩溃）。"""
+    p = Path(path)
+    if p.exists():
+        p.write_text("", encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------

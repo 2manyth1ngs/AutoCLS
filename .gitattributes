@@ -1,0 +1,2 @@
+# shell 脚本必须 LF：cloud_run.sh 要在云 Linux bash 下原样执行（CRLF 会碎成 \r 命令）
+*.sh text eol=lf
