@@ -34,6 +34,35 @@ set -u
 
 PY="${PY:-python}"
 STAGE="${STAGE:-}"
+
+# ---------------------------------------------------------------------------
+# 线程环境（GATE_5090_REPORT §3.1：**硬性启动条件**）
+# 54 核容器里 torch 默认 192 线程，对 128×51×24 这种小张量 OpenMP 同步开销压倒计算
+# → 53 s/条（0.63×，比 4060 笔记本还慢）；置 1 后 12.6 s/条（2.67×）。
+# 唯一真源是 configs/runtime.yaml 的 env 段；读不到（无 python/无 yaml）时兜底硬编码，
+# 绝不允许"没设成 1"这一状态存在。已显式 export 的同名变量不覆盖（便于临时试验）。
+# ---------------------------------------------------------------------------
+_repo_root="$(cd "$(dirname "$0")/.." && pwd)"
+_env_exports="$(REPO_ROOT="$_repo_root" $PY - <<'PYEOF' 2>/dev/null
+import os
+import sys
+sys.path.insert(0, os.environ["REPO_ROOT"])
+try:
+    from autocls.cloud_plan import load_runtime, worker_env
+    for k, v in worker_env(load_runtime()).items():
+        print(f"export {k}=${{{k}:-{v}}}")
+except Exception:
+    pass
+PYEOF
+)"
+if [ -n "$_env_exports" ]; then
+  eval "$_env_exports"
+else
+  export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}" MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+  export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}" NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+  echo "[watchdog] ⚠️ 读不到 configs/runtime.yaml，线程数用兜底值 OMP=$OMP_NUM_THREADS" >&2
+fi
+echo "[watchdog] 线程环境: OMP_NUM_THREADS=$OMP_NUM_THREADS MKL_NUM_THREADS=$MKL_NUM_THREADS"
 MAX_RESTARTS="${MAX_RESTARTS:-50}"
 FAIL_LIMIT="${FAIL_LIMIT:-3}"
 SLEEP="${SLEEP:-10}"

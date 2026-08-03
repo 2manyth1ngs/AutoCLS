@@ -398,10 +398,16 @@ def evaluate_rprime(
     通道数按任务适配（build_encoder(input_dims=|channels|)）；task_type 分发评估器与
     划分方式（铁律 7）。训练发散/异常记 r_prime=NaN + error，不中断（对齐既有
     run_one 语义）。返回逐条缓存所需字段（r_prime/n_train/n_eval/seconds/error 等）。
+
+    **例外：显存/内存不足抛 RprimeOOM，绝不记 NaN**（autocls/oom_guard.py）。NaN 是
+    "这条 CLS 训不出好表征"的结论、会被写进缓存且 --resume 不再重试；OOM 只是这次
+    没跑成，记成结论 = 静默永久丢 label。调用方须走 oom_guard.guarded_run。
     """
     import time
 
     import torch
+
+    from .oom_guard import RprimeOOM, is_oom_error
 
     from .contrastive.cl_trainer import pretrain_encoder
     from .data.task_slicer import materialize_task
@@ -429,6 +435,14 @@ def evaluate_rprime(
         rec.update(metrics)
         rec["r_prime"] = float(metrics["r_prime"])
     except Exception as e:  # 训练发散等视作该 CLS 的坏结果，不中断实验
+        if is_oom_error(e):
+            # 显存/内存不足：与这条 CLS 的好坏无关，不得落盘成结论。抛出前尽量把本
+            # 进程占的显存还回去，好让同卡其他 worker 与串行重试有余量。
+            try:
+                torch.cuda.empty_cache()
+            except Exception:  # noqa: BLE001 —— 无 CUDA 或已崩，清理失败不掩盖 OOM
+                pass
+            raise RprimeOOM(f"{type(e).__name__}: {e}") from e
         rec["error"] = f"{type(e).__name__}: {e}"
         rec["r_prime"] = float("nan")
     rec["seconds"] = round(time.perf_counter() - t0, 1)

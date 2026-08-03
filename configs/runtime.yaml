@@ -1,0 +1,56 @@
+# =====================================================================
+# 云上跑批的运行期配置——**worker 分档 / 显存预算 / 线程数的唯一真源**
+# 依据 docs/GATE_5090_REPORT.md §3（1×RTX 5090 实测标定）。
+#
+# 与 configs/train.yaml 的分工：train.yaml 管"训练量口径"（iters/batch_size，铁律 2，
+# 改了会改变实验结论）；本文件只管"怎么把同样的活儿排到卡上"，改了不影响任何 R' 数值。
+#
+# 阶段1 的并行粒度是**数据集**（一个数据集一个进程，各自 --resume）：
+# - 跨数据集共享 rprime_cache.jsonl / noise_cache.jsonl（行追加，单行 ≤706 B <
+#   4096 B 的 POSIX 原子追加边界，并发安全）；
+# - 每进程一份 inflight.txt（否则看门狗毒条目归因错乱）与一份 tasks_meta.d/<ds>.json。
+# =====================================================================
+
+gpu:
+  vram_gib: 31.4          # RTX 5090 实测可用显存
+  budget_gib: 24.0        # 准入预算：留 7.4 GiB 头寸给"两点外推的峰值模型估不准"
+  # 单进程显存峰值模型 peak(L) = base + per_len × L，锚在两个实测点上：
+  #   §3.2 NATOPS L=51 8 worker 共 10.9 GB → 1.36 GiB/进程
+  #   §3.3 合成 SCP2 L=1152 单进程峰值 15.8 GB（爆点 losses.py:91 的 triplet (n,n) 矩阵）
+  # 峰值主要由 L 与 batch_size 决定（(n,n) 里的 n 是编码后时间步数），与样本数关系不大。
+  peak_gib_base: 0.694
+  peak_gib_per_len: 0.013113
+
+throughput:
+  # 单 worker 秒/条（early_iters=290）模型，同样锚两点：
+  #   §3.1 NATOPS L=51 OMP=1 实测 12.6 s/条
+  #   §3.3 合成 SCP2 L=1152 单 worker 123.6 s/条
+  seconds_base: 7.458
+  seconds_per_len: 0.100818
+  # 并发折损系数（ETA 用，不影响调度）。§3.2 实测 2 并发 2.19×、4 并发 3.96×（近线性），
+  # 8 并发才降到 5.24×；数据集级并行下典型并发 2–4，取 1.10 作保守余量。
+  contention_factor: 1.10
+
+workers:
+  max_concurrent: 8       # 全局进程上限（§3.2：8 worker GPU 91%，再多收益递减）
+  # 每档"同时最多几个"。§3.3 实测表：
+  #   L ≤ ~200  → 8（NATOPS/ERing/ArticularyWord/Handwriting/CharacterTrajectories）
+  #   L ~300–600 → 2（UWave 315 / HandMovement 400 / Heartbeat 405 / MotorImagery 512）
+  #                  ⚠️ 保守值，**未实测**——风险由 autocls/oom_guard.py 兜住
+  #   L ≥ ~600  → 1（SCP1 896 / Ethanol 1024 / SCP2 1152；实测 2 个 SCP2 必 OOM）
+  # 分档是上限，跨档回填另受 gpu.budget_gib 约束（长序列独占整卡是纯浪费：
+  # 单 worker GPU 利用率仅 5.7%，本负载 CPU-bound）。
+  tiers:
+    - {max_l_enc: 200,  workers: 8}
+    - {max_l_enc: 600,  workers: 2}
+    - {max_l_enc: null, workers: 1}
+
+# 每个 worker 进程必带的线程环境。§3.1 实测：54 核容器里 torch 默认 192 线程，
+# 对 128×51×24 这种小张量 OpenMP 同步开销压倒计算 → 53 s/条（0.63×，比 4060 笔记本
+# 还慢）；置 1 后 12.6 s/条（2.67×）。**不依赖手动 export**：cloud_run.sh 与
+# scripts/run_stage1.py 都从这里读并注入。
+env:
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"

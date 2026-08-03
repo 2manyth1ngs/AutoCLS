@@ -114,6 +114,33 @@ def test_collect_watchdog_state(progress_mod, sample_dirs):
     assert p["watchdog"]["step0"]["restarts"] == 0
 
 
+def test_collect_watchdog_aggregates_per_dataset_subdirs(progress_mod, tmp_path):
+    """阶段1 单卡按数据集并发：每数据集一个看门狗工作目录 results/step0_snr_gate/wd/<ds>/。
+
+    只看顶层目录 = 监控全瞎（重启 0、毒条目 0、inflight 空的假绿灯）——必须把
+    wd/*/ 一起汇总，否则"跑了 8 小时其实一直在崩重拉"看不出来。
+    """
+    step0 = tmp_path / "step0"
+    for ds, poison in (("ERing", "ERing_00\taaa\t290"), ("NATOPS", "NATOPS_00\tbbb\t290")):
+        d = step0 / "wd" / ds
+        d.mkdir(parents=True)
+        (d / "watchdog_state.tsv").write_text(poison + "\n", encoding="utf-8")
+        (d / "worker_20260803T000000Z_r0.log").write_text("x", encoding="utf-8")
+        (d / "inflight.txt").write_text("", encoding="utf-8")
+    (step0 / "wd" / "ERing" / "inflight.txt").write_text("ERing_00\taaa\t290", encoding="utf-8")
+    (step0 / "oom_failures.jsonl").write_text(
+        '{"task_id":"SCP2_00","cls_key":"k","iters":290,"error":"CUDA out of memory"}\n',
+        encoding="utf-8")
+
+    p = progress_mod.collect_progress(step0_dir=step0, labels_dir=tmp_path / "none")
+    wd = p["watchdog"]["step0"]
+    assert wd["restarts"] == 2
+    assert wd["poison"] == {"ERing_00\taaa\t290": 1, "NATOPS_00\tbbb\t290": 1}
+    assert "ERing_00" in wd["inflight"]
+    # OOM 终局失败必须在进度里显式可见（这些条目没有 R'，判读前要处置）
+    assert wd["n_oom_failures"] == 1
+
+
 def test_collect_handles_missing_everything(progress_mod, tmp_path):
     # 全缺省（还没跑任何东西）也不崩：报"未跑"状态
     p = progress_mod.collect_progress(step0_dir=tmp_path / "no1", labels_dir=tmp_path / "no2")

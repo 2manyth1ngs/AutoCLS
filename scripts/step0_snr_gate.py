@@ -67,14 +67,12 @@ from autocls.data.source_pool import (  # noqa: E402
     task_count_gate,
 )
 from autocls.labeling import (  # noqa: E402
-    append_jsonl,
-    clear_inflight,
     evaluate_rprime,
     load_probe_cls as _load_probe_cls,
     load_rprime_cache,
-    mark_inflight,
     run_seed_for,
 )
+from autocls.oom_guard import ON_OOM_RECORD, ON_OOM_SKIP, guarded_run  # noqa: E402
 from autocls.snr_gate import (  # noqa: E402
     MAX_CEILING_ROUNDS,
     ceiling_escalation,
@@ -89,6 +87,8 @@ SHARED_CACHE = ROOT / "results" / "labels_route_a" / "rprime_cache.jsonl"  # 全
 NOISE_CACHE = OUTDIR / "noise_cache.jsonl"
 SMOKE_CACHE = OUTDIR / "smoke_cache.jsonl"
 INFLIGHT = OUTDIR / "inflight.txt"
+OOM_LOG = OUTDIR / "oom_failures.jsonl"
+META_DIR = "tasks_meta.d"      # 每数据集一份，见 write_tasks_meta
 PROBE_CATALOG = ROOT / "results" / "route_a_probe" / "probe_cls_catalog.json"
 
 
@@ -151,8 +151,17 @@ def _stats_for(recs: list[dict], dataset: str, task_ids: list[str], har_rank):
                               for tid, cm in rprime.items()}, har_rank=har_rank)
 
 
-def run(datasets: list[str], smoke: bool, resume: bool, device: str) -> None:
+def run(datasets: list[str], smoke: bool, resume: bool, device: str, *,
+        inflight: Path = INFLIGHT, on_oom: str = ON_OOM_SKIP,
+        oom_log: Path = OOM_LOG) -> None:
     OUTDIR.mkdir(parents=True, exist_ok=True)
+    if torch.get_num_threads() > 1:
+        # GATE §3.1：54 核容器里默认 192 线程 → 53 s/条（0.63×，比 4060 笔记本还慢）。
+        # 正常启动路径（cloud_run.sh / run_stage1.py）会注入 OMP_NUM_THREADS=1。
+        print(f"⚠️ torch.get_num_threads()={torch.get_num_threads()}>1："
+              f"本负载 CPU-bound，多线程 OpenMP 同步开销会让它慢 ~4.2×。"
+              f"请用 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 启动（configs/runtime.yaml）。",
+              flush=True)
     registry = load_registry()
     train_cfg = yaml.safe_load((ROOT / "configs" / "train.yaml").read_text(encoding="utf-8"))
     labels_cfg = yaml.safe_load((ROOT / "configs" / "labels.yaml").read_text(encoding="utf-8"))
@@ -180,7 +189,7 @@ def run(datasets: list[str], smoke: bool, resume: bool, device: str) -> None:
             "retry_rounds": [],
         }
         per_ds.append((name, X, y, tasks))
-    _write_tasks_meta(tasks_meta)
+        write_tasks_meta(OUTDIR, name, tasks_meta[name])
 
     bs, lr, evr = train_cfg["batch_size"], train_cfg["lr"], labels_cfg["eval_ratio"]
 
@@ -195,29 +204,46 @@ def run(datasets: list[str], smoke: bool, resume: bool, device: str) -> None:
                 if not (resume_flag and is_done(w[0], w[3].task_id, w[5], w[6]))]
         print(f"[{phase}] 设备 {device} | iters={early_iters} | "
               f"计划 {len(worklist)} 条，待跑 {len(todo)}", flush=True)
+        n_oom = 0
         for i, (name, X, y, t, c, key, s) in enumerate(todo):
             w_seed, sp_seed = _seed_specs(t.task_id, key, s, early_iters)
-            mark_inflight(INFLIGHT, t.task_id, key, early_iters)
-            rec = evaluate_rprime(t, c, X, y, weight_seed=w_seed, split_seed=sp_seed,
-                                  iters=early_iters, eval_ratio=evr, batch_size=bs, lr=lr,
-                                  device=device)
-            rp = rec["r_prime"]
-            rp_json = None if not np.isfinite(rp) else float(rp)
-            full = {"dataset": name, "task_id": t.task_id, "tag": t.tag,
-                    "classes": list(t.classes), "cls_key": key, "seed": s,
-                    "iters": early_iters, **rec, "r_prime": rp_json,
-                    "cls": _asdict(c)}
+
+            def make_row(rec, _name=name, _t=t, _key=key, _s=s, _c=c):
+                rp = rec["r_prime"]
+                return {"dataset": _name, "task_id": _t.task_id, "tag": _t.tag,
+                        "classes": list(_t.classes), "cls_key": _key, "seed": _s,
+                        "iters": early_iters, **rec,
+                        "r_prime": None if not np.isfinite(rp) else float(rp),
+                        "cls": _asdict(_c)}
+
             # canonical(s=0) → 全量缓存（全量口径，键 task_id+cls_key+iters）；噪声 → 独立缓存
             target = SMOKE_CACHE if smoke else (shared_path if s == 0 else noise_path)
-            append_jsonl(target, full)
-            clear_inflight(INFLIGHT)
+            # OOM 走 oom_guard：不写缓存、清 inflight（不计毒条目）、按 on_oom 记账
+            full = guarded_run(
+                lambda: evaluate_rprime(t, c, X, y, weight_seed=w_seed, split_seed=sp_seed,
+                                        iters=early_iters, eval_ratio=evr, batch_size=bs,
+                                        lr=lr, device=device),
+                make_row, cache_path=target, inflight=inflight,
+                task_id=t.task_id, cls_key=key, iters=early_iters,
+                on_oom=on_oom, oom_log=oom_log,
+                context={"dataset": name, "seed": s, "phase": phase, "on_oom": on_oom},
+                log=lambda m: print(f"[{phase} {i+1}/{len(todo)}] {m}", flush=True),
+            )
+            if full is None:      # OOM：该条保持"未跑"，下一轮 --resume 会重试
+                n_oom += 1
+                continue
             if s == 0 and not smoke:
                 shared_cache[(t.task_id, key, early_iters)] = full
             else:
                 noise_done.add((name, t.task_id, key, s))
-            st = f"R'={rp:.4f}" if rp_json is not None else f"FAIL {rec['error']}"
+            rp_json = full["r_prime"]
+            st = f"R'={rp_json:.4f}" if rp_json is not None else f"FAIL {full['error']}"
             print(f"[{phase} {i+1}/{len(todo)}] {name}/{t.task_id} {key[:8]} s{s} {st} "
-                  f"({rec['seconds']}s, n_ev={rec.get('n_eval')})", flush=True)
+                  f"({full['seconds']}s, n_ev={full.get('n_eval')})", flush=True)
+        if n_oom:
+            print(f"[{phase}] ⚠️ {n_oom}/{len(todo)} 条因显存不足未完成"
+                  + ("（已记入 oom_failures.jsonl）" if on_oom == ON_OOM_RECORD
+                     else "（未写缓存，留待 worker=1 串行收尾重试）"), flush=True)
 
     # ---- base 轮：seed-major（先跑全部 s=0 填全量缓存，再加深噪声）----
     worklist = []
@@ -250,7 +276,7 @@ def run(datasets: list[str], smoke: bool, resume: bool, device: str) -> None:
                 "tasks": [_task_meta(t) for t in rtasks],
             }]
             rounds.sort(key=lambda rm: rm["round"])
-            _write_tasks_meta(tasks_meta)
+            write_tasks_meta(OUTDIR, _name, tasks_meta[_name])
             wl = [(_name, _X, _y, t, c, key, s)
                   for s in range(pcfg.n_seeds) for t in rtasks for c, key in cls_list]
             exec_worklist(wl, True, f"{_name} 加难重探 r{r} c{new_range[0]}-{new_range[1]}")
@@ -266,9 +292,39 @@ def run(datasets: list[str], smoke: bool, resume: bool, device: str) -> None:
     print("step0 运行完成。", flush=True)
 
 
-def _write_tasks_meta(tasks_meta: dict) -> None:
-    (OUTDIR / "tasks_meta.json").write_text(
-        json.dumps(tasks_meta, indent=2, ensure_ascii=False), encoding="utf-8")
+def write_tasks_meta(outdir: Path, name: str, meta: dict) -> None:
+    """任务定义/重探轮记录落盘：**每数据集一个文件** tasks_meta.d/<数据集>.json。
+
+    原先是整份 tasks_meta.json 覆盖写，而 run() 每次从空字典重建 —— 换一批
+    --datasets 再跑一次，上一批的记录就没了，--analyze 对它们报"无 tasks_meta 记录，
+    跳过"，天花板重探记录全丢、判读残废（手册 §0.6 记的是 4 卡共享目录版本的同一
+    问题）。阶段1 单卡按数据集并发跑，这是必然场景：分文件后并发写互不相干。
+    """
+    d = Path(outdir) / META_DIR
+    d.mkdir(parents=True, exist_ok=True)
+    (d / f"{name}.json").write_text(
+        json.dumps(meta, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def read_tasks_meta(outdir: Path) -> dict:
+    """合并读：先旧的整份 tasks_meta.json（本机 smoke 与 5090 闸门产物都是旧格式，
+    必须还能判读），再用 tasks_meta.d/ 里的逐数据集文件覆盖。"""
+    outdir = Path(outdir)
+    out: dict = {}
+    legacy = outdir / "tasks_meta.json"
+    if legacy.exists():
+        try:
+            out.update(json.loads(legacy.read_text(encoding="utf-8")))
+        except json.JSONDecodeError:
+            pass
+    d = outdir / META_DIR
+    if d.exists():
+        for p in sorted(d.glob("*.json")):
+            try:
+                out[p.stem] = json.loads(p.read_text(encoding="utf-8"))
+            except json.JSONDecodeError:
+                continue
+    return out
 
 
 def _asdict(c: CLS) -> dict:
@@ -329,7 +385,7 @@ def analyze(datasets: list[str], smoke: bool) -> None:
     _, har_rank = load_probe_cls((SMOKE if smoke else ProbeCfg()).n_cls)
 
     recs = _read_jsonl(SMOKE_CACHE) if smoke else (_read_jsonl(SHARED_CACHE) + _read_jsonl(NOISE_CACHE))
-    tasks_meta = json.loads((OUTDIR / "tasks_meta.json").read_text(encoding="utf-8"))
+    tasks_meta = read_tasks_meta(OUTDIR)
 
     out: dict = {"datasets": {}}
     passed: set[str] = set()
@@ -403,7 +459,7 @@ def analyze(datasets: list[str], smoke: bool) -> None:
         sys.exit(2)  # 任务数不足：非零退出，提醒回填（smoke 不触发，机制验证用）
 
 
-def main() -> None:
+def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--run", action="store_true")
     ap.add_argument("--analyze", action="store_true")
@@ -412,6 +468,17 @@ def main() -> None:
     ap.add_argument("--datasets", nargs="+", default=None,
                     help="只跑指定源数据集（默认全部未实测源 tested=false）")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    ap.add_argument("--inflight", type=Path, default=INFLIGHT,
+                    help="看门狗打点文件；单卡多数据集并发时每进程一份，否则毒条目归因错乱")
+    ap.add_argument("--on-oom", choices=[ON_OOM_SKIP, ON_OOM_RECORD], default=ON_OOM_SKIP,
+                    help="显存不足时：skip=不写缓存留待串行收尾重试（并发档默认）；"
+                         "record=已是 worker=1，仍 OOM 即终局失败，记 oom_failures.jsonl")
+    ap.add_argument("--oom-log", type=Path, default=OOM_LOG)
+    return ap
+
+
+def main() -> None:
+    ap = build_parser()
     args = ap.parse_args()
 
     registry = load_registry()
@@ -421,7 +488,8 @@ def main() -> None:
         datasets = [e.name for e in registry.source if not e.tested]  # 未实测源
 
     if args.run:
-        run(datasets, smoke=args.smoke, resume=args.resume, device=args.device)
+        run(datasets, smoke=args.smoke, resume=args.resume, device=args.device,
+            inflight=args.inflight, on_oom=args.on_oom, oom_log=args.oom_log)
     if args.analyze:
         analyze(datasets, smoke=args.smoke)
     if not (args.run or args.analyze):

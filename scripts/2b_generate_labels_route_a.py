@@ -57,16 +57,15 @@ from autocls.labeling import (  # noqa: E402
     ORIGIN_RANDOM,
     ORIGIN_SHARED,
     append_jsonl,
-    clear_inflight,
     cls_key,
     evaluate_rprime,
     load_probe_cls,
     load_rprime_cache,
     make_pairs,
-    mark_inflight,
     run_seed_for,
     sample_random_cls,
 )
+from autocls.oom_guard import ON_OOM_RECORD, ON_OOM_SKIP, guarded_run  # noqa: E402
 from autocls.space.cls_space import CLSSpace  # noqa: E402
 from autocls.task_embed import (  # noqa: E402
     TS2VecWrapper,
@@ -307,7 +306,12 @@ def main() -> None:
     ap.add_argument("--max-tasks", type=int, default=None, help="试跑：每数据集只处理前 N 个任务")
     ap.add_argument("--max-shared", type=int, default=None, help="试跑：每任务只跑前 N 个 shared CLS")
     ap.add_argument("--max-random", type=int, default=None, help="试跑：每任务只跑前 N 个 random CLS")
+    ap.add_argument("--on-oom", choices=[ON_OOM_SKIP, ON_OOM_RECORD], default=ON_OOM_SKIP,
+                    help="显存不足时：skip=不写缓存留待重试（默认）；record=记 oom_failures.jsonl")
+    ap.add_argument("--oom-log", type=Path, default=None)
     args = ap.parse_args()
+    if args.oom_log is None:
+        args.oom_log = args.outdir / "oom_failures.jsonl"
 
     labels_cfg = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     train_cfg = yaml.safe_load((ROOT / "configs" / "train.yaml").read_text(encoding="utf-8"))
@@ -394,26 +398,43 @@ def main() -> None:
           f"（含 step0 canonical 复用），待跑 {len(todo)}", flush=True)
 
     bs, lr, evr = train_cfg["batch_size"], train_cfg["lr"], labels_cfg["eval_ratio"]
+    n_oom = 0
     for n_done, (t, org, c, key) in enumerate(todo):
         name, X, y = by_task_ds[t.task_id]
         w_seed, sp_seed = canonical_seeds(t.task_id, key)
-        mark_inflight(inflight_path, t.task_id, key, early_iters)  # 看门狗毒条目协议
-        rec = evaluate_rprime(t, c, X, y, weight_seed=w_seed, split_seed=sp_seed,
-                              iters=early_iters, eval_ratio=evr, batch_size=bs, lr=lr,
-                              device=args.device)
-        rp = rec["r_prime"]
-        full = {"dataset": name, "task_id": t.task_id, "tag": t.tag,
-                "task_type": t.task_type, "classes": list(t.classes),
-                "cls_key": key, "origin": org, "iters": early_iters,
-                **rec, "r_prime": None if not np.isfinite(rp) else float(rp),
-                "cls": dataclasses.asdict(c)}
-        append_jsonl(cache_path, full)
-        clear_inflight(inflight_path)
+
+        def make_row(rec, _name=name, _t=t, _org=org, _key=key, _c=c):
+            rp = rec["r_prime"]
+            return {"dataset": _name, "task_id": _t.task_id, "tag": _t.tag,
+                    "task_type": _t.task_type, "classes": list(_t.classes),
+                    "cls_key": _key, "origin": _org, "iters": early_iters,
+                    **rec, "r_prime": None if not np.isfinite(rp) else float(rp),
+                    "cls": dataclasses.asdict(_c)}
+
+        # 看门狗毒条目协议 + OOM 防护（oom_guard）：OOM 不写缓存、清 inflight（不计毒条目）
+        full = guarded_run(
+            lambda: evaluate_rprime(t, c, X, y, weight_seed=w_seed, split_seed=sp_seed,
+                                    iters=early_iters, eval_ratio=evr, batch_size=bs,
+                                    lr=lr, device=args.device),
+            make_row, cache_path=cache_path, inflight=inflight_path,
+            task_id=t.task_id, cls_key=key, iters=early_iters,
+            on_oom=args.on_oom, oom_log=args.oom_log,
+            context={"dataset": name, "origin": org, "on_oom": args.on_oom},
+            log=lambda m: print(f"[{n_done + 1}/{len(todo)}] {m}", flush=True),
+        )
+        if full is None:      # OOM：保持"未跑"，--resume 下一轮重试
+            n_oom += 1
+            continue
         cache[(t.task_id, key, early_iters)] = full
         st = (f"R'={full['r_prime']:.4f}" if full["r_prime"] is not None
-              else f"失败: {rec['error']}")
+              else f"失败: {full['error']}")
         print(f"[{n_done + 1}/{len(todo)}] {name}/{t.task_id} {org}:{key[:8]} {st} "
-              f"({rec['seconds']}s, n_ev={rec.get('n_eval')})", flush=True)
+              f"({full['seconds']}s, n_ev={full.get('n_eval')})", flush=True)
+    if n_oom:
+        print(f"⚠️ {n_oom}/{len(todo)} 条因显存不足未完成"
+              + (f"（已记入 {args.oom_log}）" if args.on_oom == ON_OOM_RECORD
+                 else "（未写缓存，--resume 重跑时会重试；仍不行请降并发或用 --on-oom record）"),
+              flush=True)
 
     # ---- 6. 配对 + 汇总（per-dataset δ；幂等重建，跑到哪配到哪）----
     build_pairs_and_summary(task_candidates, cache, labels_cfg, early_iters, args.outdir)

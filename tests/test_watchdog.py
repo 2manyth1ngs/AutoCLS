@@ -113,6 +113,31 @@ def test_watchdog_stops_at_max_restarts(tmp_path):
     assert "上限" in r.stdout
 
 
+@pytest.mark.skipif(BASH is None, reason="需要 bash（Git Bash / Linux）")
+def test_watchdog_forces_single_thread_env(tmp_path):
+    """GATE §3.1：worker 必须带 OMP/MKL=1，否则本负载慢 4.2×（0.63× vs 4060）。
+
+    不依赖手动 export——看门狗自己从 configs/runtime.yaml 注入；worker 里读到的
+    必须是 1。这条测的是"启动脚本给了"，不是"我记得要设"。
+    """
+    out = tmp_path / "labels"
+    out.mkdir()
+    worker = tmp_path / "echo_env.py"
+    worker.write_text(
+        "import os, sys, json\n"
+        "(sys.argv[1] and None)\n"
+        "print(json.dumps({k: os.environ.get(k) for k in "
+        "('OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'OPENBLAS_NUM_THREADS')}))\n",
+        encoding="utf-8")
+
+    r = _run_watchdog(out, worker, max_restarts=1)
+    assert r.returncode == 0, f"{r.stdout}\n{r.stderr}"
+    seen = json.loads((sorted(out.glob("worker_*.log"))[0]).read_text(encoding="utf-8"))
+    assert seen["OMP_NUM_THREADS"] == "1"
+    assert seen["MKL_NUM_THREADS"] == "1"
+    assert seen["OPENBLAS_NUM_THREADS"] == "1"
+
+
 def test_resume_skips_quarantined_entry(tmp_path):
     # 隔离记录走同一缓存键协议：load_rprime_cache 命中 → 2b/step0 的 todo 过滤跳过
     cache_path = tmp_path / "rprime_cache.jsonl"

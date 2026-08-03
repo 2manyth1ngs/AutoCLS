@@ -47,21 +47,41 @@ def _read_jsonl(path: Path) -> list[dict]:
 
 
 def _watchdog_state(outdir: Path) -> dict:
-    state_path = outdir / "watchdog_state.tsv"
+    """看门狗态：顶层目录 + `wd/<数据集>/` 子目录一并汇总。
+
+    阶段1 单卡按数据集并发（scripts/run_stage1.py），每数据集一份看门狗工作目录；
+    只看顶层 = 监控全瞎（重启 0/毒条目 0/inflight 空的假绿灯），"跑了 8 小时其实
+    一直在崩重拉"就看不出来。oom_failures.jsonl 同理必须显式可见。
+    """
+    dirs = [outdir] + sorted(p for p in (outdir / "wd").glob("*") if p.is_dir())
     poison = Counter()
-    if state_path.exists():
-        for line in state_path.read_text(encoding="utf-8").splitlines():
-            if line.strip():
-                poison[line] += 1
-    inflight_path = outdir / "inflight.txt"
-    inflight = inflight_path.read_text(encoding="utf-8") if inflight_path.exists() else ""
-    log = outdir / "watchdog.log"
-    tail = log.read_text(encoding="utf-8", errors="replace").splitlines()[-8:] if log.exists() else []
+    restarts = 0
+    inflight_parts, tail = [], []
+    for d in dirs:
+        state_path = d / "watchdog_state.tsv"
+        if state_path.exists():
+            for line in state_path.read_text(encoding="utf-8").splitlines():
+                if line.strip():
+                    poison[line] += 1
+        restarts += len(list(d.glob("worker_*.log")))  # 含跨看门狗重启的时间戳日志
+        inflight_path = d / "inflight.txt"
+        if inflight_path.exists():
+            txt = inflight_path.read_text(encoding="utf-8").strip()
+            if txt:
+                inflight_parts.append(f"{d.name}: {txt}" if d != outdir else txt)
+        log = d / "watchdog.log"
+        if log.exists():
+            tail += [f"[{d.name}] {x}" if d != outdir else x
+                     for x in log.read_text(encoding="utf-8", errors="replace").splitlines()[-4:]]
+    oom_log = outdir / "oom_failures.jsonl"
+    n_oom = (len([x for x in oom_log.read_text(encoding="utf-8").splitlines() if x.strip()])
+             if oom_log.exists() else 0)
     return {
-        "restarts": len(list(outdir.glob("worker_*.log"))),  # 含跨看门狗重启的时间戳日志
+        "restarts": restarts,
         "poison": dict(poison),
-        "inflight": inflight,
-        "log_tail": tail,
+        "inflight": " | ".join(inflight_parts),
+        "n_oom_failures": n_oom,
+        "log_tail": tail[-8:],
     }
 
 
@@ -186,6 +206,8 @@ def main() -> None:
         wd = p["watchdog"][stage]
         print(f"  [{stage}] 重启 {wd['restarts']} 次 | 毒条目 "
               f"{len(wd['poison'])} 种（{sum(wd['poison'].values())} 次崩）"
+              + (f" | ❌ 显存跑不了 {wd['n_oom_failures']} 条（oom_failures.jsonl）"
+                 if wd["n_oom_failures"] else "")
               + (f" | ⚠️ inflight 残留: {wd['inflight']}" if wd["inflight"].strip() else ""))
         for line, n in wd["poison"].items():
             print(f"      {line.replace(chr(9), ' / ')}  ×{n}")
