@@ -1,0 +1,579 @@
+{
+ "inputs": {
+  "n_rprime_cells": 640,
+  "n_baseline_cells": 640,
+  "catalog": "results\\decouple_random_cls\\random_cls_catalog.json",
+  "criterion_doc": "PREREGISTRATION.md §1/§3(v2)/§5 + VALIDATION.md"
+ },
+ "degenerate_annotation": {
+  "per_cls": {
+   "fa00abb83b1e": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.024,
+    "t": -1.919,
+    "p_t": 0.03209771732313705,
+    "p_wilcoxon": 0.08247976179171501
+   },
+   "ec8ef32c534a": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.2239,
+    "t": -7.05,
+    "p_t": 3.2221279077975756e-08,
+    "p_wilcoxon": 5.039408181724578e-07
+   },
+   "95203c98110f": {
+    "status": "ok",
+    "degenerate": false,
+    "n_cells": 32,
+    "mean_gain": 0.0079,
+    "t": 1.484,
+    "p_t": 0.9259990375192294,
+    "p_wilcoxon": 0.8910556855752587
+   },
+   "a3b6d126b438": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.1089,
+    "t": -4.65,
+    "p_t": 2.9220244431792188e-05,
+    "p_wilcoxon": 8.008845417886012e-06
+   },
+   "32a0c35c7cff": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.3923,
+    "t": -13.68,
+    "p_t": 5.601147344666425e-15,
+    "p_wilcoxon": 3.9720470506502005e-07
+   },
+   "1c40d9c48bfb": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.0105,
+    "t": -1.958,
+    "p_t": 0.029639351938376406,
+    "p_wilcoxon": 0.06248414759211151
+   },
+   "c51381604cc6": {
+    "status": "ok",
+    "degenerate": false,
+    "n_cells": 32,
+    "mean_gain": 0.0009,
+    "t": 0.198,
+    "p_t": 0.5776893430685278,
+    "p_wilcoxon": 0.5854876011427338
+   },
+   "9b3ae64db116": {
+    "status": "ok",
+    "degenerate": false,
+    "n_cells": 32,
+    "mean_gain": -0.0029,
+    "t": -0.47,
+    "p_t": 0.32086354259142846,
+    "p_wilcoxon": 0.39229034419518355
+   },
+   "3878e870dae4": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.2884,
+    "t": -9.004,
+    "p_t": 1.8453725939784972e-10,
+    "p_wilcoxon": 5.860602952993322e-07
+   },
+   "282551fca558": {
+    "status": "ok",
+    "degenerate": false,
+    "n_cells": 32,
+    "mean_gain": 0.0099,
+    "t": 1.525,
+    "p_t": 0.9312988045901592,
+    "p_wilcoxon": 0.8787725143860332
+   },
+   "ee238dca135d": {
+    "status": "ok",
+    "degenerate": false,
+    "n_cells": 32,
+    "mean_gain": -0.0067,
+    "t": -0.788,
+    "p_t": 0.21841139515973718,
+    "p_wilcoxon": 0.22152432934591892
+   },
+   "839cad7bed5b": {
+    "status": "ok",
+    "degenerate": false,
+    "n_cells": 32,
+    "mean_gain": 0.0129,
+    "t": 3.685,
+    "p_t": 0.999564896378302,
+    "p_wilcoxon": 0.9990504009677981
+   },
+   "bcdedc8ff2f6": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.0573,
+    "t": -3.68,
+    "p_t": 0.0004407797672151134,
+    "p_wilcoxon": 0.0014681919286425305
+   },
+   "fd2c5db1e113": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.3449,
+    "t": -12.805,
+    "p_t": 3.2232549016400867e-14,
+    "p_wilcoxon": 3.974244047848165e-07
+   },
+   "66ec59228f34": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.4672,
+    "t": -17.997,
+    "p_t": 2.8834661895833912e-18,
+    "p_wilcoxon": 3.974244047848165e-07
+   },
+   "d009ba3bdf8c": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.0369,
+    "t": -3.581,
+    "p_t": 0.0005758395063592757,
+    "p_wilcoxon": 0.0009389139783568956
+   },
+   "0a6389fe3adb": {
+    "status": "ok",
+    "degenerate": false,
+    "n_cells": 32,
+    "mean_gain": 0.0063,
+    "t": 0.97,
+    "p_t": 0.83013925116923,
+    "p_wilcoxon": 0.8822160934823806
+   },
+   "e36fc387c259": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.0717,
+    "t": -2.851,
+    "p_t": 0.003845411769060644,
+    "p_wilcoxon": 0.0005925761513051451
+   },
+   "50e9358b3556": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.0325,
+    "t": -3.079,
+    "p_t": 0.0021603753113435538,
+    "p_wilcoxon": 0.002752550248945571
+   },
+   "4622a68302c6": {
+    "status": "ok",
+    "degenerate": true,
+    "n_cells": 32,
+    "mean_gain": -0.1523,
+    "t": -6.486,
+    "p_t": 1.5531497834859973e-07,
+    "p_wilcoxon": 2.480462518443863e-06
+   }
+  },
+  "flagged": [
+   "1c40d9c48bfb",
+   "32a0c35c7cff",
+   "3878e870dae4",
+   "4622a68302c6",
+   "50e9358b3556",
+   "66ec59228f34",
+   "a3b6d126b438",
+   "bcdedc8ff2f6",
+   "d009ba3bdf8c",
+   "e36fc387c259",
+   "ec8ef32c534a",
+   "fa00abb83b1e",
+   "fd2c5db1e113"
+  ],
+  "unknown": [],
+  "share": 0.65,
+  "wilson90": [
+   0.467,
+   0.798
+  ]
+ },
+ "datasets": {
+  "ArticularyWordRecognition": {
+   "r_reg": {
+    "verdict": "fail_noisy",
+    "passed": false,
+    "delta_star": null,
+    "accuracy": 1.0,
+    "yield": 0.0238,
+    "n_kept": 1,
+    "n_comparable": 1,
+    "n_candidates": 42,
+    "reason": "存在干净 δ（最优 δ=0.03，正确率 1.000）但产量仅 0.024<0.333（1/42 条）：抬 δ 抬得干净，label 不够"
+   },
+   "r_full": {
+    "verdict": "pass",
+    "passed": true,
+    "delta_star": 0.03,
+    "accuracy": 0.958,
+    "yield": 0.6289,
+    "n_kept": 239,
+    "n_comparable": 238,
+    "n_candidates": 380,
+    "reason": "δ*=0.03：方向正确率 0.958≥0.95 且产量 0.629≥0.333（239/380 条 label）"
+   },
+   "registry_delta": {
+    "delta": 0.08,
+    "r_full": {
+     "delta": 0.08,
+     "n_candidates": 380,
+     "n_kept": 176,
+     "yield_frac": 0.4632,
+     "n_comparable": 176,
+     "n_agree": 174,
+     "accuracy": 0.9886
+    },
+    "r_reg": {
+     "delta": 0.08,
+     "n_candidates": 42,
+     "n_kept": 0,
+     "yield_frac": 0.0,
+     "n_comparable": 0,
+     "n_agree": 0,
+     "accuracy": null
+    }
+   },
+   "holdout_delta_bias_full": {
+    "rounds": [
+     {
+      "fit_task": "ArticularyWordRecognition_00",
+      "eval_task": "ArticularyWordRecognition_01",
+      "delta_star": 0.015,
+      "eval_accuracy": 0.8699186991869918,
+      "eval_yield": 0.6578947368421053
+     },
+     {
+      "fit_task": "ArticularyWordRecognition_01",
+      "eval_task": "ArticularyWordRecognition_00",
+      "delta_star": 0.045,
+      "eval_accuracy": 0.9913793103448276,
+      "eval_yield": 0.6105263157894737
+     }
+    ],
+    "mean_eval_accuracy": 0.9306
+   },
+   "trivial_share_at_delta_star_full": 0.9958
+  },
+  "CharacterTrajectories": {
+   "r_reg": {
+    "verdict": "fail_noisy",
+    "passed": false,
+    "delta_star": null,
+    "accuracy": 1.0,
+    "yield": 0.1429,
+    "n_kept": 6,
+    "n_comparable": 4,
+    "n_candidates": 42,
+    "reason": "存在干净 δ（最优 δ=0.01，正确率 1.000）但产量仅 0.143<0.333（6/42 条）：抬 δ 抬得干净，label 不够"
+   },
+   "r_full": {
+    "verdict": "pass",
+    "passed": true,
+    "delta_star": 0.02,
+    "accuracy": 0.9624,
+    "yield": 0.5605,
+    "n_kept": 213,
+    "n_comparable": 213,
+    "n_candidates": 380,
+    "reason": "δ*=0.02：方向正确率 0.962≥0.95 且产量 0.561≥0.333（213/380 条 label）"
+   },
+   "registry_delta": {
+    "delta": 0.05,
+    "r_full": {
+     "delta": 0.05,
+     "n_candidates": 380,
+     "n_kept": 174,
+     "yield_frac": 0.4579,
+     "n_comparable": 174,
+     "n_agree": 171,
+     "accuracy": 0.9828
+    },
+    "r_reg": {
+     "delta": 0.05,
+     "n_candidates": 42,
+     "n_kept": 0,
+     "yield_frac": 0.0,
+     "n_comparable": 0,
+     "n_agree": 0,
+     "accuracy": null
+    }
+   },
+   "holdout_delta_bias_full": {
+    "rounds": [
+     {
+      "fit_task": "CharacterTrajectories_00",
+      "eval_task": "CharacterTrajectories_01",
+      "delta_star": 0.025,
+      "eval_accuracy": 1.0,
+      "eval_yield": 0.5052631578947369
+     },
+     {
+      "fit_task": "CharacterTrajectories_01",
+      "eval_task": "CharacterTrajectories_00",
+      "delta_star": 0.01,
+      "eval_accuracy": 0.924812030075188,
+      "eval_yield": 0.7
+     }
+    ],
+    "mean_eval_accuracy": 0.9624
+   },
+   "trivial_share_at_delta_star_full": 1.0
+  },
+  "ERing": {
+   "r_reg": {
+    "verdict": "fail_noisy",
+    "passed": false,
+    "delta_star": null,
+    "accuracy": 1.0,
+    "yield": 0.1429,
+    "n_kept": 6,
+    "n_comparable": 6,
+    "n_candidates": 42,
+    "reason": "存在干净 δ（最优 δ=0.06，正确率 1.000）但产量仅 0.143<0.333（6/42 条）：抬 δ 抬得干净，label 不够"
+   },
+   "r_full": {
+    "verdict": "pass",
+    "passed": true,
+    "delta_star": 0.06,
+    "accuracy": 0.9524,
+    "yield": 0.4974,
+    "n_kept": 189,
+    "n_comparable": 189,
+    "n_candidates": 380,
+    "reason": "δ*=0.06：方向正确率 0.952≥0.95 且产量 0.497≥0.333（189/380 条 label）"
+   },
+   "registry_delta": {
+    "delta": 0.06,
+    "r_full": {
+     "delta": 0.06,
+     "n_candidates": 380,
+     "n_kept": 189,
+     "yield_frac": 0.4974,
+     "n_comparable": 189,
+     "n_agree": 180,
+     "accuracy": 0.9524
+    },
+    "r_reg": {
+     "delta": 0.06,
+     "n_candidates": 42,
+     "n_kept": 6,
+     "yield_frac": 0.1429,
+     "n_comparable": 6,
+     "n_agree": 6,
+     "accuracy": 1.0
+    }
+   },
+   "holdout_delta_bias_full": {
+    "rounds": [
+     {
+      "fit_task": "ERing_00",
+      "eval_task": "ERing_01",
+      "delta_star": 0.08,
+      "eval_accuracy": 0.9682539682539683,
+      "eval_yield": 0.33157894736842103
+     },
+     {
+      "fit_task": "ERing_01",
+      "eval_task": "ERing_00",
+      "delta_star": 0.045,
+      "eval_accuracy": 0.9296875,
+      "eval_yield": 0.6736842105263158
+     }
+    ],
+    "mean_eval_accuracy": 0.949
+   },
+   "trivial_share_at_delta_star_full": 0.9683
+  },
+  "NATOPS": {
+   "r_reg": {
+    "verdict": "fail_noisy",
+    "passed": false,
+    "delta_star": null,
+    "accuracy": 1.0,
+    "yield": 0.119,
+    "n_kept": 5,
+    "n_comparable": 5,
+    "n_candidates": 42,
+    "reason": "存在干净 δ（最优 δ=0.08，正确率 1.000）但产量仅 0.119<0.333（5/42 条）：抬 δ 抬得干净，label 不够"
+   },
+   "r_full": {
+    "verdict": "pass",
+    "passed": true,
+    "delta_star": 0.035,
+    "accuracy": 0.9503,
+    "yield": 0.8474,
+    "n_kept": 322,
+    "n_comparable": 322,
+    "n_candidates": 380,
+    "reason": "δ*=0.035：方向正确率 0.950≥0.95 且产量 0.847≥0.333（322/380 条 label）"
+   },
+   "registry_delta": {
+    "delta": 0.06,
+    "r_full": {
+     "delta": 0.06,
+     "n_candidates": 380,
+     "n_kept": 292,
+     "yield_frac": 0.7684,
+     "n_comparable": 292,
+     "n_agree": 281,
+     "accuracy": 0.9623
+    },
+    "r_reg": {
+     "delta": 0.06,
+     "n_candidates": 42,
+     "n_kept": 8,
+     "yield_frac": 0.1905,
+     "n_comparable": 8,
+     "n_agree": 7,
+     "accuracy": 0.875
+    }
+   },
+   "holdout_delta_bias_full": {
+    "rounds": [
+     {
+      "fit_task": "NATOPS_00",
+      "eval_task": "NATOPS_01",
+      "delta_star": 0.01,
+      "eval_accuracy": 0.893048128342246,
+      "eval_yield": 0.9842105263157894
+     },
+     {
+      "fit_task": "NATOPS_01",
+      "eval_task": "NATOPS_00",
+      "delta_star": 0.08,
+      "eval_accuracy": 0.9927536231884058,
+      "eval_yield": 0.7263157894736842
+     }
+    ],
+    "mean_eval_accuracy": 0.9429
+   },
+   "trivial_share_at_delta_star_full": 0.9472
+  }
+ },
+ "prediction": {
+  "passed_r_reg": {
+   "ArticularyWordRecognition": false,
+   "CharacterTrajectories": false,
+   "ERing": false,
+   "NATOPS": false
+  },
+  "outcome": "design_failure",
+  "deviations": [
+   "NATOPS"
+  ],
+  "note": "阳性对照未通过——按 §1 主结论判实验设计存疑，其余三个的 fail 不作为预测应验报告"
+ },
+ "dose_response": {
+  "pearson": 0.213,
+  "n_subsets": 2000,
+  "k": 10,
+  "seed": 20260804,
+  "final_baseline_pearson_old_cache": 0.584,
+  "by_n_tail": {
+   "3": {
+    "n": 3,
+    "mean": 32.0,
+    "range": [
+     16,
+     40
+    ]
+   },
+   "4": {
+    "n": 45,
+    "mean": 34.9,
+    "range": [
+     16,
+     40
+    ]
+   },
+   "5": {
+    "n": 287,
+    "mean": 35.6,
+    "range": [
+     0,
+     40
+    ]
+   },
+   "6": {
+    "n": 660,
+    "mean": 37.5,
+    "range": [
+     10,
+     40
+    ]
+   },
+   "7": {
+    "n": 674,
+    "mean": 38.4,
+    "range": [
+     18,
+     40
+    ]
+   },
+   "8": {
+    "n": 278,
+    "mean": 39.1,
+    "range": [
+     18,
+     40
+    ]
+   },
+   "9": {
+    "n": 49,
+    "mean": 39.6,
+    "range": [
+     34,
+     40
+    ]
+   },
+   "10": {
+    "n": 4,
+    "mean": 40.0,
+    "range": [
+     40,
+     40
+    ]
+   }
+  }
+ },
+ "spread_comparison": {
+  "ArticularyWordRecognition": {
+   "random20": 0.1705,
+   "old_probe10": 0.1122
+  },
+  "CharacterTrajectories": {
+   "random20": 0.1694,
+   "old_probe10": 0.0306
+  },
+  "ERing": {
+   "random20": 0.0945,
+   "old_probe10": 0.0993
+  },
+  "NATOPS": {
+   "random20": 0.1882,
+   "old_probe10": 0.148
+  }
+ }
+}
