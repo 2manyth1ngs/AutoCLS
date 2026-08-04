@@ -85,7 +85,9 @@ def load_probe_cls(
     """
     cat = json.loads(Path(catalog_path).read_text(encoding="utf-8"))["cls"][:n_cls]
     cls_list = [(CLS(**cd["cls"]), cd["cls_key"]) for cd in cat]
-    har_rank = {cd["cls_key"]: cd["har_rank"] for cd in cat}
+    # 解耦实验的随机目录（scripts/sample_random_cls_catalog.py）刻意不带 har_rank
+    # ——随机样本没有排名，带了就又给"按好坏取子集"开口子。只收录有该字段的条目。
+    har_rank = {cd["cls_key"]: cd["har_rank"] for cd in cat if "har_rank" in cd}
     return cls_list, har_rank
 
 

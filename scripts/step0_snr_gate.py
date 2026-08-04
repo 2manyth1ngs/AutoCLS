@@ -49,7 +49,7 @@ import json
 import sys
 import time
 from collections import defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 import numpy as np
@@ -100,6 +100,30 @@ class ProbeCfg:
 
 
 SMOKE = ProbeCfg(n_tasks=1, n_cls=5, n_seeds=3)
+
+
+def resolve_paths(*, smoke: bool, baseline: bool, cache_dir: Path | None
+                  ) -> tuple[Path, Path, Path]:
+    """→ (canonical 缓存, 噪声缓存, tasks_meta 根目录)。
+
+    解耦实验（results/decouple_random_cls/PREREGISTRATION.md §4）的隔离规则：
+    - --cache-dir 给定 → 全部产物进该目录，不碰生产缓存（这批 CLS 与阶段2 的
+      shared/random 采样流无交集，混写只污染 preflight 计数）；
+    - --baseline（iters=0 配对基线）→ 所有种子进同一 baseline_cache.jsonl，且
+      **必须**给 cache-dir：往生产 canonical 缓存写 iters=0 记录是不可接受的污染。
+    - 两者都不给 → 生产路径逐字不变（smoke 全进 SMOKE_CACHE，不污染全量）。
+    """
+    if baseline:
+        if cache_dir is None:
+            raise ValueError("--baseline 必须搭配 --cache-dir（防 iters=0 记录混进生产缓存）")
+        p = Path(cache_dir) / "baseline_cache.jsonl"
+        return p, p, Path(cache_dir)
+    if cache_dir is not None:
+        d = Path(cache_dir)
+        return d / "rprime_cache.jsonl", d / "noise_cache.jsonl", d
+    if smoke:
+        return SMOKE_CACHE, SMOKE_CACHE, OUTDIR
+    return SHARED_CACHE, NOISE_CACHE, OUTDIR
 
 
 def load_probe_cls(n_cls: int) -> tuple[list[tuple[CLS, str]], dict[str, int]]:
@@ -153,7 +177,9 @@ def _stats_for(recs: list[dict], dataset: str, task_ids: list[str], har_rank):
 
 def run(datasets: list[str], smoke: bool, resume: bool, device: str, *,
         inflight: Path = INFLIGHT, on_oom: str = ON_OOM_SKIP,
-        oom_log: Path = OOM_LOG) -> None:
+        oom_log: Path = OOM_LOG, catalog: Path = PROBE_CATALOG,
+        n_cls: int | None = None, cache_dir: Path | None = None,
+        baseline: bool = False, no_escalate: bool = False) -> None:
     OUTDIR.mkdir(parents=True, exist_ok=True)
     if torch.get_num_threads() > 1:
         # GATE §3.1：54 核容器里默认 192 线程 → 53 s/条（0.63×，比 4060 笔记本还慢）。
@@ -165,15 +191,20 @@ def run(datasets: list[str], smoke: bool, resume: bool, device: str, *,
     registry = load_registry()
     train_cfg = yaml.safe_load((ROOT / "configs" / "train.yaml").read_text(encoding="utf-8"))
     labels_cfg = yaml.safe_load((ROOT / "configs" / "labels.yaml").read_text(encoding="utf-8"))
-    early_iters = 30 if smoke else train_cfg["early_iters"]
+    # baseline（解耦实验 §3 配对基线）：iters=0 = pretrain_encoder 零步，encoder
+    # 停在随机初始化；weight/split 种子派生与正式跑逐字相同 → 严格配对
+    early_iters = 0 if baseline else (30 if smoke else train_cfg["early_iters"])
     pcfg = SMOKE if smoke else ProbeCfg()
-    cls_list, har_rank = load_probe_cls(pcfg.n_cls)
+    if n_cls is not None:
+        pcfg = replace(pcfg, n_cls=n_cls)
+    cls_list, har_rank = _load_probe_cls(catalog, pcfg.n_cls)
 
-    # canonical(s=0) 与噪声(s≥1) 的缓存：smoke 全进 smoke_cache 不污染全量
-    shared_path = SMOKE_CACHE if smoke else SHARED_CACHE
-    noise_path = SMOKE_CACHE if smoke else NOISE_CACHE
+    # canonical(s=0) 与噪声(s≥1) 的缓存路由（smoke/实验目录/基线隔离见 resolve_paths）
+    shared_path, noise_path, meta_root = resolve_paths(
+        smoke=smoke, baseline=baseline, cache_dir=cache_dir)
+    meta_root.mkdir(parents=True, exist_ok=True)
     shared_cache = load_rprime_cache(shared_path)
-    noise_done = _load_noise_keys(noise_path) if not smoke else _load_noise_keys(SMOKE_CACHE)
+    noise_done = _load_noise_keys(noise_path)
 
     tasks_meta: dict = {}
     per_ds = []
@@ -189,11 +220,13 @@ def run(datasets: list[str], smoke: bool, resume: bool, device: str, *,
             "retry_rounds": [],
         }
         per_ds.append((name, X, y, tasks))
-        write_tasks_meta(OUTDIR, name, tasks_meta[name])
+        write_tasks_meta(meta_root, name, tasks_meta[name])
 
     bs, lr, evr = train_cfg["batch_size"], train_cfg["lr"], labels_cfg["eval_ratio"]
 
     def is_done(name, tid, key, s):
+        if baseline:  # 基线所有种子同文件，按 (ds, task, cls, seed) 记账
+            return (name, tid, key, s) in noise_done
         if s == 0 and not smoke:
             return (tid, key, early_iters) in shared_cache
         return (name, tid, key, s) in noise_done
@@ -217,7 +250,8 @@ def run(datasets: list[str], smoke: bool, resume: bool, device: str, *,
                         "cls": _asdict(_c)}
 
             # canonical(s=0) → 全量缓存（全量口径，键 task_id+cls_key+iters）；噪声 → 独立缓存
-            target = SMOKE_CACHE if smoke else (shared_path if s == 0 else noise_path)
+            # （smoke 两路都是 SMOKE_CACHE；baseline 两路都是 baseline_cache，见 resolve_paths）
+            target = shared_path if s == 0 else noise_path
             # OOM 走 oom_guard：不写缓存、清 inflight（不计毒条目）、按 on_oom 记账
             full = guarded_run(
                 lambda: evaluate_rprime(t, c, X, y, weight_seed=w_seed, split_seed=sp_seed,
@@ -232,10 +266,10 @@ def run(datasets: list[str], smoke: bool, resume: bool, device: str, *,
             if full is None:      # OOM：该条保持"未跑"，下一轮 --resume 会重试
                 n_oom += 1
                 continue
-            if s == 0 and not smoke:
-                shared_cache[(t.task_id, key, early_iters)] = full
-            else:
+            if baseline or s != 0 or smoke:
                 noise_done.add((name, t.task_id, key, s))
+            else:
+                shared_cache[(t.task_id, key, early_iters)] = full
             rp_json = full["r_prime"]
             st = f"R'={rp_json:.4f}" if rp_json is not None else f"FAIL {full['error']}"
             print(f"[{phase} {i+1}/{len(todo)}] {name}/{t.task_id} {key[:8]} s{s} {st} "
@@ -254,10 +288,16 @@ def run(datasets: list[str], smoke: bool, resume: bool, device: str, *,
                     worklist.append((name, X, y, t, c, key, s))
     exec_worklist(worklist, resume, "base")
 
+    if baseline or no_escalate:
+        # 解耦实验：任务集写死（PREREGISTRATION.md §4），不做加难重探；
+        # baseline（iters=0）算 SNR 也毫无意义
+        print("step0 运行完成（--baseline/--no-escalate：跳过天花板加难重探）。", flush=True)
+        return
+
     # ---- 天花板加难重探（Part A-1）：SNR<1 且贴顶 → 自动加难 ≤2 轮 ----
     def all_recs() -> list[dict]:
-        return (_read_jsonl(SMOKE_CACHE) if smoke
-                else _read_jsonl(SHARED_CACHE) + _read_jsonl(NOISE_CACHE))
+        return (_read_jsonl(shared_path) if shared_path == noise_path
+                else _read_jsonl(shared_path) + _read_jsonl(noise_path))
 
     for name, X, y, tasks in per_ds:
         entry = registry.get(name)
@@ -276,7 +316,7 @@ def run(datasets: list[str], smoke: bool, resume: bool, device: str, *,
                 "tasks": [_task_meta(t) for t in rtasks],
             }]
             rounds.sort(key=lambda rm: rm["round"])
-            write_tasks_meta(OUTDIR, _name, tasks_meta[_name])
+            write_tasks_meta(meta_root, _name, tasks_meta[_name])
             wl = [(_name, _X, _y, t, c, key, s)
                   for s in range(pcfg.n_seeds) for t in rtasks for c, key in cls_list]
             exec_worklist(wl, True, f"{_name} 加难重探 r{r} c{new_range[0]}-{new_range[1]}")
@@ -474,6 +514,18 @@ def build_parser() -> argparse.ArgumentParser:
                     help="显存不足时：skip=不写缓存留待串行收尾重试（并发档默认）；"
                          "record=已是 worker=1，仍 OOM 即终局失败，记 oom_failures.jsonl")
     ap.add_argument("--oom-log", type=Path, default=OOM_LOG)
+    # --- 解耦实验注入点（results/decouple_random_cls/PREREGISTRATION.md §4）---
+    ap.add_argument("--catalog", type=Path, default=PROBE_CATALOG,
+                    help="探针 CLS 目录（默认生产目录；解耦实验换随机目录）")
+    ap.add_argument("--n-cls", type=int, default=None,
+                    help="覆盖 ProbeCfg.n_cls（解耦实验 20；默认档不变）")
+    ap.add_argument("--cache-dir", type=Path, default=None,
+                    help="全部产物改进该目录（rprime/noise/tasks_meta），不碰生产缓存")
+    ap.add_argument("--baseline", action="store_true",
+                    help="iters=0 配对基线（同 weight/split 种子，encoder 停在随机"
+                         "初始化）；须搭配 --cache-dir，全部种子进 baseline_cache.jsonl")
+    ap.add_argument("--no-escalate", action="store_true",
+                    help="禁天花板加难重探（解耦实验任务集写死）")
     return ap
 
 
@@ -489,7 +541,9 @@ def main() -> None:
 
     if args.run:
         run(datasets, smoke=args.smoke, resume=args.resume, device=args.device,
-            inflight=args.inflight, on_oom=args.on_oom, oom_log=args.oom_log)
+            inflight=args.inflight, on_oom=args.on_oom, oom_log=args.oom_log,
+            catalog=args.catalog, n_cls=args.n_cls, cache_dir=args.cache_dir,
+            baseline=args.baseline, no_escalate=args.no_escalate)
     if args.analyze:
         analyze(datasets, smoke=args.smoke)
     if not (args.run or args.analyze):

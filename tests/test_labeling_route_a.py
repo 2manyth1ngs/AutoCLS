@@ -76,6 +76,19 @@ def test_probe_cls_keys_reproducible_from_fields():
         assert cls_key(c) == k
 
 
+def test_load_probe_cls_tolerates_missing_har_rank(tmp_path):
+    # 解耦实验的随机目录刻意不带 har_rank（带排名字段 = 给"按好坏取子集"开口子，
+    # 预注册 §2）。loader 必须能读：har_rank 只收录有该字段的条目。
+    cat = json.loads(PROBE_CATALOG.read_text(encoding="utf-8"))
+    stripped = {"cls": [{"cls_key": c["cls_key"], "cls": c["cls"]}
+                        for c in cat["cls"][:3]]}
+    p = tmp_path / "random_catalog.json"
+    p.write_text(json.dumps(stripped), encoding="utf-8")
+    cls_list, ranks = load_probe_cls(p, 3)
+    assert [k for _, k in cls_list] == [c["cls_key"] for c in cat["cls"][:3]]
+    assert ranks == {}
+
+
 # ---- 每任务 random CLS：task_id 派生、确定性、前缀稳定、与 shared 去重 ----
 
 def test_sample_random_cls_deterministic_per_task(space):

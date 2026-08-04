@@ -69,6 +69,52 @@ def test_per_dataset_file_wins_over_legacy(tmp_path):
     assert STEP0.read_tasks_meta(tmp_path)["NATOPS"]["retry_rounds"]
 
 
+def test_cli_exposes_decouple_experiment_switches():
+    # 解耦实验（results/decouple_random_cls/PREREGISTRATION.md §4）：换探针目录、
+    # 独立缓存目录、iters=0 配对基线、禁天花板重探——全部走显式参数，默认行为不变
+    ap = STEP0.build_parser()
+    args = ap.parse_args(["--run", "--catalog", "x/random_cls_catalog.json",
+                          "--n-cls", "20", "--cache-dir", "x/exp",
+                          "--baseline", "--no-escalate"])
+    assert args.catalog == Path("x/random_cls_catalog.json")
+    assert args.n_cls == 20
+    assert args.cache_dir == Path("x/exp")
+    assert args.baseline and args.no_escalate
+    d = ap.parse_args(["--run"])
+    assert d.catalog == STEP0.PROBE_CATALOG and d.n_cls is None
+    assert d.cache_dir is None and not d.baseline and not d.no_escalate
+
+
+def test_resolve_paths_default_production_unchanged():
+    canon, noise, meta_root = STEP0.resolve_paths(smoke=False, baseline=False,
+                                                  cache_dir=None)
+    assert canon == STEP0.SHARED_CACHE
+    assert noise == STEP0.NOISE_CACHE
+    assert meta_root == STEP0.OUTDIR
+
+
+def test_resolve_paths_cache_dir_isolates_experiment(tmp_path):
+    canon, noise, meta_root = STEP0.resolve_paths(smoke=False, baseline=False,
+                                                  cache_dir=tmp_path)
+    assert canon == tmp_path / "rprime_cache.jsonl"
+    assert noise == tmp_path / "noise_cache.jsonl"
+    assert meta_root == tmp_path
+
+
+def test_resolve_paths_baseline_goes_to_dedicated_file(tmp_path):
+    # iters=0 基线全部种子进同一独立文件——绝不允许混进生产 canonical 缓存
+    canon, noise, _ = STEP0.resolve_paths(smoke=False, baseline=True,
+                                          cache_dir=tmp_path)
+    assert canon == noise == tmp_path / "baseline_cache.jsonl"
+
+
+def test_resolve_paths_baseline_requires_cache_dir():
+    # 防呆：--baseline 不给 --cache-dir 就会往生产缓存写 iters=0 记录，必须硬拦
+    import pytest
+    with pytest.raises(ValueError):
+        STEP0.resolve_paths(smoke=False, baseline=True, cache_dir=None)
+
+
 def test_cli_exposes_oom_and_inflight_switches():
     # 并发跑时每进程一份 inflight（否则看门狗毒条目归因错乱）；
     # --on-oom record 是"已经降到 worker=1"的串行收尾扫描才用的模式
