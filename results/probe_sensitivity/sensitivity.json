@@ -1,0 +1,5297 @@
+{
+  "meta": {
+    "snapshot": "results/stage1_rerun_20260804/results",
+    "n_records": 1040,
+    "datasets": {
+      "ArticularyWordRecognition": {
+        "role": "source",
+        "planned_tasks": 8,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          6,
+          12
+        ],
+        "n_classes": 25,
+        "l_enc": 144,
+        "domain": "Motion"
+      },
+      "CharacterTrajectories": {
+        "role": "source",
+        "planned_tasks": 16,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          6,
+          10
+        ],
+        "n_classes": 20,
+        "l_enc": 182,
+        "domain": "Motion"
+      },
+      "ERing": {
+        "role": "source",
+        "planned_tasks": 6,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          3,
+          6
+        ],
+        "n_classes": 6,
+        "l_enc": 65,
+        "domain": "HAR"
+      },
+      "EthanolConcentration": {
+        "role": "reserve",
+        "planned_tasks": 8,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          2,
+          4
+        ],
+        "n_classes": 4,
+        "l_enc": 1024,
+        "domain": "Spectro"
+      },
+      "FingerMovements": {
+        "role": "reserve",
+        "planned_tasks": 4,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          2,
+          2
+        ],
+        "n_classes": 2,
+        "l_enc": 50,
+        "domain": "EEG/MEG"
+      },
+      "HandMovementDirection": {
+        "role": "source",
+        "planned_tasks": 6,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          2,
+          4
+        ],
+        "n_classes": 4,
+        "l_enc": 400,
+        "domain": "EEG/MEG"
+      },
+      "Handwriting": {
+        "role": "source",
+        "planned_tasks": 12,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          8,
+          14
+        ],
+        "n_classes": 26,
+        "l_enc": 152,
+        "domain": "HAR"
+      },
+      "Heartbeat": {
+        "role": "reserve",
+        "planned_tasks": 4,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          2,
+          2
+        ],
+        "n_classes": 2,
+        "l_enc": 405,
+        "domain": "Audio"
+      },
+      "MotorImagery": {
+        "role": "source",
+        "planned_tasks": 4,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          2,
+          2
+        ],
+        "n_classes": 2,
+        "l_enc": 512,
+        "domain": "EEG/MEG"
+      },
+      "NATOPS": {
+        "role": "source",
+        "planned_tasks": 10,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          3,
+          6
+        ],
+        "n_classes": 6,
+        "l_enc": 51,
+        "domain": "HAR"
+      },
+      "SelfRegulationSCP1": {
+        "role": "source",
+        "planned_tasks": 2,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          2,
+          2
+        ],
+        "n_classes": 2,
+        "l_enc": 896,
+        "domain": "EEG/MEG"
+      },
+      "SelfRegulationSCP2": {
+        "role": "source",
+        "planned_tasks": 3,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          2,
+          2
+        ],
+        "n_classes": 2,
+        "l_enc": 1152,
+        "domain": "EEG/MEG"
+      },
+      "UWaveGestureLibrary": {
+        "role": "source",
+        "planned_tasks": 10,
+        "n_tasks_probed": 2,
+        "n_classes_range": [
+          4,
+          8
+        ],
+        "n_classes": 8,
+        "l_enc": 315,
+        "domain": "HAR"
+      }
+    },
+    "probe_cls": [
+      {
+        "cls_key": "4f7d413581f6",
+        "har_rank": 0
+      },
+      {
+        "cls_key": "cffb55035c3a",
+        "har_rank": 2
+      },
+      {
+        "cls_key": "8c4aa28336d6",
+        "har_rank": 4
+      },
+      {
+        "cls_key": "f48e5da1d899",
+        "har_rank": 7
+      },
+      {
+        "cls_key": "a1f67db45e64",
+        "har_rank": 9
+      },
+      {
+        "cls_key": "e490b88ee785",
+        "har_rank": 11
+      },
+      {
+        "cls_key": "9092e36eefe1",
+        "har_rank": 13
+      },
+      {
+        "cls_key": "65627517fa32",
+        "har_rank": 15
+      },
+      {
+        "cls_key": "20be4f7443e8",
+        "har_rank": 17
+      },
+      {
+        "cls_key": "8b87d66faad3",
+        "har_rank": 19
+      }
+    ],
+    "baseline_gate": 74
+  },
+  "loo": {
+    "rounds": [
+      {
+        "dropped": "8b87d66faad3",
+        "gate": 56,
+        "reserve_bonus": 0,
+        "verdicts": {
+          "ArticularyWordRecognition": "fail_unstable",
+          "CharacterTrajectories": "fail_unstable",
+          "ERing": "fail_unstable",
+          "EthanolConcentration": "fail_unstable",
+          "FingerMovements": "fail_mismatch",
+          "HandMovementDirection": "fail_unstable",
+          "Handwriting": "pass",
+          "Heartbeat": "fail_mismatch",
+          "MotorImagery": "fail_mismatch",
+          "NATOPS": "fail_unstable",
+          "SelfRegulationSCP1": "fail_mismatch",
+          "SelfRegulationSCP2": "fail_mismatch",
+          "UWaveGestureLibrary": "fail_unstable"
+        },
+        "snr": {
+          "ArticularyWordRecognition": 5.287,
+          "CharacterTrajectories": 3.369,
+          "ERing": 2.95,
+          "EthanolConcentration": 1.028,
+          "FingerMovements": 0.981,
+          "HandMovementDirection": 1.144,
+          "Handwriting": 5.17,
+          "Heartbeat": 0.504,
+          "MotorImagery": 0.504,
+          "NATOPS": 4.043,
+          "SelfRegulationSCP1": 0.921,
+          "SelfRegulationSCP2": 0.537,
+          "UWaveGestureLibrary": 3.538
+        },
+        "sign": {
+          "ArticularyWordRecognition": 0.687,
+          "CharacterTrajectories": 0.567,
+          "ERing": 0.611,
+          "EthanolConcentration": 0.417,
+          "FingerMovements": 0.278,
+          "HandMovementDirection": 0.347,
+          "Handwriting": 0.803,
+          "Heartbeat": 0.239,
+          "MotorImagery": 0.208,
+          "NATOPS": 0.625,
+          "SelfRegulationSCP1": 0.417,
+          "SelfRegulationSCP2": 0.236,
+          "UWaveGestureLibrary": 0.694
+        }
+      },
+      {
+        "dropped": "20be4f7443e8",
+        "gate": 56,
+        "reserve_bonus": 0,
+        "verdicts": {
+          "ArticularyWordRecognition": "fail_unstable",
+          "CharacterTrajectories": "fail_unstable",
+          "ERing": "fail_unstable",
+          "EthanolConcentration": "fail_unstable",
+          "FingerMovements": "fail_mismatch",
+          "HandMovementDirection": "fail_unstable",
+          "Handwriting": "pass",
+          "Heartbeat": "fail_mismatch",
+          "MotorImagery": "fail_mismatch",
+          "NATOPS": "fail_unstable",
+          "SelfRegulationSCP1": "fail_mismatch",
+          "SelfRegulationSCP2": "fail_mismatch",
+          "UWaveGestureLibrary": "fail_unstable"
+        },
+        "snr": {
+          "ArticularyWordRecognition": 1.578,
+          "CharacterTrajectories": 1.629,
+          "ERing": 2.837,
+          "EthanolConcentration": 1.065,
+          "FingerMovements": 0.739,
+          "HandMovementDirection": 1.129,
+          "Handwriting": 4.376,
+          "Heartbeat": 0.634,
+          "MotorImagery": 0.525,
+          "NATOPS": 1.774,
+          "SelfRegulationSCP1": 0.745,
+          "SelfRegulationSCP2": 0.567,
+          "UWaveGestureLibrary": 1.58
+        },
+        "sign": {
+          "ArticularyWordRecognition": 0.652,
+          "CharacterTrajectories": 0.567,
+          "ERing": 0.611,
+          "EthanolConcentration": 0.389,
+          "FingerMovements": 0.208,
+          "HandMovementDirection": 0.389,
+          "Handwriting": 0.803,
+          "Heartbeat": 0.319,
+          "MotorImagery": 0.167,
+          "NATOPS": 0.486,
+          "SelfRegulationSCP1": 0.278,
+          "SelfRegulationSCP2": 0.25,
+          "UWaveGestureLibrary": 0.625
+        }
+      },
+      {
+        "dropped": "65627517fa32",
+        "gate": 56,
+        "reserve_bonus": 0,
+        "verdicts": {
+          "ArticularyWordRecognition": "fail_unstable",
+          "CharacterTrajectories": "fail_unstable",
+          "ERing": "fail_unstable",
+          "EthanolConcentration": "fail_mismatch",
+          "FingerMovements": "fail_unstable",
+          "HandMovementDirection": "fail_unstable",
+          "Handwriting": "pass",
+          "Heartbeat": "fail_mismatch",
+          "MotorImagery": "fail_mismatch",
+          "NATOPS": "fail_unstable",
+          "SelfRegulationSCP1": "fail_mismatch",
+          "SelfRegulationSCP2": "fail_mismatch",
+          "UWaveGestureLibrary": "fail_unstable"
+        },
+        "snr": {
+          "ArticularyWordRecognition": 5.627,
+          "CharacterTrajectories": 2.961,
+          "ERing": 3.562,
+          "EthanolConcentration": 0.872,
+          "FingerMovements": 1.06,
+          "HandMovementDirection": 1.109,
+          "Handwriting": 5.62,
+          "Heartbeat": 0.64,
+          "MotorImagery": 0.531,
+          "NATOPS": 4.339,
+          "SelfRegulationSCP1": 0.872,
+          "SelfRegulationSCP2": 0.562,
+          "UWaveGestureLibrary": 3.657
+        },
+        "sign": {
+          "ArticularyWordRecognition": 0.697,
+          "CharacterTrajectories": 0.672,
+          "ERing": 0.653,
+          "EthanolConcentration": 0.306,
+          "FingerMovements": 0.319,
+          "HandMovementDirection": 0.361,
+          "Handwriting": 0.845,
+          "Heartbeat": 0.352,
+          "MotorImagery": 0.183,
+          "NATOPS": 0.597,
+          "SelfRegulationSCP1": 0.361,
+          "SelfRegulationSCP2": 0.236,
+          "UWaveGestureLibrary": 0.625
+        }
+      },
+      {
+        "dropped": "9092e36eefe1",
+        "gate": 74,
+        "reserve_bonus": 0,
+        "verdicts": {
+          "ArticularyWordRecognition": "pass",
+          "CharacterTrajectories": "fail_unstable",
+          "ERing": "fail_unstable",
+          "EthanolConcentration": "fail_unstable",
+          "FingerMovements": "fail_mismatch",
+          "HandMovementDirection": "fail_mismatch",
+          "Handwriting": "pass",
+          "Heartbeat": "fail_mismatch",
+          "MotorImagery": "fail_mismatch",
+          "NATOPS": "fail_unstable",
+          "SelfRegulationSCP1": "fail_mismatch",
+          "SelfRegulationSCP2": "fail_mismatch",
+          "UWaveGestureLibrary": "pass"
+        },
+        "snr": {
+          "ArticularyWordRecognition": 4.629,
+          "CharacterTrajectories": 2.942,
+          "ERing": 3.204,
+          "EthanolConcentration": 1.054,
+          "FingerMovements": 0.963,
+          "HandMovementDirection": 0.485,
+          "Handwriting": 4.851,
+          "Heartbeat": 0.702,
+          "MotorImagery": 0.517,
+          "NATOPS": 3.974,
+          "SelfRegulationSCP1": 0.834,
+          "SelfRegulationSCP2": 0.556,
+          "UWaveGestureLibrary": 3.54
+        },
+        "sign": {
+          "ArticularyWordRecognition": 0.731,
+          "CharacterTrajectories": 0.681,
+          "ERing": 0.653,
+          "EthanolConcentration": 0.389,
+          "FingerMovements": 0.264,
+          "HandMovementDirection": 0.181,
+          "Handwriting": 0.845,
+          "Heartbeat": 0.38,
+          "MotorImagery": 0.183,
+          "NATOPS": 0.625,
+          "SelfRegulationSCP1": 0.333,
+          "SelfRegulationSCP2": 0.25,
+          "UWaveGestureLibrary": 0.736
+        }
+      },
+      {
+        "dropped": "e490b88ee785",
+        "gate": 74,
+        "reserve_bonus": 0,
+        "verdicts": {
+          "ArticularyWordRecognition": "pass",
+          "CharacterTrajectories": "fail_unstable",
+          "ERing": "fail_unstable",
+          "EthanolConcentration": "fail_unstable",
+          "FingerMovements": "fail_unstable",
+          "HandMovementDirection": "fail_unstable",
+          "Handwriting": "pass",
+          "Heartbeat": "fail_mismatch",
+          "MotorImagery": "fail_mismatch",
+          "NATOPS": "fail_unstable",
+          "SelfRegulationSCP1": "fail_mismatch",
+          "SelfRegulationSCP2": "fail_mismatch",
+          "UWaveGestureLibrary": "pass"
+        },
+        "snr": {
+          "ArticularyWordRecognition": 4.78,
+          "CharacterTrajectories": 2.891,
+          "ERing": 3.377,
+          "EthanolConcentration": 1.038,
+          "FingerMovements": 1.028,
+          "HandMovementDirection": 1.067,
+          "Handwriting": 4.699,
+          "Heartbeat": 0.75,
+          "MotorImagery": 0.522,
+          "NATOPS": 4.126,
+          "SelfRegulationSCP1": 0.936,
+          "SelfRegulationSCP2": 0.447,
+          "UWaveGestureLibrary": 3.484
+        },
+        "sign": {
+          "ArticularyWordRecognition": 0.768,
+          "CharacterTrajectories": 0.657,
+          "ERing": 0.694,
+          "EthanolConcentration": 0.403,
+          "FingerMovements": 0.306,
+          "HandMovementDirection": 0.347,
+          "Handwriting": 0.847,
+          "Heartbeat": 0.375,
+          "MotorImagery": 0.169,
+          "NATOPS": 0.5,
+          "SelfRegulationSCP1": 0.403,
+          "SelfRegulationSCP2": 0.181,
+          "UWaveGestureLibrary": 0.708
+        }
+      },
+      {
+        "dropped": "a1f67db45e64",
+        "gate": 74,
+        "reserve_bonus": 0,
+        "verdicts": {
+          "ArticularyWordRecognition": "pass",
+          "CharacterTrajectories": "fail_unstable",
+          "ERing": "fail_unstable",
+          "EthanolConcentration": "fail_mismatch",
+          "FingerMovements": "fail_mismatch",
+          "HandMovementDirection": "fail_unstable",
+          "Handwriting": "pass",
+          "Heartbeat": "fail_mismatch",
+          "MotorImagery": "fail_mismatch",
+          "NATOPS": "fail_unstable",
+          "SelfRegulationSCP1": "fail_mismatch",
+          "SelfRegulationSCP2": "fail_mismatch",
+          "UWaveGestureLibrary": "pass"
+        },
+        "snr": {
+          "ArticularyWordRecognition": 4.788,
+          "CharacterTrajectories": 2.888,
+          "ERing": 3.271,
+          "EthanolConcentration": 0.969,
+          "FingerMovements": 0.981,
+          "HandMovementDirection": 1.054,
+          "Handwriting": 4.79,
+          "Heartbeat": 0.697,
+          "MotorImagery": 0.555,
+          "NATOPS": 4.161,
+          "SelfRegulationSCP1": 0.983,
+          "SelfRegulationSCP2": 0.568,
+          "UWaveGestureLibrary": 3.682
+        },
+        "sign": {
+          "ArticularyWordRecognition": 0.761,
+          "CharacterTrajectories": 0.629,
+          "ERing": 0.694,
+          "EthanolConcentration": 0.375,
+          "FingerMovements": 0.306,
+          "HandMovementDirection": 0.319,
+          "Handwriting": 0.831,
+          "Heartbeat": 0.366,
+          "MotorImagery": 0.211,
+          "NATOPS": 0.639,
+          "SelfRegulationSCP1": 0.417,
+          "SelfRegulationSCP2": 0.25,
+          "UWaveGestureLibrary": 0.778
+        }
+      },
+      {
+        "dropped": "f48e5da1d899",
+        "gate": 96,
+        "reserve_bonus": 0,
+        "verdicts": {
+          "ArticularyWordRecognition": "pass",
+          "CharacterTrajectories": "pass",
+          "ERing": "pass",
+          "EthanolConcentration": "fail_mismatch",
+          "FingerMovements": "fail_mismatch",
+          "HandMovementDirection": "fail_unstable",
+          "Handwriting": "pass",
+          "Heartbeat": "fail_mismatch",
+          "MotorImagery": "fail_mismatch",
+          "NATOPS": "fail_unstable",
+          "SelfRegulationSCP1": "fail_mismatch",
+          "SelfRegulationSCP2": "fail_mismatch",
+          "UWaveGestureLibrary": "pass"
+        },
+        "snr": {
+          "ArticularyWordRecognition": 5.031,
+          "CharacterTrajectories": 2.999,
+          "ERing": 3.406,
+          "EthanolConcentration": 0.991,
+          "FingerMovements": 0.995,
+          "HandMovementDirection": 1.074,
+          "Handwriting": 5.159,
+          "Heartbeat": 0.692,
+          "MotorImagery": 0.524,
+          "NATOPS": 3.977,
+          "SelfRegulationSCP1": 0.941,
+          "SelfRegulationSCP2": 0.549,
+          "UWaveGestureLibrary": 3.517
+        },
+        "sign": {
+          "ArticularyWordRecognition": 0.735,
+          "CharacterTrajectories": 0.716,
+          "ERing": 0.75,
+          "EthanolConcentration": 0.403,
+          "FingerMovements": 0.292,
+          "HandMovementDirection": 0.347,
+          "Handwriting": 0.817,
+          "Heartbeat": 0.324,
+          "MotorImagery": 0.211,
+          "NATOPS": 0.625,
+          "SelfRegulationSCP1": 0.458,
+          "SelfRegulationSCP2": 0.264,
+          "UWaveGestureLibrary": 0.708
+        }
+      },
+      {
+        "dropped": "8c4aa28336d6",
+        "gate": 70,
+        "reserve_bonus": 0,
+        "verdicts": {
+          "ArticularyWordRecognition": "pass",
+          "CharacterTrajectories": "fail_unstable",
+          "ERing": "pass",
+          "EthanolConcentration": "fail_mismatch",
+          "FingerMovements": "fail_unstable",
+          "HandMovementDirection": "fail_unstable",
+          "Handwriting": "pass",
+          "Heartbeat": "fail_mismatch",
+          "MotorImagery": "fail_mismatch",
+          "NATOPS": "fail_unstable",
+          "SelfRegulationSCP1": "fail_mismatch",
+          "SelfRegulationSCP2": "fail_mismatch",
+          "UWaveGestureLibrary": "fail_unstable"
+        },
+        "snr": {
+          "ArticularyWordRecognition": 4.788,
+          "CharacterTrajectories": 2.92,
+          "ERing": 3.283,
+          "EthanolConcentration": 0.96,
+          "FingerMovements": 1.077,
+          "HandMovementDirection": 1.063,
+          "Handwriting": 4.786,
+          "Heartbeat": 0.665,
+          "MotorImagery": 0.434,
+          "NATOPS": 4.33,
+          "SelfRegulationSCP1": 0.968,
+          "SelfRegulationSCP2": 0.507,
+          "UWaveGestureLibrary": 3.439
+        },
+        "sign": {
+          "ArticularyWordRecognition": 0.75,
+          "CharacterTrajectories": 0.647,
+          "ERing": 0.708,
+          "EthanolConcentration": 0.389,
+          "FingerMovements": 0.333,
+          "HandMovementDirection": 0.319,
+          "Handwriting": 0.861,
+          "Heartbeat": 0.31,
+          "MotorImagery": 0.127,
+          "NATOPS": 0.597,
+          "SelfRegulationSCP1": 0.431,
+          "SelfRegulationSCP2": 0.194,
+          "UWaveGestureLibrary": 0.694
+        }
+      },
+      {
+        "dropped": "cffb55035c3a",
+        "gate": 74,
+        "reserve_bonus": 0,
+        "verdicts": {
+          "ArticularyWordRecognition": "pass",
+          "CharacterTrajectories": "fail_unstable",
+          "ERing": "fail_unstable",
+          "EthanolConcentration": "fail_mismatch",
+          "FingerMovements": "fail_mismatch",
+          "HandMovementDirection": "fail_unstable",
+          "Handwriting": "pass",
+          "Heartbeat": "fail_mismatch",
+          "MotorImagery": "fail_mismatch",
+          "NATOPS": "fail_unstable",
+          "SelfRegulationSCP1": "fail_mismatch",
+          "SelfRegulationSCP2": "fail_mismatch",
+          "UWaveGestureLibrary": "pass"
+        },
+        "snr": {
+          "ArticularyWordRecognition": 4.801,
+          "CharacterTrajectories": 2.922,
+          "ERing": 3.226,
+          "EthanolConcentration": 0.834,
+          "FingerMovements": 0.978,
+          "HandMovementDirection": 1.029,
+          "Handwriting": 4.693,
+          "Heartbeat": 0.709,
+          "MotorImagery": 0.573,
+          "NATOPS": 4.119,
+          "SelfRegulationSCP1": 0.879,
+          "SelfRegulationSCP2": 0.506,
+          "UWaveGestureLibrary": 3.406
+        },
+        "sign": {
+          "ArticularyWordRecognition": 0.721,
+          "CharacterTrajectories": 0.642,
+          "ERing": 0.681,
+          "EthanolConcentration": 0.292,
+          "FingerMovements": 0.292,
+          "HandMovementDirection": 0.333,
+          "Handwriting": 0.845,
+          "Heartbeat": 0.352,
+          "MotorImagery": 0.197,
+          "NATOPS": 0.569,
+          "SelfRegulationSCP1": 0.375,
+          "SelfRegulationSCP2": 0.208,
+          "UWaveGestureLibrary": 0.708
+        }
+      },
+      {
+        "dropped": "4f7d413581f6",
+        "gate": 80,
+        "reserve_bonus": 0,
+        "verdicts": {
+          "ArticularyWordRecognition": "pass",
+          "CharacterTrajectories": "fail_unstable",
+          "ERing": "pass",
+          "EthanolConcentration": "fail_mismatch",
+          "FingerMovements": "fail_mismatch",
+          "HandMovementDirection": "fail_unstable",
+          "Handwriting": "pass",
+          "Heartbeat": "fail_mismatch",
+          "MotorImagery": "fail_mismatch",
+          "NATOPS": "fail_unstable",
+          "SelfRegulationSCP1": "fail_mismatch",
+          "SelfRegulationSCP2": "fail_mismatch",
+          "UWaveGestureLibrary": "pass"
+        },
+        "snr": {
+          "ArticularyWordRecognition": 4.665,
+          "CharacterTrajectories": 2.91,
+          "ERing": 3.361,
+          "EthanolConcentration": 0.909,
+          "FingerMovements": 0.946,
+          "HandMovementDirection": 1.263,
+          "Handwriting": 5.307,
+          "Heartbeat": 0.652,
+          "MotorImagery": 0.438,
+          "NATOPS": 4.031,
+          "SelfRegulationSCP1": 0.935,
+          "SelfRegulationSCP2": 0.558,
+          "UWaveGestureLibrary": 3.303
+        },
+        "sign": {
+          "ArticularyWordRecognition": 0.758,
+          "CharacterTrajectories": 0.691,
+          "ERing": 0.722,
+          "EthanolConcentration": 0.306,
+          "FingerMovements": 0.292,
+          "HandMovementDirection": 0.389,
+          "Handwriting": 0.817,
+          "Heartbeat": 0.352,
+          "MotorImagery": 0.141,
+          "NATOPS": 0.625,
+          "SelfRegulationSCP1": 0.417,
+          "SelfRegulationSCP2": 0.264,
+          "UWaveGestureLibrary": 0.722
+        }
+      }
+    ],
+    "summary": {
+      "n_subsets": 10,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "n_subsets": 10,
+          "pass_rate": 0.7,
+          "verdict_counts": {
+            "pass": 7,
+            "fail_unstable": 3
+          },
+          "snr_min": 1.578,
+          "snr_med": 4.788,
+          "snr_max": 5.627,
+          "sign_min": 0.652,
+          "sign_med": 0.733,
+          "sign_max": 0.768
+        },
+        "CharacterTrajectories": {
+          "n_subsets": 10,
+          "pass_rate": 0.1,
+          "verdict_counts": {
+            "fail_unstable": 9,
+            "pass": 1
+          },
+          "snr_min": 1.629,
+          "snr_med": 2.921,
+          "snr_max": 3.369,
+          "sign_min": 0.567,
+          "sign_med": 0.652,
+          "sign_max": 0.716
+        },
+        "ERing": {
+          "n_subsets": 10,
+          "pass_rate": 0.3,
+          "verdict_counts": {
+            "fail_unstable": 7,
+            "pass": 3
+          },
+          "snr_min": 2.837,
+          "snr_med": 3.277,
+          "snr_max": 3.562,
+          "sign_min": 0.611,
+          "sign_med": 0.688,
+          "sign_max": 0.75
+        },
+        "EthanolConcentration": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 6,
+            "fail_unstable": 4
+          },
+          "snr_min": 0.834,
+          "snr_med": 0.98,
+          "snr_max": 1.065,
+          "sign_min": 0.292,
+          "sign_med": 0.389,
+          "sign_max": 0.417
+        },
+        "FingerMovements": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 7,
+            "fail_unstable": 3
+          },
+          "snr_min": 0.739,
+          "snr_med": 0.981,
+          "snr_max": 1.077,
+          "sign_min": 0.208,
+          "sign_med": 0.292,
+          "sign_max": 0.333
+        },
+        "HandMovementDirection": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_unstable": 9,
+            "fail_mismatch": 1
+          },
+          "snr_min": 0.485,
+          "snr_med": 1.071,
+          "snr_max": 1.263,
+          "sign_min": 0.181,
+          "sign_med": 0.347,
+          "sign_max": 0.389
+        },
+        "Handwriting": {
+          "n_subsets": 10,
+          "pass_rate": 1.0,
+          "verdict_counts": {
+            "pass": 10
+          },
+          "snr_min": 4.376,
+          "snr_med": 4.821,
+          "snr_max": 5.62,
+          "sign_min": 0.803,
+          "sign_med": 0.838,
+          "sign_max": 0.861
+        },
+        "Heartbeat": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 10
+          },
+          "snr_min": 0.504,
+          "snr_med": 0.678,
+          "snr_max": 0.75,
+          "sign_min": 0.239,
+          "sign_med": 0.352,
+          "sign_max": 0.38
+        },
+        "MotorImagery": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 10
+          },
+          "snr_min": 0.434,
+          "snr_med": 0.523,
+          "snr_max": 0.573,
+          "sign_min": 0.127,
+          "sign_med": 0.183,
+          "sign_max": 0.211
+        },
+        "NATOPS": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_unstable": 10
+          },
+          "snr_min": 1.774,
+          "snr_med": 4.081,
+          "snr_max": 4.339,
+          "sign_min": 0.486,
+          "sign_med": 0.611,
+          "sign_max": 0.639
+        },
+        "SelfRegulationSCP1": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 10
+          },
+          "snr_min": 0.745,
+          "snr_med": 0.928,
+          "snr_max": 0.983,
+          "sign_min": 0.278,
+          "sign_med": 0.41,
+          "sign_max": 0.458
+        },
+        "SelfRegulationSCP2": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 10
+          },
+          "snr_min": 0.447,
+          "snr_med": 0.552,
+          "snr_max": 0.568,
+          "sign_min": 0.181,
+          "sign_med": 0.243,
+          "sign_max": 0.264
+        },
+        "UWaveGestureLibrary": {
+          "n_subsets": 10,
+          "pass_rate": 0.6,
+          "verdict_counts": {
+            "pass": 6,
+            "fail_unstable": 4
+          },
+          "snr_min": 1.58,
+          "snr_med": 3.5,
+          "snr_max": 3.682,
+          "sign_min": 0.625,
+          "sign_med": 0.708,
+          "sign_max": 0.778
+        }
+      },
+      "gate": {
+        "mean": 71.0,
+        "median": 74.0,
+        "min": 56.0,
+        "max": 96.0,
+        "p10": 56.0,
+        "p25": 59.5,
+        "p75": 74.0,
+        "p90": 81.6,
+        "frac_ge_100": 0.0,
+        "frac_ge_74": 0.6,
+        "frac_eq_74": 0.4,
+        "hist": {
+          "56": 3,
+          "70": 1,
+          "74": 4,
+          "80": 1,
+          "96": 1
+        }
+      }
+    }
+  },
+  "subsets": {
+    "9": {
+      "n_subsets": 10,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "n_subsets": 10,
+          "pass_rate": 0.7,
+          "verdict_counts": {
+            "pass": 7,
+            "fail_unstable": 3
+          },
+          "snr_min": 1.578,
+          "snr_med": 4.788,
+          "snr_max": 5.627,
+          "sign_min": 0.652,
+          "sign_med": 0.733,
+          "sign_max": 0.768
+        },
+        "CharacterTrajectories": {
+          "n_subsets": 10,
+          "pass_rate": 0.1,
+          "verdict_counts": {
+            "fail_unstable": 9,
+            "pass": 1
+          },
+          "snr_min": 1.629,
+          "snr_med": 2.921,
+          "snr_max": 3.369,
+          "sign_min": 0.567,
+          "sign_med": 0.652,
+          "sign_max": 0.716
+        },
+        "ERing": {
+          "n_subsets": 10,
+          "pass_rate": 0.3,
+          "verdict_counts": {
+            "fail_unstable": 7,
+            "pass": 3
+          },
+          "snr_min": 2.837,
+          "snr_med": 3.277,
+          "snr_max": 3.562,
+          "sign_min": 0.611,
+          "sign_med": 0.688,
+          "sign_max": 0.75
+        },
+        "EthanolConcentration": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 6,
+            "fail_unstable": 4
+          },
+          "snr_min": 0.834,
+          "snr_med": 0.98,
+          "snr_max": 1.065,
+          "sign_min": 0.292,
+          "sign_med": 0.389,
+          "sign_max": 0.417
+        },
+        "FingerMovements": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 7,
+            "fail_unstable": 3
+          },
+          "snr_min": 0.739,
+          "snr_med": 0.981,
+          "snr_max": 1.077,
+          "sign_min": 0.208,
+          "sign_med": 0.292,
+          "sign_max": 0.333
+        },
+        "HandMovementDirection": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_unstable": 9,
+            "fail_mismatch": 1
+          },
+          "snr_min": 0.485,
+          "snr_med": 1.071,
+          "snr_max": 1.263,
+          "sign_min": 0.181,
+          "sign_med": 0.347,
+          "sign_max": 0.389
+        },
+        "Handwriting": {
+          "n_subsets": 10,
+          "pass_rate": 1.0,
+          "verdict_counts": {
+            "pass": 10
+          },
+          "snr_min": 4.376,
+          "snr_med": 4.821,
+          "snr_max": 5.62,
+          "sign_min": 0.803,
+          "sign_med": 0.838,
+          "sign_max": 0.861
+        },
+        "Heartbeat": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 10
+          },
+          "snr_min": 0.504,
+          "snr_med": 0.678,
+          "snr_max": 0.75,
+          "sign_min": 0.239,
+          "sign_med": 0.352,
+          "sign_max": 0.38
+        },
+        "MotorImagery": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 10
+          },
+          "snr_min": 0.434,
+          "snr_med": 0.523,
+          "snr_max": 0.573,
+          "sign_min": 0.127,
+          "sign_med": 0.183,
+          "sign_max": 0.211
+        },
+        "NATOPS": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_unstable": 10
+          },
+          "snr_min": 1.774,
+          "snr_med": 4.081,
+          "snr_max": 4.339,
+          "sign_min": 0.486,
+          "sign_med": 0.611,
+          "sign_max": 0.639
+        },
+        "SelfRegulationSCP1": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 10
+          },
+          "snr_min": 0.745,
+          "snr_med": 0.928,
+          "snr_max": 0.983,
+          "sign_min": 0.278,
+          "sign_med": 0.41,
+          "sign_max": 0.458
+        },
+        "SelfRegulationSCP2": {
+          "n_subsets": 10,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 10
+          },
+          "snr_min": 0.447,
+          "snr_med": 0.552,
+          "snr_max": 0.568,
+          "sign_min": 0.181,
+          "sign_med": 0.243,
+          "sign_max": 0.264
+        },
+        "UWaveGestureLibrary": {
+          "n_subsets": 10,
+          "pass_rate": 0.6,
+          "verdict_counts": {
+            "pass": 6,
+            "fail_unstable": 4
+          },
+          "snr_min": 1.58,
+          "snr_med": 3.5,
+          "snr_max": 3.682,
+          "sign_min": 0.625,
+          "sign_med": 0.708,
+          "sign_max": 0.778
+        }
+      },
+      "gate": {
+        "mean": 71.0,
+        "median": 74.0,
+        "min": 56.0,
+        "max": 96.0,
+        "p10": 56.0,
+        "p25": 59.5,
+        "p75": 74.0,
+        "p90": 81.6,
+        "frac_ge_100": 0.0,
+        "frac_ge_74": 0.6,
+        "frac_eq_74": 0.4,
+        "hist": {
+          "56": 3,
+          "70": 1,
+          "74": 4,
+          "80": 1,
+          "96": 1
+        }
+      }
+    },
+    "8": {
+      "n_subsets": 45,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "n_subsets": 45,
+          "pass_rate": 0.6667,
+          "verdict_counts": {
+            "pass": 30,
+            "fail_unstable": 15
+          },
+          "snr_min": 1.485,
+          "snr_med": 4.75,
+          "snr_max": 6.366,
+          "sign_min": 0.588,
+          "sign_med": 0.74,
+          "sign_max": 0.804
+        },
+        "CharacterTrajectories": {
+          "n_subsets": 45,
+          "pass_rate": 0.2667,
+          "verdict_counts": {
+            "fail_unstable": 32,
+            "pass": 12,
+            "retry_ceiling": 1
+          },
+          "snr_min": 0.513,
+          "snr_med": 2.854,
+          "snr_max": 3.424,
+          "sign_min": 0.431,
+          "sign_med": 0.648,
+          "sign_max": 0.788
+        },
+        "ERing": {
+          "n_subsets": 45,
+          "pass_rate": 0.3556,
+          "verdict_counts": {
+            "fail_unstable": 28,
+            "pass": 16,
+            "retry_ceiling": 1
+          },
+          "snr_min": 0.977,
+          "snr_med": 3.247,
+          "snr_max": 3.724,
+          "sign_min": 0.5,
+          "sign_med": 0.679,
+          "sign_max": 0.804
+        },
+        "EthanolConcentration": {
+          "n_subsets": 45,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 26,
+            "fail_unstable": 19
+          },
+          "snr_min": 0.633,
+          "snr_med": 0.962,
+          "snr_max": 1.17,
+          "sign_min": 0.179,
+          "sign_med": 0.357,
+          "sign_max": 0.464
+        },
+        "FingerMovements": {
+          "n_subsets": 45,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 23,
+            "fail_unstable": 22
+          },
+          "snr_min": 0.68,
+          "snr_med": 1.0,
+          "snr_max": 1.191,
+          "sign_min": 0.161,
+          "sign_med": 0.304,
+          "sign_max": 0.375
+        },
+        "HandMovementDirection": {
+          "n_subsets": 45,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_unstable": 36,
+            "fail_mismatch": 9
+          },
+          "snr_min": 0.436,
+          "snr_med": 1.12,
+          "snr_max": 1.425,
+          "sign_min": 0.143,
+          "sign_med": 0.357,
+          "sign_max": 0.464
+        },
+        "Handwriting": {
+          "n_subsets": 45,
+          "pass_rate": 1.0,
+          "verdict_counts": {
+            "pass": 45
+          },
+          "snr_min": 3.165,
+          "snr_med": 4.987,
+          "snr_max": 6.175,
+          "sign_min": 0.745,
+          "sign_med": 0.836,
+          "sign_max": 0.893
+        },
+        "Heartbeat": {
+          "n_subsets": 45,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 45
+          },
+          "snr_min": 0.444,
+          "snr_med": 0.679,
+          "snr_max": 0.812,
+          "sign_min": 0.182,
+          "sign_med": 0.357,
+          "sign_max": 0.429
+        },
+        "MotorImagery": {
+          "n_subsets": 45,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 45
+          },
+          "snr_min": 0.359,
+          "snr_med": 0.528,
+          "snr_max": 0.631,
+          "sign_min": 0.089,
+          "sign_med": 0.182,
+          "sign_max": 0.255
+        },
+        "NATOPS": {
+          "n_subsets": 45,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_unstable": 44,
+            "retry_ceiling": 1
+          },
+          "snr_min": 0.975,
+          "snr_med": 4.154,
+          "snr_max": 4.755,
+          "sign_min": 0.357,
+          "sign_med": 0.625,
+          "sign_max": 0.679
+        },
+        "SelfRegulationSCP1": {
+          "n_subsets": 45,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 37,
+            "fail_unstable": 8
+          },
+          "snr_min": 0.666,
+          "snr_med": 0.91,
+          "snr_max": 1.069,
+          "sign_min": 0.196,
+          "sign_med": 0.393,
+          "sign_max": 0.518
+        },
+        "SelfRegulationSCP2": {
+          "n_subsets": 45,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 45
+          },
+          "snr_min": 0.393,
+          "snr_med": 0.536,
+          "snr_max": 0.608,
+          "sign_min": 0.143,
+          "sign_med": 0.232,
+          "sign_max": 0.321
+        },
+        "UWaveGestureLibrary": {
+          "n_subsets": 45,
+          "pass_rate": 0.5556,
+          "verdict_counts": {
+            "pass": 25,
+            "fail_unstable": 20
+          },
+          "snr_min": 1.156,
+          "snr_med": 3.559,
+          "snr_max": 4.026,
+          "sign_min": 0.518,
+          "sign_med": 0.714,
+          "sign_max": 0.821
+        }
+      },
+      "gate": {
+        "mean": 73.29,
+        "median": 74.0,
+        "min": 56.0,
+        "max": 96.0,
+        "p10": 56.0,
+        "p25": 64.0,
+        "p75": 80.0,
+        "p90": 96.0,
+        "frac_ge_100": 0.0,
+        "frac_ge_74": 0.5778,
+        "frac_eq_74": 0.2,
+        "hist": {
+          "56": 11,
+          "64": 3,
+          "66": 3,
+          "70": 2,
+          "74": 9,
+          "78": 1,
+          "80": 7,
+          "86": 1,
+          "90": 1,
+          "96": 7
+        }
+      }
+    },
+    "7": {
+      "n_subsets": 120,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "n_subsets": 120,
+          "pass_rate": 0.6833,
+          "verdict_counts": {
+            "pass": 82,
+            "fail_unstable": 37,
+            "retry_ceiling": 1
+          },
+          "snr_min": 0.713,
+          "snr_med": 4.74,
+          "snr_max": 6.91,
+          "sign_min": 0.459,
+          "sign_med": 0.744,
+          "sign_max": 0.846
+        },
+        "CharacterTrajectories": {
+          "n_subsets": 120,
+          "pass_rate": 0.325,
+          "verdict_counts": {
+            "fail_unstable": 73,
+            "pass": 39,
+            "retry_ceiling": 8
+          },
+          "snr_min": 0.427,
+          "snr_med": 2.758,
+          "snr_max": 3.414,
+          "sign_min": 0.375,
+          "sign_med": 0.65,
+          "sign_max": 0.825
+        },
+        "ERing": {
+          "n_subsets": 120,
+          "pass_rate": 0.425,
+          "verdict_counts": {
+            "fail_unstable": 66,
+            "pass": 51,
+            "retry_ceiling": 3
+          },
+          "snr_min": 0.833,
+          "snr_med": 3.226,
+          "snr_max": 3.858,
+          "sign_min": 0.429,
+          "sign_med": 0.69,
+          "sign_max": 0.857
+        },
+        "EthanolConcentration": {
+          "n_subsets": 120,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 68,
+            "fail_unstable": 52
+          },
+          "snr_min": 0.553,
+          "snr_med": 0.966,
+          "snr_max": 1.297,
+          "sign_min": 0.071,
+          "sign_med": 0.369,
+          "sign_max": 0.524
+        },
+        "FingerMovements": {
+          "n_subsets": 120,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_unstable": 64,
+            "fail_mismatch": 56
+          },
+          "snr_min": 0.598,
+          "snr_med": 1.019,
+          "snr_max": 1.326,
+          "sign_min": 0.119,
+          "sign_med": 0.298,
+          "sign_max": 0.405
+        },
+        "HandMovementDirection": {
+          "n_subsets": 120,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_unstable": 84,
+            "fail_mismatch": 36
+          },
+          "snr_min": 0.373,
+          "snr_med": 1.149,
+          "snr_max": 1.621,
+          "sign_min": 0.095,
+          "sign_med": 0.381,
+          "sign_max": 0.524
+        },
+        "Handwriting": {
+          "n_subsets": 120,
+          "pass_rate": 1.0,
+          "verdict_counts": {
+            "pass": 120
+          },
+          "snr_min": 2.679,
+          "snr_med": 4.841,
+          "snr_max": 7.061,
+          "sign_min": 0.707,
+          "sign_med": 0.833,
+          "sign_max": 0.952
+        },
+        "Heartbeat": {
+          "n_subsets": 120,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 120
+          },
+          "snr_min": 0.348,
+          "snr_med": 0.679,
+          "snr_max": 0.877,
+          "sign_min": 0.122,
+          "sign_med": 0.357,
+          "sign_max": 0.476
+        },
+        "MotorImagery": {
+          "n_subsets": 120,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 120
+          },
+          "snr_min": 0.317,
+          "snr_med": 0.509,
+          "snr_max": 0.681,
+          "sign_min": 0.048,
+          "sign_med": 0.19,
+          "sign_max": 0.31
+        },
+        "NATOPS": {
+          "n_subsets": 120,
+          "pass_rate": 0.15,
+          "verdict_counts": {
+            "fail_unstable": 97,
+            "pass": 18,
+            "retry_ceiling": 5
+          },
+          "snr_min": 0.8,
+          "snr_med": 4.227,
+          "snr_max": 5.037,
+          "sign_min": 0.286,
+          "sign_med": 0.583,
+          "sign_max": 0.738
+        },
+        "SelfRegulationSCP1": {
+          "n_subsets": 120,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 92,
+            "fail_unstable": 28
+          },
+          "snr_min": 0.595,
+          "snr_med": 0.915,
+          "snr_max": 1.158,
+          "sign_min": 0.119,
+          "sign_med": 0.405,
+          "sign_max": 0.571
+        },
+        "SelfRegulationSCP2": {
+          "n_subsets": 120,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 120
+          },
+          "snr_min": 0.354,
+          "snr_med": 0.542,
+          "snr_max": 0.654,
+          "sign_min": 0.119,
+          "sign_med": 0.238,
+          "sign_max": 0.405
+        },
+        "UWaveGestureLibrary": {
+          "n_subsets": 120,
+          "pass_rate": 0.5583,
+          "verdict_counts": {
+            "pass": 67,
+            "fail_unstable": 52,
+            "fail_mismatch": 1
+          },
+          "snr_min": 0.93,
+          "snr_med": 3.606,
+          "snr_max": 4.302,
+          "sign_min": 0.476,
+          "sign_med": 0.714,
+          "sign_max": 0.881
+        }
+      },
+      "gate": {
+        "mean": 76.3,
+        "median": 74.0,
+        "min": 56.0,
+        "max": 106.0,
+        "p10": 56.0,
+        "p25": 63.5,
+        "p75": 86.0,
+        "p90": 96.0,
+        "frac_ge_100": 0.075,
+        "frac_ge_74": 0.6333,
+        "frac_eq_74": 0.15,
+        "hist": {
+          "56": 27,
+          "62": 3,
+          "64": 5,
+          "66": 4,
+          "70": 3,
+          "72": 2,
+          "74": 18,
+          "76": 1,
+          "78": 1,
+          "80": 17,
+          "84": 5,
+          "86": 7,
+          "90": 4,
+          "96": 14,
+          "100": 1,
+          "106": 8
+        }
+      }
+    },
+    "6": {
+      "n_subsets": 210,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "n_subsets": 210,
+          "pass_rate": 0.6476,
+          "verdict_counts": {
+            "pass": 136,
+            "fail_unstable": 67,
+            "retry_ceiling": 7
+          },
+          "snr_min": 0.616,
+          "snr_med": 4.598,
+          "snr_max": 7.023,
+          "sign_min": 0.385,
+          "sign_med": 0.724,
+          "sign_max": 0.889
+        },
+        "CharacterTrajectories": {
+          "n_subsets": 210,
+          "pass_rate": 0.3762,
+          "verdict_counts": {
+            "fail_unstable": 103,
+            "pass": 79,
+            "retry_ceiling": 28
+          },
+          "snr_min": 0.35,
+          "snr_med": 2.623,
+          "snr_max": 3.36,
+          "sign_min": 0.308,
+          "sign_med": 0.655,
+          "sign_max": 0.862
+        },
+        "ERing": {
+          "n_subsets": 210,
+          "pass_rate": 0.519,
+          "verdict_counts": {
+            "pass": 109,
+            "fail_unstable": 85,
+            "retry_ceiling": 16
+          },
+          "snr_min": 0.715,
+          "snr_med": 3.223,
+          "snr_max": 4.015,
+          "sign_min": 0.333,
+          "sign_med": 0.7,
+          "sign_max": 0.9
+        },
+        "EthanolConcentration": {
+          "n_subsets": 210,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 122,
+            "fail_unstable": 88
+          },
+          "snr_min": 0.387,
+          "snr_med": 0.966,
+          "snr_max": 1.442,
+          "sign_min": 0.033,
+          "sign_med": 0.4,
+          "sign_max": 0.6
+        },
+        "FingerMovements": {
+          "n_subsets": 210,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_unstable": 106,
+            "fail_mismatch": 104
+          },
+          "snr_min": 0.505,
+          "snr_med": 1.006,
+          "snr_max": 1.444,
+          "sign_min": 0.1,
+          "sign_med": 0.3,
+          "sign_max": 0.467
+        },
+        "HandMovementDirection": {
+          "n_subsets": 210,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_unstable": 126,
+            "fail_mismatch": 84
+          },
+          "snr_min": 0.317,
+          "snr_med": 1.159,
+          "snr_max": 1.845,
+          "sign_min": 0.033,
+          "sign_med": 0.384,
+          "sign_max": 0.6
+        },
+        "Handwriting": {
+          "n_subsets": 210,
+          "pass_rate": 0.9667,
+          "verdict_counts": {
+            "pass": 203,
+            "fail_unstable": 7
+          },
+          "snr_min": 2.464,
+          "snr_med": 4.784,
+          "snr_max": 7.8,
+          "sign_min": 0.655,
+          "sign_med": 0.833,
+          "sign_max": 0.967
+        },
+        "Heartbeat": {
+          "n_subsets": 210,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 210
+          },
+          "snr_min": 0.271,
+          "snr_med": 0.667,
+          "snr_max": 0.952,
+          "sign_min": 0.067,
+          "sign_med": 0.356,
+          "sign_max": 0.533
+        },
+        "MotorImagery": {
+          "n_subsets": 210,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 210
+          },
+          "snr_min": 0.286,
+          "snr_med": 0.492,
+          "snr_max": 0.734,
+          "sign_min": 0.0,
+          "sign_med": 0.172,
+          "sign_max": 0.367
+        },
+        "NATOPS": {
+          "n_subsets": 210,
+          "pass_rate": 0.2762,
+          "verdict_counts": {
+            "fail_unstable": 134,
+            "pass": 58,
+            "retry_ceiling": 18
+          },
+          "snr_min": 0.463,
+          "snr_med": 4.213,
+          "snr_max": 5.412,
+          "sign_min": 0.167,
+          "sign_med": 0.6,
+          "sign_max": 0.833
+        },
+        "SelfRegulationSCP1": {
+          "n_subsets": 210,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 148,
+            "fail_unstable": 62
+          },
+          "snr_min": 0.447,
+          "snr_med": 0.899,
+          "snr_max": 1.285,
+          "sign_min": 0.067,
+          "sign_med": 0.4,
+          "sign_max": 0.633
+        },
+        "SelfRegulationSCP2": {
+          "n_subsets": 210,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 210
+          },
+          "snr_min": 0.296,
+          "snr_med": 0.528,
+          "snr_max": 0.713,
+          "sign_min": 0.1,
+          "sign_med": 0.233,
+          "sign_max": 0.467
+        },
+        "UWaveGestureLibrary": {
+          "n_subsets": 210,
+          "pass_rate": 0.6048,
+          "verdict_counts": {
+            "pass": 127,
+            "fail_unstable": 78,
+            "fail_mismatch": 3,
+            "retry_ceiling": 2
+          },
+          "snr_min": 0.736,
+          "snr_med": 3.583,
+          "snr_max": 4.616,
+          "sign_min": 0.4,
+          "sign_med": 0.7,
+          "sign_max": 0.933
+        }
+      },
+      "gate": {
+        "mean": 78.72,
+        "median": 80.0,
+        "min": 44.0,
+        "max": 106.0,
+        "p10": 56.0,
+        "p25": 64.0,
+        "p75": 96.0,
+        "p90": 106.0,
+        "frac_ge_100": 0.1286,
+        "frac_ge_74": 0.6333,
+        "frac_eq_74": 0.0857,
+        "hist": {
+          "44": 3,
+          "54": 2,
+          "56": 34,
+          "62": 6,
+          "64": 9,
+          "66": 13,
+          "70": 3,
+          "72": 7,
+          "74": 18,
+          "76": 3,
+          "78": 1,
+          "80": 25,
+          "82": 3,
+          "84": 9,
+          "86": 9,
+          "90": 8,
+          "92": 1,
+          "96": 28,
+          "98": 1,
+          "100": 1,
+          "106": 26
+        }
+      }
+    },
+    "5": {
+      "n_subsets": 252,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "n_subsets": 252,
+          "pass_rate": 0.6349,
+          "verdict_counts": {
+            "pass": 160,
+            "fail_unstable": 71,
+            "retry_ceiling": 21
+          },
+          "snr_min": 0.48,
+          "snr_med": 2.98,
+          "snr_max": 7.105,
+          "sign_min": 0.278,
+          "sign_med": 0.737,
+          "sign_max": 0.947
+        },
+        "CharacterTrajectories": {
+          "n_subsets": 252,
+          "pass_rate": 0.4325,
+          "verdict_counts": {
+            "pass": 109,
+            "fail_unstable": 87,
+            "retry_ceiling": 56
+          },
+          "snr_min": 0.312,
+          "snr_med": 2.192,
+          "snr_max": 3.241,
+          "sign_min": 0.25,
+          "sign_med": 0.667,
+          "sign_max": 0.9
+        },
+        "ERing": {
+          "n_subsets": 252,
+          "pass_rate": 0.5635,
+          "verdict_counts": {
+            "pass": 142,
+            "fail_unstable": 77,
+            "retry_ceiling": 33
+          },
+          "snr_min": 0.499,
+          "snr_med": 3.236,
+          "snr_max": 4.583,
+          "sign_min": 0.25,
+          "sign_med": 0.7,
+          "sign_max": 0.95
+        },
+        "EthanolConcentration": {
+          "n_subsets": 252,
+          "pass_rate": 0.004,
+          "verdict_counts": {
+            "fail_mismatch": 139,
+            "fail_unstable": 112,
+            "pass": 1
+          },
+          "snr_min": 0.304,
+          "snr_med": 0.966,
+          "snr_max": 1.53,
+          "sign_min": 0.0,
+          "sign_med": 0.4,
+          "sign_max": 0.7
+        },
+        "FingerMovements": {
+          "n_subsets": 252,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 140,
+            "fail_unstable": 112
+          },
+          "snr_min": 0.42,
+          "snr_med": 0.923,
+          "snr_max": 1.603,
+          "sign_min": 0.05,
+          "sign_med": 0.3,
+          "sign_max": 0.55
+        },
+        "HandMovementDirection": {
+          "n_subsets": 252,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 126,
+            "fail_unstable": 126
+          },
+          "snr_min": 0.232,
+          "snr_med": 0.967,
+          "snr_max": 2.072,
+          "sign_min": 0.0,
+          "sign_med": 0.35,
+          "sign_max": 0.65
+        },
+        "Handwriting": {
+          "n_subsets": 252,
+          "pass_rate": 0.9286,
+          "verdict_counts": {
+            "pass": 234,
+            "fail_unstable": 18
+          },
+          "snr_min": 1.162,
+          "snr_med": 4.76,
+          "snr_max": 8.29,
+          "sign_min": 0.474,
+          "sign_med": 0.85,
+          "sign_max": 1.0
+        },
+        "Heartbeat": {
+          "n_subsets": 252,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 249,
+            "fail_unstable": 3
+          },
+          "snr_min": 0.185,
+          "snr_med": 0.657,
+          "snr_max": 1.051,
+          "sign_min": 0.05,
+          "sign_med": 0.35,
+          "sign_max": 0.6
+        },
+        "MotorImagery": {
+          "n_subsets": 252,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 252
+          },
+          "snr_min": 0.258,
+          "snr_med": 0.485,
+          "snr_max": 0.819,
+          "sign_min": 0.0,
+          "sign_med": 0.158,
+          "sign_max": 0.45
+        },
+        "NATOPS": {
+          "n_subsets": 252,
+          "pass_rate": 0.2897,
+          "verdict_counts": {
+            "fail_unstable": 145,
+            "pass": 73,
+            "retry_ceiling": 34
+          },
+          "snr_min": 0.383,
+          "snr_med": 3.321,
+          "snr_max": 5.755,
+          "sign_min": 0.05,
+          "sign_med": 0.6,
+          "sign_max": 0.9
+        },
+        "SelfRegulationSCP1": {
+          "n_subsets": 252,
+          "pass_rate": 0.0238,
+          "verdict_counts": {
+            "fail_mismatch": 169,
+            "fail_unstable": 77,
+            "pass": 6
+          },
+          "snr_min": 0.335,
+          "snr_med": 0.882,
+          "snr_max": 1.454,
+          "sign_min": 0.0,
+          "sign_med": 0.4,
+          "sign_max": 0.75
+        },
+        "SelfRegulationSCP2": {
+          "n_subsets": 252,
+          "pass_rate": 0.0,
+          "verdict_counts": {
+            "fail_mismatch": 252
+          },
+          "snr_min": 0.259,
+          "snr_med": 0.522,
+          "snr_max": 0.789,
+          "sign_min": 0.05,
+          "sign_med": 0.2,
+          "sign_max": 0.55
+        },
+        "UWaveGestureLibrary": {
+          "n_subsets": 252,
+          "pass_rate": 0.5754,
+          "verdict_counts": {
+            "pass": 145,
+            "fail_unstable": 91,
+            "retry_ceiling": 9,
+            "fail_mismatch": 7
+          },
+          "snr_min": 0.573,
+          "snr_med": 2.752,
+          "snr_max": 4.958,
+          "sign_min": 0.3,
+          "sign_med": 0.7,
+          "sign_max": 1.0
+        }
+      },
+      "gate": {
+        "mean": 79.22,
+        "median": 80.0,
+        "min": 44.0,
+        "max": 108.0,
+        "p10": 56.0,
+        "p25": 66.0,
+        "p75": 96.0,
+        "p90": 106.0,
+        "frac_ge_100": 0.131,
+        "frac_ge_74": 0.627,
+        "frac_eq_74": 0.0437,
+        "hist": {
+          "44": 7,
+          "50": 1,
+          "52": 1,
+          "54": 2,
+          "56": 30,
+          "62": 7,
+          "64": 14,
+          "66": 18,
+          "70": 5,
+          "72": 9,
+          "74": 11,
+          "76": 3,
+          "78": 7,
+          "80": 27,
+          "82": 7,
+          "84": 10,
+          "86": 8,
+          "88": 1,
+          "90": 13,
+          "92": 1,
+          "94": 1,
+          "96": 36,
+          "100": 1,
+          "106": 28,
+          "108": 4
+        }
+      }
+    }
+  },
+  "subsets_pooled": {
+    "n_subsets": 637,
+    "datasets": {
+      "ArticularyWordRecognition": {
+        "n_subsets": 637,
+        "pass_rate": 0.6515,
+        "verdict_counts": {
+          "pass": 415,
+          "fail_unstable": 193,
+          "retry_ceiling": 29
+        },
+        "snr_min": 0.48,
+        "snr_med": 4.592,
+        "snr_max": 7.105,
+        "sign_min": 0.278,
+        "sign_med": 0.737,
+        "sign_max": 0.947
+      },
+      "CharacterTrajectories": {
+        "n_subsets": 637,
+        "pass_rate": 0.3768,
+        "verdict_counts": {
+          "fail_unstable": 304,
+          "pass": 240,
+          "retry_ceiling": 93
+        },
+        "snr_min": 0.312,
+        "snr_med": 2.594,
+        "snr_max": 3.424,
+        "sign_min": 0.25,
+        "sign_med": 0.654,
+        "sign_max": 0.9
+      },
+      "ERing": {
+        "n_subsets": 637,
+        "pass_rate": 0.5039,
+        "verdict_counts": {
+          "pass": 321,
+          "fail_unstable": 263,
+          "retry_ceiling": 53
+        },
+        "snr_min": 0.499,
+        "snr_med": 3.23,
+        "snr_max": 4.583,
+        "sign_min": 0.25,
+        "sign_med": 0.7,
+        "sign_max": 0.95
+      },
+      "EthanolConcentration": {
+        "n_subsets": 637,
+        "pass_rate": 0.0016,
+        "verdict_counts": {
+          "fail_mismatch": 361,
+          "fail_unstable": 275,
+          "pass": 1
+        },
+        "snr_min": 0.304,
+        "snr_med": 0.966,
+        "snr_max": 1.53,
+        "sign_min": 0.0,
+        "sign_med": 0.381,
+        "sign_max": 0.7
+      },
+      "FingerMovements": {
+        "n_subsets": 637,
+        "pass_rate": 0.0,
+        "verdict_counts": {
+          "fail_mismatch": 330,
+          "fail_unstable": 307
+        },
+        "snr_min": 0.42,
+        "snr_med": 0.994,
+        "snr_max": 1.603,
+        "sign_min": 0.05,
+        "sign_med": 0.3,
+        "sign_max": 0.55
+      },
+      "HandMovementDirection": {
+        "n_subsets": 637,
+        "pass_rate": 0.0,
+        "verdict_counts": {
+          "fail_unstable": 381,
+          "fail_mismatch": 256
+        },
+        "snr_min": 0.232,
+        "snr_med": 1.13,
+        "snr_max": 2.072,
+        "sign_min": 0.0,
+        "sign_med": 0.367,
+        "sign_max": 0.65
+      },
+      "Handwriting": {
+        "n_subsets": 637,
+        "pass_rate": 0.9608,
+        "verdict_counts": {
+          "pass": 612,
+          "fail_unstable": 25
+        },
+        "snr_min": 1.162,
+        "snr_med": 4.814,
+        "snr_max": 8.29,
+        "sign_min": 0.474,
+        "sign_med": 0.833,
+        "sign_max": 1.0
+      },
+      "Heartbeat": {
+        "n_subsets": 637,
+        "pass_rate": 0.0,
+        "verdict_counts": {
+          "fail_mismatch": 634,
+          "fail_unstable": 3
+        },
+        "snr_min": 0.185,
+        "snr_med": 0.67,
+        "snr_max": 1.051,
+        "sign_min": 0.05,
+        "sign_med": 0.35,
+        "sign_max": 0.6
+      },
+      "MotorImagery": {
+        "n_subsets": 637,
+        "pass_rate": 0.0,
+        "verdict_counts": {
+          "fail_mismatch": 637
+        },
+        "snr_min": 0.258,
+        "snr_med": 0.493,
+        "snr_max": 0.819,
+        "sign_min": 0.0,
+        "sign_med": 0.172,
+        "sign_max": 0.45
+      },
+      "NATOPS": {
+        "n_subsets": 637,
+        "pass_rate": 0.2339,
+        "verdict_counts": {
+          "fail_unstable": 430,
+          "pass": 149,
+          "retry_ceiling": 58
+        },
+        "snr_min": 0.383,
+        "snr_med": 4.155,
+        "snr_max": 5.755,
+        "sign_min": 0.05,
+        "sign_med": 0.6,
+        "sign_max": 0.9
+      },
+      "SelfRegulationSCP1": {
+        "n_subsets": 637,
+        "pass_rate": 0.0094,
+        "verdict_counts": {
+          "fail_mismatch": 456,
+          "fail_unstable": 175,
+          "pass": 6
+        },
+        "snr_min": 0.335,
+        "snr_med": 0.899,
+        "snr_max": 1.454,
+        "sign_min": 0.0,
+        "sign_med": 0.4,
+        "sign_max": 0.75
+      },
+      "SelfRegulationSCP2": {
+        "n_subsets": 637,
+        "pass_rate": 0.0,
+        "verdict_counts": {
+          "fail_mismatch": 637
+        },
+        "snr_min": 0.259,
+        "snr_med": 0.532,
+        "snr_max": 0.789,
+        "sign_min": 0.05,
+        "sign_med": 0.233,
+        "sign_max": 0.55
+      },
+      "UWaveGestureLibrary": {
+        "n_subsets": 637,
+        "pass_rate": 0.5808,
+        "verdict_counts": {
+          "pass": 370,
+          "fail_unstable": 245,
+          "fail_mismatch": 11,
+          "retry_ceiling": 11
+        },
+        "snr_min": 0.573,
+        "snr_med": 3.538,
+        "snr_max": 4.958,
+        "sign_min": 0.3,
+        "sign_med": 0.708,
+        "sign_max": 1.0
+      }
+    },
+    "gate": {
+      "mean": 77.96,
+      "median": 80.0,
+      "min": 44.0,
+      "max": 108.0,
+      "p10": 56.0,
+      "p25": 64.0,
+      "p75": 90.0,
+      "p90": 106.0,
+      "frac_ge_100": 0.1083,
+      "frac_ge_74": 0.6264,
+      "frac_eq_74": 0.0942,
+      "hist": {
+        "44": 10,
+        "50": 1,
+        "52": 1,
+        "54": 4,
+        "56": 105,
+        "62": 16,
+        "64": 31,
+        "66": 38,
+        "70": 14,
+        "72": 18,
+        "74": 60,
+        "76": 7,
+        "78": 10,
+        "80": 77,
+        "82": 10,
+        "84": 24,
+        "86": 25,
+        "88": 1,
+        "90": 26,
+        "92": 2,
+        "94": 1,
+        "96": 86,
+        "98": 1,
+        "100": 3,
+        "106": 62,
+        "108": 4
+      }
+    }
+  },
+  "thresholds": [
+    {
+      "snr_floor": 1.0,
+      "sign_floor": 0.7,
+      "n_pass": 3,
+      "passed": [
+        "ArticularyWordRecognition",
+        "Handwriting",
+        "UWaveGestureLibrary"
+      ],
+      "gate": 74,
+      "reserve_bonus": 0,
+      "verdicts": {
+        "ArticularyWordRecognition": "pass",
+        "CharacterTrajectories": "fail_unstable",
+        "ERing": "fail_unstable",
+        "EthanolConcentration": "fail_mismatch",
+        "FingerMovements": "fail_mismatch",
+        "HandMovementDirection": "fail_unstable",
+        "Handwriting": "pass",
+        "Heartbeat": "fail_mismatch",
+        "MotorImagery": "fail_mismatch",
+        "NATOPS": "fail_unstable",
+        "SelfRegulationSCP1": "fail_mismatch",
+        "SelfRegulationSCP2": "fail_mismatch",
+        "UWaveGestureLibrary": "pass"
+      }
+    },
+    {
+      "snr_floor": 1.0,
+      "sign_floor": 0.65,
+      "n_pass": 4,
+      "passed": [
+        "ArticularyWordRecognition",
+        "ERing",
+        "Handwriting",
+        "UWaveGestureLibrary"
+      ],
+      "gate": 80,
+      "reserve_bonus": 0,
+      "verdicts": {
+        "ArticularyWordRecognition": "pass",
+        "CharacterTrajectories": "fail_unstable",
+        "ERing": "pass",
+        "EthanolConcentration": "fail_mismatch",
+        "FingerMovements": "fail_mismatch",
+        "HandMovementDirection": "fail_unstable",
+        "Handwriting": "pass",
+        "Heartbeat": "fail_mismatch",
+        "MotorImagery": "fail_mismatch",
+        "NATOPS": "fail_unstable",
+        "SelfRegulationSCP1": "fail_mismatch",
+        "SelfRegulationSCP2": "fail_mismatch",
+        "UWaveGestureLibrary": "pass"
+      }
+    },
+    {
+      "snr_floor": 1.0,
+      "sign_floor": 0.6,
+      "n_pass": 5,
+      "passed": [
+        "ArticularyWordRecognition",
+        "CharacterTrajectories",
+        "ERing",
+        "Handwriting",
+        "UWaveGestureLibrary"
+      ],
+      "gate": 96,
+      "reserve_bonus": 0,
+      "verdicts": {
+        "ArticularyWordRecognition": "pass",
+        "CharacterTrajectories": "pass",
+        "ERing": "pass",
+        "EthanolConcentration": "fail_mismatch",
+        "FingerMovements": "fail_mismatch",
+        "HandMovementDirection": "fail_unstable",
+        "Handwriting": "pass",
+        "Heartbeat": "fail_mismatch",
+        "MotorImagery": "fail_mismatch",
+        "NATOPS": "fail_unstable",
+        "SelfRegulationSCP1": "fail_mismatch",
+        "SelfRegulationSCP2": "fail_mismatch",
+        "UWaveGestureLibrary": "pass"
+      }
+    },
+    {
+      "snr_floor": 0.9,
+      "sign_floor": 0.7,
+      "n_pass": 3,
+      "passed": [
+        "ArticularyWordRecognition",
+        "Handwriting",
+        "UWaveGestureLibrary"
+      ],
+      "gate": 74,
+      "reserve_bonus": 0,
+      "verdicts": {
+        "ArticularyWordRecognition": "pass",
+        "CharacterTrajectories": "fail_unstable",
+        "ERing": "fail_unstable",
+        "EthanolConcentration": "fail_unstable",
+        "FingerMovements": "fail_unstable",
+        "HandMovementDirection": "fail_unstable",
+        "Handwriting": "pass",
+        "Heartbeat": "fail_mismatch",
+        "MotorImagery": "fail_mismatch",
+        "NATOPS": "fail_unstable",
+        "SelfRegulationSCP1": "fail_unstable",
+        "SelfRegulationSCP2": "fail_mismatch",
+        "UWaveGestureLibrary": "pass"
+      }
+    },
+    {
+      "snr_floor": 0.9,
+      "sign_floor": 0.65,
+      "n_pass": 4,
+      "passed": [
+        "ArticularyWordRecognition",
+        "ERing",
+        "Handwriting",
+        "UWaveGestureLibrary"
+      ],
+      "gate": 80,
+      "reserve_bonus": 0,
+      "verdicts": {
+        "ArticularyWordRecognition": "pass",
+        "CharacterTrajectories": "fail_unstable",
+        "ERing": "pass",
+        "EthanolConcentration": "fail_unstable",
+        "FingerMovements": "fail_unstable",
+        "HandMovementDirection": "fail_unstable",
+        "Handwriting": "pass",
+        "Heartbeat": "fail_mismatch",
+        "MotorImagery": "fail_mismatch",
+        "NATOPS": "fail_unstable",
+        "SelfRegulationSCP1": "fail_unstable",
+        "SelfRegulationSCP2": "fail_mismatch",
+        "UWaveGestureLibrary": "pass"
+      }
+    },
+    {
+      "snr_floor": 0.9,
+      "sign_floor": 0.6,
+      "n_pass": 5,
+      "passed": [
+        "ArticularyWordRecognition",
+        "CharacterTrajectories",
+        "ERing",
+        "Handwriting",
+        "UWaveGestureLibrary"
+      ],
+      "gate": 96,
+      "reserve_bonus": 0,
+      "verdicts": {
+        "ArticularyWordRecognition": "pass",
+        "CharacterTrajectories": "pass",
+        "ERing": "pass",
+        "EthanolConcentration": "fail_unstable",
+        "FingerMovements": "fail_unstable",
+        "HandMovementDirection": "fail_unstable",
+        "Handwriting": "pass",
+        "Heartbeat": "fail_mismatch",
+        "MotorImagery": "fail_mismatch",
+        "NATOPS": "fail_unstable",
+        "SelfRegulationSCP1": "fail_unstable",
+        "SelfRegulationSCP2": "fail_mismatch",
+        "UWaveGestureLibrary": "pass"
+      }
+    },
+    {
+      "snr_floor": 0.8,
+      "sign_floor": 0.7,
+      "n_pass": 3,
+      "passed": [
+        "ArticularyWordRecognition",
+        "Handwriting",
+        "UWaveGestureLibrary"
+      ],
+      "gate": 74,
+      "reserve_bonus": 0,
+      "verdicts": {
+        "ArticularyWordRecognition": "pass",
+        "CharacterTrajectories": "fail_unstable",
+        "ERing": "fail_unstable",
+        "EthanolConcentration": "fail_unstable",
+        "FingerMovements": "fail_unstable",
+        "HandMovementDirection": "fail_unstable",
+        "Handwriting": "pass",
+        "Heartbeat": "fail_mismatch",
+        "MotorImagery": "fail_mismatch",
+        "NATOPS": "fail_unstable",
+        "SelfRegulationSCP1": "fail_unstable",
+        "SelfRegulationSCP2": "fail_mismatch",
+        "UWaveGestureLibrary": "pass"
+      }
+    },
+    {
+      "snr_floor": 0.8,
+      "sign_floor": 0.65,
+      "n_pass": 4,
+      "passed": [
+        "ArticularyWordRecognition",
+        "ERing",
+        "Handwriting",
+        "UWaveGestureLibrary"
+      ],
+      "gate": 80,
+      "reserve_bonus": 0,
+      "verdicts": {
+        "ArticularyWordRecognition": "pass",
+        "CharacterTrajectories": "fail_unstable",
+        "ERing": "pass",
+        "EthanolConcentration": "fail_unstable",
+        "FingerMovements": "fail_unstable",
+        "HandMovementDirection": "fail_unstable",
+        "Handwriting": "pass",
+        "Heartbeat": "fail_mismatch",
+        "MotorImagery": "fail_mismatch",
+        "NATOPS": "fail_unstable",
+        "SelfRegulationSCP1": "fail_unstable",
+        "SelfRegulationSCP2": "fail_mismatch",
+        "UWaveGestureLibrary": "pass"
+      }
+    },
+    {
+      "snr_floor": 0.8,
+      "sign_floor": 0.6,
+      "n_pass": 5,
+      "passed": [
+        "ArticularyWordRecognition",
+        "CharacterTrajectories",
+        "ERing",
+        "Handwriting",
+        "UWaveGestureLibrary"
+      ],
+      "gate": 96,
+      "reserve_bonus": 0,
+      "verdicts": {
+        "ArticularyWordRecognition": "pass",
+        "CharacterTrajectories": "pass",
+        "ERing": "pass",
+        "EthanolConcentration": "fail_unstable",
+        "FingerMovements": "fail_unstable",
+        "HandMovementDirection": "fail_unstable",
+        "Handwriting": "pass",
+        "Heartbeat": "fail_mismatch",
+        "MotorImagery": "fail_mismatch",
+        "NATOPS": "fail_unstable",
+        "SelfRegulationSCP1": "fail_unstable",
+        "SelfRegulationSCP2": "fail_mismatch",
+        "UWaveGestureLibrary": "pass"
+      }
+    }
+  ],
+  "cls_roles": {
+    "4f7d413581f6": {
+      "har_rank": 0,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "rbar": 0.9833,
+          "robust_z": 0.45,
+          "seed_std": 0.0068,
+          "seed_std_rel": 0.28,
+          "seed_range": 0.0136,
+          "loo_snr": 4.665,
+          "loo_snr_delta": -0.152,
+          "loo_sign": 0.758,
+          "loo_sign_delta": 0.031,
+          "spread_drop_frac": -0.046
+        },
+        "CharacterTrajectories": {
+          "rbar": 0.9951,
+          "robust_z": 0.59,
+          "seed_std": 0.0036,
+          "seed_std_rel": 0.33,
+          "seed_range": 0.0081,
+          "loo_snr": 2.91,
+          "loo_snr_delta": -0.071,
+          "loo_sign": 0.691,
+          "loo_sign_delta": 0.044,
+          "spread_drop_frac": -0.048
+        },
+        "ERing": {
+          "rbar": 0.9314,
+          "robust_z": 0.5,
+          "seed_std": 0.0275,
+          "seed_std_rel": 0.84,
+          "seed_range": 0.0622,
+          "loo_snr": 3.361,
+          "loo_snr_delta": 0.073,
+          "loo_sign": 0.722,
+          "loo_sign_delta": 0.044,
+          "spread_drop_frac": -0.04
+        },
+        "EthanolConcentration": {
+          "rbar": 0.3958,
+          "robust_z": -1.52,
+          "seed_std": 0.0291,
+          "seed_std_rel": 0.85,
+          "seed_range": 0.064,
+          "loo_snr": 0.909,
+          "loo_snr_delta": -0.066,
+          "loo_sign": 0.306,
+          "loo_sign_delta": -0.061,
+          "spread_drop_frac": 0.052
+        },
+        "FingerMovements": {
+          "rbar": 0.5796,
+          "robust_z": 1.46,
+          "seed_std": 0.0333,
+          "seed_std_rel": 1.08,
+          "seed_range": 0.0726,
+          "loo_snr": 0.946,
+          "loo_snr_delta": -0.032,
+          "loo_sign": 0.292,
+          "loo_sign_delta": 0.003,
+          "spread_drop_frac": 0.041
+        },
+        "HandMovementDirection": {
+          "rbar": 0.4121,
+          "robust_z": -0.19,
+          "seed_std": 0.1035,
+          "seed_std_rel": 2.11,
+          "seed_range": 0.2287,
+          "loo_snr": 1.263,
+          "loo_snr_delta": 0.211,
+          "loo_sign": 0.389,
+          "loo_sign_delta": 0.056,
+          "spread_drop_frac": -0.053
+        },
+        "Handwriting": {
+          "rbar": 0.6966,
+          "robust_z": -0.57,
+          "seed_std": 0.0435,
+          "seed_std_rel": 1.09,
+          "seed_range": 0.1013,
+          "loo_snr": 5.307,
+          "loo_snr_delta": 0.347,
+          "loo_sign": 0.817,
+          "loo_sign_delta": -0.015,
+          "spread_drop_frac": -0.059
+        },
+        "Heartbeat": {
+          "rbar": 0.7367,
+          "robust_z": 0.63,
+          "seed_std": 0.0136,
+          "seed_std_rel": 0.69,
+          "seed_range": 0.0328,
+          "loo_snr": 0.652,
+          "loo_snr_delta": -0.016,
+          "loo_sign": 0.352,
+          "loo_sign_delta": 0.015,
+          "spread_drop_frac": -0.01
+        },
+        "MotorImagery": {
+          "rbar": 0.5439,
+          "robust_z": 2.14,
+          "seed_std": 0.0299,
+          "seed_std_rel": 0.78,
+          "seed_range": 0.0658,
+          "loo_snr": 0.438,
+          "loo_snr_delta": -0.075,
+          "loo_sign": 0.141,
+          "loo_sign_delta": -0.039,
+          "spread_drop_frac": 0.125
+        },
+        "NATOPS": {
+          "rbar": 0.928,
+          "robust_z": 0.22,
+          "seed_std": 0.0249,
+          "seed_std_rel": 0.64,
+          "seed_range": 0.0491,
+          "loo_snr": 4.031,
+          "loo_snr_delta": 0.022,
+          "loo_sign": 0.625,
+          "loo_sign_delta": 0.036,
+          "spread_drop_frac": -0.046
+        },
+        "SelfRegulationSCP1": {
+          "rbar": 0.8513,
+          "robust_z": 0.56,
+          "seed_std": 0.0357,
+          "seed_std_rel": 1.19,
+          "seed_range": 0.0828,
+          "loo_snr": 0.935,
+          "loo_snr_delta": 0.032,
+          "loo_sign": 0.417,
+          "loo_sign_delta": 0.028,
+          "spread_drop_frac": -0.014
+        },
+        "SelfRegulationSCP2": {
+          "rbar": 0.5121,
+          "robust_z": -1.2,
+          "seed_std": 0.0488,
+          "seed_std_rel": 1.23,
+          "seed_range": 0.1053,
+          "loo_snr": 0.558,
+          "loo_snr_delta": 0.021,
+          "loo_sign": 0.264,
+          "loo_sign_delta": 0.031,
+          "spread_drop_frac": -0.012
+        },
+        "UWaveGestureLibrary": {
+          "rbar": 0.9184,
+          "robust_z": 0.83,
+          "seed_std": 0.0114,
+          "seed_std_rel": 0.43,
+          "seed_range": 0.0257,
+          "loo_snr": 3.303,
+          "loo_snr_delta": -0.104,
+          "loo_sign": 0.722,
+          "loo_sign_delta": 0.022,
+          "spread_drop_frac": -0.031
+        }
+      },
+      "summary": {
+        "mean_abs_z": 0.84,
+        "max_abs_z": 2.14,
+        "n_ds_outlier_z2": 1,
+        "n_ds_outlier_z3": 0,
+        "mean_seed_std_rel": 0.89,
+        "max_seed_std_rel": 2.11,
+        "n_ds_highvar": 1,
+        "mean_spread_drop": -0.011,
+        "max_spread_drop": 0.125
+      }
+    },
+    "cffb55035c3a": {
+      "har_rank": 2,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "rbar": 0.9737,
+          "robust_z": -0.15,
+          "seed_std": 0.0125,
+          "seed_std_rel": 0.51,
+          "seed_range": 0.0266,
+          "loo_snr": 4.801,
+          "loo_snr_delta": -0.016,
+          "loo_sign": 0.721,
+          "loo_sign_delta": -0.006,
+          "spread_drop_frac": -0.051
+        },
+        "CharacterTrajectories": {
+          "rbar": 0.9943,
+          "robust_z": 0.25,
+          "seed_std": 0.0039,
+          "seed_std_rel": 0.36,
+          "seed_range": 0.0081,
+          "loo_snr": 2.922,
+          "loo_snr_delta": -0.059,
+          "loo_sign": 0.642,
+          "loo_sign_delta": -0.005,
+          "spread_drop_frac": -0.05
+        },
+        "ERing": {
+          "rbar": 0.9172,
+          "robust_z": -0.15,
+          "seed_std": 0.0126,
+          "seed_std_rel": 0.38,
+          "seed_range": 0.03,
+          "loo_snr": 3.226,
+          "loo_snr_delta": -0.063,
+          "loo_sign": 0.681,
+          "loo_sign_delta": 0.003,
+          "spread_drop_frac": -0.048
+        },
+        "EthanolConcentration": {
+          "rbar": 0.4917,
+          "robust_z": 2.08,
+          "seed_std": 0.031,
+          "seed_std_rel": 0.9,
+          "seed_range": 0.0735,
+          "loo_snr": 0.834,
+          "loo_snr_delta": -0.141,
+          "loo_sign": 0.292,
+          "loo_sign_delta": -0.075,
+          "spread_drop_frac": 0.135
+        },
+        "FingerMovements": {
+          "rbar": 0.5615,
+          "robust_z": 0.45,
+          "seed_std": 0.0197,
+          "seed_std_rel": 0.64,
+          "seed_range": 0.0444,
+          "loo_snr": 0.978,
+          "loo_snr_delta": 0.0,
+          "loo_sign": 0.292,
+          "loo_sign_delta": 0.003,
+          "spread_drop_frac": -0.04
+        },
+        "HandMovementDirection": {
+          "rbar": 0.3884,
+          "robust_z": -1.61,
+          "seed_std": 0.029,
+          "seed_std_rel": 0.59,
+          "seed_range": 0.0614,
+          "loo_snr": 1.029,
+          "loo_snr_delta": -0.023,
+          "loo_sign": 0.333,
+          "loo_sign_delta": 0.0,
+          "spread_drop_frac": -0.022
+        },
+        "Handwriting": {
+          "rbar": 0.8621,
+          "robust_z": 0.78,
+          "seed_std": 0.0142,
+          "seed_std_rel": 0.36,
+          "seed_range": 0.0337,
+          "loo_snr": 4.693,
+          "loo_snr_delta": -0.267,
+          "loo_sign": 0.845,
+          "loo_sign_delta": 0.014,
+          "spread_drop_frac": -0.014
+        },
+        "Heartbeat": {
+          "rbar": 0.7295,
+          "robust_z": 0.0,
+          "seed_std": 0.0209,
+          "seed_std_rel": 1.07,
+          "seed_range": 0.0451,
+          "loo_snr": 0.709,
+          "loo_snr_delta": 0.042,
+          "loo_sign": 0.352,
+          "loo_sign_delta": 0.015,
+          "spread_drop_frac": -0.055
+        },
+        "MotorImagery": {
+          "rbar": 0.5219,
+          "robust_z": 0.56,
+          "seed_std": 0.0592,
+          "seed_std_rel": 1.54,
+          "seed_range": 0.1316,
+          "loo_snr": 0.573,
+          "loo_snr_delta": 0.059,
+          "loo_sign": 0.197,
+          "loo_sign_delta": 0.017,
+          "spread_drop_frac": -0.049
+        },
+        "NATOPS": {
+          "rbar": 0.8808,
+          "robust_z": -1.2,
+          "seed_std": 0.0289,
+          "seed_std_rel": 0.74,
+          "seed_range": 0.0574,
+          "loo_snr": 4.119,
+          "loo_snr_delta": 0.109,
+          "loo_sign": 0.569,
+          "loo_sign_delta": -0.019,
+          "spread_drop_frac": -0.057
+        },
+        "SelfRegulationSCP1": {
+          "rbar": 0.8536,
+          "robust_z": 0.64,
+          "seed_std": 0.0205,
+          "seed_std_rel": 0.68,
+          "seed_range": 0.0473,
+          "loo_snr": 0.879,
+          "loo_snr_delta": -0.023,
+          "loo_sign": 0.375,
+          "loo_sign_delta": -0.014,
+          "spread_drop_frac": -0.009
+        },
+        "SelfRegulationSCP2": {
+          "rbar": 0.545,
+          "robust_z": 1.69,
+          "seed_std": 0.022,
+          "seed_std_rel": 0.56,
+          "seed_range": 0.0482,
+          "loo_snr": 0.506,
+          "loo_snr_delta": -0.031,
+          "loo_sign": 0.208,
+          "loo_sign_delta": -0.025,
+          "spread_drop_frac": 0.011
+        },
+        "UWaveGestureLibrary": {
+          "rbar": 0.9032,
+          "robust_z": 0.42,
+          "seed_std": 0.016,
+          "seed_std_rel": 0.61,
+          "seed_range": 0.0329,
+          "loo_snr": 3.406,
+          "loo_snr_delta": -0.001,
+          "loo_sign": 0.708,
+          "loo_sign_delta": 0.008,
+          "spread_drop_frac": -0.044
+        }
+      },
+      "summary": {
+        "mean_abs_z": 0.77,
+        "max_abs_z": 2.08,
+        "n_ds_outlier_z2": 1,
+        "n_ds_outlier_z3": 0,
+        "mean_seed_std_rel": 0.69,
+        "max_seed_std_rel": 1.54,
+        "n_ds_highvar": 1,
+        "mean_spread_drop": -0.023,
+        "max_spread_drop": 0.135
+      }
+    },
+    "8c4aa28336d6": {
+      "har_rank": 4,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "rbar": 0.9802,
+          "robust_z": 0.26,
+          "seed_std": 0.0125,
+          "seed_std_rel": 0.51,
+          "seed_range": 0.0266,
+          "loo_snr": 4.788,
+          "loo_snr_delta": -0.029,
+          "loo_sign": 0.75,
+          "loo_sign_delta": 0.024,
+          "spread_drop_frac": -0.048
+        },
+        "CharacterTrajectories": {
+          "rbar": 0.9931,
+          "robust_z": -0.25,
+          "seed_std": 0.0037,
+          "seed_std_rel": 0.34,
+          "seed_range": 0.0081,
+          "loo_snr": 2.92,
+          "loo_snr_delta": -0.061,
+          "loo_sign": 0.647,
+          "loo_sign_delta": 0.0,
+          "spread_drop_frac": -0.052
+        },
+        "ERing": {
+          "rbar": 0.9236,
+          "robust_z": 0.15,
+          "seed_std": 0.0191,
+          "seed_std_rel": 0.58,
+          "seed_range": 0.0378,
+          "loo_snr": 3.283,
+          "loo_snr_delta": -0.006,
+          "loo_sign": 0.708,
+          "loo_sign_delta": 0.031,
+          "spread_drop_frac": -0.045
+        },
+        "EthanolConcentration": {
+          "rbar": 0.3958,
+          "robust_z": -1.52,
+          "seed_std": 0.0457,
+          "seed_std_rel": 1.33,
+          "seed_range": 0.1087,
+          "loo_snr": 0.96,
+          "loo_snr_delta": -0.015,
+          "loo_sign": 0.389,
+          "loo_sign_delta": 0.022,
+          "spread_drop_frac": 0.052
+        },
+        "FingerMovements": {
+          "rbar": 0.5585,
+          "robust_z": 0.28,
+          "seed_std": 0.0442,
+          "seed_std_rel": 1.43,
+          "seed_range": 0.1008,
+          "loo_snr": 1.077,
+          "loo_snr_delta": 0.099,
+          "loo_sign": 0.333,
+          "loo_sign_delta": 0.044,
+          "spread_drop_frac": -0.048
+        },
+        "HandMovementDirection": {
+          "rbar": 0.3769,
+          "robust_z": -2.29,
+          "seed_std": 0.0553,
+          "seed_std_rel": 1.13,
+          "seed_range": 0.1205,
+          "loo_snr": 1.063,
+          "loo_snr_delta": 0.011,
+          "loo_sign": 0.319,
+          "loo_sign_delta": -0.014,
+          "spread_drop_frac": 0.004
+        },
+        "Handwriting": {
+          "rbar": 0.8548,
+          "robust_z": 0.72,
+          "seed_std": 0.0199,
+          "seed_std_rel": 0.5,
+          "seed_range": 0.045,
+          "loo_snr": 4.786,
+          "loo_snr_delta": -0.175,
+          "loo_sign": 0.861,
+          "loo_sign_delta": 0.03,
+          "spread_drop_frac": -0.019
+        },
+        "Heartbeat": {
+          "rbar": 0.7152,
+          "robust_z": -1.26,
+          "seed_std": 0.0162,
+          "seed_std_rel": 0.82,
+          "seed_range": 0.0369,
+          "loo_snr": 0.665,
+          "loo_snr_delta": -0.003,
+          "loo_sign": 0.31,
+          "loo_sign_delta": -0.027,
+          "spread_drop_frac": -0.015
+        },
+        "MotorImagery": {
+          "rbar": 0.4857,
+          "robust_z": -2.06,
+          "seed_std": 0.0237,
+          "seed_std_rel": 0.62,
+          "seed_range": 0.0482,
+          "loo_snr": 0.434,
+          "loo_snr_delta": -0.08,
+          "loo_sign": 0.127,
+          "loo_sign_delta": -0.053,
+          "spread_drop_frac": 0.119
+        },
+        "NATOPS": {
+          "rbar": 0.8627,
+          "robust_z": -1.74,
+          "seed_std": 0.0462,
+          "seed_std_rel": 1.18,
+          "seed_range": 0.0991,
+          "loo_snr": 4.33,
+          "loo_snr_delta": 0.321,
+          "loo_sign": 0.597,
+          "loo_sign_delta": 0.008,
+          "spread_drop_frac": -0.059
+        },
+        "SelfRegulationSCP1": {
+          "rbar": 0.8373,
+          "robust_z": 0.1,
+          "seed_std": 0.0351,
+          "seed_std_rel": 1.17,
+          "seed_range": 0.0828,
+          "loo_snr": 0.968,
+          "loo_snr_delta": 0.065,
+          "loo_sign": 0.431,
+          "loo_sign_delta": 0.042,
+          "spread_drop_frac": -0.052
+        },
+        "SelfRegulationSCP2": {
+          "rbar": 0.5164,
+          "robust_z": -0.82,
+          "seed_std": 0.042,
+          "seed_std_rel": 1.06,
+          "seed_range": 0.0921,
+          "loo_snr": 0.507,
+          "loo_snr_delta": -0.031,
+          "loo_sign": 0.194,
+          "loo_sign_delta": -0.039,
+          "spread_drop_frac": 0.063
+        },
+        "UWaveGestureLibrary": {
+          "rbar": 0.915,
+          "robust_z": 0.74,
+          "seed_std": 0.0205,
+          "seed_std_rel": 0.78,
+          "seed_range": 0.0424,
+          "loo_snr": 3.439,
+          "loo_snr_delta": 0.032,
+          "loo_sign": 0.694,
+          "loo_sign_delta": -0.006,
+          "spread_drop_frac": -0.034
+        }
+      },
+      "summary": {
+        "mean_abs_z": 0.94,
+        "max_abs_z": 2.29,
+        "n_ds_outlier_z2": 2,
+        "n_ds_outlier_z3": 0,
+        "mean_seed_std_rel": 0.88,
+        "max_seed_std_rel": 1.43,
+        "n_ds_highvar": 0,
+        "mean_spread_drop": -0.01,
+        "max_spread_drop": 0.119
+      }
+    },
+    "f48e5da1d899": {
+      "har_rank": 7,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "rbar": 0.9649,
+          "robust_z": -0.69,
+          "seed_std": 0.0225,
+          "seed_std_rel": 0.91,
+          "seed_range": 0.0468,
+          "loo_snr": 5.031,
+          "loo_snr_delta": 0.214,
+          "loo_sign": 0.735,
+          "loo_sign_delta": 0.009,
+          "spread_drop_frac": -0.055
+        },
+        "CharacterTrajectories": {
+          "rbar": 0.9927,
+          "robust_z": -0.42,
+          "seed_std": 0.0064,
+          "seed_std_rel": 0.59,
+          "seed_range": 0.0146,
+          "loo_snr": 2.999,
+          "loo_snr_delta": 0.018,
+          "loo_sign": 0.716,
+          "loo_sign_delta": 0.069,
+          "spread_drop_frac": -0.052
+        },
+        "ERing": {
+          "rbar": 0.9322,
+          "robust_z": 0.54,
+          "seed_std": 0.032,
+          "seed_std_rel": 0.97,
+          "seed_range": 0.0678,
+          "loo_snr": 3.406,
+          "loo_snr_delta": 0.117,
+          "loo_sign": 0.75,
+          "loo_sign_delta": 0.072,
+          "spread_drop_frac": -0.039
+        },
+        "EthanolConcentration": {
+          "rbar": 0.4358,
+          "robust_z": -0.01,
+          "seed_std": 0.0216,
+          "seed_std_rel": 0.63,
+          "seed_range": 0.0511,
+          "loo_snr": 0.991,
+          "loo_snr_delta": 0.016,
+          "loo_sign": 0.403,
+          "loo_sign_delta": 0.036,
+          "spread_drop_frac": -0.058
+        },
+        "FingerMovements": {
+          "rbar": 0.5645,
+          "robust_z": 0.62,
+          "seed_std": 0.0268,
+          "seed_std_rel": 0.87,
+          "seed_range": 0.0645,
+          "loo_snr": 0.995,
+          "loo_snr_delta": 0.017,
+          "loo_sign": 0.292,
+          "loo_sign_delta": 0.003,
+          "spread_drop_frac": -0.033
+        },
+        "HandMovementDirection": {
+          "rbar": 0.4284,
+          "robust_z": 0.78,
+          "seed_std": 0.0326,
+          "seed_std_rel": 0.66,
+          "seed_range": 0.077,
+          "loo_snr": 1.074,
+          "loo_snr_delta": 0.022,
+          "loo_sign": 0.347,
+          "loo_sign_delta": 0.014,
+          "spread_drop_frac": -0.059
+        },
+        "Handwriting": {
+          "rbar": 0.6385,
+          "robust_z": -1.04,
+          "seed_std": 0.0361,
+          "seed_std_rel": 0.9,
+          "seed_range": 0.0803,
+          "loo_snr": 5.159,
+          "loo_snr_delta": 0.199,
+          "loo_sign": 0.817,
+          "loo_sign_delta": -0.015,
+          "spread_drop_frac": -0.051
+        },
+        "Heartbeat": {
+          "rbar": 0.7213,
+          "robust_z": -0.72,
+          "seed_std": 0.0172,
+          "seed_std_rel": 0.88,
+          "seed_range": 0.041,
+          "loo_snr": 0.692,
+          "loo_snr_delta": 0.024,
+          "loo_sign": 0.324,
+          "loo_sign_delta": -0.013,
+          "spread_drop_frac": -0.05
+        },
+        "MotorImagery": {
+          "rbar": 0.5044,
+          "robust_z": -0.71,
+          "seed_std": 0.0331,
+          "seed_std_rel": 0.86,
+          "seed_range": 0.0702,
+          "loo_snr": 0.524,
+          "loo_snr_delta": 0.011,
+          "loo_sign": 0.211,
+          "loo_sign_delta": 0.031,
+          "spread_drop_frac": -0.037
+        },
+        "NATOPS": {
+          "rbar": 0.9461,
+          "robust_z": 0.76,
+          "seed_std": 0.0228,
+          "seed_std_rel": 0.58,
+          "seed_range": 0.0454,
+          "loo_snr": 3.977,
+          "loo_snr_delta": -0.032,
+          "loo_sign": 0.625,
+          "loo_sign_delta": 0.036,
+          "spread_drop_frac": -0.038
+        },
+        "SelfRegulationSCP1": {
+          "rbar": 0.8439,
+          "robust_z": 0.32,
+          "seed_std": 0.0313,
+          "seed_std_rel": 1.04,
+          "seed_range": 0.071,
+          "loo_snr": 0.941,
+          "loo_snr_delta": 0.038,
+          "loo_sign": 0.458,
+          "loo_sign_delta": 0.069,
+          "spread_drop_frac": -0.038
+        },
+        "SelfRegulationSCP2": {
+          "rbar": 0.5274,
+          "robust_z": 0.14,
+          "seed_std": 0.0274,
+          "seed_std_rel": 0.69,
+          "seed_range": 0.057,
+          "loo_snr": 0.549,
+          "loo_snr_delta": 0.011,
+          "loo_sign": 0.264,
+          "loo_sign_delta": 0.031,
+          "spread_drop_frac": -0.056
+        },
+        "UWaveGestureLibrary": {
+          "rbar": 0.8742,
+          "robust_z": -0.36,
+          "seed_std": 0.0205,
+          "seed_std_rel": 0.78,
+          "seed_range": 0.0463,
+          "loo_snr": 3.517,
+          "loo_snr_delta": 0.11,
+          "loo_sign": 0.708,
+          "loo_sign_delta": 0.008,
+          "spread_drop_frac": -0.058
+        }
+      },
+      "summary": {
+        "mean_abs_z": 0.55,
+        "max_abs_z": 1.04,
+        "n_ds_outlier_z2": 0,
+        "n_ds_outlier_z3": 0,
+        "mean_seed_std_rel": 0.8,
+        "max_seed_std_rel": 1.04,
+        "n_ds_highvar": 0,
+        "mean_spread_drop": -0.048,
+        "max_spread_drop": -0.033
+      }
+    },
+    "a1f67db45e64": {
+      "har_rank": 9,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "rbar": 0.9869,
+          "robust_z": 0.67,
+          "seed_std": 0.0133,
+          "seed_std_rel": 0.54,
+          "seed_range": 0.0266,
+          "loo_snr": 4.788,
+          "loo_snr_delta": -0.029,
+          "loo_sign": 0.761,
+          "loo_sign_delta": 0.035,
+          "spread_drop_frac": -0.045
+        },
+        "CharacterTrajectories": {
+          "rbar": 0.9963,
+          "robust_z": 1.1,
+          "seed_std": 0.0031,
+          "seed_std_rel": 0.29,
+          "seed_range": 0.0065,
+          "loo_snr": 2.888,
+          "loo_snr_delta": -0.093,
+          "loo_sign": 0.629,
+          "loo_sign_delta": -0.018,
+          "spread_drop_frac": -0.046
+        },
+        "ERing": {
+          "rbar": 0.9275,
+          "robust_z": 0.32,
+          "seed_std": 0.0183,
+          "seed_std_rel": 0.56,
+          "seed_range": 0.0367,
+          "loo_snr": 3.271,
+          "loo_snr_delta": -0.018,
+          "loo_sign": 0.694,
+          "loo_sign_delta": 0.017,
+          "spread_drop_frac": -0.043
+        },
+        "EthanolConcentration": {
+          "rbar": 0.4525,
+          "robust_z": 0.61,
+          "seed_std": 0.0178,
+          "seed_std_rel": 0.52,
+          "seed_range": 0.0416,
+          "loo_snr": 0.969,
+          "loo_snr_delta": -0.006,
+          "loo_sign": 0.375,
+          "loo_sign_delta": 0.008,
+          "spread_drop_frac": -0.047
+        },
+        "FingerMovements": {
+          "rbar": 0.5585,
+          "robust_z": 0.28,
+          "seed_std": 0.0389,
+          "seed_std_rel": 1.26,
+          "seed_range": 0.0927,
+          "loo_snr": 0.981,
+          "loo_snr_delta": 0.003,
+          "loo_sign": 0.306,
+          "loo_sign_delta": 0.017,
+          "spread_drop_frac": 0.026
+        },
+        "HandMovementDirection": {
+          "rbar": 0.4202,
+          "robust_z": 0.29,
+          "seed_std": 0.031,
+          "seed_std_rel": 0.63,
+          "seed_range": 0.0686,
+          "loo_snr": 1.054,
+          "loo_snr_delta": 0.002,
+          "loo_sign": 0.319,
+          "loo_sign_delta": -0.014,
+          "spread_drop_frac": -0.042
+        },
+        "Handwriting": {
+          "rbar": 0.8264,
+          "robust_z": 0.49,
+          "seed_std": 0.0149,
+          "seed_std_rel": 0.37,
+          "seed_range": 0.0314,
+          "loo_snr": 4.79,
+          "loo_snr_delta": -0.171,
+          "loo_sign": 0.831,
+          "loo_sign_delta": -0.0,
+          "spread_drop_frac": -0.033
+        },
+        "Heartbeat": {
+          "rbar": 0.7295,
+          "robust_z": 0.0,
+          "seed_std": 0.0182,
+          "seed_std_rel": 0.93,
+          "seed_range": 0.041,
+          "loo_snr": 0.697,
+          "loo_snr_delta": 0.029,
+          "loo_sign": 0.366,
+          "loo_sign_delta": 0.029,
+          "spread_drop_frac": -0.052
+        },
+        "MotorImagery": {
+          "rbar": 0.5219,
+          "robust_z": 0.56,
+          "seed_std": 0.0482,
+          "seed_std_rel": 1.25,
+          "seed_range": 0.1096,
+          "loo_snr": 0.555,
+          "loo_snr_delta": 0.041,
+          "loo_sign": 0.211,
+          "loo_sign_delta": 0.031,
+          "spread_drop_frac": -0.05
+        },
+        "NATOPS": {
+          "rbar": 0.937,
+          "robust_z": 0.49,
+          "seed_std": 0.038,
+          "seed_std_rel": 0.97,
+          "seed_range": 0.0806,
+          "loo_snr": 4.161,
+          "loo_snr_delta": 0.152,
+          "loo_sign": 0.639,
+          "loo_sign_delta": 0.05,
+          "spread_drop_frac": -0.041
+        },
+        "SelfRegulationSCP1": {
+          "rbar": 0.8314,
+          "robust_z": -0.1,
+          "seed_std": 0.0373,
+          "seed_std_rel": 1.24,
+          "seed_range": 0.0799,
+          "loo_snr": 0.983,
+          "loo_snr_delta": 0.08,
+          "loo_sign": 0.417,
+          "loo_sign_delta": 0.028,
+          "spread_drop_frac": -0.06
+        },
+        "SelfRegulationSCP2": {
+          "rbar": 0.5318,
+          "robust_z": 0.53,
+          "seed_std": 0.0554,
+          "seed_std_rel": 1.4,
+          "seed_range": 0.114,
+          "loo_snr": 0.568,
+          "loo_snr_delta": 0.031,
+          "loo_sign": 0.25,
+          "loo_sign_delta": 0.017,
+          "spread_drop_frac": -0.011
+        },
+        "UWaveGestureLibrary": {
+          "rbar": 0.8934,
+          "robust_z": 0.16,
+          "seed_std": 0.0333,
+          "seed_std_rel": 1.26,
+          "seed_range": 0.0725,
+          "loo_snr": 3.682,
+          "loo_snr_delta": 0.275,
+          "loo_sign": 0.778,
+          "loo_sign_delta": 0.078,
+          "spread_drop_frac": -0.049
+        }
+      },
+      "summary": {
+        "mean_abs_z": 0.43,
+        "max_abs_z": 1.1,
+        "n_ds_outlier_z2": 0,
+        "n_ds_outlier_z3": 0,
+        "mean_seed_std_rel": 0.86,
+        "max_seed_std_rel": 1.4,
+        "n_ds_highvar": 0,
+        "mean_spread_drop": -0.038,
+        "max_spread_drop": 0.026
+      }
+    },
+    "e490b88ee785": {
+      "har_rank": 11,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "rbar": 0.9784,
+          "robust_z": 0.15,
+          "seed_std": 0.012,
+          "seed_std_rel": 0.48,
+          "seed_range": 0.0266,
+          "loo_snr": 4.78,
+          "loo_snr_delta": -0.037,
+          "loo_sign": 0.768,
+          "loo_sign_delta": 0.042,
+          "spread_drop_frac": -0.049
+        },
+        "CharacterTrajectories": {
+          "rbar": 0.9955,
+          "robust_z": 0.76,
+          "seed_std": 0.003,
+          "seed_std_rel": 0.27,
+          "seed_range": 0.0065,
+          "loo_snr": 2.891,
+          "loo_snr_delta": -0.09,
+          "loo_sign": 0.657,
+          "loo_sign_delta": 0.01,
+          "spread_drop_frac": -0.048
+        },
+        "ERing": {
+          "rbar": 0.9028,
+          "robust_z": -0.81,
+          "seed_std": 0.0246,
+          "seed_std_rel": 0.75,
+          "seed_range": 0.0544,
+          "loo_snr": 3.377,
+          "loo_snr_delta": 0.088,
+          "loo_sign": 0.694,
+          "loo_sign_delta": 0.017,
+          "spread_drop_frac": -0.055
+        },
+        "EthanolConcentration": {
+          "rbar": 0.4166,
+          "robust_z": -0.73,
+          "seed_std": 0.0446,
+          "seed_std_rel": 1.3,
+          "seed_range": 0.0991,
+          "loo_snr": 1.038,
+          "loo_snr_delta": 0.064,
+          "loo_sign": 0.403,
+          "loo_sign_delta": 0.036,
+          "spread_drop_frac": -0.029
+        },
+        "FingerMovements": {
+          "rbar": 0.5192,
+          "robust_z": -1.91,
+          "seed_std": 0.0449,
+          "seed_std_rel": 1.45,
+          "seed_range": 0.0968,
+          "loo_snr": 1.028,
+          "loo_snr_delta": 0.05,
+          "loo_sign": 0.306,
+          "loo_sign_delta": 0.017,
+          "spread_drop_frac": 0.002
+        },
+        "HandMovementDirection": {
+          "rbar": 0.437,
+          "robust_z": 1.3,
+          "seed_std": 0.0353,
+          "seed_std_rel": 0.72,
+          "seed_range": 0.0675,
+          "loo_snr": 1.067,
+          "loo_snr_delta": 0.014,
+          "loo_sign": 0.347,
+          "loo_sign_delta": 0.014,
+          "spread_drop_frac": -0.045
+        },
+        "Handwriting": {
+          "rbar": 0.8366,
+          "robust_z": 0.57,
+          "seed_std": 0.0092,
+          "seed_std_rel": 0.23,
+          "seed_range": 0.0209,
+          "loo_snr": 4.699,
+          "loo_snr_delta": -0.262,
+          "loo_sign": 0.847,
+          "loo_sign_delta": 0.016,
+          "spread_drop_frac": -0.028
+        },
+        "Heartbeat": {
+          "rbar": 0.7316,
+          "robust_z": 0.18,
+          "seed_std": 0.0322,
+          "seed_std_rel": 1.64,
+          "seed_range": 0.0738,
+          "loo_snr": 0.75,
+          "loo_snr_delta": 0.083,
+          "loo_sign": 0.375,
+          "loo_sign_delta": 0.038,
+          "spread_drop_frac": -0.044
+        },
+        "MotorImagery": {
+          "rbar": 0.5285,
+          "robust_z": 1.03,
+          "seed_std": 0.0408,
+          "seed_std_rel": 1.06,
+          "seed_range": 0.0921,
+          "loo_snr": 0.522,
+          "loo_snr_delta": 0.009,
+          "loo_sign": 0.169,
+          "loo_sign_delta": -0.011,
+          "spread_drop_frac": -0.011
+        },
+        "NATOPS": {
+          "rbar": 0.7694,
+          "robust_z": -4.54,
+          "seed_std": 0.0358,
+          "seed_std_rel": 0.91,
+          "seed_range": 0.0741,
+          "loo_snr": 4.126,
+          "loo_snr_delta": 0.117,
+          "loo_sign": 0.5,
+          "loo_sign_delta": -0.089,
+          "spread_drop_frac": -0.039
+        },
+        "SelfRegulationSCP1": {
+          "rbar": 0.804,
+          "robust_z": -1.01,
+          "seed_std": 0.0406,
+          "seed_std_rel": 1.35,
+          "seed_range": 0.0888,
+          "loo_snr": 0.936,
+          "loo_snr_delta": 0.033,
+          "loo_sign": 0.403,
+          "loo_sign_delta": 0.014,
+          "spread_drop_frac": 0.003
+        },
+        "SelfRegulationSCP2": {
+          "rbar": 0.5241,
+          "robust_z": -0.14,
+          "seed_std": 0.0414,
+          "seed_std_rel": 1.04,
+          "seed_range": 0.0833,
+          "loo_snr": 0.447,
+          "loo_snr_delta": -0.091,
+          "loo_sign": 0.181,
+          "loo_sign_delta": -0.053,
+          "spread_drop_frac": 0.173
+        },
+        "UWaveGestureLibrary": {
+          "rbar": 0.8818,
+          "robust_z": -0.16,
+          "seed_std": 0.0191,
+          "seed_std_rel": 0.72,
+          "seed_range": 0.0424,
+          "loo_snr": 3.484,
+          "loo_snr_delta": 0.077,
+          "loo_sign": 0.708,
+          "loo_sign_delta": 0.008,
+          "spread_drop_frac": -0.054
+        }
+      },
+      "summary": {
+        "mean_abs_z": 1.02,
+        "max_abs_z": 4.54,
+        "n_ds_outlier_z2": 1,
+        "n_ds_outlier_z3": 1,
+        "mean_seed_std_rel": 0.92,
+        "max_seed_std_rel": 1.64,
+        "n_ds_highvar": 1,
+        "mean_spread_drop": -0.017,
+        "max_spread_drop": 0.173
+      }
+    },
+    "9092e36eefe1": {
+      "har_rank": 13,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "rbar": 0.987,
+          "robust_z": 0.68,
+          "seed_std": 0.0053,
+          "seed_std_rel": 0.21,
+          "seed_range": 0.013,
+          "loo_snr": 4.629,
+          "loo_snr_delta": -0.188,
+          "loo_sign": 0.731,
+          "loo_sign_delta": 0.005,
+          "spread_drop_frac": -0.045
+        },
+        "CharacterTrajectories": {
+          "rbar": 0.9943,
+          "robust_z": 0.25,
+          "seed_std": 0.0046,
+          "seed_std_rel": 0.42,
+          "seed_range": 0.0098,
+          "loo_snr": 2.942,
+          "loo_snr_delta": -0.039,
+          "loo_sign": 0.681,
+          "loo_sign_delta": 0.034,
+          "spread_drop_frac": -0.05
+        },
+        "ERing": {
+          "rbar": 0.9497,
+          "robust_z": 1.34,
+          "seed_std": 0.0169,
+          "seed_std_rel": 0.52,
+          "seed_range": 0.0367,
+          "loo_snr": 3.204,
+          "loo_snr_delta": -0.085,
+          "loo_sign": 0.653,
+          "loo_sign_delta": -0.025,
+          "spread_drop_frac": -0.027
+        },
+        "EthanolConcentration": {
+          "rbar": 0.4342,
+          "robust_z": -0.07,
+          "seed_std": 0.0406,
+          "seed_std_rel": 1.18,
+          "seed_range": 0.0897,
+          "loo_snr": 1.054,
+          "loo_snr_delta": 0.079,
+          "loo_sign": 0.389,
+          "loo_sign_delta": 0.022,
+          "spread_drop_frac": -0.059
+        },
+        "FingerMovements": {
+          "rbar": 0.5484,
+          "robust_z": -0.28,
+          "seed_std": 0.0175,
+          "seed_std_rel": 0.57,
+          "seed_range": 0.0363,
+          "loo_snr": 0.963,
+          "loo_snr_delta": -0.015,
+          "loo_sign": 0.264,
+          "loo_sign_delta": -0.025,
+          "spread_drop_frac": -0.032
+        },
+        "HandMovementDirection": {
+          "rbar": 0.5554,
+          "robust_z": 8.37,
+          "seed_std": 0.0325,
+          "seed_std_rel": 0.66,
+          "seed_range": 0.0736,
+          "loo_snr": 0.485,
+          "loo_snr_delta": -0.567,
+          "loo_sign": 0.181,
+          "loo_sign_delta": -0.153,
+          "spread_drop_frac": 0.522
+        },
+        "Handwriting": {
+          "rbar": 0.8434,
+          "robust_z": 0.63,
+          "seed_std": 0.023,
+          "seed_std_rel": 0.58,
+          "seed_range": 0.053,
+          "loo_snr": 4.851,
+          "loo_snr_delta": -0.11,
+          "loo_sign": 0.845,
+          "loo_sign_delta": 0.014,
+          "spread_drop_frac": -0.024
+        },
+        "Heartbeat": {
+          "rbar": 0.7316,
+          "robust_z": 0.18,
+          "seed_std": 0.0202,
+          "seed_std_rel": 1.03,
+          "seed_range": 0.0451,
+          "loo_snr": 0.702,
+          "loo_snr_delta": 0.034,
+          "loo_sign": 0.38,
+          "loo_sign_delta": 0.043,
+          "spread_drop_frac": -0.048
+        },
+        "MotorImagery": {
+          "rbar": 0.5066,
+          "robust_z": -0.56,
+          "seed_std": 0.0275,
+          "seed_std_rel": 0.71,
+          "seed_range": 0.0658,
+          "loo_snr": 0.517,
+          "loo_snr_delta": 0.003,
+          "loo_sign": 0.183,
+          "loo_sign_delta": 0.003,
+          "spread_drop_frac": -0.039
+        },
+        "NATOPS": {
+          "rbar": 0.9403,
+          "robust_z": 0.59,
+          "seed_std": 0.0217,
+          "seed_std_rel": 0.55,
+          "seed_range": 0.0454,
+          "loo_snr": 3.974,
+          "loo_snr_delta": -0.035,
+          "loo_sign": 0.625,
+          "loo_sign_delta": 0.036,
+          "spread_drop_frac": -0.041
+        },
+        "SelfRegulationSCP1": {
+          "rbar": 0.8691,
+          "robust_z": 1.15,
+          "seed_std": 0.0349,
+          "seed_std_rel": 1.16,
+          "seed_range": 0.074,
+          "loo_snr": 0.834,
+          "loo_snr_delta": -0.068,
+          "loo_sign": 0.333,
+          "loo_sign_delta": -0.056,
+          "spread_drop_frac": 0.092
+        },
+        "SelfRegulationSCP2": {
+          "rbar": 0.5395,
+          "robust_z": 1.2,
+          "seed_std": 0.0418,
+          "seed_std_rel": 1.05,
+          "seed_range": 0.0965,
+          "loo_snr": 0.556,
+          "loo_snr_delta": 0.019,
+          "loo_sign": 0.25,
+          "loo_sign_delta": 0.017,
+          "spread_drop_frac": -0.028
+        },
+        "UWaveGestureLibrary": {
+          "rbar": 0.9102,
+          "robust_z": 0.61,
+          "seed_std": 0.0265,
+          "seed_std_rel": 1.0,
+          "seed_range": 0.0631,
+          "loo_snr": 3.54,
+          "loo_snr_delta": 0.133,
+          "loo_sign": 0.736,
+          "loo_sign_delta": 0.036,
+          "spread_drop_frac": -0.038
+        }
+      },
+      "summary": {
+        "mean_abs_z": 1.22,
+        "max_abs_z": 8.37,
+        "n_ds_outlier_z2": 1,
+        "n_ds_outlier_z3": 1,
+        "mean_seed_std_rel": 0.74,
+        "max_seed_std_rel": 1.18,
+        "n_ds_highvar": 0,
+        "mean_spread_drop": 0.014,
+        "max_spread_drop": 0.522
+      }
+    },
+    "65627517fa32": {
+      "har_rank": 15,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "rbar": 0.9131,
+          "robust_z": -3.9,
+          "seed_std": 0.0455,
+          "seed_std_rel": 1.85,
+          "seed_range": 0.1071,
+          "loo_snr": 5.627,
+          "loo_snr_delta": 0.81,
+          "loo_sign": 0.697,
+          "loo_sign_delta": -0.029,
+          "spread_drop_frac": -0.058
+        },
+        "CharacterTrajectories": {
+          "rbar": 0.9915,
+          "robust_z": -0.93,
+          "seed_std": 0.0049,
+          "seed_std_rel": 0.45,
+          "seed_range": 0.0114,
+          "loo_snr": 2.961,
+          "loo_snr_delta": -0.02,
+          "loo_sign": 0.672,
+          "loo_sign_delta": 0.025,
+          "spread_drop_frac": -0.054
+        },
+        "ERing": {
+          "rbar": 0.8814,
+          "robust_z": -1.79,
+          "seed_std": 0.0393,
+          "seed_std_rel": 1.19,
+          "seed_range": 0.0922,
+          "loo_snr": 3.562,
+          "loo_snr_delta": 0.273,
+          "loo_sign": 0.653,
+          "loo_sign_delta": -0.025,
+          "spread_drop_frac": -0.059
+        },
+        "EthanolConcentration": {
+          "rbar": 0.4822,
+          "robust_z": 1.73,
+          "seed_std": 0.0334,
+          "seed_std_rel": 0.97,
+          "seed_range": 0.0766,
+          "loo_snr": 0.872,
+          "loo_snr_delta": -0.103,
+          "loo_sign": 0.306,
+          "loo_sign_delta": -0.061,
+          "spread_drop_frac": 0.103
+        },
+        "FingerMovements": {
+          "rbar": 0.5403,
+          "robust_z": -0.73,
+          "seed_std": 0.0391,
+          "seed_std_rel": 1.26,
+          "seed_range": 0.0927,
+          "loo_snr": 1.06,
+          "loo_snr_delta": 0.082,
+          "loo_sign": 0.319,
+          "loo_sign_delta": 0.031,
+          "spread_drop_frac": -0.052
+        },
+        "HandMovementDirection": {
+          "rbar": 0.4061,
+          "robust_z": -0.55,
+          "seed_std": 0.05,
+          "seed_std_rel": 1.02,
+          "seed_range": 0.1144,
+          "loo_snr": 1.109,
+          "loo_snr_delta": 0.056,
+          "loo_sign": 0.361,
+          "loo_sign_delta": 0.028,
+          "spread_drop_frac": -0.052
+        },
+        "Handwriting": {
+          "rbar": 0.7065,
+          "robust_z": -0.49,
+          "seed_std": 0.0631,
+          "seed_std_rel": 1.58,
+          "seed_range": 0.1434,
+          "loo_snr": 5.62,
+          "loo_snr_delta": 0.66,
+          "loo_sign": 0.845,
+          "loo_sign_delta": 0.014,
+          "spread_drop_frac": -0.06
+        },
+        "Heartbeat": {
+          "rbar": 0.7213,
+          "robust_z": -0.72,
+          "seed_std": 0.0129,
+          "seed_std_rel": 0.66,
+          "seed_range": 0.0246,
+          "loo_snr": 0.64,
+          "loo_snr_delta": -0.028,
+          "loo_sign": 0.352,
+          "loo_sign_delta": 0.015,
+          "spread_drop_frac": 0.006
+        },
+        "MotorImagery": {
+          "rbar": 0.5055,
+          "robust_z": -0.63,
+          "seed_std": 0.0427,
+          "seed_std_rel": 1.11,
+          "seed_range": 0.0965,
+          "loo_snr": 0.531,
+          "loo_snr_delta": 0.017,
+          "loo_sign": 0.183,
+          "loo_sign_delta": 0.003,
+          "spread_drop_frac": -0.021
+        },
+        "NATOPS": {
+          "rbar": 0.9134,
+          "robust_z": -0.22,
+          "seed_std": 0.0493,
+          "seed_std_rel": 1.26,
+          "seed_range": 0.1139,
+          "loo_snr": 4.339,
+          "loo_snr_delta": 0.33,
+          "loo_sign": 0.597,
+          "loo_sign_delta": 0.008,
+          "spread_drop_frac": -0.051
+        },
+        "SelfRegulationSCP1": {
+          "rbar": 0.8107,
+          "robust_z": -0.78,
+          "seed_std": 0.013,
+          "seed_std_rel": 0.43,
+          "seed_range": 0.0296,
+          "loo_snr": 0.872,
+          "loo_snr_delta": -0.031,
+          "loo_sign": 0.361,
+          "loo_sign_delta": -0.028,
+          "spread_drop_frac": -0.027
+        },
+        "SelfRegulationSCP2": {
+          "rbar": 0.5285,
+          "robust_z": 0.24,
+          "seed_std": 0.035,
+          "seed_std_rel": 0.88,
+          "seed_range": 0.0833,
+          "loo_snr": 0.562,
+          "loo_snr_delta": 0.024,
+          "loo_sign": 0.236,
+          "loo_sign_delta": 0.003,
+          "spread_drop_frac": -0.059
+        },
+        "UWaveGestureLibrary": {
+          "rbar": 0.8125,
+          "robust_z": -2.03,
+          "seed_std": 0.0331,
+          "seed_std_rel": 1.25,
+          "seed_range": 0.0709,
+          "loo_snr": 3.657,
+          "loo_snr_delta": 0.251,
+          "loo_sign": 0.625,
+          "loo_sign_delta": -0.075,
+          "spread_drop_frac": -0.043
+        }
+      },
+      "summary": {
+        "mean_abs_z": 1.13,
+        "max_abs_z": 3.9,
+        "n_ds_outlier_z2": 2,
+        "n_ds_outlier_z3": 1,
+        "mean_seed_std_rel": 1.07,
+        "max_seed_std_rel": 1.85,
+        "n_ds_highvar": 2,
+        "mean_spread_drop": -0.033,
+        "max_spread_drop": 0.103
+      }
+    },
+    "20be4f7443e8": {
+      "har_rank": 17,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "rbar": 0.6011,
+          "robust_z": -23.25,
+          "seed_std": 0.0834,
+          "seed_std_rel": 3.38,
+          "seed_range": 0.1935,
+          "loo_snr": 1.578,
+          "loo_snr_delta": -3.239,
+          "loo_sign": 0.652,
+          "loo_sign_delta": -0.075,
+          "spread_drop_frac": 0.759
+        },
+        "CharacterTrajectories": {
+          "rbar": 0.8927,
+          "robust_z": -41.85,
+          "seed_std": 0.0572,
+          "seed_std_rel": 5.25,
+          "seed_range": 0.1349,
+          "loo_snr": 1.629,
+          "loo_snr_delta": -1.353,
+          "loo_sign": 0.567,
+          "loo_sign_delta": -0.08,
+          "spread_drop_frac": 0.712
+        },
+        "ERing": {
+          "rbar": 0.6458,
+          "robust_z": -12.58,
+          "seed_std": 0.0978,
+          "seed_std_rel": 2.98,
+          "seed_range": 0.2067,
+          "loo_snr": 2.837,
+          "loo_snr_delta": -0.452,
+          "loo_sign": 0.611,
+          "loo_sign_delta": -0.067,
+          "spread_drop_frac": 0.327
+        },
+        "EthanolConcentration": {
+          "rbar": 0.4438,
+          "robust_z": 0.28,
+          "seed_std": 0.0441,
+          "seed_std_rel": 1.29,
+          "seed_range": 0.0959,
+          "loo_snr": 1.065,
+          "loo_snr_delta": 0.09,
+          "loo_sign": 0.389,
+          "loo_sign_delta": 0.022,
+          "spread_drop_frac": -0.058
+        },
+        "FingerMovements": {
+          "rbar": 0.4859,
+          "robust_z": -3.77,
+          "seed_std": 0.0286,
+          "seed_std_rel": 0.93,
+          "seed_range": 0.0645,
+          "loo_snr": 0.739,
+          "loo_snr_delta": -0.239,
+          "loo_sign": 0.208,
+          "loo_sign_delta": -0.081,
+          "spread_drop_frac": 0.238
+        },
+        "HandMovementDirection": {
+          "rbar": 0.4058,
+          "robust_z": -0.57,
+          "seed_std": 0.0578,
+          "seed_std_rel": 1.18,
+          "seed_range": 0.1132,
+          "loo_snr": 1.129,
+          "loo_snr_delta": 0.076,
+          "loo_sign": 0.389,
+          "loo_sign_delta": 0.056,
+          "spread_drop_frac": -0.051
+        },
+        "Handwriting": {
+          "rbar": 0.3268,
+          "robust_z": -3.59,
+          "seed_std": 0.0822,
+          "seed_std_rel": 2.05,
+          "seed_range": 0.184,
+          "loo_snr": 4.376,
+          "loo_snr_delta": -0.584,
+          "loo_sign": 0.803,
+          "loo_sign_delta": -0.029,
+          "spread_drop_frac": 0.221
+        },
+        "Heartbeat": {
+          "rbar": 0.7428,
+          "robust_z": 1.17,
+          "seed_std": 0.0213,
+          "seed_std_rel": 1.09,
+          "seed_range": 0.0492,
+          "loo_snr": 0.634,
+          "loo_snr_delta": -0.034,
+          "loo_sign": 0.319,
+          "loo_sign_delta": -0.018,
+          "spread_drop_frac": 0.06
+        },
+        "MotorImagery": {
+          "rbar": 0.5,
+          "robust_z": -1.03,
+          "seed_std": 0.0376,
+          "seed_std_rel": 0.98,
+          "seed_range": 0.0833,
+          "loo_snr": 0.525,
+          "loo_snr_delta": 0.012,
+          "loo_sign": 0.167,
+          "loo_sign_delta": -0.013,
+          "spread_drop_frac": -0.026
+        },
+        "NATOPS": {
+          "rbar": 0.4377,
+          "robust_z": -14.51,
+          "seed_std": 0.0977,
+          "seed_std_rel": 2.49,
+          "seed_range": 0.2139,
+          "loo_snr": 1.774,
+          "loo_snr_delta": -2.235,
+          "loo_sign": 0.486,
+          "loo_sign_delta": -0.103,
+          "spread_drop_frac": 0.631
+        },
+        "SelfRegulationSCP1": {
+          "rbar": 0.7825,
+          "robust_z": -1.72,
+          "seed_std": 0.0255,
+          "seed_std_rel": 0.85,
+          "seed_range": 0.0562,
+          "loo_snr": 0.745,
+          "loo_snr_delta": -0.158,
+          "loo_sign": 0.278,
+          "loo_sign_delta": -0.111,
+          "spread_drop_frac": 0.161
+        },
+        "SelfRegulationSCP2": {
+          "rbar": 0.523,
+          "robust_z": -0.24,
+          "seed_std": 0.0384,
+          "seed_std_rel": 0.97,
+          "seed_range": 0.0833,
+          "loo_snr": 0.567,
+          "loo_snr_delta": 0.03,
+          "loo_sign": 0.25,
+          "loo_sign_delta": 0.017,
+          "spread_drop_frac": -0.059
+        },
+        "UWaveGestureLibrary": {
+          "rbar": 0.6208,
+          "robust_z": -7.21,
+          "seed_std": 0.0622,
+          "seed_std_rel": 2.36,
+          "seed_range": 0.1451,
+          "loo_snr": 1.58,
+          "loo_snr_delta": -1.827,
+          "loo_sign": 0.625,
+          "loo_sign_delta": -0.075,
+          "spread_drop_frac": 0.606
+        }
+      },
+      "summary": {
+        "mean_abs_z": 8.6,
+        "max_abs_z": 41.85,
+        "n_ds_outlier_z2": 7,
+        "n_ds_outlier_z3": 7,
+        "mean_seed_std_rel": 1.98,
+        "max_seed_std_rel": 5.25,
+        "n_ds_highvar": 6,
+        "mean_spread_drop": 0.271,
+        "max_spread_drop": 0.759
+      }
+    },
+    "8b87d66faad3": {
+      "har_rank": 19,
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "rbar": 0.9222,
+          "robust_z": -3.34,
+          "seed_std": 0.0329,
+          "seed_std_rel": 1.33,
+          "seed_range": 0.0734,
+          "loo_snr": 5.287,
+          "loo_snr_delta": 0.47,
+          "loo_sign": 0.687,
+          "loo_sign_delta": -0.04,
+          "spread_drop_frac": -0.057
+        },
+        "CharacterTrajectories": {
+          "rbar": 0.9667,
+          "robust_z": -11.21,
+          "seed_std": 0.0185,
+          "seed_std_rel": 1.7,
+          "seed_range": 0.0439,
+          "loo_snr": 3.369,
+          "loo_snr_delta": 0.388,
+          "loo_sign": 0.567,
+          "loo_sign_delta": -0.08,
+          "spread_drop_frac": -0.042
+        },
+        "ERing": {
+          "rbar": 0.7125,
+          "robust_z": -9.53,
+          "seed_std": 0.0405,
+          "seed_std_rel": 1.23,
+          "seed_range": 0.0778,
+          "loo_snr": 2.95,
+          "loo_snr_delta": -0.339,
+          "loo_sign": 0.611,
+          "loo_sign_delta": -0.067,
+          "spread_drop_frac": 0.126
+        },
+        "EthanolConcentration": {
+          "rbar": 0.4365,
+          "robust_z": 0.01,
+          "seed_std": 0.035,
+          "seed_std_rel": 1.02,
+          "seed_range": 0.0797,
+          "loo_snr": 1.028,
+          "loo_snr_delta": 0.053,
+          "loo_sign": 0.417,
+          "loo_sign_delta": 0.05,
+          "spread_drop_frac": -0.052
+        },
+        "FingerMovements": {
+          "rbar": 0.5403,
+          "robust_z": -0.73,
+          "seed_std": 0.0158,
+          "seed_std_rel": 0.51,
+          "seed_range": 0.0363,
+          "loo_snr": 0.981,
+          "loo_snr_delta": 0.003,
+          "loo_sign": 0.278,
+          "loo_sign_delta": -0.011,
+          "spread_drop_frac": -0.058
+        },
+        "HandMovementDirection": {
+          "rbar": 0.4185,
+          "robust_z": 0.19,
+          "seed_std": 0.0641,
+          "seed_std_rel": 1.3,
+          "seed_range": 0.1205,
+          "loo_snr": 1.144,
+          "loo_snr_delta": 0.092,
+          "loo_sign": 0.347,
+          "loo_sign_delta": 0.014,
+          "spread_drop_frac": -0.051
+        },
+        "Handwriting": {
+          "rbar": 0.393,
+          "robust_z": -3.05,
+          "seed_std": 0.0939,
+          "seed_std_rel": 2.35,
+          "seed_range": 0.217,
+          "loo_snr": 5.17,
+          "loo_snr_delta": 0.21,
+          "loo_sign": 0.803,
+          "loo_sign_delta": -0.029,
+          "spread_drop_frac": 0.114
+        },
+        "Heartbeat": {
+          "rbar": 0.6998,
+          "robust_z": -2.61,
+          "seed_std": 0.0233,
+          "seed_std_rel": 1.19,
+          "seed_range": 0.0533,
+          "loo_snr": 0.504,
+          "loo_snr_delta": -0.164,
+          "loo_sign": 0.239,
+          "loo_sign_delta": -0.098,
+          "spread_drop_frac": 0.261
+        },
+        "MotorImagery": {
+          "rbar": 0.523,
+          "robust_z": 0.63,
+          "seed_std": 0.0426,
+          "seed_std_rel": 1.1,
+          "seed_range": 0.0833,
+          "loo_snr": 0.504,
+          "loo_snr_delta": -0.009,
+          "loo_sign": 0.208,
+          "loo_sign_delta": 0.029,
+          "spread_drop_frac": 0.029
+        },
+        "NATOPS": {
+          "rbar": 0.9308,
+          "robust_z": 0.3,
+          "seed_std": 0.0268,
+          "seed_std_rel": 0.68,
+          "seed_range": 0.0565,
+          "loo_snr": 4.043,
+          "loo_snr_delta": 0.034,
+          "loo_sign": 0.625,
+          "loo_sign_delta": 0.036,
+          "spread_drop_frac": -0.044
+        },
+        "SelfRegulationSCP1": {
+          "rbar": 0.8129,
+          "robust_z": -0.71,
+          "seed_std": 0.0274,
+          "seed_std_rel": 0.91,
+          "seed_range": 0.0562,
+          "loo_snr": 0.921,
+          "loo_snr_delta": 0.019,
+          "loo_sign": 0.417,
+          "loo_sign_delta": 0.028,
+          "spread_drop_frac": -0.031
+        },
+        "SelfRegulationSCP2": {
+          "rbar": 0.511,
+          "robust_z": -1.3,
+          "seed_std": 0.0442,
+          "seed_std_rel": 1.12,
+          "seed_range": 0.0965,
+          "loo_snr": 0.537,
+          "loo_snr_delta": -0.0,
+          "loo_sign": 0.236,
+          "loo_sign_delta": 0.003,
+          "spread_drop_frac": 0.014
+        },
+        "UWaveGestureLibrary": {
+          "rbar": 0.8542,
+          "robust_z": -0.9,
+          "seed_std": 0.0214,
+          "seed_std_rel": 0.81,
+          "seed_range": 0.0396,
+          "loo_snr": 3.538,
+          "loo_snr_delta": 0.131,
+          "loo_sign": 0.694,
+          "loo_sign_delta": -0.006,
+          "spread_drop_frac": -0.06
+        }
+      },
+      "summary": {
+        "mean_abs_z": 2.65,
+        "max_abs_z": 11.21,
+        "n_ds_outlier_z2": 5,
+        "n_ds_outlier_z3": 4,
+        "mean_seed_std_rel": 1.17,
+        "max_seed_std_rel": 2.35,
+        "n_ds_highvar": 2,
+        "mean_spread_drop": 0.011,
+        "max_spread_drop": 0.261
+      }
+    }
+  },
+  "cls_configs": {
+    "4f7d413581f6": {
+      "resize": 0.5,
+      "rescale": 0.7,
+      "jitter": 0.7,
+      "point_mask": 0.4,
+      "freq_mask": 0.3,
+      "crop": 0.6,
+      "order": 0,
+      "emb_jitter": 0.6,
+      "emb_mask": 0.1,
+      "norm": "layer_norm",
+      "instance": true,
+      "temporal": false,
+      "cross_scale": true,
+      "kernel": 5,
+      "pool": "avg",
+      "adj_neighbor": false,
+      "loss_type": "info_nce",
+      "sim_func": "dot",
+      "temperature": 1.0
+    },
+    "cffb55035c3a": {
+      "resize": 0.3,
+      "rescale": 0.0,
+      "jitter": 0.1,
+      "point_mask": 0.95,
+      "freq_mask": 0.4,
+      "crop": 0.5,
+      "order": 2,
+      "emb_jitter": 0.8,
+      "emb_mask": 0.0,
+      "norm": "none",
+      "instance": true,
+      "temporal": true,
+      "cross_scale": true,
+      "kernel": 3,
+      "pool": "avg",
+      "adj_neighbor": true,
+      "loss_type": "triplet",
+      "sim_func": "dot",
+      "temperature": 1.0
+    },
+    "8c4aa28336d6": {
+      "resize": 0.9,
+      "rescale": 0.4,
+      "jitter": 0.5,
+      "point_mask": 0.4,
+      "freq_mask": 0.2,
+      "crop": 0.95,
+      "order": 3,
+      "emb_jitter": 0.7,
+      "emb_mask": 0.4,
+      "norm": "l2",
+      "instance": true,
+      "temporal": false,
+      "cross_scale": true,
+      "kernel": 2,
+      "pool": "avg",
+      "adj_neighbor": true,
+      "loss_type": "triplet",
+      "sim_func": "euclidean",
+      "temperature": 0.01
+    },
+    "f48e5da1d899": {
+      "resize": 0.0,
+      "rescale": 0.8,
+      "jitter": 0.6,
+      "point_mask": 0.6,
+      "freq_mask": 0.6,
+      "crop": 0.6,
+      "order": 0,
+      "emb_jitter": 0.6,
+      "emb_mask": 0.8,
+      "norm": "none",
+      "instance": true,
+      "temporal": false,
+      "cross_scale": true,
+      "kernel": 2,
+      "pool": "avg",
+      "adj_neighbor": false,
+      "loss_type": "info_nce",
+      "sim_func": "dot",
+      "temperature": 1.0
+    },
+    "a1f67db45e64": {
+      "resize": 0.5,
+      "rescale": 0.7,
+      "jitter": 0.3,
+      "point_mask": 0.8,
+      "freq_mask": 0.6,
+      "crop": 0.5,
+      "order": 2,
+      "emb_jitter": 0.6,
+      "emb_mask": 0.0,
+      "norm": "none",
+      "instance": true,
+      "temporal": true,
+      "cross_scale": true,
+      "kernel": 2,
+      "pool": "max",
+      "adj_neighbor": false,
+      "loss_type": "info_nce",
+      "sim_func": "euclidean",
+      "temperature": 1.0
+    },
+    "e490b88ee785": {
+      "resize": 0.4,
+      "rescale": 0.4,
+      "jitter": 0.4,
+      "point_mask": 0.8,
+      "freq_mask": 0.3,
+      "crop": 0.1,
+      "order": 1,
+      "emb_jitter": 0.0,
+      "emb_mask": 0.1,
+      "norm": "none",
+      "instance": true,
+      "temporal": false,
+      "cross_scale": false,
+      "kernel": null,
+      "pool": null,
+      "adj_neighbor": null,
+      "loss_type": "info_nce",
+      "sim_func": "euclidean",
+      "temperature": 1.0
+    },
+    "9092e36eefe1": {
+      "resize": 0.6,
+      "rescale": 0.5,
+      "jitter": 0.9,
+      "point_mask": 0.2,
+      "freq_mask": 0.95,
+      "crop": 0.95,
+      "order": 0,
+      "emb_jitter": 0.1,
+      "emb_mask": 0.5,
+      "norm": "none",
+      "instance": true,
+      "temporal": true,
+      "cross_scale": true,
+      "kernel": 5,
+      "pool": "max",
+      "adj_neighbor": true,
+      "loss_type": "triplet",
+      "sim_func": "dot",
+      "temperature": 10.0
+    },
+    "65627517fa32": {
+      "resize": 0.4,
+      "rescale": 0.8,
+      "jitter": 0.9,
+      "point_mask": 0.4,
+      "freq_mask": 0.9,
+      "crop": 0.3,
+      "order": 1,
+      "emb_jitter": 0.7,
+      "emb_mask": 0.7,
+      "norm": "none",
+      "instance": true,
+      "temporal": false,
+      "cross_scale": true,
+      "kernel": 5,
+      "pool": "avg",
+      "adj_neighbor": false,
+      "loss_type": "triplet",
+      "sim_func": "euclidean",
+      "temperature": 10.0
+    },
+    "20be4f7443e8": {
+      "resize": 0.5,
+      "rescale": 0.1,
+      "jitter": 0.7,
+      "point_mask": 0.5,
+      "freq_mask": 0.3,
+      "crop": 0.2,
+      "order": 2,
+      "emb_jitter": 0.7,
+      "emb_mask": 0.95,
+      "norm": "layer_norm",
+      "instance": true,
+      "temporal": true,
+      "cross_scale": false,
+      "kernel": 3,
+      "pool": "max",
+      "adj_neighbor": true,
+      "loss_type": "info_nce",
+      "sim_func": "euclidean",
+      "temperature": 100.0
+    },
+    "8b87d66faad3": {
+      "resize": 0.5,
+      "rescale": 0.5,
+      "jitter": 0.8,
+      "point_mask": 0.2,
+      "freq_mask": 0.95,
+      "crop": 0.3,
+      "order": 2,
+      "emb_jitter": 0.5,
+      "emb_mask": 0.9,
+      "norm": "layer_norm",
+      "instance": true,
+      "temporal": true,
+      "cross_scale": true,
+      "kernel": 2,
+      "pool": "max",
+      "adj_neighbor": true,
+      "loss_type": "triplet",
+      "sim_func": "cosine",
+      "temperature": 0.01
+    }
+  },
+  "outlier_dose_response": {
+    "outliers": [
+      "20be4f7443e8",
+      "8b87d66faad3"
+    ],
+    "by_n_outliers": {
+      "0": {
+        "n_subsets": 93,
+        "gate_mean": 57.85,
+        "gate_median": 56.0,
+        "gate_min": 44,
+        "gate_max": 84,
+        "frac_ge_100": 0.0
+      },
+      "1": {
+        "n_subsets": 326,
+        "gate_mean": 74.56,
+        "gate_median": 74.0,
+        "gate_min": 56,
+        "gate_max": 108,
+        "frac_ge_100": 0.0521
+      },
+      "2": {
+        "n_subsets": 218,
+        "gate_mean": 91.62,
+        "gate_median": 96.0,
+        "gate_min": 56,
+        "gate_max": 108,
+        "frac_ge_100": 0.2385
+      }
+    },
+    "pearson_frac_vs_gate": 0.751
+  },
+  "sign_by_strata": {
+    "data_driven": {
+      "outliers": [
+        "20be4f7443e8",
+        "8b87d66faad3"
+      ],
+      "normal": [
+        "4f7d413581f6",
+        "65627517fa32",
+        "8c4aa28336d6",
+        "9092e36eefe1",
+        "a1f67db45e64",
+        "cffb55035c3a",
+        "e490b88ee785",
+        "f48e5da1d899"
+      ],
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "all": 0.7262,
+          "normal": 0.5882,
+          "outlier": 1.0,
+          "cross": 0.9355,
+          "n_normal_pairs": 51,
+          "n_cross_pairs": 31
+        },
+        "CharacterTrajectories": {
+          "all": 0.6471,
+          "normal": 0.4314,
+          "outlier": 0.5,
+          "cross": 1.0,
+          "n_normal_pairs": 51,
+          "n_cross_pairs": 32
+        },
+        "ERing": {
+          "all": 0.6778,
+          "normal": 0.5,
+          "outlier": 0.5,
+          "cross": 1.0,
+          "n_normal_pairs": 56,
+          "n_cross_pairs": 32
+        },
+        "EthanolConcentration": {
+          "all": 0.3667,
+          "normal": 0.4464,
+          "outlier": 0.0,
+          "cross": 0.25,
+          "n_normal_pairs": 56,
+          "n_cross_pairs": 32
+        },
+        "FingerMovements": {
+          "all": 0.2889,
+          "normal": 0.1786,
+          "outlier": 0.5,
+          "cross": 0.4688,
+          "n_normal_pairs": 56,
+          "n_cross_pairs": 32
+        },
+        "HandMovementDirection": {
+          "all": 0.3333,
+          "normal": 0.4107,
+          "outlier": 0.0,
+          "cross": 0.2188,
+          "n_normal_pairs": 56,
+          "n_cross_pairs": 32
+        },
+        "Handwriting": {
+          "all": 0.8315,
+          "normal": 0.7455,
+          "outlier": 0.5,
+          "cross": 1.0,
+          "n_normal_pairs": 55,
+          "n_cross_pairs": 32
+        },
+        "Heartbeat": {
+          "all": 0.3371,
+          "normal": 0.2143,
+          "outlier": 1.0,
+          "cross": 0.5161,
+          "n_normal_pairs": 56,
+          "n_cross_pairs": 31
+        },
+        "MotorImagery": {
+          "all": 0.1798,
+          "normal": 0.1964,
+          "outlier": 0.0,
+          "cross": 0.1562,
+          "n_normal_pairs": 56,
+          "n_cross_pairs": 32
+        },
+        "NATOPS": {
+          "all": 0.5889,
+          "normal": 0.5179,
+          "outlier": 1.0,
+          "cross": 0.6875,
+          "n_normal_pairs": 56,
+          "n_cross_pairs": 32
+        },
+        "SelfRegulationSCP1": {
+          "all": 0.3889,
+          "normal": 0.2857,
+          "outlier": 0.5,
+          "cross": 0.5625,
+          "n_normal_pairs": 56,
+          "n_cross_pairs": 32
+        },
+        "SelfRegulationSCP2": {
+          "all": 0.2333,
+          "normal": 0.25,
+          "outlier": 0.0,
+          "cross": 0.2188,
+          "n_normal_pairs": 56,
+          "n_cross_pairs": 32
+        },
+        "UWaveGestureLibrary": {
+          "all": 0.7,
+          "normal": 0.6071,
+          "outlier": 1.0,
+          "cross": 0.8438,
+          "n_normal_pairs": 56,
+          "n_cross_pairs": 32
+        }
+      }
+    },
+    "har_tail3": {
+      "outliers": [
+        "20be4f7443e8",
+        "65627517fa32",
+        "8b87d66faad3"
+      ],
+      "normal": [
+        "4f7d413581f6",
+        "8c4aa28336d6",
+        "9092e36eefe1",
+        "a1f67db45e64",
+        "cffb55035c3a",
+        "e490b88ee785",
+        "f48e5da1d899"
+      ],
+      "datasets": {
+        "ArticularyWordRecognition": {
+          "all": 0.7262,
+          "normal": 0.4595,
+          "outlier": 0.6667,
+          "cross": 0.9756,
+          "n_normal_pairs": 37,
+          "n_cross_pairs": 41
+        },
+        "CharacterTrajectories": {
+          "all": 0.6471,
+          "normal": 0.4324,
+          "outlier": 0.8333,
+          "cross": 0.8095,
+          "n_normal_pairs": 37,
+          "n_cross_pairs": 42
+        },
+        "ERing": {
+          "all": 0.6778,
+          "normal": 0.4286,
+          "outlier": 0.8333,
+          "cross": 0.9048,
+          "n_normal_pairs": 42,
+          "n_cross_pairs": 42
+        },
+        "EthanolConcentration": {
+          "all": 0.3667,
+          "normal": 0.381,
+          "outlier": 0.3333,
+          "cross": 0.3571,
+          "n_normal_pairs": 42,
+          "n_cross_pairs": 42
+        },
+        "FingerMovements": {
+          "all": 0.2889,
+          "normal": 0.1905,
+          "outlier": 0.3333,
+          "cross": 0.381,
+          "n_normal_pairs": 42,
+          "n_cross_pairs": 42
+        },
+        "HandMovementDirection": {
+          "all": 0.3333,
+          "normal": 0.4524,
+          "outlier": 0.0,
+          "cross": 0.2619,
+          "n_normal_pairs": 42,
+          "n_cross_pairs": 42
+        },
+        "Handwriting": {
+          "all": 0.8315,
+          "normal": 0.7561,
+          "outlier": 0.8333,
+          "cross": 0.9048,
+          "n_normal_pairs": 41,
+          "n_cross_pairs": 42
+        },
+        "Heartbeat": {
+          "all": 0.3371,
+          "normal": 0.2143,
+          "outlier": 0.6667,
+          "cross": 0.4146,
+          "n_normal_pairs": 42,
+          "n_cross_pairs": 41
+        },
+        "MotorImagery": {
+          "all": 0.1798,
+          "normal": 0.1905,
+          "outlier": 0.0,
+          "cross": 0.1905,
+          "n_normal_pairs": 42,
+          "n_cross_pairs": 42
+        },
+        "NATOPS": {
+          "all": 0.5889,
+          "normal": 0.5238,
+          "outlier": 0.8333,
+          "cross": 0.619,
+          "n_normal_pairs": 42,
+          "n_cross_pairs": 42
+        },
+        "SelfRegulationSCP1": {
+          "all": 0.3889,
+          "normal": 0.2143,
+          "outlier": 0.5,
+          "cross": 0.5476,
+          "n_normal_pairs": 42,
+          "n_cross_pairs": 42
+        },
+        "SelfRegulationSCP2": {
+          "all": 0.2333,
+          "normal": 0.2619,
+          "outlier": 0.1667,
+          "cross": 0.2143,
+          "n_normal_pairs": 42,
+          "n_cross_pairs": 42
+        },
+        "UWaveGestureLibrary": {
+          "all": 0.7,
+          "normal": 0.4762,
+          "outlier": 1.0,
+          "cross": 0.881,
+          "n_normal_pairs": 42,
+          "n_cross_pairs": 42
+        }
+      }
+    }
+  },
+  "delta_yield": {
+    "data_driven": {
+      "ArticularyWordRecognition": {
+        "delta": 0.08,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 21,
+          "keep_rate": 0.2333,
+          "sign_stable_among_kept": 1.0
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 3,
+          "keep_rate": 0.0536,
+          "sign_stable_among_kept": 1.0
+        }
+      },
+      "CharacterTrajectories": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 17,
+          "keep_rate": 0.1889,
+          "sign_stable_among_kept": 0.9412
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        }
+      },
+      "ERing": {
+        "delta": 0.06,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 36,
+          "keep_rate": 0.4,
+          "sign_stable_among_kept": 0.9722
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 4,
+          "keep_rate": 0.0714,
+          "sign_stable_among_kept": 0.75
+        }
+      },
+      "EthanolConcentration": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 49,
+          "keep_rate": 0.5444,
+          "sign_stable_among_kept": 0.4898
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 30,
+          "keep_rate": 0.5357,
+          "sign_stable_among_kept": 0.5667
+        }
+      },
+      "FingerMovements": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 31,
+          "keep_rate": 0.3444,
+          "sign_stable_among_kept": 0.3871
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 17,
+          "keep_rate": 0.3036,
+          "sign_stable_among_kept": 0.2941
+        }
+      },
+      "HandMovementDirection": {
+        "delta": 0.06,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 47,
+          "keep_rate": 0.5222,
+          "sign_stable_among_kept": 0.4255
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 34,
+          "keep_rate": 0.6071,
+          "sign_stable_among_kept": 0.5
+        }
+      },
+      "Handwriting": {
+        "delta": 0.07,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 64,
+          "keep_rate": 0.7111,
+          "sign_stable_among_kept": 0.9844
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 32,
+          "keep_rate": 0.5714,
+          "sign_stable_among_kept": 0.9688
+        }
+      },
+      "Heartbeat": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        }
+      },
+      "MotorImagery": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 28,
+          "keep_rate": 0.3111,
+          "sign_stable_among_kept": 0.1071
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 15,
+          "keep_rate": 0.2679,
+          "sign_stable_among_kept": 0.1333
+        }
+      },
+      "NATOPS": {
+        "delta": 0.06,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 52,
+          "keep_rate": 0.5778,
+          "sign_stable_among_kept": 0.8462
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 25,
+          "keep_rate": 0.4464,
+          "sign_stable_among_kept": 0.84
+        }
+      },
+      "SelfRegulationSCP1": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 31,
+          "keep_rate": 0.3444,
+          "sign_stable_among_kept": 0.4516
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 18,
+          "keep_rate": 0.3214,
+          "sign_stable_among_kept": 0.2778
+        }
+      },
+      "SelfRegulationSCP2": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 32,
+          "keep_rate": 0.3556,
+          "sign_stable_among_kept": 0.375
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 18,
+          "keep_rate": 0.3214,
+          "sign_stable_among_kept": 0.4444
+        }
+      },
+      "UWaveGestureLibrary": {
+        "delta": 0.06,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 36,
+          "keep_rate": 0.4,
+          "sign_stable_among_kept": 1.0
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 12,
+          "keep_rate": 0.2143,
+          "sign_stable_among_kept": 1.0
+        }
+      }
+    },
+    "har_tail3": {
+      "ArticularyWordRecognition": {
+        "delta": 0.08,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 21,
+          "keep_rate": 0.2333,
+          "sign_stable_among_kept": 1.0
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        }
+      },
+      "CharacterTrajectories": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 17,
+          "keep_rate": 0.1889,
+          "sign_stable_among_kept": 0.9412
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        }
+      },
+      "ERing": {
+        "delta": 0.06,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 36,
+          "keep_rate": 0.4,
+          "sign_stable_among_kept": 0.9722
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 4,
+          "keep_rate": 0.0952,
+          "sign_stable_among_kept": 0.75
+        }
+      },
+      "EthanolConcentration": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 49,
+          "keep_rate": 0.5444,
+          "sign_stable_among_kept": 0.4898
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 23,
+          "keep_rate": 0.5476,
+          "sign_stable_among_kept": 0.4348
+        }
+      },
+      "FingerMovements": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 31,
+          "keep_rate": 0.3444,
+          "sign_stable_among_kept": 0.3871
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 13,
+          "keep_rate": 0.3095,
+          "sign_stable_among_kept": 0.3077
+        }
+      },
+      "HandMovementDirection": {
+        "delta": 0.06,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 47,
+          "keep_rate": 0.5222,
+          "sign_stable_among_kept": 0.4255
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 27,
+          "keep_rate": 0.6429,
+          "sign_stable_among_kept": 0.5556
+        }
+      },
+      "Handwriting": {
+        "delta": 0.07,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 64,
+          "keep_rate": 0.7111,
+          "sign_stable_among_kept": 0.9844
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 21,
+          "keep_rate": 0.5,
+          "sign_stable_among_kept": 1.0
+        }
+      },
+      "Heartbeat": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        }
+      },
+      "MotorImagery": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 28,
+          "keep_rate": 0.3111,
+          "sign_stable_among_kept": 0.1071
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 11,
+          "keep_rate": 0.2619,
+          "sign_stable_among_kept": 0.0909
+        }
+      },
+      "NATOPS": {
+        "delta": 0.06,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 52,
+          "keep_rate": 0.5778,
+          "sign_stable_among_kept": 0.8462
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 20,
+          "keep_rate": 0.4762,
+          "sign_stable_among_kept": 0.85
+        }
+      },
+      "SelfRegulationSCP1": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 31,
+          "keep_rate": 0.3444,
+          "sign_stable_among_kept": 0.4516
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 16,
+          "keep_rate": 0.381,
+          "sign_stable_among_kept": 0.25
+        }
+      },
+      "SelfRegulationSCP2": {
+        "delta": 0.05,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 32,
+          "keep_rate": 0.3556,
+          "sign_stable_among_kept": 0.375
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 13,
+          "keep_rate": 0.3095,
+          "sign_stable_among_kept": 0.5385
+        }
+      },
+      "UWaveGestureLibrary": {
+        "delta": 0.06,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 36,
+          "keep_rate": 0.4,
+          "sign_stable_among_kept": 1.0
+        },
+        "normal": {
+          "n_pairs": 42,
+          "n_kept": 2,
+          "keep_rate": 0.0476,
+          "sign_stable_among_kept": 1.0
+        }
+      }
+    },
+    "data_driven_suggested_delta": {
+      "ArticularyWordRecognition": {
+        "delta": 0.074,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 23,
+          "keep_rate": 0.2556,
+          "sign_stable_among_kept": 0.9565
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 5,
+          "keep_rate": 0.0893,
+          "sign_stable_among_kept": 0.8
+        }
+      },
+      "CharacterTrajectories": {
+        "delta": 0.033,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 22,
+          "keep_rate": 0.2444,
+          "sign_stable_among_kept": 0.9545
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        }
+      },
+      "ERing": {
+        "delta": 0.099,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 25,
+          "keep_rate": 0.2778,
+          "sign_stable_among_kept": 1.0
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        }
+      },
+      "EthanolConcentration": {
+        "delta": 0.103,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 12,
+          "keep_rate": 0.1333,
+          "sign_stable_among_kept": 0.75
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 8,
+          "keep_rate": 0.1429,
+          "sign_stable_among_kept": 0.75
+        }
+      },
+      "FingerMovements": {
+        "delta": 0.093,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 8,
+          "keep_rate": 0.0889,
+          "sign_stable_among_kept": 0.5
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 5,
+          "keep_rate": 0.0893,
+          "sign_stable_among_kept": 0.2
+        }
+      },
+      "HandMovementDirection": {
+        "delta": 0.147,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 14,
+          "keep_rate": 0.1556,
+          "sign_stable_among_kept": 0.6429
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 11,
+          "keep_rate": 0.1964,
+          "sign_stable_among_kept": 0.8182
+        }
+      },
+      "Handwriting": {
+        "delta": 0.12,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 58,
+          "keep_rate": 0.6444,
+          "sign_stable_among_kept": 1.0
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 27,
+          "keep_rate": 0.4821,
+          "sign_stable_among_kept": 1.0
+        }
+      },
+      "Heartbeat": {
+        "delta": 0.059,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        }
+      },
+      "MotorImagery": {
+        "delta": 0.116,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 1,
+          "keep_rate": 0.0111,
+          "sign_stable_among_kept": 0.0
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 0,
+          "keep_rate": 0.0,
+          "sign_stable_among_kept": null
+        }
+      },
+      "NATOPS": {
+        "delta": 0.118,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 30,
+          "keep_rate": 0.3333,
+          "sign_stable_among_kept": 0.9667
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 9,
+          "keep_rate": 0.1607,
+          "sign_stable_among_kept": 0.8889
+        }
+      },
+      "SelfRegulationSCP1": {
+        "delta": 0.09,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 8,
+          "keep_rate": 0.0889,
+          "sign_stable_among_kept": 0.625
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 5,
+          "keep_rate": 0.0893,
+          "sign_stable_among_kept": 0.4
+        }
+      },
+      "SelfRegulationSCP2": {
+        "delta": 0.119,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 1,
+          "keep_rate": 0.0111,
+          "sign_stable_among_kept": 0.0
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 1,
+          "keep_rate": 0.0179,
+          "sign_stable_among_kept": 0.0
+        }
+      },
+      "UWaveGestureLibrary": {
+        "delta": 0.079,
+        "all": {
+          "n_pairs": 90,
+          "n_kept": 29,
+          "keep_rate": 0.3222,
+          "sign_stable_among_kept": 1.0
+        },
+        "normal": {
+          "n_pairs": 56,
+          "n_kept": 9,
+          "keep_rate": 0.1607,
+          "sign_stable_among_kept": 1.0
+        }
+      }
+    }
+  }
+}
