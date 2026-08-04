@@ -1,0 +1,46 @@
+{
+  "L": 65,
+  "n_ch": 4,
+  "n_classes": 6,
+  "n_classes_range": [
+    3,
+    6
+  ],
+  "tasks": [
+    {
+      "task_id": "ERing_00",
+      "classes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "channels": [
+        0,
+        1
+      ],
+      "tag": "",
+      "n_samples": 300
+    },
+    {
+      "task_id": "ERing_01",
+      "classes": [
+        0,
+        1,
+        2,
+        3,
+        5
+      ],
+      "channels": [
+        1,
+        2,
+        3
+      ],
+      "tag": "",
+      "n_samples": 250
+    }
+  ],
+  "retry_rounds": []
+}
