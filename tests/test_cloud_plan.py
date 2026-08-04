@@ -3,7 +3,7 @@
 依据 GATE_5090_REPORT §3 的 1×RTX 5090 实测：
 - §3.1 `OMP_NUM_THREADS=1` 是硬性启动条件（默认 192 线程时 0.63×，比 4060 还慢）；
 - §3.2 单卡 8 worker（15.2 条/分）> 4 卡各 1（11.6 条/分）——本负载 CPU-bound；
-- §3.3 L=1152 单进程峰值 15.8 GB（losses.py:91 的 (n,n) 三元组矩阵），31.4 GiB
+- §3.3 L=1152 单进程峰值 15.8 GB（_masked_triplet 的 (P,n) hinge），31.4 GiB
   装不下两份 → worker 数必须按 L 分档。
 
 本模块是"分档"的可测核心：worker 分档表、显存峰值模型、并发准入、墙钟估算。
@@ -144,6 +144,20 @@ def test_worker_env_forces_single_thread(cfg):
     env = worker_env(cfg)
     assert env["OMP_NUM_THREADS"] == "1"
     assert env["MKL_NUM_THREADS"] == "1"
+
+
+def test_worker_env_carries_triplet_chunk_default(cfg):
+    """triplet 分块阈值必须随 worker 环境注入，且与 losses.py 的默认值一致——
+    两处 split-brain = 云上按另一个数值跑，显存核算全部作废。"""
+    from autocls.contrastive.losses import TRIPLET_CHUNK_ELEMS
+
+    assert int(worker_env(cfg)["AUTOCLS_TRIPLET_CHUNK_ELEMS"]) == TRIPLET_CHUNK_ELEMS
+
+
+def test_worker_env_enables_expandable_segments(cfg):
+    """69 条 OOM 的报错里有 7.58 GiB "reserved but unallocated"：每 iteration 的
+    张量尺寸随 resize 浮动，分配器分段必碎片化。补跑那几条 29 GiB 级的条目要靠这点余量。"""
+    assert "expandable_segments:True" in worker_env(cfg)["PYTORCH_CUDA_ALLOC_CONF"]
 
 
 # ---------------------------------------------------------------------------

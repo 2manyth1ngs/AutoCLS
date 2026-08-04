@@ -16,8 +16,15 @@ gpu:
   budget_gib: 24.0        # 准入预算：留 7.4 GiB 头寸给"两点外推的峰值模型估不准"
   # 单进程显存峰值模型 peak(L) = base + per_len × L，锚在两个实测点上：
   #   §3.2 NATOPS L=51 8 worker 共 10.9 GB → 1.36 GiB/进程
-  #   §3.3 合成 SCP2 L=1152 单进程峰值 15.8 GB（爆点 losses.py:91 的 triplet (n,n) 矩阵）
+  #   §3.3 合成 SCP2 L=1152 单进程峰值 15.8 GB（爆点是 _masked_triplet 的 (P,n) hinge）
   # 峰值主要由 L 与 batch_size 决定（(n,n) 里的 n 是编码后时间步数），与样本数关系不大。
+  #
+  # ⚠️ 该模型按 **L** 取值，但真实峰值取决于**编码后长度 n=2T**，而 T 被 CLS 的
+  # resize 放大到 2L（p 是高斯 σ，T_new=round(T·(1+ε))，上限 2T）——sim 是 (B,n,n)，
+  # 按 T² 走。docs/TRIPLET_OOM_FIX.md §5 实测：SCP2 L=1152 最坏一次 resize 下
+  # n=4378、峰值 29.2 GiB，是本模型给出的 15.8 的 1.85 倍。故本模型只适合**排程
+  # 估算**，不构成安全保证；真正兜底的是 autocls/oom_guard.py（OOM 不写缓存 +
+  # worker=1 串行收尾重试）。重标定需要 5090 上按最坏 resize 抽样，尚未做。
   peak_gib_base: 0.694
   peak_gib_per_len: 0.013113
 
@@ -45,12 +52,26 @@ workers:
     - {max_l_enc: 600,  workers: 2}
     - {max_l_enc: null, workers: 1}
 
-# 每个 worker 进程必带的线程环境。§3.1 实测：54 核容器里 torch 默认 192 线程，
-# 对 128×51×24 这种小张量 OpenMP 同步开销压倒计算 → 53 s/条（0.63×，比 4060 笔记本
-# 还慢）；置 1 后 12.6 s/条（2.67×）。**不依赖手动 export**：cloud_run.sh 与
-# scripts/run_stage1.py 都从这里读并注入。
+# 每个 worker 进程必带的环境。**不依赖手动 export**：cloud_run.sh 与
+# scripts/run_stage1.py 都从这里读并注入（autocls/cloud_plan.py: worker_env）。
+#
+# 线程数：§3.1 实测 54 核容器里 torch 默认 192 线程，对 128×51×24 这种小张量
+# OpenMP 同步开销压倒计算 → 53 s/条（0.63×，比 4060 笔记本还慢）；置 1 后
+# 12.6 s/条（2.67×）。
+#
+# AUTOCLS_TRIPLET_CHUNK_ELEMS：triplet hinge 的分块阈值（元素数），
+# autocls/contrastive/losses.py 的默认值来源。**纯内存旋钮，不改任何 R' 数值**
+# （分块求和 = 整体求和，等价性见 tests/test_triplet_chunking.py）。2^26 = 268 MiB/张量。
+# 调小更省显存、Python 侧分块循环变多；调大反之。
+#
+# PYTORCH_CUDA_ALLOC_CONF：阶段1 那 69 条 OOM 的报错里有 "7.58 GiB is reserved by
+# PyTorch but unallocated"——每 iteration 的张量尺寸随 resize 随机浮动（SCP2 的
+# n=2T 在 1152~4378 间跳），缓存分配器的分段极易碎片化。expandable_segments 让
+# 分段可增长，把这部分要回来；补跑那几条 29 GiB 级的条目就靠这点余量。
 env:
   OMP_NUM_THREADS: "1"
   MKL_NUM_THREADS: "1"
   OPENBLAS_NUM_THREADS: "1"
   NUMEXPR_NUM_THREADS: "1"
+  AUTOCLS_TRIPLET_CHUNK_ELEMS: "67108864"
+  PYTORCH_CUDA_ALLOC_CONF: "expandable_segments:True"
