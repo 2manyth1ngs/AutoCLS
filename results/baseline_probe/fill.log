@@ -1,0 +1,68 @@
+[PhonemeSpectra] X=(6668, 217, 11) n_classes=39 planned=18 → 2 tasks
+[Cricket] X=(180, 256, 6) n_classes=12 planned=10 → 2 tasks
+[SpokenArabicDigits] X=(8798, 93, 13) n_classes=10 planned=16 → 2 tasks
+
+补跑 trained 参照：iters=290 | 计划 60 条，待跑 60
+
+[fill 1/60] PhonemeSpectra/PhonemeSpectra_00 4f7d4135 R'=0.5097 (55.6s) ETA 54.8min
+[fill 2/60] PhonemeSpectra/PhonemeSpectra_00 cffb5503 R'=0.4416 (72.2s) ETA 61.8min
+[fill 3/60] PhonemeSpectra/PhonemeSpectra_00 8c4aa283 R'=0.4416 (138.3s) ETA 84.3min
+[fill 4/60] PhonemeSpectra/PhonemeSpectra_00 f48e5da1 R'=0.4675 (76.1s) ETA 79.9min
+[fill 5/60] PhonemeSpectra/PhonemeSpectra_00 a1f67db4 R'=0.4221 (88.5s) ETA 79.0min
+[fill 6/60] PhonemeSpectra/PhonemeSpectra_00 e490b88e R'=0.4318 (28.0s) ETA 68.8min
+[fill 7/60] PhonemeSpectra/PhonemeSpectra_00 9092e36e R'=0.4221 (862.3s) ETA 166.7min
+[fill 8/60] PhonemeSpectra/PhonemeSpectra_00 65627517 R'=0.2857 (64.7s) ETA 150.2min
+[fill 9/60] PhonemeSpectra/PhonemeSpectra_00 20be4f74 R'=0.2305 (33.4s) ETA 134.1min
+[fill 10/60] PhonemeSpectra/PhonemeSpectra_00 8b87d66f R'=0.4416 (63.6s) ETA 123.6min
+[fill 11/60] PhonemeSpectra/PhonemeSpectra_01 4f7d4135 R'=0.6124 (51.0s) ETA 113.9min
+[fill 12/60] PhonemeSpectra/PhonemeSpectra_01 cffb5503 R'=0.5863 (62.8s) ETA 106.5min
+[fill 13/60] PhonemeSpectra/PhonemeSpectra_01 8c4aa283 R'=0.5570 (130.4s) ETA 104.1min
+[fill 14/60] PhonemeSpectra/PhonemeSpectra_01 f48e5da1 R'=0.5863 (70.7s) ETA 98.5min
+[fill 15/60] PhonemeSpectra/PhonemeSpectra_01 a1f67db4 R'=0.5277 (84.2s) ETA 94.1min
+[fill 16/60] PhonemeSpectra/PhonemeSpectra_01 e490b88e R'=0.5798 (20.2s) ETA 87.2min
+[fill 17/60] PhonemeSpectra/PhonemeSpectra_01 9092e36e R'=0.5147 (122.2s) ETA 85.4min
+[fill 18/60] PhonemeSpectra/PhonemeSpectra_01 65627517 R'=0.3909 (47.4s) ETA 80.6min
+[fill 19/60] PhonemeSpectra/PhonemeSpectra_01 20be4f74 R'=0.3746 (33.5s) ETA 75.7min
+[fill 20/60] PhonemeSpectra/PhonemeSpectra_01 8b87d66f R'=0.4984 (71.9s) ETA 72.6min
+[fill 21/60] Cricket/Cricket_00 4f7d4135 R'=0.9000 (61.7s) ETA 69.3min
+[fill 22/60] Cricket/Cricket_00 cffb5503 R'=0.8750 (70.5s) ETA 66.5min
+[fill 23/60] Cricket/Cricket_00 8c4aa283 R'=0.9000 (127.6s) ETA 65.3min
+[fill 24/60] Cricket/Cricket_00 f48e5da1 R'=0.8500 (68.0s) ETA 62.6min
+[fill 25/60] Cricket/Cricket_00 a1f67db4 R'=0.9500 (77.1s) ETA 60.3min
+[fill 26/60] Cricket/Cricket_00 e490b88e R'=0.9000 (18.0s) ETA 56.7min
+[fill 27/60] Cricket/Cricket_00 9092e36e R'=0.9250 (123.2s) ETA 55.5min
+[fill 28/60] Cricket/Cricket_00 65627517 R'=0.6750 (40.8s) ETA 52.7min
+[fill 29/60] Cricket/Cricket_00 20be4f74 R'=0.5000 (29.8s) ETA 49.8min
+[fill 30/60] Cricket/Cricket_00 8b87d66f R'=0.8250 (66.4s) ETA 47.7min
+[fill 31/60] Cricket/Cricket_01 4f7d4135 R'=0.8929 (42.4s) ETA 45.3min
+[fill 32/60] Cricket/Cricket_01 cffb5503 R'=0.7500 (48.1s) ETA 43.0min
+[fill 33/60] Cricket/Cricket_01 8c4aa283 R'=0.8214 (77.5s) ETA 41.3min
+[fill 34/60] Cricket/Cricket_01 f48e5da1 R'=0.8571 (41.5s) ETA 39.1min
+[fill 35/60] Cricket/Cricket_01 a1f67db4 R'=0.8929 (46.8s) ETA 37.1min
+[fill 36/60] Cricket/Cricket_01 e490b88e R'=0.8929 (12.5s) ETA 34.8min
+[fill 37/60] Cricket/Cricket_01 9092e36e R'=0.9286 (85.3s) ETA 33.3min
+[fill 38/60] Cricket/Cricket_01 65627517 R'=0.6786 (30.3s) ETA 31.3min
+[fill 39/60] Cricket/Cricket_01 20be4f74 R'=0.5714 (22.0s) ETA 29.3min
+[fill 40/60] Cricket/Cricket_01 8b87d66f R'=0.7500 (49.2s) ETA 27.6min
+[fill 41/60] SpokenArabicDigits/SpokenArabicDigits_00 4f7d4135 R'=0.9542 (27.5s) ETA 25.8min
+[fill 42/60] SpokenArabicDigits/SpokenArabicDigits_00 cffb5503 R'=0.9052 (32.0s) ETA 24.1min
+[fill 43/60] SpokenArabicDigits/SpokenArabicDigits_00 8c4aa283 R'=0.9608 (43.7s) ETA 22.5min
+[fill 44/60] SpokenArabicDigits/SpokenArabicDigits_00 f48e5da1 R'=0.9118 (27.9s) ETA 20.9min
+[fill 45/60] SpokenArabicDigits/SpokenArabicDigits_00 a1f67db4 R'=0.9379 (30.5s) ETA 19.3min
+[fill 46/60] SpokenArabicDigits/SpokenArabicDigits_00 e490b88e R'=0.9020 (10.2s) ETA 17.7min
+[fill 47/60] SpokenArabicDigits/SpokenArabicDigits_00 9092e36e R'=0.9542 (39.5s) ETA 16.3min
+[fill 48/60] SpokenArabicDigits/SpokenArabicDigits_00 65627517 R'=0.8399 (22.6s) ETA 14.8min
+[fill 49/60] SpokenArabicDigits/SpokenArabicDigits_00 20be4f74 R'=0.2614 (17.2s) ETA 13.3min
+[fill 50/60] SpokenArabicDigits/SpokenArabicDigits_00 8b87d66f R'=0.8922 (34.7s) ETA 12.0min
+[fill 51/60] SpokenArabicDigits/SpokenArabicDigits_01 4f7d4135 R'=0.9577 (22.7s) ETA 10.7min
+[fill 52/60] SpokenArabicDigits/SpokenArabicDigits_01 cffb5503 R'=0.9609 (29.8s) ETA 9.4min
+[fill 53/60] SpokenArabicDigits/SpokenArabicDigits_01 8c4aa283 R'=0.9642 (44.8s) ETA 8.1min
+[fill 54/60] SpokenArabicDigits/SpokenArabicDigits_01 f48e5da1 R'=0.9609 (28.3s) ETA 6.9min
+[fill 55/60] SpokenArabicDigits/SpokenArabicDigits_01 a1f67db4 R'=0.9316 (29.6s) ETA 5.7min
+[fill 56/60] SpokenArabicDigits/SpokenArabicDigits_01 e490b88e R'=0.9316 (10.2s) ETA 4.5min
+[fill 57/60] SpokenArabicDigits/SpokenArabicDigits_01 9092e36e R'=0.9642 (39.8s) ETA 3.3min
+[fill 58/60] SpokenArabicDigits/SpokenArabicDigits_01 65627517 R'=0.9316 (22.4s) ETA 2.2min
+[fill 59/60] SpokenArabicDigits/SpokenArabicDigits_01 20be4f74 R'=0.2834 (17.1s) ETA 1.1min
+[fill 60/60] SpokenArabicDigits/SpokenArabicDigits_01 8b87d66f R'=0.9023 (34.7s) ETA 0.0min
+
+补跑完成，墙钟 64.7 min → D:\DevelopDoc\CLS\results\baseline_probe\trained_fill.jsonl
