@@ -125,6 +125,21 @@ def test_verdict_unknown_without_training_data():
     assert v == "unknown"
 
 
+def test_verdict_unknown_when_fewer_rows_than_protocol_requires():
+    """测不满 PROTOCOL §4.1 的 20 条就不出判定——这是执行协议，不是改判据。
+
+    真实场景：PTB-XL 在步骤3 首次启动时只跑出 2 条就因 L² 代价被停机。若对 n=2
+    出判定，T3 的"超出 ≥ 半数"退化成"超出 ≥1 条"，一条运气好的 CLS 就能判 usable。
+    """
+    v = classify_verdict(baseline=0.695, best_gain=0.30, n_above=2, n_below=0, n_trained=2)
+    assert v == "unknown"
+
+
+def test_verdict_issues_verdict_at_exactly_the_protocol_row_count():
+    v = classify_verdict(baseline=0.555, best_gain=0.397, n_above=15, n_below=4, n_trained=20)
+    assert v == "usable"
+
+
 def test_verdict_inert_when_gain_below_delta():
     # T2 不过：MotorImagery 型——基线≈随机猜测，headroom 名义 0.49 但一分没用上
     v = classify_verdict(baseline=0.511, best_gain=0.049, n_above=4, n_below=1, n_trained=20)

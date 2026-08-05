@@ -27,6 +27,7 @@ from .space.cls_space import CLS
 __all__ = [
     "BASELINE_ITERS", "BEST_GAIN_FLOOR", "CEILING_BASELINE", "OPEN_BASELINE",
     "MIN_N_CLASSES", "MIN_N_EVAL", "MIN_N_SAMPLES", "MIN_SEQ_LEN",
+    "PROTOCOL_TRAINED_ROWS",
     "T3_ABOVE_FRACTION", "T3_ABOVE_OVER_BELOW",
     "baseline_seed_specs", "classify_quadrant", "classify_tier", "classify_verdict",
     "inert_cls", "prescreen", "probe_scope", "propose_slice",
@@ -111,6 +112,10 @@ MIN_N_CLASSES = 5       # H3 类别子集是任务多样性主力（实测类别
 # §4.2 判据 v2 的 T3：把零假设诊断写进判据
 T3_ABOVE_FRACTION = 0.5     # 超出 ±2σ 带的条数 ≥ 总条数的一半
 T3_ABOVE_OVER_BELOW = 2.0   # 且 超出 ≥ 2× 跌破（挡住"提升与破坏并存"的假阳）
+# §4.1 的测量口径：10 shared CLS × 前 2 任务 = 20 条。测不满就不出判定——这是执行
+# 协议而非改判据：对 n=2 出判定时 T3 的"超出过半"退化成"超出 ≥1 条"，一条运气好的
+# CLS 就能判 usable（PTB-XL 因 L² 代价被停机时正好只剩 2 条，是真实场景）。
+PROTOCOL_TRAINED_ROWS = 20
 
 
 def prescreen(
@@ -195,8 +200,8 @@ def classify_verdict(
     """
     if classify_tier(baseline) == "ceiling":
         return "ceiling"          # T1 不过：贴顶直接出局，不看增益
-    if best_gain is None or n_trained <= 0:
-        return "unknown"          # 没有配对训练数据，不臆断
+    if best_gain is None or n_trained < PROTOCOL_TRAINED_ROWS:
+        return "unknown"          # 没有配对训练数据、或测不满 §4.1 的 20 条，不臆断
     if best_gain < BEST_GAIN_FLOOR:
         return "inert"            # T2 不过：空间在，但没有 CLS 用得上
     if n_above < T3_ABOVE_FRACTION * n_trained:

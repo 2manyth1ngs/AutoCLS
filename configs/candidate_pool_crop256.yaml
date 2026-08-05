@@ -1,0 +1,38 @@
+# =====================================================================
+# 长序列候选的裁剪变体（crop_len=256）—— 换池调研步骤3 的算力可行性处置
+#
+# 为什么单独一个文件而不是改 candidate_pool.yaml：
+#   crop_len **不进 task_id**（pool_name_for 只对 n_classes_range 打标），故裁剪前后
+#   的任务同名。若沿用同一份缓存，L=1000 的基线会被 L=256 的运行当成命中而静默错配
+#   （铁律 3 的缓存键 = (task_id, cls_key, iters)）。→ 裁剪变体一律走**独立注册表 +
+#   独立 outdir**（results/candidate_survey/baseline_crop256），两套数据永不相遇。
+#
+# 为什么是 256：PROTOCOL §7.1 实测步骤3 耗时按 L² 走（L=1000 实测 1774 s/条、且在
+#   8 GB 上 OOM）。256 是 UEA 源池既有的裁剪先例（Cricket 1197→256）。
+#
+# 为什么只裁这两个：ECG 是准周期信号，2.56 s @100 Hz 仍含 2–3 个心搏，裁剪后样本
+#   仍是"一段心电"。SleepEDF 不在此列——30 s 睡眠分期 epoch 裁到 2.56 s 会丢掉
+#   纺锤波与慢波，那不再是睡眠分期任务（见 REPORT_STEP3 的 limitations 与待选项）。
+#
+# ⚠️ 裁剪改变了任务定义 → **基线必须重测**，不得复用 candidate_pool.yaml 那批。
+# =====================================================================
+
+encode_length_floor: 50
+
+slice:
+  seed: 0
+  n_samples: 1024      # 与 candidate_pool.yaml 同参，保证除 L 外口径一致
+  min_samples: 32
+
+# 目标池原样带过来：让 baseline_probe 的铁律 6 自检有对象
+target_pool:
+  - {name: UCI-HAR,       source: external, domain: HAR}
+  - {name: Epilepsy,      source: uea,      domain: HAR}
+  - {name: FaceDetection, source: uea,      domain: EEG/MEG}
+
+source_pool:
+  - {name: PTB-XL, source: npz, domain: ECG, n_channels: 12, n_classes: 5, l_enc: 256, crop_len: 256, n_classes_range: [2, 4], planned_tasks: 16, tested: false}
+  - {name: NonInvasiveFetalECGThorax1, source: npz, domain: ECG, n_channels: 1, n_classes: 42, l_enc: 256, crop_len: 256, n_classes_range: [17, 34], planned_tasks: 16, tested: false}
+
+reserve:
+  []
