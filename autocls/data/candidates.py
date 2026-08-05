@@ -92,6 +92,41 @@ def zscore_channels(X: np.ndarray, eps: float = 1e-8) -> np.ndarray:
     return ((Xd - mean) / std).astype(np.float32)
 
 
+def decimate_to_length(X: np.ndarray, target_len: int) -> np.ndarray:
+    """(N, T, C) → (N, target_len, C)，**带抗混叠低通**的整段降采样。
+
+    存在的理由（长序列候选的退路）：步骤3 的耗时按 T² 走（`results/candidate_survey/
+    PROTOCOL.md` §7.1 实测），L=3000 在本机不可行。两条压 T 的路——
+    - `crop_len`：截前缀。保采样率、丢时长。对准周期信号（ECG）合适。
+    - 本函数：保时长、降采样率。对"整段才有意义"的样本合适（如 30 s 睡眠分期 epoch，
+      裁到 2.56 s 就不再是分期任务）。
+
+    **必须抗混叠**：裸切片 `X[:, ::k]` 会把高于新 Nyquist 的成分折叠进低频。
+    以 SleepEDF 为例，100 Hz → 256/30 s ≈ 8.5 Hz 时新 Nyquist 只有 4.3 Hz，
+    纺锤波（11–16 Hz）裸切片后会折叠成 ~4.5 Hz 的假信号，**正好污染睡眠分期依赖的
+    delta 带**。`scipy.signal.decimate` 先做 FIR 低通再抽取，把它滤掉而不是折叠。
+
+    诚实的代价：抗混叠只保证"不造假信号"，**不保证信息不丢**——高于新 Nyquist 的
+    真实成分（纺锤波）无论如何都没了。用本函数换来的是"整段时长 + 无假信号"，
+    换掉的是高频段。是否可接受取决于任务，须逐数据集论证。
+
+    T < target_len 时原样返回（不上采样——插值只会造假样本）。
+    """
+    from scipy.signal import resample_poly
+
+    X = np.asarray(X)
+    T = X.shape[1]
+    if T <= target_len:
+        return X
+    # resample_poly 的多相 FIR 自带抗混叠；用有理比 target/T 一次到位，避免整数抽取
+    # 因子凑不出目标长度时再截断（截断会让不同样本的有效时长不一致）。
+    out = resample_poly(X.astype(np.float64), up=target_len, down=T, axis=1)
+    if out.shape[1] != target_len:                      # 有理比舍入的边界情形
+        out = out[:, :target_len] if out.shape[1] > target_len else np.pad(
+            out, ((0, 0), (0, target_len - out.shape[1]), (0, 0)))
+    return out.astype(X.dtype if X.dtype.kind == "f" else np.float32)
+
+
 def drop_rare_classes(
     X: np.ndarray, y: np.ndarray, min_count: int
 ) -> tuple[np.ndarray, np.ndarray]:

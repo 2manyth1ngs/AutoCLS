@@ -19,6 +19,7 @@ import pytest
 from autocls.data.candidates import (
     WINDOW_LEN,
     WINDOW_STRIDE,
+    decimate_to_length,
     describe,
     drop_rare_classes,
     extract_archive,
@@ -230,6 +231,52 @@ def test_extract_archive_targz(tmp_path):
         t.addfile(info, io.BytesIO(data))
     out = extract_archive(src, tmp_path / "ex")
     assert (out / "inner" / "b.txt").read_bytes() == b"tarred"
+
+
+# ---- 抗混叠降采样（长序列候选的退路：保住整段时长而不是裁掉大半）----
+
+def test_decimate_to_length_hits_target_length():
+    X = np.random.default_rng(0).normal(size=(8, 3000, 1))
+    Z = decimate_to_length(X, 256)
+    assert Z.shape == (8, 256, 1)
+
+
+def test_decimate_to_length_passthrough_when_already_short():
+    X = np.random.default_rng(0).normal(size=(4, 128, 2))
+    Z = decimate_to_length(X, 256)
+    assert Z.shape == (4, 128, 2)          # 不上采样，短的原样返回
+
+
+def test_decimate_to_length_preserves_low_frequency_content():
+    # 1 Hz 正弦 @100 Hz、30 s → 降到 256 步（≈8.5 Hz）后仍应是同一条 1 Hz 正弦
+    fs, T = 100, 3000
+    t = np.arange(T) / fs
+    X = np.sin(2 * np.pi * 1.0 * t)[None, :, None]
+    Z = decimate_to_length(X, 256)
+    # 降采样后每个周期约 8.5 个点，过零点数应仍对应 30 个周期（±1）
+    zc = np.sum(np.diff(np.signbit(Z[0, :, 0])) != 0)
+    assert 58 <= zc <= 62                   # 30 个周期 ≈ 60 次过零
+
+
+def test_decimate_to_length_suppresses_aliasing_of_high_frequency():
+    """抗混叠是这个函数存在的理由：裸切片会把高频折叠进低频。
+
+    13 Hz（睡眠纺锤波频段）@100 Hz 降到 ≈8.5 Hz：Nyquist 4.27 Hz，13 Hz 必须被
+    **滤掉**而不是折叠成 ~4.5 Hz 的假信号——后者会污染 delta 带，正是睡眠分期
+    依赖的特征。故要求降采样后的能量显著低于裸切片。
+    """
+    fs, T = 100, 3000
+    t = np.arange(T) / fs
+    X = np.sin(2 * np.pi * 13.0 * t)[None, :, None]
+    naive = X[:, :: T // 256, :][:, :256, :]          # 裸切片：混叠，能量几乎不减
+    Z = decimate_to_length(X, 256)
+    assert Z.std() < 0.25 * naive.std()
+
+
+def test_decimate_to_length_keeps_dtype_and_finiteness():
+    X = np.random.default_rng(1).normal(size=(3, 1000, 4)).astype(np.float32)
+    Z = decimate_to_length(X, 256)
+    assert Z.dtype == np.float32 and np.isfinite(Z).all()
 
 
 def test_extract_archive_is_idempotent(tmp_path):
