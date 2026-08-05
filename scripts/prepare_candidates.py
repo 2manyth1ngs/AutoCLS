@@ -39,6 +39,7 @@ for _stream in (sys.stdout, sys.stderr):        # 本机控制台默认 GBK
     except (AttributeError, ValueError):
         pass
 
+from autocls.baseline_probe import prescreen  # noqa: E402
 from autocls.data.candidates import (  # noqa: E402
     CANDIDATE_ROOT,
     WINDOW_LEN,
@@ -122,22 +123,64 @@ def prepare_one(mod_name: str, *, skip_existing: bool) -> dict:
     return {**full, **d}
 
 
+UEA_SURVEY = ROOT / "results" / "uea_survey" / "uea_survey.csv"
+UEA_TARGETS = {"Epilepsy", "FaceDetection"}          # 铁律 6（UCI-HAR 不在 UEA 档案里）
+UEA_PROBED = {                                        # 已进 baseline_probe 的 16 个
+    "ArticularyWordRecognition", "CharacterTrajectories", "Cricket", "ERing",
+    "EthanolConcentration", "FingerMovements", "HandMovementDirection", "Handwriting",
+    "Heartbeat", "MotorImagery", "NATOPS", "PhonemeSpectra", "SelfRegulationSCP1",
+    "SelfRegulationSCP2", "SpokenArabicDigits", "UWaveGestureLibrary",
+}
+
+
+def _screen_line(name, domain, n, L, C, K, imb, extra="") -> str:
+    ok, role, why = prescreen(n_samples=n, seq_len=L, n_classes=K)
+    mark = {"source": "✔源", "reserve": "△备", "reject": "✘"}[role]
+    return (f"{name:<27}{domain:<10}{n:>7}{L:>6}{C:>5}{K:>4}{imb:>8.2f}"
+            f"{1.0 / K:>7.3f}{extra:>10}  {mark:<4}{'；'.join(why)}")
+
+
 def table() -> None:
-    """汇总已备好的候选统计（第1步的统计表）。"""
-    rows = []
-    for p in sorted(CANDIDATE_ROOT.glob("*.json")):
-        rows.append(json.loads(p.read_text(encoding="utf-8")))
+    """第1步产出：候选真实统计 + 初筛（PROTOCOL §2 硬条件 H1/H2/H3）。"""
+    rows = [json.loads(p.read_text(encoding="utf-8"))
+            for p in sorted(CANDIDATE_ROOT.glob("*.json"))]
     if not rows:
         print("尚无候选，先跑 --all")
         return
-    print(f"{'数据集':<22}{'域':<10}{'N':>7}{'L':>5}{'C':>5}{'K':>4}{'不平衡':>8}"
-          f"{'猜测':>7}{'fs':>6}{'受试':>5}")
+    head = (f"{'数据集':<27}{'域':<10}{'N':>7}{'L':>6}{'C':>5}{'K':>4}{'不平衡':>8}"
+            f"{'猜测':>7}{'fs/受试':>10}  {'初筛':<4}未过条件")
+    print(f"{'=' * 130}\n新下载候选（实际加载确认，非论文数字）\n{'=' * 130}")
+    print(head)
+    n_src = 0
     for r in sorted(rows, key=lambda r: (r.get("domain", ""), -r.get("n_samples", 0))):
-        print(f"{r['name']:<22}{r.get('domain', '?'):<10}{r['n_samples']:>7}{r['seq_len']:>5}"
-              f"{r['n_channels']:>5}{r['n_classes']:>4}{r['imbalance_ratio']:>8.2f}"
-              f"{r['chance']:>7.3f}{str(r.get('fs', '?')):>6}"
-              f"{str(r.get('n_subjects') or '?'):>5}")
-    print(f"\n共 {len(rows)} 个候选 → {CANDIDATE_ROOT}")
+        ok, role, _ = prescreen(n_samples=r["n_samples"], seq_len=r["seq_len"],
+                                n_classes=r["n_classes"])
+        n_src += role == "source"
+        print(_screen_line(r["name"], r.get("domain", "?"), r["n_samples"], r["seq_len"],
+                           r["n_channels"], r["n_classes"], r["imbalance_ratio"],
+                           f"{r.get('fs', '?')}/{r.get('n_subjects') or '?'}"))
+    print(f"\n新候选 {len(rows)} 个：入源 {n_src}，其余见「未过条件」列")
+
+    if UEA_SURVEY.exists():
+        print(f"\n{'=' * 130}\nUEA 存量对照（results/uea_survey 的实测统计，同一把尺子）"
+              f"\n{'=' * 130}")
+        print(head)
+        import csv
+
+        kept = 0
+        with open(UEA_SURVEY, encoding="utf-8") as f:
+            for d in csv.DictReader(f):
+                if d["name"] in UEA_TARGETS:
+                    continue
+                n, K = int(d["n_total"]), int(d["n_classes"])
+                # 编码长度口径：变长数据集按 pad 到的 L_max 算（与 uea.py 落地形状一致）
+                L = int(d["length_max"])
+                ok, role, _ = prescreen(n_samples=n, seq_len=L, n_classes=K)
+                kept += role == "source"
+                tag = "已测" if d["name"] in UEA_PROBED else "未测"
+                print(_screen_line(d["name"], d["domain"], n, L, int(d["n_channels"]), K,
+                                   float(d["imbalance_ratio"]), tag))
+        print(f"\nUEA 28 个（除目标池 2 个）：过初筛 {kept} 个")
 
 
 def main() -> None:
