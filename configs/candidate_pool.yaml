@@ -1,0 +1,39 @@
+# =====================================================================
+# 换源池调研——候选池注册表（scripts/prepare_candidates.py --emit-registry 生成）
+#
+# 这不是新源池的定稿，只是**要测基线的候选清单**：谁最终入池由步骤 3 判完
+# usable 才定（results/candidate_survey/PROTOCOL.md §5）。
+# 角色按 §2 初筛：K>=5 记 source，K=2-4 记 reserve（照样测基线，但撑不起任务多样性）。
+# 切片档由 propose_slice 提（类别档 [0.4K, 0.8K]，与 source_pool.yaml 现有档同型）。
+#
+# δ 仍在 configs/labels.yaml（唯一真源，防 split-brain）——候选的 δ 待步骤 3 后标定。
+# =====================================================================
+
+encode_length_floor: 50
+
+slice:
+  seed: 0
+  n_samples: 1024      # 与 source_pool.yaml 同参，保证任务定义口径一致
+  min_samples: 32
+
+# 目标池原样带过来：让 baseline_probe 的铁律 6 自检有对象（fail-fast 必须仍生效）
+target_pool:
+  - {name: UCI-HAR,       source: external, domain: HAR}
+  - {name: Epilepsy,      source: uea,      domain: HAR}
+  - {name: FaceDetection, source: uea,      domain: EEG/MEG}
+
+source_pool:
+  - {name: USC-HAD, source: npz, domain: HAR, n_channels: 6, n_classes: 12, l_enc: 128, crop_len: null, n_classes_range: [5, 10], planned_tasks: 16, tested: false}
+  - {name: WISDM2019, source: npz, domain: HAR, n_channels: 6, n_classes: 18, l_enc: 128, crop_len: null, n_classes_range: [7, 14], planned_tasks: 16, tested: false}
+  - {name: ChestAccel, source: npz, domain: HAR, n_channels: 3, n_classes: 7, l_enc: 128, crop_len: null, n_classes_range: [3, 6], planned_tasks: 16, tested: false}
+  - {name: MotionSense, source: npz, domain: HAR, n_channels: 12, n_classes: 6, l_enc: 128, crop_len: null, n_classes_range: [2, 5], planned_tasks: 16, tested: false}
+  - {name: ElectricDevices, source: npz, domain: Device, n_channels: 1, n_classes: 7, l_enc: 96, crop_len: null, n_classes_range: [3, 6], planned_tasks: 16, tested: false}
+  - {name: WISDM, source: npz, domain: HAR, n_channels: 3, n_classes: 6, l_enc: 128, crop_len: null, n_classes_range: [2, 5], planned_tasks: 16, tested: false}
+  - {name: UniMiB-SHAR, source: npz, domain: HAR, n_channels: 3, n_classes: 17, l_enc: 151, crop_len: null, n_classes_range: [7, 14], planned_tasks: 16, tested: false}
+  - {name: MHEALTH, source: npz, domain: HAR, n_channels: 23, n_classes: 12, l_enc: 128, crop_len: null, n_classes_range: [5, 10], planned_tasks: 16, tested: false}
+
+reserve:
+  - {name: Daphnet, source: npz, domain: HAR, n_channels: 9, n_classes: 2, l_enc: 128, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1, tested: false}
+  - {name: Opportunity, source: npz, domain: HAR, n_channels: 45, n_classes: 4, l_enc: 128, crop_len: null, n_classes_range: [2, 3], planned_tasks: 10, tested: false}
+  - {name: FordA, source: npz, domain: Sensor, n_channels: 1, n_classes: 2, l_enc: 500, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1, tested: false}
+  - {name: FordB, source: npz, domain: Sensor, n_channels: 1, n_classes: 2, l_enc: 500, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1, tested: false}

@@ -238,6 +238,70 @@ def plan() -> None:
           f"——注意这是**初筛后**的上界，步骤3 判完 usable 还会再掉")
 
 
+CANDIDATE_REGISTRY = ROOT / "configs" / "candidate_pool.yaml"
+
+
+def emit_registry(path: Path = CANDIDATE_REGISTRY) -> None:
+    """按初筛结果生成候选池注册表（步骤 2 的输入）。
+
+    与 configs/source_pool.yaml 同 schema，故 baseline_probe --registry 能直接吃。
+    **这不是新的源池定稿**——只是"要测基线的候选清单"；谁最终入池由步骤 3 判完
+    usable 才定（PROTOCOL §5）。目标池原样带过来，让铁律 6 的 fail-fast 自检有对象。
+    """
+    rows = [json.loads(p.read_text(encoding="utf-8"))
+            for p in sorted(CANDIDATE_ROOT.glob("*.json"))]
+    src, res = [], []
+    for r in sorted(rows, key=lambda r: -r["n_samples"]):
+        ok, role, _ = prescreen(n_samples=r["n_samples"], seq_len=r["seq_len"],
+                                n_classes=r["n_classes"])
+        if not ok:
+            continue
+        p = propose_slice(n_samples=r["n_samples"], n_classes=r["n_classes"],
+                          n_channels=r["n_channels"])
+        lo, hi = p["n_classes_range"]
+        line = (f"  - {{name: {r['name']}, source: npz, domain: {r.get('domain', 'Other')},"
+                f" n_channels: {r['n_channels']}, n_classes: {r['n_classes']},"
+                f" l_enc: {r['seq_len']}, crop_len: null,"
+                f" n_classes_range: [{lo}, {hi}],"
+                f" planned_tasks: {p['planned_tasks']}, tested: false}}")
+        (src if role == "source" else res).append(line)
+
+    body = [
+        "# =====================================================================",
+        "# 换源池调研——候选池注册表（scripts/prepare_candidates.py --emit-registry 生成）",
+        "#",
+        "# 这不是新源池的定稿，只是**要测基线的候选清单**：谁最终入池由步骤 3 判完",
+        "# usable 才定（results/candidate_survey/PROTOCOL.md §5）。",
+        "# 角色按 §2 初筛：K>=5 记 source，K=2-4 记 reserve（照样测基线，但撑不起任务多样性）。",
+        "# 切片档由 propose_slice 提（类别档 [0.4K, 0.8K]，与 source_pool.yaml 现有档同型）。",
+        "#",
+        "# δ 仍在 configs/labels.yaml（唯一真源，防 split-brain）——候选的 δ 待步骤 3 后标定。",
+        "# =====================================================================",
+        "",
+        "encode_length_floor: 50",
+        "",
+        "slice:",
+        "  seed: 0",
+        "  n_samples: 1024      # 与 source_pool.yaml 同参，保证任务定义口径一致",
+        "  min_samples: 32",
+        "",
+        "# 目标池原样带过来：让 baseline_probe 的铁律 6 自检有对象（fail-fast 必须仍生效）",
+        "target_pool:",
+        "  - {name: UCI-HAR,       source: external, domain: HAR}",
+        "  - {name: Epilepsy,      source: uea,      domain: HAR}",
+        "  - {name: FaceDetection, source: uea,      domain: EEG/MEG}",
+        "",
+        "source_pool:",
+        *(src or ["  []"]),
+        "",
+        "reserve:",
+        *(res or ["  []"]),
+        "",
+    ]
+    path.write_text("\n".join(body), encoding="utf-8")
+    print(f"候选池注册表 → {path}（source {len(src)} / reserve {len(res)}）")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--list", action="store_true")
@@ -246,7 +310,13 @@ def main() -> None:
     ap.add_argument("--skip-existing", action="store_true")
     ap.add_argument("--table", action="store_true")
     ap.add_argument("--plan", action="store_true", help="切片规划 + 步骤2/3 成本估算")
+    ap.add_argument("--emit-registry", action="store_true",
+                    help="按初筛结果生成 configs/candidate_pool.yaml（步骤2 的输入）")
     args = ap.parse_args()
+
+    if args.emit_registry:
+        emit_registry()
+        return
 
     if args.list:
         print("\n".join(adapter_names()) or "（尚无 adapter）")
