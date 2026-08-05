@@ -255,6 +255,13 @@ def summarize_task(
         "n_trained_below_null": sum(1 for v in tr if v < mean - band) if vals else 0,
     }
     out["quadrant"] = classify_quadrant(mean, out["best_gain"]) if vals else "unknown"
+    # 判据 v2 与旧 quadrant **并列输出**：baseline_probe 的历史 analysis.json 按
+    # quadrant 生成，覆盖它会让旧结果不可复算；两套各自标注出处更可审计。
+    out["verdict"] = classify_verdict(
+        baseline=mean, best_gain=out["best_gain"],
+        n_above=out["n_trained_above_null"], n_below=out["n_trained_below_null"],
+        n_trained=out["n_trained"],
+    ) if vals else "unknown"
     return out
 
 
@@ -296,4 +303,12 @@ def summarize_dataset(tasks: dict[str, dict]) -> dict:
         "tier": classify_tier(mean),
         "tier_counts": tier_counts,
         "quadrant": classify_quadrant(mean, best_gain_max),
+        # 数据集级 verdict：零假设计数按**跨任务累加**（口径 §4.1 的 20 条本就是
+        # "前 2 任务 × 10 CLS"合起来算的），best_gain 仍取跨任务最大（宽松侧）。
+        "verdict": classify_verdict(
+            baseline=mean, best_gain=best_gain_max,
+            n_above=sum(t.get("n_trained_above_null", 0) for t in tasks.values()),
+            n_below=sum(t.get("n_trained_below_null", 0) for t in tasks.values()),
+            n_trained=sum(t.get("n_trained", 0) for t in tasks.values()),
+        ),
     }

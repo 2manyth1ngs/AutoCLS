@@ -433,7 +433,7 @@ def analyze(names: list[str], max_tasks: int | None) -> None:
     print(f"\n{'='*118}\n随机初始化基线（iters=0，{N_SEEDS} 个初始化种子，canonical split）\n{'='*118}")
     print(f"{'数据集':<27}{'角色':<9}{'任务':>4}{'类':>4}{'基线':>7}{'±':>7}"
           f"{'任务min':>8}{'中位':>7}{'max':>7}{'离顶':>7}{'猜测':>7}{'超猜测':>8}"
-          f"{'实得':>7}{'最好':>7}  {'档':<8}{'象限'}")
+          f"{'实得':>7}{'最好':>7}  {'档':<8}{'象限':<9}{'判据v2'}")
     for name, d in sorted(ds_out.items(), key=lambda kv: kv[1]["baseline_mean"]):
         f = lambda v, w=7, p=3: (f"{v:>{w}.{p}f}" if isinstance(v, (int, float)) else f"{'—':>{w}}")
         print(f"{name:<27}{d['role']:<9}{d['n_tasks']:>4}{d['n_classes_total']:>4}"
@@ -441,15 +441,19 @@ def analyze(names: list[str], max_tasks: int | None) -> None:
               f"{f(d['task_median'])}{f(d['task_max'])}{f(d['headroom'])}"
               f"{f(d['chance_mean'])}{f(d['lift_over_chance'],8)}"
               f"{f(d['realized_gain_mean'])}{f(d['best_gain_max'])}  "
-              f"{d['tier']:<8}{d['quadrant']}")
+              f"{d['tier']:<8}{d['quadrant']:<9}{d.get('verdict', '—')}")
 
     print(f"\n{'—'*118}\n分档汇总（数据集级）")
     for tier in ("ceiling", "mid", "open"):
         hit = [n for n, d in ds_out.items() if d["tier"] == tier]
         print(f"  {tier:<9} {len(hit):>2} 个: {', '.join(sorted(hit)) or '—'}")
-    print("象限汇总（headroom × 实际可用增益）")
+    print("象限汇总（旧判据：headroom × best_gain）")
     for q in ("ceiling", "usable", "inert", "unknown"):
         hit = [n for n, d in ds_out.items() if d["quadrant"] == q]
+        print(f"  {q:<9} {len(hit):>2} 个: {', '.join(sorted(hit)) or '—'}")
+    print("判据 v2 汇总（candidate_survey/PROTOCOL.md §4.2：T1 离顶 + T2 幅度 + T3 显著性）")
+    for q in ("ceiling", "usable", "inert", "unknown"):
+        hit = [n for n, d in ds_out.items() if d.get("verdict") == q]
         print(f"  {q:<9} {len(hit):>2} 个: {', '.join(sorted(hit)) or '—'}")
 
     n_task_tier = {}

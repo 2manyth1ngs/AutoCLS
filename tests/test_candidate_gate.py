@@ -186,6 +186,54 @@ def test_verdict_reproduces_uea_verdicts(name, base, gain, up, dn, tot, expect):
                             n_below=dn, n_trained=tot) == expect, name
 
 
+# ---- 判据 v2 接进分析产出（summarize_* 要同时给出旧 quadrant 与新 verdict）----
+
+def _rows(baseline_vals, n_eval=307):
+    return [{"r_prime": v, "n_eval": n_eval} for v in baseline_vals]
+
+
+def test_summarize_task_emits_both_quadrant_and_verdict():
+    from autocls.baseline_probe import summarize_task
+
+    st = summarize_task(_rows([0.55] * 5), n_classes=10, trained=[0.95] * 20)
+    assert st["quadrant"] == "usable"          # 旧判据保持不变
+    assert "verdict" in st                      # 新判据并列输出，不覆盖旧的
+
+
+def test_summarize_task_verdict_is_stricter_than_quadrant():
+    """构造 UEA 上 PhonemeSpectra 那种情形：增益够大但多数条在破坏。
+
+    基线 0.541±0，σ 用 ACC 量子 1/n_eval 兜底；20 条里 2 条大幅超出、7 条大幅跌破。
+    旧 quadrant 只看 best_gain 会判 usable，新 verdict 必须判 inert。
+    """
+    from autocls.baseline_probe import summarize_task
+
+    trained = [0.62, 0.61] + [0.40] * 7 + [0.541] * 11    # 2↑ / 7↓ / 11 带内
+    st = summarize_task(_rows([0.541] * 5), n_classes=10, trained=trained)
+    assert st["n_trained_above_null"] == 2 and st["n_trained_below_null"] == 7
+    assert st["quadrant"] == "usable"          # 旧判据放行
+    assert st["verdict"] == "inert"            # 新判据拦下
+
+
+def test_summarize_dataset_aggregates_verdict():
+    from autocls.baseline_probe import summarize_dataset, summarize_task
+
+    tasks = {
+        "t0": summarize_task(_rows([0.55] * 5), n_classes=10, trained=[0.95] * 20),
+        "t1": summarize_task(_rows([0.56] * 5), n_classes=10, trained=[0.96] * 20),
+    }
+    ds = summarize_dataset(tasks)
+    assert ds["verdict"] == "usable"
+    assert ds["n_trained_total"] == 40
+
+
+def test_summarize_dataset_verdict_unknown_when_undermeasured():
+    from autocls.baseline_probe import summarize_dataset, summarize_task
+
+    tasks = {"t0": summarize_task(_rows([0.695] * 5), n_classes=5, trained=[0.99, 0.99])}
+    assert summarize_dataset(tasks)["verdict"] == "unknown"   # 只有 2 条 < §4.1 的 20
+
+
 def test_candidate_registry_loads_npz_source(tmp_path):
     """候选走 `source: npz` 进同一个 load_source_dataset 入口。
 
