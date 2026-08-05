@@ -8,7 +8,7 @@
     "doc": "results/baseline_probe/PROTOCOL.md"
   },
   "trained_pairing_audit": {
-    "matched": 0,
+    "matched": 142,
     "rejected_classes": 0,
     "rejected_split": 0,
     "unknown_task": 620
@@ -24,19 +24,20 @@
       "headroom": 0.1847842112972673,
       "chance_mean": 0.1349702380952381,
       "lift_over_chance": 0.6802455506074946,
-      "best_gain_max": null,
-      "best_gain_median": null,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "n_trained_total": 0,
-      "realized_gain_mean": null,
+      "best_gain_max": 0.02736156351791519,
+      "best_gain_median": 0.027035830618892476,
+      "n_trained_above_null": 5,
+      "n_trained_below_null": 8,
+      "n_trained_total": 20,
+      "realized_gain_mean": -0.05846905537459285,
       "tier": "mid",
       "tier_counts": {
         "mid": 11,
         "ceiling": 4,
         "open": 1
       },
-      "quadrant": "unknown",
+      "quadrant": "inert",
+      "verdict": "inert",
       "role": "source",
       "n_classes_total": 12,
       "l_enc": 128,
@@ -57,17 +58,18 @@
       "headroom": 0.6138299639748908,
       "chance_mean": 0.09999150155400155,
       "lift_over_chance": 0.2861785344711077,
-      "best_gain_max": null,
-      "best_gain_median": null,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "n_trained_total": 0,
-      "realized_gain_mean": null,
+      "best_gain_max": 0.0736156351791531,
+      "best_gain_median": 0.04951140065146581,
+      "n_trained_above_null": 5,
+      "n_trained_below_null": 5,
+      "n_trained_total": 20,
+      "realized_gain_mean": -0.021172638436482094,
       "tier": "open",
       "tier_counts": {
         "open": 16
       },
-      "quadrant": "unknown",
+      "quadrant": "usable",
+      "verdict": "inert",
       "role": "source",
       "n_classes_total": 18,
       "l_enc": 128,
@@ -88,19 +90,20 @@
       "headroom": 0.2335837788624482,
       "chance_mean": 0.240625,
       "lift_over_chance": 0.5257912211375518,
-      "best_gain_max": null,
-      "best_gain_median": null,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "n_trained_total": 0,
-      "realized_gain_mean": null,
+      "best_gain_max": 0.04313725490196074,
+      "best_gain_median": 0.026454620936322337,
+      "n_trained_above_null": 2,
+      "n_trained_below_null": 9,
+      "n_trained_total": 20,
+      "realized_gain_mean": -0.046849651912882484,
       "tier": "mid",
       "tier_counts": {
         "mid": 10,
         "open": 4,
         "ceiling": 2
       },
-      "quadrant": "unknown",
+      "quadrant": "inert",
+      "verdict": "inert",
       "role": "source",
       "n_classes_total": 7,
       "l_enc": 128,
@@ -133,6 +136,7 @@
         "mid": 1
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "source",
       "n_classes_total": 6,
       "l_enc": 128,
@@ -153,18 +157,19 @@
       "headroom": 0.10122164715186466,
       "chance_mean": 0.1349702380952381,
       "lift_over_chance": 0.7638081147528972,
-      "best_gain_max": null,
-      "best_gain_median": null,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "n_trained_total": 0,
-      "realized_gain_mean": null,
+      "best_gain_max": 0.056493506493506485,
+      "best_gain_median": 0.02726955454968477,
+      "n_trained_above_null": 1,
+      "n_trained_below_null": 9,
+      "n_trained_total": 20,
+      "realized_gain_mean": -0.042449447946190655,
       "tier": "mid",
       "tier_counts": {
         "mid": 10,
         "ceiling": 6
       },
-      "quadrant": "unknown",
+      "quadrant": "usable",
+      "verdict": "inert",
       "role": "source",
       "n_classes_total": 12,
       "l_enc": 128,
@@ -185,18 +190,19 @@
       "headroom": 0.14728256271415885,
       "chance_mean": 0.240625,
       "lift_over_chance": 0.6120924372858412,
-      "best_gain_max": null,
-      "best_gain_median": null,
+      "best_gain_max": 0.009771986970683932,
+      "best_gain_median": 0.007808071407419903,
       "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "n_trained_total": 0,
-      "realized_gain_mean": null,
+      "n_trained_below_null": 13,
+      "n_trained_total": 20,
+      "realized_gain_mean": -0.05902533948136557,
       "tier": "mid",
       "tier_counts": {
         "mid": 12,
         "ceiling": 4
       },
-      "quadrant": "unknown",
+      "quadrant": "inert",
+      "verdict": "inert",
       "role": "source",
       "n_classes_total": 7,
       "l_enc": 96,
@@ -229,6 +235,7 @@
         "ceiling": 9
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "source",
       "n_classes_total": 6,
       "l_enc": 128,
@@ -249,19 +256,20 @@
       "headroom": 0.21930609500135267,
       "chance_mean": 0.09999150155400155,
       "lift_over_chance": 0.6807024034446458,
-      "best_gain_max": null,
-      "best_gain_median": null,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "n_trained_total": 0,
-      "realized_gain_mean": null,
+      "best_gain_max": 0.07035830618892513,
+      "best_gain_median": 0.06286644951140069,
+      "n_trained_above_null": 9,
+      "n_trained_below_null": 6,
+      "n_trained_total": 20,
+      "realized_gain_mean": -0.04837133550488598,
       "tier": "mid",
       "tier_counts": {
         "mid": 12,
         "open": 3,
         "ceiling": 1
       },
-      "quadrant": "unknown",
+      "quadrant": "usable",
+      "verdict": "inert",
       "role": "source",
       "n_classes_total": 17,
       "l_enc": 151,
@@ -295,6 +303,7 @@
         "mid": 10
       },
       "quadrant": "unknown",
+      "verdict": "unknown",
       "role": "source",
       "n_classes_total": 5,
       "l_enc": 3000,
@@ -326,6 +335,7 @@
         "ceiling": 16
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "source",
       "n_classes_total": 33,
       "l_enc": 128,
@@ -357,6 +367,7 @@
         "ceiling": 16
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "source",
       "n_classes_total": 12,
       "l_enc": 128,
@@ -388,6 +399,7 @@
         "ceiling": 16
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "source",
       "n_classes_total": 8,
       "l_enc": 945,
@@ -408,18 +420,19 @@
       "headroom": 0.3045680601971319,
       "chance_mean": 0.375,
       "lift_over_chance": 0.3204319398028681,
-      "best_gain_max": null,
-      "best_gain_median": null,
+      "best_gain_max": 0.0012987012987012436,
+      "best_gain_median": 0.0012987012987012436,
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
-      "n_trained_total": 0,
-      "realized_gain_mean": null,
+      "n_trained_total": 2,
+      "realized_gain_mean": -0.0035714285714285587,
       "tier": "open",
       "tier_counts": {
         "open": 9,
         "mid": 7
       },
-      "quadrant": "unknown",
+      "quadrant": "inert",
+      "verdict": "unknown",
       "role": "source",
       "n_classes_total": 5,
       "l_enc": 1000,
@@ -452,6 +465,7 @@
         "open": 2
       },
       "quadrant": "unknown",
+      "verdict": "unknown",
       "role": "source",
       "n_classes_total": 42,
       "l_enc": 750,
@@ -484,6 +498,7 @@
         "mid": 1
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "source",
       "n_classes_total": 5,
       "l_enc": 1024,
@@ -504,19 +519,20 @@
       "headroom": 0.2338755168894623,
       "chance_mean": 0.17941468253968254,
       "lift_over_chance": 0.5867098005708552,
-      "best_gain_max": null,
-      "best_gain_median": null,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "n_trained_total": 0,
-      "realized_gain_mean": null,
+      "best_gain_max": 0.07597402597402592,
+      "best_gain_median": 0.06469711070688267,
+      "n_trained_above_null": 9,
+      "n_trained_below_null": 3,
+      "n_trained_total": 20,
+      "realized_gain_mean": 0.0038897584500189875,
       "tier": "mid",
       "tier_counts": {
         "mid": 13,
         "open": 2,
         "ceiling": 1
       },
-      "quadrant": "unknown",
+      "quadrant": "usable",
+      "verdict": "inert",
       "role": "source",
       "n_classes_total": 11,
       "l_enc": 256,
@@ -548,6 +564,7 @@
         "ceiling": 1
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "reserve",
       "n_classes_total": 2,
       "l_enc": 128,
@@ -579,6 +596,7 @@
         "ceiling": 4
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "reserve",
       "n_classes_total": 3,
       "l_enc": 1024,
@@ -610,6 +628,7 @@
         "ceiling": 1
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "reserve",
       "n_classes_total": 2,
       "l_enc": 152,
@@ -641,6 +660,7 @@
         "ceiling": 10
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "reserve",
       "n_classes_total": 4,
       "l_enc": 128,
@@ -672,6 +692,7 @@
         "ceiling": 10
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "reserve",
       "n_classes_total": 4,
       "l_enc": 128,
@@ -704,6 +725,7 @@
         "ceiling": 8
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "reserve",
       "n_classes_total": 4,
       "l_enc": 140,
@@ -735,6 +757,7 @@
         "mid": 1
       },
       "quadrant": "unknown",
+      "verdict": "unknown",
       "role": "reserve",
       "n_classes_total": 2,
       "l_enc": 500,
@@ -766,6 +789,7 @@
         "mid": 1
       },
       "quadrant": "unknown",
+      "verdict": "unknown",
       "role": "reserve",
       "n_classes_total": 2,
       "l_enc": 500,
@@ -798,6 +822,7 @@
         "mid": 2
       },
       "quadrant": "unknown",
+      "verdict": "unknown",
       "role": "reserve",
       "n_classes_total": 3,
       "l_enc": 166,
@@ -829,6 +854,7 @@
         "mid": 1
       },
       "quadrant": "unknown",
+      "verdict": "unknown",
       "role": "reserve",
       "n_classes_total": 2,
       "l_enc": 426,
@@ -860,6 +886,7 @@
         "ceiling": 1
       },
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "role": "reserve",
       "n_classes_total": 2,
       "l_enc": 301,
@@ -884,15 +911,16 @@
       "chance": 0.1,
       "lift_over_chance": 0.6289902280130293,
       "tier": "mid",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.6537459283387622,
+      "trained_max": 0.755700325732899,
+      "realized_gain": -0.07524429967426705,
+      "best_gain": 0.026710097719869763,
       "null_band": 0.02581317622952307,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_above_null": 1,
+      "n_trained_below_null": 5,
+      "quadrant": "inert",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "USC-HAD_01": {
@@ -907,15 +935,16 @@
       "chance": 0.16666666666666666,
       "lift_over_chance": 0.776655808903366,
       "tier": "ceiling",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.901628664495114,
+      "trained_max": 0.9706840390879479,
+      "realized_gain": -0.04169381107491865,
+      "best_gain": 0.02736156351791519,
       "null_band": 0.013509082314871485,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
+      "n_trained_above_null": 4,
+      "n_trained_below_null": 3,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "USC-HAD"
     },
     "USC-HAD_02": {
@@ -939,6 +968,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "USC-HAD"
     },
     "USC-HAD_03": {
@@ -962,6 +992,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "USC-HAD"
     },
     "USC-HAD_04": {
@@ -985,6 +1016,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "USC-HAD_05": {
@@ -1008,6 +1040,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "USC-HAD_06": {
@@ -1031,6 +1064,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "USC-HAD_07": {
@@ -1054,6 +1088,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "USC-HAD_08": {
@@ -1077,6 +1112,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "USC-HAD_09": {
@@ -1100,6 +1136,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "USC-HAD_10": {
@@ -1123,6 +1160,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "USC-HAD_11": {
@@ -1146,6 +1184,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "USC-HAD_12": {
@@ -1169,6 +1208,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "USC-HAD_13": {
@@ -1192,6 +1232,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "USC-HAD_14": {
@@ -1215,6 +1256,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "USC-HAD"
     },
     "USC-HAD_15": {
@@ -1238,6 +1280,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "USC-HAD"
     },
     "WISDM2019_00": {
@@ -1252,15 +1295,16 @@
       "chance": 0.07692307692307693,
       "lift_over_chance": 0.22405412177399148,
       "tier": "open",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.29250814332247554,
+      "trained_max": 0.3745928338762215,
+      "realized_gain": -0.00846905537459286,
+      "best_gain": 0.0736156351791531,
       "null_band": 0.020394105332245605,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_above_null": 5,
+      "n_trained_below_null": 3,
+      "quadrant": "usable",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_01": {
@@ -1275,15 +1319,16 @@
       "chance": 0.09090909090909091,
       "lift_over_chance": 0.2973645247260882,
       "tier": "open",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.3543973941368078,
+      "trained_max": 0.41368078175895767,
+      "realized_gain": -0.03387622149837133,
+      "best_gain": 0.025407166123778524,
       "null_band": 0.09066849992290191,
       "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_below_null": 2,
+      "quadrant": "inert",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_02": {
@@ -1307,6 +1352,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_03": {
@@ -1330,6 +1376,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_04": {
@@ -1353,6 +1400,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_05": {
@@ -1376,6 +1424,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_06": {
@@ -1399,6 +1448,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_07": {
@@ -1422,6 +1472,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_08": {
@@ -1445,6 +1496,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_09": {
@@ -1468,6 +1520,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_10": {
@@ -1491,6 +1544,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_11": {
@@ -1514,6 +1568,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_12": {
@@ -1537,6 +1592,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_13": {
@@ -1560,6 +1616,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_14": {
@@ -1583,6 +1640,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "WISDM2019_15": {
@@ -1606,6 +1664,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM2019"
     },
     "ChestAccel_00": {
@@ -1620,15 +1679,16 @@
       "chance": 0.16666666666666666,
       "lift_over_chance": 0.5549019607843138,
       "tier": "mid",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.6558823529411765,
+      "trained_max": 0.7647058823529411,
+      "realized_gain": -0.06568627450980391,
+      "best_gain": 0.04313725490196074,
       "null_band": 0.020874143036171647,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_above_null": 1,
+      "n_trained_below_null": 6,
+      "quadrant": "inert",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_01": {
@@ -1643,15 +1703,16 @@
       "chance": 0.2,
       "lift_over_chance": 0.6110749185667754,
       "tier": "mid",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.7830618892508143,
+      "trained_max": 0.8208469055374593,
+      "realized_gain": -0.028013029315961058,
+      "best_gain": 0.009771986970683932,
       "null_band": 0.00797879395043381,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_above_null": 1,
+      "n_trained_below_null": 3,
+      "quadrant": "inert",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_02": {
@@ -1675,6 +1736,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_03": {
@@ -1698,6 +1760,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ChestAccel"
     },
     "ChestAccel_04": {
@@ -1721,6 +1784,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_05": {
@@ -1744,6 +1808,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_06": {
@@ -1767,6 +1832,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_07": {
@@ -1790,6 +1856,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_08": {
@@ -1813,6 +1880,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_09": {
@@ -1836,6 +1904,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_10": {
@@ -1859,6 +1928,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_11": {
@@ -1882,6 +1952,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_12": {
@@ -1905,6 +1976,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_13": {
@@ -1928,6 +2000,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "ChestAccel_14": {
@@ -1951,6 +2024,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ChestAccel"
     },
     "ChestAccel_15": {
@@ -1974,6 +2048,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChestAccel"
     },
     "MotionSense_00": {
@@ -1997,6 +2072,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_01": {
@@ -2020,6 +2096,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_02": {
@@ -2043,6 +2120,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_03": {
@@ -2066,6 +2144,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "MotionSense"
     },
     "MotionSense_04": {
@@ -2089,6 +2168,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_05": {
@@ -2112,6 +2192,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_06": {
@@ -2135,6 +2216,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_07": {
@@ -2158,6 +2240,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_08": {
@@ -2181,6 +2264,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_09": {
@@ -2204,6 +2288,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_10": {
@@ -2227,6 +2312,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_11": {
@@ -2250,6 +2336,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_12": {
@@ -2273,6 +2360,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_13": {
@@ -2296,6 +2384,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_14": {
@@ -2319,6 +2408,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "MotionSense_15": {
@@ -2342,6 +2432,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MotionSense"
     },
     "PAMAP2_00": {
@@ -2356,15 +2447,16 @@
       "chance": 0.1,
       "lift_over_chance": 0.7525974025974026,
       "tier": "mid",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.8165584415584416,
+      "trained_max": 0.9090909090909091,
+      "realized_gain": -0.03603896103896098,
+      "best_gain": 0.056493506493506485,
       "null_band": 0.04718416136255832,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_above_null": 1,
+      "n_trained_below_null": 2,
+      "quadrant": "usable",
+      "verdict": "unknown",
       "dataset": "PAMAP2"
     },
     "PAMAP2_01": {
@@ -2379,15 +2471,16 @@
       "chance": 0.16666666666666666,
       "lift_over_chance": 0.7505971769815419,
       "tier": "ceiling",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.8684039087947882,
+      "trained_max": 0.9153094462540716,
+      "realized_gain": -0.04885993485342033,
+      "best_gain": -0.001954397394136942,
       "null_band": 0.011834463924811047,
       "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
+      "n_trained_below_null": 7,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "PAMAP2"
     },
     "PAMAP2_02": {
@@ -2411,6 +2504,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "PAMAP2"
     },
     "PAMAP2_03": {
@@ -2434,6 +2528,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "PAMAP2"
     },
     "PAMAP2_04": {
@@ -2457,6 +2552,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PAMAP2"
     },
     "PAMAP2_05": {
@@ -2480,6 +2576,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PAMAP2"
     },
     "PAMAP2_06": {
@@ -2503,6 +2600,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PAMAP2"
     },
     "PAMAP2_07": {
@@ -2526,6 +2624,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "PAMAP2"
     },
     "PAMAP2_08": {
@@ -2549,6 +2648,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PAMAP2"
     },
     "PAMAP2_09": {
@@ -2572,6 +2672,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PAMAP2"
     },
     "PAMAP2_10": {
@@ -2595,6 +2696,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PAMAP2"
     },
     "PAMAP2_11": {
@@ -2618,6 +2720,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "PAMAP2"
     },
     "PAMAP2_12": {
@@ -2641,6 +2744,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PAMAP2"
     },
     "PAMAP2_13": {
@@ -2664,6 +2768,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PAMAP2"
     },
     "PAMAP2_14": {
@@ -2687,6 +2792,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "PAMAP2"
     },
     "PAMAP2_15": {
@@ -2710,6 +2816,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PAMAP2"
     },
     "ElectricDevices_00": {
@@ -2724,15 +2831,16 @@
       "chance": 0.16666666666666666,
       "lift_over_chance": 0.6509229098805648,
       "tier": "mid",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.7579804560260587,
+      "trained_max": 0.8273615635179153,
+      "realized_gain": -0.05960912052117273,
+      "best_gain": 0.009771986970683932,
       "null_band": 0.02160667615866711,
       "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_below_null": 7,
+      "quadrant": "inert",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_01": {
@@ -2747,15 +2855,16 @@
       "chance": 0.2,
       "lift_over_chance": 0.6155844155844155,
       "tier": "mid",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.7571428571428571,
+      "trained_max": 0.8214285714285714,
+      "realized_gain": -0.058441558441558406,
+      "best_gain": 0.005844155844155874,
       "null_band": 0.0207385966528199,
       "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_below_null": 6,
+      "quadrant": "inert",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_02": {
@@ -2779,6 +2888,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_03": {
@@ -2802,6 +2912,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_04": {
@@ -2825,6 +2936,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_05": {
@@ -2848,6 +2960,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_06": {
@@ -2871,6 +2984,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_07": {
@@ -2894,6 +3008,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_08": {
@@ -2917,6 +3032,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_09": {
@@ -2940,6 +3056,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_10": {
@@ -2963,6 +3080,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_11": {
@@ -2986,6 +3104,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_12": {
@@ -3009,6 +3128,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_13": {
@@ -3032,6 +3152,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_14": {
@@ -3055,6 +3176,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ElectricDevices"
     },
     "ElectricDevices_15": {
@@ -3078,6 +3200,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ElectricDevices"
     },
     "WISDM_00": {
@@ -3101,6 +3224,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM"
     },
     "WISDM_01": {
@@ -3124,6 +3248,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM"
     },
     "WISDM_02": {
@@ -3147,6 +3272,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "WISDM"
     },
     "WISDM_03": {
@@ -3170,6 +3296,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "WISDM"
     },
     "WISDM_04": {
@@ -3193,6 +3320,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "WISDM"
     },
     "WISDM_05": {
@@ -3216,6 +3344,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "WISDM"
     },
     "WISDM_06": {
@@ -3239,6 +3368,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "WISDM"
     },
     "WISDM_07": {
@@ -3262,6 +3392,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "WISDM"
     },
     "WISDM_08": {
@@ -3285,6 +3416,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM"
     },
     "WISDM_09": {
@@ -3308,6 +3440,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM"
     },
     "WISDM_10": {
@@ -3331,6 +3464,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "WISDM"
     },
     "WISDM_11": {
@@ -3354,6 +3488,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM"
     },
     "WISDM_12": {
@@ -3377,6 +3512,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "WISDM"
     },
     "WISDM_13": {
@@ -3400,6 +3536,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM"
     },
     "WISDM_14": {
@@ -3423,6 +3560,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "WISDM"
     },
     "WISDM_15": {
@@ -3446,6 +3584,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "WISDM"
     },
     "UniMiB-SHAR_00": {
@@ -3460,15 +3599,16 @@
       "chance": 0.07692307692307693,
       "lift_over_chance": 0.6735655224254573,
       "tier": "mid",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.7267100977198697,
+      "trained_max": 0.8208469055374593,
+      "realized_gain": -0.02377850162866446,
+      "best_gain": 0.07035830618892513,
       "null_band": 0.02189933070224315,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_above_null": 5,
+      "n_trained_below_null": 2,
+      "quadrant": "usable",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_01": {
@@ -3483,15 +3623,16 @@
       "chance": 0.09090909090909091,
       "lift_over_chance": 0.7234231566479123,
       "tier": "mid",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.7413680781758958,
+      "trained_max": 0.8697068403908795,
+      "realized_gain": -0.0729641693811075,
+      "best_gain": 0.055374592833876246,
       "null_band": 0.013029315960912058,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_above_null": 4,
+      "n_trained_below_null": 4,
+      "quadrant": "usable",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_02": {
@@ -3515,6 +3656,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_03": {
@@ -3538,6 +3680,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_04": {
@@ -3561,6 +3704,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_05": {
@@ -3584,6 +3728,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_06": {
@@ -3607,6 +3752,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_07": {
@@ -3630,6 +3776,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_08": {
@@ -3653,6 +3800,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_09": {
@@ -3676,6 +3824,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_10": {
@@ -3699,6 +3848,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_11": {
@@ -3722,6 +3872,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_12": {
@@ -3745,6 +3896,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_13": {
@@ -3768,6 +3920,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_14": {
@@ -3791,6 +3944,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UniMiB-SHAR"
     },
     "UniMiB-SHAR_15": {
@@ -3814,6 +3968,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "UniMiB-SHAR"
     },
     "SleepEDF_00": {
@@ -3837,6 +3992,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_01": {
@@ -3860,6 +4016,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "SleepEDF"
     },
     "SleepEDF_02": {
@@ -3883,6 +4040,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_03": {
@@ -3906,6 +4064,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_04": {
@@ -3929,6 +4088,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_05": {
@@ -3952,6 +4112,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_06": {
@@ -3975,6 +4136,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_07": {
@@ -3998,6 +4160,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_08": {
@@ -4021,6 +4184,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "SleepEDF"
     },
     "SleepEDF_09": {
@@ -4044,6 +4208,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_10": {
@@ -4067,6 +4232,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "SleepEDF"
     },
     "SleepEDF_11": {
@@ -4090,6 +4256,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_12": {
@@ -4113,6 +4280,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_13": {
@@ -4136,6 +4304,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_14": {
@@ -4159,6 +4328,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "SleepEDF_15": {
@@ -4182,6 +4352,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "SleepEDF"
     },
     "REALDISP_00": {
@@ -4205,6 +4376,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_01": {
@@ -4228,6 +4400,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_02": {
@@ -4251,6 +4424,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_03": {
@@ -4274,6 +4448,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_04": {
@@ -4297,6 +4472,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_05": {
@@ -4320,6 +4496,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_06": {
@@ -4343,6 +4520,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_07": {
@@ -4366,6 +4544,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_08": {
@@ -4389,6 +4568,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_09": {
@@ -4412,6 +4592,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_10": {
@@ -4435,6 +4616,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_11": {
@@ -4458,6 +4640,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_12": {
@@ -4481,6 +4664,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_13": {
@@ -4504,6 +4688,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_14": {
@@ -4527,6 +4712,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "REALDISP_15": {
@@ -4550,6 +4736,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "REALDISP"
     },
     "MHEALTH_00": {
@@ -4573,6 +4760,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_01": {
@@ -4596,6 +4784,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_02": {
@@ -4619,6 +4808,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_03": {
@@ -4642,6 +4832,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_04": {
@@ -4665,6 +4856,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_05": {
@@ -4688,6 +4880,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_06": {
@@ -4711,6 +4904,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_07": {
@@ -4734,6 +4928,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_08": {
@@ -4757,6 +4952,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_09": {
@@ -4780,6 +4976,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_10": {
@@ -4803,6 +5000,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_11": {
@@ -4826,6 +5024,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_12": {
@@ -4849,6 +5048,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_13": {
@@ -4872,6 +5072,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_14": {
@@ -4895,6 +5096,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "MHEALTH_15": {
@@ -4918,6 +5120,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MHEALTH"
     },
     "UWaveGestureLibraryAll_00": {
@@ -4941,6 +5144,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_01": {
@@ -4964,6 +5168,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_02": {
@@ -4987,6 +5192,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_03": {
@@ -5010,6 +5216,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_04": {
@@ -5033,6 +5240,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_05": {
@@ -5056,6 +5264,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_06": {
@@ -5079,6 +5288,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_07": {
@@ -5102,6 +5312,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_08": {
@@ -5125,6 +5336,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_09": {
@@ -5148,6 +5360,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_10": {
@@ -5171,6 +5384,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_11": {
@@ -5194,6 +5408,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_12": {
@@ -5217,6 +5432,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_13": {
@@ -5240,6 +5456,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_14": {
@@ -5263,6 +5480,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "UWaveGestureLibraryAll_15": {
@@ -5286,6 +5504,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "UWaveGestureLibraryAll"
     },
     "PTB-XL_00": {
@@ -5300,15 +5519,16 @@
       "chance": 0.25,
       "lift_over_chance": 0.30714285714285716,
       "tier": "open",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 2,
+      "trained_mean": 0.5535714285714286,
+      "trained_max": 0.5584415584415584,
+      "realized_gain": -0.0035714285714285587,
+      "best_gain": 0.0012987012987012436,
       "null_band": 0.025811177810846513,
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "quadrant": "inert",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_01": {
@@ -5332,6 +5552,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_02": {
@@ -5355,6 +5576,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_03": {
@@ -5378,6 +5600,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_04": {
@@ -5401,6 +5624,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_05": {
@@ -5424,6 +5648,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_06": {
@@ -5447,6 +5672,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_07": {
@@ -5470,6 +5696,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_08": {
@@ -5493,6 +5720,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_09": {
@@ -5516,6 +5744,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_10": {
@@ -5539,6 +5768,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_11": {
@@ -5562,6 +5792,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_12": {
@@ -5585,6 +5816,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_13": {
@@ -5608,6 +5840,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_14": {
@@ -5631,6 +5864,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "PTB-XL_15": {
@@ -5654,6 +5888,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "PTB-XL"
     },
     "NonInvasiveFetalECGThorax1_00": {
@@ -5677,6 +5912,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_01": {
@@ -5700,6 +5936,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_02": {
@@ -5723,6 +5960,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_03": {
@@ -5746,6 +5984,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_04": {
@@ -5769,6 +6008,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_05": {
@@ -5792,6 +6032,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_06": {
@@ -5815,6 +6056,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_07": {
@@ -5838,6 +6080,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_08": {
@@ -5861,6 +6104,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_09": {
@@ -5884,6 +6128,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_10": {
@@ -5907,6 +6152,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_11": {
@@ -5930,6 +6176,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_12": {
@@ -5953,6 +6200,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_13": {
@@ -5976,6 +6224,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_14": {
@@ -5999,6 +6248,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "NonInvasiveFetalECGThorax1_15": {
@@ -6022,6 +6272,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "NonInvasiveFetalECGThorax1"
     },
     "MixedShapesRegularTrain_00": {
@@ -6045,6 +6296,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_01": {
@@ -6068,6 +6320,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_02": {
@@ -6091,6 +6344,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_03": {
@@ -6114,6 +6368,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_04": {
@@ -6137,6 +6392,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_05": {
@@ -6160,6 +6416,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_06": {
@@ -6183,6 +6440,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_07": {
@@ -6206,6 +6464,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_08": {
@@ -6229,6 +6488,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_09": {
@@ -6252,6 +6512,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_10": {
@@ -6275,6 +6536,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_11": {
@@ -6298,6 +6560,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_12": {
@@ -6321,6 +6584,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_13": {
@@ -6344,6 +6608,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_14": {
@@ -6367,6 +6632,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "MixedShapesRegularTrain_15": {
@@ -6390,6 +6656,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "MixedShapesRegularTrain"
     },
     "InsectWingbeatSound_00": {
@@ -6404,15 +6671,16 @@
       "chance": 0.1111111111111111,
       "lift_over_chance": 0.6074556641331885,
       "tier": "mid",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.714657980456026,
+      "trained_max": 0.7719869706840391,
+      "realized_gain": -0.003908794788273662,
+      "best_gain": 0.053420195439739415,
       "null_band": 0.025062389656900788,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_above_null": 3,
+      "n_trained_below_null": 1,
+      "quadrant": "usable",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_01": {
@@ -6427,15 +6695,16 @@
       "chance": 0.14285714285714285,
       "lift_over_chance": 0.5636363636363637,
       "tier": "mid",
-      "n_trained": 0,
-      "trained_mean": null,
-      "trained_max": null,
-      "realized_gain": null,
-      "best_gain": null,
+      "n_trained": 10,
+      "trained_mean": 0.7181818181818181,
+      "trained_max": 0.7824675324675324,
+      "realized_gain": 0.011688311688311637,
+      "best_gain": 0.07597402597402592,
       "null_band": 0.01422655993519915,
-      "n_trained_above_null": 0,
-      "n_trained_below_null": 0,
-      "quadrant": "unknown",
+      "n_trained_above_null": 6,
+      "n_trained_below_null": 2,
+      "quadrant": "usable",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_02": {
@@ -6459,6 +6728,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_03": {
@@ -6482,6 +6752,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_04": {
@@ -6505,6 +6776,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_05": {
@@ -6528,6 +6800,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_06": {
@@ -6551,6 +6824,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_07": {
@@ -6574,6 +6848,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_08": {
@@ -6597,6 +6872,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_09": {
@@ -6620,6 +6896,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_10": {
@@ -6643,6 +6920,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_11": {
@@ -6666,6 +6944,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_12": {
@@ -6689,6 +6968,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_13": {
@@ -6712,6 +6992,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_14": {
@@ -6735,6 +7016,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "InsectWingbeatSound_15": {
@@ -6758,6 +7040,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "InsectWingbeatSound"
     },
     "Daphnet_00": {
@@ -6781,6 +7064,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Daphnet"
     },
     "StarLightCurves_00": {
@@ -6804,6 +7088,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "StarLightCurves"
     },
     "StarLightCurves_01": {
@@ -6827,6 +7112,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "StarLightCurves"
     },
     "StarLightCurves_02": {
@@ -6850,6 +7136,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "StarLightCurves"
     },
     "StarLightCurves_03": {
@@ -6873,6 +7160,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "StarLightCurves"
     },
     "Wafer_00": {
@@ -6896,6 +7184,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Wafer"
     },
     "Opportunity_00": {
@@ -6919,6 +7208,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Opportunity"
     },
     "Opportunity_01": {
@@ -6942,6 +7232,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Opportunity"
     },
     "Opportunity_02": {
@@ -6965,6 +7256,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Opportunity"
     },
     "Opportunity_03": {
@@ -6988,6 +7280,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Opportunity"
     },
     "Opportunity_04": {
@@ -7011,6 +7304,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Opportunity"
     },
     "Opportunity_05": {
@@ -7034,6 +7328,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Opportunity"
     },
     "Opportunity_06": {
@@ -7057,6 +7352,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Opportunity"
     },
     "Opportunity_07": {
@@ -7080,6 +7376,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Opportunity"
     },
     "Opportunity_08": {
@@ -7103,6 +7400,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Opportunity"
     },
     "Opportunity_09": {
@@ -7126,6 +7424,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "Opportunity"
     },
     "TwoPatterns_00": {
@@ -7149,6 +7448,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "TwoPatterns"
     },
     "TwoPatterns_01": {
@@ -7172,6 +7472,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "TwoPatterns"
     },
     "TwoPatterns_02": {
@@ -7195,6 +7496,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "TwoPatterns"
     },
     "TwoPatterns_03": {
@@ -7218,6 +7520,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "TwoPatterns"
     },
     "TwoPatterns_04": {
@@ -7241,6 +7544,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "TwoPatterns"
     },
     "TwoPatterns_05": {
@@ -7264,6 +7568,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "TwoPatterns"
     },
     "TwoPatterns_06": {
@@ -7287,6 +7592,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "TwoPatterns"
     },
     "TwoPatterns_07": {
@@ -7310,6 +7616,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "TwoPatterns"
     },
     "TwoPatterns_08": {
@@ -7333,6 +7640,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "TwoPatterns"
     },
     "TwoPatterns_09": {
@@ -7356,6 +7664,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "TwoPatterns"
     },
     "ECG5000_00": {
@@ -7379,6 +7688,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ECG5000"
     },
     "ECG5000_01": {
@@ -7402,6 +7712,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ECG5000"
     },
     "ECG5000_02": {
@@ -7425,6 +7736,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ECG5000"
     },
     "ECG5000_03": {
@@ -7448,6 +7760,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ECG5000"
     },
     "ECG5000_04": {
@@ -7471,6 +7784,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ECG5000"
     },
     "ECG5000_05": {
@@ -7494,6 +7808,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ECG5000"
     },
     "ECG5000_06": {
@@ -7517,6 +7832,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ECG5000"
     },
     "ECG5000_07": {
@@ -7540,6 +7856,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ECG5000"
     },
     "ECG5000_08": {
@@ -7563,6 +7880,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ECG5000"
     },
     "ECG5000_09": {
@@ -7586,6 +7904,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "ECG5000"
     },
     "FordA_00": {
@@ -7609,6 +7928,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "FordA"
     },
     "FordB_00": {
@@ -7632,6 +7952,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "FordB"
     },
     "ChlorineConcentration_00": {
@@ -7655,6 +7976,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChlorineConcentration"
     },
     "ChlorineConcentration_01": {
@@ -7678,6 +8000,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChlorineConcentration"
     },
     "ChlorineConcentration_02": {
@@ -7701,6 +8024,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChlorineConcentration"
     },
     "ChlorineConcentration_03": {
@@ -7724,6 +8048,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "ChlorineConcentration"
     },
     "Yoga_00": {
@@ -7747,6 +8072,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "unknown",
+      "verdict": "unknown",
       "dataset": "Yoga"
     },
     "FreezerRegularTrain_00": {
@@ -7770,6 +8096,7 @@
       "n_trained_above_null": 0,
       "n_trained_below_null": 0,
       "quadrant": "ceiling",
+      "verdict": "ceiling",
       "dataset": "FreezerRegularTrain"
     }
   },
@@ -7779,9 +8106,9 @@
         "baseline": 0.8152157887027327,
         "headroom": 0.1847842112972673,
         "tier": "mid",
-        "quadrant": "unknown",
-        "best_gain_max": null,
-        "realized_gain_mean": null,
+        "quadrant": "inert",
+        "best_gain_max": 0.02736156351791519,
+        "realized_gain_mean": -0.05846905537459285,
         "gate_v2_verdict": "not_gated",
         "gate_v2_passed": null,
         "gate_v2_delta_star": null,
@@ -7789,17 +8116,17 @@
         "gate_v2_yield": null,
         "gate_v1_verdict": null,
         "stage1_trained_mean": null,
-        "n_above": 0,
-        "n_below": 0,
-        "n_trained_total": 0
+        "n_above": 5,
+        "n_below": 8,
+        "n_trained_total": 20
       },
       "WISDM2019": {
         "baseline": 0.38617003602510924,
         "headroom": 0.6138299639748908,
         "tier": "open",
-        "quadrant": "unknown",
-        "best_gain_max": null,
-        "realized_gain_mean": null,
+        "quadrant": "usable",
+        "best_gain_max": 0.0736156351791531,
+        "realized_gain_mean": -0.021172638436482094,
         "gate_v2_verdict": "not_gated",
         "gate_v2_passed": null,
         "gate_v2_delta_star": null,
@@ -7807,17 +8134,17 @@
         "gate_v2_yield": null,
         "gate_v1_verdict": null,
         "stage1_trained_mean": null,
-        "n_above": 0,
-        "n_below": 0,
-        "n_trained_total": 0
+        "n_above": 5,
+        "n_below": 5,
+        "n_trained_total": 20
       },
       "ChestAccel": {
         "baseline": 0.7664162211375518,
         "headroom": 0.2335837788624482,
         "tier": "mid",
-        "quadrant": "unknown",
-        "best_gain_max": null,
-        "realized_gain_mean": null,
+        "quadrant": "inert",
+        "best_gain_max": 0.04313725490196074,
+        "realized_gain_mean": -0.046849651912882484,
         "gate_v2_verdict": "not_gated",
         "gate_v2_passed": null,
         "gate_v2_delta_star": null,
@@ -7825,9 +8152,9 @@
         "gate_v2_yield": null,
         "gate_v1_verdict": null,
         "stage1_trained_mean": null,
-        "n_above": 0,
-        "n_below": 0,
-        "n_trained_total": 0
+        "n_above": 2,
+        "n_below": 9,
+        "n_trained_total": 20
       },
       "MotionSense": {
         "baseline": 0.9660771130335463,
@@ -7851,9 +8178,9 @@
         "baseline": 0.8987783528481353,
         "headroom": 0.10122164715186466,
         "tier": "mid",
-        "quadrant": "unknown",
-        "best_gain_max": null,
-        "realized_gain_mean": null,
+        "quadrant": "usable",
+        "best_gain_max": 0.056493506493506485,
+        "realized_gain_mean": -0.042449447946190655,
         "gate_v2_verdict": "not_gated",
         "gate_v2_passed": null,
         "gate_v2_delta_star": null,
@@ -7861,17 +8188,17 @@
         "gate_v2_yield": null,
         "gate_v1_verdict": null,
         "stage1_trained_mean": null,
-        "n_above": 0,
-        "n_below": 0,
-        "n_trained_total": 0
+        "n_above": 1,
+        "n_below": 9,
+        "n_trained_total": 20
       },
       "ElectricDevices": {
         "baseline": 0.8527174372858412,
         "headroom": 0.14728256271415885,
         "tier": "mid",
-        "quadrant": "unknown",
-        "best_gain_max": null,
-        "realized_gain_mean": null,
+        "quadrant": "inert",
+        "best_gain_max": 0.009771986970683932,
+        "realized_gain_mean": -0.05902533948136557,
         "gate_v2_verdict": "not_gated",
         "gate_v2_passed": null,
         "gate_v2_delta_star": null,
@@ -7880,8 +8207,8 @@
         "gate_v1_verdict": null,
         "stage1_trained_mean": null,
         "n_above": 0,
-        "n_below": 0,
-        "n_trained_total": 0
+        "n_below": 13,
+        "n_trained_total": 20
       },
       "WISDM": {
         "baseline": 0.9098527039134674,
@@ -7905,9 +8232,9 @@
         "baseline": 0.7806939049986473,
         "headroom": 0.21930609500135267,
         "tier": "mid",
-        "quadrant": "unknown",
-        "best_gain_max": null,
-        "realized_gain_mean": null,
+        "quadrant": "usable",
+        "best_gain_max": 0.07035830618892513,
+        "realized_gain_mean": -0.04837133550488598,
         "gate_v2_verdict": "not_gated",
         "gate_v2_passed": null,
         "gate_v2_delta_star": null,
@@ -7915,9 +8242,9 @@
         "gate_v2_yield": null,
         "gate_v1_verdict": null,
         "stage1_trained_mean": null,
-        "n_above": 0,
-        "n_below": 0,
-        "n_trained_total": 0
+        "n_above": 9,
+        "n_below": 6,
+        "n_trained_total": 20
       },
       "SleepEDF": {
         "baseline": 0.7951818407503165,
@@ -7995,9 +8322,9 @@
         "baseline": 0.6954319398028681,
         "headroom": 0.3045680601971319,
         "tier": "open",
-        "quadrant": "unknown",
-        "best_gain_max": null,
-        "realized_gain_mean": null,
+        "quadrant": "inert",
+        "best_gain_max": 0.0012987012987012436,
+        "realized_gain_mean": -0.0035714285714285587,
         "gate_v2_verdict": "not_gated",
         "gate_v2_passed": null,
         "gate_v2_delta_star": null,
@@ -8007,7 +8334,7 @@
         "stage1_trained_mean": null,
         "n_above": 0,
         "n_below": 0,
-        "n_trained_total": 0
+        "n_trained_total": 2
       },
       "NonInvasiveFetalECGThorax1": {
         "baseline": 0.8025806600619356,
@@ -8049,9 +8376,9 @@
         "baseline": 0.7661244831105377,
         "headroom": 0.2338755168894623,
         "tier": "mid",
-        "quadrant": "unknown",
-        "best_gain_max": null,
-        "realized_gain_mean": null,
+        "quadrant": "usable",
+        "best_gain_max": 0.07597402597402592,
+        "realized_gain_mean": 0.0038897584500189875,
         "gate_v2_verdict": "not_gated",
         "gate_v2_passed": null,
         "gate_v2_delta_star": null,
@@ -8059,9 +8386,9 @@
         "gate_v2_yield": null,
         "gate_v1_verdict": null,
         "stage1_trained_mean": null,
-        "n_above": 0,
-        "n_below": 0,
-        "n_trained_total": 0
+        "n_above": 9,
+        "n_below": 3,
+        "n_trained_total": 20
       },
       "Daphnet": {
         "baseline": 0.9153094462540716,
@@ -8263,22 +8590,20 @@
       }
     },
     "cells": {
-      "unknown": {
+      "inert": {
         "not_gated": [
           "USC-HAD",
-          "WISDM2019",
           "ChestAccel",
-          "PAMAP2",
           "ElectricDevices",
+          "PTB-XL"
+        ]
+      },
+      "usable": {
+        "not_gated": [
+          "WISDM2019",
+          "PAMAP2",
           "UniMiB-SHAR",
-          "SleepEDF",
-          "PTB-XL",
-          "NonInvasiveFetalECGThorax1",
-          "InsectWingbeatSound",
-          "FordA",
-          "FordB",
-          "ChlorineConcentration",
-          "Yoga"
+          "InsectWingbeatSound"
         ]
       },
       "ceiling": {
@@ -8296,6 +8621,16 @@
           "TwoPatterns",
           "ECG5000",
           "FreezerRegularTrain"
+        ]
+      },
+      "unknown": {
+        "not_gated": [
+          "SleepEDF",
+          "NonInvasiveFetalECGThorax1",
+          "FordA",
+          "FordB",
+          "ChlorineConcentration",
+          "Yoga"
         ]
       }
     }
