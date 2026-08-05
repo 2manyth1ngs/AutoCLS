@@ -104,6 +104,12 @@ def configure_paths(outdir: str | Path) -> None:
 FILL_ITERS = 290          # = configs/train.yaml: early_iters（阶段1 造 label 口径）
 FILL_TASKS, FILL_CLS = 2, 10   # 与阶段1 rprime_cache 逐字段同口径：前 2 任务 × 前 10 shared CLS
 
+# 配对用的训练量（--pair-iters）。默认 290 = 既有 analysis.json 的口径，改默认会让
+# 已发布结果不可复算。full-iters 判别实验（results/full_iters_probe/PROTOCOL.md）用
+# 2320 重跑同一批 (任务, CLS, 初始化, 划分)，两份 R' 必须按 iters 分开配对——否则
+# realized_gain 会变成 early 与 full 的混合均值（铁律 2："early 与 final 禁止混用"）。
+PAIR_ITERS = FILL_ITERS
+
 
 def load_registry_cfg():
     """按 --registry 解析注册表（None = configs/source_pool.yaml 默认）。"""
@@ -126,6 +132,17 @@ def _read_jsonl(path: Path) -> list[dict]:
 def load_cache(path: Path) -> dict[tuple[str, int], dict]:
     """→ {(task_id, seed): 记录}。append-only，同键后行覆盖前行。"""
     return {(r["task_id"], r["seed"]): r for r in _read_jsonl(path)}
+
+
+def fill_done_keys(path: Path) -> set[tuple[str, str, int]]:
+    """--fill-trained 的 resume 去重键：**(task_id, cls_key, iters)**。
+
+    iters 必须入键。同一 (任务, CLS) 在 290 与 2320 下是两条不同的测量，漏掉 iters
+    会让 early 的记录把 full 的重跑整批挡掉——`--resume` 下表现为"秒完成"，实则一条
+    没跑。口径与 `labeling.load_rprime_cache` 一致（它早就注明"iters 入键防 early/full
+    混用"），本处此前是唯一的例外。
+    """
+    return {(r["task_id"], r["cls_key"], r["iters"]) for r in _read_jsonl(path)}
 
 
 def leak_check(registry) -> None:
@@ -237,19 +254,24 @@ def _run_loop(todo, cache, cls_cfg, key, device, on_oom) -> None:
 
 
 def _trained_by_task(tasks_by_id: dict) -> tuple[dict[str, list[float]], dict]:
-    """阶段1 canonical R'（290 iters）按 task_id 归集，**逐字段校验任务定义一致**。
+    """canonical R'（PAIR_ITERS 口径）按 task_id 归集，**逐字段校验任务定义一致**。
 
-    只接受 classes 与当前切片逐字段相同、且 split_seed 等于 canonical 划分的记录——
-    历史缓存跨过若干次注册表调整，静默错配会让 realized gain 变成两个不同任务相减。
+    只接受 iters == PAIR_ITERS、classes 与当前切片逐字段相同、且 split_seed 等于
+    canonical 划分的记录——历史缓存跨过若干次注册表调整，静默错配会让 realized gain
+    变成两个不同任务相减；而 iters 不过滤则会让它变成 early 与 full 的混合均值。
     """
     by_task: dict[str, list[float]] = {}
-    audit = {"matched": 0, "rejected_classes": 0, "rejected_split": 0, "unknown_task": 0}
+    audit = {"matched": 0, "rejected_classes": 0, "rejected_split": 0,
+             "rejected_iters": 0, "unknown_task": 0}
     for path in TRAINED_CACHES:
         for r in _read_jsonl(path):
             tid = r["task_id"]
             t = tasks_by_id.get(tid)
             if t is None:
                 audit["unknown_task"] += 1
+                continue
+            if r.get("iters") != PAIR_ITERS:
+                audit["rejected_iters"] += 1
                 continue
             if list(r.get("classes", [])) != list(t.classes):
                 audit["rejected_classes"] += 1
@@ -264,8 +286,14 @@ def _trained_by_task(tasks_by_id: dict) -> tuple[dict[str, list[float]], dict]:
     return by_task, audit
 
 
-def fill_trained(names: list[str], *, device: str, resume: bool, backend: str) -> None:
-    """补跑阶段1 口径的 canonical R'（290 iters），给缺配对参照的数据集。
+def fill_trained(names: list[str], *, device: str, resume: bool, backend: str,
+                 iters: int = FILL_ITERS) -> None:
+    """补跑 canonical R'（默认 290 iters = 阶段1 口径），给缺配对参照的数据集。
+
+    `iters` 显式传参（铁律 2）：full-iters 判别实验用 2320 重跑**完全相同**的
+    (任务, CLS, weight_seed, split_seed)，唯一变量是训练量。weight_seed 的派生
+    `run_seed_for(task_id, cls_key)` 不含 iters，故两轮的随机初始化逐位相同
+    ——这正是严格配对比较所要求的。
 
     为什么需要：realized/best gain 要拿 R'(290) 与基线相减，而探针骨干
     （Cricket/PhonemeSpectra/SpokenArabicDigits）只有 results/route_a_probe 那份**早于
@@ -280,12 +308,12 @@ def fill_trained(names: list[str], *, device: str, resume: bool, backend: str) -
     registry = load_registry_cfg()
     per_ds = sliced_tasks(registry, names, FILL_TASKS)
     cls_list, _ = load_probe_cls(PROBE_CATALOG, FILL_CLS)
-    done = {(r["task_id"], r["cls_key"]) for r in _read_jsonl(TRAINED_FILL)}
+    done = fill_done_keys(TRAINED_FILL)
 
     work = [(n, X, y, t, c, k) for n, _e, X, y, tasks in per_ds
             for t in tasks for c, k in cls_list]
-    todo = [w for w in work if not (resume and (w[3].task_id, w[5]) in done)]
-    print(f"\n补跑 trained 参照：iters={FILL_ITERS} | 计划 {len(work)} 条，待跑 {len(todo)}\n",
+    todo = [w for w in work if not (resume and (w[3].task_id, w[5], iters) in done)]
+    print(f"\n补跑 trained 参照：iters={iters} | 计划 {len(work)} 条，待跑 {len(todo)}\n",
           flush=True)
 
     t_start = time.time()
@@ -298,15 +326,15 @@ def fill_trained(names: list[str], *, device: str, resume: bool, backend: str) -
                 rp = rec["r_prime"]
                 return {"dataset": _n, "task_id": _t.task_id, "tag": _t.tag,
                         "task_type": _t.task_type, "classes": list(_t.classes),
-                        "cls_key": _k, "seed": 0, "iters": FILL_ITERS, **rec,
+                        "cls_key": _k, "seed": 0, "iters": iters, **rec,
                         "r_prime": None if not np.isfinite(rp) else float(rp),
                         "cls": dataclasses.asdict(_c)}
 
             full = guarded_run(
                 lambda: evaluate_rprime(t, c, X, y, weight_seed=w_seed, split_seed=sp_seed,
-                                        iters=FILL_ITERS, device=device),
+                                        iters=iters, device=device),
                 make_row, cache_path=TRAINED_FILL, inflight=INFLIGHT,
-                task_id=t.task_id, cls_key=k, iters=FILL_ITERS,
+                task_id=t.task_id, cls_key=k, iters=iters,
                 on_oom=ON_OOM_SKIP, oom_log=OOM_LOG, context={"dataset": name},
                 log=lambda m: print(f"[fill {i + 1}/{len(todo)}] {m}", flush=True))
             if full is None:
@@ -393,8 +421,9 @@ def analyze(names: list[str], max_tasks: int | None) -> None:
     for r in rows:
         by_task.setdefault(r["task_id"], []).append(r)
     trained, audit = _trained_by_task(tasks_by_id)
-    print(f"\n阶段1 配对 R'：命中 {audit['matched']} 条 / 覆盖 {len(trained)} 个任务；"
-          f"拒收 classes 不符 {audit['rejected_classes']}、split 不符 {audit['rejected_split']}、"
+    print(f"\n配对 R'（iters={PAIR_ITERS}）：命中 {audit['matched']} 条 / 覆盖 "
+          f"{len(trained)} 个任务；拒收 iters 不符 {audit['rejected_iters']}、"
+          f"classes 不符 {audit['rejected_classes']}、split 不符 {audit['rejected_split']}、"
           f"任务不在当前切片 {audit['unknown_task']}", flush=True)
 
     task_out: dict[str, dict] = {}
@@ -475,6 +504,13 @@ def main() -> None:
     ap.add_argument("--fill-trained", action="store_true",
                     help=f"补跑 {FILL_ITERS} iters 的 canonical R' 参照（前 {FILL_TASKS} 任务 × "
                          f"前 {FILL_CLS} shared CLS），给缺阶段1 配对缓存的数据集")
+    ap.add_argument("--fill-iters", type=int, default=FILL_ITERS,
+                    help=f"--fill-trained 的训练量（默认 {FILL_ITERS} = early_iters）。"
+                         f"full-iters 判别实验用 2320（= train.yaml full_iters）；"
+                         f"iters 入缓存键与配对口径，两者绝不混算（铁律 2）")
+    ap.add_argument("--pair-iters", type=int, default=None,
+                    help="--analyze 配对 R' 的训练量（默认跟随 --fill-iters）。"
+                         "既有 analysis.json 全部按 290 生成")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--datasets", nargs="+", default=None,
                     help="只跑指定数据集（默认源池 13 + reserve 3；目标池绝不可选，铁律 6）")
@@ -500,8 +536,9 @@ def main() -> None:
 
     if args.outdir:
         configure_paths(args.outdir)
-    global REGISTRY_PATH
+    global REGISTRY_PATH, PAIR_ITERS
     REGISTRY_PATH = Path(args.registry) if args.registry else None
+    PAIR_ITERS = args.pair_iters if args.pair_iters is not None else args.fill_iters
 
     registry = load_registry_cfg()
     names = args.datasets or probe_scope(registry)
@@ -514,7 +551,8 @@ def main() -> None:
             max_tasks=args.max_tasks, on_oom=args.on_oom, backend=args.backend,
             n_classes_range=tuple(args.n_classes_range) if args.n_classes_range else None)
     if args.fill_trained:
-        fill_trained(names, device=args.device, resume=args.resume, backend=args.backend)
+        fill_trained(names, device=args.device, resume=args.resume, backend=args.backend,
+                     iters=args.fill_iters)
     if args.analyze:
         analyze(names, args.max_tasks)
     if not (args.run or args.analyze or args.fill_trained):

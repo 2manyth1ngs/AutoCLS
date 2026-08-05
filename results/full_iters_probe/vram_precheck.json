@@ -1,0 +1,27 @@
+{
+  "dataset": "InsectWingbeatSound",
+  "l_enc": 256,
+  "task_id": "InsectWingbeatSound_00",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "total_mib": 8187.5,
+  "scan_iters": 60,
+  "long_iters": 600,
+  "target_iters": 2320,
+  "scan": [
+    {
+      "cls_key": "9092e36eefe1",
+      "peak_mib": 4455.82861328125,
+      "resize": 0.6,
+      "crop": 0.95
+    }
+  ],
+  "heaviest_cls": "9092e36eefe1",
+  "peak_short_mib": 4455.82861328125,
+  "peak_long_mib": 4462.326171875,
+  "peak_target_mib": 4463.8203125,
+  "growth_frac": 0.001458215554876387,
+  "target_frac_of_card": 0.545199427480916,
+  "not_scaling_with_iters": true,
+  "fits": true,
+  "verdict": "PASS：full=2320 实测峰值 4464 MiB（占卡 54.5%），且峰值不随 iters 标度，不会 OOM"
+}
