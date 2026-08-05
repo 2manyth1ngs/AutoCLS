@@ -27,13 +27,28 @@ source_pool:
   - {name: WISDM2019, source: npz, domain: HAR, n_channels: 6, n_classes: 18, l_enc: 128, crop_len: null, n_classes_range: [7, 14], planned_tasks: 16, tested: false}
   - {name: ChestAccel, source: npz, domain: HAR, n_channels: 3, n_classes: 7, l_enc: 128, crop_len: null, n_classes_range: [3, 6], planned_tasks: 16, tested: false}
   - {name: MotionSense, source: npz, domain: HAR, n_channels: 12, n_classes: 6, l_enc: 128, crop_len: null, n_classes_range: [2, 5], planned_tasks: 16, tested: false}
+  - {name: PAMAP2, source: npz, domain: HAR, n_channels: 27, n_classes: 12, l_enc: 128, crop_len: null, n_classes_range: [5, 10], planned_tasks: 16, tested: false}
   - {name: ElectricDevices, source: npz, domain: Device, n_channels: 1, n_classes: 7, l_enc: 96, crop_len: null, n_classes_range: [3, 6], planned_tasks: 16, tested: false}
   - {name: WISDM, source: npz, domain: HAR, n_channels: 3, n_classes: 6, l_enc: 128, crop_len: null, n_classes_range: [2, 5], planned_tasks: 16, tested: false}
   - {name: UniMiB-SHAR, source: npz, domain: HAR, n_channels: 3, n_classes: 17, l_enc: 151, crop_len: null, n_classes_range: [7, 14], planned_tasks: 16, tested: false}
+  - {name: SleepEDF, source: npz, domain: EEG, n_channels: 1, n_classes: 5, l_enc: 3000, crop_len: null, n_classes_range: [2, 4], planned_tasks: 16, tested: false}
+  - {name: REALDISP, source: npz, domain: HAR, n_channels: 54, n_classes: 33, l_enc: 128, crop_len: null, n_classes_range: [13, 26], planned_tasks: 16, tested: false}
   - {name: MHEALTH, source: npz, domain: HAR, n_channels: 23, n_classes: 12, l_enc: 128, crop_len: null, n_classes_range: [5, 10], planned_tasks: 16, tested: false}
+  - {name: UWaveGestureLibraryAll, source: npz, domain: Motion, n_channels: 1, n_classes: 8, l_enc: 945, crop_len: null, n_classes_range: [3, 6], planned_tasks: 16, tested: false}
+  - {name: PTB-XL, source: npz, domain: ECG, n_channels: 12, n_classes: 5, l_enc: 1000, crop_len: null, n_classes_range: [2, 4], planned_tasks: 16, tested: false}
+  - {name: NonInvasiveFetalECGThorax1, source: npz, domain: ECG, n_channels: 1, n_classes: 42, l_enc: 750, crop_len: null, n_classes_range: [17, 34], planned_tasks: 16, tested: false}
+  - {name: MixedShapesRegularTrain, source: npz, domain: Image, n_channels: 1, n_classes: 5, l_enc: 1024, crop_len: null, n_classes_range: [2, 4], planned_tasks: 16, tested: false}
+  - {name: InsectWingbeatSound, source: npz, domain: Sensor, n_channels: 1, n_classes: 11, l_enc: 256, crop_len: null, n_classes_range: [4, 9], planned_tasks: 16, tested: false}
 
 reserve:
   - {name: Daphnet, source: npz, domain: HAR, n_channels: 9, n_classes: 2, l_enc: 128, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1, tested: false}
+  - {name: StarLightCurves, source: npz, domain: Sensor, n_channels: 1, n_classes: 3, l_enc: 1024, crop_len: null, n_classes_range: [2, 3], planned_tasks: 4, tested: false}
+  - {name: Wafer, source: npz, domain: Sensor, n_channels: 1, n_classes: 2, l_enc: 152, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1, tested: false}
   - {name: Opportunity, source: npz, domain: HAR, n_channels: 45, n_classes: 4, l_enc: 128, crop_len: null, n_classes_range: [2, 3], planned_tasks: 10, tested: false}
+  - {name: TwoPatterns, source: npz, domain: Simulated, n_channels: 1, n_classes: 4, l_enc: 128, crop_len: null, n_classes_range: [2, 3], planned_tasks: 10, tested: false}
+  - {name: ECG5000, source: npz, domain: ECG, n_channels: 1, n_classes: 4, l_enc: 140, crop_len: null, n_classes_range: [2, 3], planned_tasks: 10, tested: false}
   - {name: FordA, source: npz, domain: Sensor, n_channels: 1, n_classes: 2, l_enc: 500, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1, tested: false}
   - {name: FordB, source: npz, domain: Sensor, n_channels: 1, n_classes: 2, l_enc: 500, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1, tested: false}
+  - {name: ChlorineConcentration, source: npz, domain: Sensor, n_channels: 1, n_classes: 3, l_enc: 166, crop_len: null, n_classes_range: [2, 3], planned_tasks: 4, tested: false}
+  - {name: Yoga, source: npz, domain: Image, n_channels: 1, n_classes: 2, l_enc: 426, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1, tested: false}
+  - {name: FreezerRegularTrain, source: npz, domain: Sensor, n_channels: 1, n_classes: 2, l_enc: 301, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1, tested: false}

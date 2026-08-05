@@ -211,7 +211,7 @@ def plan() -> None:
 
     print(f"{'数据集':<24}{'角色':<7}{'类别档':>9}{'任务':>5}{'任务N':>7}{'n_eval':>7}"
           f"{'R噪声':>8}{'L':>6}{'步骤2 s':>9}{'步骤3 s':>9}  n_eval")
-    t2 = t3 = 0.0
+    t2 = t3 = t3_src = 0.0
     n_tasks_source = 0
     for r in sorted(rows, key=lambda r: -r["n_samples"]):
         _ok, role, _ = prescreen(n_samples=r["n_samples"], seq_len=r["seq_len"],
@@ -224,6 +224,7 @@ def plan() -> None:
         t3 += c3
         if role == "source":
             n_tasks_source += p["planned_tasks"]
+            t3_src += c3
         lo, hi = p["n_classes_range"]
         print(f"{r['name']:<24}{role:<7}{f'[{lo},{hi}]':>9}{p['planned_tasks']:>5}"
               f"{p['task_n_est']:>7}{p['n_eval_est']:>7}{p['rprime_noise_est']:>8.3f}"
@@ -231,8 +232,10 @@ def plan() -> None:
               f"{'✔' if p['n_eval_ok'] else '✘ 噪声超 δ'}")
 
     print(f"\n步骤2（基线，iters=0，{N_SEEDS} 种子）：{t2 / 60:.1f} min")
-    print(f"步骤3（训练能拉动，iters=290，每候选 {STEP3_ROWS} 条）：{t3 / 3600:.1f} h"
-          f"  ← 只对**过 G1（基线≤0.90）**的候选跑，故这是上界")
+    print(f"步骤3（训练能拉动，iters=290，每候选 {STEP3_ROWS} 条）：全部 {t3 / 3600:.1f} h / "
+          f"**仅源角色 {t3_src / 3600:.1f} h**")
+    print(f"  ← 两重上界：① reserve 候选（K<5）无论如何进不了源池，可不跑；"
+          f"② 只对过 G1（基线≤0.90）的候选跑，贴顶的直接出局")
     print(f"\n源池任务合计 {n_tasks_source}（floor=100，"
           f"{'过闸' if n_tasks_source >= 100 else '不足，需更多候选'}）"
           f"——注意这是**初筛后**的上界，步骤3 判完 usable 还会再掉")
