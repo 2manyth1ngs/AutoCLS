@@ -35,6 +35,7 @@ ROLE_RESERVE = "reserve"
 ROLE_TARGET = "target"
 
 SOURCE_EXTERNAL = "external"
+SOURCE_NPZ = "npz"        # 换池调研的候选：data/candidates/<name>.npz（canonical 已开窗+z-score）
 
 # yaml 顶层键 → 角色
 _POOL_KEYS = {"source_pool": ROLE_SOURCE, "reserve": ROLE_RESERVE, "target_pool": ROLE_TARGET}
@@ -145,12 +146,18 @@ def load_source_dataset(
     *,
     cache_dir: str | Path = DEFAULT_CACHE,
     crop_len: int | str | None = "auto",
+    candidate_root: str | Path | None = None,
 ) -> tuple[np.ndarray, np.ndarray]:
     """加载一个**源/reserve**数据集（TRAIN+TEST 合并 + 注册表 crop）。
 
     铁律 6 防护：目标池数据集 → TargetPoolLeakageError（绝不走源加载路径）。
     外部数据集（source=external，如 UCI-HAR）→ ValueError（不经 uea_cache）。
+    候选数据集（source=npz，换池调研）→ data/candidates/<name>.npz，已开窗+z-score。
     crop_len="auto" 用注册表值；传具体值/None 显式覆盖。
+
+    候选走同一入口而非另开一条加载路径：baseline_probe 的口径一致性靠"同一个
+    load_source_dataset + 同一个 slice_source_tasks"保证，换池调研的全部结论都
+    建立在"新数字与 UEA 那 16 个可比"之上。
     """
     registry = registry or load_registry()
     entry = registry.get(name)
@@ -159,6 +166,12 @@ def load_source_dataset(
             f"{name!r} 是目标池数据集，绝不走源加载路径（铁律 6）——"
             "目标池样本不得参与 TS2Vec 训练/造 label"
         )
+    if entry.source == SOURCE_NPZ:
+        from .candidates import CANDIDATE_ROOT, load_candidate
+
+        X, y = load_candidate(name, root=candidate_root or CANDIDATE_ROOT)
+        eff = entry.crop_len if crop_len == "auto" else crop_len
+        return (X[:, :eff] if eff else X), y
     if entry.source == SOURCE_EXTERNAL:
         raise ValueError(
             f"{name!r} 是 external 外部数据集（非 uea_cache），"

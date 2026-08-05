@@ -26,8 +26,10 @@ from .space.cls_space import CLS
 
 __all__ = [
     "BASELINE_ITERS", "BEST_GAIN_FLOOR", "CEILING_BASELINE", "OPEN_BASELINE",
-    "baseline_seed_specs", "classify_quadrant", "classify_tier", "inert_cls",
-    "probe_scope", "summarize_dataset", "summarize_task",
+    "MIN_N_CLASSES", "MIN_N_SAMPLES", "MIN_SEQ_LEN",
+    "T3_ABOVE_FRACTION", "T3_ABOVE_OVER_BELOW",
+    "baseline_seed_specs", "classify_quadrant", "classify_tier", "classify_verdict",
+    "inert_cls", "prescreen", "probe_scope", "summarize_dataset", "summarize_task",
 ]
 
 # 训练量：0 = 不训练（铁律 2 要求 max_iters 显式传参；这里显式为 0）
@@ -94,6 +96,74 @@ def classify_quadrant(baseline: float, best_gain: Optional[float]) -> str:
     if best_gain is None:
         return "unknown"
     return "usable" if best_gain >= BEST_GAIN_FLOOR else "inert"
+
+
+# =====================================================================
+# 换源池调研（results/candidate_survey/PROTOCOL.md）：初筛硬条件 + 判据 v2
+# =====================================================================
+
+# §2 初筛硬条件（H1/H2/H3）
+MIN_SEQ_LEN = 50        # H1 固定 encoder 适用边界（PenDigits L=8 的 CLS spread SNR 0.39）
+MIN_N_SAMPLES = 1000    # H2 由 n_eval≥100 反推（R' 噪声 ≈0.5/√n_eval ≤ 典型 δ 0.05）
+MIN_N_CLASSES = 5       # H3 类别子集是任务多样性主力（实测类别 ≈0.65 强 / 通道 ≈0.92 弱）
+
+# §4.2 判据 v2 的 T3：把零假设诊断写进判据
+T3_ABOVE_FRACTION = 0.5     # 超出 ±2σ 带的条数 ≥ 总条数的一半
+T3_ABOVE_OVER_BELOW = 2.0   # 且 超出 ≥ 2× 跌破（挡住"提升与破坏并存"的假阳）
+
+
+def prescreen(
+    *, n_samples: int, seq_len: int, n_classes: int
+) -> tuple[bool, str, list[str]]:
+    """§2 初筛：→ (是否进基线测量, 建议角色, 未过条件说明)。
+
+    K<MIN_N_CLASSES 不是淘汰而是降 **reserve**：这类候选每条基线只要 0.2 s，测了能
+    独立回答"贴顶是不是普遍现象"，但它只能靠通道/样本子集造多样性——UEA 的 2 类
+    EEG 源（SCP1 切出 2 任务、SCP2 3 个、MotorImagery 4 个）全部判 inert。
+    """
+    why: list[str] = []
+    if seq_len < MIN_SEQ_LEN:
+        why.append(f"L={seq_len} < {MIN_SEQ_LEN}（encoder 适用边界）")
+    if n_samples < MIN_N_SAMPLES:
+        why.append(f"N={n_samples} < {MIN_N_SAMPLES}（n_eval 不足 100，R' 噪声超 δ）")
+    hard_fail = bool(why)
+    if n_classes < MIN_N_CLASSES:
+        why.append(f"K={n_classes} < {MIN_N_CLASSES}（类别子集撑不起任务多样性）→ reserve")
+    if hard_fail:
+        return False, "reject", why
+    return True, ("source" if n_classes >= MIN_N_CLASSES else "reserve"), why
+
+
+def classify_verdict(
+    *,
+    baseline: float,
+    best_gain: Optional[float],
+    n_above: int,
+    n_below: int,
+    n_trained: int,
+) -> str:
+    """§4.2 判据 v2：ceiling / usable / inert / unknown。
+
+    与 `classify_quadrant`（旧版）的差别是 **T3**——旧版只要 `best_gain ≥ δ` 就判
+    usable，而 `best_gain` 是"N 条 CLS 取最大"、天然向上偏。UEA 上因此放行了
+    PhonemeSpectra(2↑/7↓) 与 Cricket(1↑/8↓)：它们的增益全由选择偏差撑着。
+    新判据要求训练后真的有**过半**条数跑出随机初始化自身的 ±2σ 带，且**超出的
+    比跌破的多一倍以上**（挡住 SpokenArabicDigits 那种提升与破坏并存的情形）。
+
+    旧版保留不动（`classify_quadrant`），因为 baseline_probe 的历史 analysis.json
+    按它生成——两套判据并存、各自标注出处，比就地改写更可审计。
+    """
+    if classify_tier(baseline) == "ceiling":
+        return "ceiling"          # T1 不过：贴顶直接出局，不看增益
+    if best_gain is None or n_trained <= 0:
+        return "unknown"          # 没有配对训练数据，不臆断
+    if best_gain < BEST_GAIN_FLOOR:
+        return "inert"            # T2 不过：空间在，但没有 CLS 用得上
+    if n_above < T3_ABOVE_FRACTION * n_trained:
+        return "inert"            # T3 前半：显著超出的条数不过半
+    if n_above < T3_ABOVE_OVER_BELOW * n_below:
+        return "inert"            # T3 后半：提升没有压过破坏
+    return "usable"
 
 
 def _finite(values: Iterable[Optional[float]]) -> list[float]:

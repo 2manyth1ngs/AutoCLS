@@ -80,8 +80,34 @@ TRAINED_CACHES = (
 )
 PROBE_CATALOG = ROOT / "results" / "route_a_probe" / "probe_cls_catalog.json"
 TRAINED_FILL = OUTDIR / "trained_fill.jsonl"
+REGISTRY_PATH: Path | None = None      # None = configs/source_pool.yaml（load_registry 默认）
+
+
+def configure_paths(outdir: str | Path) -> None:
+    """把全部落盘路径整体重定向到 outdir（换池调研步骤 2 用）。
+
+    候选数据集要用**同一个**探针测（口径一致性是本轮结论的前提，见
+    results/candidate_survey/PROTOCOL.md §3），但绝不能写进 results/baseline_probe/
+    ——那 685 条 UEA 基线是已定稿数据（铁律 3）。TRAINED_CACHES 里的
+    `OUTDIR/trained_fill.jsonl` 也要跟着走，否则候选会去读 UEA 的补跑结果做配对。
+    """
+    global OUTDIR, CACHE, INFLIGHT, OOM_LOG, TRAINED_FILL, TRAINED_CACHES
+    OUTDIR = Path(outdir)
+    CACHE = OUTDIR / "baseline_cache.jsonl"
+    INFLIGHT = OUTDIR / "inflight.txt"
+    OOM_LOG = OUTDIR / "oom_failures.jsonl"
+    TRAINED_FILL = OUTDIR / "trained_fill.jsonl"
+    TRAINED_CACHES = tuple(p for p in TRAINED_CACHES if p.name != "trained_fill.jsonl") + \
+        (TRAINED_FILL,)
+
+
 FILL_ITERS = 290          # = configs/train.yaml: early_iters（阶段1 造 label 口径）
 FILL_TASKS, FILL_CLS = 2, 10   # 与阶段1 rprime_cache 逐字段同口径：前 2 任务 × 前 10 shared CLS
+
+
+def load_registry_cfg():
+    """按 --registry 解析注册表（None = configs/source_pool.yaml 默认）。"""
+    return load_registry(REGISTRY_PATH) if REGISTRY_PATH else load_registry()
 
 
 def _read_jsonl(path: Path) -> list[dict]:
@@ -148,7 +174,7 @@ def run(names: list[str], *, device: str, resume: bool, n_seeds: int,
               f"请用 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 启动（configs/runtime.yaml）。",
               flush=True)
     OUTDIR.mkdir(parents=True, exist_ok=True)
-    registry = load_registry()
+    registry = load_registry_cfg()
     leak_check(registry)
 
     per_ds = sliced_tasks(registry, names, max_tasks, n_classes_range)
@@ -251,7 +277,7 @@ def fill_trained(names: list[str], *, device: str, resume: bool, backend: str) -
     from autocls.labeling import load_probe_cls, run_seed_for
 
     OUTDIR.mkdir(parents=True, exist_ok=True)
-    registry = load_registry()
+    registry = load_registry_cfg()
     per_ds = sliced_tasks(registry, names, FILL_TASKS)
     cls_list, _ = load_probe_cls(PROBE_CATALOG, FILL_CLS)
     done = {(r["task_id"], r["cls_key"]) for r in _read_jsonl(TRAINED_FILL)}
@@ -357,7 +383,7 @@ def print_crosstab(ct: dict) -> None:
 
 
 def analyze(names: list[str], max_tasks: int | None) -> None:
-    registry = load_registry()
+    registry = load_registry_cfg()
     per_ds = sliced_tasks(registry, names, max_tasks)
     tasks_by_id = {t.task_id: t for _n, _e, _X, _y, tasks in per_ds for t in tasks}
     ds_of_task = {t.task_id: n for n, _e, _X, _y, tasks in per_ds for t in tasks}
@@ -457,10 +483,23 @@ def main() -> None:
                          "任务 id 会打 +c<lo>-<hi> 标，与默认档缓存共存不互撞")
     ap.add_argument("--backend", choices=["threading", "loky"], default="threading",
                     help="fit_svm 的 joblib 后端。Windows 上 loky 每条 spawn 进程池要 "
-                         "8–15s（占 99% 耗时），threading 逐位同值（默认）")
+                         # %% 转义：argparse 对 help 串做 % 展开，裸 % 后接中文会
+                         # 抛 ValueError（本行此前就让 --help 整个崩掉）
+                         "8–15s（占 99%% 耗时），threading 逐位同值（默认）")
+    ap.add_argument("--registry", default=None,
+                    help="池注册表 yaml（默认 configs/source_pool.yaml）。换池调研用 "
+                         "configs/candidate_pool.yaml")
+    ap.add_argument("--outdir", default=None,
+                    help="落盘目录（默认 results/baseline_probe）。测候选务必改到别处——"
+                         "那 685 条 UEA 基线是已定稿数据，勿混（铁律 3）")
     args = ap.parse_args()
 
-    registry = load_registry()
+    if args.outdir:
+        configure_paths(args.outdir)
+    global REGISTRY_PATH
+    REGISTRY_PATH = Path(args.registry) if args.registry else None
+
+    registry = load_registry_cfg()
     names = args.datasets or probe_scope(registry)
     bad = set(names) & set(registry.names(ROLE_TARGET))
     if bad:
