@@ -26,10 +26,11 @@ from .space.cls_space import CLS
 
 __all__ = [
     "BASELINE_ITERS", "BEST_GAIN_FLOOR", "CEILING_BASELINE", "OPEN_BASELINE",
-    "MIN_N_CLASSES", "MIN_N_SAMPLES", "MIN_SEQ_LEN",
+    "MIN_N_CLASSES", "MIN_N_EVAL", "MIN_N_SAMPLES", "MIN_SEQ_LEN",
     "T3_ABOVE_FRACTION", "T3_ABOVE_OVER_BELOW",
     "baseline_seed_specs", "classify_quadrant", "classify_tier", "classify_verdict",
-    "inert_cls", "prescreen", "probe_scope", "summarize_dataset", "summarize_task",
+    "inert_cls", "prescreen", "probe_scope", "propose_slice",
+    "summarize_dataset", "summarize_task",
 ]
 
 # 训练量：0 = 不训练（铁律 2 要求 max_iters 显式传参；这里显式为 0）
@@ -132,6 +133,45 @@ def prescreen(
     if hard_fail:
         return False, "reject", why
     return True, ("source" if n_classes >= MIN_N_CLASSES else "reserve"), why
+
+
+MIN_N_EVAL = 100          # H2 的精确版：R' 噪声 ≈0.5/√n_eval ≤ 典型 δ 0.05
+_EVAL_RATIO = 0.3         # labels.yaml: eval_ratio
+_TASK_SAMPLE_CAP = 1024   # source_pool.yaml: slice.n_samples（每任务采样上限）
+_MAX_TASKS_PER_DATASET = 16   # 与 source_pool.yaml 现有上限一致（SpokenArabicDigits/CT）
+
+
+def propose_slice(*, n_samples: int, n_classes: int, n_channels: int) -> dict:
+    """给候选提一套切片档（类别子集范围 + 任务数），并估每任务 n_eval。
+
+    这是 PROTOCOL §5 第 2 条"按实际切片档核算 n_eval ≥ 100"的实现，也是步骤 2/3
+    成本估算的输入。**只是规划建议**——真正的注册表在步骤 3 判完 usable 之后才写。
+
+    类别档取 [0.4K, 0.8K]（刻意 off-ceiling：类别越多任务越难，避免 R' 贴天花板；
+    与 source_pool.yaml 现有档同型，如 K=10→[6,10]、K=26→[8,14] 都落在这个带里）。
+    """
+    from math import comb
+
+    lo = max(2, round(n_classes * 0.4))
+    hi = min(n_classes, max(lo + 1, round(n_classes * 0.8)))
+    n_combos = sum(comb(n_classes, k) for k in range(lo, hi + 1))
+
+    # 每任务样本 ≈ N × 该档平均类占比，再受采样上限截断
+    frac = (lo + hi) / 2.0 / n_classes
+    task_n = min(_TASK_SAMPLE_CAP, n_samples * frac)
+    n_eval = int(task_n * _EVAL_RATIO)
+
+    planned = min(_MAX_TASKS_PER_DATASET, n_combos)
+    return {
+        "n_classes_range": (lo, hi),
+        "n_combos": n_combos,
+        "planned_tasks": planned,
+        "n_channels_range": (max(1, (n_channels + 1) // 2), n_channels),
+        "task_n_est": int(task_n),
+        "n_eval_est": n_eval,
+        "n_eval_ok": n_eval >= MIN_N_EVAL,
+        "rprime_noise_est": 0.5 / (n_eval ** 0.5) if n_eval else float("inf"),
+    }
 
 
 def classify_verdict(

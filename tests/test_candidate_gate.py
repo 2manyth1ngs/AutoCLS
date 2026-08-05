@@ -15,6 +15,7 @@ from __future__ import annotations
 import pytest
 
 from autocls.baseline_probe import (
+    MIN_N_EVAL,
     MIN_N_SAMPLES,
     MIN_N_CLASSES,
     MIN_SEQ_LEN,
@@ -22,7 +23,42 @@ from autocls.baseline_probe import (
     T3_ABOVE_OVER_BELOW,
     classify_verdict,
     prescreen,
+    propose_slice,
 )
+
+
+# ---- §5 切片规划：每候选能切多少任务、每任务 n_eval 够不够 ----
+
+def test_min_n_eval_matches_delta_noise_derivation():
+    # R' 噪声 ≈ 0.5/√n_eval ≤ 典型 δ 0.05 → n_eval ≥ 100
+    assert MIN_N_EVAL == 100
+
+
+def test_propose_slice_class_range_is_a_subset_band():
+    p = propose_slice(n_samples=30000, n_classes=12, n_channels=6)
+    lo, hi = p["n_classes_range"]
+    assert 2 <= lo < hi <= 12
+
+
+def test_propose_slice_task_count_capped_by_class_combos():
+    # K=5 时 (2,4) 档的组合数有限，planned_tasks 不能超过它
+    p = propose_slice(n_samples=30000, n_classes=5, n_channels=3)
+    assert p["planned_tasks"] <= p["n_combos"]
+
+
+def test_propose_slice_reports_n_eval_and_flags_thin_tasks():
+    # N=1000、K=26、档约 (10,21) → 任务样本 ≈1000×0.6=600，n_eval≈180 够
+    ok = propose_slice(n_samples=1000, n_classes=26, n_channels=3)
+    assert ok["n_eval_est"] >= MIN_N_EVAL and ok["n_eval_ok"]
+    # N=300 的同形数据集必然不够
+    thin = propose_slice(n_samples=300, n_classes=26, n_channels=3)
+    assert thin["n_eval_est"] < MIN_N_EVAL and not thin["n_eval_ok"]
+
+
+def test_propose_slice_caps_n_eval_by_sampling_limit():
+    # 任务采样上限 1024 → n_eval 封顶 ≈307，再大的 N 也不会更高
+    huge = propose_slice(n_samples=500000, n_classes=10, n_channels=6)
+    assert huge["n_eval_est"] <= 308
 
 
 # ---- §2 初筛硬条件 ----

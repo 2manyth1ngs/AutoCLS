@@ -39,7 +39,7 @@ for _stream in (sys.stdout, sys.stderr):        # 本机控制台默认 GBK
     except (AttributeError, ValueError):
         pass
 
-from autocls.baseline_probe import prescreen  # noqa: E402
+from autocls.baseline_probe import prescreen, propose_slice  # noqa: E402
 from autocls.data.candidates import (  # noqa: E402
     CANDIDATE_ROOT,
     WINDOW_LEN,
@@ -183,6 +183,61 @@ def table() -> None:
         print(f"\nUEA 28 个（除目标池 2 个）：过初筛 {kept} 个")
 
 
+# —— 成本模型（PROTOCOL §7，实测锚点）——
+BASELINE_SEC = 0.22      # baseline_probe REPORT §7.3：685 条 / 2.5 min
+TRAINED_SEC = 65.0       # baseline_probe --fill-trained：60 条 / 65 min
+N_SEEDS = 5              # PROTOCOL §3
+STEP3_ROWS = 20          # PROTOCOL §4.1：10 shared CLS × 前 2 任务 × 1 种子
+
+
+def _l_factor(L: int) -> float:
+    """iters=290 的耗时随 L 的粗修正（iters=0 由 SVM 主导、几乎与 L 无关）。
+
+    两个锚点来自 PROTOCOL §7：L=1000 按 ×1.5、L=3000 按 ×3，中间线性内插。
+    """
+    return max(1.0, 1.0 + (L - 300) / 1350.0)
+
+
+def plan() -> None:
+    """第1步的规划与成本估算：每候选切多少任务、n_eval 够不够、步骤2/3 要多久。"""
+    rows = [json.loads(p.read_text(encoding="utf-8"))
+            for p in sorted(CANDIDATE_ROOT.glob("*.json"))]
+    rows = [r for r in rows
+            if prescreen(n_samples=r["n_samples"], seq_len=r["seq_len"],
+                         n_classes=r["n_classes"])[0]]
+    if not rows:
+        print("没有过初筛的候选")
+        return
+
+    print(f"{'数据集':<24}{'角色':<7}{'类别档':>9}{'任务':>5}{'任务N':>7}{'n_eval':>7}"
+          f"{'R噪声':>8}{'L':>6}{'步骤2 s':>9}{'步骤3 s':>9}  n_eval")
+    t2 = t3 = 0.0
+    n_tasks_source = 0
+    for r in sorted(rows, key=lambda r: -r["n_samples"]):
+        _ok, role, _ = prescreen(n_samples=r["n_samples"], seq_len=r["seq_len"],
+                                 n_classes=r["n_classes"])
+        p = propose_slice(n_samples=r["n_samples"], n_classes=r["n_classes"],
+                          n_channels=r["n_channels"])
+        c2 = p["planned_tasks"] * N_SEEDS * BASELINE_SEC
+        c3 = STEP3_ROWS * TRAINED_SEC * _l_factor(r["seq_len"])
+        t2 += c2
+        t3 += c3
+        if role == "source":
+            n_tasks_source += p["planned_tasks"]
+        lo, hi = p["n_classes_range"]
+        print(f"{r['name']:<24}{role:<7}{f'[{lo},{hi}]':>9}{p['planned_tasks']:>5}"
+              f"{p['task_n_est']:>7}{p['n_eval_est']:>7}{p['rprime_noise_est']:>8.3f}"
+              f"{r['seq_len']:>6}{c2:>9.0f}{c3:>9.0f}  "
+              f"{'✔' if p['n_eval_ok'] else '✘ 噪声超 δ'}")
+
+    print(f"\n步骤2（基线，iters=0，{N_SEEDS} 种子）：{t2 / 60:.1f} min")
+    print(f"步骤3（训练能拉动，iters=290，每候选 {STEP3_ROWS} 条）：{t3 / 3600:.1f} h"
+          f"  ← 只对**过 G1（基线≤0.90）**的候选跑，故这是上界")
+    print(f"\n源池任务合计 {n_tasks_source}（floor=100，"
+          f"{'过闸' if n_tasks_source >= 100 else '不足，需更多候选'}）"
+          f"——注意这是**初筛后**的上界，步骤3 判完 usable 还会再掉")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--list", action="store_true")
@@ -190,6 +245,7 @@ def main() -> None:
     ap.add_argument("--datasets", nargs="+", default=None, help="adapter 模块名（小写）")
     ap.add_argument("--skip-existing", action="store_true")
     ap.add_argument("--table", action="store_true")
+    ap.add_argument("--plan", action="store_true", help="切片规划 + 步骤2/3 成本估算")
     args = ap.parse_args()
 
     if args.list:
@@ -197,6 +253,9 @@ def main() -> None:
         return
     if args.table:
         table()
+        return
+    if args.plan:
+        plan()
         return
 
     names = adapter_names() if args.all else (args.datasets or [])
