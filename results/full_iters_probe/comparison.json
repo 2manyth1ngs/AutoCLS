@@ -1,0 +1,194 @@
+{
+  "WISDM2019": {
+    "dataset": "WISDM2019",
+    "l_enc": 128,
+    "n_tasks": 2,
+    "audit": {
+      "matched": 60,
+      "rejected_classes": 0,
+      "rejected_split": 0,
+      "unknown_task": 142
+    },
+    "arms": {
+      "30": {
+        "n_trained": 20,
+        "baseline": 0.3446254071661238,
+        "realized_gain": -0.006026058631921821,
+        "best_gain": 0.037785016286644935,
+        "n_above": 3,
+        "n_below": 3,
+        "n_band": 14,
+        "T1": true,
+        "T2": false,
+        "T3": false,
+        "verdict": "inert",
+        "null_band": {
+          "WISDM2019_00": 0.020394105332245605,
+          "WISDM2019_01": 0.09066849992290191
+        }
+      },
+      "290": {
+        "n_trained": 20,
+        "baseline": 0.3446254071661238,
+        "realized_gain": -0.021172638436482094,
+        "best_gain": 0.0736156351791531,
+        "n_above": 5,
+        "n_below": 5,
+        "n_band": 10,
+        "T1": true,
+        "T2": true,
+        "T3": false,
+        "verdict": "inert",
+        "null_band": {
+          "WISDM2019_00": 0.020394105332245605,
+          "WISDM2019_01": 0.09066849992290191
+        }
+      },
+      "2320": {
+        "n_trained": 20,
+        "baseline": 0.3446254071661238,
+        "realized_gain": -0.03241042345276873,
+        "best_gain": 0.1003257328990228,
+        "n_above": 6,
+        "n_below": 7,
+        "n_band": 7,
+        "T1": true,
+        "T2": true,
+        "T3": false,
+        "verdict": "inert",
+        "null_band": {
+          "WISDM2019_00": 0.020394105332245605,
+          "WISDM2019_01": 0.09066849992290191
+        }
+      }
+    }
+  },
+  "InsectWingbeatSound": {
+    "dataset": "InsectWingbeatSound",
+    "l_enc": 256,
+    "n_tasks": 2,
+    "audit": {
+      "matched": 40,
+      "rejected_classes": 0,
+      "rejected_split": 0,
+      "unknown_task": 162
+    },
+    "arms": {
+      "30": {
+        "n_trained": 20,
+        "baseline": 0.7125301408689031,
+        "realized_gain": 0.0061730614662210415,
+        "best_gain": 0.059934853420195444,
+        "n_above": 9,
+        "n_below": 2,
+        "n_band": 9,
+        "T1": true,
+        "T2": true,
+        "T3": false,
+        "verdict": "inert",
+        "null_band": {
+          "InsectWingbeatSound_00": 0.025062389656900788,
+          "InsectWingbeatSound_01": 0.01422655993519915
+        }
+      },
+      "290": {
+        "n_trained": 20,
+        "baseline": 0.7125301408689031,
+        "realized_gain": 0.0038897584500189875,
+        "best_gain": 0.07597402597402592,
+        "n_above": 9,
+        "n_below": 3,
+        "n_band": 8,
+        "T1": true,
+        "T2": true,
+        "T3": false,
+        "verdict": "inert",
+        "null_band": {
+          "InsectWingbeatSound_00": 0.025062389656900788,
+          "InsectWingbeatSound_01": 0.01422655993519915
+        }
+      },
+      "2320": {
+        "n_trained": 0,
+        "baseline": 0.7125301408689031,
+        "realized_gain": null,
+        "best_gain": null,
+        "n_above": 0,
+        "n_below": 0,
+        "n_band": 0,
+        "T1": true,
+        "T2": false,
+        "T3": false,
+        "verdict": "unknown",
+        "null_band": {
+          "InsectWingbeatSound_00": 0.025062389656900788,
+          "InsectWingbeatSound_01": 0.01422655993519915
+        }
+      }
+    }
+  },
+  "Handwriting": {
+    "dataset": "Handwriting",
+    "l_enc": 152,
+    "n_tasks": 2,
+    "audit": {
+      "matched": 60,
+      "rejected_classes": 0,
+      "rejected_split": 0,
+      "unknown_task": 240
+    },
+    "arms": {
+      "30": {
+        "n_trained": 20,
+        "baseline": 0.5294193548387097,
+        "realized_gain": 0.1403870967741935,
+        "best_gain": 0.24903225806451607,
+        "n_above": 18,
+        "n_below": 0,
+        "n_band": 2,
+        "T1": true,
+        "T2": true,
+        "T3": true,
+        "verdict": "usable",
+        "null_band": {
+          "Handwriting_00": 0.052094527066287366,
+          "Handwriting_01": 0.03919183588453088
+        }
+      },
+      "290": {
+        "n_trained": 20,
+        "baseline": 0.5294193548387097,
+        "realized_gain": 0.16139354838709682,
+        "best_gain": 0.39741935483870966,
+        "n_above": 15,
+        "n_below": 4,
+        "n_band": 1,
+        "T1": true,
+        "T2": true,
+        "T3": true,
+        "verdict": "usable",
+        "null_band": {
+          "Handwriting_00": 0.052094527066287366,
+          "Handwriting_01": 0.03919183588453088
+        }
+      },
+      "2320": {
+        "n_trained": 20,
+        "baseline": 0.5294193548387097,
+        "realized_gain": 0.09269677419354841,
+        "best_gain": 0.37161290322580637,
+        "n_above": 14,
+        "n_below": 5,
+        "n_band": 1,
+        "T1": true,
+        "T2": true,
+        "T3": true,
+        "verdict": "usable",
+        "null_band": {
+          "Handwriting_00": 0.052094527066287366,
+          "Handwriting_01": 0.03919183588453088
+        }
+      }
+    }
+  }
+}

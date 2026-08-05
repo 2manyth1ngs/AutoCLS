@@ -1,0 +1,5 @@
+WISDM2019@2320 reached 20/20 -- stopping driver tree pid=34764 (skip InsectWingbeatSound per user fallback)
+成功: 已终止 PID 26400 (属于 PID 34764 子进程)的进程。
+成功: 已终止 PID 34240 (属于 PID 34764 子进程)的进程。
+成功: 已终止 PID 34764 (属于 PID 32644 子进程)的进程。
+Wed Aug  5 22:03:46     2026

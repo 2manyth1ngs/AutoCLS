@@ -106,7 +106,40 @@ def test_existing_caches_are_all_early_so_filter_is_noop():
                 assert json.loads(line).get("iters") == EARLY, f"{path} 混入非 290 记录"
 
 
-# --- 3. CLI 必须暴露出来 -----------------------------------------------------
+# --- 3. 长跑是短跑的前缀（判别实验的配对基础）-------------------------------
+
+def test_longer_run_is_prefix_of_shorter():
+    """同 seed 下，max_iters 大的那次训练，前面若干步与 max_iters 小的那次逐位相同。
+
+    这是 full-iters 判别实验能把 `R'(2320) − R'(290)` 读成"再训 2030 步的净效应"的
+    前提（results/full_iters_probe/REPORT.md §1.1）：`gen` 在训练循环**外**只 seed
+    一次、打乱与增强共用它，`max_iters` 只决定在哪一步停；而 weight_seed 的派生不含
+    iters，故两轮的初始化也相同。若将来有人把 gen 挪进循环、或让 max_iters 参与
+    任何随机派生，这条会立刻失败——那时"配对比较"就不成立了，必须重解释全部结论。
+    """
+    import numpy as np
+    import torch
+
+    from autocls.contrastive.cl_trainer import pretrain_encoder
+    from autocls.encoders.registry import build_encoder
+
+    X = np.random.default_rng(0).standard_normal((40, 64, 3)).astype(np.float32)
+    cls_cfg = bp.inert_cls()
+
+    def run(max_iters: int) -> list[float]:
+        torch.manual_seed(1234)
+        enc = build_encoder(input_dims=X.shape[-1])
+        return pretrain_encoder(enc, cls_cfg, X, max_iters=max_iters,
+                                batch_size=16, lr=1e-3, device="cpu", seed=1234)
+
+    short, long = run(6), run(24)
+    assert len(long) > len(short)
+    # 每"遍数据"的平均损失：短跑的整段必须是长跑的前缀
+    assert short[:len(short) - 1] == long[:len(short) - 1], (
+        "长跑与短跑的前缀损失不一致 → 训练轨迹不共享，配对比较失效")
+
+
+# --- 4. CLI 必须暴露出来 -----------------------------------------------------
 
 def test_cli_exposes_fill_iters_and_pair_iters():
     src = (ROOT / "scripts" / "baseline_probe.py").read_text(encoding="utf-8")
