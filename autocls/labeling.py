@@ -381,6 +381,24 @@ def clear_inflight(path: str | Path) -> None:
 # ---------------------------------------------------------------------------
 
 
+def device_label(device: Optional[str]) -> str:
+    """实际执行设备的硬件标识（如 "NVIDIA GeForce RTX 4060 Laptop GPU"）。
+
+    R' 缓存记录此前没有任何硬件字段，跨机器的 seconds/R' 锚点无法区分——
+    full-iters 判别实验的 5.6× 估时事故有一半来自把 5090 的耗时锚点套在 4060 上。
+    设备解析与 pretrain_encoder 同规则（None → 有 CUDA 用 CUDA）。
+    """
+    import platform
+
+    import torch
+
+    dev = torch.device(device) if device is not None else torch.device(
+        "cuda" if torch.cuda.is_available() else "cpu")
+    if dev.type == "cuda" and torch.cuda.is_available():
+        return torch.cuda.get_device_name(dev.index if dev.index is not None else 0)
+    return f"cpu:{platform.processor() or platform.machine()}"
+
+
 def evaluate_rprime(
     task,
     cls_cfg: CLS,
@@ -451,5 +469,6 @@ def evaluate_rprime(
     rec.update({
         "n_train": int(len(tr_idx)), "n_eval": int(len(ev_idx)),
         "weight_seed": int(weight_seed), "split_seed": int(split_seed),
+        "device_name": device_label(device),
     })
     return rec

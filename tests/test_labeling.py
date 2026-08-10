@@ -378,3 +378,23 @@ class TestEvaluateRprime:
         r1 = evaluate_rprime(task, make_cls(), X, y, split_seed=1, **base)["r_prime"]
         r2 = evaluate_rprime(task, make_cls(), X, y, split_seed=2, **base)["r_prime"]
         assert np.isfinite(r1) and np.isfinite(r2)
+
+    def test_records_device_name_cpu(self, make_cls):
+        # 缓存记录无硬件字段时，跨机的 seconds/R' 锚点无法区分（full-iters §1.6
+        # 的 5.6× 估时事故根因之一）。device="cpu" 必须记 CPU 标识而非显卡名。
+        task, X, y = self._tiny_task_data()
+        rec = evaluate_rprime(
+            task, make_cls(), X, y, weight_seed=1, split_seed=2,
+            iters=5, batch_size=32, device="cpu",
+        )
+        assert isinstance(rec.get("device_name"), str) and rec["device_name"]
+        assert rec["device_name"].startswith("cpu")
+
+    @pytest.mark.skipif(not torch.cuda.is_available(), reason="无 CUDA")
+    def test_records_device_name_cuda(self, make_cls):
+        task, X, y = self._tiny_task_data()
+        rec = evaluate_rprime(
+            task, make_cls(), X, y, weight_seed=1, split_seed=2,
+            iters=5, batch_size=32, device="cuda",
+        )
+        assert rec["device_name"] == torch.cuda.get_device_name(0)
