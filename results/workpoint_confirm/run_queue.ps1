@@ -1,4 +1,4 @@
-# workpoint confirm fill 队列 · 段1（协议 results/workpoint_confirm/PROTOCOL.md §1/§7）
+﻿# workpoint confirm fill 队列 · 段1（协议 results/workpoint_confirm/PROTOCOL.md §1/§7）
 # 顺序执行（8 GB 并发两作业互相拖死）；每点 --resume 可续；iters 入缓存键；
 # Handwriting @60/@120 的任务 00-01 种子已由 seed_fill.py 幂等写入，resume 逐键跳过。
 # 段2（UWave 确认臂）由选点纯函数出结果后另行启动（run_queue_stage2.ps1）。

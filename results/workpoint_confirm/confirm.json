@@ -1,0 +1,602 @@
+{
+  "handwriting": {
+    "arms": {
+      "dataset": "Handwriting",
+      "l_enc": 152,
+      "n_tasks": 6,
+      "steps_per_epoch": [
+        2,
+        3
+      ],
+      "audit": {
+        "matched": 120,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 140
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [],
+      "arms": {
+        "60": {
+          "epoch": null,
+          "n_trained": 60,
+          "complete": true,
+          "baseline": 0.550476055837196,
+          "realized_gain": 0.1505426362135289,
+          "best_gain": 0.39096774193548384,
+          "n_above": 56,
+          "n_below": 1,
+          "n_band": 3,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true,
+          "confirm": {
+            "tier": "confirmed",
+            "t3": true,
+            "wilson_low": 0.8595438050878283,
+            "wilson_high": 0.969722601130713,
+            "pool_eligible": true
+          }
+        },
+        "120": {
+          "epoch": null,
+          "n_trained": 60,
+          "complete": true,
+          "baseline": 0.550476055837196,
+          "realized_gain": 0.14882730451834078,
+          "best_gain": 0.39096774193548384,
+          "n_above": 50,
+          "n_below": 5,
+          "n_band": 5,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true,
+          "confirm": {
+            "tier": "confirmed",
+            "t3": true,
+            "wilson_low": 0.7402050369349604,
+            "wilson_high": 0.8976921986177637,
+            "pool_eligible": true
+          }
+        }
+      },
+      "peak_best_gain": {
+        "iters": 60,
+        "value": 0.39096774193548384,
+        "censored": "left",
+        "epoch": null
+      },
+      "peak_realized": {
+        "iters": 60,
+        "value": 0.1505426362135289,
+        "censored": "left",
+        "epoch": null
+      },
+      "flip": {
+        "flip": "solid",
+        "at": [
+          60,
+          120
+        ]
+      },
+      "quantum": 0.009523809523809525,
+      "no_workpoint": {
+        "verdict": "has_net_gain",
+        "net_gain_dim_empty": false,
+        "label_dim_empty": false
+      }
+    },
+    "pool_tier": "confirmed"
+  },
+  "uwave_scan": {
+    "arms": {
+      "3": {
+        "epoch": 1.0,
+        "n_trained": 20,
+        "complete": true,
+        "baseline": 0.8642857142857143,
+        "realized_gain": 0.004185267857142849,
+        "best_gain": 0.05535714285714288,
+        "n_above": 2,
+        "n_below": 1,
+        "n_band": 17,
+        "T1": true,
+        "T2": true,
+        "T3": false,
+        "verdict": "inert",
+        "usable": false
+      },
+      "6": {
+        "epoch": 2.0,
+        "n_trained": 20,
+        "complete": true,
+        "baseline": 0.8642857142857143,
+        "realized_gain": 0.023437500000000056,
+        "best_gain": 0.06428571428571439,
+        "n_above": 8,
+        "n_below": 1,
+        "n_band": 11,
+        "T1": true,
+        "T2": true,
+        "T3": false,
+        "verdict": "inert",
+        "usable": false
+      },
+      "15": {
+        "epoch": 5.0,
+        "n_trained": 20,
+        "complete": true,
+        "baseline": 0.8642857142857143,
+        "realized_gain": 0.01858258928571427,
+        "best_gain": 0.06428571428571439,
+        "n_above": 10,
+        "n_below": 2,
+        "n_band": 8,
+        "T1": true,
+        "T2": true,
+        "T3": true,
+        "verdict": "usable",
+        "usable": true
+      },
+      "30": {
+        "epoch": 10.0,
+        "n_trained": 20,
+        "complete": true,
+        "baseline": 0.8642857142857143,
+        "realized_gain": -0.0011160714285713969,
+        "best_gain": 0.08214285714285718,
+        "n_above": 9,
+        "n_below": 3,
+        "n_band": 8,
+        "T1": true,
+        "T2": true,
+        "T3": false,
+        "verdict": "inert",
+        "usable": false
+      },
+      "60": {
+        "epoch": 20.0,
+        "n_trained": 20,
+        "complete": true,
+        "baseline": 0.8642857142857143,
+        "realized_gain": 0.010323660714285754,
+        "best_gain": 0.07656249999999998,
+        "n_above": 10,
+        "n_below": 3,
+        "n_band": 7,
+        "T1": true,
+        "T2": true,
+        "T3": true,
+        "verdict": "usable",
+        "usable": true
+      },
+      "290": {
+        "epoch": 96.667,
+        "n_trained": 20,
+        "complete": true,
+        "baseline": 0.8642857142857143,
+        "realized_gain": 0.01155133928571428,
+        "best_gain": 0.07656249999999998,
+        "n_above": 10,
+        "n_below": 3,
+        "n_band": 7,
+        "T1": true,
+        "T2": true,
+        "T3": true,
+        "verdict": "usable",
+        "usable": true
+      }
+    },
+    "selection": {
+      "iters": 15,
+      "best_gain": 0.06428571428571439,
+      "top_gain": 0.07656249999999998,
+      "candidates": [
+        15,
+        60,
+        290
+      ]
+    }
+  },
+  "uwave_confirm": {
+    "arms": {
+      "dataset": "UWaveGestureLibrary",
+      "l_enc": 315,
+      "n_tasks": 6,
+      "steps_per_epoch": [
+        2,
+        3
+      ],
+      "audit": {
+        "matched": 140,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 120
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [
+        3,
+        6,
+        30,
+        60
+      ],
+      "arms": {
+        "3": {
+          "epoch": null,
+          "n_trained": 20,
+          "complete": false,
+          "baseline": 0.8806547619047619,
+          "realized_gain": 0.004185267857142849,
+          "best_gain": 0.05535714285714288,
+          "n_above": 2,
+          "n_below": 1,
+          "n_band": 17,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "6": {
+          "epoch": null,
+          "n_trained": 20,
+          "complete": false,
+          "baseline": 0.8806547619047619,
+          "realized_gain": 0.023437500000000056,
+          "best_gain": 0.06428571428571439,
+          "n_above": 8,
+          "n_below": 1,
+          "n_band": 11,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "15": {
+          "epoch": null,
+          "n_trained": 60,
+          "complete": true,
+          "baseline": 0.8806547619047619,
+          "realized_gain": 0.016261160714285683,
+          "best_gain": 0.09999999999999998,
+          "n_above": 24,
+          "n_below": 5,
+          "n_band": 31,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false,
+          "confirm": {
+            "tier": "reversed",
+            "t3": false,
+            "wilson_low": 0.302454637108856,
+            "wilson_high": 0.5061761922253268,
+            "pool_eligible": false
+          }
+        },
+        "30": {
+          "epoch": null,
+          "n_trained": 20,
+          "complete": false,
+          "baseline": 0.8806547619047619,
+          "realized_gain": -0.0011160714285713969,
+          "best_gain": 0.08214285714285718,
+          "n_above": 9,
+          "n_below": 3,
+          "n_band": 8,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "60": {
+          "epoch": null,
+          "n_trained": 20,
+          "complete": false,
+          "baseline": 0.8806547619047619,
+          "realized_gain": 0.010323660714285754,
+          "best_gain": 0.07656249999999998,
+          "n_above": 10,
+          "n_below": 3,
+          "n_band": 7,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": false
+        }
+      },
+      "peak_best_gain": {
+        "iters": 15,
+        "value": 0.09999999999999998,
+        "censored": "both",
+        "epoch": null
+      },
+      "peak_realized": {
+        "iters": 15,
+        "value": 0.016261160714285683,
+        "censored": "both",
+        "epoch": null
+      },
+      "flip": {
+        "flip": "none",
+        "at": []
+      },
+      "quantum": 0.015625,
+      "no_workpoint": {
+        "verdict": "has_net_gain",
+        "net_gain_dim_empty": false,
+        "label_dim_empty": true
+      }
+    },
+    "pool_tier": "reversed",
+    "iters": 15
+  },
+  "destruction": [
+    {
+      "dataset": "Handwriting",
+      "iters": 120,
+      "n_rows": 60,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 60,
+        "n_below_band": 5,
+        "n_below_mean": 8,
+        "n_pairs": 270,
+        "n_survive": 203,
+        "survive_rate": 0.7518518518518519,
+        "n_strict": 45,
+        "strict_share": 0.22167487684729065,
+        "n_loose": 66,
+        "loose_share": 0.3251231527093596
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 60,
+        "n_below_band": 5,
+        "n_below_mean": 8,
+        "n_pairs": 270,
+        "n_survive": 236,
+        "survive_rate": 0.8740740740740741,
+        "n_strict": 45,
+        "strict_share": 0.1906779661016949,
+        "n_loose": 68,
+        "loose_share": 0.288135593220339
+      }
+    },
+    {
+      "dataset": "Handwriting",
+      "iters": 60,
+      "n_rows": 60,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 60,
+        "n_below_band": 1,
+        "n_below_mean": 2,
+        "n_pairs": 270,
+        "n_survive": 175,
+        "survive_rate": 0.6481481481481481,
+        "n_strict": 9,
+        "strict_share": 0.05142857142857143,
+        "n_loose": 18,
+        "loose_share": 0.10285714285714286
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 60,
+        "n_below_band": 1,
+        "n_below_mean": 2,
+        "n_pairs": 270,
+        "n_survive": 216,
+        "survive_rate": 0.8,
+        "n_strict": 9,
+        "strict_share": 0.041666666666666664,
+        "n_loose": 18,
+        "loose_share": 0.08333333333333333
+      }
+    },
+    {
+      "dataset": "UWaveGestureLibrary",
+      "iters": 3,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 1,
+        "n_below_mean": 8,
+        "n_pairs": 90,
+        "n_survive": 18,
+        "survive_rate": 0.2,
+        "n_strict": 9,
+        "strict_share": 0.5,
+        "n_loose": 16,
+        "loose_share": 0.8888888888888888
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 1,
+        "n_below_mean": 8,
+        "n_pairs": 90,
+        "n_survive": 35,
+        "survive_rate": 0.3888888888888889,
+        "n_strict": 9,
+        "strict_share": 0.2571428571428571,
+        "n_loose": 25,
+        "loose_share": 0.7142857142857143
+      }
+    },
+    {
+      "dataset": "UWaveGestureLibrary",
+      "iters": 6,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 1,
+        "n_below_mean": 4,
+        "n_pairs": 90,
+        "n_survive": 26,
+        "survive_rate": 0.28888888888888886,
+        "n_strict": 8,
+        "strict_share": 0.3076923076923077,
+        "n_loose": 20,
+        "loose_share": 0.7692307692307693
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 1,
+        "n_below_mean": 4,
+        "n_pairs": 90,
+        "n_survive": 44,
+        "survive_rate": 0.4888888888888889,
+        "n_strict": 9,
+        "strict_share": 0.20454545454545456,
+        "n_loose": 28,
+        "loose_share": 0.6363636363636364
+      }
+    },
+    {
+      "dataset": "UWaveGestureLibrary",
+      "iters": 15,
+      "n_rows": 60,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 60,
+        "n_below_band": 5,
+        "n_below_mean": 14,
+        "n_pairs": 270,
+        "n_survive": 76,
+        "survive_rate": 0.2814814814814815,
+        "n_strict": 40,
+        "strict_share": 0.5263157894736842,
+        "n_loose": 65,
+        "loose_share": 0.8552631578947368
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 60,
+        "n_below_band": 5,
+        "n_below_mean": 14,
+        "n_pairs": 270,
+        "n_survive": 129,
+        "survive_rate": 0.4777777777777778,
+        "n_strict": 43,
+        "strict_share": 0.3333333333333333,
+        "n_loose": 90,
+        "loose_share": 0.6976744186046512
+      }
+    },
+    {
+      "dataset": "UWaveGestureLibrary",
+      "iters": 30,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 3,
+        "n_below_mean": 5,
+        "n_pairs": 90,
+        "n_survive": 42,
+        "survive_rate": 0.4666666666666667,
+        "n_strict": 24,
+        "strict_share": 0.5714285714285714,
+        "n_loose": 33,
+        "loose_share": 0.7857142857142857
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 3,
+        "n_below_mean": 5,
+        "n_pairs": 90,
+        "n_survive": 58,
+        "survive_rate": 0.6444444444444445,
+        "n_strict": 26,
+        "strict_share": 0.4482758620689655,
+        "n_loose": 38,
+        "loose_share": 0.6551724137931034
+      }
+    },
+    {
+      "dataset": "UWaveGestureLibrary",
+      "iters": 60,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 3,
+        "n_below_mean": 3,
+        "n_pairs": 90,
+        "n_survive": 38,
+        "survive_rate": 0.4222222222222222,
+        "n_strict": 25,
+        "strict_share": 0.6578947368421053,
+        "n_loose": 25,
+        "loose_share": 0.6578947368421053
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 3,
+        "n_below_mean": 3,
+        "n_pairs": 90,
+        "n_survive": 57,
+        "survive_rate": 0.6333333333333333,
+        "n_strict": 26,
+        "strict_share": 0.45614035087719296,
+        "n_loose": 26,
+        "loose_share": 0.45614035087719296
+      }
+    },
+    {
+      "dataset": "UWaveGestureLibrary",
+      "iters": 290,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 3,
+        "n_below_mean": 5,
+        "n_pairs": 90,
+        "n_survive": 40,
+        "survive_rate": 0.4444444444444444,
+        "n_strict": 26,
+        "strict_share": 0.65,
+        "n_loose": 36,
+        "loose_share": 0.9
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 3,
+        "n_below_mean": 5,
+        "n_pairs": 90,
+        "n_survive": 56,
+        "survive_rate": 0.6222222222222222,
+        "n_strict": 26,
+        "strict_share": 0.4642857142857143,
+        "n_loose": 39,
+        "loose_share": 0.6964285714285714
+      }
+    }
+  ],
+  "wilson_threshold_60": {
+    "low_37": 0.5105058154249587,
+    "low_36": 0.49382380777467316
+  }
+}
