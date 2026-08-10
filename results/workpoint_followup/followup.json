@@ -1,0 +1,1500 @@
+{
+  "rescan": {
+    "ChestAccel": {
+      "dataset": "ChestAccel",
+      "l_enc": 128,
+      "n_tasks": 2,
+      "steps_per_epoch": 6,
+      "audit": {
+        "matched": 120,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 622
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [],
+      "arms": {
+        "6": {
+          "epoch": 1.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7663217730088778,
+          "realized_gain": -0.008166208937429587,
+          "best_gain": 0.033333333333333326,
+          "n_above": 1,
+          "n_below": 4,
+          "n_band": 15,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "12": {
+          "epoch": 2.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7663217730088778,
+          "realized_gain": -0.006366162100019224,
+          "best_gain": 0.016993464052287632,
+          "n_above": 0,
+          "n_below": 4,
+          "n_band": 16,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "30": {
+          "epoch": 5.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7663217730088778,
+          "realized_gain": -0.02464925166592158,
+          "best_gain": 0.016993464052287632,
+          "n_above": 0,
+          "n_below": 5,
+          "n_band": 15,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "60": {
+          "epoch": 10.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7663217730088778,
+          "realized_gain": -0.03361808349832879,
+          "best_gain": 0.009771986970683932,
+          "n_above": 2,
+          "n_below": 10,
+          "n_band": 8,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "120": {
+          "epoch": 20.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7663217730088778,
+          "realized_gain": -0.030533733580294264,
+          "best_gain": 0.013029315960911947,
+          "n_above": 1,
+          "n_below": 9,
+          "n_band": 10,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "290": {
+          "epoch": 48.333,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7663217730088778,
+          "realized_gain": -0.046849651912882484,
+          "best_gain": 0.04313725490196074,
+          "n_above": 2,
+          "n_below": 9,
+          "n_band": 9,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        }
+      },
+      "peak_best_gain": {
+        "iters": 290,
+        "value": 0.04313725490196074,
+        "censored": "right",
+        "epoch": 48.333
+      },
+      "peak_realized": {
+        "iters": 12,
+        "value": -0.006366162100019224,
+        "censored": null,
+        "epoch": 2.0
+      },
+      "flip": {
+        "flip": "none",
+        "at": []
+      },
+      "quantum": 0.0032679738562091504,
+      "no_workpoint": {
+        "verdict": "no_workpoint",
+        "net_gain_dim_empty": true,
+        "label_dim_empty": true
+      }
+    },
+    "USC-HAD": {
+      "dataset": "USC-HAD",
+      "l_enc": 128,
+      "n_tasks": 2,
+      "steps_per_epoch": 6,
+      "audit": {
+        "matched": 120,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 622
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [],
+      "arms": {
+        "6": {
+          "epoch": 1.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8361563517915309,
+          "realized_gain": 0.0,
+          "best_gain": 0.013680781758957705,
+          "n_above": 0,
+          "n_below": 1,
+          "n_band": 19,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "12": {
+          "epoch": 2.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8361563517915309,
+          "realized_gain": -0.004560260586319254,
+          "best_gain": 0.03322475570032579,
+          "n_above": 3,
+          "n_below": 4,
+          "n_band": 13,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "30": {
+          "epoch": 5.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8361563517915309,
+          "realized_gain": -0.012377850162866522,
+          "best_gain": 0.03973941368078182,
+          "n_above": 6,
+          "n_below": 5,
+          "n_band": 9,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "60": {
+          "epoch": 10.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8361563517915309,
+          "realized_gain": -0.02133550488599356,
+          "best_gain": 0.06254071661237792,
+          "n_above": 6,
+          "n_below": 5,
+          "n_band": 9,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "120": {
+          "epoch": 20.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8361563517915309,
+          "realized_gain": -0.03192182410423455,
+          "best_gain": 0.042996742671009835,
+          "n_above": 8,
+          "n_below": 7,
+          "n_band": 5,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "290": {
+          "epoch": 48.333,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8361563517915309,
+          "realized_gain": -0.05846905537459285,
+          "best_gain": 0.02736156351791519,
+          "n_above": 5,
+          "n_below": 8,
+          "n_band": 7,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        }
+      },
+      "peak_best_gain": {
+        "iters": 60,
+        "value": 0.06254071661237792,
+        "censored": null,
+        "epoch": 10.0
+      },
+      "peak_realized": {
+        "iters": 6,
+        "value": 0.0,
+        "censored": "left",
+        "epoch": 1.0
+      },
+      "flip": {
+        "flip": "none",
+        "at": []
+      },
+      "quantum": 0.003257328990228013,
+      "no_workpoint": {
+        "verdict": "no_workpoint",
+        "net_gain_dim_empty": true,
+        "label_dim_empty": true
+      }
+    },
+    "ElectricDevices": {
+      "dataset": "ElectricDevices",
+      "l_enc": 96,
+      "n_tasks": 2,
+      "steps_per_epoch": 6,
+      "audit": {
+        "matched": 120,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 622
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [],
+      "arms": {
+        "6": {
+          "epoch": 1.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8165869960658234,
+          "realized_gain": -0.010553005626295575,
+          "best_gain": 0.019543973941367976,
+          "n_above": 0,
+          "n_below": 7,
+          "n_band": 13,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "12": {
+          "epoch": 2.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8165869960658234,
+          "realized_gain": -0.01544851728076485,
+          "best_gain": 0.018831168831168865,
+          "n_above": 0,
+          "n_below": 10,
+          "n_band": 10,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "30": {
+          "epoch": 5.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8165869960658234,
+          "realized_gain": -0.01869421295317064,
+          "best_gain": 0.013029315960911947,
+          "n_above": 0,
+          "n_below": 9,
+          "n_band": 11,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "60": {
+          "epoch": 10.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8165869960658234,
+          "realized_gain": -0.02388373027623847,
+          "best_gain": 0.012337662337662425,
+          "n_above": 0,
+          "n_below": 9,
+          "n_band": 11,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "120": {
+          "epoch": 20.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8165869960658234,
+          "realized_gain": -0.03543720123524685,
+          "best_gain": 0.006514657980455918,
+          "n_above": 0,
+          "n_below": 9,
+          "n_band": 11,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "290": {
+          "epoch": 48.333,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8165869960658234,
+          "realized_gain": -0.05902533948136557,
+          "best_gain": 0.009771986970683932,
+          "n_above": 0,
+          "n_below": 13,
+          "n_band": 7,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        }
+      },
+      "peak_best_gain": {
+        "iters": 6,
+        "value": 0.019543973941367976,
+        "censored": "left",
+        "epoch": 1.0
+      },
+      "peak_realized": {
+        "iters": 6,
+        "value": -0.010553005626295575,
+        "censored": "left",
+        "epoch": 1.0
+      },
+      "flip": {
+        "flip": "none",
+        "at": []
+      },
+      "quantum": 0.003257328990228013,
+      "no_workpoint": {
+        "verdict": "no_workpoint",
+        "net_gain_dim_empty": true,
+        "label_dim_empty": true
+      }
+    }
+  },
+  "confirm": {
+    "InsectWingbeatSound": {
+      "dataset": "InsectWingbeatSound",
+      "l_enc": 256,
+      "n_tasks": 6,
+      "steps_per_epoch": [
+        5,
+        6
+      ],
+      "audit": {
+        "matched": 120,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 480
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [],
+      "arms": {
+        "6": {
+          "epoch": null,
+          "n_trained": 60,
+          "complete": true,
+          "baseline": 0.7166142638577492,
+          "realized_gain": 0.021703070725872037,
+          "best_gain": 0.06970684039087949,
+          "n_above": 16,
+          "n_below": 1,
+          "n_band": 43,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false,
+          "confirm": {
+            "tier": "reversed",
+            "t3": false,
+            "wilson_low": 0.18432155338230943,
+            "wilson_high": 0.3691503817307838,
+            "pool_eligible": false
+          },
+          "is_workpoint": true
+        },
+        "12": {
+          "epoch": null,
+          "n_trained": 60,
+          "complete": true,
+          "baseline": 0.7166142638577492,
+          "realized_gain": 0.02195407130871302,
+          "best_gain": 0.06688311688311688,
+          "n_above": 18,
+          "n_below": 0,
+          "n_band": 42,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false,
+          "confirm": {
+            "tier": "reversed",
+            "t3": false,
+            "wilson_low": 0.21304389499748733,
+            "wilson_high": 0.40421776367087825,
+            "pool_eligible": false
+          },
+          "is_workpoint": true
+        }
+      },
+      "peak_best_gain": {
+        "iters": 6,
+        "value": 0.06970684039087949,
+        "censored": "left",
+        "epoch": null
+      },
+      "peak_realized": {
+        "iters": 12,
+        "value": 0.02195407130871302,
+        "censored": "right",
+        "epoch": null
+      },
+      "flip": {
+        "flip": "none",
+        "at": []
+      },
+      "quantum": 0.004166666666666667,
+      "no_workpoint": {
+        "verdict": "has_net_gain",
+        "net_gain_dim_empty": false,
+        "label_dim_empty": true
+      }
+    },
+    "UniMiB-SHAR": {
+      "dataset": "UniMiB-SHAR",
+      "l_enc": 151,
+      "n_tasks": 6,
+      "steps_per_epoch": 6,
+      "audit": {
+        "matched": 180,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 420
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [],
+      "arms": {
+        "12": {
+          "epoch": 2.0,
+          "n_trained": 60,
+          "complete": true,
+          "baseline": 0.7460252784692333,
+          "realized_gain": 0.027696482798034865,
+          "best_gain": 0.12483660130718954,
+          "n_above": 31,
+          "n_below": 4,
+          "n_band": 25,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true,
+          "confirm": {
+            "tier": "marginal",
+            "t3": true,
+            "wilson_low": 0.4121347789389305,
+            "wilson_high": 0.6197600828387057,
+            "pool_eligible": false
+          },
+          "is_workpoint": false
+        },
+        "30": {
+          "epoch": 5.0,
+          "n_trained": 60,
+          "complete": true,
+          "baseline": 0.7460252784692333,
+          "realized_gain": -0.0033103505607816794,
+          "best_gain": 0.10129870129870122,
+          "n_above": 37,
+          "n_below": 8,
+          "n_band": 15,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true,
+          "confirm": {
+            "tier": "confirmed",
+            "t3": true,
+            "wilson_low": 0.5105058154249587,
+            "wilson_high": 0.7127582170184947,
+            "pool_eligible": true
+          },
+          "is_workpoint": true
+        },
+        "60": {
+          "epoch": 10.0,
+          "n_trained": 60,
+          "complete": true,
+          "baseline": 0.7460252784692333,
+          "realized_gain": -0.01508418291805915,
+          "best_gain": 0.09215686274509804,
+          "n_above": 27,
+          "n_below": 10,
+          "n_band": 23,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false,
+          "confirm": {
+            "tier": "reversed",
+            "t3": false,
+            "wilson_low": 0.34878794869017626,
+            "wilson_high": 0.5555274659769152,
+            "pool_eligible": false
+          },
+          "is_workpoint": false
+        }
+      },
+      "peak_best_gain": {
+        "iters": 12,
+        "value": 0.12483660130718954,
+        "censored": "left",
+        "epoch": 2.0
+      },
+      "peak_realized": {
+        "iters": 12,
+        "value": 0.027696482798034865,
+        "censored": "left",
+        "epoch": 2.0
+      },
+      "flip": {
+        "flip": "solid",
+        "at": [
+          12,
+          30
+        ]
+      },
+      "quantum": 0.0032679738562091504,
+      "no_workpoint": {
+        "verdict": "has_net_gain",
+        "net_gain_dim_empty": false,
+        "label_dim_empty": false
+      }
+    }
+  },
+  "destruction": [
+    {
+      "dataset": "InsectWingbeatSound",
+      "iters": 6,
+      "n_rows": 60,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 60,
+        "n_below_band": 1,
+        "n_below_mean": 7,
+        "n_pairs": 270,
+        "n_survive": 19,
+        "survive_rate": 0.07037037037037037,
+        "n_strict": 8,
+        "strict_share": 0.42105263157894735,
+        "n_loose": 14,
+        "loose_share": 0.7368421052631579
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 60,
+        "n_below_band": 1,
+        "n_below_mean": 7,
+        "n_pairs": 270,
+        "n_survive": 59,
+        "survive_rate": 0.21851851851851853,
+        "n_strict": 9,
+        "strict_share": 0.15254237288135594,
+        "n_loose": 32,
+        "loose_share": 0.5423728813559322
+      }
+    },
+    {
+      "dataset": "InsectWingbeatSound",
+      "iters": 12,
+      "n_rows": 60,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 60,
+        "n_below_band": 0,
+        "n_below_mean": 6,
+        "n_pairs": 270,
+        "n_survive": 22,
+        "survive_rate": 0.08148148148148149,
+        "n_strict": 0,
+        "strict_share": 0.0,
+        "n_loose": 13,
+        "loose_share": 0.5909090909090909
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 60,
+        "n_below_band": 0,
+        "n_below_mean": 6,
+        "n_pairs": 270,
+        "n_survive": 79,
+        "survive_rate": 0.29259259259259257,
+        "n_strict": 0,
+        "strict_share": 0.0,
+        "n_loose": 28,
+        "loose_share": 0.35443037974683544
+      }
+    },
+    {
+      "dataset": "UniMiB-SHAR",
+      "iters": 12,
+      "n_rows": 60,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 60,
+        "n_below_band": 4,
+        "n_below_mean": 9,
+        "n_pairs": 270,
+        "n_survive": 68,
+        "survive_rate": 0.2518518518518518,
+        "n_strict": 23,
+        "strict_share": 0.3382352941176471,
+        "n_loose": 36,
+        "loose_share": 0.5294117647058824
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 60,
+        "n_below_band": 4,
+        "n_below_mean": 9,
+        "n_pairs": 270,
+        "n_survive": 132,
+        "survive_rate": 0.4888888888888889,
+        "n_strict": 27,
+        "strict_share": 0.20454545454545456,
+        "n_loose": 40,
+        "loose_share": 0.30303030303030304
+      }
+    },
+    {
+      "dataset": "UniMiB-SHAR",
+      "iters": 30,
+      "n_rows": 60,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 60,
+        "n_below_band": 8,
+        "n_below_mean": 13,
+        "n_pairs": 270,
+        "n_survive": 96,
+        "survive_rate": 0.35555555555555557,
+        "n_strict": 63,
+        "strict_share": 0.65625,
+        "n_loose": 73,
+        "loose_share": 0.7604166666666666
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 60,
+        "n_below_band": 8,
+        "n_below_mean": 13,
+        "n_pairs": 270,
+        "n_survive": 136,
+        "survive_rate": 0.5037037037037037,
+        "n_strict": 66,
+        "strict_share": 0.4852941176470588,
+        "n_loose": 84,
+        "loose_share": 0.6176470588235294
+      }
+    },
+    {
+      "dataset": "UniMiB-SHAR",
+      "iters": 60,
+      "n_rows": 60,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 60,
+        "n_below_band": 10,
+        "n_below_mean": 21,
+        "n_pairs": 270,
+        "n_survive": 100,
+        "survive_rate": 0.37037037037037035,
+        "n_strict": 78,
+        "strict_share": 0.78,
+        "n_loose": 94,
+        "loose_share": 0.94
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 60,
+        "n_below_band": 10,
+        "n_below_mean": 21,
+        "n_pairs": 270,
+        "n_survive": 148,
+        "survive_rate": 0.5481481481481482,
+        "n_strict": 81,
+        "strict_share": 0.5472972972972973,
+        "n_loose": 114,
+        "loose_share": 0.7702702702702703
+      }
+    },
+    {
+      "dataset": "ChestAccel",
+      "iters": 6,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 4,
+        "n_below_mean": 16,
+        "n_pairs": 90,
+        "n_survive": 11,
+        "survive_rate": 0.12222222222222222,
+        "n_strict": 11,
+        "strict_share": 1.0,
+        "n_loose": 11,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 4,
+        "n_below_mean": 16,
+        "n_pairs": 90,
+        "n_survive": 20,
+        "survive_rate": 0.2222222222222222,
+        "n_strict": 16,
+        "strict_share": 0.8,
+        "n_loose": 20,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "ChestAccel",
+      "iters": 12,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 4,
+        "n_below_mean": 15,
+        "n_pairs": 90,
+        "n_survive": 7,
+        "survive_rate": 0.07777777777777778,
+        "n_strict": 7,
+        "strict_share": 1.0,
+        "n_loose": 7,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 4,
+        "n_below_mean": 15,
+        "n_pairs": 90,
+        "n_survive": 13,
+        "survive_rate": 0.14444444444444443,
+        "n_strict": 12,
+        "strict_share": 0.9230769230769231,
+        "n_loose": 13,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "ChestAccel",
+      "iters": 30,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 5,
+        "n_below_mean": 17,
+        "n_pairs": 90,
+        "n_survive": 25,
+        "survive_rate": 0.2777777777777778,
+        "n_strict": 25,
+        "strict_share": 1.0,
+        "n_loose": 25,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 5,
+        "n_below_mean": 17,
+        "n_pairs": 90,
+        "n_survive": 34,
+        "survive_rate": 0.37777777777777777,
+        "n_strict": 32,
+        "strict_share": 0.9411764705882353,
+        "n_loose": 34,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "ChestAccel",
+      "iters": 60,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 10,
+        "n_below_mean": 15,
+        "n_pairs": 90,
+        "n_survive": 22,
+        "survive_rate": 0.24444444444444444,
+        "n_strict": 22,
+        "strict_share": 1.0,
+        "n_loose": 22,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 10,
+        "n_below_mean": 15,
+        "n_pairs": 90,
+        "n_survive": 36,
+        "survive_rate": 0.4,
+        "n_strict": 36,
+        "strict_share": 1.0,
+        "n_loose": 36,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "ChestAccel",
+      "iters": 120,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 9,
+        "n_below_mean": 13,
+        "n_pairs": 90,
+        "n_survive": 26,
+        "survive_rate": 0.28888888888888886,
+        "n_strict": 26,
+        "strict_share": 1.0,
+        "n_loose": 26,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 9,
+        "n_below_mean": 13,
+        "n_pairs": 90,
+        "n_survive": 37,
+        "survive_rate": 0.4111111111111111,
+        "n_strict": 37,
+        "strict_share": 1.0,
+        "n_loose": 37,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "ChestAccel",
+      "iters": 290,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 9,
+        "n_below_mean": 16,
+        "n_pairs": 90,
+        "n_survive": 43,
+        "survive_rate": 0.4777777777777778,
+        "n_strict": 42,
+        "strict_share": 0.9767441860465116,
+        "n_loose": 43,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 9,
+        "n_below_mean": 16,
+        "n_pairs": 90,
+        "n_survive": 55,
+        "survive_rate": 0.6111111111111112,
+        "n_strict": 52,
+        "strict_share": 0.9454545454545454,
+        "n_loose": 55,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "USC-HAD",
+      "iters": 6,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 1,
+        "n_below_mean": 9,
+        "n_pairs": 90,
+        "n_survive": 0,
+        "survive_rate": 0.0,
+        "n_strict": 0,
+        "strict_share": null,
+        "n_loose": 0,
+        "loose_share": null
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 1,
+        "n_below_mean": 9,
+        "n_pairs": 90,
+        "n_survive": 0,
+        "survive_rate": 0.0,
+        "n_strict": 0,
+        "strict_share": null,
+        "n_loose": 0,
+        "loose_share": null
+      }
+    },
+    {
+      "dataset": "USC-HAD",
+      "iters": 12,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 4,
+        "n_below_mean": 9,
+        "n_pairs": 90,
+        "n_survive": 18,
+        "survive_rate": 0.2,
+        "n_strict": 18,
+        "strict_share": 1.0,
+        "n_loose": 18,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 4,
+        "n_below_mean": 9,
+        "n_pairs": 90,
+        "n_survive": 28,
+        "survive_rate": 0.3111111111111111,
+        "n_strict": 23,
+        "strict_share": 0.8214285714285714,
+        "n_loose": 28,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "USC-HAD",
+      "iters": 30,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 5,
+        "n_below_mean": 7,
+        "n_pairs": 90,
+        "n_survive": 25,
+        "survive_rate": 0.2777777777777778,
+        "n_strict": 23,
+        "strict_share": 0.92,
+        "n_loose": 25,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 5,
+        "n_below_mean": 7,
+        "n_pairs": 90,
+        "n_survive": 37,
+        "survive_rate": 0.4111111111111111,
+        "n_strict": 31,
+        "strict_share": 0.8378378378378378,
+        "n_loose": 37,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "USC-HAD",
+      "iters": 60,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 5,
+        "n_below_mean": 10,
+        "n_pairs": 90,
+        "n_survive": 34,
+        "survive_rate": 0.37777777777777777,
+        "n_strict": 29,
+        "strict_share": 0.8529411764705882,
+        "n_loose": 33,
+        "loose_share": 0.9705882352941176
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 5,
+        "n_below_mean": 10,
+        "n_pairs": 90,
+        "n_survive": 48,
+        "survive_rate": 0.5333333333333333,
+        "n_strict": 37,
+        "strict_share": 0.7708333333333334,
+        "n_loose": 44,
+        "loose_share": 0.9166666666666666
+      }
+    },
+    {
+      "dataset": "USC-HAD",
+      "iters": 120,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 7,
+        "n_below_mean": 8,
+        "n_pairs": 90,
+        "n_survive": 40,
+        "survive_rate": 0.4444444444444444,
+        "n_strict": 38,
+        "strict_share": 0.95,
+        "n_loose": 40,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 7,
+        "n_below_mean": 8,
+        "n_pairs": 90,
+        "n_survive": 49,
+        "survive_rate": 0.5444444444444444,
+        "n_strict": 45,
+        "strict_share": 0.9183673469387755,
+        "n_loose": 49,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "USC-HAD",
+      "iters": 290,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 8,
+        "n_below_mean": 10,
+        "n_pairs": 90,
+        "n_survive": 51,
+        "survive_rate": 0.5666666666666667,
+        "n_strict": 50,
+        "strict_share": 0.9803921568627451,
+        "n_loose": 51,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 8,
+        "n_below_mean": 10,
+        "n_pairs": 90,
+        "n_survive": 62,
+        "survive_rate": 0.6888888888888889,
+        "n_strict": 55,
+        "strict_share": 0.8870967741935484,
+        "n_loose": 62,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "ElectricDevices",
+      "iters": 6,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 7,
+        "n_below_mean": 13,
+        "n_pairs": 90,
+        "n_survive": 2,
+        "survive_rate": 0.022222222222222223,
+        "n_strict": 2,
+        "strict_share": 1.0,
+        "n_loose": 2,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 7,
+        "n_below_mean": 13,
+        "n_pairs": 90,
+        "n_survive": 30,
+        "survive_rate": 0.3333333333333333,
+        "n_strict": 25,
+        "strict_share": 0.8333333333333334,
+        "n_loose": 30,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "ElectricDevices",
+      "iters": 12,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 10,
+        "n_below_mean": 14,
+        "n_pairs": 90,
+        "n_survive": 4,
+        "survive_rate": 0.044444444444444446,
+        "n_strict": 4,
+        "strict_share": 1.0,
+        "n_loose": 4,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 10,
+        "n_below_mean": 14,
+        "n_pairs": 90,
+        "n_survive": 30,
+        "survive_rate": 0.3333333333333333,
+        "n_strict": 29,
+        "strict_share": 0.9666666666666667,
+        "n_loose": 30,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "ElectricDevices",
+      "iters": 30,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 9,
+        "n_below_mean": 14,
+        "n_pairs": 90,
+        "n_survive": 17,
+        "survive_rate": 0.18888888888888888,
+        "n_strict": 17,
+        "strict_share": 1.0,
+        "n_loose": 17,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 9,
+        "n_below_mean": 14,
+        "n_pairs": 90,
+        "n_survive": 37,
+        "survive_rate": 0.4111111111111111,
+        "n_strict": 37,
+        "strict_share": 1.0,
+        "n_loose": 37,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "ElectricDevices",
+      "iters": 60,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 9,
+        "n_below_mean": 17,
+        "n_pairs": 90,
+        "n_survive": 19,
+        "survive_rate": 0.2111111111111111,
+        "n_strict": 19,
+        "strict_share": 1.0,
+        "n_loose": 19,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 9,
+        "n_below_mean": 17,
+        "n_pairs": 90,
+        "n_survive": 34,
+        "survive_rate": 0.37777777777777777,
+        "n_strict": 34,
+        "strict_share": 1.0,
+        "n_loose": 34,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "ElectricDevices",
+      "iters": 120,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 9,
+        "n_below_mean": 17,
+        "n_pairs": 90,
+        "n_survive": 25,
+        "survive_rate": 0.2777777777777778,
+        "n_strict": 25,
+        "strict_share": 1.0,
+        "n_loose": 25,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 9,
+        "n_below_mean": 17,
+        "n_pairs": 90,
+        "n_survive": 42,
+        "survive_rate": 0.4666666666666667,
+        "n_strict": 42,
+        "strict_share": 1.0,
+        "n_loose": 42,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "ElectricDevices",
+      "iters": 290,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 13,
+        "n_below_mean": 18,
+        "n_pairs": 90,
+        "n_survive": 43,
+        "survive_rate": 0.4777777777777778,
+        "n_strict": 43,
+        "strict_share": 1.0,
+        "n_loose": 43,
+        "loose_share": 1.0
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 13,
+        "n_below_mean": 18,
+        "n_pairs": 90,
+        "n_survive": 57,
+        "survive_rate": 0.6333333333333333,
+        "n_strict": 57,
+        "strict_share": 1.0,
+        "n_loose": 57,
+        "loose_share": 1.0
+      }
+    },
+    {
+      "dataset": "InsectWingbeatSound",
+      "iters": 290,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 3,
+        "n_below_mean": 6,
+        "n_pairs": 90,
+        "n_survive": 31,
+        "survive_rate": 0.34444444444444444,
+        "n_strict": 20,
+        "strict_share": 0.6451612903225806,
+        "n_loose": 25,
+        "loose_share": 0.8064516129032258
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 3,
+        "n_below_mean": 6,
+        "n_pairs": 90,
+        "n_survive": 51,
+        "survive_rate": 0.5666666666666667,
+        "n_strict": 24,
+        "strict_share": 0.47058823529411764,
+        "n_loose": 34,
+        "loose_share": 0.6666666666666666
+      }
+    },
+    {
+      "dataset": "UniMiB-SHAR",
+      "iters": 290,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 6,
+        "n_below_mean": 8,
+        "n_pairs": 90,
+        "n_survive": 57,
+        "survive_rate": 0.6333333333333333,
+        "n_strict": 46,
+        "strict_share": 0.8070175438596491,
+        "n_loose": 55,
+        "loose_share": 0.9649122807017544
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 6,
+        "n_below_mean": 8,
+        "n_pairs": 90,
+        "n_survive": 65,
+        "survive_rate": 0.7222222222222222,
+        "n_strict": 47,
+        "strict_share": 0.7230769230769231,
+        "n_loose": 58,
+        "loose_share": 0.8923076923076924
+      }
+    },
+    {
+      "dataset": "Handwriting",
+      "iters": 60,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 0,
+        "n_below_mean": 1,
+        "n_pairs": 90,
+        "n_survive": 64,
+        "survive_rate": 0.7111111111111111,
+        "n_strict": 0,
+        "strict_share": 0.0,
+        "n_loose": 9,
+        "loose_share": 0.140625
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 0,
+        "n_below_mean": 1,
+        "n_pairs": 90,
+        "n_survive": 78,
+        "survive_rate": 0.8666666666666667,
+        "n_strict": 0,
+        "strict_share": 0.0,
+        "n_loose": 9,
+        "loose_share": 0.11538461538461539
+      }
+    },
+    {
+      "dataset": "Handwriting",
+      "iters": 120,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 1,
+        "n_below_mean": 2,
+        "n_pairs": 90,
+        "n_survive": 67,
+        "survive_rate": 0.7444444444444445,
+        "n_strict": 9,
+        "strict_share": 0.13432835820895522,
+        "n_loose": 18,
+        "loose_share": 0.26865671641791045
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 1,
+        "n_below_mean": 2,
+        "n_pairs": 90,
+        "n_survive": 79,
+        "survive_rate": 0.8777777777777778,
+        "n_strict": 9,
+        "strict_share": 0.11392405063291139,
+        "n_loose": 18,
+        "loose_share": 0.22784810126582278
+      }
+    },
+    {
+      "dataset": "Handwriting",
+      "iters": 290,
+      "n_rows": 20,
+      "main": {
+        "delta": 0.05,
+        "n_cls": 20,
+        "n_below_band": 4,
+        "n_below_mean": 4,
+        "n_pairs": 90,
+        "n_survive": 68,
+        "survive_rate": 0.7555555555555555,
+        "n_strict": 33,
+        "strict_share": 0.4852941176470588,
+        "n_loose": 33,
+        "loose_share": 0.4852941176470588
+      },
+      "sens": {
+        "delta": 0.03,
+        "n_cls": 20,
+        "n_below_band": 4,
+        "n_below_mean": 4,
+        "n_pairs": 90,
+        "n_survive": 73,
+        "survive_rate": 0.8111111111111111,
+        "n_strict": 34,
+        "strict_share": 0.4657534246575342,
+        "n_loose": 34,
+        "loose_share": 0.4657534246575342
+      }
+    }
+  ],
+  "wilson_threshold_60": {
+    "escape_low": 37,
+    "low_37": 0.5105058154249587,
+    "low_36": 0.49382380777467316
+  }
+}
