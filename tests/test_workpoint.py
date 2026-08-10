@@ -18,6 +18,7 @@ from autocls.workpoint import (
     find_peak,
     no_workpoint_verdict,
     peak_consistency,
+    select_workpoint,
     steps_per_epoch,
     wilson_interval,
 )
@@ -292,3 +293,63 @@ class TestDestructionParticipation:
         per_task = {"t0": {"a": 0.80, "b": None, "c": float("nan"), "d": 0.60}}
         v = destruction_participation(per_task, {"t0": (0.75, 0.04)}, delta=0.05)
         assert v["n_cls"] == 2 and v["n_pairs"] == 1 and v["n_survive"] == 1
+
+
+# ------------------- 确认工作点选择（workpoint_confirm 协议 §2，0.02 让分窗）
+class TestSelectWorkpoint:
+    # 本轮真实语境：扫描臂 {3,6,15,30,60} + @290 历史臂（best_gain +0.077 已知）
+
+    def test_no_usable_arm_returns_none(self):
+        arms = {3: {"usable": False, "best_gain": 0.02},
+                290: {"usable": False, "best_gain": 0.01}}
+        assert select_workpoint(arms) is None
+
+    def test_single_usable_arm_wins(self):
+        arms = {30: {"usable": True, "best_gain": 0.06},
+                60: {"usable": False, "best_gain": 0.09}}
+        v = select_workpoint(arms)
+        assert v["iters"] == 30 and v["candidates"] == [30]
+
+    def test_clear_max_wins_over_margin(self):
+        # 差距 > 0.02：不让分，max best_gain 胜（哪怕它是更贵的 @290）
+        arms = {30: {"usable": True, "best_gain": 0.050},
+                290: {"usable": True, "best_gain": 0.077}}
+        assert select_workpoint(arms)["iters"] == 290
+
+    def test_within_margin_prefers_fewer_iters(self):
+        # 差 ≤0.02 视为并列 → 取更少 iters（±1 样本抖动 + 破坏参与随 iters 涨）
+        arms = {30: {"usable": True, "best_gain": 0.058},
+                290: {"usable": True, "best_gain": 0.077}}
+        assert select_workpoint(arms)["iters"] == 30
+
+    def test_margin_boundary_is_inclusive(self):
+        # 恰差 0.02 也算并列（与 |ΔR'|≥δ 的闭区间口径同精神：边界从宽给早点）
+        arms = {15: {"usable": True, "best_gain": 0.057},
+                290: {"usable": True, "best_gain": 0.077}}
+        assert select_workpoint(arms)["iters"] == 15
+
+    def test_margin_chain_does_not_transit(self):
+        # 让分窗只对"与最大者的差"生效，不做传递闭包：
+        # max=0.077，0.058 在窗内、0.040 在窗外——选 0.058 的臂而不是更早的 0.040
+        arms = {6: {"usable": True, "best_gain": 0.040},
+                30: {"usable": True, "best_gain": 0.058},
+                290: {"usable": True, "best_gain": 0.077}}
+        assert select_workpoint(arms)["iters"] == 30
+
+    def test_failed_gain_arm_excluded(self):
+        # usable 但 best_gain 缺失/NaN 的臂不参与（防御：不该出现，出现即剔除）
+        arms = {15: {"usable": True, "best_gain": float("nan")},
+                30: {"usable": True, "best_gain": 0.06}}
+        assert select_workpoint(arms)["iters"] == 30
+
+    def test_all_failed_returns_none(self):
+        arms = {15: {"usable": True, "best_gain": None}}
+        assert select_workpoint(arms) is None
+
+    def test_candidates_sorted_and_reported(self):
+        arms = {290: {"usable": True, "best_gain": 0.077},
+                30: {"usable": True, "best_gain": 0.058},
+                6: {"usable": False, "best_gain": 0.100}}
+        v = select_workpoint(arms)
+        assert v["candidates"] == [30, 290]
+        assert v["best_gain"] == pytest.approx(0.058)

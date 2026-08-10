@@ -151,6 +151,32 @@ def confirm_verdict(
             "pool_eligible": tier == "confirmed"}
 
 
+def select_workpoint(arms: dict[int, dict], *, margin: float = 0.02) -> Optional[dict]:
+    """确认工作点选择（workpoint_confirm 协议 §2；用户裁决"0.02 让分窗"，2026-08-11）。
+
+    输入 {iters: {"usable": T1+T2+T3 全过, "best_gain": float}}——扫描臂与历史臂
+    （如 UWave@290）平等入表。数据前写死的规则：
+    1. 候选 = usable 且 best_gain 有限的臂；空 → None（无可确认点）。
+    2. 取 best_gain 最大者；与最大者差 ≤ margin 的候选视为并列，并列取最少 iters。
+       让分只对"与最大者的差"生效，不做传递闭包。
+    理由（预注册）：历史臂的 best_gain 带跨硬件 ±1 样本抖动（rprime 5090 记忆条目），
+    幅度差在一两个量子内不可信；破坏参与随 iters 单调涨（followup §4 规律 2），
+    同幅度下更早的臂 label 成分更好——Handwriting 弃 290 选 20–40ep 的先例同构。
+    """
+    usable = {
+        it: float(a["best_gain"]) for it, a in arms.items()
+        if a.get("usable") and a.get("best_gain") is not None
+        and math.isfinite(a["best_gain"])
+    }
+    if not usable:
+        return None
+    top = max(usable.values())
+    tied = [it for it, g in usable.items() if top - g <= margin]
+    pick = min(tied)
+    return {"iters": pick, "best_gain": usable[pick],
+            "top_gain": top, "candidates": sorted(usable)}
+
+
 def destruction_participation(
     per_task: dict[str, dict[str, Optional[float]]],
     baselines: dict[str, tuple[float, float]],
