@@ -1,0 +1,762 @@
+{
+  "datasets": {
+    "WISDM2019": {
+      "dataset": "WISDM2019",
+      "l_enc": 128,
+      "n_tasks": 2,
+      "steps_per_epoch": 6,
+      "audit": {
+        "matched": 140,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 422
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [],
+      "arms": {
+        "6": {
+          "epoch": 1.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.3446254071661238,
+          "realized_gain": -0.0016286644951140072,
+          "best_gain": 0.041693811074918596,
+          "n_above": 0,
+          "n_below": 2,
+          "n_band": 18,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "12": {
+          "epoch": 2.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.3446254071661238,
+          "realized_gain": 0.004071661237785018,
+          "best_gain": 0.04104234527687295,
+          "n_above": 2,
+          "n_below": 2,
+          "n_band": 16,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "30": {
+          "epoch": 5.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.3446254071661238,
+          "realized_gain": -0.006026058631921821,
+          "best_gain": 0.037785016286644935,
+          "n_above": 3,
+          "n_below": 3,
+          "n_band": 14,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "60": {
+          "epoch": 10.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.3446254071661238,
+          "realized_gain": -0.0014657980456025954,
+          "best_gain": 0.05081433224755699,
+          "n_above": 3,
+          "n_below": 2,
+          "n_band": 15,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "120": {
+          "epoch": 20.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.3446254071661238,
+          "realized_gain": -0.009934853420195455,
+          "best_gain": 0.05732899022801302,
+          "n_above": 4,
+          "n_below": 4,
+          "n_band": 12,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "290": {
+          "epoch": 48.333,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.3446254071661238,
+          "realized_gain": -0.021172638436482094,
+          "best_gain": 0.0736156351791531,
+          "n_above": 5,
+          "n_below": 5,
+          "n_band": 10,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "2320": {
+          "epoch": 386.667,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.3446254071661238,
+          "realized_gain": -0.03241042345276873,
+          "best_gain": 0.1003257328990228,
+          "n_above": 6,
+          "n_below": 7,
+          "n_band": 7,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        }
+      },
+      "peak_best_gain": {
+        "iters": 2320,
+        "value": 0.1003257328990228,
+        "censored": "right",
+        "epoch": 386.667
+      },
+      "peak_realized": {
+        "iters": 12,
+        "value": 0.004071661237785018,
+        "censored": null,
+        "epoch": 2.0
+      },
+      "flip": {
+        "flip": "none",
+        "at": []
+      },
+      "quantum": 0.003257328990228013,
+      "no_workpoint": {
+        "verdict": "has_net_gain",
+        "net_gain_dim_empty": false,
+        "label_dim_empty": true
+      }
+    },
+    "InsectWingbeatSound": {
+      "dataset": "InsectWingbeatSound",
+      "l_enc": 256,
+      "n_tasks": 2,
+      "steps_per_epoch": 6,
+      "audit": {
+        "matched": 120,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 442
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [],
+      "arms": {
+        "6": {
+          "epoch": 1.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7125301408689031,
+          "realized_gain": 0.02227621726807394,
+          "best_gain": 0.06970684039087949,
+          "n_above": 10,
+          "n_below": 0,
+          "n_band": 10,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true
+        },
+        "12": {
+          "epoch": 2.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7125301408689031,
+          "realized_gain": 0.02439242353737464,
+          "best_gain": 0.06644951140065147,
+          "n_above": 12,
+          "n_below": 0,
+          "n_band": 8,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true
+        },
+        "30": {
+          "epoch": 5.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7125301408689031,
+          "realized_gain": 0.0061730614662210415,
+          "best_gain": 0.059934853420195444,
+          "n_above": 9,
+          "n_below": 2,
+          "n_band": 9,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "60": {
+          "epoch": 10.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7125301408689031,
+          "realized_gain": 0.011529146749016395,
+          "best_gain": 0.05974025974025976,
+          "n_above": 9,
+          "n_below": 2,
+          "n_band": 9,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "120": {
+          "epoch": 20.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7125301408689031,
+          "realized_gain": 0.002593172300012603,
+          "best_gain": 0.06644951140065147,
+          "n_above": 9,
+          "n_below": 2,
+          "n_band": 9,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "290": {
+          "epoch": 48.333,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7125301408689031,
+          "realized_gain": 0.0038897584500189875,
+          "best_gain": 0.07597402597402592,
+          "n_above": 9,
+          "n_below": 3,
+          "n_band": 8,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        }
+      },
+      "peak_best_gain": {
+        "iters": 290,
+        "value": 0.07597402597402592,
+        "censored": "right",
+        "epoch": 48.333
+      },
+      "peak_realized": {
+        "iters": 12,
+        "value": 0.02439242353737464,
+        "censored": null,
+        "epoch": 2.0
+      },
+      "flip": {
+        "flip": "solid",
+        "at": [
+          6,
+          12
+        ]
+      },
+      "quantum": 0.003257328990228013,
+      "no_workpoint": {
+        "verdict": "has_net_gain",
+        "net_gain_dim_empty": false,
+        "label_dim_empty": false
+      }
+    },
+    "UniMiB-SHAR": {
+      "dataset": "UniMiB-SHAR",
+      "l_enc": 151,
+      "n_tasks": 2,
+      "steps_per_epoch": 6,
+      "audit": {
+        "matched": 120,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 442
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [],
+      "arms": {
+        "6": {
+          "epoch": 1.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7824104234527687,
+          "realized_gain": 0.011074918566775283,
+          "best_gain": 0.041042345276873005,
+          "n_above": 8,
+          "n_below": 2,
+          "n_band": 10,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "12": {
+          "epoch": 2.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7824104234527687,
+          "realized_gain": 0.015472312703583124,
+          "best_gain": 0.05407166123778506,
+          "n_above": 7,
+          "n_below": 1,
+          "n_band": 12,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "30": {
+          "epoch": 5.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7824104234527687,
+          "realized_gain": -0.014006514657980473,
+          "best_gain": 0.07361563517915315,
+          "n_above": 12,
+          "n_below": 3,
+          "n_band": 5,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true
+        },
+        "60": {
+          "epoch": 10.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7824104234527687,
+          "realized_gain": -0.02817589576547236,
+          "best_gain": 0.04429967426710102,
+          "n_above": 7,
+          "n_below": 4,
+          "n_band": 9,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "120": {
+          "epoch": 20.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7824104234527687,
+          "realized_gain": -0.0296416938110749,
+          "best_gain": 0.06058631921824109,
+          "n_above": 4,
+          "n_below": 5,
+          "n_band": 11,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "290": {
+          "epoch": 48.333,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.7824104234527687,
+          "realized_gain": -0.04837133550488598,
+          "best_gain": 0.07035830618892513,
+          "n_above": 9,
+          "n_below": 6,
+          "n_band": 5,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        }
+      },
+      "peak_best_gain": {
+        "iters": 30,
+        "value": 0.07361563517915315,
+        "censored": null,
+        "epoch": 5.0
+      },
+      "peak_realized": {
+        "iters": 12,
+        "value": 0.015472312703583124,
+        "censored": null,
+        "epoch": 2.0
+      },
+      "flip": {
+        "flip": "solid",
+        "at": [
+          30
+        ]
+      },
+      "quantum": 0.003257328990228013,
+      "no_workpoint": {
+        "verdict": "has_net_gain",
+        "net_gain_dim_empty": false,
+        "label_dim_empty": false
+      }
+    },
+    "PAMAP2": {
+      "dataset": "PAMAP2",
+      "l_enc": 128,
+      "n_tasks": 2,
+      "steps_per_epoch": 6,
+      "audit": {
+        "matched": 120,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 442
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [],
+      "arms": {
+        "6": {
+          "epoch": 1.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8849306231228056,
+          "realized_gain": 0.0050335251068149844,
+          "best_gain": 0.04675324675324677,
+          "n_above": 0,
+          "n_below": 0,
+          "n_band": 20,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "12": {
+          "epoch": 2.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8849306231228056,
+          "realized_gain": 0.0034053893988746364,
+          "best_gain": 0.05324675324675332,
+          "n_above": 1,
+          "n_below": 2,
+          "n_band": 17,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "30": {
+          "epoch": 5.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8849306231228056,
+          "realized_gain": -0.03562121917170785,
+          "best_gain": 0.03701298701298705,
+          "n_above": 0,
+          "n_below": 5,
+          "n_band": 15,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "60": {
+          "epoch": 10.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8849306231228056,
+          "realized_gain": -0.043909429332882166,
+          "best_gain": 0.04675324675324677,
+          "n_above": 0,
+          "n_below": 7,
+          "n_band": 13,
+          "T1": true,
+          "T2": false,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "120": {
+          "epoch": 20.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8849306231228056,
+          "realized_gain": -0.042766191463259995,
+          "best_gain": 0.050000000000000044,
+          "n_above": 2,
+          "n_below": 8,
+          "n_band": 10,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "290": {
+          "epoch": 48.333,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.8849306231228056,
+          "realized_gain": -0.042449447946190655,
+          "best_gain": 0.056493506493506485,
+          "n_above": 1,
+          "n_below": 9,
+          "n_band": 10,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        }
+      },
+      "peak_best_gain": {
+        "iters": 290,
+        "value": 0.056493506493506485,
+        "censored": "right",
+        "epoch": 48.333
+      },
+      "peak_realized": {
+        "iters": 6,
+        "value": 0.0050335251068149844,
+        "censored": "left",
+        "epoch": 1.0
+      },
+      "flip": {
+        "flip": "none",
+        "at": []
+      },
+      "quantum": 0.003257328990228013,
+      "no_workpoint": {
+        "verdict": "has_net_gain",
+        "net_gain_dim_empty": false,
+        "label_dim_empty": true
+      }
+    },
+    "Handwriting": {
+      "dataset": "Handwriting",
+      "l_enc": 152,
+      "n_tasks": 2,
+      "steps_per_epoch": 3,
+      "audit": {
+        "matched": 160,
+        "rejected_classes": 0,
+        "rejected_split": 0,
+        "unknown_task": 240
+      },
+      "devices": [
+        "NVIDIA GeForce RTX 4060 Laptop GPU"
+      ],
+      "missing_arms": [],
+      "extra_arms": [],
+      "arms": {
+        "3": {
+          "epoch": 1.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.5294193548387097,
+          "realized_gain": 0.02012903225806445,
+          "best_gain": 0.07199999999999995,
+          "n_above": 5,
+          "n_below": 0,
+          "n_band": 15,
+          "T1": true,
+          "T2": true,
+          "T3": false,
+          "verdict": "inert",
+          "usable": false
+        },
+        "6": {
+          "epoch": 2.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.5294193548387097,
+          "realized_gain": 0.06050322580645162,
+          "best_gain": 0.12,
+          "n_above": 13,
+          "n_below": 0,
+          "n_band": 7,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true
+        },
+        "15": {
+          "epoch": 5.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.5294193548387097,
+          "realized_gain": 0.11828387096774193,
+          "best_gain": 0.21599999999999997,
+          "n_above": 18,
+          "n_below": 0,
+          "n_band": 2,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true
+        },
+        "30": {
+          "epoch": 10.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.5294193548387097,
+          "realized_gain": 0.1403870967741935,
+          "best_gain": 0.24903225806451607,
+          "n_above": 18,
+          "n_below": 0,
+          "n_band": 2,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true
+        },
+        "60": {
+          "epoch": 20.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.5294193548387097,
+          "realized_gain": 0.16710967741935476,
+          "best_gain": 0.39096774193548384,
+          "n_above": 18,
+          "n_below": 0,
+          "n_band": 2,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true
+        },
+        "120": {
+          "epoch": 40.0,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.5294193548387097,
+          "realized_gain": 0.18291612903225798,
+          "best_gain": 0.39096774193548384,
+          "n_above": 18,
+          "n_below": 1,
+          "n_band": 1,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true
+        },
+        "290": {
+          "epoch": 96.667,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.5294193548387097,
+          "realized_gain": 0.16139354838709682,
+          "best_gain": 0.39741935483870966,
+          "n_above": 15,
+          "n_below": 4,
+          "n_band": 1,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true
+        },
+        "2320": {
+          "epoch": 773.333,
+          "n_trained": 20,
+          "complete": true,
+          "baseline": 0.5294193548387097,
+          "realized_gain": 0.09269677419354841,
+          "best_gain": 0.37161290322580637,
+          "n_above": 14,
+          "n_below": 5,
+          "n_band": 1,
+          "T1": true,
+          "T2": true,
+          "T3": true,
+          "verdict": "usable",
+          "usable": true
+        }
+      },
+      "peak_best_gain": {
+        "iters": 290,
+        "value": 0.39741935483870966,
+        "censored": null,
+        "epoch": 96.667
+      },
+      "peak_realized": {
+        "iters": 120,
+        "value": 0.18291612903225798,
+        "censored": null,
+        "epoch": 40.0
+      },
+      "flip": {
+        "flip": "solid",
+        "at": [
+          6,
+          15,
+          30,
+          60,
+          120,
+          290,
+          2320
+        ]
+      },
+      "quantum": 0.008,
+      "no_workpoint": {
+        "verdict": "has_net_gain",
+        "net_gain_dim_empty": false,
+        "label_dim_empty": false
+      }
+    }
+  },
+  "peak_consistency": {
+    "verdict": "uncertain",
+    "ratio": 77.3334,
+    "n": 5,
+    "datasets": [
+      "Handwriting",
+      "InsectWingbeatSound",
+      "PAMAP2",
+      "UniMiB-SHAR",
+      "WISDM2019"
+    ]
+  }
+}
