@@ -106,6 +106,96 @@ def classify_flip(arms: dict[int, dict]) -> dict:
     return {"flip": "solid" if adjacent else "weak", "at": usable}
 
 
+def wilson_interval(k: int, n: int, z: float = 1.645) -> tuple[float, float]:
+    """比例 k/n 的 Wilson score 区间（默认 z=1.645 → 90%，与既有报告口径一致）。
+
+    workpoint followup 协议 §1 的确认门槛由它导出：n=60 时下界脱离 0.5 需
+    k≥37（37→0.511，36→0.494）。REPORT_STEP3 §2 与 iters_workpoint REPORT §2.1
+    的引用值（12/20→[0.42,0.76]、15/20→[0.57,0.87]）均可由本函数复算。
+    """
+    if n <= 0 or k < 0 or k > n:
+        raise ValueError(f"非法计数 k={k}, n={n}")
+    p = k / n
+    denom = 1.0 + z * z / n
+    center = (p + z * z / (2 * n)) / denom
+    half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / denom
+    return center - half, center + half
+
+
+def confirm_verdict(
+    *, n_above: int, n_below: int, n_trained: int, t1: bool, t2: bool,
+    z: float = 1.645,
+) -> dict:
+    """加测确认层级（followup 协议 §1，n=60 口径；用户拍板 B 层不算入池）。
+
+    - A confirmed：T1+T2+T3 全过 **且** ↑/n 的 Wilson 90% 下界 >0.5 → 可作入池依据；
+    - B marginal：T1+T2+T3 过但 Wilson 仍含 0.5 → usable 判定维持、统计边缘未消除，
+      **不作入池依据**（用户裁决，2026-08-10）；
+    - C reversed：T1/T2/T3 任一不过 → 更大样本优先，20 条的 usable 判定撤销。
+    T3 阈值直接引用判据 v2 常数（同一实现，禁止两处漂移）。
+    """
+    from autocls.baseline_probe import T3_ABOVE_FRACTION, T3_ABOVE_OVER_BELOW
+
+    t3 = bool(n_trained > 0 and n_above >= T3_ABOVE_FRACTION * n_trained
+              and n_above >= T3_ABOVE_OVER_BELOW * n_below)
+    lo = hi = None
+    if n_trained > 0:
+        lo, hi = wilson_interval(n_above, n_trained, z)
+    if not (t1 and t2 and t3):
+        tier = "reversed"
+    elif lo is not None and lo > 0.5:
+        tier = "confirmed"
+    else:
+        tier = "marginal"
+    return {"tier": tier, "t3": t3, "wilson_low": lo, "wilson_high": hi,
+            "pool_eligible": tier == "confirmed"}
+
+
+def destruction_participation(
+    per_task: dict[str, dict[str, Optional[float]]],
+    baselines: dict[str, tuple[float, float]],
+    *, delta: float,
+) -> dict:
+    """δ 过滤后存活配对里"破坏参与"的占比（followup 协议 §1；如实报告，不设硬门槛）。
+
+    per_task: {task_id: {cls_key: R'}}（None/NaN = 失败记录，剔除）；
+    baselines: {task_id: (基线均值, 带半宽)}——带半宽必须喂 summarize_task 的
+    null_band（2·max(σ, 1/n_eval)），保证"strict 破坏"与 ↑/↓ 计数是同一条带子。
+    配对只在任务内（造 label 的口径），存活 = |ΔR'| ≥ δ。
+    - strict：至少一方 R' < 均值 − 带（显著破坏，解耦实验的 94.7–100% 用的口径）；
+    - loose：至少一方 R' < 均值。
+    """
+    n_pairs = n_survive = n_strict = n_loose = 0
+    n_cls = n_below_band = n_below_mean = 0
+    for tid, cls_map in per_task.items():
+        mean, band = baselines[tid]
+        vals = {k: float(v) for k, v in cls_map.items()
+                if v is not None and v == v}
+        n_cls += len(vals)
+        strict = {k for k, v in vals.items() if v < mean - band}
+        loose = {k for k, v in vals.items() if v < mean}
+        n_below_band += len(strict)
+        n_below_mean += len(loose)
+        keys = sorted(vals)
+        for i, a in enumerate(keys):
+            for b in keys[i + 1:]:
+                n_pairs += 1
+                if abs(vals[a] - vals[b]) < delta:
+                    continue
+                n_survive += 1
+                n_strict += a in strict or b in strict
+                n_loose += a in loose or b in loose
+    return {
+        "n_cls": n_cls, "n_below_band": n_below_band, "n_below_mean": n_below_mean,
+        "n_pairs": n_pairs, "n_survive": n_survive,
+        "survive_rate": (n_survive / n_pairs) if n_pairs else None,
+        "n_strict": n_strict,
+        "strict_share": (n_strict / n_survive) if n_survive else None,
+        "n_loose": n_loose,
+        "loose_share": (n_loose / n_survive) if n_survive else None,
+    }
+
+
 def no_workpoint_verdict(arms: dict[int, dict], *, quantum: float) -> dict:
     """"无工作点"双维确认（判据 5，用户拍板补 best_gain 维度）。
 

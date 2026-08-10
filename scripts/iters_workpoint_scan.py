@@ -98,12 +98,18 @@ def read_jsonl(path: Path) -> list[dict]:
     return out
 
 
-def collect(name: str, spec: dict) -> dict:
+def collect(name: str, spec: dict, *, n_tasks: int = FILL_TASKS,
+            arm_rows: int = ARM_ROWS, allow_mixed_spe: bool = False) -> dict:
+    """跨臂并列汇总。n_tasks/arm_rows 默认 = 扫描口径（前 2 任务、20 条/臂）；
+    followup 加测用 (6, 60)。allow_mixed_spe：加测扩到 6 任务后 Insect 任务 02
+    （n_train=560 → 5 steps/ep）打破"数据集内 steps/ep 唯一"，此时 epoch 不再唯一
+    可换算，臂只按 iters 报告（epoch=None），差异如实进 REPORT——判据全部按 iters
+    臂判定，不受影响。默认仍 fail-fast（扫描口径的前提校验不放松）。"""
     reg = load_registry(ROOT / spec["registry"]) if spec["registry"] else load_registry()
     entry = reg.get(name)
     _X, y = load_source_dataset(name, reg)
     _, tasks = slice_source_tasks(entry, reg, y)
-    tasks = tasks[:FILL_TASKS]
+    tasks = tasks[:n_tasks]
     by_id = {t.task_id: t for t in tasks}
 
     base_rows: dict[str, list[dict]] = {}
@@ -142,16 +148,20 @@ def collect(name: str, spec: dict) -> dict:
     # 协议 §0.1：数据集内 steps/epoch 恒定，是 epoch 对齐退化为 per-dataset iters
     # 的前提——不成立就必须报错，而不是悄悄取均值
     spe_all = set().union(*spe_seen.values()) if spe_seen else set()
-    if len(spe_all) != 1:
+    if len(spe_all) == 1:
+        spe = spe_all.pop()
+    elif allow_mixed_spe:
+        spe = None   # epoch 不唯一可换算：臂只按 iters 报，差异如实上 REPORT
+    else:
         raise RuntimeError(f"{name}: steps/epoch 不唯一 {spe_seen}，epoch 对齐前提破坏")
-    spe = spe_all.pop()
 
     found = sorted(trained)
     missing = [it for it in spec["expected"] if it not in found]
     extra = [it for it in found if it not in spec["expected"]]
 
     out = {"dataset": name, "l_enc": entry.l_enc, "n_tasks": len(tasks),
-           "steps_per_epoch": spe, "audit": audit, "devices": sorted(devices),
+           "steps_per_epoch": spe if spe is not None else sorted(spe_all),
+           "audit": audit, "devices": sorted(devices),
            "missing_arms": missing, "extra_arms": extra, "arms": {}}
     for iters in found:
         per_task = {}
@@ -164,8 +174,8 @@ def collect(name: str, spec: dict) -> dict:
         n_tr, n_up, n_dn = d["n_trained_total"], d["n_trained_above_null"], d["n_trained_below_null"]
         bg = d["best_gain_max"]
         out["arms"][iters] = {
-            "epoch": round(arm_epoch(iters, spe), 3),
-            "n_trained": n_tr, "complete": n_tr >= ARM_ROWS,
+            "epoch": round(arm_epoch(iters, spe), 3) if spe is not None else None,
+            "n_trained": n_tr, "complete": n_tr >= arm_rows,
             "baseline": d["baseline_mean"],
             "realized_gain": d["realized_gain_mean"], "best_gain": bg,
             "n_above": n_up, "n_below": n_dn, "n_band": n_tr - n_up - n_dn,
@@ -177,7 +187,7 @@ def collect(name: str, spec: dict) -> dict:
         }
         out["arms"][iters]["usable"] = bool(
             out["arms"][iters]["T1"] and out["arms"][iters]["T2"]
-            and out["arms"][iters]["T3"] and n_tr >= ARM_ROWS)
+            and out["arms"][iters]["T3"] and n_tr >= arm_rows)
 
     # 判据 2：峰 = best_gain 的 argmax（测满的臂才参与）；realized 峰作辅助诊断
     complete = {it: a for it, a in out["arms"].items() if a["complete"]}
@@ -185,7 +195,8 @@ def collect(name: str, spec: dict) -> dict:
     out["peak_realized"] = find_peak({it: a["realized_gain"] for it, a in complete.items()})
     for key in ("peak_best_gain", "peak_realized"):
         if out[key] is not None:
-            out[key]["epoch"] = round(arm_epoch(out[key]["iters"], spe), 3)
+            out[key]["epoch"] = (round(arm_epoch(out[key]["iters"], spe), 3)
+                                 if spe is not None else None)
 
     # 判据 4/5（只对候选有意义，对照 Handwriting 也算但只作参考）
     out["flip"] = classify_flip(complete)

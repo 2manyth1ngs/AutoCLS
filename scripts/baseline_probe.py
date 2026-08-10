@@ -287,7 +287,7 @@ def _trained_by_task(tasks_by_id: dict) -> tuple[dict[str, list[float]], dict]:
 
 
 def fill_trained(names: list[str], *, device: str, resume: bool, backend: str,
-                 iters: int = FILL_ITERS) -> None:
+                 iters: int = FILL_ITERS, n_tasks: int = FILL_TASKS) -> None:
     """补跑 canonical R'（默认 290 iters = 阶段1 口径），给缺配对参照的数据集。
 
     `iters` 显式传参（铁律 2）：full-iters 判别实验用 2320 重跑**完全相同**的
@@ -306,7 +306,7 @@ def fill_trained(names: list[str], *, device: str, resume: bool, backend: str,
 
     OUTDIR.mkdir(parents=True, exist_ok=True)
     registry = load_registry_cfg()
-    per_ds = sliced_tasks(registry, names, FILL_TASKS)
+    per_ds = sliced_tasks(registry, names, n_tasks)
     cls_list, _ = load_probe_cls(PROBE_CATALOG, FILL_CLS)
     done = fill_done_keys(TRAINED_FILL)
 
@@ -508,6 +508,10 @@ def main() -> None:
                     help=f"--fill-trained 的训练量（默认 {FILL_ITERS} = early_iters）。"
                          f"full-iters 判别实验用 2320（= train.yaml full_iters）；"
                          f"iters 入缓存键与配对口径，两者绝不混算（铁律 2）")
+    ap.add_argument("--fill-tasks", type=int, default=FILL_TASKS,
+                    help=f"--fill-trained 每数据集取前 N 个任务（默认 {FILL_TASKS} = 历史"
+                         f"口径，勿改默认）。workpoint followup 加测用 6（60 条确认口径，"
+                         f"任务 00–01 已有记录由 --resume 逐键跳过）")
     ap.add_argument("--pair-iters", type=int, default=None,
                     help="--analyze 配对 R' 的训练量（默认跟随 --fill-iters）。"
                          "既有 analysis.json 全部按 290 生成")
@@ -552,7 +556,7 @@ def main() -> None:
             n_classes_range=tuple(args.n_classes_range) if args.n_classes_range else None)
     if args.fill_trained:
         fill_trained(names, device=args.device, resume=args.resume, backend=args.backend,
-                     iters=args.fill_iters)
+                     iters=args.fill_iters, n_tasks=args.fill_tasks)
     if args.analyze:
         analyze(names, args.max_tasks)
     if not (args.run or args.analyze or args.fill_trained):

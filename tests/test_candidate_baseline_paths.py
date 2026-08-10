@@ -52,3 +52,19 @@ def test_cli_exposes_registry_and_outdir():
     src = (ROOT / "scripts" / "baseline_probe.py").read_text(encoding="utf-8")
     assert '"--registry"' in src
     assert '"--outdir"' in src
+
+
+def test_fill_trained_task_count_is_parameterized():
+    """workpoint followup 加测要把 fill 扩到前 6 任务（60 条确认口径）。
+
+    FILL_TASKS=2 是模块常数：不暴露参数就只能改源码跑，且默认值必须仍是 2
+    ——历史 fill（第3步/full-iters/工作点扫描）全部按前 2 任务口径，默认漂移
+    会让 --resume 的"待跑计划"悄悄变大。
+    """
+    import inspect
+
+    sig = inspect.signature(bp.fill_trained)
+    assert "n_tasks" in sig.parameters
+    assert sig.parameters["n_tasks"].default == bp.FILL_TASKS == 2
+    src = (ROOT / "scripts" / "baseline_probe.py").read_text(encoding="utf-8")
+    assert '"--fill-tasks"' in src

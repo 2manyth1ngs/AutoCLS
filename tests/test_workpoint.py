@@ -13,10 +13,13 @@ import pytest
 from autocls.workpoint import (
     arm_epoch,
     classify_flip,
+    confirm_verdict,
+    destruction_participation,
     find_peak,
     no_workpoint_verdict,
     peak_consistency,
     steps_per_epoch,
+    wilson_interval,
 )
 
 
@@ -173,3 +176,119 @@ class TestNoWorkpoint:
         arms = {30: _narm(float("nan"))}
         v = no_workpoint_verdict(arms, quantum=self.QUANTUM)
         assert v["net_gain_dim_empty"]
+
+
+# ------------------------------------------------- Wilson 区间（followup 协议 §1）
+class TestWilsonInterval:
+    def test_report_values_12_of_20(self):
+        # iters_workpoint REPORT §2.1 引用值：12/20 → [0.42, 0.76]（90%，z=1.645）
+        lo, hi = wilson_interval(12, 20)
+        assert lo == pytest.approx(0.4185, abs=5e-4)
+        assert hi == pytest.approx(0.7576, abs=5e-4)
+
+    def test_handwriting_15_of_20_escapes_half(self):
+        # REPORT_STEP3 §2：15/20 → [0.57, 0.87]，下界已高于 0.5
+        lo, hi = wilson_interval(15, 20)
+        assert lo == pytest.approx(0.5678, abs=5e-4)
+        assert lo > 0.5
+
+    def test_confirmation_threshold_37_of_60(self):
+        # followup 协议预注册门槛：n=60 时脱离 0.5 需 ↑≥37（37→0.511 / 36→0.494）
+        assert wilson_interval(37, 60)[0] > 0.5
+        assert wilson_interval(36, 60)[0] < 0.5
+
+    def test_degenerate_endpoints(self):
+        assert wilson_interval(0, 20)[0] == pytest.approx(0.0)
+        assert wilson_interval(20, 20)[1] == pytest.approx(1.0)
+
+    def test_rejects_invalid_counts(self):
+        with pytest.raises(ValueError):
+            wilson_interval(21, 20)
+        with pytest.raises(ValueError):
+            wilson_interval(0, 0)
+
+
+# ------------------------------------- 加测确认层级（followup 协议 §1，用户拍板）
+def _confirm(n_above, n_below, n=60, t1=True, t2=True):
+    return confirm_verdict(n_above=n_above, n_below=n_below, n_trained=n,
+                           t1=t1, t2=t2)
+
+
+class TestConfirmVerdict:
+    def test_tier_a_confirmed_is_pool_eligible(self):
+        v = _confirm(37, 3)
+        assert v["tier"] == "confirmed" and v["pool_eligible"]
+        assert v["t3"] and v["wilson_low"] > 0.5
+
+    def test_tier_b_marginal_not_pool_eligible(self):
+        # 用户裁决：B 层（T3 过但 Wilson 含 0.5）不算入池依据
+        v = _confirm(36, 0)
+        assert v["tier"] == "marginal" and not v["pool_eligible"]
+
+    def test_tier_b_boundary_exactly_half_and_2x(self):
+        # T3 边界：30 = 恰 0.5×60 且 恰 2×15 —— 判据原文是 ≥，两处都过
+        v = _confirm(30, 15)
+        assert v["t3"] and v["tier"] == "marginal"
+
+    def test_tier_c_reversed_below_half(self):
+        v = _confirm(29, 0)
+        assert v["tier"] == "reversed" and not v["pool_eligible"]
+
+    def test_tier_c_reversed_when_destruction_catches_up(self):
+        # ↑=40 但 ↓=21：40 < 2×21 → T3 后半不过 → 反转（60 条优先于 20 条）
+        v = _confirm(40, 21)
+        assert not v["t3"] and v["tier"] == "reversed"
+
+    def test_t1_t2_failure_is_reversal_even_with_high_above(self):
+        assert _confirm(50, 0, t2=False)["tier"] == "reversed"
+        assert _confirm(50, 0, t1=False)["tier"] == "reversed"
+
+    def test_empty_arm_is_reversed(self):
+        assert _confirm(0, 0, n=0)["tier"] == "reversed"
+
+    def test_uses_prereg_wilson_threshold(self):
+        # confirm 的 Wilson 必须与 wilson_interval 同一实现（阈值不许两处漂移）
+        v = _confirm(37, 0)
+        assert v["wilson_low"] == pytest.approx(wilson_interval(37, 60)[0])
+
+
+# --------------------------- 破坏参与率（followup 协议 §1；如实报告，不设硬门槛）
+class TestDestructionParticipation:
+    # 单任务 4 条 CLS：基线 mean=0.75、带半宽 0.04（与 summarize_task 的
+    # null_band 同义：strict 破坏 = R' < 0.71，loose = R' < 0.75）
+    TASK = {"t0": {"a": 0.80, "b": 0.74, "c": 0.72, "d": 0.60}}
+    BASE = {"t0": (0.75, 0.04)}
+
+    def test_counts_on_hand_built_example(self):
+        # δ=0.05 存活 5/6 对（bc 差 0.02 不存活）；strict 只有 d（0.60<0.71）
+        # 参与 ad/bd/cd = 3/5；loose b/c/d 参与全部 5 对
+        v = destruction_participation(self.TASK, self.BASE, delta=0.05)
+        assert v["n_pairs"] == 6 and v["n_survive"] == 5
+        assert v["n_strict"] == 3 and v["strict_share"] == pytest.approx(0.6)
+        assert v["n_loose"] == 5 and v["loose_share"] == pytest.approx(1.0)
+        assert v["n_cls"] == 4 and v["n_below_band"] == 1 and v["n_below_mean"] == 3
+
+    def test_pairs_do_not_cross_tasks(self):
+        # 配对只在任务内（label 造对的口径）：2 任务 × 2 CLS = 各 1 对，非跨任务 6 对
+        per_task = {"t0": {"a": 0.9, "b": 0.7}, "t1": {"a": 0.9, "b": 0.7}}
+        base = {"t0": (0.8, 0.02), "t1": (0.8, 0.02)}
+        v = destruction_participation(per_task, base, delta=0.05)
+        assert v["n_pairs"] == 2 and v["n_survive"] == 2
+
+    def test_exact_delta_survives(self):
+        # |ΔR'| 恰等于 δ 算存活（造 label 的 ≥δ 口径）
+        v = destruction_participation({"t0": {"a": 0.80, "b": 0.75}},
+                                      {"t0": (0.9, 0.01)}, delta=0.05)
+        assert v["n_survive"] == 1
+
+    def test_no_survivors_yields_none_shares(self):
+        v = destruction_participation({"t0": {"a": 0.75, "b": 0.74}},
+                                      {"t0": (0.7, 0.01)}, delta=0.05)
+        assert v["n_survive"] == 0
+        assert v["strict_share"] is None and v["loose_share"] is None
+
+    def test_failed_rows_excluded(self):
+        # r_prime=None/NaN 是"没跑出来"，不参与配对也不计入 CLS 数
+        per_task = {"t0": {"a": 0.80, "b": None, "c": float("nan"), "d": 0.60}}
+        v = destruction_participation(per_task, {"t0": (0.75, 0.04)}, delta=0.05)
+        assert v["n_cls"] == 2 and v["n_pairs"] == 1 and v["n_survive"] == 1
