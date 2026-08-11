@@ -1,0 +1,20 @@
+{
+  "verdict": "C2",
+  "label": "干净信号缺乏跨任务多样性坐实——扩池救不了，调整主张",
+  "median_run": "R3_mixed_s2",
+  "median_within": {
+    "mean_delta": 0.0,
+    "n_sig": 0,
+    "pass": false
+  },
+  "median_cross": {
+    "mean_delta": 0.0,
+    "n_sig": 0,
+    "pass": false
+  },
+  "r4_within": {
+    "mean_delta": 0.0,
+    "n_sig": 0,
+    "pass": false
+  }
+}

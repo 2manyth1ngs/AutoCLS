@@ -1,0 +1,11 @@
+{
+  "fit_datasets": [
+    "Handwriting",
+    "UniMiB-SHAR"
+  ],
+  "n_instances": 7096,
+  "t_max": 152,
+  "n_iters": 600,
+  "max_instances_per_dataset": 4096,
+  "embed_seed": 0
+}

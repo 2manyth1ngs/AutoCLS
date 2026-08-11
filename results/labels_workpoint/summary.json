@@ -1,0 +1,380 @@
+{
+  "protocol": "results/decisive_e_ablation/PROTOCOL.md",
+  "iters_per_dataset": {
+    "Handwriting": 60,
+    "UniMiB-SHAR": 30
+  },
+  "delta_per_dataset": {
+    "Handwriting": 0.11,
+    "UniMiB-SHAR": 0.075
+  },
+  "n_tasks": 28,
+  "per_task": {
+    "Handwriting_00": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 71,
+      "n_tie_dropped": 0,
+      "n_kept": 119
+    },
+    "Handwriting_01": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 113,
+      "n_tie_dropped": 0,
+      "n_kept": 77
+    },
+    "Handwriting_02": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 140,
+      "n_tie_dropped": 0,
+      "n_kept": 50
+    },
+    "Handwriting_03": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 96,
+      "n_tie_dropped": 0,
+      "n_kept": 94
+    },
+    "Handwriting_04": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 107,
+      "n_tie_dropped": 0,
+      "n_kept": 83
+    },
+    "Handwriting_05": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 108,
+      "n_tie_dropped": 0,
+      "n_kept": 82
+    },
+    "Handwriting_06": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 104,
+      "n_tie_dropped": 0,
+      "n_kept": 86
+    },
+    "Handwriting_07": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 97,
+      "n_tie_dropped": 0,
+      "n_kept": 93
+    },
+    "Handwriting_08": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 80,
+      "n_tie_dropped": 0,
+      "n_kept": 110
+    },
+    "Handwriting_09": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 86,
+      "n_tie_dropped": 0,
+      "n_kept": 104
+    },
+    "Handwriting_10": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 85,
+      "n_tie_dropped": 0,
+      "n_kept": 105
+    },
+    "Handwriting_11": {
+      "dataset": "Handwriting",
+      "delta": 0.11,
+      "iters": 60,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 115,
+      "n_tie_dropped": 0,
+      "n_kept": 75
+    },
+    "UniMiB-SHAR_00": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 91,
+      "n_tie_dropped": 0,
+      "n_kept": 99
+    },
+    "UniMiB-SHAR_01": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 122,
+      "n_tie_dropped": 0,
+      "n_kept": 68
+    },
+    "UniMiB-SHAR_02": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 108,
+      "n_tie_dropped": 0,
+      "n_kept": 82
+    },
+    "UniMiB-SHAR_03": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 108,
+      "n_tie_dropped": 0,
+      "n_kept": 82
+    },
+    "UniMiB-SHAR_04": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 88,
+      "n_tie_dropped": 0,
+      "n_kept": 102
+    },
+    "UniMiB-SHAR_05": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 141,
+      "n_tie_dropped": 0,
+      "n_kept": 49
+    },
+    "UniMiB-SHAR_06": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 120,
+      "n_tie_dropped": 0,
+      "n_kept": 70
+    },
+    "UniMiB-SHAR_07": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 67,
+      "n_tie_dropped": 0,
+      "n_kept": 123
+    },
+    "UniMiB-SHAR_08": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 94,
+      "n_tie_dropped": 0,
+      "n_kept": 96
+    },
+    "UniMiB-SHAR_09": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 121,
+      "n_tie_dropped": 0,
+      "n_kept": 69
+    },
+    "UniMiB-SHAR_10": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 89,
+      "n_tie_dropped": 0,
+      "n_kept": 101
+    },
+    "UniMiB-SHAR_11": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 96,
+      "n_tie_dropped": 0,
+      "n_kept": 94
+    },
+    "UniMiB-SHAR_12": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 125,
+      "n_tie_dropped": 0,
+      "n_kept": 65
+    },
+    "UniMiB-SHAR_13": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 129,
+      "n_tie_dropped": 0,
+      "n_kept": 61
+    },
+    "UniMiB-SHAR_14": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 122,
+      "n_tie_dropped": 0,
+      "n_kept": 68
+    },
+    "UniMiB-SHAR_15": {
+      "dataset": "UniMiB-SHAR",
+      "delta": 0.075,
+      "iters": 30,
+      "n_cls": 20,
+      "n_failed_cls": 0,
+      "n_candidates": 190,
+      "n_delta_dropped": 106,
+      "n_tie_dropped": 0,
+      "n_kept": 84
+    }
+  },
+  "per_dataset": {
+    "Handwriting": {
+      "delta": 0.11,
+      "iters": 60,
+      "n_tasks": 12,
+      "n_cls": 240,
+      "n_failed_cls": 0,
+      "n_candidates": 2280,
+      "n_delta_dropped": 1202,
+      "n_tie_dropped": 0,
+      "n_kept": 1078
+    },
+    "UniMiB-SHAR": {
+      "delta": 0.075,
+      "iters": 30,
+      "n_tasks": 16,
+      "n_cls": 320,
+      "n_failed_cls": 0,
+      "n_candidates": 3040,
+      "n_delta_dropped": 1727,
+      "n_tie_dropped": 0,
+      "n_kept": 1313
+    }
+  },
+  "destruction": {
+    "Handwriting": {
+      "n_cls": 240,
+      "n_below_band": 20,
+      "n_below_mean": 31,
+      "n_pairs": 2280,
+      "n_survive": 1078,
+      "survive_rate": 0.4728070175438597,
+      "n_strict": 343,
+      "strict_share": 0.3181818181818182,
+      "n_loose": 501,
+      "loose_share": 0.4647495361781076
+    },
+    "UniMiB-SHAR": {
+      "n_cls": 320,
+      "n_below_band": 86,
+      "n_below_mean": 129,
+      "n_pairs": 3040,
+      "n_survive": 1313,
+      "survive_rate": 0.4319078947368421,
+      "n_strict": 1212,
+      "strict_share": 0.9230769230769231,
+      "n_loose": 1289,
+      "loose_share": 0.9817212490479817
+    }
+  },
+  "total": {
+    "n_cls": 560,
+    "n_failed_cls": 0,
+    "n_candidates": 5320,
+    "n_delta_dropped": 2929,
+    "n_tie_dropped": 0,
+    "n_kept": 2391
+  }
+}

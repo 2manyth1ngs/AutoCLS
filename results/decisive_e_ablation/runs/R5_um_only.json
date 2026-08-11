@@ -1,0 +1,233 @@
+{
+  "run_id": "R5_um_only",
+  "seed": 0,
+  "train_tids": [
+    "UniMiB-SHAR_00",
+    "UniMiB-SHAR_01",
+    "UniMiB-SHAR_02",
+    "UniMiB-SHAR_03",
+    "UniMiB-SHAR_04",
+    "UniMiB-SHAR_05",
+    "UniMiB-SHAR_08",
+    "UniMiB-SHAR_09",
+    "UniMiB-SHAR_10",
+    "UniMiB-SHAR_12",
+    "UniMiB-SHAR_13",
+    "UniMiB-SHAR_14"
+  ],
+  "test_tids": [
+    "UniMiB-SHAR_06",
+    "UniMiB-SHAR_07",
+    "UniMiB-SHAR_11",
+    "UniMiB-SHAR_15"
+  ],
+  "n_train_records": 240,
+  "n_test_pairs_directed": 742,
+  "n_test_pairs_forward": 371,
+  "train_seconds": 189.7,
+  "bce_first": 0.69399094581604,
+  "bce_last": 0.17224419489502907,
+  "normal": {
+    "acc": 0.8126684636118598,
+    "loss": 0.5424334901683735,
+    "binom_p_forward": 3.548933801245159e-36
+  },
+  "within": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.8126684636118598,
+        "loss": 0.5422414067299218,
+        "delta_acc": 0.0,
+        "assignment": {
+          "UniMiB-SHAR_06": "UniMiB-SHAR_11",
+          "UniMiB-SHAR_07": "UniMiB-SHAR_15",
+          "UniMiB-SHAR_11": "UniMiB-SHAR_07",
+          "UniMiB-SHAR_15": "UniMiB-SHAR_06"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 1,
+        "acc": 0.8126684636118598,
+        "loss": 0.5425213131943161,
+        "delta_acc": 0.0,
+        "assignment": {
+          "UniMiB-SHAR_06": "UniMiB-SHAR_11",
+          "UniMiB-SHAR_07": "UniMiB-SHAR_06",
+          "UniMiB-SHAR_11": "UniMiB-SHAR_15",
+          "UniMiB-SHAR_15": "UniMiB-SHAR_07"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 2,
+        "acc": 0.8126684636118598,
+        "loss": 0.5422414067299218,
+        "delta_acc": 0.0,
+        "assignment": {
+          "UniMiB-SHAR_06": "UniMiB-SHAR_11",
+          "UniMiB-SHAR_07": "UniMiB-SHAR_15",
+          "UniMiB-SHAR_11": "UniMiB-SHAR_07",
+          "UniMiB-SHAR_15": "UniMiB-SHAR_06"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 3,
+        "acc": 0.8126684636118598,
+        "loss": 0.5426861177878881,
+        "delta_acc": 0.0,
+        "assignment": {
+          "UniMiB-SHAR_06": "UniMiB-SHAR_07",
+          "UniMiB-SHAR_07": "UniMiB-SHAR_15",
+          "UniMiB-SHAR_11": "UniMiB-SHAR_06",
+          "UniMiB-SHAR_15": "UniMiB-SHAR_11"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 4,
+        "acc": 0.8126684636118598,
+        "loss": 0.5426341892895351,
+        "delta_acc": 0.0,
+        "assignment": {
+          "UniMiB-SHAR_06": "UniMiB-SHAR_11",
+          "UniMiB-SHAR_07": "UniMiB-SHAR_15",
+          "UniMiB-SHAR_11": "UniMiB-SHAR_06",
+          "UniMiB-SHAR_15": "UniMiB-SHAR_07"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      }
+    ],
+    "mean_delta": 0.0,
+    "min_delta": 0.0,
+    "max_delta": 0.0,
+    "n_sig": 0,
+    "pass": false
+  },
+  "cross": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.8126684636118598,
+        "loss": 0.5444031176220053,
+        "delta_acc": 0.0,
+        "assignment": {
+          "UniMiB-SHAR_06": "Handwriting_11",
+          "UniMiB-SHAR_07": "Handwriting_06",
+          "UniMiB-SHAR_11": "Handwriting_07",
+          "UniMiB-SHAR_15": "Handwriting_04"
+        },
+        "mcnemar": {
+          "b": 1,
+          "c": 0,
+          "p": 0.5
+        }
+      },
+      {
+        "seed": 1,
+        "acc": 0.8126684636118598,
+        "loss": 0.5443618442170383,
+        "delta_acc": 0.0,
+        "assignment": {
+          "UniMiB-SHAR_06": "Handwriting_10",
+          "UniMiB-SHAR_07": "Handwriting_09",
+          "UniMiB-SHAR_11": "Handwriting_00",
+          "UniMiB-SHAR_15": "Handwriting_08"
+        },
+        "mcnemar": {
+          "b": 1,
+          "c": 0,
+          "p": 0.5
+        }
+      },
+      {
+        "seed": 2,
+        "acc": 0.8126684636118598,
+        "loss": 0.5445013899366168,
+        "delta_acc": 0.0,
+        "assignment": {
+          "UniMiB-SHAR_06": "Handwriting_05",
+          "UniMiB-SHAR_07": "Handwriting_04",
+          "UniMiB-SHAR_11": "Handwriting_10",
+          "UniMiB-SHAR_15": "Handwriting_05"
+        },
+        "mcnemar": {
+          "b": 1,
+          "c": 0,
+          "p": 0.5
+        }
+      },
+      {
+        "seed": 3,
+        "acc": 0.8126684636118598,
+        "loss": 0.5444230254127009,
+        "delta_acc": 0.0,
+        "assignment": {
+          "UniMiB-SHAR_06": "Handwriting_11",
+          "UniMiB-SHAR_07": "Handwriting_08",
+          "UniMiB-SHAR_11": "Handwriting_09",
+          "UniMiB-SHAR_15": "Handwriting_07"
+        },
+        "mcnemar": {
+          "b": 1,
+          "c": 0,
+          "p": 0.5
+        }
+      },
+      {
+        "seed": 4,
+        "acc": 0.8126684636118598,
+        "loss": 0.5444255676873611,
+        "delta_acc": 0.0,
+        "assignment": {
+          "UniMiB-SHAR_06": "Handwriting_11",
+          "UniMiB-SHAR_07": "Handwriting_06",
+          "UniMiB-SHAR_11": "Handwriting_08",
+          "UniMiB-SHAR_15": "Handwriting_07"
+        },
+        "mcnemar": {
+          "b": 1,
+          "c": 0,
+          "p": 0.5
+        }
+      }
+    ],
+    "mean_delta": 0.0,
+    "min_delta": 0.0,
+    "max_delta": 0.0,
+    "n_sig": 0,
+    "pass": false
+  },
+  "zero": {
+    "acc": 0.8113207547169812,
+    "loss": 0.45203725202385625,
+    "delta_acc": 0.0013477088948786742,
+    "mcnemar": {
+      "b": 0,
+      "c": 1,
+      "p": 1.0
+    }
+  }
+}

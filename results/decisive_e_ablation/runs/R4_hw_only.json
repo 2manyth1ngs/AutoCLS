@@ -1,0 +1,219 @@
+{
+  "run_id": "R4_hw_only",
+  "seed": 0,
+  "train_tids": [
+    "Handwriting_00",
+    "Handwriting_01",
+    "Handwriting_02",
+    "Handwriting_03",
+    "Handwriting_04",
+    "Handwriting_05",
+    "Handwriting_09",
+    "Handwriting_10",
+    "Handwriting_11"
+  ],
+  "test_tids": [
+    "Handwriting_06",
+    "Handwriting_07",
+    "Handwriting_08"
+  ],
+  "n_train_records": 180,
+  "n_test_pairs_directed": 578,
+  "n_test_pairs_forward": 289,
+  "train_seconds": 98.4,
+  "bce_first": 0.6941870450973511,
+  "bce_last": 0.23725269734859467,
+  "normal": {
+    "acc": 0.7491349480968859,
+    "loss": 0.6592345534723936,
+    "binom_p_forward": 7.289172588238477e-21
+  },
+  "within": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.7491349480968859,
+        "loss": 0.6591842050783362,
+        "delta_acc": 0.0,
+        "assignment": {
+          "Handwriting_06": "Handwriting_07",
+          "Handwriting_07": "Handwriting_08",
+          "Handwriting_08": "Handwriting_06"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 1,
+        "acc": 0.7491349480968859,
+        "loss": 0.6591842050783362,
+        "delta_acc": 0.0,
+        "assignment": {
+          "Handwriting_06": "Handwriting_07",
+          "Handwriting_07": "Handwriting_08",
+          "Handwriting_08": "Handwriting_06"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 2,
+        "acc": 0.7491349480968859,
+        "loss": 0.6591842050783362,
+        "delta_acc": 0.0,
+        "assignment": {
+          "Handwriting_06": "Handwriting_07",
+          "Handwriting_07": "Handwriting_08",
+          "Handwriting_08": "Handwriting_06"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 3,
+        "acc": 0.7491349480968859,
+        "loss": 0.6591842050783362,
+        "delta_acc": 0.0,
+        "assignment": {
+          "Handwriting_06": "Handwriting_07",
+          "Handwriting_07": "Handwriting_08",
+          "Handwriting_08": "Handwriting_06"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 4,
+        "acc": 0.7491349480968859,
+        "loss": 0.6594023094045249,
+        "delta_acc": 0.0,
+        "assignment": {
+          "Handwriting_06": "Handwriting_08",
+          "Handwriting_07": "Handwriting_06",
+          "Handwriting_08": "Handwriting_07"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      }
+    ],
+    "mean_delta": 0.0,
+    "min_delta": 0.0,
+    "max_delta": 0.0,
+    "n_sig": 0,
+    "pass": false
+  },
+  "cross": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.7491349480968859,
+        "loss": 0.6540059746342959,
+        "delta_acc": 0.0,
+        "assignment": {
+          "Handwriting_06": "UniMiB-SHAR_15",
+          "Handwriting_07": "UniMiB-SHAR_08",
+          "Handwriting_08": "UniMiB-SHAR_10"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 1,
+        "acc": 0.7491349480968859,
+        "loss": 0.652990979719327,
+        "delta_acc": 0.0,
+        "assignment": {
+          "Handwriting_06": "UniMiB-SHAR_13",
+          "Handwriting_07": "UniMiB-SHAR_12",
+          "Handwriting_08": "UniMiB-SHAR_00"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 2,
+        "acc": 0.7491349480968859,
+        "loss": 0.6514569690070763,
+        "delta_acc": 0.0,
+        "assignment": {
+          "Handwriting_06": "UniMiB-SHAR_07",
+          "Handwriting_07": "UniMiB-SHAR_06",
+          "Handwriting_08": "UniMiB-SHAR_13"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 3,
+        "acc": 0.7491349480968859,
+        "loss": 0.6518741553217482,
+        "delta_acc": 0.0,
+        "assignment": {
+          "Handwriting_06": "UniMiB-SHAR_14",
+          "Handwriting_07": "UniMiB-SHAR_10",
+          "Handwriting_08": "UniMiB-SHAR_13"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 4,
+        "acc": 0.7491349480968859,
+        "loss": 0.651999914934891,
+        "delta_acc": 0.0,
+        "assignment": {
+          "Handwriting_06": "UniMiB-SHAR_15",
+          "Handwriting_07": "UniMiB-SHAR_08",
+          "Handwriting_08": "UniMiB-SHAR_11"
+        },
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      }
+    ],
+    "mean_delta": 0.0,
+    "min_delta": 0.0,
+    "max_delta": 0.0,
+    "n_sig": 0,
+    "pass": false
+  },
+  "zero": {
+    "acc": 0.7508650519031141,
+    "loss": 0.5416438736305105,
+    "delta_acc": -0.0017301038062282892,
+    "mcnemar": {
+      "b": 0,
+      "c": 1,
+      "p": 1.0
+    }
+  }
+}
