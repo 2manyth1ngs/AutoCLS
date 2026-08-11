@@ -56,6 +56,20 @@ route_a:
   ts2vec_max_instances_per_dataset: 4096   # 共享 TS2Vec 单变量实例池每数据集封顶（省内存；
                                            # 600 iters × bs128 仅消费 ~77k 实例）
 
+# --- 工作点口径（决定性实验 2026-08-11；用户拍板 "full"=per-dataset 工作点训练量，
+#     协议锁 results/decisive_e_ablation/PROTOCOL.md）---
+# iters_per_dataset：铁律 2 修改建议（iters_workpoint §6.1）的首次实例化，与
+# delta_per_dataset 同格式同地位；计量单位仍是 iters（数据集内跨任务 steps/ep 恒定）。
+# train.yaml 的全局 early/full 口径不动（既有 290/2320 缓存与判定按原口径引用）。
+# workpoint.delta_per_dataset：δ 用工作点 k=3 噪声探针重标（公式见协议 §2——
+# P95(同 CLS 重复对 |ΔR'|) 与 2×量子取大、上取整到 0.005），标定后由本次实验回填，
+# 回填前 2c 脚本拒绝配对（fail-fast，防用 290 口径 δ 配工作点 label）。
+workpoint:
+  iters_per_dataset:
+    Handwriting: 60       # 20ep；workpoint confirm n=60 A 层从容（56↑/1↓，strict 5%）
+    UniMiB-SHAR: 30       # 5ep；workpoint followup n=60 A 层踩线（37↑/8↓，strict 66%）
+  delta_per_dataset: {}   # 待噪声探针标定回填（协议 §2）
+
 # --- per-dataset δ（路线 A；探针 results/route_a_probe 定案，见 results/route_a_pool/REPORT.md）---
 # 铁律 2 之外的可靠性口径：δ=0.02 是 HAR 特调值，UEA 噪声随 n_eval/离天花板 4× 跨度，
 # 全局单值会在噪声大的数据集放行噪声 label。改按数据集查表。
