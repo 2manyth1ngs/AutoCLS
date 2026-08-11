@@ -1,0 +1,33 @@
+﻿D:\Anaconda\envs\pytorch\python.exe : D:\DevelopDoc\CLS\scripts\5_target_zero_shot.py:605: RuntimeWarning: Mean of empty slice
+At line:1 char:391
++ ... NG='utf-8'; D:\Anaconda\envs\pytorch\python.exe scripts/5_target_zero ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (D:\DevelopDoc\C... of empty slice:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  scores = np.nanmean(np.nanmean(all_S, axis=0), axis=1)
+D:\DevelopDoc\CLS\scripts\5_target_zero_shot.py:605: RuntimeWarning: Mean of empty slice
+  scores = np.nanmean(np.nanmean(all_S, axis=0), axis=1)
+D:\DevelopDoc\CLS\scripts\5_target_zero_shot.py:605: RuntimeWarning: Mean of empty slice
+  scores = np.nanmean(np.nanmean(all_S, axis=0), axis=1)
+D:\DevelopDoc\CLS\scripts\5_target_zero_shot.py:605: RuntimeWarning: Mean of empty slice
+  scores = np.nanmean(np.nanmean(all_S, axis=0), axis=1)
+D:\DevelopDoc\CLS\scripts\5_target_zero_shot.py:605: RuntimeWarning: Mean of empty slice
+  scores = np.nanmean(np.nanmean(all_S, axis=0), axis=1)
+D:\DevelopDoc\CLS\scripts\5_target_zero_shot.py:605: RuntimeWarning: Mean of empty slice
+  scores = np.nanmean(np.nanmean(all_S, axis=0), axis=1)
+D:\DevelopDoc\CLS\scripts\5_target_zero_shot.py:605: RuntimeWarning: Mean of empty slice
+  scores = np.nanmean(np.nanmean(all_S, axis=0), axis=1)
+
+比较器排名（31 候选 × 8 任务 × 3 种子多数票 → Borda）：
+  # 1 e490b88e [shared] wins=240 score=0.964
+  # 2 8c4aa283 [shared] wins=232 score=0.904
+  # 3 bb2875c3 [random] wins=224 score=0.907
+  # 4 9092e36e [shared] wins=216 score=0.855
+  # 5 9c4a9cee [random] wins=208 score=0.772
+  # 6 65627517 [shared] wins=200 score=0.719
+  # 7 b3070915 [random] wins=184 score=0.727
+  # 8 0fa624cb [random] wins=184 score=0.686
+  # 9 c92058f2 [ggs] wins=184 score=0.667
+  #10 f48e5da1 [shared] wins=168 score=0.629
+GGS 名次: #9/31 | 种子间 τ=[0.8451612903225807, 0.8279569892473119, 0.853763440860215] | E 消融 shuffle τ=[1.0, 1.0, 1.0, 1.0, 1.0] zero τ=0.9914

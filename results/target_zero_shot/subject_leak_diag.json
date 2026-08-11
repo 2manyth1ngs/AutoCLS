@@ -1,0 +1,61 @@
+{
+  "per_task_subject_overlap": {
+    "UCI-HAR_00": {
+      "n_eval": 306,
+      "eval_subject_in_train_frac": 1.0,
+      "n_subjects_train_side": 21
+    },
+    "UCI-HAR_01": {
+      "n_eval": 306,
+      "eval_subject_in_train_frac": 1.0,
+      "n_subjects_train_side": 21
+    },
+    "UCI-HAR_02": {
+      "n_eval": 307,
+      "eval_subject_in_train_frac": 1.0,
+      "n_subjects_train_side": 21
+    },
+    "UCI-HAR_03": {
+      "n_eval": 308,
+      "eval_subject_in_train_frac": 1.0,
+      "n_subjects_train_side": 21
+    },
+    "UCI-HAR_04": {
+      "n_eval": 307,
+      "eval_subject_in_train_frac": 1.0,
+      "n_subjects_train_side": 21
+    },
+    "UCI-HAR_05": {
+      "n_eval": 307,
+      "eval_subject_in_train_frac": 1.0,
+      "n_subjects_train_side": 21
+    },
+    "UCI-HAR_06": {
+      "n_eval": 308,
+      "eval_subject_in_train_frac": 1.0,
+      "n_subjects_train_side": 21
+    },
+    "UCI-HAR_07": {
+      "n_eval": 307,
+      "eval_subject_in_train_frac": 1.0,
+      "n_subjects_train_side": 21
+    }
+  },
+  "subject_disjoint_random_init_val": {
+    "held_out_subjects": [
+      8,
+      17,
+      21,
+      25
+    ],
+    "n_fit": 5886,
+    "n_val": 1466,
+    "seeds": [
+      0.8942701227830833,
+      0.8901773533424284,
+      0.8888130968622101
+    ],
+    "mean": 0.8910868576625739
+  },
+  "subject_mixed_random_init_val_ref": "results/target_zero_shot/prep_summary.json: full_random_init_val"
+}

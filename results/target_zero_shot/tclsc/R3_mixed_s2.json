@@ -1,0 +1,11 @@
+{
+  "run_id": "R3_mixed_s2",
+  "seed": 2,
+  "train_seconds": 366.3,
+  "bce_last": 0.1745703568061193,
+  "normal_acc": 0.7818181818181819,
+  "ref_acc": 0.7818181818181819,
+  "acc_delta_vs_ref": 0.0,
+  "n_train_records": 420,
+  "model_md5": "e06196fbbb2321eef013b6fd48acc8c6"
+}

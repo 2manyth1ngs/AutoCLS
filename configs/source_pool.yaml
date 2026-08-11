@@ -28,8 +28,11 @@ slice:
   min_samples: 32      # 任务样本数下限（低于此该类别子集不成任务）
 
 # 目标池（铁律 6：绝不进源池、绝不参与 TS2Vec 训练；load_source_dataset 对其 fail-fast）
+# UCI-HAR 的切片参数为 zero-shot 评估（scripts/5_target_zero_shot.py）切目标任务用：
+# 通用切片（RandomClassSubsetSlicer），与源池同口径同唯一真源；加载仍走 external
+# 专用路径（load_har），fail-fast 防护不变。6 类 → [3,6] 档组合数 42 ≥ 8 不重复。
 target_pool:
-  - {name: UCI-HAR,       source: external, domain: HAR}
+  - {name: UCI-HAR,       source: external, domain: HAR, n_channels: 9, n_classes: 6, l_enc: 128, crop_len: null, n_classes_range: [3, 6], planned_tasks: 8}
   - {name: Epilepsy,      source: uea,      domain: HAR}
   - {name: FaceDetection, source: uea,      domain: EEG/MEG}
 
