@@ -1,0 +1,515 @@
+{
+  "baseline": {
+    "delta_map": {
+      "Handwriting": 0.11,
+      "UniMiB-SHAR": 0.075
+    },
+    "calibrated": {
+      "n_delta_dropped": 902,
+      "n_tie_dropped": 0,
+      "pooled": {
+        "ceiling": 0.952513966480447,
+        "n_survive": 358
+      },
+      "Handwriting": {
+        "ceiling": 1.0,
+        "n_survive": 176
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 0.989010989010989,
+        "n_survive": 182
+      }
+    },
+    "delta0": {
+      "n_delta_dropped": 0,
+      "n_tie_dropped": 57,
+      "pooled": {
+        "ceiling": 0.7472984206151289,
+        "n_survive": 1203
+      },
+      "Handwriting": {
+        "ceiling": 0.8865384615384615,
+        "n_survive": 520
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 0.7774524158125915,
+        "n_survive": 683
+      }
+    }
+  },
+  "noise_distribution": {
+    "Handwriting": {
+      "n_diffs": 60,
+      "quantiles": {
+        "p10": 0.006451612903225812,
+        "p25": 0.011677419354838653,
+        "p50": 0.02890322580645166,
+        "p75": 0.05599999999999994,
+        "p90": 0.09096774193548388,
+        "p95": 0.10999999999999993,
+        "p100": 0.16000000000000003
+      },
+      "top20pct_cells_share_of_noise": 0.4332129963898917,
+      "hist_0.02bins": [
+        25,
+        14,
+        10,
+        2,
+        4,
+        3,
+        1,
+        0,
+        1
+      ],
+      "cell_mean_diffs_sorted": [
+        0.1067,
+        0.0903,
+        0.0731,
+        0.0602,
+        0.0533,
+        0.048,
+        0.043,
+        0.0373,
+        0.0373,
+        0.0373,
+        0.0373,
+        0.0258,
+        0.0258,
+        0.0215,
+        0.0213,
+        0.0172,
+        0.0129,
+        0.0086,
+        0.0053,
+        0.0
+      ]
+    },
+    "UniMiB-SHAR": {
+      "n_diffs": 60,
+      "quantiles": {
+        "p10": 0.006514657980456029,
+        "p25": 0.009771986970684043,
+        "p50": 0.019543973941368087,
+        "p75": 0.032573289902280145,
+        "p90": 0.04951140065146583,
+        "p95": 0.07540716612377846,
+        "p100": 0.09771986970684038
+      },
+      "top20pct_cells_share_of_noise": 0.40969162995594705,
+      "hist_0.02bins": [
+        32,
+        20,
+        4,
+        1,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cell_mean_diffs_sorted": [
+        0.0651,
+        0.0608,
+        0.0391,
+        0.0369,
+        0.0326,
+        0.0304,
+        0.0261,
+        0.0239,
+        0.0217,
+        0.0217,
+        0.0217,
+        0.0174,
+        0.0152,
+        0.0152,
+        0.0152,
+        0.013,
+        0.013,
+        0.0087,
+        0.0087,
+        0.0065
+      ]
+    }
+  },
+  "attribution": {
+    "Handwriting": {
+      "ss_share": {
+        "cls": 0.4820012984555083,
+        "task": 0.00010221543980189503,
+        "interaction_resid": 0.5178964861046897
+      },
+      "spearman_task0_vs_task1_cell_noise": -0.08000340850184665,
+      "per_cls_noise": {
+        "20be4f7443e8": 0.07182795698924734,
+        "4f7d413581f6": 0.04877419354838708,
+        "65627517fa32": 0.061935483870967735,
+        "8b87d66faad3": 0.021419354838709714,
+        "8c4aa28336d6": 0.05522580645161286,
+        "9092e36eefe1": 0.02511827956989247,
+        "a1f67db45e64": 0.02150537634408604,
+        "cffb55035c3a": 0.03690322580645163,
+        "e490b88ee785": 0.02296774193548386,
+        "f48e5da1d899": 0.015569892473118279
+      },
+      "spearman_noise_vs_meanR": 0.01818181818181818
+    },
+    "UniMiB-SHAR": {
+      "ss_share": {
+        "cls": 0.8888942797535299,
+        "task": 0.008199505118625966,
+        "interaction_resid": 0.10290621512784452
+      },
+      "spearman_task0_vs_task1_cell_noise": 0.5229382250813518,
+      "per_cls_noise": {
+        "20be4f7443e8": 0.06297502714440824,
+        "4f7d413581f6": 0.018458197611292082,
+        "65627517fa32": 0.014115092290988063,
+        "8b87d66faad3": 0.015200868621064068,
+        "8c4aa28336d6": 0.017372421281216077,
+        "9092e36eefe1": 0.034744842562432154,
+        "a1f67db45e64": 0.032573289902280145,
+        "cffb55035c3a": 0.0228013029315961,
+        "e490b88ee785": 0.016286644951140072,
+        "f48e5da1d899": 0.011943539630836053
+      },
+      "spearman_noise_vs_meanR": -0.5636363636363636
+    },
+    "spearman_perCLS_HW_vs_UM": 0.38181818181818183
+  },
+  "stability_probe_tasks": {
+    "perCLS_max": {
+      "new": {
+        "n": 21,
+        "sign_stable_3seed": 0.7619047619047619,
+        "seed0_matches_mean3": 1.0
+      },
+      "old": {
+        "n": 52,
+        "sign_stable_3seed": 0.9807692307692307,
+        "seed0_matches_mean3": 1.0
+      }
+    },
+    "perCLS_2nd": {
+      "new": {
+        "n": 39,
+        "sign_stable_3seed": 0.6666666666666666,
+        "seed0_matches_mean3": 1.0
+      },
+      "old": {
+        "n": 56,
+        "sign_stable_3seed": 0.9821428571428571,
+        "seed0_matches_mean3": 1.0
+      }
+    }
+  },
+  "shaved_magnitudes": {
+    "task_specific": {
+      "n": 284,
+      "quantiles": {
+        "p25": 0.012987012987012964,
+        "p50": 0.0228013029315961,
+        "p75": 0.0392156862745098,
+        "p90": 0.0537815126050421
+      }
+    },
+    "majority": {
+      "n": 561,
+      "quantiles": {
+        "p25": 0.01941747572815533,
+        "p50": 0.03594771241830064,
+        "p75": 0.06306306306306309,
+        "p90": 0.09009009009009006
+      }
+    }
+  },
+  "k3_preview_probe_tasks": {
+    "k1values_28tasks_delta_k3_approx": {
+      "n_delta_dropped": 684,
+      "n_tie_dropped": 0,
+      "pooled": {
+        "ceiling": 0.8975694444444444,
+        "n_survive": 576
+      },
+      "Handwriting": {
+        "ceiling": 0.9807073954983923,
+        "n_survive": 311
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 0.9471698113207547,
+        "n_survive": 265
+      }
+    },
+    "delta_k3": {
+      "Handwriting": 0.065,
+      "UniMiB-SHAR": 0.045
+    },
+    "k1_calibrated": {
+      "n_delta_dropped": 124,
+      "n_tie_dropped": 0,
+      "pooled": {
+        "ceiling": 1.0,
+        "n_survive": 56
+      },
+      "Handwriting": {
+        "ceiling": 1.0,
+        "n_survive": 35
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 1.0,
+        "n_survive": 21
+      }
+    },
+    "k1_delta0": {
+      "n_delta_dropped": 0,
+      "n_tie_dropped": 11,
+      "pooled": {
+        "ceiling": 0.8816568047337278,
+        "n_survive": 169
+      },
+      "Handwriting": {
+        "ceiling": 0.9534883720930233,
+        "n_survive": 86
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 0.927710843373494,
+        "n_survive": 83
+      }
+    },
+    "k3_calibrated_sqrt3": {
+      "n_delta_dropped": 100,
+      "n_tie_dropped": 0,
+      "pooled": {
+        "ceiling": 1.0,
+        "n_survive": 80
+      },
+      "Handwriting": {
+        "ceiling": 1.0,
+        "n_survive": 56
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 1.0,
+        "n_survive": 24
+      }
+    },
+    "k3_delta0": {
+      "n_delta_dropped": 0,
+      "n_tie_dropped": 2,
+      "pooled": {
+        "ceiling": 0.8426966292134831,
+        "n_survive": 178
+      },
+      "Handwriting": {
+        "ceiling": 0.9111111111111111,
+        "n_survive": 90
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 0.8863636363636364,
+        "n_survive": 88
+      }
+    },
+    "k3_perCLS_sqrt3": {
+      "n_delta_dropped": 80,
+      "n_tie_dropped": 0,
+      "pooled": {
+        "ceiling": 0.99,
+        "n_survive": 100
+      },
+      "Handwriting": {
+        "ceiling": 1.0,
+        "n_survive": 61
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 1.0,
+        "n_survive": 39
+      }
+    }
+  },
+  "required_k": {
+    "Handwriting": {
+      "p25": {
+        "delta_target": 0.014925373134328401,
+        "k_needed": 53.9987929240371
+      },
+      "p50": {
+        "delta_target": 0.033333333333333326,
+        "k_needed": 10.82622268470343
+      },
+      "p75": {
+        "delta_target": 0.04761904761904756,
+        "k_needed": 5.304849115504691
+      },
+      "frac_ts_above_delta_k3": 0.1643835616438356,
+      "n_task_specific_votes": 73
+    },
+    "UniMiB-SHAR": {
+      "p25": {
+        "delta_target": 0.012987012987012936,
+        "k_needed": 33.278241678957045
+      },
+      "p50": {
+        "delta_target": 0.02280130293159599,
+        "k_needed": 10.795918367347028
+      },
+      "p75": {
+        "delta_target": 0.04234527687296419,
+        "k_needed": 3.1301775147928943
+      },
+      "frac_ts_above_delta_k3": 0.22943722943722944,
+      "n_task_specific_votes": 231
+    }
+  },
+  "counterfactual_variants": {
+    "perCLS_max": {
+      "note": "δ_pair=max(δ_a,δ_b)，δ_c=cell 6 diff 的 max（保守）",
+      "deltas": {
+        "Handwriting": {
+          "20be4f7443e8": 0.14,
+          "4f7d413581f6": 0.095,
+          "65627517fa32": 0.165,
+          "8b87d66faad3": 0.035,
+          "8c4aa28336d6": 0.11,
+          "9092e36eefe1": 0.06,
+          "a1f67db45e64": 0.065,
+          "cffb55035c3a": 0.075,
+          "e490b88ee785": 0.06,
+          "f48e5da1d899": 0.04
+        },
+        "UniMiB-SHAR": {
+          "20be4f7443e8": 0.1,
+          "4f7d413581f6": 0.05,
+          "65627517fa32": 0.025,
+          "8b87d66faad3": 0.035,
+          "8c4aa28336d6": 0.035,
+          "9092e36eefe1": 0.06,
+          "a1f67db45e64": 0.06,
+          "cffb55035c3a": 0.04,
+          "e490b88ee785": 0.03,
+          "f48e5da1d899": 0.025
+        }
+      },
+      "n_delta_dropped": 804,
+      "n_tie_dropped": 0,
+      "pooled": {
+        "ceiling": 0.9276315789473685,
+        "n_survive": 456
+      },
+      "Handwriting": {
+        "ceiling": 0.9900497512437811,
+        "n_survive": 201
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 0.9568627450980393,
+        "n_survive": 255
+      }
+    },
+    "perCLS_2nd": {
+      "note": "δ_c=6 diff 的次大值（宽松，P83≈级）",
+      "deltas": {
+        "Handwriting": {
+          "20be4f7443e8": 0.12,
+          "4f7d413581f6": 0.085,
+          "65627517fa32": 0.105,
+          "8b87d66faad3": 0.035,
+          "8c4aa28336d6": 0.1,
+          "9092e36eefe1": 0.045,
+          "a1f67db45e64": 0.035,
+          "cffb55035c3a": 0.045,
+          "e490b88ee785": 0.05,
+          "f48e5da1d899": 0.035
+        },
+        "UniMiB-SHAR": {
+          "20be4f7443e8": 0.095,
+          "4f7d413581f6": 0.025,
+          "65627517fa32": 0.02,
+          "8b87d66faad3": 0.025,
+          "8c4aa28336d6": 0.02,
+          "9092e36eefe1": 0.05,
+          "a1f67db45e64": 0.04,
+          "cffb55035c3a": 0.035,
+          "e490b88ee785": 0.025,
+          "f48e5da1d899": 0.02
+        }
+      },
+      "n_delta_dropped": 658,
+      "n_tie_dropped": 0,
+      "pooled": {
+        "ceiling": 0.8754152823920266,
+        "n_survive": 602
+      },
+      "Handwriting": {
+        "ceiling": 0.9816176470588235,
+        "n_survive": 272
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 0.9242424242424242,
+        "n_survive": 330
+      }
+    },
+    "trimmed10": {
+      "note": "去掉最吵 10% cell 后重算 P95 全局 δ",
+      "deltas": {
+        "Handwriting": 0.085,
+        "UniMiB-SHAR": 0.05
+      },
+      "n_delta_dropped": 766,
+      "n_tie_dropped": 0,
+      "pooled": {
+        "ceiling": 0.917004048582996,
+        "n_survive": 494
+      },
+      "Handwriting": {
+        "ceiling": 0.9881889763779528,
+        "n_survive": 254
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 0.975,
+        "n_survive": 240
+      },
+      "at_risk_fraction": 0.1882591093117409
+    },
+    "trimmed20": {
+      "note": "去掉最吵 20% cell 后重算 P95 全局 δ",
+      "deltas": {
+        "Handwriting": 0.065,
+        "UniMiB-SHAR": 0.04
+      },
+      "n_delta_dropped": 667,
+      "n_tie_dropped": 0,
+      "pooled": {
+        "ceiling": 0.8853288364249579,
+        "n_survive": 593
+      },
+      "Handwriting": {
+        "ceiling": 0.9807073954983923,
+        "n_survive": 311
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 0.9432624113475178,
+        "n_survive": 282
+      },
+      "at_risk_fraction": 0.26644182124789206
+    },
+    "trimmed30": {
+      "note": "去掉最吵 30% cell 后重算 P95 全局 δ",
+      "deltas": {
+        "Handwriting": 0.06,
+        "UniMiB-SHAR": 0.04
+      },
+      "n_delta_dropped": 651,
+      "n_tie_dropped": 0,
+      "pooled": {
+        "ceiling": 0.8850574712643678,
+        "n_survive": 609
+      },
+      "Handwriting": {
+        "ceiling": 0.9755351681957186,
+        "n_survive": 327
+      },
+      "UniMiB-SHAR": {
+        "ceiling": 0.9432624113475178,
+        "n_survive": 282
+      },
+      "at_risk_fraction": 0.2824302134646962
+    }
+  }
+}
