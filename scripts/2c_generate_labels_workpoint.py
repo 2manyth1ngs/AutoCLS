@@ -57,6 +57,8 @@ from autocls.labeling import (  # noqa: E402
     load_probe_cls, load_rprime_cache, make_pairs, run_seed_for,
     sample_random_cls,
 )
+from joblib import parallel_backend  # noqa: E402
+
 from autocls.oom_guard import ON_OOM_SKIP, guarded_run  # noqa: E402
 from autocls.space.cls_space import CLSSpace  # noqa: E402
 from autocls.workpoint import destruction_participation  # noqa: E402
@@ -193,6 +195,14 @@ def noise_probe(outdir: Path, per_ds: list, iters_map: dict, shared_cls: list,
             if not (resume and (w[3].task_id, w[5], iters_map[w[0]], w[6]) in done)]
     print(f"噪声探针: 计划 {len(work)} 条，待跑 {len(todo)}", flush=True)
     t0 = time.time()
+    # threading 后端：fit_svm 的 GridSearchCV(n_jobs=-1) 在 Windows 上逐条 spawn
+    # loky 进程池（8–15s/条，占 99% 耗时；R' 逐位同值）——长期记忆教训，勿删
+    with parallel_backend("threading", n_jobs=1):
+        _noise_loop(todo, outdir, iters_map, train_cfg, labels_cfg, device, t0)
+
+
+def _noise_loop(todo, outdir, iters_map, train_cfg, labels_cfg, device, t0):
+    probe_path = outdir / "noise_probe.jsonl"
     for i, (name, X, y, t, c, k, rep) in enumerate(todo):
         iters = iters_map[name]
         w_seed = run_seed_for(t.task_id, f"{k}:noise{rep}")
@@ -288,6 +298,14 @@ def fill(outdir: Path, candidates: list, iters_map: dict, train_cfg: dict,
             if not (resume and (w[3].task_id, w[6], iters_map[w[0]]) in cache)]
     print(f"R' fill: 计划 {len(worklist)} 条，已缓存 {len(worklist) - len(todo)}，"
           f"待跑 {len(todo)}", flush=True)
+    # threading 后端：同 noise_probe 处注释（loky spawn 99% 耗时教训）
+    with parallel_backend("threading", n_jobs=1):
+        _fill_loop(todo, cache, cache_path, outdir, iters_map, train_cfg,
+                   labels_cfg, device)
+
+
+def _fill_loop(todo, cache, cache_path, outdir, iters_map, train_cfg,
+               labels_cfg, device):
     t0, n_oom = time.time(), 0
     for i, (name, X, y, t, org, c, key) in enumerate(todo):
         iters = iters_map[name]
