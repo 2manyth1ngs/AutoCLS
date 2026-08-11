@@ -68,7 +68,13 @@ workpoint:
   iters_per_dataset:
     Handwriting: 60       # 20ep；workpoint confirm n=60 A 层从容（56↑/1↓，strict 5%）
     UniMiB-SHAR: 30       # 5ep；workpoint followup n=60 A 层踩线（37↑/8↓，strict 66%）
-  delta_per_dataset: {}   # 待噪声探针标定回填（协议 §2）
+  # k=3 噪声探针标定（2026-08-11，results/labels_workpoint/delta_calibration.json）：
+  # 同 CLS 跨 weight seed 重复对 |ΔR'| 的 P95（重尾：HW 中位 0.029/最大 0.160，
+  # UniMiB 中位 0.020/最大 0.098）——工作点轨迹噪声显著大于 290 口径
+  # （290 口径 HW 推测值 0.07），δ 相应更严。
+  delta_per_dataset:
+    Handwriting: 0.110
+    UniMiB-SHAR: 0.075
 
 # --- per-dataset δ（路线 A；探针 results/route_a_probe 定案，见 results/route_a_pool/REPORT.md）---
 # 铁律 2 之外的可靠性口径：δ=0.02 是 HAR 特调值，UEA 噪声随 n_eval/离天花板 4× 跨度，

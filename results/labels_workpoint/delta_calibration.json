@@ -1,0 +1,20 @@
+{
+  "Handwriting": {
+    "iters": 60,
+    "n_diff_pairs": 60,
+    "p95_replicate_diff": 0.10967741935483866,
+    "quantum_floor": 0.016,
+    "delta": 0.11,
+    "diff_median": 0.02890322580645166,
+    "diff_max": 0.16000000000000003
+  },
+  "UniMiB-SHAR": {
+    "iters": 30,
+    "n_diff_pairs": 60,
+    "p95_replicate_diff": 0.07491856677524428,
+    "quantum_floor": 0.006514657980456026,
+    "delta": 0.075,
+    "diff_median": 0.019543973941368087,
+    "diff_max": 0.09771986970684038
+  }
+}

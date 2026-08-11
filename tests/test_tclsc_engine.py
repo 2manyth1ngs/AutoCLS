@@ -87,6 +87,32 @@ class TestDynamicPairs:
                                  rng=np.random.default_rng(seed)) == []
 
 
+class TestPerTaskDelta:
+    """delta 可以是 {task_id: δ} 映射（决定性实验：per-dataset δ 随任务查表；
+    引擎不知道数据集概念，只做 per-task 查表——铁律 7）。"""
+
+    def test_mapping_respected_per_task(self, records):
+        # t0 给大 δ（0.3）：|0.90-0.88|、|0.90-0.50| 中仅 0.40 差值存活；
+        # t1 给小 δ（0.01）：全部差值存活
+        deltas = {"t0": 0.3, "t1": 0.01}
+        for seed in range(8):
+            for p in dynamic_pairs(records, better, delta=deltas,
+                                   rng=np.random.default_rng(seed)):
+                tid = p.task_id
+                assert abs(p.vec_a[0] - p.vec_b[0]) >= deltas[tid], \
+                    f"{tid} 的 δ={deltas[tid]} 未生效"
+
+    def test_mapping_missing_task_raises(self, records):
+        with pytest.raises(KeyError):
+            dynamic_pairs(records, better, delta={"t0": 0.05},
+                          rng=np.random.default_rng(0))
+
+    def test_scalar_still_works(self, records):
+        pairs = dynamic_pairs(records, better, delta=0.05,
+                              rng=np.random.default_rng(0))
+        assert all(abs(p.vec_a[0] - p.vec_b[0]) >= 0.05 for p in pairs)
+
+
 class TestWithReversed:
     def test_doubles_flips_and_swaps(self, records):
         pairs = dynamic_pairs(records, better, delta=0.0,
@@ -187,3 +213,71 @@ class TestEngineTrainEval:
         engine, records = engine_setup
         with pytest.raises(ValueError):
             engine.evaluate(_all_directed_pairs(records), e_mode="nope")
+
+
+class TestEvaluateReturnCorrect:
+    """return_correct=True：返回逐对正误向量（McNemar 配对检验要用；
+    聚合 acc 必须与向量均值逐位一致）。"""
+
+    def test_correct_vector_consistent_with_acc(self, engine_setup):
+        engine, records = engine_setup
+        pairs = _all_directed_pairs(records)
+        res = engine.evaluate(pairs, return_correct=True)
+        assert len(res["correct"]) == len(pairs)
+        assert res["acc"] == pytest.approx(float(np.mean(res["correct"])))
+
+    def test_default_omits_vector(self, engine_setup):
+        engine, records = engine_setup
+        res = engine.evaluate(_all_directed_pairs(records))
+        assert "correct" not in res
+
+    def test_works_with_ablation_modes(self, engine_setup):
+        engine, records = engine_setup
+        pairs = _all_directed_pairs(records)
+        res = engine.evaluate(pairs, e_mode="zero", return_correct=True)
+        assert len(res["correct"]) == len(pairs)
+
+
+class TestEvaluateAssign:
+    """e_mode='assign'：调用方显式指定 每任务→取谁的 E（决定性实验的两档 shuffle：
+    within=数据集内 derangement / cross=跨数据集对调——数据集知识留在调用方，
+    引擎保持任务无关，铁律 7）。"""
+
+    def test_identity_assignment_equals_normal(self, engine_setup):
+        engine, records = engine_setup
+        pairs = _all_directed_pairs(records)
+        base = engine.evaluate(pairs)
+        ident = engine.evaluate(pairs, e_mode="assign",
+                                e_assignment={"t0": "t0", "t1": "t1"})
+        assert ident["acc"] == base["acc"] and ident["loss"] == pytest.approx(base["loss"])
+
+    def test_swap_assignment_equals_two_task_derangement(self, engine_setup):
+        # 2 任务时 derangement 唯一 = 对调 → assign 对调必须与 shuffle 档逐位一致
+        engine, records = engine_setup
+        pairs = _all_directed_pairs(records)
+        swap = engine.evaluate(pairs, e_mode="assign",
+                               e_assignment={"t0": "t1", "t1": "t0"})
+        shuf = engine.evaluate(pairs, e_mode="shuffle", seed=0)
+        assert swap["acc"] == shuf["acc"] and swap["loss"] == pytest.approx(shuf["loss"])
+        base = engine.evaluate(pairs)
+        assert swap["loss"] != base["loss"], "E 参与前向 → 对调必须改变输出统计"
+
+    def test_assignment_may_point_outside_test_tasks(self, engine_setup):
+        # cross 档会把留出任务的 E 指到训练侧任务——目标只需在 task_windows 里
+        engine, records = engine_setup
+        pairs = [p for p in _all_directed_pairs(records) if p.task_id == "t0"]
+        res = engine.evaluate(pairs, e_mode="assign", e_assignment={"t0": "t1"})
+        assert 0.0 <= res["acc"] <= 1.0 and np.isfinite(res["loss"])
+
+    def test_assign_validation(self, engine_setup):
+        engine, records = engine_setup
+        pairs = _all_directed_pairs(records)
+        with pytest.raises(ValueError):   # 缺映射
+            engine.evaluate(pairs, e_mode="assign", e_assignment={"t0": "t0"})
+        with pytest.raises(ValueError):   # 目标任务无特征
+            engine.evaluate(pairs, e_mode="assign",
+                            e_assignment={"t0": "t9", "t1": "t0"})
+        with pytest.raises(ValueError):   # assign 档必须给映射
+            engine.evaluate(pairs, e_mode="assign")
+        with pytest.raises(ValueError):   # 非 assign 档不得带映射
+            engine.evaluate(pairs, e_mode="zero", e_assignment={"t0": "t0", "t1": "t1"})

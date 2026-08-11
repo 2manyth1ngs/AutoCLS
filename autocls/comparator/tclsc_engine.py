@@ -28,7 +28,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
-from typing import Callable, Optional, Sequence
+from typing import Callable, Mapping, Optional, Sequence, Union
 
 import numpy as np
 import torch
@@ -61,11 +61,23 @@ class Pair:
     kind: str  # "shared-shared" / "random-shared" / "random-random"
 
 
+DeltaSpec = Union[float, Mapping[str, float]]
+
+
+def _delta_of(delta: DeltaSpec, task_id: str) -> float:
+    """δ 解析：标量全局同值；映射按 task_id 查表（per-dataset δ 的引擎侧形态
+    ——引擎不知道数据集概念，调用方把数据集 δ 展开成 per-task 表，铁律 7）。
+    映射缺任务即 KeyError fail-fast，绝不静默回退。"""
+    if isinstance(delta, Mapping):
+        return delta[task_id]
+    return delta
+
+
 def dynamic_pairs(
     records: Sequence[ClsRecord],
     better_fn: BetterFn,
     *,
-    delta: float,
+    delta: DeltaSpec,
     rng: np.random.Generator,
     origins: Optional[tuple[str, ...]] = None,
 ) -> list[Pair]:
@@ -73,7 +85,7 @@ def dynamic_pairs(
 
     任务内把记录序列与其乱序副本逐位配对；自配对、|Δr|<delta 近平局、双向
     均不优（严格平局）三类跳过。origins 给出时只用该来源的记录（curriculum
-    第一阶段传 ('shared',)）。
+    第一阶段传 ('shared',)）。delta 可为 {task_id: δ} 映射（_delta_of）。
     """
     if origins is not None:
         records = [r for r in records if r.origin in origins]
@@ -82,13 +94,14 @@ def dynamic_pairs(
         by_task.setdefault(r.task_id, []).append(r)
 
     pairs: list[Pair] = []
-    for recs in by_task.values():
+    for tid, recs in by_task.items():
+        d = _delta_of(delta, tid)
         partners = list(recs)
         rng.shuffle(partners)  # type: ignore[arg-type]
         for a, b in zip(recs, partners):
             if a.key == b.key:
                 continue
-            if abs(a.r - b.r) < delta:
+            if abs(a.r - b.r) < d:
                 continue
             a_better = better_fn(a.r, b.r)
             if not (a_better or better_fn(b.r, a.r)):
@@ -151,7 +164,7 @@ class TCLSCEngine:
         epochs: int,
         curriculum_epochs: int,
         better_fn: BetterFn,
-        delta: float,
+        delta: DeltaSpec,
     ) -> list[dict]:
         """动态配对 + curriculum 训练，返回逐 epoch 历史（loss/配对准确率）。
 
@@ -188,7 +201,8 @@ class TCLSCEngine:
     # ------------------------------------------------------------------ 评估
 
     def evaluate(
-        self, pairs: Sequence[Pair], *, e_mode: str = "normal", seed: int = 0
+        self, pairs: Sequence[Pair], *, e_mode: str = "normal", seed: int = 0,
+        e_assignment: Optional[dict[str, str]] = None, return_correct: bool = False,
     ) -> dict:
         """配对准确率评估（← ahc_engine.py::evaluate），带 E 消融开关。
 
@@ -196,25 +210,45 @@ class TCLSCEngine:
         - normal：每任务用自己的 E；
         - shuffle：任务间错位（derangement）——任务 A 的样本配任务 B 的 E。
           若准确率不掉，说明模型没在看 E；
+        - assign：按调用方给的 e_assignment（task_id → 取谁的 E）逐任务指定，
+          目标任务只需在 task_windows 里（可指向测试集外的任务）。分组消融
+          （如"数据集内错位"/"跨数据集对调"）的分组知识留在调用方——引擎
+          保持任务无关（铁律 7），不 import 任何数据集概念；
         - zero：E 置零（set_fc 只剩常数支路）。
         判读：消融后大幅下降 → 真 task-aware；几乎不变 → 退化为忽略 E 的
         通用 CLS 排序器（很可能是源任务多样性不足的必然结果，印证转路线 A）。
         """
-        if e_mode not in ("normal", "shuffle", "zero"):
-            raise ValueError(f"未知 e_mode={e_mode!r}（可选 normal/shuffle/zero）")
+        if e_mode not in ("normal", "shuffle", "assign", "zero"):
+            raise ValueError(f"未知 e_mode={e_mode!r}（可选 normal/shuffle/assign/zero）")
+        if (e_assignment is not None) != (e_mode == "assign"):
+            raise ValueError("e_assignment 当且仅当 e_mode='assign' 时给出")
         tids = sorted({p.task_id for p in pairs})
         self.model.eval()
         with torch.no_grad():
-            e_rows = self.model.encode_tasks([self.task_windows[t] for t in tids])
-            if e_mode == "zero":
-                e_rows = torch.zeros_like(e_rows)
-            elif e_mode == "shuffle":
-                e_rows = e_rows[torch.as_tensor(
-                    derangement(len(tids), np.random.default_rng(seed)),
-                    device=self.device)]
-            e_map = {t: e_rows[i] for i, t in enumerate(tids)}
+            if e_mode == "assign":
+                missing = [t for t in tids if t not in e_assignment]
+                if missing:
+                    raise ValueError(f"e_assignment 缺任务映射: {missing}")
+                unknown = sorted({e_assignment[t] for t in tids}
+                                 - set(self.task_windows))
+                if unknown:
+                    raise ValueError(f"e_assignment 目标任务无特征: {unknown}")
+                src = sorted({e_assignment[t] for t in tids})
+                rows = self.model.encode_tasks([self.task_windows[t] for t in src])
+                idx = {t: i for i, t in enumerate(src)}
+                e_map = {t: rows[idx[e_assignment[t]]] for t in tids}
+            else:
+                e_rows = self.model.encode_tasks([self.task_windows[t] for t in tids])
+                if e_mode == "zero":
+                    e_rows = torch.zeros_like(e_rows)
+                elif e_mode == "shuffle":
+                    e_rows = e_rows[torch.as_tensor(
+                        derangement(len(tids), np.random.default_rng(seed)),
+                        device=self.device)]
+                e_map = {t: e_rows[i] for i, t in enumerate(tids)}
 
             losses_sum, n_correct = 0.0, 0
+            correct_flags: list[bool] = []
             for batch in self._batches(pairs):
                 a = self._stack([p.vec_a for p in batch])
                 b = self._stack([p.vec_b for p in batch])
@@ -222,13 +256,19 @@ class TCLSCEngine:
                 y = torch.as_tensor([float(p.y) for p in batch], device=self.device)
                 out = self.model(a, b, E)
                 losses_sum += self.criterion(out, y).item() * len(batch)
-                n_correct += (torch.round(out) == y).sum().item()
+                hit = torch.round(out) == y
+                n_correct += hit.sum().item()
+                if return_correct:
+                    correct_flags += [bool(v) for v in hit.cpu().numpy()]
         n = len(pairs)
-        return {
+        res = {
             "e_mode": e_mode, "n": n,
             "acc": n_correct / n if n else float("nan"),
             "loss": losses_sum / n if n else float("nan"),
         }
+        if return_correct:
+            res["correct"] = np.asarray(correct_flags, dtype=bool)
+        return res
 
     # ------------------------------------------------------------------ 内部
 
