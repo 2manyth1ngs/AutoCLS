@@ -160,6 +160,53 @@ def split_task_train_eval(
     )
 
 
+def split_train_eval_by_group(
+    y: np.ndarray, groups: np.ndarray, *, eval_ratio: float, seed: int,
+    max_attempts: int = 100,
+) -> tuple[np.ndarray, np.ndarray]:
+    """按分组（如受试者）划 (train, eval)：**整组进一侧**，杜绝组内孪生泄漏。
+
+    动机（目标池 zero-shot 评估 2026-08-11 发现，出路 A 拍板 2026-08-12）：
+    UCI-HAR 窗口 50% 重叠 + 分层随机切分让 eval 侧每个窗口在 train 侧有同受试者
+    孪生近邻——随机初始化基线被抬 +0.070 直接贴顶，R' 测量饱和。组切分与官方
+    test（跨受试者）的划分语义对齐。
+
+    算法（数据前写死）：组随机排列后依序累入 eval，**首次达到目标样本数即停**
+    （过冲上界 = 最大组的大小，保证 train 侧规模可控——steps/epoch 换算依赖）；
+    校验每类两侧都有 ≥1 样本（SVM 训练/评估前提），不满足换派生 seed 重试
+    max_attempts 次后 ValueError fail-fast（如某类只存在于单一组时无解）。
+    返回升序局部索引，接口与 split_task_train_eval 对齐。
+    """
+    y = np.asarray(y)
+    groups = np.asarray(groups)
+    assert len(y) == len(groups), f"y {len(y)} 与 groups {len(groups)} 长度不一致"
+    uniq = np.unique(groups)
+    if len(uniq) < 2:
+        raise ValueError(f"组数 {len(uniq)} < 2，无法组切分")
+    target = eval_ratio * len(y)
+    classes = set(np.unique(y).tolist())
+    for attempt in range(max_attempts):
+        rng = np.random.default_rng([seed, attempt])
+        perm = rng.permutation(uniq)
+        ev_groups, n_ev = [], 0
+        for g in perm:
+            ev_groups.append(g)
+            n_ev += int(np.sum(groups == g))
+            if n_ev >= target:
+                break
+        ev_mask = np.isin(groups, ev_groups)
+        if ev_mask.all():
+            continue  # 组太少/太大吞掉全部样本：换排列
+        tr_idx = np.where(~ev_mask)[0]
+        ev_idx = np.where(ev_mask)[0]
+        if set(y[tr_idx].tolist()) == classes and set(y[ev_idx].tolist()) == classes:
+            return np.sort(tr_idx), np.sort(ev_idx)
+    raise ValueError(
+        f"组切分 {max_attempts} 次尝试均无法保证每类两侧覆盖"
+        "（可能某类只存在于单一组）——数据不支持该协议，fail-fast"
+    )
+
+
 # ---------------------------------------------------------------------------
 # 配对造 label（铁律 8：方向只经 is_better；δ 过滤同分噪声）
 # ---------------------------------------------------------------------------
@@ -412,8 +459,13 @@ def evaluate_rprime(
     batch_size: int = 128,
     lr: float = 1e-3,
     device: Optional[str] = None,
+    split_indices: Optional[tuple[np.ndarray, np.ndarray]] = None,
 ) -> dict:
     """对 (task, cls) 跑 iters 对比预训练 + 任务内分层 train/eval 下游评估得 R'。
+
+    split_indices: 显式 (tr_idx, ev_idx)（任务内局部索引）——给出时绕过内部
+    分层切分（出路 A 跨受试者协议：调用方用 split_train_eval_by_group 产出组
+    切分注入；split_seed 仍原样落盘作切分来源标识）。None = 原分层切分。
 
     通道数按任务适配（build_encoder(input_dims=|channels|)）；task_type 分发评估器与
     划分方式（铁律 7）。训练发散/异常记 r_prime=NaN + error，不中断（对齐既有
@@ -435,9 +487,12 @@ def evaluate_rprime(
     from .encoders.registry import build_encoder
 
     Xt, yt = materialize_task(task, X, y)
-    tr_idx, ev_idx = split_task_train_eval(
-        yt, task.task_type, eval_ratio=eval_ratio, seed=split_seed,
-    )
+    if split_indices is not None:
+        tr_idx, ev_idx = split_indices
+    else:
+        tr_idx, ev_idx = split_task_train_eval(
+            yt, task.task_type, eval_ratio=eval_ratio, seed=split_seed,
+        )
     rec: dict = {"seconds": None, "error": None, "r_prime": float("nan")}
     t0 = time.perf_counter()
     try:

@@ -70,6 +70,7 @@ from autocls.encoders.registry import build_encoder  # noqa: E402
 from autocls.labeling import (  # noqa: E402
     append_jsonl, cls_key, comparator_records, device_label, evaluate_rprime,
     load_probe_cls, load_rprime_cache, run_seed_for, split_task_train_eval,
+    split_train_eval_by_group,
 )
 from autocls.oom_guard import ON_OOM_SKIP, guarded_run, is_oom_error  # noqa: E402
 from autocls.search.rank import (  # noqa: E402
@@ -111,6 +112,16 @@ VAL_SPLIT_SEED = 20260811
 DESTRUCTION_DELTAS = (0.05, 0.03)  # 破坏参与率诊断口径（confirm §4 主口径 + 敏感性）
 M1_GGS_2320 = {"original": 0.9372, "rerun_4060": 0.9348}  # M1 锚点（桥接对照引用）
 WORKPOINT_MARGIN = 0.02         # select_workpoint 让分窗（confirm 协议 §2）
+
+# --- 出路 A：跨受试者协议（2026-08-12 拍板；PROTOCOL 见 subject_protocol/PROTOCOL.md）---
+# 动机：train 内分层切分受试者 100% 重叠 + 窗口 50% 重叠 → 测量饱和（首轮停机报告 §4）。
+# 协议模式下任务内 train/eval 与 sweep 的 val 全部按受试者整组切分；判据/网格/候选池
+# 与首轮逐字不变。协议特定缓存进 subject_protocol/ 子目录（切分不同 → R' 不可混用，
+# 铁律 3）；task_features / tclsc / ranking / candidates / encoders 切分无关，两协议共享。
+SUBJECT_TXT = ROOT / "data" / "raw" / "uci_har" / "inner" / "UCI HAR Dataset" / \
+    "train" / "subject_train.txt"
+VAL_HOLDOUT_SUBJECTS = (8, 17, 21, 25)   # 预注册固定（diag rng seed=0 抽出，停机报告 §9-1）
+SUBJECT_SUBDIR = "subject_protocol"
 
 
 # ---------------------------------------------------------------------------
@@ -206,14 +217,49 @@ def val_split(y_train: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         y_train, "classification", eval_ratio=VAL_RATIO, seed=VAL_SPLIT_SEED)
 
 
-def probe_spe(tasks, X_train, y_train, eval_ratio: float) -> int:
-    """前 2 任务的 steps/epoch（须唯一，否则 epoch 网格不可换算——fail-fast）。"""
+def data_dir(outdir: Path, subject: bool) -> Path:
+    """协议特定缓存目录：subject 模式进子目录（切分不同 → R' 不可混用，铁律 3）。"""
+    return outdir / SUBJECT_SUBDIR if subject else outdir
+
+
+def load_train_subjects(n_expected: int) -> np.ndarray:
+    subjects = np.loadtxt(SUBJECT_TXT, dtype=np.int64)
+    assert len(subjects) == n_expected, \
+        f"subject_train.txt {len(subjects)} 行 ≠ train {n_expected}（顺序对齐前提破坏）"
+    return subjects
+
+
+def subject_task_split(task, subjects: np.ndarray, yt: np.ndarray,
+                       eval_ratio: float) -> tuple[np.ndarray, np.ndarray, int]:
+    """任务内跨受试者切分（canonical：seed 由 task_id 派生，与执行顺序无关）。"""
+    gidx = np.asarray(task.sample_indices)
+    seed = run_seed_for(task.task_id, "subject_eval_split")
+    tr, ev = split_train_eval_by_group(
+        yt, subjects[gidx], eval_ratio=eval_ratio, seed=seed)
+    return tr, ev, seed
+
+
+def subject_val_split(subjects: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """sweep 真值的跨受试者 val：留出组预注册固定 VAL_HOLDOUT_SUBJECTS。"""
+    mask = np.isin(subjects, VAL_HOLDOUT_SUBJECTS)
+    assert mask.any() and not mask.all(), "留出受试者不在 train 中或吞掉全部样本"
+    return np.where(~mask)[0], np.where(mask)[0]
+
+
+def probe_spe(tasks, X_train, y_train, eval_ratio: float,
+              subjects: np.ndarray | None = None) -> int:
+    """前 2 任务的 steps/epoch（须唯一，否则 epoch 网格不可换算——fail-fast）。
+
+    subjects 给出时按跨受试者切分计 n_train（出路 A 协议）。"""
     spes = set()
     for t in tasks[:N_PROBE_TASKS]:
         _Xt, yt = materialize_task(t, X_train, y_train)
-        tr_idx, _ = split_task_train_eval(
-            yt, t.task_type, eval_ratio=eval_ratio,
-            seed=run_seed_for(t.task_id, "train_eval_split"))
+        if subjects is not None:
+            tr_idx, _ev, _s = subject_task_split(t, subjects, yt, eval_ratio)
+        else:
+            tr_idx, _ = split_task_train_eval(
+                yt, t.task_type, eval_ratio=eval_ratio,
+                seed=run_seed_for(t.task_id, "train_eval_split"))
         spes.add(steps_per_epoch(len(tr_idx)))
     if len(spes) != 1:
         sys.exit(f"探针任务 steps/epoch 不唯一 {spes}，epoch 网格不可换算")
@@ -252,7 +298,10 @@ def pair_prob_matrix(model: TCLSC, vecs: torch.Tensor, e_row: torch.Tensor) -> n
 # ---------------------------------------------------------------------------
 
 
-def stage_prep(outdir: Path, reg, labels_cfg: dict, device: str, resume: bool) -> None:
+def stage_prep(outdir: Path, reg, labels_cfg: dict, device: str, resume: bool,
+               subject: bool = False) -> None:
+    ddir = data_dir(outdir, subject)
+    ddir.mkdir(parents=True, exist_ok=True)
     # 泄漏自检①（铁律 6）：目标走源加载路径必须 fail-fast
     try:
         load_source_dataset(TARGET, reg)
@@ -263,86 +312,130 @@ def stage_prep(outdir: Path, reg, labels_cfg: dict, device: str, resume: bool) -
     X_train, y_train = load_target_train()
     tasks = target_tasks(reg, y_train)
     eval_ratio = labels_cfg["eval_ratio"]
-    print(f"{TARGET}: X_train={X_train.shape} → {len(tasks)} 任务（通用切片）", flush=True)
+    subjects = load_train_subjects(len(y_train)) if subject else None
+    print(f"{TARGET}: X_train={X_train.shape} → {len(tasks)} 任务（通用切片"
+          f"{'，跨受试者协议' if subject else ''}）", flush=True)
+
+    def task_split(t, yt):
+        """协议分发：subject 模式整组切分（注入），否则 canonical 分层切分。"""
+        if subject:
+            tr, ev, seed = subject_task_split(t, subjects, yt, eval_ratio)
+            return tr, ev, seed
+        seed = run_seed_for(t.task_id, "train_eval_split")
+        tr, ev = split_task_train_eval(yt, t.task_type, eval_ratio=eval_ratio,
+                                       seed=seed)
+        return tr, ev, seed
 
     task_meta = []
     for t in tasks:
         _Xt, yt = materialize_task(t, X_train, y_train)
-        tr_idx, ev_idx = split_task_train_eval(
-            yt, t.task_type, eval_ratio=eval_ratio,
-            seed=run_seed_for(t.task_id, "train_eval_split"))
-        task_meta.append({**dataclasses.asdict(t), "n_train": len(tr_idx),
-                          "n_eval": len(ev_idx),
-                          "spe": steps_per_epoch(len(tr_idx))})
-    (outdir / "tasks.json").write_text(json.dumps({
+        tr_idx, ev_idx, sp_seed = task_split(t, yt)
+        row = {**dataclasses.asdict(t), "n_train": len(tr_idx),
+               "n_eval": len(ev_idx), "spe": steps_per_epoch(len(tr_idx)),
+               "split_seed": sp_seed}
+        if subject:
+            gidx = np.asarray(t.sample_indices)
+            row["eval_subjects"] = sorted(set(subjects[gidx][ev_idx].tolist()))
+        task_meta.append(row)
+    (ddir / "tasks.json").write_text(json.dumps({
         "dataset": TARGET, "n_tasks": len(tasks), "slice": "RandomClassSubsetSlicer",
+        "split_protocol": "subject_disjoint" if subject else "stratified",
         "tasks": task_meta}, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    # 任务特征：共享 TS2Vec 只 load 不 fit（铁律 6 核心；指纹校验 fit 池 = 源池）
-    meta = json.loads((LABELS_DIR / "shared_ts2vec.meta.json").read_text(encoding="utf-8"))
-    assert TARGET not in meta["fit_datasets"], "共享 TS2Vec fit 池含目标数据集！（铁律 6）"
-    assert sorted(meta["fit_datasets"]) == ["Handwriting", "UniMiB-SHAR"], \
-        f"fit 池 {meta['fit_datasets']} ≠ 决定性实验源池"
-    shared = TS2VecWrapper.load(LABELS_DIR / "shared_ts2vec.pt", device=device)
-    assert shared.frozen and shared.n_iters > 0, "共享 TS2Vec 必须已冻结（铁律 6）"
-    init_path = LABELS_DIR / "set_encoder_init.pt"
-    assert init_path.exists(), "缺 set_encoder_init.pt（决定性实验产物）"
-    ra = labels_cfg["route_a"]
-    torch.manual_seed(ra["embed_seed"])
-    set_enc = TaskSetEncoder(dim_input=shared.output_dims, nz=ra["nz"])
-    set_enc.load_state_dict(torch.load(init_path, map_location="cpu", weights_only=True))
+    # 任务特征：共享 TS2Vec 只 load 不 fit（铁律 6 核心；指纹校验 fit 池 = 源池）。
+    # 特征不含标签/切分 → 两协议共享（subject 模式仅校验已存在，不重算）。
     feat_dir = outdir / "task_features"
-    feat_dir.mkdir(exist_ok=True)
-    for t in tasks:
-        _r2b.ensure_task_features(t, X_train, y_train, shared, set_enc, ra, feat_dir)
-    print("任务特征就绪（冻结 TS2Vec 只编码，零训练）", flush=True)
+    if subject:
+        missing = [t.task_id for t in tasks
+                   if not (feat_dir / f"{t.task_id}.npz").exists()]
+        assert not missing, f"任务特征缺失 {missing}：先跑首轮 --prep"
+        print("任务特征复用首轮产物（切分无关）", flush=True)
+    else:
+        meta = json.loads((LABELS_DIR / "shared_ts2vec.meta.json").read_text(encoding="utf-8"))
+        assert TARGET not in meta["fit_datasets"], "共享 TS2Vec fit 池含目标数据集！（铁律 6）"
+        assert sorted(meta["fit_datasets"]) == ["Handwriting", "UniMiB-SHAR"], \
+            f"fit 池 {meta['fit_datasets']} ≠ 决定性实验源池"
+        shared = TS2VecWrapper.load(LABELS_DIR / "shared_ts2vec.pt", device=device)
+        assert shared.frozen and shared.n_iters > 0, "共享 TS2Vec 必须已冻结（铁律 6）"
+        init_path = LABELS_DIR / "set_encoder_init.pt"
+        assert init_path.exists(), "缺 set_encoder_init.pt（决定性实验产物）"
+        ra = labels_cfg["route_a"]
+        torch.manual_seed(ra["embed_seed"])
+        set_enc = TaskSetEncoder(dim_input=shared.output_dims, nz=ra["nz"])
+        set_enc.load_state_dict(torch.load(init_path, map_location="cpu", weights_only=True))
+        feat_dir.mkdir(exist_ok=True)
+        for t in tasks:
+            _r2b.ensure_task_features(t, X_train, y_train, shared, set_enc, ra, feat_dir)
+        print("任务特征就绪（冻结 TS2Vec 只编码，零训练）", flush=True)
 
-    # 随机初始化基线：8 任务 × 5 种子 iters=0（canonical split；源池探针同口径）
-    cache_path = outdir / "baseline_cache.jsonl"
+    # 随机初始化基线：8 任务 × 5 种子 iters=0（split 恒 canonical——subject 模式为
+    # 任务级组切分、否则分层切分；weight 逐种子派生。源池探针同口径）
+    cache_path = ddir / "baseline_cache.jsonl"
     done = {(r["task_id"], r["seed"]) for r in read_jsonl(cache_path)}
     work = [(t, s) for t in tasks for s in range(N_BASELINE_SEEDS)]
     todo = [w for w in work if not (resume and (w[0].task_id, w[1]) in done)]
     print(f"基线: 计划 {len(work)} 条，待跑 {len(todo)}", flush=True)
     base_cls = inert_cls()
+    split_cache: dict[str, tuple] = {}   # task_id → (tr, ev, seed)（组切分复用）
+
+    def split_of(t):
+        if t.task_id not in split_cache:
+            _Xt, yt = materialize_task(t, X_train, y_train)
+            split_cache[t.task_id] = task_split(t, yt)
+        return split_cache[t.task_id]
+
     # threading 后端：fit_svm 的 GridSearchCV(n_jobs=-1) 在 Windows 上逐条 spawn
     # loky 进程池（占 99% 耗时；R' 逐位同值）——长期记忆教训，勿删
     with parallel_backend("threading", n_jobs=1):
         for i, (t, s) in enumerate(todo):
-            w_seed, sp_seed = baseline_seed_specs(t.task_id, s)
+            w_seed, _canon_sp = baseline_seed_specs(t.task_id, s)
+            tr_idx, ev_idx, sp_seed = split_of(t)
 
             def make_row(rec, _t=t, _s=s):
                 rp = rec["r_prime"]
                 return {"dataset": TARGET, "task_id": _t.task_id, "tag": _t.tag,
                         "task_type": _t.task_type, "classes": list(_t.classes),
                         "cls_key": "baseline", "seed": _s, "iters": 0, **rec,
+                        "split_protocol": "subject_disjoint" if subject else "stratified",
                         "r_prime": None if not np.isfinite(rp) else float(rp)}
 
             full = guarded_run(
                 lambda: evaluate_rprime(t, base_cls, X_train, y_train,
                                         weight_seed=w_seed, split_seed=sp_seed,
                                         iters=0, eval_ratio=eval_ratio,
+                                        split_indices=(tr_idx, ev_idx) if subject else None,
                                         device=device),
-                make_row, cache_path=cache_path, inflight=outdir / "inflight.txt",
+                make_row, cache_path=cache_path, inflight=ddir / "inflight.txt",
                 task_id=t.task_id, cls_key="baseline", iters=0,
-                on_oom=ON_OOM_SKIP, oom_log=outdir / "oom_failures.jsonl",
+                on_oom=ON_OOM_SKIP, oom_log=ddir / "oom_failures.jsonl",
                 context={"dataset": TARGET, "baseline_seed": s},
                 log=lambda m: print(f"[base {i + 1}/{len(todo)}] {m}", flush=True))
             if full is not None:
                 print(f"[base {i + 1}/{len(todo)}] {t.task_id} s{s} "
                       f"R'={full['r_prime']}", flush=True)
 
-        # 全量随机初始化 val 基线（贴顶判断的全量口径；只用 train/val，不碰 test）
-        fit_idx, val_idx = val_split(y_train)
-        full_base = []
-        for s in range(N_FULLBASE_SEEDS):
-            torch.manual_seed(s)
-            enc = build_encoder(input_dims=X_train.shape[-1])
-            f_fit = encode_features(enc, X_train[fit_idx], device=device)
-            f_val = encode_features(enc, X_train[val_idx], device=device)
-            clf = fit_svm(f_fit, y_train[fit_idx], seed=s)
-            acc = float(np.mean(clf.predict(f_val) == y_train[val_idx]))
-            full_base.append(acc)
-            print(f"[full-base s{s}] val_acc={acc:.4f}", flush=True)
+        if subject:
+            # 全量跨受试者随机初始化 val 基线：诊断已按同一留出组测过（3 种子），
+            # 逐字段复用，不重烧 GPU
+            diag = json.loads((outdir / "subject_leak_diag.json").read_text(encoding="utf-8"))
+            dj = diag["subject_disjoint_random_init_val"]
+            assert tuple(dj["held_out_subjects"]) == VAL_HOLDOUT_SUBJECTS
+            full_base, n_fit, n_val = dj["seeds"], dj["n_fit"], dj["n_val"]
+            print(f"[full-base] 复用 subject_leak_diag: {full_base}", flush=True)
+        else:
+            # 全量随机初始化 val 基线（贴顶判断的全量口径；只用 train/val，不碰 test）
+            fit_idx, val_idx = val_split(y_train)
+            n_fit, n_val = len(fit_idx), len(val_idx)
+            full_base = []
+            for s in range(N_FULLBASE_SEEDS):
+                torch.manual_seed(s)
+                enc = build_encoder(input_dims=X_train.shape[-1])
+                f_fit = encode_features(enc, X_train[fit_idx], device=device)
+                f_val = encode_features(enc, X_train[val_idx], device=device)
+                clf = fit_svm(f_fit, y_train[fit_idx], seed=s)
+                acc = float(np.mean(clf.predict(f_val) == y_train[val_idx]))
+                full_base.append(acc)
+                print(f"[full-base s{s}] val_acc={acc:.4f}", flush=True)
 
     rows_by_task = defaultdict(list)
     for r in read_jsonl(cache_path):
@@ -351,15 +444,18 @@ def stage_prep(outdir: Path, reg, labels_cfg: dict, device: str, resume: bool) -
     per_task = {tid: summarize_task(rows, n_classes=n_classes_of[tid])
                 for tid, rows in rows_by_task.items()}
     summary = {
+        "split_protocol": "subject_disjoint" if subject else "stratified",
         "per_task": per_task,
         "dataset": summarize_dataset(per_task),
         "full_random_init_val": {"seeds": full_base,
                                  "mean": statistics.fmean(full_base),
-                                 "n_fit": int(len(fit_idx)), "n_val": int(len(val_idx))},
+                                 "n_fit": int(n_fit), "n_val": int(n_val)},
         "shared_ts2vec_md5": file_md5(LABELS_DIR / "shared_ts2vec.pt"),
-        "shared_ts2vec_fit_pool": meta["fit_datasets"],
+        "shared_ts2vec_fit_pool": json.loads(
+            (LABELS_DIR / "shared_ts2vec.meta.json").read_text(encoding="utf-8")
+        )["fit_datasets"],
     }
-    (outdir / "prep_summary.json").write_text(
+    (ddir / "prep_summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
     d = summary["dataset"]
     print(f"\n基线汇总: 任务级 mean={d['baseline_mean']:.4f} "
@@ -373,17 +469,33 @@ def stage_prep(outdir: Path, reg, labels_cfg: dict, device: str, resume: bool) -
 
 
 def stage_calibrate(outdir: Path, reg, labels_cfg: dict, train_cfg: dict,
-                    device: str, resume: bool) -> None:
+                    device: str, resume: bool, subject: bool = False) -> None:
+    ddir = data_dir(outdir, subject)
+    ddir.mkdir(parents=True, exist_ok=True)
     X_train, y_train = load_target_train()
     tasks = target_tasks(reg, y_train)
     probe = tasks[:N_PROBE_TASKS]
     eval_ratio = labels_cfg["eval_ratio"]
-    spe = probe_spe(tasks, X_train, y_train, eval_ratio)
+    subjects = load_train_subjects(len(y_train)) if subject else None
+    spe = probe_spe(tasks, X_train, y_train, eval_ratio, subjects=subjects)
     iters_grid = grid_iters(spe)
     shared_cls = load_probe_cls(PROBE_CATALOG, N_SHARED_CLS)[0]
-    print(f"标定: spe={spe} → iters 网格 {iters_grid}（= {list(EP_GRID)} ep）", flush=True)
+    print(f"标定: spe={spe} → iters 网格 {iters_grid}（= {list(EP_GRID)} ep"
+          f"{'，跨受试者协议' if subject else ''}）", flush=True)
 
-    fill_path = outdir / "trained_fill.jsonl"
+    split_cache: dict[str, tuple] = {}
+
+    def split_of(t):
+        """subject 模式的任务级组切分（canonical、任务内恒定）；否则 None。"""
+        if not subject:
+            return None, run_seed_for(t.task_id, "train_eval_split")
+        if t.task_id not in split_cache:
+            _Xt, yt = materialize_task(t, X_train, y_train)
+            split_cache[t.task_id] = subject_task_split(t, subjects, yt, eval_ratio)
+        tr, ev, seed = split_cache[t.task_id]
+        return (tr, ev), seed
+
+    fill_path = ddir / "trained_fill.jsonl"
     cache = load_rprime_cache(fill_path)
     work = [(t, c, k, it) for it in iters_grid for t in probe for c, k in shared_cls]
     todo = [w for w in work if not (resume and (w[0].task_id, w[2], w[3]) in cache)]
@@ -393,7 +505,7 @@ def stage_calibrate(outdir: Path, reg, labels_cfg: dict, train_cfg: dict,
     with parallel_backend("threading", n_jobs=1):
         for i, (t, c, k, it) in enumerate(todo):
             w_seed = run_seed_for(t.task_id, k)
-            sp_seed = run_seed_for(t.task_id, "train_eval_split")
+            split_idx, sp_seed = split_of(t)
 
             def make_row(rec, _t=t, _k=k, _c=c, _it=it):
                 rp = rec["r_prime"]
@@ -401,6 +513,7 @@ def stage_calibrate(outdir: Path, reg, labels_cfg: dict, train_cfg: dict,
                         "task_type": _t.task_type, "classes": list(_t.classes),
                         "cls_key": _k, "origin": "shared", "seed": 0, "iters": _it,
                         **rec, "r_prime": None if not np.isfinite(rp) else float(rp),
+                        "split_protocol": "subject_disjoint" if subject else "stratified",
                         "cls": dataclasses.asdict(_c)}
 
             full = guarded_run(
@@ -408,10 +521,11 @@ def stage_calibrate(outdir: Path, reg, labels_cfg: dict, train_cfg: dict,
                                         split_seed=sp_seed, iters=it,
                                         eval_ratio=eval_ratio,
                                         batch_size=train_cfg["batch_size"],
-                                        lr=train_cfg["lr"], device=device),
-                make_row, cache_path=fill_path, inflight=outdir / "inflight.txt",
+                                        lr=train_cfg["lr"], device=device,
+                                        split_indices=split_idx),
+                make_row, cache_path=fill_path, inflight=ddir / "inflight.txt",
                 task_id=t.task_id, cls_key=k, iters=it,
-                on_oom=ON_OOM_SKIP, oom_log=outdir / "oom_failures.jsonl",
+                on_oom=ON_OOM_SKIP, oom_log=ddir / "oom_failures.jsonl",
                 context={"dataset": TARGET},
                 log=lambda m: print(f"[cal {i + 1}/{len(todo)}] {m}", flush=True))
             if full is None:
@@ -424,7 +538,7 @@ def stage_calibrate(outdir: Path, reg, labels_cfg: dict, train_cfg: dict,
 
     # 臂汇总（iters_workpoint_scan.collect 同式）→ 选点（confirm 协议 §2）
     base_rows = defaultdict(list)
-    for r in read_jsonl(outdir / "baseline_cache.jsonl"):
+    for r in read_jsonl(ddir / "baseline_cache.jsonl"):
         if r["task_id"] in {t.task_id for t in probe}:
             base_rows[r["task_id"]].append(r)
     by_id = {t.task_id: t for t in probe}
@@ -476,11 +590,12 @@ def stage_calibrate(outdir: Path, reg, labels_cfg: dict, train_cfg: dict,
 
     wp = {"dataset": TARGET, "spe": spe, "ep_grid": list(EP_GRID),
           "iters_grid": iters_grid, "margin": WORKPOINT_MARGIN,
+          "split_protocol": "subject_disjoint" if subject else "stratified",
           "arms": {str(k): v for k, v in arms.items()},
           "selection": selection, "no_workpoint": nw,
           "destruction_at_selection": destruction,
           "workpoint_ep": (selection["iters"] / spe) if selection else None}
-    (outdir / "workpoint.json").write_text(
+    (ddir / "workpoint.json").write_text(
         json.dumps(wp, indent=2, ensure_ascii=False), encoding="utf-8")
 
     print(f"\n{'iters':>6}{'ep':>5}{'基线':>8}{'实得':>8}{'最好':>8}"
@@ -752,18 +867,24 @@ def ensure_pretrained(outdir: Path, cls_cfg, key: str, seed: int, iters: int,
     return encoder, False
 
 
-def stage_sweep(outdir: Path, train_cfg: dict, device: str, resume: bool) -> None:
-    wp = load_workpoint(outdir)
+def stage_sweep(outdir: Path, train_cfg: dict, device: str, resume: bool,
+                subject: bool = False) -> None:
+    ddir = data_dir(outdir, subject)
+    wp = load_workpoint(ddir)
     X_train, y_train = load_target_train()
     ep = wp["workpoint_ep"]
     iters = full_iters_for_ep(ep, n_train=len(y_train))
     pool = build_candidate_pool()
     ggs_k = cls_key(_m1.GGS)
-    fit_idx, val_idx = val_split(y_train)
+    if subject:
+        fit_idx, val_idx = subject_val_split(load_train_subjects(len(y_train)))
+    else:
+        fit_idx, val_idx = val_split(y_train)
     print(f"sweep: 工作点 {ep:.0f}ep → 全量 {iters} iters | "
-          f"fit/val = {len(fit_idx)}/{len(val_idx)}（train 内切分，test 不碰）", flush=True)
+          f"fit/val = {len(fit_idx)}/{len(val_idx)}"
+          f"（{'跨受试者' if subject else 'train 内分层'}切分，test 不碰）", flush=True)
 
-    cache_path = outdir / "sweep_cache.jsonl"
+    cache_path = ddir / "sweep_cache.jsonl"
     done = {(r["cls_key"], r["iters"], r["seed"]) for r in read_jsonl(cache_path)}
     # 31 × seed0 + GGS 补种子 1/2（对照误差棒；winner 补种子在 --final 判明后跑）
     work = [(o, c, k, 0) for o, c, k in pool] + \
@@ -792,6 +913,7 @@ def stage_sweep(outdir: Path, train_cfg: dict, device: str, resume: bool) -> Non
             rec = {"dataset": TARGET, "scope": "full_train", "cls_key": k,
                    "origin": org, "iters": iters, "workpoint_ep": ep, "seed": seed,
                    "val_acc": val_acc, "svm_c": float(clf.C),
+                   "split_protocol": "subject_disjoint" if subject else "stratified",
                    "n_fit": int(len(fit_idx)), "n_val": int(len(val_idx)),
                    "seconds": round(time.time() - t1, 1),
                    "encoder_cached": cached, "device_name": device_label(device)}
@@ -813,6 +935,7 @@ def stage_sweep(outdir: Path, train_cfg: dict, device: str, resume: bool) -> Non
                            list(range(len(val_order)))).statistic)
     summary = {
         "iters": iters, "workpoint_ep": ep,
+        "split_protocol": "subject_disjoint" if subject else "stratified",
         "val_ranking": [{"rank": i + 1, "cls_key": r["cls_key"],
                          "origin": r["origin"], "val_acc": r["val_acc"],
                          "comparator_rank": comp_pos[r["cls_key"]] + 1}
@@ -823,7 +946,7 @@ def stage_sweep(outdir: Path, train_cfg: dict, device: str, resume: bool) -> Non
         "kendall_tau_comparator_vs_val": tau,
         "top3_val_accs": {k: val_accs.get(k) for k in ranking["top3"]},
     }
-    (outdir / "sweep_summary.json").write_text(
+    (ddir / "sweep_summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
     tb = summary["true_best"]
     print(f"\n真值(val)最优: {tb['cls_key'][:8]} val={tb['val_acc']:.4f} → "
@@ -835,8 +958,10 @@ def stage_sweep(outdir: Path, train_cfg: dict, device: str, resume: bool) -> Non
 # ---------------------------------------------------------------------------
 
 
-def stage_final(outdir: Path, train_cfg: dict, device: str, resume: bool) -> None:
-    wp = load_workpoint(outdir)
+def stage_final(outdir: Path, train_cfg: dict, device: str, resume: bool,
+                subject: bool = False) -> None:
+    ddir = data_dir(outdir, subject)
+    wp = load_workpoint(ddir)
     ranking = json.loads((outdir / "ranking.json").read_text(encoding="utf-8"))
     X_train, y_train = load_target_train()
     X_test, y_test = load_target_test()   # ← 测试集全流程唯一加载点
@@ -845,7 +970,7 @@ def stage_final(outdir: Path, train_cfg: dict, device: str, resume: bool) -> Non
     pool = {k: (o, c) for o, c, k in build_candidate_pool()}
     ggs_k = cls_key(_m1.GGS)
 
-    evals_path = outdir / "final_evals.jsonl"
+    evals_path = ddir / "final_evals.jsonl"
     done = {(r["cls_key"], r["iters"], r["seed"]) for r in read_jsonl(evals_path)}
 
     def test_eval(key: str, seed: int, it: int) -> dict:
@@ -905,8 +1030,9 @@ def stage_final(outdir: Path, train_cfg: dict, device: str, resume: bool) -> Non
         "delta_winner_vs_ggs_workpoint":
             statistics.fmean(win_accs) - statistics.fmean(ggs_accs),
         "n_test_set_evals": len(read_jsonl(evals_path)),
+        "split_protocol": wp.get("split_protocol", "stratified"),
     }
-    (outdir / "final.json").write_text(
+    (ddir / "final.json").write_text(
         json.dumps(final, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"\ntop-3 测试: {[(k[:8], round(top3_evals[k]['test_acc'], 4)) for k in top3]}")
     print(f"winner {winner[:8]} mean={statistics.fmean(win_accs):.4f} {win_accs}")
@@ -919,7 +1045,8 @@ def stage_final(outdir: Path, train_cfg: dict, device: str, resume: bool) -> Non
 # ---------------------------------------------------------------------------
 
 
-def stage_verify(outdir: Path, reg) -> None:
+def stage_verify(outdir: Path, reg, subject: bool = False) -> None:
+    ddir = data_dir(outdir, subject)
     # 1. 源加载路径 fail-fast（复跑自检）
     try:
         load_source_dataset(TARGET, reg)
@@ -928,7 +1055,7 @@ def stage_verify(outdir: Path, reg) -> None:
         leak_ok = True
     # 2. 共享 TS2Vec 指纹：与 labels_workpoint 落盘一致 + fit 池不含目标
     meta = json.loads((LABELS_DIR / "shared_ts2vec.meta.json").read_text(encoding="utf-8"))
-    prep = json.loads((outdir / "prep_summary.json").read_text(encoding="utf-8"))
+    prep = json.loads((ddir / "prep_summary.json").read_text(encoding="utf-8"))
     ts2vec_ok = (prep["shared_ts2vec_md5"] == file_md5(LABELS_DIR / "shared_ts2vec.pt")
                  and TARGET not in meta["fit_datasets"])
     # 3. T-CLSC 只吃源池数据：meta 里记录的训练记录数 + checkpoint hash 未变
@@ -936,18 +1063,18 @@ def stage_verify(outdir: Path, reg) -> None:
     tclsc_ok = all(m["model_md5"] == file_md5(outdir / "tclsc" / f"{rid}.pt")
                    for rid, m in tmeta.items())
     # 4. 测试集触碰清单：只有 final_evals.jsonl 的 official_test 记录
-    finals = read_jsonl(outdir / "final_evals.jsonl")
+    finals = read_jsonl(ddir / "final_evals.jsonl")
     test_scopes = {r.get("scope") for r in finals}
     # 5. 缓存完整性
-    print("== 收官校验 ==")
+    print(f"== 收官校验（{'跨受试者协议' if subject else '分层协议'}）==")
     for name, path, keyf in [
-        ("baseline_cache", outdir / "baseline_cache.jsonl",
+        ("baseline_cache", ddir / "baseline_cache.jsonl",
          lambda r: (r["task_id"], r["seed"], r["iters"])),
-        ("trained_fill", outdir / "trained_fill.jsonl",
+        ("trained_fill", ddir / "trained_fill.jsonl",
          lambda r: (r["task_id"], r["cls_key"], r["iters"])),
-        ("sweep_cache", outdir / "sweep_cache.jsonl",
+        ("sweep_cache", ddir / "sweep_cache.jsonl",
          lambda r: (r["cls_key"], r["iters"], r["seed"])),
-        ("final_evals", outdir / "final_evals.jsonl",
+        ("final_evals", ddir / "final_evals.jsonl",
          lambda r: (r["cls_key"], r["iters"], r["seed"])),
     ]:
         rows = read_jsonl(path)
@@ -976,6 +1103,9 @@ def main() -> None:
     ap.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--subject", action="store_true",
+                    help="出路 A 跨受试者协议：任务内与 sweep val 全按受试者整组切分，"
+                         "缓存进 subject_protocol/ 子目录（判据/网格/候选池逐字不变）")
     for st in ("prep", "calibrate", "tclsc", "rank", "sweep", "final", "verify"):
         ap.add_argument(f"--{st}", action="store_true")
     args = ap.parse_args()
@@ -989,21 +1119,27 @@ def main() -> None:
     reg = load_registry()
     args.outdir.mkdir(parents=True, exist_ok=True)
 
+    if args.subject and (args.tclsc or args.rank):
+        ap.error("--tclsc/--rank 与切分协议无关（产物两协议共享），不接受 --subject")
+
     if args.prep:
-        stage_prep(args.outdir, reg, labels_cfg, args.device, args.resume)
+        stage_prep(args.outdir, reg, labels_cfg, args.device, args.resume,
+                   subject=args.subject)
     if args.calibrate:
         stage_calibrate(args.outdir, reg, labels_cfg, train_cfg, args.device,
-                        args.resume)
+                        args.resume, subject=args.subject)
     if args.tclsc:
         stage_tclsc(args.outdir, labels_cfg, tclsc_cfg, args.device, args.resume)
     if args.rank:
         stage_rank(args.outdir, labels_cfg, tclsc_cfg, args.device)
     if args.sweep:
-        stage_sweep(args.outdir, train_cfg, args.device, args.resume)
+        stage_sweep(args.outdir, train_cfg, args.device, args.resume,
+                    subject=args.subject)
     if args.final:
-        stage_final(args.outdir, train_cfg, args.device, args.resume)
+        stage_final(args.outdir, train_cfg, args.device, args.resume,
+                    subject=args.subject)
     if args.verify:
-        stage_verify(args.outdir, reg)
+        stage_verify(args.outdir, reg, subject=args.subject)
 
 
 if __name__ == "__main__":

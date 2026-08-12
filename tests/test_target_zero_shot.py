@@ -148,3 +148,74 @@ def test_uci_har_target_entry_has_slice_params():
 def test_uci_har_source_load_fails_fast():
     with pytest.raises(TargetPoolLeakageError):
         load_source_dataset("UCI-HAR")
+
+
+# ---------------------------------------------------------------------------
+# 出路 A：跨受试者协议（2026-08-12 拍板）
+# ---------------------------------------------------------------------------
+
+from autocls.labeling import (  # noqa: E402
+    evaluate_rprime, split_train_eval_by_group,
+)
+
+
+def _toy_groups():
+    """6 组 × 各 10 样本、3 类均匀分布 → 组切分的可控夹具。"""
+    rng = np.random.default_rng(0)
+    groups = np.repeat(np.arange(6), 10)
+    y = np.tile(np.array([0, 1, 2]), 20)
+    return y, groups, rng
+
+
+def test_group_split_keeps_groups_whole_and_disjoint():
+    y, groups, _ = _toy_groups()
+    tr, ev = split_train_eval_by_group(y, groups, eval_ratio=0.3, seed=0)
+    assert len(np.intersect1d(tr, ev)) == 0
+    assert len(tr) + len(ev) == len(y)
+    # 整组进一侧：任一组不得横跨两侧
+    assert not (set(groups[tr].tolist()) & set(groups[ev].tolist()))
+    # 首次跨越目标即停：eval ≥ 目标 且 去掉最后一组就 < 目标（不过量吞组）
+    assert len(ev) >= 0.3 * len(y)
+    assert len(ev) - 10 < 0.3 * len(y)   # 夹具组大小恒 10
+
+
+def test_group_split_covers_all_classes_both_sides():
+    y, groups, _ = _toy_groups()
+    tr, ev = split_train_eval_by_group(y, groups, eval_ratio=0.3, seed=0)
+    assert set(y[tr].tolist()) == set(y[ev].tolist()) == {0, 1, 2}
+
+
+def test_group_split_deterministic_and_seed_sensitive():
+    y, groups, _ = _toy_groups()
+    a = split_train_eval_by_group(y, groups, eval_ratio=0.3, seed=7)
+    b = split_train_eval_by_group(y, groups, eval_ratio=0.3, seed=7)
+    assert np.array_equal(a[0], b[0]) and np.array_equal(a[1], b[1])
+    outs = {tuple(split_train_eval_by_group(y, groups, eval_ratio=0.3, seed=s)[1])
+            for s in range(6)}
+    assert len(outs) > 1, "不同 seed 应产生不同留出组"
+
+
+def test_group_split_fails_when_class_isolated_in_one_group():
+    """某类只存在于单一组 → 该组无论在哪一侧都缺类，必须 fail-fast。"""
+    groups = np.repeat(np.arange(3), 10)
+    y = np.zeros(30, dtype=int)
+    y[groups == 2] = 1   # 类 1 只在组 2
+    with pytest.raises(ValueError):
+        split_train_eval_by_group(y, groups, eval_ratio=0.3, seed=0)
+
+
+def test_evaluate_rprime_honors_split_indices():
+    """split_indices 注入：n_train/n_eval 必须按注入索引计，内部分层切分被绕过。"""
+    from autocls.data.task_slicer import SlicedTask
+
+    rng = np.random.default_rng(0)
+    X = rng.normal(size=(60, 32, 2)).astype(np.float32)
+    y = np.tile(np.array([0, 1]), 30)
+    task = SlicedTask(task_id="toy_00", pool="toy", classes=(0, 1), channels=(0, 1),
+                      sample_indices=tuple(range(60)))
+    tr = np.arange(0, 40)
+    ev = np.arange(40, 60)
+    rec = evaluate_rprime(task, _tz._m1.GGS, X, y, weight_seed=0, split_seed=0,
+                          iters=0, split_indices=(tr, ev), device="cpu")
+    assert rec["n_train"] == 40 and rec["n_eval"] == 20
+    assert rec["r_prime"] is not None
