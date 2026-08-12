@@ -1,0 +1,29 @@
+{
+  "val_holdout_subjects": [
+    8,
+    17,
+    21,
+    25
+  ],
+  "random_init_val_ref": 0.8911,
+  "arms": [
+    {
+      "cls_key": "c92058f26c1d",
+      "iters": 580,
+      "seed": 0,
+      "val_acc": 0.902455661664393,
+      "encoder_cached": false,
+      "seconds": 23.2,
+      "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU"
+    },
+    {
+      "cls_key": "c92058f26c1d",
+      "iters": 2320,
+      "seed": 0,
+      "val_acc": 0.8874488403819918,
+      "encoder_cached": false,
+      "seconds": 77.9,
+      "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU"
+    }
+  ]
+}

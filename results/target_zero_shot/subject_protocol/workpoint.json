@@ -1,0 +1,110 @@
+{
+  "dataset": "UCI-HAR",
+  "spe": 6,
+  "ep_grid": [
+    1,
+    2,
+    5,
+    10,
+    20
+  ],
+  "iters_grid": [
+    6,
+    12,
+    30,
+    60,
+    120
+  ],
+  "margin": 0.02,
+  "split_protocol": "subject_disjoint",
+  "arms": {
+    "6": {
+      "epoch": 1.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.915995004995005,
+      "realized_gain": 0.0018366633366633245,
+      "best_gain": 0.023384615384615337,
+      "n_above": 2,
+      "n_below": 0,
+      "n_band": 18,
+      "T1": false,
+      "T2": false,
+      "T3": false,
+      "verdict": "ceiling",
+      "usable": false
+    },
+    "12": {
+      "epoch": 2.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.915995004995005,
+      "realized_gain": 0.00036713286713291327,
+      "best_gain": 0.01558441558441559,
+      "n_above": 1,
+      "n_below": 0,
+      "n_band": 19,
+      "T1": false,
+      "T2": false,
+      "T3": false,
+      "verdict": "ceiling",
+      "usable": false
+    },
+    "30": {
+      "epoch": 5.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.915995004995005,
+      "realized_gain": -0.014733266733266692,
+      "best_gain": 0.01723076923076927,
+      "n_above": 1,
+      "n_below": 4,
+      "n_band": 15,
+      "T1": false,
+      "T2": false,
+      "T3": false,
+      "verdict": "ceiling",
+      "usable": false
+    },
+    "60": {
+      "epoch": 10.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.915995004995005,
+      "realized_gain": -0.02821678321678317,
+      "best_gain": 0.026461538461538425,
+      "n_above": 0,
+      "n_below": 4,
+      "n_band": 16,
+      "T1": false,
+      "T2": false,
+      "T3": false,
+      "verdict": "ceiling",
+      "usable": false
+    },
+    "120": {
+      "epoch": 20.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.915995004995005,
+      "realized_gain": -0.04399850149850143,
+      "best_gain": 0.012337662337662425,
+      "n_above": 0,
+      "n_below": 5,
+      "n_band": 15,
+      "T1": false,
+      "T2": false,
+      "T3": false,
+      "verdict": "ceiling",
+      "usable": false
+    }
+  },
+  "selection": null,
+  "no_workpoint": {
+    "verdict": "no_workpoint",
+    "net_gain_dim_empty": true,
+    "label_dim_empty": true
+  },
+  "destruction_at_selection": {},
+  "workpoint_ep": null
+}

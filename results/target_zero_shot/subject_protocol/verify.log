@@ -1,0 +1,11 @@
+﻿== 收官校验（跨受试者协议）==
+  baseline_cache: 40 行 | 唯一键 40 | null 0 | device 40/40
+  trained_fill: 100 行 | 唯一键 100 | null 0 | device 100/100
+  sweep_cache: 0 行 | 唯一键 0 | null 0 | device 0/0
+  final_evals: 0 行 | 唯一键 0 | null 0 | device 0/0
+== 泄漏自检（铁律 6）==
+  ① load_source_dataset(UCI-HAR) fail-fast: ✅
+  ② 共享 TS2Vec 指纹一致 & fit 池不含目标: ✅
+  ③ T-CLSC checkpoint 未被改动（只训过源池 pairs）: ✅
+  ④ 测试集触碰: 0 次评估，scope=[]（应仅 official_test；标定/排名/sweep 均只用 train）
+  ⑤ 本脚本不含 fit_shared_ts2vec / fit(...) 调用——TS2Vec 只 load (TS2VecWrapper.load)，见 stage_prep

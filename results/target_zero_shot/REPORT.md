@@ -1,5 +1,11 @@
 # 目标池 zero-shot 评估（UCI-HAR）——步骤2 判 no_workpoint 停机报告 + 机制解剖
 
+> **2026-08-12 终判更新**：用户拍板出路 A（跨受试者协议）后重跑——**再判
+> no_workpoint，且全量尺度 GGS 增益 ≈0（+0.011@10ep / −0.004@2320）**。
+> UCI-HAR 在固定 encoder + SVM 栈下判**不可评**（非破坏带内 CLS 差异 < ±0.01
+> < 噪声）。终局证据链见 `subject_protocol/REPORT.md`；本文的"出路 A 推荐"
+> 已执行完毕，§7 选项就此关闭。
+
 日期：2026-08-11 ｜ 本机 RTX 4060 Laptop ｜ 脚本：`scripts/5_target_zero_shot.py`
 （阶段化幂等 + `--resume`）｜ 单测：`tests/test_target_zero_shot.py`（10 新增，
 全套 736 过）｜ 停机依据：用户预注册规则"若 UCI-HAR 判 inert（无工作点），
