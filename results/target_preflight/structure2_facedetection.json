@@ -1,0 +1,77 @@
+{
+  "win": 60,
+  "boundaries": [
+    {
+      "k": 1,
+      "pos": 589,
+      "cross_dist": 0.18389,
+      "ctrl_mean": 0.097,
+      "ctrl_std": 0.0595,
+      "zscore": 1.46
+    },
+    {
+      "k": 2,
+      "pos": 1178,
+      "cross_dist": 0.33782,
+      "ctrl_mean": 0.09108,
+      "ctrl_std": 0.053,
+      "zscore": 4.66
+    },
+    {
+      "k": 3,
+      "pos": 1767,
+      "cross_dist": 0.95781,
+      "ctrl_mean": 0.11171,
+      "ctrl_std": 0.05741,
+      "zscore": 14.74
+    },
+    {
+      "k": 4,
+      "pos": 2356,
+      "cross_dist": 0.81683,
+      "ctrl_mean": 0.08619,
+      "ctrl_std": 0.05507,
+      "zscore": 13.27
+    },
+    {
+      "k": 5,
+      "pos": 2945,
+      "cross_dist": 1.1989,
+      "ctrl_mean": 0.09639,
+      "ctrl_std": 0.0496,
+      "zscore": 22.23
+    },
+    {
+      "k": 6,
+      "pos": 3534,
+      "cross_dist": 1.13483,
+      "ctrl_mean": 0.08741,
+      "ctrl_std": 0.03625,
+      "zscore": 28.89
+    },
+    {
+      "k": 7,
+      "pos": 4123,
+      "cross_dist": 1.0792,
+      "ctrl_mean": 0.10887,
+      "ctrl_std": 0.05448,
+      "zscore": 17.81
+    },
+    {
+      "k": 8,
+      "pos": 4712,
+      "cross_dist": 1.07612,
+      "ctrl_mean": 0.09885,
+      "ctrl_std": 0.04835,
+      "zscore": 20.21
+    },
+    {
+      "k": 9,
+      "pos": 5301,
+      "cross_dist": 0.63823,
+      "ctrl_mean": 0.10084,
+      "ctrl_std": 0.05181,
+      "zscore": 10.37
+    }
+  ]
+}

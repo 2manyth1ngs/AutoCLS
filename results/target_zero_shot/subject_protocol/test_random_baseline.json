@@ -1,0 +1,55 @@
+{
+  "purpose": "UCI-HAR test 随机初始化基线（排查一；用户授权的第 1 次 test 触碰）",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "test_accs": [
+    0.9131,
+    0.925,
+    0.9169
+  ],
+  "mean": 0.9183,
+  "std": 0.005,
+  "m1_ggs_2320_anchors": {
+    "original": 0.9372,
+    "rerun_4060": 0.9348
+  },
+  "pretrain_gain_vs_random": {
+    "original": 0.0189,
+    "rerun_4060": 0.0165
+  },
+  "gain_boundary": 0.03,
+  "verdict": "protocol_ok_verdict_confirmed",
+  "val_refs": {
+    "random_init_val": 0.8911,
+    "ggs2320_val": 0.8874
+  },
+  "runs": [
+    {
+      "seed": 0,
+      "test_acc": 0.9131319986426875,
+      "f1": 0.9121300908035685,
+      "svm_c": 100.0,
+      "seconds": 2.0,
+      "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU"
+    },
+    {
+      "seed": 1,
+      "test_acc": 0.9250084832032576,
+      "f1": 0.9244779241942743,
+      "svm_c": 100.0,
+      "seconds": 1.3,
+      "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU"
+    },
+    {
+      "seed": 2,
+      "test_acc": 0.9168646080760094,
+      "f1": 0.915957906208993,
+      "svm_c": 100.0,
+      "seconds": 1.3,
+      "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU"
+    }
+  ]
+}
