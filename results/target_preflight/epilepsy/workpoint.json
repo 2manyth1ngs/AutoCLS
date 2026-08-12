@@ -1,0 +1,97 @@
+{
+  "dataset": "Epilepsy",
+  "spe": 1,
+  "ep_grid": [
+    1,
+    2,
+    5,
+    10,
+    20
+  ],
+  "split_protocol": "stratified",
+  "arms": {
+    "1": {
+      "epoch": 1.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.8708333333333333,
+      "realized_gain": 0.0029166666666665675,
+      "best_gain": 0.050000000000000044,
+      "n_above": 0,
+      "n_below": 0,
+      "n_band": 20,
+      "T1": true,
+      "T2": true,
+      "T3": false,
+      "usable": false
+    },
+    "2": {
+      "epoch": 2.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.8708333333333333,
+      "realized_gain": 0.012916666666666576,
+      "best_gain": 0.07499999999999996,
+      "n_above": 0,
+      "n_below": 1,
+      "n_band": 19,
+      "T1": true,
+      "T2": true,
+      "T3": false,
+      "usable": false
+    },
+    "5": {
+      "epoch": 5.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.8708333333333333,
+      "realized_gain": 0.010416666666666685,
+      "best_gain": 0.07499999999999996,
+      "n_above": 0,
+      "n_below": 0,
+      "n_band": 20,
+      "T1": true,
+      "T2": true,
+      "T3": false,
+      "usable": false
+    },
+    "10": {
+      "epoch": 10.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.8708333333333333,
+      "realized_gain": 0.019583333333333286,
+      "best_gain": 0.125,
+      "n_above": 1,
+      "n_below": 0,
+      "n_band": 19,
+      "T1": true,
+      "T2": true,
+      "T3": false,
+      "usable": false
+    },
+    "20": {
+      "epoch": 20.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.8708333333333333,
+      "realized_gain": -0.0029166666666667895,
+      "best_gain": 0.06666666666666654,
+      "n_above": 0,
+      "n_below": 2,
+      "n_band": 18,
+      "T1": true,
+      "T2": true,
+      "T3": false,
+      "usable": false
+    }
+  },
+  "selection": null,
+  "no_workpoint": {
+    "verdict": "no_workpoint",
+    "net_gain_dim_empty": true,
+    "label_dim_empty": true
+  },
+  "quantum": 0.03333333333333333,
+  "workpoint_margin": 0.02
+}

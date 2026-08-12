@@ -1,0 +1,8 @@
+{
+  "dataset": "FaceDetection",
+  "scale1_workpoint": null,
+  "scale1_no_workpoint": "no_workpoint",
+  "scale2_gain_max": 0.02716468590831911,
+  "scale2_pass": false,
+  "verdict": "unevaluable"
+}

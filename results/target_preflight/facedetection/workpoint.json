@@ -1,0 +1,97 @@
+{
+  "dataset": "FaceDetection",
+  "spe": 6,
+  "ep_grid": [
+    1,
+    2,
+    5,
+    10,
+    20
+  ],
+  "split_protocol": "subject_block_disjoint",
+  "arms": {
+    "6": {
+      "epoch": 1.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.5141693037974684,
+      "realized_gain": -0.011040348101265807,
+      "best_gain": 0.057499999999999996,
+      "n_above": 1,
+      "n_below": 6,
+      "n_band": 13,
+      "T1": true,
+      "T2": true,
+      "T3": false,
+      "usable": false
+    },
+    "12": {
+      "epoch": 2.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.5141693037974684,
+      "realized_gain": -0.009477848101265784,
+      "best_gain": 0.02937500000000004,
+      "n_above": 0,
+      "n_below": 4,
+      "n_band": 16,
+      "T1": true,
+      "T2": false,
+      "T3": false,
+      "usable": false
+    },
+    "30": {
+      "epoch": 5.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.5141693037974684,
+      "realized_gain": -0.005565664556962002,
+      "best_gain": 0.04500000000000004,
+      "n_above": 2,
+      "n_below": 2,
+      "n_band": 16,
+      "T1": true,
+      "T2": false,
+      "T3": false,
+      "usable": false
+    },
+    "60": {
+      "epoch": 10.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.5141693037974684,
+      "realized_gain": 0.0028263449367088578,
+      "best_gain": 0.036708860759493644,
+      "n_above": 1,
+      "n_below": 2,
+      "n_band": 17,
+      "T1": true,
+      "T2": false,
+      "T3": false,
+      "usable": false
+    },
+    "120": {
+      "epoch": 20.0,
+      "n_trained": 20,
+      "complete": true,
+      "baseline": 0.5141693037974684,
+      "realized_gain": -0.0006744462025315978,
+      "best_gain": 0.04500000000000004,
+      "n_above": 3,
+      "n_below": 4,
+      "n_band": 13,
+      "T1": true,
+      "T2": false,
+      "T3": false,
+      "usable": false
+    }
+  },
+  "selection": null,
+  "no_workpoint": {
+    "verdict": "no_workpoint",
+    "net_gain_dim_empty": true,
+    "label_dim_empty": true
+  },
+  "quantum": 0.0031645569620253164,
+  "workpoint_margin": 0.02
+}

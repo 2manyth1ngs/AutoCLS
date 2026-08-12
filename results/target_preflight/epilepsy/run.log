@@ -1,0 +1,118 @@
+Epilepsy 标定: spe=1 → iters 网格 [1, 2, 5, 10, 20]（= [1, 2, 5, 10, 20] ep）
+标定 fill: 计划 100 条，待跑 100
+[cal 1/100] Epilepsy_00@1 4f7d4135 R'=0.8250 (2.1s) ETA 3.5min
+[cal 2/100] Epilepsy_00@1 cffb5503 R'=0.8500 (0.3s) ETA 2.0min
+[cal 3/100] Epilepsy_00@1 8c4aa283 R'=0.9000 (0.5s) ETA 1.6min
+[cal 4/100] Epilepsy_00@1 f48e5da1 R'=0.9250 (0.2s) ETA 1.2min
+[cal 5/100] Epilepsy_00@1 a1f67db4 R'=0.9250 (0.2s) ETA 1.0min
+[cal 6/100] Epilepsy_00@1 e490b88e R'=0.9250 (0.1s) ETA 0.9min
+[cal 7/100] Epilepsy_00@1 9092e36e R'=0.8750 (0.2s) ETA 0.8min
+[cal 8/100] Epilepsy_00@1 65627517 R'=0.9000 (0.1s) ETA 0.7min
+[cal 9/100] Epilepsy_00@1 20be4f74 R'=0.8750 (0.1s) ETA 0.7min
+[cal 10/100] Epilepsy_00@1 8b87d66f R'=0.8750 (0.2s) ETA 0.6min
+[cal 11/100] Epilepsy_01@1 4f7d4135 R'=0.8667 (0.1s) ETA 0.6min
+[cal 12/100] Epilepsy_01@1 cffb5503 R'=0.8667 (0.2s) ETA 0.5min
+[cal 13/100] Epilepsy_01@1 8c4aa283 R'=0.8333 (0.2s) ETA 0.5min
+[cal 14/100] Epilepsy_01@1 f48e5da1 R'=0.8667 (0.2s) ETA 0.5min
+[cal 15/100] Epilepsy_01@1 a1f67db4 R'=0.8333 (0.1s) ETA 0.5min
+[cal 16/100] Epilepsy_01@1 e490b88e R'=0.8667 (0.1s) ETA 0.4min
+[cal 17/100] Epilepsy_01@1 9092e36e R'=0.8333 (0.2s) ETA 0.4min
+[cal 18/100] Epilepsy_01@1 65627517 R'=0.8667 (0.1s) ETA 0.4min
+[cal 19/100] Epilepsy_01@1 20be4f74 R'=0.8667 (0.1s) ETA 0.4min
+[cal 20/100] Epilepsy_01@1 8b87d66f R'=0.9000 (0.1s) ETA 0.4min
+[cal 21/100] Epilepsy_00@2 4f7d4135 R'=0.9500 (0.3s) ETA 0.4min
+[cal 22/100] Epilepsy_00@2 cffb5503 R'=0.8500 (0.3s) ETA 0.4min
+[cal 23/100] Epilepsy_00@2 8c4aa283 R'=0.8750 (0.6s) ETA 0.4min
+[cal 24/100] Epilepsy_00@2 f48e5da1 R'=0.9000 (0.3s) ETA 0.4min
+[cal 25/100] Epilepsy_00@2 a1f67db4 R'=0.9250 (0.4s) ETA 0.4min
+[cal 26/100] Epilepsy_00@2 e490b88e R'=0.9000 (0.1s) ETA 0.4min
+[cal 27/100] Epilepsy_00@2 9092e36e R'=0.9250 (0.6s) ETA 0.4min
+[cal 28/100] Epilepsy_00@2 65627517 R'=0.9250 (0.2s) ETA 0.4min
+[cal 29/100] Epilepsy_00@2 20be4f74 R'=0.9500 (0.2s) ETA 0.4min
+[cal 30/100] Epilepsy_00@2 8b87d66f R'=0.8750 (0.4s) ETA 0.4min
+[cal 31/100] Epilepsy_01@2 4f7d4135 R'=0.8667 (0.2s) ETA 0.3min
+[cal 32/100] Epilepsy_01@2 cffb5503 R'=0.8667 (0.3s) ETA 0.3min
+[cal 33/100] Epilepsy_01@2 8c4aa283 R'=0.8000 (0.5s) ETA 0.3min
+[cal 34/100] Epilepsy_01@2 f48e5da1 R'=0.8667 (0.2s) ETA 0.3min
+[cal 35/100] Epilepsy_01@2 a1f67db4 R'=0.8667 (0.3s) ETA 0.3min
+[cal 36/100] Epilepsy_01@2 e490b88e R'=0.8667 (0.1s) ETA 0.3min
+[cal 37/100] Epilepsy_01@2 9092e36e R'=0.8667 (0.3s) ETA 0.3min
+[cal 38/100] Epilepsy_01@2 65627517 R'=0.8667 (0.2s) ETA 0.3min
+[cal 39/100] Epilepsy_01@2 20be4f74 R'=0.8667 (0.2s) ETA 0.3min
+[cal 40/100] Epilepsy_01@2 8b87d66f R'=0.8667 (0.3s) ETA 0.3min
+[cal 41/100] Epilepsy_00@5 4f7d4135 R'=0.9000 (0.6s) ETA 0.3min
+[cal 42/100] Epilepsy_00@5 cffb5503 R'=0.8500 (0.7s) ETA 0.3min
+[cal 43/100] Epilepsy_00@5 8c4aa283 R'=0.8750 (1.3s) ETA 0.3min
+[cal 44/100] Epilepsy_00@5 f48e5da1 R'=0.9000 (0.6s) ETA 0.3min
+[cal 45/100] Epilepsy_00@5 a1f67db4 R'=0.9000 (0.7s) ETA 0.3min
+[cal 46/100] Epilepsy_00@5 e490b88e R'=0.9000 (0.3s) ETA 0.3min
+[cal 47/100] Epilepsy_00@5 9092e36e R'=0.9250 (1.4s) ETA 0.3min
+[cal 48/100] Epilepsy_00@5 65627517 R'=0.8500 (0.4s) ETA 0.3min
+[cal 49/100] Epilepsy_00@5 20be4f74 R'=0.9500 (0.4s) ETA 0.3min
+[cal 50/100] Epilepsy_00@5 8b87d66f R'=0.8750 (0.8s) ETA 0.3min
+[cal 51/100] Epilepsy_01@5 4f7d4135 R'=0.8333 (0.5s) ETA 0.3min
+[cal 52/100] Epilepsy_01@5 cffb5503 R'=0.9000 (0.6s) ETA 0.3min
+[cal 53/100] Epilepsy_01@5 8c4aa283 R'=0.8333 (0.9s) ETA 0.3min
+[cal 54/100] Epilepsy_01@5 f48e5da1 R'=0.8333 (0.5s) ETA 0.3min
+[cal 55/100] Epilepsy_01@5 a1f67db4 R'=0.8667 (0.6s) ETA 0.3min
+[cal 56/100] Epilepsy_01@5 e490b88e R'=0.9333 (0.2s) ETA 0.3min
+[cal 57/100] Epilepsy_01@5 9092e36e R'=0.8667 (0.7s) ETA 0.3min
+[cal 58/100] Epilepsy_01@5 65627517 R'=0.8667 (0.4s) ETA 0.3min
+[cal 59/100] Epilepsy_01@5 20be4f74 R'=0.8667 (0.3s) ETA 0.3min
+[cal 60/100] Epilepsy_01@5 8b87d66f R'=0.9000 (0.6s) ETA 0.3min
+[cal 61/100] Epilepsy_00@10 4f7d4135 R'=0.9000 (1.1s) ETA 0.3min
+[cal 62/100] Epilepsy_00@10 cffb5503 R'=0.9000 (1.2s) ETA 0.3min
+[cal 63/100] Epilepsy_00@10 8c4aa283 R'=0.8750 (2.6s) ETA 0.3min
+[cal 64/100] Epilepsy_00@10 f48e5da1 R'=0.9000 (1.2s) ETA 0.3min
+[cal 65/100] Epilepsy_00@10 a1f67db4 R'=0.9000 (1.3s) ETA 0.3min
+[cal 66/100] Epilepsy_00@10 e490b88e R'=0.9250 (0.5s) ETA 0.3min
+[cal 67/100] Epilepsy_00@10 9092e36e R'=0.9250 (2.9s) ETA 0.3min
+[cal 68/100] Epilepsy_00@10 65627517 R'=0.8500 (0.8s) ETA 0.3min
+[cal 69/100] Epilepsy_00@10 20be4f74 R'=1.0000 (0.6s) ETA 0.3min
+[cal 70/100] Epilepsy_00@10 8b87d66f R'=0.9000 (1.5s) ETA 0.3min
+[cal 71/100] Epilepsy_01@10 4f7d4135 R'=0.8667 (0.9s) ETA 0.3min
+[cal 72/100] Epilepsy_01@10 cffb5503 R'=0.8667 (1.0s) ETA 0.3min
+[cal 73/100] Epilepsy_01@10 8c4aa283 R'=0.8667 (2.1s) ETA 0.3min
+[cal 74/100] Epilepsy_01@10 f48e5da1 R'=0.8333 (1.0s) ETA 0.3min
+[cal 75/100] Epilepsy_01@10 a1f67db4 R'=0.8667 (1.0s) ETA 0.2min
+[cal 76/100] Epilepsy_01@10 e490b88e R'=0.8667 (0.4s) ETA 0.2min
+[cal 77/100] Epilepsy_01@10 9092e36e R'=0.9000 (1.5s) ETA 0.2min
+[cal 78/100] Epilepsy_01@10 65627517 R'=0.8667 (0.7s) ETA 0.2min
+[cal 79/100] Epilepsy_01@10 20be4f74 R'=0.9333 (0.6s) ETA 0.2min
+[cal 80/100] Epilepsy_01@10 8b87d66f R'=0.8667 (1.5s) ETA 0.2min
+[cal 81/100] Epilepsy_00@20 4f7d4135 R'=0.9250 (2.2s) ETA 0.2min
+[cal 82/100] Epilepsy_00@20 cffb5503 R'=0.9000 (2.2s) ETA 0.2min
+[cal 83/100] Epilepsy_00@20 8c4aa283 R'=0.9000 (4.5s) ETA 0.2min
+[cal 84/100] Epilepsy_00@20 f48e5da1 R'=0.9000 (2.1s) ETA 0.2min
+[cal 85/100] Epilepsy_00@20 a1f67db4 R'=0.9000 (2.6s) ETA 0.2min
+[cal 86/100] Epilepsy_00@20 e490b88e R'=0.9000 (0.7s) ETA 0.2min
+[cal 87/100] Epilepsy_00@20 9092e36e R'=0.9250 (4.2s) ETA 0.2min
+[cal 88/100] Epilepsy_00@20 65627517 R'=0.8250 (1.6s) ETA 0.2min
+[cal 89/100] Epilepsy_00@20 20be4f74 R'=0.7500 (1.3s) ETA 0.1min
+[cal 90/100] Epilepsy_00@20 8b87d66f R'=0.9000 (2.8s) ETA 0.1min
+[cal 91/100] Epilepsy_01@20 4f7d4135 R'=0.8667 (1.7s) ETA 0.1min
+[cal 92/100] Epilepsy_01@20 cffb5503 R'=0.8667 (2.5s) ETA 0.1min
+[cal 93/100] Epilepsy_01@20 8c4aa283 R'=0.8333 (4.2s) ETA 0.1min
+[cal 94/100] Epilepsy_01@20 f48e5da1 R'=0.8667 (1.8s) ETA 0.1min
+[cal 95/100] Epilepsy_01@20 a1f67db4 R'=0.8667 (2.3s) ETA 0.1min
+[cal 96/100] Epilepsy_01@20 e490b88e R'=0.8667 (0.7s) ETA 0.1min
+[cal 97/100] Epilepsy_01@20 9092e36e R'=0.9333 (3.3s) ETA 0.0min
+[cal 98/100] Epilepsy_01@20 65627517 R'=0.8333 (1.4s) ETA 0.0min
+[cal 99/100] Epilepsy_01@20 20be4f74 R'=0.7667 (1.1s) ETA 0.0min
+[cal 100/100] Epilepsy_01@20 8b87d66f R'=0.8333 (2.5s) ETA 0.0min
+     1 iters (1ep): base=0.871 realized=+0.003 best=+0.050 ↑0 ↓0 T1✓T2✓T3✗
+     2 iters (2ep): base=0.871 realized=+0.013 best=+0.075 ↑0 ↓1 T1✓T2✓T3✗
+     5 iters (5ep): base=0.871 realized=+0.010 best=+0.075 ↑0 ↓0 T1✓T2✓T3✗
+    10 iters (10ep): base=0.871 realized=+0.020 best=+0.125 ↑1 ↓0 T1✓T2✓T3✗
+    20 iters (20ep): base=0.871 realized=-0.003 best=+0.067 ↑0 ↓2 T1✓T2✓T3✗
+Epilepsy 工作点: selection=None no_workpoint=no_workpoint
+[rand s0] ['1.0000', '0.8148', '0.9630', '0.8889', '0.9259']
+[rand s1] ['1.0000', '0.9259', '0.8889', '0.8889', '0.9259']
+[rand s2] ['0.9630', '0.8889', '0.8889', '0.8889', '0.8889']
+[GGS@20] mean=0.9111 gain=-0.0049 (1.6s)
+[GGS@2320] mean=0.9333 gain=+0.0173 (89.4s)
+Epilepsy 尺度2: random=0.9160 gain_max=+0.0173 pass=False
+
+===== Epilepsy 预检判定: unevaluable =====
+  尺度1 workpoint: None (no_workpoint=no_workpoint)
+  尺度2 gain_max: +0.0173 (≥0.03 → False)

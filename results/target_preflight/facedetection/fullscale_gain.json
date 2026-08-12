@@ -1,0 +1,77 @@
+{
+  "dataset": "FaceDetection",
+  "n": 5890,
+  "spe_full": 47,
+  "split_protocol": "subject_block_disjoint",
+  "n_splits": 1,
+  "split_sizes": [
+    [
+      4712,
+      1178
+    ]
+  ],
+  "val_blocks": [
+    8,
+    9
+  ],
+  "split_seeds": null,
+  "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "random_init": {
+    "rows": [
+      {
+        "seed": 0,
+        "accs_by_split": [
+          0.5050933786078099
+        ],
+        "mean": 0.5050933786078099
+      },
+      {
+        "seed": 1,
+        "accs_by_split": [
+          0.5212224108658744
+        ],
+        "mean": 0.5212224108658744
+      },
+      {
+        "seed": 2,
+        "accs_by_split": [
+          0.499151103565365
+        ],
+        "mean": 0.499151103565365
+      }
+    ],
+    "by_split": [
+      0.5084889643463498
+    ],
+    "mean": 0.5084889643463498
+  },
+  "ggs_arms": [
+    {
+      "cls_key": "c92058f26c1d",
+      "iters": 470,
+      "epoch_equiv": 10.0,
+      "accs_by_split": [
+        0.5356536502546689
+      ],
+      "mean": 0.5356536502546689,
+      "gain_vs_random": 0.02716468590831911,
+      "encoder_cached": false,
+      "seconds": 18.9
+    },
+    {
+      "cls_key": "c92058f26c1d",
+      "iters": 2320,
+      "epoch_equiv": 49.361702127659576,
+      "accs_by_split": [
+        0.5033955857385399
+      ],
+      "mean": 0.5033955857385399,
+      "gain_vs_random": -0.005093378607809895,
+      "encoder_cached": false,
+      "seconds": 78.2
+    }
+  ],
+  "gain_max": 0.02716468590831911,
+  "gain_floor": 0.03,
+  "scale2_pass": false
+}

@@ -33,8 +33,12 @@ slice:
 # 专用路径（load_har），fail-fast 防护不变。6 类 → [3,6] 档组合数 42 ≥ 8 不重复。
 target_pool:
   - {name: UCI-HAR,       source: external, domain: HAR, n_channels: 9, n_classes: 6, l_enc: 128, crop_len: null, n_classes_range: [3, 6], planned_tasks: 8}
-  - {name: Epilepsy,      source: uea,      domain: HAR}
-  - {name: FaceDetection, source: uea,      domain: EEG/MEG}
+  # Epilepsy/FaceDetection 切片参数为两尺度预检（scripts/6_target_preflight.py，协议
+  # results/target_preflight/PROTOCOL.md）用，与 UCI-HAR 同口径通用切片。注意本项目
+  # Epilepsy = UEA 版（腕部加速度计 HAR，非 AutoCL 的 Bonn EEG）；FaceDetection 2 类
+  # → allow_repeat 自动，通道子集 (72,144) 为多样性主力。
+  - {name: Epilepsy,      source: uea,      domain: HAR,     n_channels: 3,   n_classes: 4, l_enc: 206, crop_len: null, n_classes_range: [3, 4], planned_tasks: 8}
+  - {name: FaceDetection, source: uea,      domain: EEG/MEG, n_channels: 144, n_classes: 2, l_enc: 62,  crop_len: null, n_classes_range: [2, 2], planned_tasks: 8}
 
 # 源池（13 活跃）
 source_pool:

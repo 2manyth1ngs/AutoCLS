@@ -1,0 +1,8 @@
+{
+  "dataset": "Epilepsy",
+  "scale1_workpoint": null,
+  "scale1_no_workpoint": "no_workpoint",
+  "scale2_gain_max": 0.01728395061728396,
+  "scale2_pass": false,
+  "verdict": "unevaluable"
+}
