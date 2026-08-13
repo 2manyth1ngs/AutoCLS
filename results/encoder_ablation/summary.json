@@ -1,0 +1,137 @@
+{
+  "criterion": {
+    "har_ref": 0.8911,
+    "weak_threshold": 0.75,
+    "solid_threshold": 0.85
+  },
+  "verdict": "found_weakening_config",
+  "below_075": [
+    "nores"
+  ],
+  "summary": {
+    "UCI-HAR": {
+      "base": {
+        "n": 5,
+        "mean": 0.8935,
+        "std": 0.0058,
+        "delta_vs_base": 0.0
+      },
+      "depth6": {
+        "n": 5,
+        "mean": 0.8955,
+        "std": 0.0053,
+        "delta_vs_base": 0.002
+      },
+      "depth3": {
+        "n": 5,
+        "mean": 0.8915,
+        "std": 0.0066,
+        "delta_vs_base": -0.0019
+      },
+      "depth1": {
+        "n": 5,
+        "mean": 0.8937,
+        "std": 0.0037,
+        "delta_vs_base": 0.0003
+      },
+      "dims128": {
+        "n": 5,
+        "mean": 0.8929,
+        "std": 0.0077,
+        "delta_vs_base": -0.0005
+      },
+      "dims64": {
+        "n": 5,
+        "mean": 0.8806,
+        "std": 0.0059,
+        "delta_vs_base": -0.0128
+      },
+      "dims32": {
+        "n": 5,
+        "mean": 0.8417,
+        "std": 0.0165,
+        "delta_vs_base": -0.0517
+      },
+      "pool_mean": {
+        "n": 5,
+        "mean": 0.8767,
+        "std": 0.0094,
+        "delta_vs_base": -0.0168
+      },
+      "pool_last": {
+        "n": 5,
+        "mean": 0.8018,
+        "std": 0.0063,
+        "delta_vs_base": -0.0917
+      },
+      "nores": {
+        "n": 5,
+        "mean": 0.1965,
+        "std": 0.0,
+        "delta_vs_base": -0.697
+      }
+    },
+    "Handwriting": {
+      "base": {
+        "n": 5,
+        "mean": 0.4893,
+        "std": 0.006,
+        "delta_vs_base": 0.0
+      },
+      "depth6": {
+        "n": 5,
+        "mean": 0.4887,
+        "std": 0.0152,
+        "delta_vs_base": -0.0007
+      },
+      "depth3": {
+        "n": 5,
+        "mean": 0.4887,
+        "std": 0.0301,
+        "delta_vs_base": -0.0007
+      },
+      "depth1": {
+        "n": 5,
+        "mean": 0.4407,
+        "std": 0.0153,
+        "delta_vs_base": -0.0487
+      },
+      "dims128": {
+        "n": 5,
+        "mean": 0.438,
+        "std": 0.0331,
+        "delta_vs_base": -0.0513
+      },
+      "dims64": {
+        "n": 5,
+        "mean": 0.4227,
+        "std": 0.0206,
+        "delta_vs_base": -0.0667
+      },
+      "dims32": {
+        "n": 5,
+        "mean": 0.3433,
+        "std": 0.0575,
+        "delta_vs_base": -0.146
+      },
+      "pool_mean": {
+        "n": 5,
+        "mean": 0.298,
+        "std": 0.0482,
+        "delta_vs_base": -0.1913
+      },
+      "pool_last": {
+        "n": 5,
+        "mean": 0.2393,
+        "std": 0.0138,
+        "delta_vs_base": -0.25
+      },
+      "nores": {
+        "n": 5,
+        "mean": 0.0533,
+        "std": 0.0,
+        "delta_vs_base": -0.436
+      }
+    }
+  }
+}
