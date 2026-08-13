@@ -39,6 +39,7 @@ def pretrain_encoder(
     lr: float = 1e-3,
     device: Optional[str] = None,
     seed: int = 0,
+    use_swa: bool = False,
     verbose: bool = False,
 ) -> list[float]:
     """按 cls_cfg 对 encoder 做对比预训练（就地更新权重），返回每遍数据的平均损失。
@@ -49,11 +50,23 @@ def pretrain_encoder(
 
     X_train: (N, T, C) float32。数据增强在 CPU 上执行（逐 batch 采样坐标/噪声），
     两个视图再搬运到 device 前向。
+
+    use_swa（默认关，关闭时代码路径零改动）：按 TS2Vec 官方语义做等权权重平均
+    （reference/AutoCTS_plusplus/NAS_Net/ts2vec.py，与 yuezhihan/ts2vec 逐行一致）——
+    创建 AveragedModel 后立即快照 init 权重（ts2vec.py:53-54），此后每次
+    optimizer.step() 后 update 一次（ts2vec.py:152），K 次更新 = {w_init, w_1..w_K}
+    共 K+1 个快照的等权 running mean；官方 encode 用平均权重（ts2vec.py:177）、
+    梯度只更新原始权重。此处训练结束把平均参数拷回 encoder（后续只有评估，与官方
+    eval 走平均权重等价）。AveragedModel 不消耗 RNG，训练轨迹与关闭时逐位相同。
     """
     device = device or ("cuda" if torch.cuda.is_available() else "cpu")
     encoder = encoder.to(device)
     encoder.train()
     optimizer = torch.optim.AdamW(encoder.parameters(), lr=lr)
+    swa_model = None
+    if use_swa:
+        swa_model = torch.optim.swa_utils.AveragedModel(encoder)
+        swa_model.update_parameters(encoder)  # init 快照（官方 ts2vec.py:54）
 
     aug_params = {name: getattr(cls_cfg, name) for name in _AUG_FIELDS}
     X = torch.from_numpy(np.ascontiguousarray(X_train, dtype=np.float32))
@@ -83,6 +96,8 @@ def pretrain_encoder(
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+            if swa_model is not None:
+                swa_model.update_parameters(encoder)  # 逐 iter（官方 ts2vec.py:152）
             step += 1
             batch_losses.append(loss.item())
 
@@ -92,4 +107,8 @@ def pretrain_encoder(
         pass_losses.append(mean_loss)
         if verbose:
             print(f"[cl_trainer] iter {step}/{max_iters} loss={mean_loss:.4f}")
+    if swa_model is not None:
+        # swa_model.module 即被 update_parameters 就地平均的 deepcopy，其 state_dict
+        # 不含 AveragedModel 自身的 n_averaged buffer，可直接拷回（encoder 无 buffer）。
+        encoder.load_state_dict(swa_model.module.state_dict())
     return pass_losses

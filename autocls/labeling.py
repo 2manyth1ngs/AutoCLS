@@ -460,8 +460,13 @@ def evaluate_rprime(
     lr: float = 1e-3,
     device: Optional[str] = None,
     split_indices: Optional[tuple[np.ndarray, np.ndarray]] = None,
+    use_swa: bool = False,
 ) -> dict:
     """对 (task, cls) 跑 iters 对比预训练 + 任务内分层 train/eval 下游评估得 R'。
+
+    use_swa（默认关）：TS2Vec 官方语义的等权权重平均（见 pretrain_encoder 文档），
+    评估用平均权重。状态记入返回记录的 "swa" 字段——调用方必须将其纳入缓存键，
+    与历史（无 SWA）记录隔离。
 
     split_indices: 显式 (tr_idx, ev_idx)（任务内局部索引）——给出时绕过内部
     分层切分（出路 A 跨受试者协议：调用方用 split_train_eval_by_group 产出组
@@ -501,6 +506,7 @@ def evaluate_rprime(
         pretrain_encoder(
             encoder, cls_cfg, Xt[tr_idx], max_iters=iters,
             batch_size=batch_size, lr=lr, device=device, seed=weight_seed,
+            use_swa=use_swa,
         )
         evaluator = resolve_evaluator(task.task_type)  # 铁律 7 分发点
         metrics = evaluator(
@@ -524,6 +530,6 @@ def evaluate_rprime(
     rec.update({
         "n_train": int(len(tr_idx)), "n_eval": int(len(ev_idx)),
         "weight_seed": int(weight_seed), "split_seed": int(split_seed),
-        "device_name": device_label(device),
+        "device_name": device_label(device), "swa": bool(use_swa),
     })
     return rec
