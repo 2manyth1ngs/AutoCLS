@@ -18,7 +18,7 @@ resolve_slice_strategy 分发）。核心与既有分支零改动。
 from __future__ import annotations
 
 TASK_CLASSIFICATION = "classification"
-TASK_FORECASTING = "forecasting"  # 预留：阶段一未实现，仅作分发 stub（关键决策 3）
+TASK_FORECASTING = "forecasting"  # 2026-08-13 起接入：is_better/下游评估器已实现（噪声探针先行）
 
 KNOWN_TASK_TYPES = (TASK_CLASSIFICATION, TASK_FORECASTING)
 
@@ -37,13 +37,14 @@ def is_better(r1: float, r2: float, task_type: str) -> bool:
 
     造配对 label 的唯一合法途径：y = is_better(r_a, r_b, task_type)；平局返回
     False（严格优），调用方应弃平局样本而非赋任意方向。
-    classification: R'=ACC，大者优；forecasting: R'=MSE，小者优——当前留 stub，
-    接入时实现 `return r1 < r2` 并在 tests/test_task_types.py 补用例。
+    classification: R'=ACC，大者优；forecasting: R'=MSE（norm 尺度，AutoCL 附录
+    B.1 / B.3 验证指标 MSE@48 horizons），小者优。
     """
     validate_task_type(task_type)
     if task_type == TASK_CLASSIFICATION:
         return r1 > r2
+    if task_type == TASK_FORECASTING:
+        return r1 < r2
     raise NotImplementedError(
-        f"task_type={task_type!r} 的 R' 比较未实现——forecasting 为小者优"
-        "（r1 < r2），接入时在此补分支"
+        f"task_type={task_type!r} 已登记但 R' 比较方向未实现——新类型接入时在此补分支"
     )

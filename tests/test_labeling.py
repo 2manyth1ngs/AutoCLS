@@ -224,9 +224,10 @@ class TestMakePairs:
         assert kinds[("s1", "r1")] == "random-shared"
 
     def test_forecasting_dispatches_through_is_better(self):
-        # 证明方向判定走 is_better（铁律 8）：forecasting stub 应从中冒出
-        with pytest.raises(NotImplementedError):
-            make_pairs({"a": 0.9, "b": 0.5}, TASK_FORECASTING, delta=0.0)
+        # 证明方向判定走 is_better（铁律 8）：forecasting（MSE 小者优）方向与分类
+        # 相反（2026-08-13 起分支已实现，原 stub 断言更新为方向反转检查）
+        pairs, _ = make_pairs({"a": 0.9, "b": 0.5}, TASK_FORECASTING, delta=0.0)
+        assert pairs[0]["y"] == 0  # MSE 0.9 > 0.5 → b 更优 → y=0
 
 
 # ---------------------------------------------------------------- δ 标定辅助
@@ -322,11 +323,12 @@ class TestTaskTypeDispatchPoints:
         assert m["r_prime"] == m["acc"]
         assert {"acc", "f1"} <= set(m)
 
-    def test_resolve_evaluator_forecasting_stub(self):
+    def test_resolve_evaluator_forecasting_returns_callable(self):
+        # 2026-08-13 起 forecasting 评估器已实现（TS2Vec Ridge 协议），原 stub 断言更新；
+        # 行为细节由 tests/test_forecast_eval.py 钉死
         from autocls.downstream import resolve_evaluator
 
-        with pytest.raises(NotImplementedError):
-            resolve_evaluator(TASK_FORECASTING)
+        assert callable(resolve_evaluator(TASK_FORECASTING))
 
     def test_resolve_evaluator_unknown_rejected(self):
         from autocls.downstream import resolve_evaluator

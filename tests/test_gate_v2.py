@@ -74,11 +74,19 @@ def test_label_direction_goes_through_is_better():
                                task_type=CLF)[0].label_a_better is False
 
 
-def test_forecasting_direction_not_silently_assumed():
-    """铁律 7/8：未实现的任务类型必须炸，不得按分类语义蒙混。"""
+def test_forecasting_direction_inverted_via_is_better():
+    """铁律 7/8：forecasting（MSE 小者优）方向必须与分类相反——证明经 is_better
+    分发而非按分类语义蒙混（2026-08-13 起 forecasting 分支已实现，原 stub 断言更新）。"""
+    (o,) = G.pair_observations(_tm(a={0: 0.9}, b={0: 0.5}), ("a", "b"),
+                               task_type="forecasting")
+    assert o.label_a_better is False  # MSE 0.9 > 0.5 → a 更差
+
+
+def test_unknown_task_type_not_silently_assumed():
+    """未登记的任务类型必须炸，不得按任何既有语义蒙混。"""
     with pytest.raises((NotImplementedError, ValueError)):
         G.pair_observations(_tm(a={0: 0.9}, b={0: 0.5}), ("a", "b"),
-                            task_type="forecasting")
+                            task_type="segmentation")
 
 
 # ---------------------------------------------------------------------------

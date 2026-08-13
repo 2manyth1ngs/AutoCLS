@@ -43,10 +43,14 @@ class TestIsBetter:
         # 严格优：平局不算优（配对 label 造样时平局应弃样，不给假方向）
         assert is_better(0.90, 0.90, TASK_CLASSIFICATION) is False
 
-    def test_forecasting_stub_reserved(self):
-        # 预测分支留 stub：接入时实现"小者优"（r1 < r2），当前显式拒绝而非静默给错方向
-        with pytest.raises(NotImplementedError, match="小者优"):
-            is_better(0.1, 0.2, TASK_FORECASTING)
+    def test_forecasting_lower_mse_is_better(self):
+        # 预测 R'=MSE，小者优（铁律 8：与分类方向相反，方向只活在这里）
+        assert is_better(0.1, 0.2, TASK_FORECASTING) is True
+        assert is_better(0.2, 0.1, TASK_FORECASTING) is False
+
+    def test_forecasting_tie_is_not_better(self):
+        # 严格优：平局不算优（与分类同语义，配对造样时平局弃样）
+        assert is_better(0.15, 0.15, TASK_FORECASTING) is False
 
     def test_unknown_task_type_rejected(self):
         with pytest.raises(ValueError, match="task_type"):
