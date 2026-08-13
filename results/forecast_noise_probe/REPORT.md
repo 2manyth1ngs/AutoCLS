@@ -34,6 +34,11 @@ Ridge 协议，norm MSE）｜ 10 shared 探针 CLS × k=3 weight_seed × iters {
   （ETTh1 univar @48）。
 - rep0（canonical）无系统位移：rep0 − mean(rep1,2) 中位 **+0.0002**（均值 +0.0098
   被 20be4f74@290 单点拉动）——canonical 种子无特殊地位，有效性检查通过。
+- run.err 内容核实：全部为 sklearn `LinAlgWarning`（alpha 网格小档在 320 维相关
+  特征上病态矩阵，官方同网格固有行为），零 Traceback。最终选中 alpha<5 的仅
+  9/90 条、集中在 290 档；同 cell 内 alpha 选择随 weight_seed 漂移（如 f48e5da1@290
+  三种子选 2.0/2.0/1.0，4f7d4135@290 rep0 选 0.5 而余者大档）——alpha 不稳是
+  表征不稳的下游表现，非独立噪声源。
 
 ## 2. 主表：噪声分布（同 (cls, iters) 跨 3 weight_seed，每档 10 cell × 3 对）
 
