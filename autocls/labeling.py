@@ -405,6 +405,17 @@ def run_seed_for(task_id: str, key: str, base: int = 0) -> int:
     return int(h[:8], 16) % (2**31 - 1)
 
 
+def shared_seed_for(task_id: str, rep: int) -> int:
+    """共享种子（common random numbers）：同任务全 CLS 共用的第 rep 个权重种子。
+
+    与生产口径 run_seed_for(task_id, cls_key) 的关键差异：**不含 cls_key**——同一
+    任务上所有 CLS 从同一初始化出发做配对比较，seed 主效应 g 在 ΔR' 中完全抵消，
+    只剩 cls×seed 交互 ε（results/shared_seed_probe/PROTOCOL.md 的方差模型）。
+    派生串带 "sharedseed:" 前缀，与 canonical（cls_key）/噪声探针（"{key}:noise{rep}"）
+    两条既有种子流天然不相交，历史缓存零污染。"""
+    return run_seed_for(task_id, f"sharedseed:{rep}")
+
+
 def mark_inflight(path: str | Path, task_id: str, cls_key_: str, iters: int) -> None:
     """开跑一条 R' 前打点（Part A-3 看门狗协议）：进程在这条上被杀时，看门狗读此
     文件累计 (task, cls) 崩溃次数，≥FAIL_LIMIT 写永久隔离记录防死循环。"""
