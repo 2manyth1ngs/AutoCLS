@@ -1,0 +1,312 @@
+{
+  "protocol": "results/shared_seed_probe/PROTOCOL.md",
+  "validity": {
+    "n_rows": 60,
+    "n_finite": 60,
+    "n_dup_keys": 0,
+    "n_seed_violations": 0,
+    "seed_violations": [],
+    "n_tasks": 2,
+    "usable_cls_per_task": {
+      "Handwriting_00": 10,
+      "Handwriting_01": 10
+    },
+    "dropped_cls": {},
+    "devices": [
+      "NVIDIA GeForce RTX 4060 Laptop GPU"
+    ],
+    "passed": true
+  },
+  "per_task": {
+    "Handwriting_00": {
+      "indep": {
+        "n": 30,
+        "median": 0.025806451612903264,
+        "p95": 0.14193548387096777,
+        "max": 0.14838709677419348
+      },
+      "shared_rep_diff": {
+        "n": 135,
+        "median": 0.03870967741935483,
+        "p95": 0.1483870967741936,
+        "max": 0.1870967741935483
+      },
+      "anova": {
+        "ss": {
+          "cls": 0.26627956989247314,
+          "seed": 0.005447103711411701,
+          "resid": 0.023439472771418658
+        },
+        "ss_share": {
+          "cls": 0.9021345203792405,
+          "seed": 0.01845436469697888,
+          "resid": 0.07941111492378054
+        },
+        "ms_seed": 0.0027235518557058506,
+        "ms_resid": 0.0013021929317454809,
+        "var_g_hat": 0.00014213589239603697,
+        "var_eps_hat": 0.0013021929317454809,
+        "grand_mean": 0.6178494623655912,
+        "seed_effects": [
+          -0.017204301075268602,
+          0.01569892473118295,
+          0.0015053763440860957
+        ]
+      }
+    },
+    "Handwriting_01": {
+      "indep": {
+        "n": 30,
+        "median": 0.03200000000000003,
+        "p95": 0.12,
+        "max": 0.12
+      },
+      "shared_rep_diff": {
+        "n": 135,
+        "median": 0.04800000000000004,
+        "p95": 0.15200000000000002,
+        "max": 0.20000000000000007
+      },
+      "anova": {
+        "ss": {
+          "cls": 0.13808853333333343,
+          "seed": 0.0035711999999999975,
+          "resid": 0.02655146666666668
+        },
+        "ss_share": {
+          "cls": 0.8209235373942599,
+          "seed": 0.021230453144618164,
+          "resid": 0.15784600946112184
+        },
+        "ms_seed": 0.0017855999999999987,
+        "ms_resid": 0.0014750814814814821,
+        "var_g_hat": 3.105185185185166e-05,
+        "var_eps_hat": 0.0014750814814814821,
+        "grand_mean": 0.7784,
+        "seed_effects": [
+          0.0119999999999999,
+          0.0023999999999999577,
+          -0.01440000000000008
+        ]
+      }
+    }
+  },
+  "pooled": {
+    "indep": {
+      "n": 60,
+      "median": 0.02890322580645166,
+      "p95": 0.12,
+      "max": 0.14838709677419348
+    },
+    "shared_rep_diff": {
+      "n": 270,
+      "median": 0.040000000000000036,
+      "p95": 0.15200000000000002,
+      "max": 0.20000000000000007
+    },
+    "p95_shared_corrected_sqrt2": 0.10748023074035523,
+    "median_shared_corrected_sqrt2": 0.028284271247461926,
+    "reduction_corr": 0.10433141049703976,
+    "reduction_raw": -0.26666666666666683,
+    "reduction_median_corr": 0.02141472246504661,
+    "dev_witness": {
+      "p95_shared": 0.08817204301075265,
+      "p95_indep": 0.09032258064516127,
+      "reduction": 0.023809523809523947
+    },
+    "anova_ss_share": {
+      "cls": 0.8726540181321172,
+      "seed": 0.01946211609599813,
+      "resid": 0.10788386577188461
+    }
+  },
+  "verdict": {
+    "p95_indep": 0.12,
+    "p95_shared_corr": 0.10748023074035523,
+    "p95_shared_raw": 0.15200000000000002,
+    "reduction_corr": 0.10433141049703976,
+    "reduction_raw": -0.26666666666666683,
+    "band_corr": "red",
+    "band_raw": "red",
+    "band_final": "red",
+    "indep_p95_sanity_ok": true,
+    "note": null
+  },
+  "derived": {
+    "delta_paired": 0.11,
+    "delta_paired_raw": 0.155,
+    "required_k_corr": 10.607897153351699,
+    "required_k_raw": 21.2157943067034,
+    "required_k_published": {
+      "k1": 11.0,
+      "swa": 5.5
+    },
+    "probe_paired_ceiling_per_seed": [
+      {
+        "n_delta_dropped": 58,
+        "n_tie_dropped": 0,
+        "pooled": {
+          "ceiling": 1.0,
+          "n_survive": 32
+        },
+        "Handwriting": {
+          "ceiling": 1.0,
+          "n_survive": 32
+        },
+        "UniMiB-SHAR": {
+          "ceiling": null,
+          "n_survive": 0
+        }
+      },
+      {
+        "n_delta_dropped": 45,
+        "n_tie_dropped": 0,
+        "pooled": {
+          "ceiling": 1.0,
+          "n_survive": 45
+        },
+        "Handwriting": {
+          "ceiling": 1.0,
+          "n_survive": 45
+        },
+        "UniMiB-SHAR": {
+          "ceiling": null,
+          "n_survive": 0
+        }
+      },
+      {
+        "n_delta_dropped": 52,
+        "n_tie_dropped": 0,
+        "pooled": {
+          "ceiling": 1.0,
+          "n_survive": 38
+        },
+        "Handwriting": {
+          "ceiling": 1.0,
+          "n_survive": 38
+        },
+        "UniMiB-SHAR": {
+          "ceiling": null,
+          "n_survive": 0
+        }
+      }
+    ],
+    "paired_direction_stability": {
+      "Handwriting_00": {
+        "n_pairs": 24,
+        "stable_frac": 1.0
+      },
+      "Handwriting_01": {
+        "n_pairs": 14,
+        "stable_frac": 1.0
+      }
+    },
+    "ceiling_hw12": {
+      "paired_delta": {
+        "n_delta_dropped": 364,
+        "n_tie_dropped": 0,
+        "pooled": {
+          "ceiling": 1.0,
+          "n_survive": 176
+        },
+        "Handwriting": {
+          "ceiling": 1.0,
+          "n_survive": 176
+        },
+        "UniMiB-SHAR": {
+          "ceiling": null,
+          "n_survive": 0
+        }
+      },
+      "published_delta_ref": {
+        "n_delta_dropped": 364,
+        "n_tie_dropped": 0,
+        "pooled": {
+          "ceiling": 1.0,
+          "n_survive": 176
+        },
+        "Handwriting": {
+          "ceiling": 1.0,
+          "n_survive": 176
+        },
+        "UniMiB-SHAR": {
+          "ceiling": null,
+          "n_survive": 0
+        }
+      },
+      "delta0_ref": {
+        "n_delta_dropped": 0,
+        "n_tie_dropped": 20,
+        "pooled": {
+          "ceiling": 0.8865384615384615,
+          "n_survive": 520
+        },
+        "Handwriting": {
+          "ceiling": 0.8865384615384615,
+          "n_survive": 520
+        },
+        "UniMiB-SHAR": {
+          "ceiling": null,
+          "n_survive": 0
+        }
+      },
+      "note": "k=1 独立种子 R' + δ_paired 混合口径（非真配对数据）"
+    },
+    "ceiling_pooled28_scaled": {
+      "delta_um_scaled": 0.07,
+      "hw_um_ratio_applied": 0.8956685895029602,
+      "paired_delta": {
+        "n_delta_dropped": 896,
+        "n_tie_dropped": 0,
+        "pooled": {
+          "ceiling": 0.9423076923076923,
+          "n_survive": 364
+        },
+        "Handwriting": {
+          "ceiling": 1.0,
+          "n_survive": 176
+        },
+        "UniMiB-SHAR": {
+          "ceiling": 0.9840425531914894,
+          "n_survive": 188
+        }
+      },
+      "published_ref": {
+        "n_delta_dropped": 902,
+        "n_tie_dropped": 0,
+        "pooled": {
+          "ceiling": 0.952513966480447,
+          "n_survive": 358
+        },
+        "Handwriting": {
+          "ceiling": 1.0,
+          "n_survive": 176
+        },
+        "UniMiB-SHAR": {
+          "ceiling": 0.989010989010989,
+          "n_survive": 182
+        }
+      },
+      "assumption": "UM 配对噪声按 HW 降幅同比例缩放（未实测，仅参考）"
+    }
+  },
+  "predictions": {
+    "P1_p95_indep_in_band": {
+      "band": [
+        0.08,
+        0.15
+      ],
+      "value": 0.12,
+      "hit": true
+    },
+    "P2_resid_share_gt_seed_share": {
+      "resid": 0.10788386577188461,
+      "seed": 0.01946211609599813,
+      "hit": true
+    },
+    "P3_band_mid": {
+      "band_final": "red",
+      "hit": false
+    }
+  }
+}
