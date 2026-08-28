@@ -1,0 +1,1082 @@
+{
+  "protocol": "results/eval_size_probe/PROTOCOL.md",
+  "validity": {
+    "n_rows": 60,
+    "n_finite": 60,
+    "n_dup_keys": 0,
+    "n_tasks": 2,
+    "cells_complete": true,
+    "vector_len_consistent": {
+      "Handwriting_00": [
+        155
+      ],
+      "Handwriting_01": [
+        125
+      ]
+    },
+    "bitwise": {
+      "n_total": 60,
+      "n_match": 46,
+      "n_missing_ref": 0,
+      "max_abs_diff": 0.025806451612903236,
+      "mismatches": [
+        {
+          "key": [
+            "Handwriting_00",
+            "20be4f7443e8",
+            60,
+            1
+          ],
+          "new": 0.5096774193548387,
+          "ref": 0.5225806451612903
+        },
+        {
+          "key": [
+            "Handwriting_00",
+            "20be4f7443e8",
+            60,
+            2
+          ],
+          "new": 0.432258064516129,
+          "ref": 0.4064516129032258
+        },
+        {
+          "key": [
+            "Handwriting_00",
+            "8b87d66faad3",
+            60,
+            0
+          ],
+          "new": 0.5290322580645161,
+          "ref": 0.5096774193548387
+        },
+        {
+          "key": [
+            "Handwriting_00",
+            "8b87d66faad3",
+            60,
+            2
+          ],
+          "new": 0.5612903225806452,
+          "ref": 0.5419354838709678
+        },
+        {
+          "key": [
+            "Handwriting_01",
+            "4f7d413581f6",
+            60,
+            2
+          ],
+          "new": 0.776,
+          "ref": 0.768
+        },
+        {
+          "key": [
+            "Handwriting_01",
+            "a1f67db45e64",
+            60,
+            0
+          ],
+          "new": 0.8,
+          "ref": 0.792
+        },
+        {
+          "key": [
+            "Handwriting_01",
+            "e490b88ee785",
+            60,
+            2
+          ],
+          "new": 0.912,
+          "ref": 0.904
+        },
+        {
+          "key": [
+            "Handwriting_01",
+            "9092e36eefe1",
+            60,
+            0
+          ],
+          "new": 0.816,
+          "ref": 0.824
+        },
+        {
+          "key": [
+            "Handwriting_01",
+            "9092e36eefe1",
+            60,
+            1
+          ],
+          "new": 0.872,
+          "ref": 0.864
+        },
+        {
+          "key": [
+            "Handwriting_01",
+            "20be4f7443e8",
+            60,
+            0
+          ],
+          "new": 0.688,
+          "ref": 0.672
+        }
+      ],
+      "passed": false
+    },
+    "devices": [
+      "NVIDIA GeForce RTX 4060 Laptop GPU"
+    ],
+    "passed": false
+  },
+  "flip_structure": {
+    "q_median": 0.17096774193548386,
+    "q_p25": 0.136,
+    "q_p75": 0.22580645161290322,
+    "imbalance_median": 0.15959252971137522,
+    "imbalance_top6_by_net": [
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "65627517fa32",
+        "net": 0.16,
+        "q": 0.288,
+        "imbalance": 0.5555555555555556
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "20be4f7443e8",
+        "net": 0.12258064516129032,
+        "q": 0.38064516129032255,
+        "imbalance": 0.3220338983050847
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "8c4aa28336d6",
+        "net": 0.10967741935483871,
+        "q": 0.1870967741935484,
+        "imbalance": 0.5862068965517241
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "65627517fa32",
+        "net": 0.104,
+        "q": 0.392,
+        "imbalance": 0.2653061224489796
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "8c4aa28336d6",
+        "net": 0.0967741935483871,
+        "q": 0.2129032258064516,
+        "imbalance": 0.45454545454545453
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "4f7d413581f6",
+        "net": 0.09032258064516129,
+        "q": 0.18064516129032257,
+        "imbalance": 0.5
+      }
+    ],
+    "per_pair": [
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "4f7d413581f6",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.10967741935483871,
+        "net": 0.0064516129032258064,
+        "flips_pos": 8,
+        "flips_neg": 9,
+        "imbalance": 0.058823529411764705
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "4f7d413581f6",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.18064516129032257,
+        "net": 0.09032258064516129,
+        "flips_pos": 7,
+        "flips_neg": 21,
+        "imbalance": 0.5
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "4f7d413581f6",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.17419354838709677,
+        "net": 0.08387096774193549,
+        "flips_pos": 7,
+        "flips_neg": 20,
+        "imbalance": 0.48148148148148145
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "cffb55035c3a",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.18064516129032257,
+        "net": 0.012903225806451613,
+        "flips_pos": 13,
+        "flips_neg": 15,
+        "imbalance": 0.07142857142857142
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "cffb55035c3a",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.21935483870967742,
+        "net": 0.03870967741935484,
+        "flips_pos": 14,
+        "flips_neg": 20,
+        "imbalance": 0.17647058823529413
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "cffb55035c3a",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.23225806451612904,
+        "net": 0.025806451612903226,
+        "flips_pos": 16,
+        "flips_neg": 20,
+        "imbalance": 0.1111111111111111
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "8c4aa28336d6",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.12903225806451613,
+        "net": 0.012903225806451613,
+        "flips_pos": 11,
+        "flips_neg": 9,
+        "imbalance": 0.1
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "8c4aa28336d6",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.1870967741935484,
+        "net": 0.10967741935483871,
+        "flips_pos": 23,
+        "flips_neg": 6,
+        "imbalance": 0.5862068965517241
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "8c4aa28336d6",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.2129032258064516,
+        "net": 0.0967741935483871,
+        "flips_pos": 24,
+        "flips_neg": 9,
+        "imbalance": 0.45454545454545453
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "f48e5da1d899",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.14838709677419354,
+        "net": 0.0064516129032258064,
+        "flips_pos": 12,
+        "flips_neg": 11,
+        "imbalance": 0.043478260869565216
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "f48e5da1d899",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.1870967741935484,
+        "net": 0.03225806451612903,
+        "flips_pos": 12,
+        "flips_neg": 17,
+        "imbalance": 0.1724137931034483
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "f48e5da1d899",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.21935483870967742,
+        "net": 0.03870967741935484,
+        "flips_pos": 14,
+        "flips_neg": 20,
+        "imbalance": 0.17647058823529413
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "a1f67db45e64",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.22580645161290322,
+        "net": 0.03225806451612903,
+        "flips_pos": 15,
+        "flips_neg": 20,
+        "imbalance": 0.14285714285714285
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "a1f67db45e64",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.22580645161290322,
+        "net": 0.03225806451612903,
+        "flips_pos": 20,
+        "flips_neg": 15,
+        "imbalance": 0.14285714285714285
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "a1f67db45e64",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.23225806451612904,
+        "net": 0.06451612903225806,
+        "flips_pos": 23,
+        "flips_neg": 13,
+        "imbalance": 0.2777777777777778
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "e490b88ee785",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.1870967741935484,
+        "net": 0.0064516129032258064,
+        "flips_pos": 14,
+        "flips_neg": 15,
+        "imbalance": 0.034482758620689655
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "e490b88ee785",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.14838709677419354,
+        "net": 0.0064516129032258064,
+        "flips_pos": 12,
+        "flips_neg": 11,
+        "imbalance": 0.043478260869565216
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "e490b88ee785",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.09032258064516129,
+        "net": 0.012903225806451613,
+        "flips_pos": 8,
+        "flips_neg": 6,
+        "imbalance": 0.14285714285714285
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "9092e36eefe1",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.17419354838709677,
+        "net": 0.0064516129032258064,
+        "flips_pos": 13,
+        "flips_neg": 14,
+        "imbalance": 0.037037037037037035
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "9092e36eefe1",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.17419354838709677,
+        "net": 0.01935483870967742,
+        "flips_pos": 12,
+        "flips_neg": 15,
+        "imbalance": 0.1111111111111111
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "9092e36eefe1",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.12903225806451613,
+        "net": 0.012903225806451613,
+        "flips_pos": 9,
+        "flips_neg": 11,
+        "imbalance": 0.1
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "65627517fa32",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.25161290322580643,
+        "net": 0.0064516129032258064,
+        "flips_pos": 19,
+        "flips_neg": 20,
+        "imbalance": 0.02564102564102564
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "65627517fa32",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.25161290322580643,
+        "net": 0.01935483870967742,
+        "flips_pos": 21,
+        "flips_neg": 18,
+        "imbalance": 0.07692307692307693
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "65627517fa32",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.2709677419354839,
+        "net": 0.025806451612903226,
+        "flips_pos": 23,
+        "flips_neg": 19,
+        "imbalance": 0.09523809523809523
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "20be4f7443e8",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.38064516129032255,
+        "net": 0.12258064516129032,
+        "flips_pos": 20,
+        "flips_neg": 39,
+        "imbalance": 0.3220338983050847
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "20be4f7443e8",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.47096774193548385,
+        "net": 0.04516129032258064,
+        "flips_pos": 33,
+        "flips_neg": 40,
+        "imbalance": 0.0958904109589041
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "20be4f7443e8",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.4,
+        "net": 0.07741935483870968,
+        "flips_pos": 37,
+        "flips_neg": 25,
+        "imbalance": 0.1935483870967742
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "8b87d66faad3",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.2129032258064516,
+        "net": 0.0064516129032258064,
+        "flips_pos": 16,
+        "flips_neg": 17,
+        "imbalance": 0.030303030303030304
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "8b87d66faad3",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.2,
+        "net": 0.03225806451612903,
+        "flips_pos": 13,
+        "flips_neg": 18,
+        "imbalance": 0.16129032258064516
+      },
+      {
+        "task_id": "Handwriting_00",
+        "cls_key": "8b87d66faad3",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.16774193548387098,
+        "net": 0.025806451612903226,
+        "flips_pos": 11,
+        "flips_neg": 15,
+        "imbalance": 0.15384615384615385
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "4f7d413581f6",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.112,
+        "net": 0.048,
+        "flips_pos": 4,
+        "flips_neg": 10,
+        "imbalance": 0.42857142857142855
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "4f7d413581f6",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.144,
+        "net": 0.0,
+        "flips_pos": 9,
+        "flips_neg": 9,
+        "imbalance": 0.0
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "4f7d413581f6",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.08,
+        "net": 0.048,
+        "flips_pos": 8,
+        "flips_neg": 2,
+        "imbalance": 0.6
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "cffb55035c3a",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.112,
+        "net": 0.032,
+        "flips_pos": 9,
+        "flips_neg": 5,
+        "imbalance": 0.2857142857142857
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "cffb55035c3a",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.152,
+        "net": 0.072,
+        "flips_pos": 14,
+        "flips_neg": 5,
+        "imbalance": 0.47368421052631576
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "cffb55035c3a",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.152,
+        "net": 0.04,
+        "flips_pos": 12,
+        "flips_neg": 7,
+        "imbalance": 0.2631578947368421
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "8c4aa28336d6",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.112,
+        "net": 0.032,
+        "flips_pos": 9,
+        "flips_neg": 5,
+        "imbalance": 0.2857142857142857
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "8c4aa28336d6",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.136,
+        "net": 0.056,
+        "flips_pos": 12,
+        "flips_neg": 5,
+        "imbalance": 0.4117647058823529
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "8c4aa28336d6",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.152,
+        "net": 0.024,
+        "flips_pos": 11,
+        "flips_neg": 8,
+        "imbalance": 0.15789473684210525
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "f48e5da1d899",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.152,
+        "net": 0.008,
+        "flips_pos": 9,
+        "flips_neg": 10,
+        "imbalance": 0.05263157894736842
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "f48e5da1d899",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.152,
+        "net": 0.008,
+        "flips_pos": 9,
+        "flips_neg": 10,
+        "imbalance": 0.05263157894736842
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "f48e5da1d899",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.16,
+        "net": 0.0,
+        "flips_pos": 10,
+        "flips_neg": 10,
+        "imbalance": 0.0
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "a1f67db45e64",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.136,
+        "net": 0.008,
+        "flips_pos": 9,
+        "flips_neg": 8,
+        "imbalance": 0.058823529411764705
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "a1f67db45e64",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.136,
+        "net": 0.008,
+        "flips_pos": 9,
+        "flips_neg": 8,
+        "imbalance": 0.058823529411764705
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "a1f67db45e64",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.128,
+        "net": 0.0,
+        "flips_pos": 8,
+        "flips_neg": 8,
+        "imbalance": 0.0
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "e490b88ee785",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.096,
+        "net": 0.048,
+        "flips_pos": 3,
+        "flips_neg": 9,
+        "imbalance": 0.5
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "e490b88ee785",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.144,
+        "net": 0.064,
+        "flips_pos": 5,
+        "flips_neg": 13,
+        "imbalance": 0.4444444444444444
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "e490b88ee785",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.064,
+        "net": 0.016,
+        "flips_pos": 3,
+        "flips_neg": 5,
+        "imbalance": 0.25
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "9092e36eefe1",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.136,
+        "net": 0.056,
+        "flips_pos": 5,
+        "flips_neg": 12,
+        "imbalance": 0.4117647058823529
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "9092e36eefe1",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.152,
+        "net": 0.008,
+        "flips_pos": 10,
+        "flips_neg": 9,
+        "imbalance": 0.05263157894736842
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "9092e36eefe1",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.144,
+        "net": 0.064,
+        "flips_pos": 13,
+        "flips_neg": 5,
+        "imbalance": 0.4444444444444444
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "65627517fa32",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.392,
+        "net": 0.104,
+        "flips_pos": 31,
+        "flips_neg": 18,
+        "imbalance": 0.2653061224489796
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "65627517fa32",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.232,
+        "net": 0.056,
+        "flips_pos": 11,
+        "flips_neg": 18,
+        "imbalance": 0.2413793103448276
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "65627517fa32",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.288,
+        "net": 0.16,
+        "flips_pos": 8,
+        "flips_neg": 28,
+        "imbalance": 0.5555555555555556
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "20be4f7443e8",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.312,
+        "net": 0.088,
+        "flips_pos": 25,
+        "flips_neg": 14,
+        "imbalance": 0.28205128205128205
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "20be4f7443e8",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.288,
+        "net": 0.032,
+        "flips_pos": 20,
+        "flips_neg": 16,
+        "imbalance": 0.1111111111111111
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "20be4f7443e8",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.312,
+        "net": 0.056,
+        "flips_pos": 16,
+        "flips_neg": 23,
+        "imbalance": 0.1794871794871795
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "8b87d66faad3",
+        "seeds": [
+          0,
+          1
+        ],
+        "q": 0.112,
+        "net": 0.032,
+        "flips_pos": 5,
+        "flips_neg": 9,
+        "imbalance": 0.2857142857142857
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "8b87d66faad3",
+        "seeds": [
+          0,
+          2
+        ],
+        "q": 0.184,
+        "net": 0.008,
+        "flips_pos": 12,
+        "flips_neg": 11,
+        "imbalance": 0.043478260869565216
+      },
+      {
+        "task_id": "Handwriting_01",
+        "cls_key": "8b87d66faad3",
+        "seeds": [
+          1,
+          2
+        ],
+        "q": 0.152,
+        "net": 0.04,
+        "flips_pos": 12,
+        "flips_neg": 7,
+        "imbalance": 0.2631578947368421
+      }
+    ]
+  },
+  "scaling_curve": [
+    {
+      "task_id": "Handwriting_00",
+      "fraction": 1.0,
+      "n_f": 155,
+      "median": 0.025806451612903226,
+      "p95": 0.10967741935483871,
+      "n_vals": 30
+    },
+    {
+      "task_id": "Handwriting_00",
+      "fraction": 0.75,
+      "n_f": 116,
+      "median": 0.02586206896551724,
+      "p95": 0.11206896551724138,
+      "n_vals": 6000
+    },
+    {
+      "task_id": "Handwriting_00",
+      "fraction": 0.5,
+      "n_f": 78,
+      "median": 0.038461538461538464,
+      "p95": 0.1282051282051282,
+      "n_vals": 6000
+    },
+    {
+      "task_id": "Handwriting_00",
+      "fraction": 0.25,
+      "n_f": 39,
+      "median": 0.05128205128205128,
+      "p95": 0.15384615384615385,
+      "n_vals": 6000
+    },
+    {
+      "task_id": "Handwriting_00",
+      "fraction": 0.125,
+      "n_f": 19,
+      "median": 0.05263157894736842,
+      "p95": 0.21052631578947367,
+      "n_vals": 6000
+    },
+    {
+      "task_id": "Handwriting_01",
+      "fraction": 1.0,
+      "n_f": 125,
+      "median": 0.036000000000000004,
+      "p95": 0.104,
+      "n_vals": 30
+    },
+    {
+      "task_id": "Handwriting_01",
+      "fraction": 0.75,
+      "n_f": 94,
+      "median": 0.031914893617021274,
+      "p95": 0.11702127659574468,
+      "n_vals": 6000
+    },
+    {
+      "task_id": "Handwriting_01",
+      "fraction": 0.5,
+      "n_f": 62,
+      "median": 0.03225806451612903,
+      "p95": 0.12903225806451613,
+      "n_vals": 6000
+    },
+    {
+      "task_id": "Handwriting_01",
+      "fraction": 0.25,
+      "n_f": 31,
+      "median": 0.06451612903225806,
+      "p95": 0.16129032258064516,
+      "n_vals": 6000
+    },
+    {
+      "task_id": "Handwriting_01",
+      "fraction": 0.125,
+      "n_f": 16,
+      "median": 0.0625,
+      "p95": 0.1875,
+      "n_vals": 6000
+    }
+  ],
+  "verdict": {
+    "beta_median": 0.5019898614227827,
+    "beta_median_ci95": [
+      0.11995788040620063,
+      0.704497251878891
+    ],
+    "beta_p95": 0.27239305637149186,
+    "beta_per_task": {
+      "Handwriting_00": 0.5425756691964383,
+      "Handwriting_01": 0.4471108121727311
+    },
+    "band": "confirmed",
+    "um_extrapolation": {
+      "predicted_med_at_307": 0.018227100296568228,
+      "published_med": 0.02,
+      "ratio": 0.9113550148284114
+    }
+  },
+  "predictions": {
+    "P1_beta_med_in_band": {
+      "value": 0.5019898614227827,
+      "hit": true
+    },
+    "P2_tail_flatter": {
+      "beta_p95": 0.27239305637149186,
+      "beta_med": 0.5019898614227827,
+      "hit": true
+    },
+    "P3_q_median_in_band": {
+      "value": 0.17096774193548386,
+      "hit": true
+    },
+    "P4_um_extrapolation_30pct": {
+      "ratio": 0.9113550148284114,
+      "hit": true
+    }
+  }
+}
