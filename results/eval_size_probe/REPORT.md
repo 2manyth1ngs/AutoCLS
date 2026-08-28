@@ -1,5 +1,8 @@
 # 评估集规模探针报告（2026-08-28，协议 PROTOCOL.md 先行 commit 66318a7）
 
+> **用户终判（2026-08-28）：直接采纳 CONFIRMED。** 有效性闸 FAIL 的环境噪声
+> 诊断（§2）成立，按 SWA 否决 2 降级判例记 limitation；§5 推论与行动面生效。
+
 日期：2026-08-28 ｜ RTX 4060 Laptop ｜ HW@60 前 2 任务 × 10 shared CLS × 3 种子
 （canonical + noise1/2，δ=0.110 标定同口径）+ 逐样本判对向量 ｜ 缓存
 `probe_cache.jsonl`（60 条）｜ 数值 `analysis.json` ｜ 墙钟 28.1 min
