@@ -1,0 +1,172 @@
+{
+  "protocol": "results/step05_iters_floor/PROTOCOL.md",
+  "per_arm": {
+    "30": {
+      "n_rows": 180,
+      "n_cells": 60,
+      "n_complete_cells": 60,
+      "n_strict": 6,
+      "nd_share": 0.9,
+      "delta_all": {
+        "n": 180,
+        "p95": 0.07600000000000007,
+        "floor": 0.001,
+        "delta": 0.08,
+        "median": 0.011499999999999955
+      },
+      "delta_nd": {
+        "n": 162,
+        "p95": 0.039000000000000035,
+        "floor": 0.001,
+        "delta": 0.04,
+        "median": 0.010249999999999981
+      },
+      "ceiling_k3_delta0": 0.8470149253731343,
+      "n_votes": 268,
+      "minority": {
+        "n": 41,
+        "p50": 0.007833333333333248,
+        "p90": 0.02400000000000002
+      },
+      "reach": 0.0
+    },
+    "60": {
+      "n_rows": 180,
+      "n_cells": 60,
+      "n_complete_cells": 60,
+      "n_strict": 12,
+      "nd_share": 0.8,
+      "delta_all": {
+        "n": 180,
+        "p95": 0.07850000000000001,
+        "floor": 0.001,
+        "delta": 0.08,
+        "median": 0.010000000000000009
+      },
+      "delta_nd": {
+        "n": 144,
+        "p95": 0.033499999999999974,
+        "floor": 0.001,
+        "delta": 0.035,
+        "median": 0.008750000000000036
+      },
+      "ceiling_k3_delta0": 0.8544776119402985,
+      "n_votes": 268,
+      "minority": {
+        "n": 39,
+        "p50": 0.0076666666666664884,
+        "p90": 0.020499999999999987
+      },
+      "reach": 0.02564102564102564
+    },
+    "120": {
+      "n_rows": 180,
+      "n_cells": 60,
+      "n_complete_cells": 60,
+      "n_strict": 14,
+      "nd_share": 0.7666666666666666,
+      "delta_all": {
+        "n": 180,
+        "p95": 0.055499999999999994,
+        "floor": 0.001,
+        "delta": 0.06,
+        "median": 0.011500000000000066
+      },
+      "delta_nd": {
+        "n": 138,
+        "p95": 0.02949999999999997,
+        "floor": 0.001,
+        "delta": 0.03,
+        "median": 0.009749999999999981
+      },
+      "ceiling_k3_delta0": 0.9256505576208178,
+      "n_votes": 269,
+      "minority": {
+        "n": 20,
+        "p50": 0.012833333333333197,
+        "p90": 0.030866666666666733
+      },
+      "reach": 0.15
+    },
+    "240": {
+      "n_rows": 180,
+      "n_cells": 60,
+      "n_complete_cells": 60,
+      "n_strict": 18,
+      "nd_share": 0.7,
+      "delta_all": {
+        "n": 180,
+        "p95": 0.061999999999999944,
+        "floor": 0.001,
+        "delta": 0.065,
+        "median": 0.013500000000000068
+      },
+      "delta_nd": {
+        "n": 126,
+        "p95": 0.03149999999999997,
+        "floor": 0.001,
+        "delta": 0.035,
+        "median": 0.010249999999999981
+      },
+      "ceiling_k3_delta0": 0.937037037037037,
+      "n_votes": 270,
+      "minority": {
+        "n": 17,
+        "p50": 0.014000000000000123,
+        "p90": 0.07683333333333336
+      },
+      "reach": 0.29411764705882354
+    }
+  },
+  "verdict": {
+    "cell": "floor_rigid",
+    "best_arm": 120,
+    "n_plus": false,
+    "s_plus": true,
+    "best_delta_nd": 0.03,
+    "best_reach": 0.15,
+    "forced_60": false
+  },
+  "validity": {
+    "n_scan_rows": 540,
+    "n_finite": 540,
+    "n_dup_keys": 0,
+    "n_rows30": 180,
+    "rows30_expected": 180,
+    "n_eval_exp_ok": true,
+    "devices": [
+      "NVIDIA GeForce RTX 4060 Laptop GPU"
+    ],
+    "passed": true
+  },
+  "predictions": {
+    "P1_delta_nd_monotone_down": {
+      "values": {
+        "30": 0.04,
+        "60": 0.035,
+        "120": 0.03,
+        "240": 0.035
+      },
+      "hit": false
+    },
+    "P2_delta_nd_240_band": {
+      "value": 0.035,
+      "hit": true
+    },
+    "P3_go_iters": {
+      "hit": false
+    },
+    "P4_strict_monotone_up": {
+      "values": {
+        "30": 0.1,
+        "60": 0.2,
+        "120": 0.23333333333333334,
+        "240": 0.3
+      },
+      "hit": true
+    },
+    "P5_validity": {
+      "hit": true
+    }
+  }
+}
