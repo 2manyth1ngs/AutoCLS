@@ -1,0 +1,245 @@
+{
+  "protocol": "results/step0_um_eval_expansion/PROTOCOL.md",
+  "validity": {
+    "n_trained_rows": 480,
+    "n_baseline_rows": 48,
+    "n_finite": 480,
+    "n_dup_keys": 0,
+    "n_tasks": 16,
+    "cells_complete": true,
+    "bcells_complete": true,
+    "n_eval_exp_all_target": true,
+    "anchor": {
+      "n_matched_refs": 200,
+      "n_bitwise": 175,
+      "max_abs_diff": 0.061889250814332275,
+      "mismatches": [
+        {
+          "key": [
+            "UniMiB-SHAR_00",
+            "20be4f7443e8",
+            0
+          ],
+          "new": 0.3745928338762215,
+          "ref": 0.3713355048859935
+        },
+        {
+          "key": [
+            "UniMiB-SHAR_01",
+            "a1f67db45e64",
+            0
+          ],
+          "new": 0.8273615635179153,
+          "ref": 0.8306188925081434
+        },
+        {
+          "key": [
+            "UniMiB-SHAR_01",
+            "20be4f7443e8",
+            0
+          ],
+          "new": 0.495114006514658,
+          "ref": 0.46905537459283386
+        },
+        {
+          "key": [
+            "UniMiB-SHAR_02",
+            "20be4f7443e8",
+            0
+          ],
+          "new": 0.40390879478827363,
+          "ref": 0.41042345276872966
+        },
+        {
+          "key": [
+            "UniMiB-SHAR_02",
+            "8b87d66faad3",
+            0
+          ],
+          "new": 0.8371335504885994,
+          "ref": 0.8403908794788274
+        },
+        {
+          "key": [
+            "UniMiB-SHAR_03",
+            "e490b88ee785",
+            0
+          ],
+          "new": 0.7941176470588235,
+          "ref": 0.7908496732026143
+        },
+        {
+          "key": [
+            "UniMiB-SHAR_03",
+            "9092e36eefe1",
+            0
+          ],
+          "new": 0.7091503267973857,
+          "ref": 0.7124183006535948
+        },
+        {
+          "key": [
+            "UniMiB-SHAR_04",
+            "a1f67db45e64",
+            0
+          ],
+          "new": 0.6938110749185668,
+          "ref": 0.6970684039087948
+        },
+        {
+          "key": [
+            "UniMiB-SHAR_06",
+            "a1f67db45e64",
+            0
+          ],
+          "new": 0.6775244299674267,
+          "ref": 0.6807817589576547
+        },
+        {
+          "key": [
+            "UniMiB-SHAR_07",
+            "20be4f7443e8",
+            0
+          ],
+          "new": 0.511326860841424,
+          "ref": 0.5210355987055016
+        }
+      ],
+      "passed": false
+    },
+    "devices": [
+      "NVIDIA GeForce RTX 4060 Laptop GPU"
+    ],
+    "passed": false
+  },
+  "delta_table": {
+    "can_all": {
+      "n": 480,
+      "p95": 0.08169934640522869,
+      "floor": 0.006535947712418301,
+      "delta": 0.085,
+      "median": 0.016339869281045805
+    },
+    "exp_all": {
+      "n": 480,
+      "p95": 0.07300000000000001,
+      "floor": 0.001,
+      "delta": 0.075,
+      "median": 0.01150000000000001
+    },
+    "can_nd": {
+      "n": 423,
+      "p95": 0.051948051948051854,
+      "floor": 0.006535947712418301,
+      "delta": 0.055,
+      "median": 0.016233766233766267
+    },
+    "exp_nd": {
+      "n": 423,
+      "p95": 0.043500000000000094,
+      "floor": 0.001,
+      "delta": 0.045,
+      "median": 0.010000000000000009
+    }
+  },
+  "regime": {
+    "n_strict_cells": 19,
+    "n_cells": 160,
+    "per_task_strict": {
+      "UniMiB-SHAR_00": 1,
+      "UniMiB-SHAR_01": 1,
+      "UniMiB-SHAR_02": 1,
+      "UniMiB-SHAR_03": 1,
+      "UniMiB-SHAR_04": 1,
+      "UniMiB-SHAR_05": 1,
+      "UniMiB-SHAR_06": 4,
+      "UniMiB-SHAR_07": 1,
+      "UniMiB-SHAR_08": 1,
+      "UniMiB-SHAR_09": 1,
+      "UniMiB-SHAR_10": 0,
+      "UniMiB-SHAR_11": 1,
+      "UniMiB-SHAR_12": 1,
+      "UniMiB-SHAR_13": 1,
+      "UniMiB-SHAR_14": 1,
+      "UniMiB-SHAR_15": 2
+    }
+  },
+  "calib_anchor": {
+    "delta_can_tasks01": {
+      "n": 60,
+      "p95": 0.08469055374592832,
+      "floor": 0.006535947712418301,
+      "delta": 0.085,
+      "median": 0.019543973941368087
+    },
+    "published": 0.075,
+    "passed": true
+  },
+  "E1": {
+    "med_ratio": 0.7037999999999983,
+    "ratio_band": [
+      0.3,
+      0.55
+    ],
+    "delta_nd_exp": 0.045,
+    "delta_nd_max": 0.045,
+    "passed": false
+  },
+  "E2": {
+    "ceiling_k3_exp_delta0": 0.8521617852161785,
+    "n_votes": 717,
+    "n_tie_dropped": 3,
+    "homogeneous_line": 0.98
+  },
+  "E3": {
+    "ceiling_two_regime": 0.9902439024390244,
+    "n_votes": 205,
+    "ceiling_nd_only": 0.9672131147540983,
+    "n_nd_votes": 61,
+    "n_delta_dropped": 515,
+    "n_tie_dropped": 0,
+    "guard_rate": 0.75,
+    "guard_n_new_votes": 32,
+    "guard_passed": false,
+    "passed": false
+  },
+  "diagnostics": {
+    "continuity_ceiling_can_prod": {
+      "ceiling": 0.989010989010989,
+      "n_votes": 182,
+      "published_um_internal": 0.989
+    },
+    "ceiling_k1_exp_delta0": {
+      "ceiling": 0.8131101813110181,
+      "n_votes": 717
+    },
+    "survival": {
+      "two_regime_votes": 205,
+      "today_votes": 182,
+      "new_nd_votes": 32
+    }
+  },
+  "verdict": {
+    "cell": "A_ruler_not_delivered"
+  },
+  "predictions": {
+    "P1_ratio": {
+      "value": 0.7037999999999983,
+      "hit": false
+    },
+    "P2_delta_nd": {
+      "value": 0.045,
+      "hit": true
+    },
+    "P3_e2_band": {
+      "value": 0.8521617852161785,
+      "hit": true
+    },
+    "P4_e3_pass": {
+      "hit": false
+    },
+    "P5_validity": {
+      "hit": false
+    }
+  }
+}
