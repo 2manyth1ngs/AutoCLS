@@ -10,9 +10,9 @@ dm = importlib.import_module("scripts.14_destruction_matrix")
 
 class TestDestructionFlag:
     def test_band_semantics(self):
-        # mean=0.8, band=0.1 → 阈 0.7：0.69 破坏、0.70 不破坏（严格小于）
-        assert dm.destruction_flag(0.69, 0.8, 0.1) == 1
-        assert dm.destruction_flag(0.70, 0.8, 0.1) == 0
+        # mean=1.0, band=0.25 → 阈 0.75（二进制精确）：0.74 破坏、0.75 不破坏（严格小于）
+        assert dm.destruction_flag(0.74, 1.0, 0.25) == 1
+        assert dm.destruction_flag(0.75, 1.0, 0.25) == 0
 
 
 class TestRateTable:
