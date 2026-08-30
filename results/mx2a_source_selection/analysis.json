@@ -1,0 +1,396 @@
+{
+  "protocol": "results/mx2a_source_selection/PROTOCOL.md",
+  "per_fold": {
+    "ArticularyWordRecognition": {
+      "n_test_pairs": 31,
+      "nearest_E": [
+        "UWaveGestureLibrary",
+        "Cricket",
+        "ERing"
+      ],
+      "acc": {
+        "W0": 1.0,
+        "W1": 1.0,
+        "W2": 1.0,
+        "W1pg": 1.0,
+        "W1_k3": 1.0,
+        "W1_k8": 1.0,
+        "WR": 0.9612903225806452
+      },
+      "acc_wr_each": [
+        0.8387,
+        1.0,
+        1.0,
+        1.0,
+        0.9677
+      ]
+    },
+    "CharacterTrajectories": {
+      "n_test_pairs": 17,
+      "nearest_E": [
+        "MotorImagery",
+        "Handwriting",
+        "SpokenArabicDigits"
+      ],
+      "acc": {
+        "W0": 1.0,
+        "W1": 1.0,
+        "W2": 1.0,
+        "W1pg": 1.0,
+        "W1_k3": 1.0,
+        "W1_k8": 1.0,
+        "WR": 1.0
+      },
+      "acc_wr_each": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "Cricket": {
+      "n_test_pairs": 46,
+      "nearest_E": [
+        "UWaveGestureLibrary",
+        "HandMovementDirection",
+        "SelfRegulationSCP2"
+      ],
+      "acc": {
+        "W0": 0.9347826086956522,
+        "W1": 0.9782608695652174,
+        "W2": 0.9130434782608695,
+        "W1pg": 0.8913043478260869,
+        "W1_k3": 1.0,
+        "W1_k8": 0.9565217391304348,
+        "WR": 0.8478260869565217
+      },
+      "acc_wr_each": [
+        0.8478,
+        0.8913,
+        0.8261,
+        0.8478,
+        0.8261
+      ]
+    },
+    "ERing": {
+      "n_test_pairs": 40,
+      "nearest_E": [
+        "ArticularyWordRecognition",
+        "NATOPS",
+        "FingerMovements"
+      ],
+      "acc": {
+        "W0": 0.925,
+        "W1": 0.95,
+        "W2": 0.925,
+        "W1pg": 0.95,
+        "W1_k3": 0.875,
+        "W1_k8": 0.95,
+        "WR": 0.8800000000000001
+      },
+      "acc_wr_each": [
+        0.725,
+        0.925,
+        0.925,
+        0.95,
+        0.875
+      ]
+    },
+    "EthanolConcentration": {
+      "n_test_pairs": 28,
+      "nearest_E": [
+        "PhonemeSpectra",
+        "Cricket",
+        "UWaveGestureLibrary"
+      ],
+      "acc": {
+        "W0": 0.39285714285714285,
+        "W1": 0.32142857142857145,
+        "W2": 0.35714285714285715,
+        "W1pg": 0.5357142857142857,
+        "W1_k3": 0.39285714285714285,
+        "W1_k8": 0.32142857142857145,
+        "WR": 0.4357142857142858
+      },
+      "acc_wr_each": [
+        0.4286,
+        0.3571,
+        0.4643,
+        0.6071,
+        0.3214
+      ]
+    },
+    "FingerMovements": {
+      "n_test_pairs": 21,
+      "nearest_E": [
+        "NATOPS",
+        "ERing",
+        "ArticularyWordRecognition"
+      ],
+      "acc": {
+        "W0": 0.8095238095238095,
+        "W1": 0.9047619047619048,
+        "W2": 0.8095238095238095,
+        "W1pg": 0.5238095238095238,
+        "W1_k3": 1.0,
+        "W1_k8": 0.9047619047619048,
+        "WR": 0.7333333333333332
+      },
+      "acc_wr_each": [
+        0.7619,
+        0.7619,
+        0.6667,
+        0.6667,
+        0.8095
+      ]
+    },
+    "HandMovementDirection": {
+      "n_test_pairs": 35,
+      "nearest_E": [
+        "UWaveGestureLibrary",
+        "Cricket",
+        "SelfRegulationSCP2"
+      ],
+      "acc": {
+        "W0": 0.7142857142857143,
+        "W1": 0.8571428571428571,
+        "W2": 0.6857142857142857,
+        "W1pg": 0.5714285714285714,
+        "W1_k3": 0.8,
+        "W1_k8": 0.6285714285714286,
+        "WR": 0.6399999999999999
+      },
+      "acc_wr_each": [
+        0.5143,
+        0.6857,
+        0.8571,
+        0.6286,
+        0.5143
+      ]
+    },
+    "Handwriting": {
+      "n_test_pairs": 65,
+      "nearest_E": [
+        "CharacterTrajectories",
+        "SpokenArabicDigits",
+        "Cricket"
+      ],
+      "acc": {
+        "W0": 0.6923076923076923,
+        "W1": 0.6615384615384615,
+        "W2": 0.6923076923076923,
+        "W1pg": 0.7384615384615385,
+        "W1_k3": 0.7538461538461538,
+        "W1_k8": 0.6923076923076923,
+        "WR": 0.7107692307692307
+      },
+      "acc_wr_each": [
+        0.5538,
+        0.7231,
+        0.8462,
+        0.7846,
+        0.6462
+      ]
+    },
+    "Heartbeat": {
+      "excluded": true,
+      "reason": "zero_test_pairs"
+    },
+    "MotorImagery": {
+      "n_test_pairs": 20,
+      "nearest_E": [
+        "CharacterTrajectories",
+        "SelfRegulationSCP1",
+        "SelfRegulationSCP2"
+      ],
+      "acc": {
+        "W0": 0.7,
+        "W1": 0.7,
+        "W2": 0.75,
+        "W1pg": 0.75,
+        "W1_k3": 0.8,
+        "W1_k8": 0.7,
+        "WR": 0.71
+      },
+      "acc_wr_each": [
+        0.65,
+        0.75,
+        0.75,
+        0.7,
+        0.7
+      ]
+    },
+    "NATOPS": {
+      "n_test_pairs": 46,
+      "nearest_E": [
+        "ERing",
+        "FingerMovements",
+        "ArticularyWordRecognition"
+      ],
+      "acc": {
+        "W0": 0.6739130434782609,
+        "W1": 0.6739130434782609,
+        "W2": 0.7391304347826086,
+        "W1pg": 0.7391304347826086,
+        "W1_k3": 0.717391304347826,
+        "W1_k8": 0.6739130434782609,
+        "WR": 0.5739130434782609
+      },
+      "acc_wr_each": [
+        0.6522,
+        0.5,
+        0.6087,
+        0.587,
+        0.5217
+      ]
+    },
+    "PhonemeSpectra": {
+      "n_test_pairs": 53,
+      "nearest_E": [
+        "Cricket",
+        "Handwriting",
+        "HandMovementDirection"
+      ],
+      "acc": {
+        "W0": 0.7547169811320755,
+        "W1": 0.6981132075471698,
+        "W2": 0.7547169811320755,
+        "W1pg": 0.7358490566037735,
+        "W1_k3": 0.7169811320754716,
+        "W1_k8": 0.7547169811320755,
+        "WR": 0.690566037735849
+      },
+      "acc_wr_each": [
+        0.6226,
+        0.7358,
+        0.7736,
+        0.6604,
+        0.6604
+      ]
+    },
+    "SelfRegulationSCP1": {
+      "n_test_pairs": 22,
+      "nearest_E": [
+        "SelfRegulationSCP2",
+        "HandMovementDirection",
+        "MotorImagery"
+      ],
+      "acc": {
+        "W0": 1.0,
+        "W1": 0.9545454545454546,
+        "W2": 1.0,
+        "W1pg": 0.9545454545454546,
+        "W1_k3": 0.7727272727272727,
+        "W1_k8": 0.9090909090909091,
+        "WR": 0.9545454545454547
+      },
+      "acc_wr_each": [
+        0.9091,
+        1.0,
+        0.9091,
+        0.9545,
+        1.0
+      ]
+    },
+    "SelfRegulationSCP2": {
+      "n_test_pairs": 9,
+      "nearest_E": [
+        "SelfRegulationSCP1",
+        "UWaveGestureLibrary",
+        "MotorImagery"
+      ],
+      "acc": {
+        "W0": 0.6666666666666666,
+        "W1": 0.7777777777777778,
+        "W2": 0.6666666666666666,
+        "W1pg": 0.8888888888888888,
+        "W1_k3": 0.6666666666666666,
+        "W1_k8": 0.7777777777777778,
+        "WR": 0.7333333333333334
+      },
+      "acc_wr_each": [
+        0.8889,
+        0.5556,
+        0.7778,
+        0.8889,
+        0.5556
+      ]
+    },
+    "SpokenArabicDigits": {
+      "n_test_pairs": 52,
+      "nearest_E": [
+        "Handwriting",
+        "CharacterTrajectories",
+        "FingerMovements"
+      ],
+      "acc": {
+        "W0": 0.8461538461538461,
+        "W1": 0.9423076923076923,
+        "W2": 0.9230769230769231,
+        "W1pg": 0.9230769230769231,
+        "W1_k3": 0.8076923076923077,
+        "W1_k8": 0.9230769230769231,
+        "WR": 0.8115384615384615
+      },
+      "acc_wr_each": [
+        0.7115,
+        0.7885,
+        0.8846,
+        0.7692,
+        0.9038
+      ]
+    },
+    "UWaveGestureLibrary": {
+      "n_test_pairs": 35,
+      "nearest_E": [
+        "SelfRegulationSCP2",
+        "ArticularyWordRecognition",
+        "Cricket"
+      ],
+      "acc": {
+        "W0": 0.9714285714285714,
+        "W1": 0.9428571428571428,
+        "W2": 0.9714285714285714,
+        "W1pg": 1.0,
+        "W1_k3": 0.9428571428571428,
+        "W1_k8": 0.9714285714285714,
+        "WR": 0.9085714285714287
+      },
+      "acc_wr_each": [
+        0.8286,
+        0.8571,
+        1.0,
+        0.9429,
+        0.9143
+      ]
+    }
+  },
+  "tests": {
+    "D1d_p": 0.18697239930462695,
+    "D2d_p": 0.023994874847479725,
+    "W2_vs_W0_p": 0.17272376523461286,
+    "W1pg_vs_W0_p": 0.2107894476088225,
+    "P3d_w1pg_ge_w1_folds": 11,
+    "P4d_w0_mean": 0.8054424051019621,
+    "acc_mean": {
+      "W0": 0.8054424051019621,
+      "W1": 0.8241764655300341,
+      "W2": 0.812516780002424,
+      "WR": 0.7727600679037872,
+      "W1pg": 0.8134806016758437,
+      "W1_k3": 0.8164012748713323,
+      "W1_k8": 0.81090636947897
+    },
+    "sens_k": {
+      "k3": 0.16403239085041837,
+      "k8": 0.2877015114563768
+    },
+    "pair_stats": {
+      "n_candidates": 1440,
+      "n_delta_dropped": 920,
+      "n_kept": 520
+    }
+  },
+  "verdict": "not_established"
+}

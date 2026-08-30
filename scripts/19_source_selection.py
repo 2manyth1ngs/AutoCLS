@@ -201,6 +201,13 @@ def main() -> None:
         dE = dataset_distances(featE, train_map, held_tids)
         dPG = dataset_distances(featPG, train_map, held_tids)
         sigma = train_pairwise_median(featE, train_map)
+        n_test = sum(len(task_pairs[t]) for t in held_tids)
+        if n_test == 0:
+            # 执行偏差（锁后，PROTOCOL §7 记录）：δ 存活测试配对为 0 的折无从
+            # 记分，剔除（零裁量）。这本身是读数：该数据集策略空间在 δ 下不可分辨。
+            per_fold[heldout] = {"excluded": True, "reason": "zero_test_pairs"}
+            print(f"[{heldout}] δ 存活测试配对 0 → 折剔除", flush=True)
+            continue
         Xa_te, Xb_te, y_te, _ = arrs(held_tids)
 
         def run_arm(sources, weights, arm):
@@ -230,7 +237,7 @@ def main() -> None:
               + " ".join(f"{k}={v:.3f}" for k, v in entry["acc"].items())
               + f" ({time.time() - t0:.0f}s)", flush=True)
 
-    active = sorted(per_fold)
+    active = [d for d in sorted(per_fold) if not per_fold[d].get("excluded")]
     acc = lambda arm: np.array([per_fold[d]["acc"][arm] for d in active])  # noqa: E731
     tests = {
         "D1d_p": lo.paired_wilcoxon_less(acc("W0"), acc("W1")),
@@ -259,7 +266,7 @@ def main() -> None:
     print("均值 acc: " + "  ".join(f"{k}={v:.4f}" for k, v in t["acc_mean"].items()))
     print(f"D1d(W1>W0) p={t['D1d_p']:.4f} | D2d(W1>WR) p={t['D2d_p']:.4f} | "
           f"W2 p={t['W2_vs_W0_p']:.4f} | W1pg p={t['W1pg_vs_W0_p']:.4f}")
-    print(f"P3d: W1pg≥W1 折数 {t['P3d_w1pg_ge_w1_folds']}/16 | "
+    print(f"P3d: W1pg≥W1 折数 {t['P3d_w1pg_ge_w1_folds']}/{len(active)} | "
           f"P4d: W0 均值 {t['P4d_w0_mean']:.4f} | 敏感性 "
           + "  ".join(f"{k}:p={v:.3f}" for k, v in t["sens_k"].items()))
     print(f"\n[判读] → {verdict}")

@@ -1,0 +1,25 @@
+配对: 候选 1440 | δ 弃样 920 | 产出 520
+[ArticularyWordRecognition] test_pairs=31 W0=1.000 W1=1.000 W2=1.000 W1pg=1.000 W1_k3=1.000 W1_k8=1.000 WR=0.961 (20s)
+[CharacterTrajectories] test_pairs=17 W0=1.000 W1=1.000 W2=1.000 W1pg=1.000 W1_k3=1.000 W1_k8=1.000 WR=1.000 (19s)
+[Cricket] test_pairs=46 W0=0.935 W1=0.978 W2=0.913 W1pg=0.891 W1_k3=1.000 W1_k8=0.957 WR=0.848 (19s)
+[ERing] test_pairs=40 W0=0.925 W1=0.950 W2=0.925 W1pg=0.950 W1_k3=0.875 W1_k8=0.950 WR=0.880 (19s)
+[EthanolConcentration] test_pairs=28 W0=0.393 W1=0.321 W2=0.357 W1pg=0.536 W1_k3=0.393 W1_k8=0.321 WR=0.436 (19s)
+[FingerMovements] test_pairs=21 W0=0.810 W1=0.905 W2=0.810 W1pg=0.524 W1_k3=1.000 W1_k8=0.905 WR=0.733 (19s)
+[HandMovementDirection] test_pairs=35 W0=0.714 W1=0.857 W2=0.686 W1pg=0.571 W1_k3=0.800 W1_k8=0.629 WR=0.640 (19s)
+[Handwriting] test_pairs=65 W0=0.692 W1=0.662 W2=0.692 W1pg=0.738 W1_k3=0.754 W1_k8=0.692 WR=0.711 (19s)
+[Heartbeat] δ 存活测试配对 0 → 折剔除
+[MotorImagery] test_pairs=20 W0=0.700 W1=0.700 W2=0.750 W1pg=0.750 W1_k3=0.800 W1_k8=0.700 WR=0.710 (19s)
+[NATOPS] test_pairs=46 W0=0.674 W1=0.674 W2=0.739 W1pg=0.739 W1_k3=0.717 W1_k8=0.674 WR=0.574 (20s)
+[PhonemeSpectra] test_pairs=53 W0=0.755 W1=0.698 W2=0.755 W1pg=0.736 W1_k3=0.717 W1_k8=0.755 WR=0.691 (19s)
+[SelfRegulationSCP1] test_pairs=22 W0=1.000 W1=0.955 W2=1.000 W1pg=0.955 W1_k3=0.773 W1_k8=0.909 WR=0.955 (19s)
+[SelfRegulationSCP2] test_pairs=9 W0=0.667 W1=0.778 W2=0.667 W1pg=0.889 W1_k3=0.667 W1_k8=0.778 WR=0.733 (20s)
+[SpokenArabicDigits] test_pairs=52 W0=0.846 W1=0.942 W2=0.923 W1pg=0.923 W1_k3=0.808 W1_k8=0.923 WR=0.812 (20s)
+[UWaveGestureLibrary] test_pairs=35 W0=0.971 W1=0.943 W2=0.971 W1pg=1.000 W1_k3=0.943 W1_k8=0.971 WR=0.909 (19s)
+
+===== MX-2a 选源（15 折）=====
+均值 acc: W0=0.8054  W1=0.8242  W2=0.8125  WR=0.7728  W1pg=0.8135  W1_k3=0.8164  W1_k8=0.8109
+D1d(W1>W0) p=0.1870 | D2d(W1>WR) p=0.0240 | W2 p=0.1727 | W1pg p=0.2108
+P3d: W1pg≥W1 折数 11/15 | P4d: W0 均值 0.8054 | 敏感性 k3:p=0.164  k8:p=0.288
+
+[判读] → not_established
+→ D:\DevelopDoc\CLS\results\mx2a_source_selection\analysis.json
