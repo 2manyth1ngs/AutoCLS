@@ -1,6 +1,8 @@
 # CLAUDE.md — AutoCLS
 
-Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比学习策略空间（CLS）** 作为搜索对象，用 **AutoCTS++ 的零样本比较器机制** 来搜，encoder 固定。目标：给未见时序数据集/下游任务，零样本排出最优 CLS。
+Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比学习策略空间（CLS）** 作为搜索对象，用 **AutoCTS++ 的零样本比较器机制** 来搜，encoder 固定。
+
+**主张定稿（出路 X，用户 2026-08-30 拍板，勿回退）**：① 通用 CLS 质量排序（任务无关先验，留出 0.77–0.87/跨数据集 0.69–0.71）+ top-K 真评估；② 任务感知**可行性/脆弱度预测**（新模型，(E, cls)→三态 提升/惰性/破坏；数据集毒性 0→0.75 已坐实 p<0.001）；③ 端到端指标 = 双向 leave-one-dataset-out（UM↔HW，按任务报 28 个搜索实例的 regret+成本表）+ 全量 HW/UCI-HAR 标准协议对 TS2Vec 论文公开数字的外部锚。**细粒度 task-aware 排序在本栈判死勿复活**：任务信号幅度 0.007–0.013 < 轨迹噪声地板 0.030（评估扩容/iters 扫描/换族探针三重排除，见 memory 与 results/step0*、step1_encoder_probe、destruction_matrix）。
 
 完整设计见 `TECHNICAL_DESIGN.md`。
 
@@ -8,14 +10,17 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 
 ## 核心概念
 - **CLS**：一个对比学习策略 = 19 个离散字段的配置向量（AutoCL Table 1）。这是"要搜的架构"。
-- **T-CLSC**：比较器，输入 `(任务嵌入 E, cls_a, cls_b)` 输出二值 y（哪个 CLS 在该任务上更好）。核心创新点。
+- **T-CLSC**：比较器，输入 `(任务嵌入 E, cls_a, cls_b)` 输出二值 y（哪个 CLS 在该任务上更好）。负责排序；其配对 label 样式**不变**。
+- **可行性预测器**（出路 X 新增）：输入 `(E, cls)` 输出三态（提升/惰性/破坏）。看门层：预判未见数据集的空间毒性与安全边界；label 须绑 iters 口径（@290 起步）。二者分工：预测器剪雷区/判可评性，比较器排序，top-K 完整评估定冠军。**训练侧不过滤破坏配置**（它们是 avoid-worst 的粮草），过滤只在推理侧。
 - **early-validation**：造训练 label 时只对比预训练 575 iters（≈5 epoch 等量）就评估，用来快速排名。**只有最终 top-K 才做完整预训练。**
 - **固定 encoder**：架构固定、每个 CLS 各自重新预训练一份权重（不是权重冻结）。
 
 ## 关键决策（已定，勿改）
 1. CLS 编码用 **向量 + MLP**（方案 A），不用图/GIN。
-2. encoder 两者可切换：`dilated_cnn`（默认，TS2Vec式）/ `transformer`，由 `configs/encoder.yaml` 控制。
-3. 第一阶段只做**分类**（HAR / Epilepsy）。
+2. encoder 两者可切换：`dilated_cnn`（默认，TS2Vec式）/ `transformer`，由 `configs/encoder.yaml` 控制。**transformer 分支已探针判死**（2026-08-29，`results/step1_encoder_probe` 四问全败：随机 attention 特征在贴顶数据集上比随机卷积**更强**——贴顶跨架构家族成立；HW 对照崩 3/20；地板 0.030 不降。勿再投入调参）。
+3. 第一阶段只做**分类**（HAR / Epilepsy）。转预测任务已探针判死（噪声继承自预训练轨迹，`results/forecast_noise_probe` 红灯）。
+4. **k 放大（Y-B 加强版）搁置未关闭**：k≈6–9 @120 工作点在数学上可压 δ 至信号之下，用户曾表态不在乎成本；X 期间不投入，若重启从 memory `outlet-x-confirmed-roadmap` 进入。
+5. 原目标池 {UCI-HAR, Epilepsy, FaceDetection} **从主结果退役**（三种死法判不可评，`results/target_preflight`），写进 limitations/预检案例；全量 UCI-HAR 标准协议仍可当外部锚（区别于切片舞台）。
 
 ## 铁律
 1. `configs/space.yaml` 是策略空间**唯一真源**，代码不得硬编码取值集合。
@@ -36,6 +41,14 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
   真实 4–93 → pad 93 → SNR 2.24）。L 在 30–50 之间须先过 SNR 检查再入池。写论文时列为 limitation。
 - **δ 非全局常数**：R' 噪声随 n_eval 变小 / R' 离天花板而涨（探针实测 0.0075→0.0495，4× 跨度），
   δ=0.02 是 HAR 特调值。改 **per-dataset δ**（`configs/labels.yaml: delta_per_dataset`）。
+- **R' 噪声结构定稿（2026-08-29）**：噪声 = 计数成分（∝1/√n_eval，β=0.502）+ 轨迹地板
+  （cls×seed 交互，UM 谷底 δ_nd=0.030@120 iters，U 形曲线 240 掉头）。两制式 δ（退化判据
+  隔离破坏 CLS 后标定）白拿 ~40%。**旧的任务信号幅度估计（outlet_y 的 0.023–0.033）已作废
+  勿引**——k=1 差值噪声膨胀 3–4×，干净口径 p50=0.0072。共享种子配对/SWA/per-CLS δ 均已
+  枪毙勿重提。
+- **端到端目标三档阶梯**：①未见任务（多）；②可行性预测目标（16 UEA 轮转 LOO，贴顶数据集
+  够格）；③端到端搜索目标（须过预检闸，现仅 HW 强 / UM 弱）。③的资格独立于②，新数据集
+  过 `6_target_preflight` 即可入③。
 - 源池重排（L≥50 剔除 PenDigits/LSST 后）见 `results/route_a_pool/REPORT.md`。
 - **长序列端与 EEG 域在源池耦合**：EthanolConcentration（唯一非 EEG 长锚，Spectro/L1024）
   降为 reserve 后，源池长序列端（L>800：SCP1 896 / SCP2 1152 及 MotorImagery 512）**全为
@@ -49,20 +62,28 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 - `AHC/ahc_engine.py` → `autocls/comparator/tclsc_engine.py`（GIN 支路换成 MLP）
 - `exps/random_search.py` → `scripts/3_pretrain_tclsc.py` + `4_zero_shot_search.py`
 
-## 数据流
+## 数据流（出路 X 版）
 ```
-离线: 源数据→切片成任务 t_i →(TS2Vec+SetTF 得 E_i);(采样CLS)
-     →对(t_i,cls)跑 k=5 预训练+下游评估得 R' →配对 (E_i,cls_a,cls_b,y) →BCE训T-CLSC
-在线: 未见D→E →进化算法+T-CLSC两两比较排名→top-K完整预训练评估→选 cls*
+离线: 源数据→切片成任务 t_i →(冻结共享TS2Vec+SetTF 得 E_i);(采样CLS)
+     →对(t_i,cls)跑预训练+下游评估得 R'
+     →配对 (E_i,cls_a,cls_b,y) →BCE训T-CLSC（排序）
+     →三态 (E_i,cls,y∈{提升/惰性/破坏}) →训可行性预测器（看门）
+在线: 未见D→冻结encoder前向得E（推理，非训练，铁律6）
+     →可行性预测器判毒性/剪雷区→T-CLSC两两比较排名→top-K完整预训练真评估→选 cls*
+展示: leave-one-dataset-out——目标数据集从离线一切训练中抠除（TS2Vec fit/label/δ标定），
+     仅考试时前向编码。UM→HW 主方向、HW→UM 反方向。
 ```
 
-## 里程碑（按序，M1/M2 是关键闸口）
-- M0 骨架+configs+空间/编码器+单测
-- **M1** 单 CLS 在 HAR 上能预训练+出 acc（复现 AutoCL 量级 ≈0.9+）
-- **M2** early-val(k=5) 与完整训练的 acc 排名 Spearman 相关性 ← **风险最高，优先跑**
-- M3 T-CLSC 留出任务配对准确率 >0.5
-- M4 零样本搜索接近直接搜索上界、耗时低 1-2 个数量级
-- M5 消融（w/o TS2Vec / SetTF / shared samples）+ 耗时表
+## 里程碑（出路 X 版，2026-08-30 重排）
+- ✅ M0 骨架 / M1 单 CLS 预训练（HAR 0.9372）/ M2 early-val 相关性（ρ=0.85）
+- ✅ M3 T-CLSC 留出配对准确率（0.77–0.87；跨数据集 0.69–0.71）
+- **MX-1 可行性预测器**：三态 label（@290 破坏矩阵数据起步，零 GPU）→ 16 折
+  leave-one-dataset-out 预测数据集毒性 vs 任务盲基线；E 消融在此目标重新预注册 ← **下一步**
+- **MX-2 端到端展示（论文头条指标）**：双向 leave-one-dataset-out（UM→HW 主 / HW→UM 副），
+  按任务 28 个搜索实例报 regret（vs 直接搜索上界/GGS/随机/垫底）+ 成本表（1–2 数量级）；
+  外部锚 = 零样本选中 CLS 在全量 Handwriting（+可选 UCI-HAR）标准协议 vs TS2Vec 论文公开数字
+- MX-3 消融（w/o TS2Vec / SetTF / shared samples）+ 耗时表 + 论文
+  （正翼=排序/脆弱度/端到端；负翼=三重排除证据链降格为 analysis/limitations）
 
 ## 目录
 `autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}` + `scripts/1-5_*.py` + `configs/*.yaml` + `tests/`
