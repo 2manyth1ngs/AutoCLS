@@ -1,0 +1,194 @@
+{
+  "protocol": "results/tasklevel_precheck/PROTOCOL.md",
+  "rejects": {
+    "baseline": {
+      "plus_c": 140
+    },
+    "trained": {
+      "not_shared": 280
+    }
+  },
+  "datasets": {
+    "Handwriting": {
+      "t2_obs": 0.10833333333333332,
+      "components": {
+        "improve": 0.04916666666666664,
+        "inert": 0.05000000000000002,
+        "destroy": 0.00916666666666667
+      },
+      "p": 0.410958904109589,
+      "n_perm": 10000,
+      "n_tasks": 12,
+      "n_cls": 10,
+      "iters": 60,
+      "per_task_counts": {
+        "Handwriting_00": {
+          "improve": 8,
+          "inert": 2,
+          "destroy": 0
+        },
+        "Handwriting_01": {
+          "improve": 10,
+          "inert": 0,
+          "destroy": 0
+        },
+        "Handwriting_02": {
+          "improve": 9,
+          "inert": 1,
+          "destroy": 0
+        },
+        "Handwriting_03": {
+          "improve": 9,
+          "inert": 0,
+          "destroy": 1
+        },
+        "Handwriting_04": {
+          "improve": 10,
+          "inert": 0,
+          "destroy": 0
+        },
+        "Handwriting_05": {
+          "improve": 10,
+          "inert": 0,
+          "destroy": 0
+        },
+        "Handwriting_06": {
+          "improve": 10,
+          "inert": 0,
+          "destroy": 0
+        },
+        "Handwriting_07": {
+          "improve": 9,
+          "inert": 1,
+          "destroy": 0
+        },
+        "Handwriting_08": {
+          "improve": 10,
+          "inert": 0,
+          "destroy": 0
+        },
+        "Handwriting_09": {
+          "improve": 9,
+          "inert": 1,
+          "destroy": 0
+        },
+        "Handwriting_10": {
+          "improve": 9,
+          "inert": 1,
+          "destroy": 0
+        },
+        "Handwriting_11": {
+          "improve": 10,
+          "inert": 0,
+          "destroy": 0
+        }
+      },
+      "global_rates": {
+        "improve": 0.9416666666666667,
+        "inert": 0.05,
+        "destroy": 0.008333333333333333
+      }
+    },
+    "UniMiB-SHAR": {
+      "t2_obs": 2.7250000000000005,
+      "components": {
+        "improve": 1.33,
+        "inert": 1.2975,
+        "destroy": 0.0975
+      },
+      "p": 9.999000099990002e-05,
+      "n_perm": 10000,
+      "n_tasks": 16,
+      "n_cls": 10,
+      "iters": 30,
+      "per_task_counts": {
+        "UniMiB-SHAR_00": {
+          "improve": 8,
+          "inert": 1,
+          "destroy": 1
+        },
+        "UniMiB-SHAR_01": {
+          "improve": 4,
+          "inert": 4,
+          "destroy": 2
+        },
+        "UniMiB-SHAR_02": {
+          "improve": 5,
+          "inert": 4,
+          "destroy": 1
+        },
+        "UniMiB-SHAR_03": {
+          "improve": 7,
+          "inert": 1,
+          "destroy": 2
+        },
+        "UniMiB-SHAR_04": {
+          "improve": 6,
+          "inert": 3,
+          "destroy": 1
+        },
+        "UniMiB-SHAR_05": {
+          "improve": 7,
+          "inert": 2,
+          "destroy": 1
+        },
+        "UniMiB-SHAR_06": {
+          "improve": 2,
+          "inert": 4,
+          "destroy": 4
+        },
+        "UniMiB-SHAR_07": {
+          "improve": 0,
+          "inert": 9,
+          "destroy": 1
+        },
+        "UniMiB-SHAR_08": {
+          "improve": 8,
+          "inert": 0,
+          "destroy": 2
+        },
+        "UniMiB-SHAR_09": {
+          "improve": 9,
+          "inert": 0,
+          "destroy": 1
+        },
+        "UniMiB-SHAR_10": {
+          "improve": 6,
+          "inert": 3,
+          "destroy": 1
+        },
+        "UniMiB-SHAR_11": {
+          "improve": 7,
+          "inert": 2,
+          "destroy": 1
+        },
+        "UniMiB-SHAR_12": {
+          "improve": 0,
+          "inert": 9,
+          "destroy": 1
+        },
+        "UniMiB-SHAR_13": {
+          "improve": 8,
+          "inert": 1,
+          "destroy": 1
+        },
+        "UniMiB-SHAR_14": {
+          "improve": 1,
+          "inert": 8,
+          "destroy": 1
+        },
+        "UniMiB-SHAR_15": {
+          "improve": 6,
+          "inert": 3,
+          "destroy": 1
+        }
+      },
+      "global_rates": {
+        "improve": 0.525,
+        "inert": 0.3375,
+        "destroy": 0.1375
+      }
+    }
+  },
+  "verdict": "positive"
+}
