@@ -36,6 +36,8 @@ PANEL_A_TRAINED = (
     ROOT / "results" / "baseline_probe" / "trained_fill.jsonl",
 )
 PANEL_A_BASELINE = ROOT / "results" / "baseline_probe" / "baseline_cache.jsonl"
+PANEL_A_K3 = (ROOT / "results" / "stage1_rerun_20260804" / "results"
+              / "step0_snr_gate" / "noise_cache.jsonl")
 PANEL_B_TRAINED = ROOT / "results" / "labels_workpoint" / "rprime_cache.jsonl"
 PANEL_B_BASELINES = (
     ROOT / "results" / "iters_workpoint" / "uea" / "baseline_cache.jsonl",
@@ -130,6 +132,52 @@ def spearman(x, y):
     return float(r.statistic), float(r.pvalue)
 
 
+def null_calibration(p: dict, *, n_tasks: int, n_sim: int, seed: int,
+                     mode: str) -> dict:
+    """零模型校准（补充稳健性，报告随判读带一并出）。
+
+    mode='additive'：格子概率 = row+col−grand（无真交互）→ share_inter 与
+    mixed 计数的抽样分布，检验观测值是否超出"每格 n_tasks 个二值标志"的噪声；
+    mode='cls_only'：格子概率 = row（无数据集效应）→ share_ds 的抽样分布，
+    检验数据集主效应显著性。任务间真实异质会被算进"噪声"，检验偏保守。
+    """
+    cls_keys = sorted(p)
+    ds_keys = sorted({d for row in p.values() for d in row
+                      if all(d in p[c] for c in cls_keys)})
+    M = np.array([[p[c][d] for d in ds_keys] for c in cls_keys])
+    grand = M.mean()
+    row = M.mean(axis=1, keepdims=True)
+    col = M.mean(axis=0, keepdims=True)
+    P0 = np.clip(row + col - grand, 0, 1) if mode == "additive" \
+        else np.broadcast_to(row, M.shape)
+    rng = np.random.default_rng(seed)
+    stat_inter, stat_ds, stat_mixed = [], [], []
+    for _ in range(n_sim):
+        flags = rng.binomial(n_tasks, P0) / n_tasks
+        pt = {c: {d: float(flags[i, j]) for j, d in enumerate(ds_keys)}
+              for i, c in enumerate(cls_keys)}
+        dec = ss_decomposition(pt)
+        stat_inter.append(dec["share_inter"])
+        stat_ds.append(dec["share_ds"])
+        stat_mixed.append(len(mixed_cls(pt)))
+    obs = ss_decomposition(p)
+    n_mix_obs = len(mixed_cls(p))
+    si, sd, sm = map(np.array, (stat_inter, stat_ds, stat_mixed))
+    return {
+        "mode": mode, "n_sim": n_sim,
+        "inter": {"observed": obs["share_inter"],
+                  "null_median": float(np.median(si)),
+                  "null_p95": float(np.percentile(si, 95)),
+                  "p_value": float((si >= obs["share_inter"]).mean())},
+        "ds": {"observed": obs["share_ds"],
+               "null_median": float(np.median(sd)),
+               "null_p95": float(np.percentile(sd, 95)),
+               "p_value": float((sd >= obs["share_ds"]).mean())},
+        "mixed": {"observed": n_mix_obs, "null_median": float(np.median(sm)),
+                  "p_value": float((sm >= n_mix_obs).mean())},
+    }
+
+
 # ---------------------------------------------------------------- 配对
 def canonical_split(tid: str) -> int:
     return run_seed_for(tid, "train_eval_split")
@@ -201,6 +249,30 @@ def collect_trained(paths, shared_keys, bands, classes, iters_of) -> tuple[dict,
     return out, dict(rejects)
 
 
+def collect_trained_k3(path, shared_keys, bands, classes) -> tuple[dict, dict]:
+    """k=3 噪声缓存 → 同 (tid, cls) 跨种子均值（classes 校验；@290）。"""
+    vals: dict = defaultdict(list)
+    rejects = defaultdict(int)
+    for r in _c2.read_jsonl(path):
+        tid, key = r.get("task_id"), r.get("cls_key")
+        if tid is None or r.get("r_prime") is None or r.get("iters") != 290:
+            rejects["null_or_iters"] += 1
+            continue
+        if key not in shared_keys:
+            rejects["not_shared"] += 1
+            continue
+        if tid not in bands:
+            rejects["no_baseline"] += 1
+            continue
+        if list(r.get("classes", [])) != list(classes.get(tid, [])):
+            rejects["classes"] += 1
+            continue
+        vals[(tid, key)].append(float(r["r_prime"]))
+    out = {k: statistics.fmean(v) for k, v in vals.items() if len(v) == 3}
+    rejects["lt3_reps"] = sum(1 for v in vals.values() if len(v) != 3)
+    return out, dict(rejects)
+
+
 def build_panel(trained: dict, bands: dict) -> dict:
     """(tid,cls)→R' + 基线带 → 矩阵/速率表/分解/mixed/判读。"""
     D: dict = defaultdict(list)
@@ -240,6 +312,10 @@ def main() -> None:
         PANEL_A_TRAINED, shared_keys, bands_a, classes_a, lambda ds: 290)
     panel_a = build_panel(trained_a, bands_a)
 
+    trained_a3, rej_ta3 = collect_trained_k3(
+        PANEL_A_K3, shared_keys, bands_a, classes_a)
+    panel_a3 = build_panel(trained_a3, bands_a)
+
     bands_b, classes_b, rej_bb = collect_baselines(
         list(PANEL_B_BASELINES), exclude_plus_c=True)
     trained_b, rej_tb = collect_trained(
@@ -247,16 +323,28 @@ def main() -> None:
         lambda ds: PANEL_B_ITERS.get(ds, -1))
     panel_b = build_panel(trained_b, bands_b)
 
+    # 零模型校准（稳健性；additive 检交互与 mixed、cls_only 检数据集主效应）
+    for pn in (panel_a, panel_a3):
+        pn["null_additive"] = null_calibration(
+            pn["rate_table"], n_tasks=2, n_sim=1000, seed=20260830,
+            mode="additive")
+        pn["null_cls_only"] = null_calibration(
+            pn["rate_table"], n_tasks=2, n_sim=1000, seed=20260831,
+            mode="cls_only")
+
     res = {"protocol": "results/destruction_matrix/PROTOCOL.md",
            "panel_A": {**panel_a, "rejects_baseline": rej_ba,
                        "rejects_trained": rej_ta},
+           "panel_A_k3": {**panel_a3, "rejects_trained": rej_ta3},
            "panel_B": {**panel_b, "rejects_baseline": rej_bb,
                        "rejects_trained": rej_tb}}
     (OUTDIR / "analysis.json").write_text(
         json.dumps(res, indent=2, ensure_ascii=False, default=float),
         encoding="utf-8")
 
-    for name, pn in (("A(@290, UEA)", panel_a), ("B(工作点, HW/UM)", panel_b)):
+    for name, pn in (("A(@290 k1, 16 UEA)", panel_a),
+                     ("A'(@290 k3, 13 UEA)", panel_a3),
+                     ("B(工作点, HW/UM)", panel_b)):
         dec = pn["decomposition"]
         print(f"\n===== Panel {name} =====")
         print(f"配对 {pn['n_pairs']} 条 | 数据集 {dec['n_datasets']}"
@@ -270,6 +358,14 @@ def main() -> None:
             print(f"L 对齐: ρ={la['spearman']:.2f} (p={la['p']:.3f}, n={la['n']})")
         print(f"per-dataset 破坏率: "
               f"{ {d: round(v, 2) for d, v in sorted(pn['per_dataset_rate'].items(), key=lambda kv: -kv[1])} }")
+        for tag in ("null_additive", "null_cls_only"):
+            if tag in pn:
+                n = pn[tag]
+                print(f"{tag}: inter p={n['inter']['p_value']:.3f} "
+                      f"(观测 {n['inter']['observed']:.2f} vs 零中位 "
+                      f"{n['inter']['null_median']:.2f}) | ds p="
+                      f"{n['ds']['p_value']:.3f} | mixed p="
+                      f"{n['mixed']['p_value']:.3f}")
         print(f"[判读] → {pn['verdict']}")
     print(f"\n→ {OUTDIR / 'analysis.json'}", flush=True)
 
