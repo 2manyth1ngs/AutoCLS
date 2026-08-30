@@ -1,0 +1,124 @@
+{
+  "protocol": "results/wide_panel/PROTOCOL.md",
+  "rejects": {
+    "baseline": {
+      "plus_c": 280
+    },
+    "trained": {}
+  },
+  "per_dataset": {
+    "UniMiB-SHAR": {
+      "n_complete_tasks": 8,
+      "gate1": {
+        "t2_obs": 0.79,
+        "components": {
+          "improve": 0.395,
+          "inert": 0.31999999999999995,
+          "destroy": 0.07500000000000001
+        },
+        "p": 0.0006999300069993001,
+        "n_perm": 10000
+      },
+      "gate2": {
+        "tasks": [
+          "UniMiB-SHAR_00",
+          "UniMiB-SHAR_01",
+          "UniMiB-SHAR_02",
+          "UniMiB-SHAR_03",
+          "UniMiB-SHAR_04",
+          "UniMiB-SHAR_05",
+          "UniMiB-SHAR_06",
+          "UniMiB-SHAR_07"
+        ],
+        "err_kernel": [
+          0.5272095882584757,
+          0.5678470926857936,
+          0.4702114303694127,
+          0.30339439520540973,
+          0.2531702888761348,
+          0.32852191655003327,
+          0.9940046727112544,
+          0.9069429943567627
+        ],
+        "err_uniform": [
+          0.4930000000000001,
+          0.5865555555555556,
+          0.5165555555555557,
+          0.3781111111111112,
+          0.35900000000000004,
+          0.3822222222222223,
+          0.9061111111111113,
+          0.8371111111111111
+        ],
+        "direction": 1,
+        "p": 0.3203125
+      }
+    },
+    "CharacterTrajectories": {
+      "n_complete_tasks": 8,
+      "gate1": {
+        "t2_obs": 0.6624999999999999,
+        "components": {
+          "improve": 0.31499999999999995,
+          "inert": 0.26874999999999993,
+          "destroy": 0.07875
+        },
+        "p": 0.0292970702929707,
+        "n_perm": 10000
+      },
+      "gate2": {
+        "tasks": [
+          "CharacterTrajectories_00",
+          "CharacterTrajectories_01",
+          "CharacterTrajectories_02",
+          "CharacterTrajectories_03",
+          "CharacterTrajectories_04",
+          "CharacterTrajectories_05",
+          "CharacterTrajectories_06",
+          "CharacterTrajectories_07"
+        ],
+        "err_kernel": [
+          0.5841898224504639,
+          0.742165325269697,
+          0.8903861756588347,
+          0.556499396386805,
+          0.8976803823118082,
+          0.6769008290718463,
+          0.6806530945403105,
+          0.773050891239516
+        ],
+        "err_uniform": [
+          0.5201111111111112,
+          0.7041111111111111,
+          0.6102222222222222,
+          0.5175555555555555,
+          0.8422222222222223,
+          0.6318888888888889,
+          0.654888888888889,
+          0.7312222222222223
+        ],
+        "direction": -1,
+        "p": 1.0
+      }
+    },
+    "UWaveGestureLibrary": {
+      "n_complete_tasks": 2
+    },
+    "PhonemeSpectra": {
+      "n_complete_tasks": 2
+    },
+    "Handwriting": {
+      "n_complete_tasks": 2
+    }
+  },
+  "gate1_pass": [
+    "UniMiB-SHAR"
+  ],
+  "gate2_pooled_primary": {
+    "n_tasks": 8,
+    "p": 1.0,
+    "direction": -1
+  },
+  "interim": true,
+  "interim_futility": false
+}
