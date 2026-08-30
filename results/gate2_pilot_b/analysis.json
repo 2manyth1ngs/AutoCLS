@@ -1,0 +1,87 @@
+{
+  "protocol": "results/gate2_pilot_b/PROTOCOL.md",
+  "combos": {
+    "E|T1_state": {
+      "d1_p": 0.469940185546875,
+      "direction": 1,
+      "median_kernel": 0.510902726445589,
+      "median_uniform": 0.524888888888889,
+      "smooth_rho": 0.19697048796608263,
+      "smooth_p": 0.067993200679932
+    },
+    "E|T2_gain": {
+      "d1_p": 0.2640838623046875,
+      "direction": 1,
+      "median_kernel": 0.027041493033956872,
+      "median_uniform": 0.027378490052691527,
+      "smooth_rho": 0.10006944926731022,
+      "smooth_p": 0.2516748325167483
+    },
+    "P|T1_state": {
+      "d1_p": 0.0326995849609375,
+      "direction": 1,
+      "median_kernel": 0.49795638779223383,
+      "median_uniform": 0.524888888888889,
+      "smooth_rho": 0.3630356158904391,
+      "smooth_p": 0.0084991500849915
+    },
+    "P|T2_gain": {
+      "d1_p": 0.953277587890625,
+      "direction": -1,
+      "median_kernel": 0.027426457178498426,
+      "median_uniform": 0.027378490052691527,
+      "smooth_rho": 0.042933537051184106,
+      "smooth_p": 0.33926607339266074
+    },
+    "G|T1_state": {
+      "d1_p": 0.7359161376953125,
+      "direction": -1,
+      "median_kernel": 0.5386505905336686,
+      "median_uniform": 0.524888888888889,
+      "smooth_rho": 0.025291930361403606,
+      "smooth_p": 0.37496250374962503
+    },
+    "G|T2_gain": {
+      "d1_p": 0.998931884765625,
+      "direction": -1,
+      "median_kernel": 0.02810008818687454,
+      "median_uniform": 0.027378490052691527,
+      "smooth_rho": -0.11032710604903116,
+      "smooth_p": 0.8027197280271973
+    },
+    "PG|T1_state": {
+      "d1_p": 0.1741943359375,
+      "direction": 1,
+      "median_kernel": 0.5167334015105195,
+      "median_uniform": 0.524888888888889,
+      "smooth_rho": 0.19406928272606555,
+      "smooth_p": 0.0496950304969503
+    },
+    "PG|T2_gain": {
+      "d1_p": 0.987518310546875,
+      "direction": -1,
+      "median_kernel": 0.027836577395959246,
+      "median_uniform": 0.027378490052691527,
+      "smooth_rho": -0.07847767206055975,
+      "smooth_p": 0.7216278372162783
+    },
+    "PGE|T1_state": {
+      "d1_p": 0.4301300048828125,
+      "direction": 1,
+      "median_kernel": 0.5102768357384635,
+      "median_uniform": 0.524888888888889,
+      "smooth_rho": 0.19685849934403132,
+      "smooth_p": 0.06819318068193181
+    },
+    "PGE|T2_gain": {
+      "d1_p": 0.28094482421875,
+      "direction": 1,
+      "median_kernel": 0.027032602867897246,
+      "median_uniform": 0.027378490052691527,
+      "smooth_rho": 0.09693728731161884,
+      "smooth_p": 0.2585741425857414
+    }
+  },
+  "winner": "P|T1_state",
+  "verdict": "strong"
+}
