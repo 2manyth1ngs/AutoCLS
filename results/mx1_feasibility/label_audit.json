@@ -1,0 +1,142 @@
+{
+  "protocol": "results/mx1_feasibility/PROTOCOL.md",
+  "iters": 290,
+  "n_cells": 320,
+  "n_datasets": 16,
+  "expected_cells_per_dataset": 20,
+  "incomplete_datasets": {},
+  "k1_datasets": [
+    "Cricket",
+    "PhonemeSpectra",
+    "SpokenArabicDigits"
+  ],
+  "per_dataset": {
+    "ArticularyWordRecognition": {
+      "n_cells": 20,
+      "improve": 0,
+      "inert": 12,
+      "destroy": 8,
+      "destroy_rate": 0.4
+    },
+    "CharacterTrajectories": {
+      "n_cells": 20,
+      "improve": 11,
+      "inert": 5,
+      "destroy": 4,
+      "destroy_rate": 0.2
+    },
+    "Cricket": {
+      "n_cells": 20,
+      "improve": 1,
+      "inert": 11,
+      "destroy": 8,
+      "destroy_rate": 0.4
+    },
+    "ERing": {
+      "n_cells": 20,
+      "improve": 4,
+      "inert": 11,
+      "destroy": 5,
+      "destroy_rate": 0.25
+    },
+    "EthanolConcentration": {
+      "n_cells": 20,
+      "improve": 0,
+      "inert": 10,
+      "destroy": 10,
+      "destroy_rate": 0.5
+    },
+    "FingerMovements": {
+      "n_cells": 20,
+      "improve": 2,
+      "inert": 16,
+      "destroy": 2,
+      "destroy_rate": 0.1
+    },
+    "HandMovementDirection": {
+      "n_cells": 20,
+      "improve": 0,
+      "inert": 20,
+      "destroy": 0,
+      "destroy_rate": 0.0
+    },
+    "Handwriting": {
+      "n_cells": 20,
+      "improve": 16,
+      "inert": 0,
+      "destroy": 4,
+      "destroy_rate": 0.2
+    },
+    "Heartbeat": {
+      "n_cells": 20,
+      "improve": 7,
+      "inert": 12,
+      "destroy": 1,
+      "destroy_rate": 0.05
+    },
+    "MotorImagery": {
+      "n_cells": 20,
+      "improve": 6,
+      "inert": 14,
+      "destroy": 0,
+      "destroy_rate": 0.0
+    },
+    "NATOPS": {
+      "n_cells": 20,
+      "improve": 0,
+      "inert": 5,
+      "destroy": 15,
+      "destroy_rate": 0.75
+    },
+    "PhonemeSpectra": {
+      "n_cells": 20,
+      "improve": 2,
+      "inert": 11,
+      "destroy": 7,
+      "destroy_rate": 0.35
+    },
+    "SelfRegulationSCP1": {
+      "n_cells": 20,
+      "improve": 8,
+      "inert": 12,
+      "destroy": 0,
+      "destroy_rate": 0.0
+    },
+    "SelfRegulationSCP2": {
+      "n_cells": 20,
+      "improve": 3,
+      "inert": 8,
+      "destroy": 9,
+      "destroy_rate": 0.45
+    },
+    "SpokenArabicDigits": {
+      "n_cells": 20,
+      "improve": 8,
+      "inert": 8,
+      "destroy": 4,
+      "destroy_rate": 0.2
+    },
+    "UWaveGestureLibrary": {
+      "n_cells": 20,
+      "improve": 7,
+      "inert": 9,
+      "destroy": 4,
+      "destroy_rate": 0.2
+    }
+  },
+  "global_rates": {
+    "improve": 0.234375,
+    "inert": 0.5125,
+    "destroy": 0.253125
+  },
+  "rejects": {
+    "baseline": {
+      "plus_c": 140
+    },
+    "k3": {
+      "lt3_reps": 0
+    },
+    "k1": {},
+    "merge": {}
+  }
+}
