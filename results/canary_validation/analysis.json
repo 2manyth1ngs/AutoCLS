@@ -1,0 +1,679 @@
+{
+  "protocol": "results/canary_validation/PROTOCOL.md",
+  "per_fold": {
+    "ArticularyWordRecognition": {
+      "p_true": 0.4,
+      "sent": {
+        "j2": {
+          "cells": [
+            "ArticularyWordRecognition_00:20be4f74",
+            "ArticularyWordRecognition_01:8b87d66f"
+          ],
+          "s": 0.5,
+          "a": 0.119,
+          "b": 0.2071,
+          "est": 0.22261904761904772
+        },
+        "j3": {
+          "cells": [
+            "ArticularyWordRecognition_00:20be4f74",
+            "ArticularyWordRecognition_01:8b87d66f",
+            "ArticularyWordRecognition_00:65627517"
+          ],
+          "s": 0.6666666666666666,
+          "a": 0.1015,
+          "b": 0.2659,
+          "est": 0.2787878787878787
+        },
+        "j5": {
+          "cells": [
+            "ArticularyWordRecognition_00:20be4f74",
+            "ArticularyWordRecognition_01:8b87d66f",
+            "ArticularyWordRecognition_00:65627517",
+            "ArticularyWordRecognition_01:e490b88e",
+            "ArticularyWordRecognition_00:cffb5503"
+          ],
+          "s": 0.6,
+          "a": -0.0175,
+          "b": 0.6986,
+          "est": 0.40168711656441725
+        }
+      }
+    },
+    "CharacterTrajectories": {
+      "p_true": 0.2,
+      "sent": {
+        "j2": {
+          "cells": [
+            "CharacterTrajectories_00:20be4f74",
+            "CharacterTrajectories_01:65627517"
+          ],
+          "s": 0.5,
+          "a": 0.1017,
+          "b": 0.31,
+          "est": 0.25666666666666654
+        },
+        "j3": {
+          "cells": [
+            "CharacterTrajectories_00:20be4f74",
+            "CharacterTrajectories_01:65627517",
+            "CharacterTrajectories_00:8b87d66f"
+          ],
+          "s": 0.6666666666666666,
+          "a": 0.1003,
+          "b": 0.3517,
+          "est": 0.3348275862068965
+        },
+        "j5": {
+          "cells": [
+            "CharacterTrajectories_00:20be4f74",
+            "CharacterTrajectories_01:65627517",
+            "CharacterTrajectories_00:8b87d66f",
+            "CharacterTrajectories_01:cffb5503",
+            "CharacterTrajectories_00:e490b88e"
+          ],
+          "s": 0.4,
+          "a": 0.0246,
+          "b": 0.6447,
+          "est": 0.2824561403508771
+        }
+      }
+    },
+    "Cricket": {
+      "p_true": 0.4,
+      "sent": {
+        "j2": {
+          "cells": [
+            "Cricket_00:20be4f74",
+            "Cricket_01:8b87d66f"
+          ],
+          "s": 1.0,
+          "a": 0.1388,
+          "b": 0.1845,
+          "est": 0.3232758620689655
+        },
+        "j3": {
+          "cells": [
+            "Cricket_00:20be4f74",
+            "Cricket_01:8b87d66f",
+            "Cricket_00:65627517"
+          ],
+          "s": 1.0,
+          "a": 0.1066,
+          "b": 0.2676,
+          "est": 0.3741525423728815
+        },
+        "j5": {
+          "cells": [
+            "Cricket_00:20be4f74",
+            "Cricket_01:8b87d66f",
+            "Cricket_00:65627517",
+            "Cricket_01:e490b88e",
+            "Cricket_00:8c4aa283"
+          ],
+          "s": 0.6,
+          "a": -0.0175,
+          "b": 0.6986,
+          "est": 0.4016871165644173
+        }
+      }
+    },
+    "ERing": {
+      "p_true": 0.25,
+      "sent": {
+        "j2": {
+          "cells": [
+            "ERing_00:20be4f74",
+            "ERing_01:8b87d66f"
+          ],
+          "s": 1.0,
+          "a": 0.1297,
+          "b": 0.2181,
+          "est": 0.34784482758620683
+        },
+        "j3": {
+          "cells": [
+            "ERing_00:20be4f74",
+            "ERing_01:8b87d66f",
+            "ERing_00:65627517"
+          ],
+          "s": 1.0,
+          "a": 0.0951,
+          "b": 0.3095,
+          "est": 0.40466101694915263
+        },
+        "j5": {
+          "cells": [
+            "ERing_00:20be4f74",
+            "ERing_01:8b87d66f",
+            "ERing_00:65627517",
+            "ERing_01:cffb5503",
+            "ERing_00:e490b88e"
+          ],
+          "s": 0.6,
+          "a": -0.0217,
+          "b": 0.6875,
+          "est": 0.3908333333333333
+        }
+      }
+    },
+    "EthanolConcentration": {
+      "p_true": 0.5,
+      "sent": {
+        "j2": {
+          "cells": [
+            "EthanolConcentration_00:20be4f74",
+            "EthanolConcentration_01:8b87d66f"
+          ],
+          "s": 0.5,
+          "a": 0.1095,
+          "b": 0.2119,
+          "est": 0.21547619047619052
+        },
+        "j3": {
+          "cells": [
+            "EthanolConcentration_00:20be4f74",
+            "EthanolConcentration_01:8b87d66f",
+            "EthanolConcentration_00:65627517"
+          ],
+          "s": 0.3333333333333333,
+          "a": 0.0652,
+          "b": 0.3087,
+          "est": 0.16807692307692315
+        },
+        "j5": {
+          "cells": [
+            "EthanolConcentration_00:20be4f74",
+            "EthanolConcentration_01:8b87d66f",
+            "EthanolConcentration_00:65627517",
+            "EthanolConcentration_01:cffb5503",
+            "EthanolConcentration_00:8c4aa283"
+          ],
+          "s": 0.4,
+          "a": -0.021,
+          "b": 0.6442,
+          "est": 0.23666666666666658
+        }
+      }
+    },
+    "FingerMovements": {
+      "p_true": 0.1,
+      "sent": {
+        "j2": {
+          "cells": [
+            "FingerMovements_00:20be4f74",
+            "FingerMovements_01:8b87d66f"
+          ],
+          "s": 0.5,
+          "a": 0.1476,
+          "b": 0.1929,
+          "est": 0.2440476190476191
+        },
+        "j3": {
+          "cells": [
+            "FingerMovements_00:20be4f74",
+            "FingerMovements_01:8b87d66f",
+            "FingerMovements_00:65627517"
+          ],
+          "s": 0.3333333333333333,
+          "a": 0.1175,
+          "b": 0.2625,
+          "est": 0.20500000000000007
+        },
+        "j5": {
+          "cells": [
+            "FingerMovements_00:20be4f74",
+            "FingerMovements_01:8b87d66f",
+            "FingerMovements_00:65627517",
+            "FingerMovements_01:cffb5503",
+            "FingerMovements_00:8c4aa283"
+          ],
+          "s": 0.2,
+          "a": -0.0008,
+          "b": 0.639,
+          "est": 0.1270053475935829
+        }
+      }
+    },
+    "HandMovementDirection": {
+      "p_true": 0.0,
+      "sent": {
+        "j2": {
+          "cells": [
+            "HandMovementDirection_00:20be4f74",
+            "HandMovementDirection_01:8b87d66f"
+          ],
+          "s": 0.0,
+          "a": 0.175,
+          "b": 0.15,
+          "est": 0.1749999999999999
+        },
+        "j3": {
+          "cells": [
+            "HandMovementDirection_00:20be4f74",
+            "HandMovementDirection_01:8b87d66f",
+            "HandMovementDirection_00:65627517"
+          ],
+          "s": 0.0,
+          "a": 0.133,
+          "b": 0.2371,
+          "est": 0.13303571428571428
+        },
+        "j5": {
+          "cells": [
+            "HandMovementDirection_00:20be4f74",
+            "HandMovementDirection_01:8b87d66f",
+            "HandMovementDirection_00:65627517",
+            "HandMovementDirection_01:cffb5503",
+            "HandMovementDirection_00:e490b88e"
+          ],
+          "s": 0.0,
+          "a": -0.0255,
+          "b": 0.6716,
+          "est": 0.0
+        }
+      }
+    },
+    "Handwriting": {
+      "p_true": 0.2,
+      "sent": {
+        "j2": {
+          "cells": [
+            "Handwriting_00:20be4f74",
+            "Handwriting_01:65627517"
+          ],
+          "s": 0.5,
+          "a": 0.1017,
+          "b": 0.31,
+          "est": 0.25666666666666654
+        },
+        "j3": {
+          "cells": [
+            "Handwriting_00:20be4f74",
+            "Handwriting_01:65627517",
+            "Handwriting_00:8b87d66f"
+          ],
+          "s": 0.6666666666666666,
+          "a": 0.1003,
+          "b": 0.3517,
+          "est": 0.3348275862068964
+        },
+        "j5": {
+          "cells": [
+            "Handwriting_00:20be4f74",
+            "Handwriting_01:65627517",
+            "Handwriting_00:8b87d66f",
+            "Handwriting_01:cffb5503",
+            "Handwriting_00:e490b88e"
+          ],
+          "s": 0.4,
+          "a": 0.0246,
+          "b": 0.6447,
+          "est": 0.2824561403508773
+        }
+      }
+    },
+    "Heartbeat": {
+      "p_true": 0.05,
+      "sent": {
+        "j2": {
+          "cells": [
+            "Heartbeat_00:20be4f74",
+            "Heartbeat_01:8b87d66f"
+          ],
+          "s": 0.5,
+          "a": 0.1524,
+          "b": 0.1905,
+          "est": 0.2476190476190478
+        },
+        "j3": {
+          "cells": [
+            "Heartbeat_00:20be4f74",
+            "Heartbeat_01:8b87d66f",
+            "Heartbeat_00:65627517"
+          ],
+          "s": 0.3333333333333333,
+          "a": 0.124,
+          "b": 0.2567,
+          "est": 0.20961538461538468
+        },
+        "j5": {
+          "cells": [
+            "Heartbeat_00:20be4f74",
+            "Heartbeat_01:8b87d66f",
+            "Heartbeat_00:65627517",
+            "Heartbeat_01:cffb5503",
+            "Heartbeat_00:e490b88e"
+          ],
+          "s": 0.2,
+          "a": -0.009,
+          "b": 0.6461,
+          "est": 0.12022471910112364
+        }
+      }
+    },
+    "MotorImagery": {
+      "p_true": 0.0,
+      "sent": {
+        "j2": {
+          "cells": [
+            "MotorImagery_00:20be4f74",
+            "MotorImagery_01:8b87d66f"
+          ],
+          "s": 0.0,
+          "a": 0.175,
+          "b": 0.15,
+          "est": 0.17499999999999985
+        },
+        "j3": {
+          "cells": [
+            "MotorImagery_00:20be4f74",
+            "MotorImagery_01:8b87d66f",
+            "MotorImagery_00:65627517"
+          ],
+          "s": 0.0,
+          "a": 0.133,
+          "b": 0.2371,
+          "est": 0.13303571428571428
+        },
+        "j5": {
+          "cells": [
+            "MotorImagery_00:20be4f74",
+            "MotorImagery_01:8b87d66f",
+            "MotorImagery_00:65627517",
+            "MotorImagery_01:cffb5503",
+            "MotorImagery_00:e490b88e"
+          ],
+          "s": 0.0,
+          "a": -0.0255,
+          "b": 0.6716,
+          "est": 0.0
+        }
+      }
+    },
+    "NATOPS": {
+      "p_true": 0.75,
+      "sent": {
+        "j2": {
+          "cells": [
+            "NATOPS_00:20be4f74",
+            "NATOPS_01:8b87d66f"
+          ],
+          "s": 0.5,
+          "a": 0.0857,
+          "b": 0.2238,
+          "est": 0.19761904761904753
+        },
+        "j3": {
+          "cells": [
+            "NATOPS_00:20be4f74",
+            "NATOPS_01:8b87d66f",
+            "NATOPS_00:65627517"
+          ],
+          "s": 0.6666666666666666,
+          "a": 0.0909,
+          "b": 0.242,
+          "est": 0.25227272727272726
+        },
+        "j5": {
+          "cells": [
+            "NATOPS_00:20be4f74",
+            "NATOPS_01:8b87d66f",
+            "NATOPS_00:65627517",
+            "NATOPS_01:cffb5503",
+            "NATOPS_00:e490b88e"
+          ],
+          "s": 0.8,
+          "a": 0.0104,
+          "b": 0.5422,
+          "est": 0.44410828025477705
+        }
+      }
+    },
+    "PhonemeSpectra": {
+      "p_true": 0.35,
+      "sent": {
+        "j2": {
+          "cells": [
+            "PhonemeSpectra_00:20be4f74",
+            "PhonemeSpectra_01:8b87d66f"
+          ],
+          "s": 1.0,
+          "a": 0.1358,
+          "b": 0.1957,
+          "est": 0.3314655172413794
+        },
+        "j3": {
+          "cells": [
+            "PhonemeSpectra_00:20be4f74",
+            "PhonemeSpectra_01:8b87d66f",
+            "PhonemeSpectra_00:65627517"
+          ],
+          "s": 1.0,
+          "a": 0.1028,
+          "b": 0.2816,
+          "est": 0.3843220338983052
+        },
+        "j5": {
+          "cells": [
+            "PhonemeSpectra_00:20be4f74",
+            "PhonemeSpectra_01:8b87d66f",
+            "PhonemeSpectra_00:65627517",
+            "PhonemeSpectra_01:cffb5503",
+            "PhonemeSpectra_00:e490b88e"
+          ],
+          "s": 0.6,
+          "a": -0.02,
+          "b": 0.6667,
+          "est": 0.3799999999999999
+        }
+      }
+    },
+    "SelfRegulationSCP1": {
+      "p_true": 0.0,
+      "sent": {
+        "j2": {
+          "cells": [
+            "SelfRegulationSCP1_00:20be4f74",
+            "SelfRegulationSCP1_01:8b87d66f"
+          ],
+          "s": 0.0,
+          "a": 0.175,
+          "b": 0.15,
+          "est": 0.17499999999999985
+        },
+        "j3": {
+          "cells": [
+            "SelfRegulationSCP1_00:20be4f74",
+            "SelfRegulationSCP1_01:8b87d66f",
+            "SelfRegulationSCP1_00:65627517"
+          ],
+          "s": 0.0,
+          "a": 0.133,
+          "b": 0.2371,
+          "est": 0.13303571428571428
+        },
+        "j5": {
+          "cells": [
+            "SelfRegulationSCP1_00:20be4f74",
+            "SelfRegulationSCP1_01:8b87d66f",
+            "SelfRegulationSCP1_00:65627517",
+            "SelfRegulationSCP1_01:cffb5503",
+            "SelfRegulationSCP1_00:e490b88e"
+          ],
+          "s": 0.0,
+          "a": -0.0255,
+          "b": 0.6716,
+          "est": 0.0
+        }
+      }
+    },
+    "SelfRegulationSCP2": {
+      "p_true": 0.45,
+      "sent": {
+        "j2": {
+          "cells": [
+            "SelfRegulationSCP2_00:20be4f74",
+            "SelfRegulationSCP2_01:8b87d66f"
+          ],
+          "s": 0.5,
+          "a": 0.1143,
+          "b": 0.2095,
+          "est": 0.21904761904761919
+        },
+        "j3": {
+          "cells": [
+            "SelfRegulationSCP2_00:20be4f74",
+            "SelfRegulationSCP2_01:8b87d66f",
+            "SelfRegulationSCP2_00:65627517"
+          ],
+          "s": 0.3333333333333333,
+          "a": 0.0717,
+          "b": 0.3029,
+          "est": 0.1726923076923078
+        },
+        "j5": {
+          "cells": [
+            "SelfRegulationSCP2_00:20be4f74",
+            "SelfRegulationSCP2_01:8b87d66f",
+            "SelfRegulationSCP2_00:65627517",
+            "SelfRegulationSCP2_01:cffb5503",
+            "SelfRegulationSCP2_00:e490b88e"
+          ],
+          "s": 0.4,
+          "a": -0.0344,
+          "b": 0.6638,
+          "est": 0.23114973262032093
+        }
+      }
+    },
+    "SpokenArabicDigits": {
+      "p_true": 0.2,
+      "sent": {
+        "j2": {
+          "cells": [
+            "SpokenArabicDigits_00:20be4f74",
+            "SpokenArabicDigits_01:8b87d66f"
+          ],
+          "s": 1.0,
+          "a": 0.1267,
+          "b": 0.2293,
+          "est": 0.35603448275862093
+        },
+        "j3": {
+          "cells": [
+            "SpokenArabicDigits_00:20be4f74",
+            "SpokenArabicDigits_01:8b87d66f",
+            "SpokenArabicDigits_00:65627517"
+          ],
+          "s": 1.0,
+          "a": 0.0913,
+          "b": 0.3235,
+          "est": 0.41483050847457636
+        },
+        "j5": {
+          "cells": [
+            "SpokenArabicDigits_00:20be4f74",
+            "SpokenArabicDigits_01:8b87d66f",
+            "SpokenArabicDigits_00:65627517",
+            "SpokenArabicDigits_01:cffb5503",
+            "SpokenArabicDigits_00:e490b88e"
+          ],
+          "s": 0.6,
+          "a": -0.0225,
+          "b": 0.6979,
+          "est": 0.39624999999999977
+        }
+      }
+    },
+    "UWaveGestureLibrary": {
+      "p_true": 0.2,
+      "sent": {
+        "j2": {
+          "cells": [
+            "UWaveGestureLibrary_00:20be4f74",
+            "UWaveGestureLibrary_01:8b87d66f"
+          ],
+          "s": 0.5,
+          "a": 0.1381,
+          "b": 0.1976,
+          "est": 0.23690476190476203
+        },
+        "j3": {
+          "cells": [
+            "UWaveGestureLibrary_00:20be4f74",
+            "UWaveGestureLibrary_01:8b87d66f",
+            "UWaveGestureLibrary_00:65627517"
+          ],
+          "s": 0.6666666666666666,
+          "a": 0.1076,
+          "b": 0.2795,
+          "est": 0.29393939393939394
+        },
+        "j5": {
+          "cells": [
+            "UWaveGestureLibrary_00:20be4f74",
+            "UWaveGestureLibrary_01:8b87d66f",
+            "UWaveGestureLibrary_00:65627517",
+            "UWaveGestureLibrary_01:cffb5503",
+            "UWaveGestureLibrary_00:e490b88e"
+          ],
+          "s": 0.4,
+          "a": -0.0163,
+          "b": 0.6604,
+          "est": 0.247860962566845
+        }
+      }
+    }
+  },
+  "tests": {
+    "budgets": {
+      "j2": {
+        "sent_rho": 0.20998749998442898,
+        "sent_rho_p": 0.43505024686618143,
+        "sent_bacc": 0.4636363636363636,
+        "rand_rho_median": 0.16872450310870346,
+        "rand_rho_p05": -0.27090078363407594,
+        "rand_bacc_median": 0.7545454545454545
+      },
+      "j3": {
+        "sent_rho": 0.35347945391555197,
+        "sent_rho_p": 0.17924902800056142,
+        "sent_bacc": 0.3727272727272727,
+        "rand_rho_median": 0.38416264080153684,
+        "rand_rho_p05": 0.034379009985817985,
+        "rand_bacc_median": 0.7
+      },
+      "j5": {
+        "sent_rho": 0.7323139741457217,
+        "sent_rho_p": 0.0012560939774649287,
+        "sent_bacc": 0.6636363636363636,
+        "rand_rho_median": 0.6320647237437126,
+        "rand_rho_p05": 0.38751702192528187,
+        "rand_bacc_median": 0.8090909090909091
+      }
+    },
+    "V1_pass": false,
+    "V2_pass": false,
+    "P3e_sent_gt_rand": false,
+    "R1_single_seed": {
+      "rep0": {
+        "rho": 0.2061353312372289,
+        "p": 0.4992582833669532,
+        "bacc": 0.4583333333333333
+      },
+      "rep1": {
+        "rho": 0.23923247853245908,
+        "p": 0.4311728335604229,
+        "bacc": 0.3888888888888889
+      },
+      "rep2": {
+        "rho": 0.5007191411144493,
+        "p": 0.08135556602693654,
+        "bacc": 0.3888888888888889
+      }
+    },
+    "P4e_r1_rho_positive_all": true
+  },
+  "verdict": "invalid"
+}
