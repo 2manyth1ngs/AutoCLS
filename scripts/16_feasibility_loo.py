@@ -55,6 +55,11 @@ FOLDS_DIR = OUTDIR / "folds"
 ANALYSIS_PATH = OUTDIR / "analysis.json"
 SET_ENC_INIT = OUTDIR / "set_encoder_init.pt"
 TS2VEC_OUTPUT_DIMS = 256                 # fit_shared_ts2vec 默认 = SetTF dim_input
+# 执行偏差（2026-08-30，协议锁后数据前，PROTOCOL.md §8 偏差记录）：TS2Vec fit
+# batch_size 128→32。SCP2 把折池 pad 到 T=1152，temporal loss 的 B×(2T)² 矩阵
+# bs=128 单个 2.7 GB，本机 8 GB OOM 实测（fit_folds.err 首崩）；bs=32 实测峰值
+# 2.9 GB 可行。16 折统一同值，折间单变量原则不受影响；600 iters 口径不变。
+TS2VEC_FIT_BS = 32
 N_MODEL_SEEDS = 5
 N_ASSIGN_SEEDS = 5
 EPOCHS, LR, WD, HIDDEN = 300, 1e-3, 1e-3, (128, 64)   # 协议 §4.2 写死
@@ -282,12 +287,13 @@ def get_fold_ts2vec(fold_dir: Path, heldout: str, train_ds: list[str],
                                  ra["embed_seed"])
     t0 = time.time()
     w = fit_shared_ts2vec(pool, n_iters=ra["ts2vec_iters"], device=device,
-                          seed=ra["embed_seed"])
+                          seed=ra["embed_seed"], batch_size=TS2VEC_FIT_BS)
     w.save(path)
     meta_path.write_text(json.dumps({
         "heldout": heldout, "fit_datasets": fit_pool,
         "n_instances": int(pool.shape[0]), "t_max": int(pool.shape[1]),
         "n_iters": ra["ts2vec_iters"], "embed_seed": ra["embed_seed"],
+        "fit_batch_size": TS2VEC_FIT_BS,
         "max_instances_per_dataset": ra["ts2vec_max_instances_per_dataset"],
         "device_name": (torch.cuda.get_device_name(0)
                         if device.startswith("cuda") else "cpu"),
@@ -319,7 +325,9 @@ def cmd_fit_folds(device: str, only_folds: list[str] | None) -> None:
             print(f"[{heldout}] 已完成（{len(datasets) * 2} 特征齐全）", flush=True)
             continue
         shared = get_fold_ts2vec(fold_dir, heldout, train_ds, data, ra, device)
-        enc_dev = set_enc.to(shared.device).eval()
+        # SetTF 前向统一 CPU（一次性 no_grad）：SCP2 级任务的 intra 注意力矩阵
+        # (heads·m, 1152, 1152) 在 8 GB 卡上 2-4 GB 级；CPU 秒级且 16 折数值口径一致
+        enc_dev = set_enc.to("cpu").eval()
         for name in datasets:
             X, y, tasks = data[name]
             for t in tasks:
@@ -333,7 +341,7 @@ def cmd_fit_folds(device: str, only_folds: list[str] | None) -> None:
                     seed=ra["embed_seed"])
                 with torch.no_grad():
                     e = enc_dev(torch.as_tensor(reprs, dtype=torch.float32)
-                                .to(shared.device)).cpu().numpy()
+                                ).numpy()
                 meta_vec = np.array([np.log10(Xt.shape[1]), np.log10(Xt.shape[2]),
                                      float(len(t.classes)), np.log10(Xt.shape[0])],
                                     dtype=np.float32)

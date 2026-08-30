@@ -204,6 +204,16 @@ argmax**）。主误差 = 总变差 err_TV(d) = ½·Σ_s |p̂_s − p_s|。头�
 - 铁律 6 自检随 16 脚本跑：每折断言留出数据集 ∉ fit_datasets；目标池
   （UCI-HAR/Epilepsy/FaceDetection）全程零参与（不在 16 面板内）。
 
+## §8.1 执行偏差记录（协议锁后、判读数据前；如实追加不改判据）
+
+- 2026-08-30：**TS2Vec fit batch_size 128→32**。折池含 SCP2（pad T=1152），
+  temporal contrastive loss 的 B×(2T)² 矩阵 bs=128 时单个 2.7 GB，本机
+  4060 8 GB 首折即 OOM（fit_folds.err 存证）；bs=32 合成池实测峰值 2.9 GB。
+  16 折统一同值（折间单变量不破）；600 iters 口径不变（等效消费实例 ¼，
+  影响方向 = 折编码器更弱 → 只会低估 E，与 §4.1 冻结 SetTF 同向保守）。
+- 2026-08-30：**SetTF 前向统一 CPU**。长任务 intra 注意力矩阵 GPU 上 2-4 GB
+  级；CPU 一次性 no_grad 秒级，16 折数值口径一致。判据无涉。
+
 ## §9 MX-2 预埋备忘（本步不执行）
 
 MX-2（端到端展示）的已拍板决定另立备忘 `docs/MX2_PREREGISTER_MEMO.md`
