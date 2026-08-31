@@ -217,6 +217,30 @@ class TestProxyCell:
 
 
 # ---------------------------------------------------------------- 面板
+class TestRegistryResolution:
+    def test_crop_pinned_datasets_use_crop256(self):
+        regs = px.load_registries()
+        for ds in ("PTB-XL", "NonInvasiveFetalECGThorax1"):
+            reg, name = px.resolve_registry(ds, regs)
+            assert name == "crop256" and reg.get(ds).crop_len == 256
+
+    def test_source_preferred_and_candidate_fallback(self):
+        regs = px.load_registries()
+        assert px.resolve_registry("Handwriting", regs)[1] == "source"
+        assert px.resolve_registry("UniMiB-SHAR", regs)[1] == "cand"
+        assert px.resolve_registry("ChestAccel", regs)[1] == "cand"
+
+    def test_unknown_dataset_raises(self):
+        with pytest.raises(KeyError):
+            px.resolve_registry("NoSuchDataset", px.load_registries())
+
+    def test_registries_share_slice_params(self):
+        regs = px.load_registries()
+        seeds = {r.slice_seed for r in regs.values()}
+        samples = {r.n_samples for r in regs.values()}
+        assert len(seeds) == 1 and len(samples) == 1
+
+
 class TestPanel:
     def test_panel_datasets_and_task_counts(self):
         assert px.N_CLS == 10

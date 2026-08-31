@@ -172,6 +172,25 @@ def proxy_cell(Xtr: np.ndarray, ytr: np.ndarray, cls_cfg, *, tid: str,
 
 
 # ---------------------------------------------------------------- 装配
+def resolve_registry(ds: str, regs: dict):
+    """注册表分派（协议 §3 钉源）：crop 钉源数据集必须走 crop256 注册表，
+    与其 R' 来源（candidate_survey/baseline_crop256）逐字一致；其余源池优先、
+    候选池兜底。三表 slice_seed/n_samples 相同，切片定义可比。"""
+    if ds in br.PIN_CROP:
+        return regs["crop256"], "crop256"
+    for name in ("source", "cand"):
+        if ds in regs[name].names():
+            return regs[name], name
+    raise KeyError(f"{ds} 不在任何注册表")
+
+
+def load_registries() -> dict:
+    return {"source": load_registry(),
+            "cand": load_registry(ROOT / "configs" / "candidate_pool.yaml"),
+            "crop256": load_registry(ROOT / "configs"
+                                     / "candidate_pool_crop256.yaml")}
+
+
 def target_tasks(asm: dict) -> dict:
     """{dataset: [task_id...]}：面板 5 个各 8 任务，其余各 2（协议 §3）。"""
     Q, _src = br.build_rows(asm)
@@ -236,7 +255,7 @@ def cmd_proxy(asm: dict, keys: list, args) -> None:
     wanted = set(names)
     done = load_proxy_cache() if args.resume else {}
     cls_by_key = {k: c for c, k in load_probe_cls(fl.PROBE_CATALOG, N_CLS)[0]}
-    registry = load_registry()
+    regs = load_registries()
     todo = sum(1 for ds in tasks for t in tasks[ds] if t in wanted
                for k in keys if (t, k) not in done)
     print(f"代理待算 {todo} 格（已有 {len(done)}）| device={args.device}", flush=True)
@@ -245,12 +264,18 @@ def cmd_proxy(asm: dict, keys: list, args) -> None:
         tids = [t for t in tasks[ds] if t in wanted]
         if all((t, k) in done for t in tids for k in keys):
             continue
+        registry, reg_name = resolve_registry(ds, regs)
         entry = registry.get(ds)
         X, y = load_source_dataset(ds, registry)
         _e, sliced = slice_source_tasks(entry, registry, y)
         by_id = {t.task_id: t for t in sliced}
+        print(f"[{ds}] 注册表={reg_name} X={X.shape} 任务 {len(tids)}", flush=True)
         for tid in tids:
             task = by_id[tid]
+            expect = list(asm["classes"].get(tid, []))
+            if list(task.classes) != expect:
+                sys.exit(f"[{tid}] classes 不一致：切片 {list(task.classes)} vs "
+                         f"缓存 {expect} —— 注册表/切片口径错，中止（协议 §3）")
             Xt, yt = materialize_task(task, X, y)
             tr, _ev = split_task_train_eval(
                 yt, task.task_type, eval_ratio=EVAL_RATIO,
