@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "D:\DevelopDoc\CLS\scripts\29_proxy_conditioning.py", line 430, in <module>
+    main()
+  File "D:\DevelopDoc\CLS\scripts\29_proxy_conditioning.py", line 422, in main
+    cmd_proxy(asm, keys, args)
+  File "D:\DevelopDoc\CLS\scripts\29_proxy_conditioning.py", line 248, in cmd_proxy
+    entry = registry.get(ds)
+  File "D:\DevelopDoc\CLS\autocls\data\source_pool.py", line 85, in get
+    raise KeyError(f"注册表无数据集 {name!r}（configs/source_pool.yaml）")
+KeyError: "注册表无数据集 'ChestAccel'（configs/source_pool.yaml）"

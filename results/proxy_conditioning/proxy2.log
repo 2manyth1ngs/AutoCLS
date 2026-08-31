@@ -1,0 +1,39 @@
+代理待算 700 格（已有 100）| device=cuda
+[ChestAccel] 注册表=cand X=(29848, 128, 3) 任务 2
+[Cricket] 注册表=source X=(180, 256, 6) 任务 2
+[ERing] 注册表=source X=(300, 65, 4) 任务 2
+[50/700] ERing_00 f48e5da1 fid=+0.1505 ETA 10min
+[ElectricDevices] 注册表=cand X=(16637, 96, 1) 任务 2
+[EthanolConcentration] 注册表=source X=(524, 1024, 3) 任务 2
+[100/700] EthanolConcentration_01 f48e5da1 fid=+0.2011 ETA 22min
+[FingerMovements] 注册表=source X=(416, 50, 28) 任务 2
+[HandMovementDirection] 注册表=source X=(234, 400, 10) 任务 2
+[Handwriting] 注册表=source X=(1000, 152, 3) 任务 8
+[150/700] Handwriting_00 f48e5da1 fid=+0.5883 ETA 16min
+[200/700] Handwriting_05 f48e5da1 fid=+0.6208 ETA 13min
+[Heartbeat] 注册表=source X=(409, 405, 61) 任务 2
+[InsectWingbeatSound] 注册表=cand X=(2200, 256, 1) 任务 2
+[250/700] InsectWingbeatSound_00 f48e5da1 fid=-0.0114 ETA 13min
+[MotorImagery] 注册表=source X=(378, 512, 64) 任务 2
+[NATOPS] 注册表=source X=(360, 51, 24) 任务 2
+[300/700] NATOPS_01 f48e5da1 fid=+0.0648 ETA 13min
+[NonInvasiveFetalECGThorax1] 注册表=crop256 X=(3765, 256, 1) 任务 2
+[PAMAP2] 注册表=cand X=(20195, 128, 27) 任务 2
+[PTB-XL] 注册表=crop256 X=(4000, 256, 12) 任务 2
+[350/700] PTB-XL_00 f48e5da1 fid=+0.1771 ETA 12min
+[PhonemeSpectra] 注册表=source X=(6668, 217, 11) 任务 8
+[400/700] PhonemeSpectra_03 f48e5da1 fid=+0.1992 ETA 11min
+[SelfRegulationSCP1] 注册表=source X=(561, 896, 6) 任务 2
+[450/700] SelfRegulationSCP1_00 f48e5da1 fid=-0.0541 ETA 10min
+[SelfRegulationSCP2] 注册表=source X=(380, 1152, 7) 任务 2
+[SpokenArabicDigits] 注册表=source X=(8798, 93, 13) 任务 2
+[500/700] SpokenArabicDigits_01 f48e5da1 fid=-0.0315 ETA 9min
+[USC-HAD] 注册表=cand X=(30001, 128, 6) 任务 2
+[UWaveGestureLibrary] 注册表=source X=(440, 315, 3) 任务 8
+[550/700] UWaveGestureLibrary_02 f48e5da1 fid=+0.1392 ETA 6min
+[600/700] UWaveGestureLibrary_07 f48e5da1 fid=+0.2239 ETA 4min
+[UniMiB-SHAR] 注册表=cand X=(11771, 151, 3) 任务 8
+[650/700] UniMiB-SHAR_04 f48e5da1 fid=+0.2789 ETA 2min
+[WISDM2019] 注册表=cand X=(29998, 128, 6) 任务 2
+[700/700] WISDM2019_01 f48e5da1 fid=+0.2915 ETA 0min
+代理收官：700 新格，墙钟 28.4 min

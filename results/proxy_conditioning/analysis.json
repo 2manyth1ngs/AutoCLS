@@ -1,0 +1,53 @@
+{
+  "protocol": "results/proxy_conditioning/PROTOCOL.md",
+  "n_tasks": 80,
+  "n_cells": 800,
+  "step0": {
+    "share": 0.1024816528108017,
+    "verdict": "amber"
+  },
+  "D1x": {
+    "rho_residual": 0.0484919131267758,
+    "p_perm": 0.20207979202079793,
+    "n_perm": 10000,
+    "verdict": "not_established"
+  },
+  "trap_controls": {
+    "pooled_rho": -0.5308282379075044,
+    "cls_centered_rho": -0.6664663206000405
+  },
+  "sensitivity": {
+    "S_std_rho": 0.029056756338681784,
+    "var": {
+      "rho": -0.1655457478902042,
+      "p": 1.0
+    },
+    "d_g2": {
+      "rho": -0.040898408851959424,
+      "p": 0.9055472263868066
+    },
+    "d_g3": {
+      "rho": 0.0599178766270888,
+      "p": 0.16091954022988506
+    },
+    "d_g4": {
+      "rho": -0.05460130566418775,
+      "p": 0.993503248375812
+    }
+  },
+  "length_diagnostic": {
+    "rho_dT_vs_fid_resid": 0.12614246272259802,
+    "partial_rho_after_dT": 0.04813791256327881
+  },
+  "D2x": {
+    "rho": -0.2942239960867227,
+    "p": 0.15339806957479638,
+    "n_datasets": 25,
+    "pass": false
+  },
+  "D3x": {
+    "auc_destroy": 0.5355906542198282,
+    "n_destroy": 231,
+    "n_total": 800
+  }
+}
