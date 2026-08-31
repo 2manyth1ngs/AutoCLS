@@ -9,7 +9,7 @@ import importlib
 import numpy as np
 import pytest
 
-asim = importlib.import_module("scripts.25_anchor_sim")
+asim = importlib.import_module("scripts.26_anchor_sim")
 tp = importlib.import_module("scripts.21_tasklevel_precheck")
 
 

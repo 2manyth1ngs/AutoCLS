@@ -1,7 +1,7 @@
 # 锚子采样模拟终判报告（金丝雀直测 + 适用性闸门功效标定）
 
 日期：2026-08-31 ｜ 协议：`PROTOCOL.md`（锁 faa151d，判读带/先验先于计算）｜
-判定机：`scripts/25_anchor_sim.py`（零 GPU，本地 CPU 208 s）｜ 数据：宽面板
+判定机：`scripts/26_anchor_sim.py`（零 GPU，本地 CPU 208 s）｜ 数据：宽面板
 400 格自助抽样，真值对账硬闸 ✓（闸 1 p/t2 与 `wide_panel/analysis.json`
 逐数据集一致，容差 1e-9）。**本报告只标定功效，不宣布新发现（协议 §0）。**
 

@@ -4,7 +4,7 @@
 标定三旋钮读数（破坏率/基线带/锚间异质性）对全面板真值的功效，按预注册
 选择规则给出部署工作点 (a*, j*)。只标定功效，不宣布新发现（协议 §0/§1）。
 
-用法：python scripts/25_anchor_sim.py [--r-draws 400] [--n-perm 4000] [--outdir ...]
+用法：python scripts/26_anchor_sim.py [--r-draws 400] [--n-perm 4000] [--outdir ...]
 """
 from __future__ import annotations
 
