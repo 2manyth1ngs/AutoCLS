@@ -1,0 +1,1145 @@
+{
+  "protocol": "results/anchor_sim/PROTOCOL.md",
+  "constants": {
+    "anchor_counts": [
+      2,
+      3,
+      4
+    ],
+    "j_values": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "r_draws": 400,
+    "n_perm_sub": 4000,
+    "alpha_deploy": 0.01,
+    "alpha_sens": 0.05,
+    "bands": {
+      "tpr_min": 0.8,
+      "fpr_max": 0.15,
+      "mae_max": 0.1
+    },
+    "seed_salt": 20260831
+  },
+  "reconciliation": {
+    "status": "ok",
+    "reference": "results/wide_panel/analysis.json"
+  },
+  "truth": {
+    "UniMiB-SHAR": {
+      "gate1_p": 0.0006999300069993001,
+      "t2_obs": 0.79,
+      "gate_pass": true,
+      "rates": {
+        "improve": 0.375,
+        "inert": 0.3,
+        "destroy": 0.325
+      },
+      "band_mean": 0.028251155647870237,
+      "base_mean_mean": 0.7567428501477937
+    },
+    "CharacterTrajectories": {
+      "gate1_p": 0.0292970702929707,
+      "t2_obs": 0.6624999999999999,
+      "gate_pass": false,
+      "rates": {
+        "improve": 0.325,
+        "inert": 0.4125,
+        "destroy": 0.2625
+      },
+      "band_mean": 0.007144351226175077,
+      "base_mean_mean": 0.983637214918767
+    },
+    "UWaveGestureLibrary": {
+      "gate1_p": 9.999000099990002e-05,
+      "t2_obs": 1.05,
+      "gate_pass": true,
+      "rates": {
+        "improve": 0.375,
+        "inert": 0.425,
+        "destroy": 0.2
+      },
+      "band_mean": 0.04017338730701783,
+      "base_mean_mean": 0.8762202380952382
+    },
+    "PhonemeSpectra": {
+      "gate1_p": 0.0888911108889111,
+      "t2_obs": 0.46249999999999997,
+      "gate_pass": false,
+      "rates": {
+        "improve": 0.0875,
+        "inert": 0.375,
+        "destroy": 0.5375
+      },
+      "band_mean": 0.03026994055172777,
+      "base_mean_mean": 0.5362434934984753
+    },
+    "Handwriting": {
+      "gate1_p": 0.11868813118688132,
+      "t2_obs": 0.08250000000000002,
+      "gate_pass": false,
+      "rates": {
+        "improve": 0.7875,
+        "inert": 0.0375,
+        "destroy": 0.175
+      },
+      "band_mean": 0.0457601045617427,
+      "base_mean_mean": 0.5515679262316386
+    }
+  },
+  "rejects": {
+    "baseline": {
+      "plus_c": 280
+    },
+    "trained": {}
+  },
+  "band_error": {
+    "UniMiB-SHAR": {
+      "a2": {
+        "n_subsets": 28,
+        "median": 0.22458201728987154,
+        "p90": 0.597075673260519
+      },
+      "a3": {
+        "n_subsets": 56,
+        "median": 0.23291708563171096,
+        "p90": 0.3669830460909951
+      },
+      "a4": {
+        "n_subsets": 70,
+        "median": 0.1930019952869871,
+        "p90": 0.2715778512770627
+      }
+    },
+    "CharacterTrajectories": {
+      "a2": {
+        "n_subsets": 28,
+        "median": 0.08961891274998275,
+        "p90": 0.25968906872039504
+      },
+      "a3": {
+        "n_subsets": 56,
+        "median": 0.09060258198590607,
+        "p90": 0.14630896474012006
+      },
+      "a4": {
+        "n_subsets": 70,
+        "median": 0.08503507798520626,
+        "p90": 0.09035426937846117
+      }
+    },
+    "UWaveGestureLibrary": {
+      "a2": {
+        "n_subsets": 28,
+        "median": 0.12038801220027019,
+        "p90": 0.3028208309092617
+      },
+      "a3": {
+        "n_subsets": 56,
+        "median": 0.09785035384271873,
+        "p90": 0.2369729337009045
+      },
+      "a4": {
+        "n_subsets": 70,
+        "median": 0.07114087052204879,
+        "p90": 0.1681093801736627
+      }
+    },
+    "PhonemeSpectra": {
+      "a2": {
+        "n_subsets": 28,
+        "median": 0.10146667683337732,
+        "p90": 0.24211402931279133
+      },
+      "a3": {
+        "n_subsets": 56,
+        "median": 0.08154267806870356,
+        "p90": 0.17179917764252414
+      },
+      "a4": {
+        "n_subsets": 70,
+        "median": 0.05989788382369243,
+        "p90": 0.13718046714167337
+      }
+    },
+    "Handwriting": {
+      "a2": {
+        "n_subsets": 28,
+        "median": 0.10911935780206997,
+        "p90": 0.2525177173288664
+      },
+      "a3": {
+        "n_subsets": 56,
+        "median": 0.08533168112065084,
+        "p90": 0.17928612524802096
+      },
+      "a4": {
+        "n_subsets": 70,
+        "median": 0.07387903253523129,
+        "p90": 0.1412218853671476
+      }
+    }
+  },
+  "curves": {
+    "UniMiB-SHAR": {
+      "a2": {
+        "j5": {
+          "destroy_mae": 0.13175,
+          "destroy_bias": -0.0032500000000000085,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j6": {
+          "destroy_mae": 0.10854166666666668,
+          "destroy_bias": 0.0058333333333333215,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j7": {
+          "destroy_mae": 0.08857142857142858,
+          "destroy_bias": 0.004821428571428551,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.005
+        },
+        "j8": {
+          "destroy_mae": 0.08259374999999998,
+          "destroy_bias": 0.0001562499999999911,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0325
+        },
+        "j9": {
+          "destroy_mae": 0.06658333333333333,
+          "destroy_bias": 0.0045833333333333195,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0725
+        },
+        "j10": {
+          "destroy_mae": 0.05362499999999999,
+          "destroy_bias": 0.0006249999999999836,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.18
+        }
+      },
+      "a3": {
+        "j5": {
+          "destroy_mae": 0.11937499999999998,
+          "destroy_bias": 0.0014999999999999896,
+          "fire_alpha01": 0.0025,
+          "fire_alpha05": 0.07
+        },
+        "j6": {
+          "destroy_mae": 0.0962638888888889,
+          "destroy_bias": 0.008194444444444428,
+          "fire_alpha01": 0.0025,
+          "fire_alpha05": 0.1425
+        },
+        "j7": {
+          "destroy_mae": 0.08214285714285713,
+          "destroy_bias": 0.0015476190476190197,
+          "fire_alpha01": 0.01,
+          "fire_alpha05": 0.24
+        },
+        "j8": {
+          "destroy_mae": 0.06816666666666667,
+          "destroy_bias": -0.00250000000000001,
+          "fire_alpha01": 0.045,
+          "fire_alpha05": 0.2975
+        },
+        "j9": {
+          "destroy_mae": 0.052467592592592587,
+          "destroy_bias": 0.002407407407407378,
+          "fire_alpha01": 0.08,
+          "fire_alpha05": 0.3625
+        },
+        "j10": {
+          "destroy_mae": 0.040708333333333326,
+          "destroy_bias": -0.0029166666666666867,
+          "fire_alpha01": 0.24,
+          "fire_alpha05": 0.465
+        }
+      },
+      "a4": {
+        "j5": {
+          "destroy_mae": 0.113,
+          "destroy_bias": -0.0021250000000000054,
+          "fire_alpha01": 0.0325,
+          "fire_alpha05": 0.165
+        },
+        "j6": {
+          "destroy_mae": 0.09354166666666666,
+          "destroy_bias": -0.004791666666666677,
+          "fire_alpha01": 0.05,
+          "fire_alpha05": 0.265
+        },
+        "j7": {
+          "destroy_mae": 0.07973214285714286,
+          "destroy_bias": -0.0007142857142857273,
+          "fire_alpha01": 0.135,
+          "fire_alpha05": 0.39
+        },
+        "j8": {
+          "destroy_mae": 0.064734375,
+          "destroy_bias": -0.00351562500000001,
+          "fire_alpha01": 0.2075,
+          "fire_alpha05": 0.4825
+        },
+        "j9": {
+          "destroy_mae": 0.048597222222222215,
+          "destroy_bias": -0.0021527777777777873,
+          "fire_alpha01": 0.2725,
+          "fire_alpha05": 0.57
+        },
+        "j10": {
+          "destroy_mae": 0.029937499999999995,
+          "destroy_bias": 0.0023124999999999877,
+          "fire_alpha01": 0.3825,
+          "fire_alpha05": 0.6375
+        }
+      }
+    },
+    "CharacterTrajectories": {
+      "a2": {
+        "j5": {
+          "destroy_mae": 0.1289375,
+          "destroy_bias": 0.009749999999999997,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j6": {
+          "destroy_mae": 0.09912499999999999,
+          "destroy_bias": -0.0016666666666666813,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j7": {
+          "destroy_mae": 0.0877232142857143,
+          "destroy_bias": 0.00999999999999998,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.005
+        },
+        "j8": {
+          "destroy_mae": 0.0745,
+          "destroy_bias": -0.0025000000000000087,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.015
+        },
+        "j9": {
+          "destroy_mae": 0.06452083333333335,
+          "destroy_bias": 0.0005555555555555408,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0325
+        },
+        "j10": {
+          "destroy_mae": 0.05168749999999999,
+          "destroy_bias": 0.0007499999999999896,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0875
+        }
+      },
+      "a3": {
+        "j5": {
+          "destroy_mae": 0.11027083333333333,
+          "destroy_bias": -0.009833333333333343,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.045
+        },
+        "j6": {
+          "destroy_mae": 0.10250694444444446,
+          "destroy_bias": 0.0030555555555555375,
+          "fire_alpha01": 0.01,
+          "fire_alpha05": 0.075
+        },
+        "j7": {
+          "destroy_mae": 0.08084821428571427,
+          "destroy_bias": 0.004999999999999974,
+          "fire_alpha01": 0.0225,
+          "fire_alpha05": 0.0875
+        },
+        "j8": {
+          "destroy_mae": 0.06191666666666666,
+          "destroy_bias": -0.0007291666666666749,
+          "fire_alpha01": 0.025,
+          "fire_alpha05": 0.1425
+        },
+        "j9": {
+          "destroy_mae": 0.05259027777777778,
+          "destroy_bias": -0.001018518518518544,
+          "fire_alpha01": 0.035,
+          "fire_alpha05": 0.18
+        },
+        "j10": {
+          "destroy_mae": 0.04331249999999999,
+          "destroy_bias": 0.0008333333333333193,
+          "fire_alpha01": 0.035,
+          "fire_alpha05": 0.2425
+        }
+      },
+      "a4": {
+        "j5": {
+          "destroy_mae": 0.103875,
+          "destroy_bias": 0.0008749999999999913,
+          "fire_alpha01": 0.025,
+          "fire_alpha05": 0.105
+        },
+        "j6": {
+          "destroy_mae": 0.09160416666666667,
+          "destroy_bias": -0.0013541666666666763,
+          "fire_alpha01": 0.0325,
+          "fire_alpha05": 0.1325
+        },
+        "j7": {
+          "destroy_mae": 0.07675000000000001,
+          "destroy_bias": -0.002678571428571441,
+          "fire_alpha01": 0.05,
+          "fire_alpha05": 0.185
+        },
+        "j8": {
+          "destroy_mae": 0.05678125,
+          "destroy_bias": 0.00374999999999999,
+          "fire_alpha01": 0.0175,
+          "fire_alpha05": 0.13
+        },
+        "j9": {
+          "destroy_mae": 0.046,
+          "destroy_bias": -0.002222222222222232,
+          "fire_alpha01": 0.035,
+          "fire_alpha05": 0.25
+        },
+        "j10": {
+          "destroy_mae": 0.033562499999999995,
+          "destroy_bias": -0.004062500000000009,
+          "fire_alpha01": 0.04,
+          "fire_alpha05": 0.345
+        }
+      }
+    },
+    "UWaveGestureLibrary": {
+      "a2": {
+        "j5": {
+          "destroy_mae": 0.1025,
+          "destroy_bias": -0.005000000000000005,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j6": {
+          "destroy_mae": 0.09375,
+          "destroy_bias": -0.002916666666666681,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.01
+        },
+        "j7": {
+          "destroy_mae": 0.08128571428571427,
+          "destroy_bias": 0.0024999999999999784,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.025
+        },
+        "j8": {
+          "destroy_mae": 0.07065625,
+          "destroy_bias": -0.0014062500000000106,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.075
+        },
+        "j9": {
+          "destroy_mae": 0.05922222222222222,
+          "destroy_bias": 0.0005555555555555383,
+          "fire_alpha01": 0.005,
+          "fire_alpha05": 0.15
+        },
+        "j10": {
+          "destroy_mae": 0.054125,
+          "destroy_bias": 0.004874999999999989,
+          "fire_alpha01": 0.045,
+          "fire_alpha05": 0.2425
+        }
+      },
+      "a3": {
+        "j5": {
+          "destroy_mae": 0.09916666666666667,
+          "destroy_bias": 0.006499999999999989,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.105
+        },
+        "j6": {
+          "destroy_mae": 0.08130555555555555,
+          "destroy_bias": -0.01097222222222224,
+          "fire_alpha01": 0.015,
+          "fire_alpha05": 0.2675
+        },
+        "j7": {
+          "destroy_mae": 0.06947619047619048,
+          "destroy_bias": -0.00142857142857145,
+          "fire_alpha01": 0.0925,
+          "fire_alpha05": 0.35
+        },
+        "j8": {
+          "destroy_mae": 0.06235416666666667,
+          "destroy_bias": 0.004895833333333322,
+          "fire_alpha01": 0.19,
+          "fire_alpha05": 0.4625
+        },
+        "j9": {
+          "destroy_mae": 0.048425925925925914,
+          "destroy_bias": 0.003981481481481459,
+          "fire_alpha01": 0.24,
+          "fire_alpha05": 0.53
+        },
+        "j10": {
+          "destroy_mae": 0.03858333333333333,
+          "destroy_bias": -0.003083333333333344,
+          "fire_alpha01": 0.375,
+          "fire_alpha05": 0.5525
+        }
+      },
+      "a4": {
+        "j5": {
+          "destroy_mae": 0.095625,
+          "destroy_bias": -0.004125000000000012,
+          "fire_alpha01": 0.045,
+          "fire_alpha05": 0.265
+        },
+        "j6": {
+          "destroy_mae": 0.07925,
+          "destroy_bias": 0.011249999999999987,
+          "fire_alpha01": 0.1375,
+          "fire_alpha05": 0.4175
+        },
+        "j7": {
+          "destroy_mae": 0.06444642857142856,
+          "destroy_bias": 0.002767857142857127,
+          "fire_alpha01": 0.2675,
+          "fire_alpha05": 0.605
+        },
+        "j8": {
+          "destroy_mae": 0.052515625,
+          "destroy_bias": -0.002734375000000011,
+          "fire_alpha01": 0.375,
+          "fire_alpha05": 0.6775
+        },
+        "j9": {
+          "destroy_mae": 0.04029166666666667,
+          "destroy_bias": -0.0018750000000000127,
+          "fire_alpha01": 0.485,
+          "fire_alpha05": 0.7475
+        },
+        "j10": {
+          "destroy_mae": 0.030812500000000007,
+          "destroy_bias": -0.0018125000000000094,
+          "fire_alpha01": 0.535,
+          "fire_alpha05": 0.7825
+        }
+      }
+    },
+    "PhonemeSpectra": {
+      "a2": {
+        "j5": {
+          "destroy_mae": 0.1271875,
+          "destroy_bias": -0.0004999999999999837,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j6": {
+          "destroy_mae": 0.12239583333333334,
+          "destroy_bias": -0.0035416666666666413,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j7": {
+          "destroy_mae": 0.11428571428571431,
+          "destroy_bias": -0.0007142857142856951,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.005
+        },
+        "j8": {
+          "destroy_mae": 0.10396875,
+          "destroy_bias": -0.0007812499999999789,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.01
+        },
+        "j9": {
+          "destroy_mae": 0.0945138888888889,
+          "destroy_bias": 0.003472222222222251,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.015
+        },
+        "j10": {
+          "destroy_mae": 0.08837500000000002,
+          "destroy_bias": -0.0011249999999999706,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0225
+        }
+      },
+      "a3": {
+        "j5": {
+          "destroy_mae": 0.11056249999999998,
+          "destroy_bias": 0.008166666666666681,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.015
+        },
+        "j6": {
+          "destroy_mae": 0.10036805555555556,
+          "destroy_bias": 0.0034722222222222494,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0125
+        },
+        "j7": {
+          "destroy_mae": 0.09568154761904762,
+          "destroy_bias": 0.0015476190476190587,
+          "fire_alpha01": 0.005,
+          "fire_alpha05": 0.0625
+        },
+        "j8": {
+          "destroy_mae": 0.08625,
+          "destroy_bias": -0.002499999999999981,
+          "fire_alpha01": 0.0125,
+          "fire_alpha05": 0.0775
+        },
+        "j9": {
+          "destroy_mae": 0.0764513888888889,
+          "destroy_bias": 0.004259259259259269,
+          "fire_alpha01": 0.0225,
+          "fire_alpha05": 0.125
+        },
+        "j10": {
+          "destroy_mae": 0.07041666666666666,
+          "destroy_bias": -0.00508333333333332,
+          "fire_alpha01": 0.06,
+          "fire_alpha05": 0.1225
+        }
+      },
+      "a4": {
+        "j5": {
+          "destroy_mae": 0.09993749999999998,
+          "destroy_bias": -0.00999999999999997,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0275
+        },
+        "j6": {
+          "destroy_mae": 0.08241666666666667,
+          "destroy_bias": 0.0025000000000000204,
+          "fire_alpha01": 0.005,
+          "fire_alpha05": 0.045
+        },
+        "j7": {
+          "destroy_mae": 0.07941964285714286,
+          "destroy_bias": 0.0024107142857143016,
+          "fire_alpha01": 0.0125,
+          "fire_alpha05": 0.0825
+        },
+        "j8": {
+          "destroy_mae": 0.071046875,
+          "destroy_bias": 0.003828125000000022,
+          "fire_alpha01": 0.02,
+          "fire_alpha05": 0.1175
+        },
+        "j9": {
+          "destroy_mae": 0.06318055555555556,
+          "destroy_bias": 0.0004861111111111409,
+          "fire_alpha01": 0.0275,
+          "fire_alpha05": 0.1525
+        },
+        "j10": {
+          "destroy_mae": 0.05487500000000001,
+          "destroy_bias": 0.005000000000000022,
+          "fire_alpha01": 0.045,
+          "fire_alpha05": 0.1925
+        }
+      }
+    },
+    "Handwriting": {
+      "a2": {
+        "j5": {
+          "destroy_mae": 0.09050000000000002,
+          "destroy_bias": -0.003999999999999979,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j6": {
+          "destroy_mae": 0.07854166666666666,
+          "destroy_bias": 0.0006250000000000039,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j7": {
+          "destroy_mae": 0.07757142857142857,
+          "destroy_bias": 0.0021428571428571443,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j8": {
+          "destroy_mae": 0.0691875,
+          "destroy_bias": 0.0009375000000000111,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j9": {
+          "destroy_mae": 0.057319444444444444,
+          "destroy_bias": -0.00041666666666666545,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j10": {
+          "destroy_mae": 0.03850000000000001,
+          "destroy_bias": -0.0019999999999999792,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        }
+      },
+      "a3": {
+        "j5": {
+          "destroy_mae": 0.09520833333333335,
+          "destroy_bias": 0.0008333333333333504,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j6": {
+          "destroy_mae": 0.07895833333333332,
+          "destroy_bias": 0.01027777777777778,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j7": {
+          "destroy_mae": 0.07169642857142856,
+          "destroy_bias": -0.0026190476190476168,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j8": {
+          "destroy_mae": 0.06289583333333333,
+          "destroy_bias": -0.0036458333333333243,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j9": {
+          "destroy_mae": 0.04636574074074074,
+          "destroy_bias": 0.002037037037037038,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j10": {
+          "destroy_mae": 0.03104166666666668,
+          "destroy_bias": 0.0008333333333333511,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        }
+      },
+      "a4": {
+        "j5": {
+          "destroy_mae": 0.092,
+          "destroy_bias": -0.01137499999999999,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j6": {
+          "destroy_mae": 0.07620833333333334,
+          "destroy_bias": -0.0020833333333333285,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j7": {
+          "destroy_mae": 0.07355357142857143,
+          "destroy_bias": 0.005892857142857144,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j8": {
+          "destroy_mae": 0.055609374999999996,
+          "destroy_bias": 0.0003906250000000108,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j9": {
+          "destroy_mae": 0.03779166666666666,
+          "destroy_bias": 0.000694444444444446,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        },
+        "j10": {
+          "destroy_mae": 0.02500000000000001,
+          "destroy_bias": 0.00025000000000001394,
+          "fire_alpha01": 0.0,
+          "fire_alpha05": 0.0
+        }
+      }
+    }
+  },
+  "points": {
+    "a2_j5": {
+      "tpr": 0.0,
+      "fpr": 0.0,
+      "destroy_mae_pooled": 0.116175,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.0,
+        "CharacterTrajectories": 0.0,
+        "UWaveGestureLibrary": 0.0,
+        "PhonemeSpectra": 0.0,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.0,
+        "CharacterTrajectories": 0.0,
+        "UWaveGestureLibrary": 0.0,
+        "PhonemeSpectra": 0.0,
+        "Handwriting": 0.0
+      }
+    },
+    "a2_j6": {
+      "tpr": 0.0,
+      "fpr": 0.0,
+      "destroy_mae_pooled": 0.10047083333333333,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.0,
+        "CharacterTrajectories": 0.0,
+        "UWaveGestureLibrary": 0.0,
+        "PhonemeSpectra": 0.0,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.0,
+        "CharacterTrajectories": 0.0,
+        "UWaveGestureLibrary": 0.01,
+        "PhonemeSpectra": 0.0,
+        "Handwriting": 0.0
+      }
+    },
+    "a2_j7": {
+      "tpr": 0.0,
+      "fpr": 0.0,
+      "destroy_mae_pooled": 0.0898875,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.0,
+        "CharacterTrajectories": 0.0,
+        "UWaveGestureLibrary": 0.0,
+        "PhonemeSpectra": 0.0,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.005,
+        "CharacterTrajectories": 0.005,
+        "UWaveGestureLibrary": 0.025,
+        "PhonemeSpectra": 0.005,
+        "Handwriting": 0.0
+      }
+    },
+    "a2_j8": {
+      "tpr": 0.0,
+      "fpr": 0.0,
+      "destroy_mae_pooled": 0.08018125,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.0,
+        "CharacterTrajectories": 0.0,
+        "UWaveGestureLibrary": 0.0,
+        "PhonemeSpectra": 0.0,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.0325,
+        "CharacterTrajectories": 0.015,
+        "UWaveGestureLibrary": 0.075,
+        "PhonemeSpectra": 0.01,
+        "Handwriting": 0.0
+      }
+    },
+    "a2_j9": {
+      "tpr": 0.0025,
+      "fpr": 0.0,
+      "destroy_mae_pooled": 0.06843194444444445,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.0,
+        "CharacterTrajectories": 0.0,
+        "UWaveGestureLibrary": 0.005,
+        "PhonemeSpectra": 0.0,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.0725,
+        "CharacterTrajectories": 0.0325,
+        "UWaveGestureLibrary": 0.15,
+        "PhonemeSpectra": 0.015,
+        "Handwriting": 0.0
+      }
+    },
+    "a2_j10": {
+      "tpr": 0.0225,
+      "fpr": 0.0,
+      "destroy_mae_pooled": 0.05726250000000001,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.0,
+        "CharacterTrajectories": 0.0,
+        "UWaveGestureLibrary": 0.045,
+        "PhonemeSpectra": 0.0,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.18,
+        "CharacterTrajectories": 0.0875,
+        "UWaveGestureLibrary": 0.2425,
+        "PhonemeSpectra": 0.0225,
+        "Handwriting": 0.0
+      }
+    },
+    "a3_j5": {
+      "tpr": 0.00125,
+      "fpr": 0.0,
+      "destroy_mae_pooled": 0.10691666666666666,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.0025,
+        "CharacterTrajectories": 0.0,
+        "UWaveGestureLibrary": 0.0,
+        "PhonemeSpectra": 0.0,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.07,
+        "CharacterTrajectories": 0.045,
+        "UWaveGestureLibrary": 0.105,
+        "PhonemeSpectra": 0.015,
+        "Handwriting": 0.0
+      }
+    },
+    "a3_j6": {
+      "tpr": 0.008749999999999999,
+      "fpr": 0.0033333333333333335,
+      "destroy_mae_pooled": 0.09188055555555555,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.0025,
+        "CharacterTrajectories": 0.01,
+        "UWaveGestureLibrary": 0.015,
+        "PhonemeSpectra": 0.0,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.1425,
+        "CharacterTrajectories": 0.075,
+        "UWaveGestureLibrary": 0.2675,
+        "PhonemeSpectra": 0.0125,
+        "Handwriting": 0.0
+      }
+    },
+    "a3_j7": {
+      "tpr": 0.05125,
+      "fpr": 0.009166666666666667,
+      "destroy_mae_pooled": 0.0799690476190476,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.01,
+        "CharacterTrajectories": 0.0225,
+        "UWaveGestureLibrary": 0.0925,
+        "PhonemeSpectra": 0.005,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.24,
+        "CharacterTrajectories": 0.0875,
+        "UWaveGestureLibrary": 0.35,
+        "PhonemeSpectra": 0.0625,
+        "Handwriting": 0.0
+      }
+    },
+    "a3_j8": {
+      "tpr": 0.1175,
+      "fpr": 0.012500000000000002,
+      "destroy_mae_pooled": 0.06831666666666666,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.045,
+        "CharacterTrajectories": 0.025,
+        "UWaveGestureLibrary": 0.19,
+        "PhonemeSpectra": 0.0125,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.2975,
+        "CharacterTrajectories": 0.1425,
+        "UWaveGestureLibrary": 0.4625,
+        "PhonemeSpectra": 0.0775,
+        "Handwriting": 0.0
+      }
+    },
+    "a3_j9": {
+      "tpr": 0.16,
+      "fpr": 0.01916666666666667,
+      "destroy_mae_pooled": 0.05526018518518518,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.08,
+        "CharacterTrajectories": 0.035,
+        "UWaveGestureLibrary": 0.24,
+        "PhonemeSpectra": 0.0225,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.3625,
+        "CharacterTrajectories": 0.18,
+        "UWaveGestureLibrary": 0.53,
+        "PhonemeSpectra": 0.125,
+        "Handwriting": 0.0
+      }
+    },
+    "a3_j10": {
+      "tpr": 0.3075,
+      "fpr": 0.03166666666666667,
+      "destroy_mae_pooled": 0.0448125,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.24,
+        "CharacterTrajectories": 0.035,
+        "UWaveGestureLibrary": 0.375,
+        "PhonemeSpectra": 0.06,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.465,
+        "CharacterTrajectories": 0.2425,
+        "UWaveGestureLibrary": 0.5525,
+        "PhonemeSpectra": 0.1225,
+        "Handwriting": 0.0
+      }
+    },
+    "a4_j5": {
+      "tpr": 0.03875,
+      "fpr": 0.008333333333333333,
+      "destroy_mae_pooled": 0.10088749999999999,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.0325,
+        "CharacterTrajectories": 0.025,
+        "UWaveGestureLibrary": 0.045,
+        "PhonemeSpectra": 0.0,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.165,
+        "CharacterTrajectories": 0.105,
+        "UWaveGestureLibrary": 0.265,
+        "PhonemeSpectra": 0.0275,
+        "Handwriting": 0.0
+      }
+    },
+    "a4_j6": {
+      "tpr": 0.09375,
+      "fpr": 0.012499999999999999,
+      "destroy_mae_pooled": 0.08460416666666666,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.05,
+        "CharacterTrajectories": 0.0325,
+        "UWaveGestureLibrary": 0.1375,
+        "PhonemeSpectra": 0.005,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.265,
+        "CharacterTrajectories": 0.1325,
+        "UWaveGestureLibrary": 0.4175,
+        "PhonemeSpectra": 0.045,
+        "Handwriting": 0.0
+      }
+    },
+    "a4_j7": {
+      "tpr": 0.20125,
+      "fpr": 0.020833333333333332,
+      "destroy_mae_pooled": 0.07478035714285715,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.135,
+        "CharacterTrajectories": 0.05,
+        "UWaveGestureLibrary": 0.2675,
+        "PhonemeSpectra": 0.0125,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.39,
+        "CharacterTrajectories": 0.185,
+        "UWaveGestureLibrary": 0.605,
+        "PhonemeSpectra": 0.0825,
+        "Handwriting": 0.0
+      }
+    },
+    "a4_j8": {
+      "tpr": 0.29125,
+      "fpr": 0.012500000000000002,
+      "destroy_mae_pooled": 0.060137499999999997,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.2075,
+        "CharacterTrajectories": 0.0175,
+        "UWaveGestureLibrary": 0.375,
+        "PhonemeSpectra": 0.02,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.4825,
+        "CharacterTrajectories": 0.13,
+        "UWaveGestureLibrary": 0.6775,
+        "PhonemeSpectra": 0.1175,
+        "Handwriting": 0.0
+      }
+    },
+    "a4_j9": {
+      "tpr": 0.37875000000000003,
+      "fpr": 0.020833333333333332,
+      "destroy_mae_pooled": 0.047172222222222226,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.2725,
+        "CharacterTrajectories": 0.035,
+        "UWaveGestureLibrary": 0.485,
+        "PhonemeSpectra": 0.0275,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.57,
+        "CharacterTrajectories": 0.25,
+        "UWaveGestureLibrary": 0.7475,
+        "PhonemeSpectra": 0.1525,
+        "Handwriting": 0.0
+      }
+    },
+    "a4_j10": {
+      "tpr": 0.45875,
+      "fpr": 0.028333333333333332,
+      "destroy_mae_pooled": 0.0348375,
+      "fire_alpha01": {
+        "UniMiB-SHAR": 0.3825,
+        "CharacterTrajectories": 0.04,
+        "UWaveGestureLibrary": 0.535,
+        "PhonemeSpectra": 0.045,
+        "Handwriting": 0.0
+      },
+      "fire_alpha05": {
+        "UniMiB-SHAR": 0.6375,
+        "CharacterTrajectories": 0.345,
+        "UWaveGestureLibrary": 0.7825,
+        "PhonemeSpectra": 0.1925,
+        "Handwriting": 0.0
+      }
+    }
+  },
+  "recommendation": {
+    "workpoint": null,
+    "feasible": []
+  },
+  "predictions": {
+    "PA1": {
+      "claim": "可行集非空",
+      "prior": 0.55,
+      "hit": false
+    },
+    "PA2": {
+      "claim": "a=2 在 j≤7 结构性零功率（p≥2/2^j>0.01）",
+      "prior": 0.9,
+      "max_fire": 0.0,
+      "hit": true
+    },
+    "PA3": {
+      "claim": "推荐锚数 a*=3（条件于 PA1）",
+      "prior": 0.6,
+      "hit": null
+    },
+    "PA4": {
+      "claim": "CT 触发率为真值不过闸三者中最高（一致性核对）",
+      "prior": 0.75,
+      "mean_fire_fail": {
+        "CharacterTrajectories": 0.018194444444444444,
+        "PhonemeSpectra": 0.011666666666666665,
+        "Handwriting": 0.0
+      },
+      "hit": true
+    }
+  }
+}
