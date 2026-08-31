@@ -560,6 +560,11 @@ def _run_loto(panel_ds: dict, *, seed_ns: str) -> dict:
                     [behavior_distance(panel_ds[a], panel_ds[b], J)
                      for i, a in enumerate(rest) for b in rest[i + 1:]])), 1e-6)
                 wk = gp.kernel_w({a: dists[a] for a in anchors}, sigma)
+                total_w = sum(wk.values())
+                if not np.isfinite(total_w) or total_w <= 0.0:
+                    # σ→0 且锚距全正时核权下溢：数学极限 = 最近锚全拿
+                    dmin = min(dists[a] for a in anchors)
+                    wk = {a: 1.0 if dists[a] == dmin else 0.0 for a in anchors}
                 acc["kernel"].append(masked_brier(
                     gp.anchor_predict(panel_ds, anchors, wk),
                     onehot_held, unobs))

@@ -1,0 +1,49 @@
+{
+  "protocol": "results/behavior_recon/PROTOCOL.md",
+  "step0": {
+    "M1": 0.4708799198099826,
+    "M2": 0.4891078602240989,
+    "verdict": "amber"
+  },
+  "main_j": 7,
+  "amber": true,
+  "D1r": {
+    "arms": [
+      {
+        "arm": "knn",
+        "p_ok": false,
+        "dir_ok": false,
+        "win_ok": false,
+        "pass": false,
+        "p": {
+          "column_prior": 0.21307098865509033,
+          "level_shift": 0.9995440542697906
+        }
+      },
+      {
+        "arm": "svd",
+        "p_ok": false,
+        "dir_ok": false,
+        "win_ok": false,
+        "pass": false,
+        "p": {
+          "column_prior": 0.011824965476989746,
+          "level_shift": 0.6444196105003357
+        }
+      }
+    ],
+    "pass": false
+  },
+  "D2r": {
+    "arm": "kernel",
+    "p_ok": false,
+    "dir_ok": false,
+    "win_ok": false,
+    "pass": false,
+    "p": {
+      "uniform": 0.5156317786400071,
+      "global": 0.9999999997671694
+    }
+  },
+  "gate": "fail"
+}

@@ -1,0 +1,732 @@
+{
+  "protocol": "results/behavior_recon/PROTOCOL.md",
+  "per_dataset": {
+    "CharacterTrajectories": {
+      "fold_err": {
+        "kernel": {
+          "3": {
+            "CharacterTrajectories_00": 0.5580506230450643,
+            "CharacterTrajectories_01": 0.7503013123387654,
+            "CharacterTrajectories_02": 0.6903320732417214,
+            "CharacterTrajectories_03": 0.5883151099785553,
+            "CharacterTrajectories_04": 0.8645838819305692,
+            "CharacterTrajectories_05": 0.6692053829238185,
+            "CharacterTrajectories_06": 0.6912234515251366,
+            "CharacterTrajectories_07": 0.7843243711488884
+          },
+          "5": {
+            "CharacterTrajectories_00": 0.5317933518164633,
+            "CharacterTrajectories_01": 0.7070635174430591,
+            "CharacterTrajectories_02": 0.6900469728967665,
+            "CharacterTrajectories_03": 0.5514078745650687,
+            "CharacterTrajectories_04": 0.8559067343763853,
+            "CharacterTrajectories_05": 0.6023964311053223,
+            "CharacterTrajectories_06": 0.679094651531344,
+            "CharacterTrajectories_07": 0.7840789231029097
+          },
+          "7": {
+            "CharacterTrajectories_00": 0.5104280770598629,
+            "CharacterTrajectories_01": 0.6929965244352669,
+            "CharacterTrajectories_02": 0.648663726083324,
+            "CharacterTrajectories_03": 0.5333356082162657,
+            "CharacterTrajectories_04": 0.8286272017130477,
+            "CharacterTrajectories_05": 0.6314622264213117,
+            "CharacterTrajectories_06": 0.637069126169394,
+            "CharacterTrajectories_07": 0.7472629319601645
+          }
+        },
+        "uniform": {
+          "3": {
+            "CharacterTrajectories_00": 0.5212698412698412,
+            "CharacterTrajectories_01": 0.7325396825396825,
+            "CharacterTrajectories_02": 0.6082539682539683,
+            "CharacterTrajectories_03": 0.5263492063492063,
+            "CharacterTrajectories_04": 0.8274603174603176,
+            "CharacterTrajectories_05": 0.6795238095238096,
+            "CharacterTrajectories_06": 0.6444444444444446,
+            "CharacterTrajectories_07": 0.7407936507936509
+          },
+          "5": {
+            "CharacterTrajectories_00": 0.5226666666666666,
+            "CharacterTrajectories_01": 0.7037777777777778,
+            "CharacterTrajectories_02": 0.6093333333333334,
+            "CharacterTrajectories_03": 0.516,
+            "CharacterTrajectories_04": 0.8304444444444445,
+            "CharacterTrajectories_05": 0.6226666666666667,
+            "CharacterTrajectories_06": 0.6437777777777778,
+            "CharacterTrajectories_07": 0.7468888888888889
+          },
+          "7": {
+            "CharacterTrajectories_00": 0.49555555555555564,
+            "CharacterTrajectories_01": 0.7111111111111111,
+            "CharacterTrajectories_02": 0.5848148148148149,
+            "CharacterTrajectories_03": 0.5018518518518519,
+            "CharacterTrajectories_04": 0.8162962962962963,
+            "CharacterTrajectories_05": 0.6574074074074074,
+            "CharacterTrajectories_06": 0.6192592592592593,
+            "CharacterTrajectories_07": 0.7285185185185185
+          }
+        },
+        "global": {
+          "3": {
+            "CharacterTrajectories_00": 0.41851311953352777,
+            "CharacterTrajectories_01": 0.6159183673469388,
+            "CharacterTrajectories_02": 0.5256268221574344,
+            "CharacterTrajectories_03": 0.4265597667638484,
+            "CharacterTrajectories_04": 0.7339650145772595,
+            "CharacterTrajectories_05": 0.5642274052478133,
+            "CharacterTrajectories_06": 0.5379591836734694,
+            "CharacterTrajectories_07": 0.6429737609329446
+          },
+          "5": {
+            "CharacterTrajectories_00": 0.421061224489796,
+            "CharacterTrajectories_01": 0.6145714285714287,
+            "CharacterTrajectories_02": 0.523469387755102,
+            "CharacterTrajectories_03": 0.42012244897959183,
+            "CharacterTrajectories_04": 0.7437959183673469,
+            "CharacterTrajectories_05": 0.5183673469387755,
+            "CharacterTrajectories_06": 0.5373469387755102,
+            "CharacterTrajectories_07": 0.6558367346938775
+          },
+          "7": {
+            "CharacterTrajectories_00": 0.4076190476190476,
+            "CharacterTrajectories_01": 0.6293877551020408,
+            "CharacterTrajectories_02": 0.5278231292517007,
+            "CharacterTrajectories_03": 0.4072789115646259,
+            "CharacterTrajectories_04": 0.714625850340136,
+            "CharacterTrajectories_05": 0.570952380952381,
+            "CharacterTrajectories_06": 0.5443537414965988,
+            "CharacterTrajectories_07": 0.650612244897959
+          }
+        }
+      },
+      "tests": {
+        "j3": {
+          "n_folds": 8,
+          "p_vs_uniform": 0.99609375,
+          "med_diff_vs_uniform": 0.0403271424127446,
+          "win_rate_vs_uniform": 0.125,
+          "n_nonzero_vs_uniform": 8,
+          "p_vs_global": 1.0,
+          "med_diff_vs_global": 0.14044405686374017,
+          "win_rate_vs_global": 0.0,
+          "n_nonzero_vs_global": 8
+        },
+        "j5": {
+          "n_folds": 8,
+          "p_vs_uniform": 0.98828125,
+          "med_diff_vs_uniform": 0.030389581842753477,
+          "win_rate_vs_uniform": 0.125,
+          "n_nonzero_vs_uniform": 8,
+          "p_vs_global": 1.0,
+          "med_diff_vs_global": 0.12017650220903531,
+          "win_rate_vs_global": 0.0,
+          "n_nonzero_vs_global": 8
+        },
+        "j7": {
+          "n_folds": 8,
+          "p_vs_uniform": 0.875,
+          "med_diff_vs_uniform": 0.01634119420722102,
+          "win_rate_vs_uniform": 0.25,
+          "n_nonzero_vs_uniform": 8,
+          "p_vs_global": 1.0,
+          "med_diff_vs_global": 0.0997298582515104,
+          "win_rate_vs_global": 0.0,
+          "n_nonzero_vs_global": 8
+        }
+      }
+    },
+    "UWaveGestureLibrary": {
+      "fold_err": {
+        "kernel": {
+          "3": {
+            "UWaveGestureLibrary_00": 0.48409457150751195,
+            "UWaveGestureLibrary_01": 0.636138977815818,
+            "UWaveGestureLibrary_02": 0.4571625948969076,
+            "UWaveGestureLibrary_03": 0.8682259252981629,
+            "UWaveGestureLibrary_04": 0.6761702990966595,
+            "UWaveGestureLibrary_05": 0.5836357020868822,
+            "UWaveGestureLibrary_06": 0.7725340893485193,
+            "UWaveGestureLibrary_07": 0.5356793423630403
+          },
+          "5": {
+            "UWaveGestureLibrary_00": 0.5216821815544043,
+            "UWaveGestureLibrary_01": 0.6147998733387422,
+            "UWaveGestureLibrary_02": 0.4464044278069273,
+            "UWaveGestureLibrary_03": 0.8420681491163297,
+            "UWaveGestureLibrary_04": 0.6901956863765563,
+            "UWaveGestureLibrary_05": 0.5599243167336663,
+            "UWaveGestureLibrary_06": 0.7297793658642828,
+            "UWaveGestureLibrary_07": 0.5454673988578312
+          },
+          "7": {
+            "UWaveGestureLibrary_00": 0.4544109791959326,
+            "UWaveGestureLibrary_01": 0.6019125489017862,
+            "UWaveGestureLibrary_02": 0.4702477130167846,
+            "UWaveGestureLibrary_03": 0.8587919928544538,
+            "UWaveGestureLibrary_04": 0.6424664331677775,
+            "UWaveGestureLibrary_05": 0.5965766537929984,
+            "UWaveGestureLibrary_06": 0.7194284085284428,
+            "UWaveGestureLibrary_07": 0.517969224688676
+          }
+        },
+        "uniform": {
+          "3": {
+            "UWaveGestureLibrary_00": 0.5053968253968254,
+            "UWaveGestureLibrary_01": 0.5461904761904762,
+            "UWaveGestureLibrary_02": 0.5214285714285715,
+            "UWaveGestureLibrary_03": 0.853968253968254,
+            "UWaveGestureLibrary_04": 0.6233333333333333,
+            "UWaveGestureLibrary_05": 0.5965079365079365,
+            "UWaveGestureLibrary_06": 0.7642857142857143,
+            "UWaveGestureLibrary_07": 0.5304761904761905
+          },
+          "5": {
+            "UWaveGestureLibrary_00": 0.5571111111111111,
+            "UWaveGestureLibrary_01": 0.5537777777777778,
+            "UWaveGestureLibrary_02": 0.5251111111111112,
+            "UWaveGestureLibrary_03": 0.8397777777777778,
+            "UWaveGestureLibrary_04": 0.6559999999999999,
+            "UWaveGestureLibrary_05": 0.5986666666666667,
+            "UWaveGestureLibrary_06": 0.7624444444444446,
+            "UWaveGestureLibrary_07": 0.5493333333333333
+          },
+          "7": {
+            "UWaveGestureLibrary_00": 0.5007407407407407,
+            "UWaveGestureLibrary_01": 0.5477777777777778,
+            "UWaveGestureLibrary_02": 0.5385185185185185,
+            "UWaveGestureLibrary_03": 0.8781481481481481,
+            "UWaveGestureLibrary_04": 0.6203703703703703,
+            "UWaveGestureLibrary_05": 0.6414814814814815,
+            "UWaveGestureLibrary_06": 0.758888888888889,
+            "UWaveGestureLibrary_07": 0.5307407407407407
+          }
+        },
+        "global": {
+          "3": {
+            "UWaveGestureLibrary_00": 0.41285714285714276,
+            "UWaveGestureLibrary_01": 0.47358600583090377,
+            "UWaveGestureLibrary_02": 0.43970845481049564,
+            "UWaveGestureLibrary_03": 0.7683090379008745,
+            "UWaveGestureLibrary_04": 0.5483673469387754,
+            "UWaveGestureLibrary_05": 0.5073760932944605,
+            "UWaveGestureLibrary_06": 0.6730029154518951,
+            "UWaveGestureLibrary_07": 0.43822157434402326
+          },
+          "5": {
+            "UWaveGestureLibrary_00": 0.41722448979591836,
+            "UWaveGestureLibrary_01": 0.4651020408163265,
+            "UWaveGestureLibrary_02": 0.4501224489795918,
+            "UWaveGestureLibrary_03": 0.7628571428571428,
+            "UWaveGestureLibrary_04": 0.554734693877551,
+            "UWaveGestureLibrary_05": 0.5164489795918368,
+            "UWaveGestureLibrary_06": 0.6911020408163264,
+            "UWaveGestureLibrary_07": 0.44244897959183677
+          },
+          "7": {
+            "UWaveGestureLibrary_00": 0.4171428571428571,
+            "UWaveGestureLibrary_01": 0.46435374149659864,
+            "UWaveGestureLibrary_02": 0.4431292517006803,
+            "UWaveGestureLibrary_03": 0.7960544217687076,
+            "UWaveGestureLibrary_04": 0.531156462585034,
+            "UWaveGestureLibrary_05": 0.5162585034013606,
+            "UWaveGestureLibrary_06": 0.6918367346938775,
+            "UWaveGestureLibrary_07": 0.44612244897959186
+          }
+        }
+      },
+      "tests": {
+        "j3": {
+          "n_folds": 8,
+          "p_vs_uniform": 0.6796875,
+          "med_diff_vs_uniform": 0.00672576347482734,
+          "win_rate_vs_uniform": 0.375,
+          "n_nonzero_vs_uniform": 8,
+          "p_vs_global": 1.0,
+          "med_diff_vs_global": 0.09849447095782063,
+          "win_rate_vs_global": 0.0,
+          "n_nonzero_vs_global": 8
+        },
+        "j5": {
+          "n_folds": 8,
+          "p_vs_uniform": 0.23046875,
+          "med_diff_vs_uniform": -0.018265506527831932,
+          "win_rate_vs_uniform": 0.625,
+          "n_nonzero_vs_uniform": 8,
+          "p_vs_global": 0.99609375,
+          "med_diff_vs_global": 0.09111471276259067,
+          "win_rate_vs_global": 0.125,
+          "n_nonzero_vs_global": 8
+        },
+        "j7": {
+          "n_folds": 8,
+          "p_vs_uniform": 0.15625,
+          "med_diff_vs_uniform": -0.029408317827070207,
+          "win_rate_vs_uniform": 0.75,
+          "n_nonzero_vs_uniform": 8,
+          "p_vs_global": 1.0,
+          "med_diff_vs_global": 0.06729217339741522,
+          "win_rate_vs_global": 0.0,
+          "n_nonzero_vs_global": 8
+        }
+      }
+    },
+    "PhonemeSpectra": {
+      "fold_err": {
+        "kernel": {
+          "3": {
+            "PhonemeSpectra_00": 0.5442596053344765,
+            "PhonemeSpectra_01": 0.4420994291017337,
+            "PhonemeSpectra_02": 0.37876613093976,
+            "PhonemeSpectra_03": 0.43961633004199585,
+            "PhonemeSpectra_04": 0.5303654791448852,
+            "PhonemeSpectra_05": 0.8290498580827981,
+            "PhonemeSpectra_06": 0.7717548020243575,
+            "PhonemeSpectra_07": 0.6766244396051618
+          },
+          "5": {
+            "PhonemeSpectra_00": 0.5405483747207377,
+            "PhonemeSpectra_01": 0.4067076081175657,
+            "PhonemeSpectra_02": 0.34878512131650796,
+            "PhonemeSpectra_03": 0.42714394992995414,
+            "PhonemeSpectra_04": 0.511865788974045,
+            "PhonemeSpectra_05": 0.8489565622635483,
+            "PhonemeSpectra_06": 0.7171619510393197,
+            "PhonemeSpectra_07": 0.6884713295984863
+          },
+          "7": {
+            "PhonemeSpectra_00": 0.5299646382777273,
+            "PhonemeSpectra_01": 0.4200181630322794,
+            "PhonemeSpectra_02": 0.3753513896144798,
+            "PhonemeSpectra_03": 0.4488891095904735,
+            "PhonemeSpectra_04": 0.477876292132149,
+            "PhonemeSpectra_05": 0.8053449098567075,
+            "PhonemeSpectra_06": 0.7388866409924932,
+            "PhonemeSpectra_07": 0.6614192792697976
+          }
+        },
+        "uniform": {
+          "3": {
+            "PhonemeSpectra_00": 0.48920634920634926,
+            "PhonemeSpectra_01": 0.43333333333333335,
+            "PhonemeSpectra_02": 0.37111111111111117,
+            "PhonemeSpectra_03": 0.43206349206349215,
+            "PhonemeSpectra_04": 0.5025396825396825,
+            "PhonemeSpectra_05": 0.743015873015873,
+            "PhonemeSpectra_06": 0.6938095238095238,
+            "PhonemeSpectra_07": 0.6415873015873015
+          },
+          "5": {
+            "PhonemeSpectra_00": 0.498888888888889,
+            "PhonemeSpectra_01": 0.4075555555555556,
+            "PhonemeSpectra_02": 0.36333333333333345,
+            "PhonemeSpectra_03": 0.42955555555555563,
+            "PhonemeSpectra_04": 0.486,
+            "PhonemeSpectra_05": 0.7386666666666667,
+            "PhonemeSpectra_06": 0.6682222222222223,
+            "PhonemeSpectra_07": 0.644888888888889
+          },
+          "7": {
+            "PhonemeSpectra_00": 0.5066666666666667,
+            "PhonemeSpectra_01": 0.4192592592592592,
+            "PhonemeSpectra_02": 0.39407407407407413,
+            "PhonemeSpectra_03": 0.4496296296296297,
+            "PhonemeSpectra_04": 0.48074074074074075,
+            "PhonemeSpectra_05": 0.7240740740740742,
+            "PhonemeSpectra_06": 0.6885185185185185,
+            "PhonemeSpectra_07": 0.644074074074074
+          }
+        },
+        "global": {
+          "3": {
+            "PhonemeSpectra_00": 0.4151603498542274,
+            "PhonemeSpectra_01": 0.35122448979591836,
+            "PhonemeSpectra_02": 0.2918075801749271,
+            "PhonemeSpectra_03": 0.3489212827988338,
+            "PhonemeSpectra_04": 0.4183673469387755,
+            "PhonemeSpectra_05": 0.6807580174927114,
+            "PhonemeSpectra_06": 0.6241399416909621,
+            "PhonemeSpectra_07": 0.5540233236151603
+          },
+          "5": {
+            "PhonemeSpectra_00": 0.42040816326530617,
+            "PhonemeSpectra_01": 0.3497551020408163,
+            "PhonemeSpectra_02": 0.28816326530612246,
+            "PhonemeSpectra_03": 0.3493469387755102,
+            "PhonemeSpectra_04": 0.40759183673469396,
+            "PhonemeSpectra_05": 0.6759183673469389,
+            "PhonemeSpectra_06": 0.612326530612245,
+            "PhonemeSpectra_07": 0.5612244897959183
+          },
+          "7": {
+            "PhonemeSpectra_00": 0.43693877551020405,
+            "PhonemeSpectra_01": 0.3552380952380952,
+            "PhonemeSpectra_02": 0.29741496598639455,
+            "PhonemeSpectra_03": 0.366734693877551,
+            "PhonemeSpectra_04": 0.3997278911564625,
+            "PhonemeSpectra_05": 0.6591836734693878,
+            "PhonemeSpectra_06": 0.6414965986394557,
+            "PhonemeSpectra_07": 0.5652380952380952
+          }
+        }
+      },
+      "tests": {
+        "j3": {
+          "n_folds": 8,
+          "p_vs_uniform": 1.0,
+          "med_diff_vs_uniform": 0.031431467311531514,
+          "win_rate_vs_uniform": 0.0,
+          "n_nonzero_vs_uniform": 8,
+          "p_vs_global": 1.0,
+          "med_diff_vs_global": 0.11729962409805564,
+          "win_rate_vs_global": 0.0,
+          "n_nonzero_vs_global": 8
+        },
+        "j5": {
+          "n_folds": 8,
+          "p_vs_uniform": 0.9609375,
+          "med_diff_vs_uniform": 0.033762637402946855,
+          "win_rate_vs_uniform": 0.375,
+          "n_nonzero_vs_uniform": 8,
+          "p_vs_global": 1.0,
+          "med_diff_vs_global": 0.10455468633321288,
+          "win_rate_vs_global": 0.0,
+          "n_nonzero_vs_global": 8
+        },
+        "j7": {
+          "n_folds": 8,
+          "p_vs_uniform": 0.90234375,
+          "med_diff_vs_uniform": 0.00905205448437188,
+          "win_rate_vs_uniform": 0.375,
+          "n_nonzero_vs_uniform": 8,
+          "p_vs_global": 1.0,
+          "med_diff_vs_global": 0.08759013924022291,
+          "win_rate_vs_global": 0.0,
+          "n_nonzero_vs_global": 8
+        }
+      }
+    },
+    "Handwriting": {
+      "fold_err": {
+        "kernel": {
+          "3": {
+            "Handwriting_00": 0.2119047619047619,
+            "Handwriting_01": 0.02503207016829071,
+            "Handwriting_02": 0.026994723475528105,
+            "Handwriting_03": 0.031226568864297564,
+            "Handwriting_04": 0.02752435020899392,
+            "Handwriting_05": 0.027750702982261694,
+            "Handwriting_06": 0.027468470059283753,
+            "Handwriting_07": 0.41984126984126974
+          },
+          "5": {
+            "Handwriting_00": 0.22666666666666666,
+            "Handwriting_01": 0.024770237457834594,
+            "Handwriting_02": 0.029917498296804398,
+            "Handwriting_03": 0.021612018052782317,
+            "Handwriting_04": 0.031812018693436216,
+            "Handwriting_05": 0.02515173985311673,
+            "Handwriting_06": 0.023791614198479777,
+            "Handwriting_07": 0.4215555555555557
+          },
+          "7": {
+            "Handwriting_00": 0.1688888888888889,
+            "Handwriting_01": 0.01952992121436807,
+            "Handwriting_02": 0.020951153149418394,
+            "Handwriting_03": 0.023356645072948254,
+            "Handwriting_04": 0.024718282414437888,
+            "Handwriting_05": 0.026077605696406894,
+            "Handwriting_06": 0.021450142589099747,
+            "Handwriting_07": 0.38111111111111107
+          }
+        },
+        "uniform": {
+          "3": {
+            "Handwriting_00": 0.21825396825396823,
+            "Handwriting_01": 0.02666666666666667,
+            "Handwriting_02": 0.026984126984126985,
+            "Handwriting_03": 0.03158730158730159,
+            "Handwriting_04": 0.029206349206349208,
+            "Handwriting_05": 0.028571428571428577,
+            "Handwriting_06": 0.028888888888888895,
+            "Handwriting_07": 0.41984126984126974
+          },
+          "5": {
+            "Handwriting_00": 0.23600000000000002,
+            "Handwriting_01": 0.027555555555555555,
+            "Handwriting_02": 0.02977777777777778,
+            "Handwriting_03": 0.02488888888888889,
+            "Handwriting_04": 0.03111111111111111,
+            "Handwriting_05": 0.025777777777777778,
+            "Handwriting_06": 0.026444444444444444,
+            "Handwriting_07": 0.4215555555555557
+          },
+          "7": {
+            "Handwriting_00": 0.1851851851851852,
+            "Handwriting_01": 0.021481481481481483,
+            "Handwriting_02": 0.02444444444444445,
+            "Handwriting_03": 0.028148148148148155,
+            "Handwriting_04": 0.02703703703703704,
+            "Handwriting_05": 0.028888888888888895,
+            "Handwriting_06": 0.02703703703703704,
+            "Handwriting_07": 0.38111111111111107
+          }
+        },
+        "global": {
+          "3": {
+            "Handwriting_00": 0.2091545189504373,
+            "Handwriting_01": 0.011836734693877556,
+            "Handwriting_02": 0.01256559766763849,
+            "Handwriting_03": 0.011924198250728865,
+            "Handwriting_04": 0.012507288629737615,
+            "Handwriting_05": 0.012478134110787176,
+            "Handwriting_06": 0.012623906705539362,
+            "Handwriting_07": 0.4154518950437317
+          },
+          "5": {
+            "Handwriting_00": 0.22420408163265307,
+            "Handwriting_01": 0.012571428571428575,
+            "Handwriting_02": 0.012000000000000004,
+            "Handwriting_03": 0.012408163265306128,
+            "Handwriting_04": 0.012612244897959188,
+            "Handwriting_05": 0.011632653061224492,
+            "Handwriting_06": 0.012448979591836738,
+            "Handwriting_07": 0.4164081632653061
+          },
+          "7": {
+            "Handwriting_00": 0.17496598639455782,
+            "Handwriting_01": 0.011972789115646263,
+            "Handwriting_02": 0.010748299319727895,
+            "Handwriting_03": 0.011972789115646263,
+            "Handwriting_04": 0.011428571428571432,
+            "Handwriting_05": 0.01122448979591837,
+            "Handwriting_06": 0.013469387755102046,
+            "Handwriting_07": 0.3749659863945578
+          }
+        }
+      },
+      "tests": {
+        "j3": {
+          "n_folds": 8,
+          "p_vs_uniform": 0.015625,
+          "med_diff_vs_uniform": -0.0011205722093860122,
+          "win_rate_vs_uniform": 0.75,
+          "n_nonzero_vs_uniform": 7,
+          "p_vs_global": 1.0,
+          "med_diff_vs_global": 0.014636844580817003,
+          "win_rate_vs_global": 0.0,
+          "n_nonzero_vs_global": 8
+        },
+        "j5": {
+          "n_folds": 8,
+          "p_vs_uniform": 0.0546875,
+          "med_diff_vs_uniform": -0.0016394340853128579,
+          "win_rate_vs_uniform": 0.625,
+          "n_nonzero_vs_uniform": 7,
+          "p_vs_global": 1.0,
+          "med_diff_vs_global": 0.011770721746524528,
+          "win_rate_vs_global": 0.0,
+          "n_nonzero_vs_global": 8
+        },
+        "j7": {
+          "n_folds": 8,
+          "p_vs_uniform": 0.0078125,
+          "med_diff_vs_uniform": -0.0031522872437540275,
+          "win_rate_vs_uniform": 0.875,
+          "n_nonzero_vs_uniform": 7,
+          "p_vs_global": 0.99609375,
+          "med_diff_vs_global": 0.0090918043318441,
+          "win_rate_vs_global": 0.125,
+          "n_nonzero_vs_global": 8
+        }
+      }
+    }
+  },
+  "pooled_primary": {
+    "j3": {
+      "n_folds": 32,
+      "p_vs_uniform": 0.9982491983113658,
+      "med_diff_vs_uniform": 0.008507235415602665,
+      "win_rate_vs_uniform": 0.3125,
+      "n_nonzero_vs_uniform": 31,
+      "p_vs_global": 1.0,
+      "med_diff_vs_global": 0.09972403064695634,
+      "win_rate_vs_global": 0.0,
+      "n_nonzero_vs_global": 32
+    },
+    "j5": {
+      "n_folds": 32,
+      "p_vs_uniform": 0.9020587805751364,
+      "med_diff_vs_uniform": 0.00042031405067586083,
+      "win_rate_vs_uniform": 0.4375,
+      "n_nonzero_vs_uniform": 31,
+      "p_vs_global": 0.9999999995343387,
+      "med_diff_vs_global": 0.08826058651908858,
+      "win_rate_vs_global": 0.03125,
+      "n_nonzero_vs_global": 32
+    },
+    "j7": {
+      "n_folds": 32,
+      "p_vs_uniform": 0.5156317786400071,
+      "med_diff_vs_uniform": -0.0021351574448562824,
+      "win_rate_vs_uniform": 0.5625,
+      "n_nonzero_vs_uniform": 31,
+      "p_vs_global": 0.9999999997671694,
+      "med_diff_vs_global": 0.07489159966858469,
+      "win_rate_vs_global": 0.03125,
+      "n_nonzero_vs_global": 32
+    }
+  },
+  "supplementary_um": {
+    "fold_err": {
+      "kernel": {
+        "3": {
+          "UniMiB-SHAR_00": 0.49051111946297743,
+          "UniMiB-SHAR_01": 0.6048292086550031,
+          "UniMiB-SHAR_02": 0.675316438421977,
+          "UniMiB-SHAR_03": 0.2586735054867318,
+          "UniMiB-SHAR_04": 0.24411719394204107,
+          "UniMiB-SHAR_05": 0.2732592713125811,
+          "UniMiB-SHAR_06": 0.8735407764450628,
+          "UniMiB-SHAR_07": 0.9547820078470324
+        },
+        "5": {
+          "UniMiB-SHAR_00": 0.4259147072350784,
+          "UniMiB-SHAR_01": 0.5365510816458712,
+          "UniMiB-SHAR_02": 0.6696073768555343,
+          "UniMiB-SHAR_03": 0.2358014271649404,
+          "UniMiB-SHAR_04": 0.23286056198866906,
+          "UniMiB-SHAR_05": 0.2360900484355594,
+          "UniMiB-SHAR_06": 0.8920421247593628,
+          "UniMiB-SHAR_07": 0.9788219440712365
+        },
+        "7": {
+          "UniMiB-SHAR_00": 0.47482994805659007,
+          "UniMiB-SHAR_01": 0.5591247976294977,
+          "UniMiB-SHAR_02": 0.6575818794651102,
+          "UniMiB-SHAR_03": 0.23760942452688635,
+          "UniMiB-SHAR_04": 0.24144555206573656,
+          "UniMiB-SHAR_05": 0.2459775370196232,
+          "UniMiB-SHAR_06": 0.8763695076481991,
+          "UniMiB-SHAR_07": 0.9165399758889836
+        }
+      },
+      "uniform": {
+        "3": {
+          "UniMiB-SHAR_00": 0.4842857142857143,
+          "UniMiB-SHAR_01": 0.5293650793650794,
+          "UniMiB-SHAR_02": 0.5541269841269841,
+          "UniMiB-SHAR_03": 0.3307936507936509,
+          "UniMiB-SHAR_04": 0.32555555555555565,
+          "UniMiB-SHAR_05": 0.3546031746031747,
+          "UniMiB-SHAR_06": 0.8873015873015874,
+          "UniMiB-SHAR_07": 0.8855555555555555
+        },
+        "5": {
+          "UniMiB-SHAR_00": 0.44644444444444453,
+          "UniMiB-SHAR_01": 0.5073333333333333,
+          "UniMiB-SHAR_02": 0.5931111111111111,
+          "UniMiB-SHAR_03": 0.33044444444444443,
+          "UniMiB-SHAR_04": 0.3208888888888889,
+          "UniMiB-SHAR_05": 0.3111111111111111,
+          "UniMiB-SHAR_06": 0.9244444444444444,
+          "UniMiB-SHAR_07": 0.9053333333333333
+        },
+        "7": {
+          "UniMiB-SHAR_00": 0.4725925925925926,
+          "UniMiB-SHAR_01": 0.5496296296296297,
+          "UniMiB-SHAR_02": 0.5896296296296297,
+          "UniMiB-SHAR_03": 0.3255555555555556,
+          "UniMiB-SHAR_04": 0.34518518518518526,
+          "UniMiB-SHAR_05": 0.34407407407407414,
+          "UniMiB-SHAR_06": 0.9266666666666667,
+          "UniMiB-SHAR_07": 0.8603703703703703
+        }
+      },
+      "global": {
+        "3": {
+          "UniMiB-SHAR_00": 0.38160349854227404,
+          "UniMiB-SHAR_01": 0.44422740524781346,
+          "UniMiB-SHAR_02": 0.4863848396501458,
+          "UniMiB-SHAR_03": 0.2530612244897959,
+          "UniMiB-SHAR_04": 0.25157434402332357,
+          "UniMiB-SHAR_05": 0.25090379008746355,
+          "UniMiB-SHAR_06": 0.8417784256559767,
+          "UniMiB-SHAR_07": 0.8019825072886297
+        },
+        "5": {
+          "UniMiB-SHAR_00": 0.3704081632653062,
+          "UniMiB-SHAR_01": 0.456,
+          "UniMiB-SHAR_02": 0.5063265306122449,
+          "UniMiB-SHAR_03": 0.25281632653061226,
+          "UniMiB-SHAR_04": 0.25106122448979595,
+          "UniMiB-SHAR_05": 0.24804081632653063,
+          "UniMiB-SHAR_06": 0.8371836734693878,
+          "UniMiB-SHAR_07": 0.8324081632653062
+        },
+        "7": {
+          "UniMiB-SHAR_00": 0.39884353741496603,
+          "UniMiB-SHAR_01": 0.4546258503401361,
+          "UniMiB-SHAR_02": 0.5079591836734694,
+          "UniMiB-SHAR_03": 0.2541496598639456,
+          "UniMiB-SHAR_04": 0.2504081632653061,
+          "UniMiB-SHAR_05": 0.24727891156462584,
+          "UniMiB-SHAR_06": 0.8704761904761905,
+          "UniMiB-SHAR_07": 0.7961904761904762
+        }
+      }
+    },
+    "tests": {
+      "j3": {
+        "n_folds": 8,
+        "p_vs_uniform": 0.47265625,
+        "med_diff_vs_uniform": -0.0037677028396307377,
+        "win_rate_vs_uniform": 0.5,
+        "n_nonzero_vs_uniform": 8,
+        "p_vs_global": 0.9921875,
+        "med_diff_vs_global": 0.07033498585489473,
+        "win_rate_vs_global": 0.125,
+        "n_nonzero_vs_global": 8
+      },
+      "j5": {
+        "n_folds": 8,
+        "p_vs_uniform": 0.23046875,
+        "med_diff_vs_uniform": -0.026466028447223844,
+        "win_rate_vs_uniform": 0.625,
+        "n_nonzero_vs_uniform": 8,
+        "p_vs_global": 0.9609375,
+        "med_diff_vs_global": 0.05518249762987362,
+        "win_rate_vs_global": 0.375,
+        "n_nonzero_vs_global": 8
+      },
+      "j7": {
+        "n_folds": 8,
+        "p_vs_uniform": 0.23046875,
+        "med_diff_vs_uniform": -0.024029901777235102,
+        "win_rate_vs_uniform": 0.5,
+        "n_nonzero_vs_uniform": 8,
+        "p_vs_global": 0.92578125,
+        "med_diff_vs_global": 0.04093986390681631,
+        "win_rate_vs_global": 0.375,
+        "n_nonzero_vs_global": 8
+      }
+    }
+  },
+  "exploratory_cross_ds": {
+    "j3": {
+      "knn5_med": 0.6414857142857143,
+      "global_med": 0.585401088169643,
+      "win_rate": 0.4
+    },
+    "j5": {
+      "knn5_med": 0.5997600000000001,
+      "global_med": 0.5895849609374999,
+      "win_rate": 0.5
+    },
+    "j7": {
+      "knn5_med": 0.5917333333333333,
+      "global_med": 0.588017578125,
+      "win_rate": 0.575
+    }
+  }
+}
