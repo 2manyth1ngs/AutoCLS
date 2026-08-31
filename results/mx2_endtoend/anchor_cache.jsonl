@@ -1,0 +1,6 @@
+{"arm": "champion", "cls_key": "f48e5da1d899", "seed": 0, "iters": 2320, "acc": 0.3411764705882353, "f1": 0.3114397733450883, "svm_c": 10.0, "pretrain_seconds": 97.8, "eval_seconds": 0.1, "device_name": "NVIDIA GeForce RTX 5090"}
+{"arm": "champion", "cls_key": "f48e5da1d899", "seed": 1, "iters": 2320, "acc": 0.3423529411764706, "f1": 0.30997983386278377, "svm_c": 10.0, "pretrain_seconds": 96.8, "eval_seconds": 0.1, "device_name": "NVIDIA GeForce RTX 5090"}
+{"arm": "champion", "cls_key": "f48e5da1d899", "seed": 2, "iters": 2320, "acc": 0.33294117647058824, "f1": 0.2972112246200507, "svm_c": 10.0, "pretrain_seconds": 93.5, "eval_seconds": 0.1, "device_name": "NVIDIA GeForce RTX 5090"}
+{"arm": "ggs", "cls_key": "c92058f26c1d", "seed": 0, "iters": 2320, "acc": 0.39176470588235296, "f1": 0.34943868910583337, "svm_c": 10.0, "pretrain_seconds": 41.5, "eval_seconds": 0.1, "device_name": "NVIDIA GeForce RTX 5090"}
+{"arm": "ggs", "cls_key": "c92058f26c1d", "seed": 1, "iters": 2320, "acc": 0.3788235294117647, "f1": 0.34592441145755226, "svm_c": 10.0, "pretrain_seconds": 36.8, "eval_seconds": 0.1, "device_name": "NVIDIA GeForce RTX 5090"}
+{"arm": "ggs", "cls_key": "c92058f26c1d", "seed": 2, "iters": 2320, "acc": 0.4, "f1": 0.3663878820473038, "svm_c": 10.0, "pretrain_seconds": 37.2, "eval_seconds": 0.1, "device_name": "NVIDIA GeForce RTX 5090"}

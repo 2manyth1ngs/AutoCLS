@@ -1,0 +1,10 @@
+{
+  "fit_datasets": [
+    "UniMiB-SHAR"
+  ],
+  "n_instances": 4096,
+  "t_max": 151,
+  "n_iters": 600,
+  "max_instances_per_dataset": 4096,
+  "embed_seed": 0
+}
