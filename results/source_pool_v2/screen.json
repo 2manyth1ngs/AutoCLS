@@ -1,0 +1,143 @@
+{
+  "protocol": "results/source_pool_v2/PROTOCOL.md",
+  "note": "初筛表机器对账（已见读数重算，不构成判定；协议 §1）",
+  "rejects": {},
+  "table": {
+    "ArticularyWordRecognition": {
+      "survival": 0.23333333333333334,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 1.0,
+      "range": 0.48051948051948057,
+      "delta": 0.08
+    },
+    "CharacterTrajectories": {
+      "survival": 0.19166666666666668,
+      "n_pairs": 360,
+      "n_tasks": 8,
+      "max_r": 1.0,
+      "range": 0.18831168831168832,
+      "delta": 0.05
+    },
+    "Cricket": {
+      "survival": 0.5111111111111111,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 0.95,
+      "range": 0.44999999999999996,
+      "delta": 0.08
+    },
+    "ERing": {
+      "survival": 0.4,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 0.9866666666666667,
+      "range": 0.4311111111111111,
+      "delta": 0.06
+    },
+    "EthanolConcentration": {
+      "survival": 0.5444444444444444,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 0.6923076923076923,
+      "range": 0.4439000489955904,
+      "delta": 0.05
+    },
+    "FingerMovements": {
+      "survival": 0.34444444444444444,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 0.5887096774193549,
+      "range": 0.12096774193548393,
+      "delta": 0.05
+    },
+    "HandMovementDirection": {
+      "survival": 0.5222222222222223,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 0.6875,
+      "range": 0.4121376811594203,
+      "delta": 0.06
+    },
+    "Handwriting": {
+      "survival": 0.7222222222222222,
+      "n_pairs": 360,
+      "n_tasks": 8,
+      "max_r": 0.9435483870967742,
+      "range": 0.8259013282732448,
+      "delta": 0.07
+    },
+    "Heartbeat": {
+      "survival": 0.0,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 0.7459016393442623,
+      "range": 0.049180327868852514,
+      "delta": 0.05
+    },
+    "MotorImagery": {
+      "survival": 0.3111111111111111,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 0.5877192982456141,
+      "range": 0.1578947368421053,
+      "delta": 0.05
+    },
+    "NATOPS": {
+      "survival": 0.5777777777777777,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 0.9722222222222222,
+      "range": 0.49074074074074076,
+      "delta": 0.06
+    },
+    "PhonemeSpectra": {
+      "survival": 0.55,
+      "n_pairs": 360,
+      "n_tasks": 8,
+      "max_r": 0.6568627450980392,
+      "range": 0.4263432645785587,
+      "delta": 0.05
+    },
+    "SelfRegulationSCP1": {
+      "survival": 0.34444444444444444,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 0.9053254437869822,
+      "range": 0.14792899408284022,
+      "delta": 0.05
+    },
+    "SelfRegulationSCP2": {
+      "survival": 0.35555555555555557,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 0.5964912280701754,
+      "range": 0.14912280701754382,
+      "delta": 0.05
+    },
+    "SpokenArabicDigits": {
+      "survival": 0.5777777777777777,
+      "n_pairs": 90,
+      "n_tasks": 2,
+      "max_r": 0.9641693811074918,
+      "range": 0.7027314726107599,
+      "delta": 0.03
+    },
+    "UWaveGestureLibrary": {
+      "survival": 0.4527777777777778,
+      "n_pairs": 360,
+      "n_tasks": 8,
+      "max_r": 0.9821428571428571,
+      "range": 0.5342261904761905,
+      "delta": 0.06
+    },
+    "UniMiB-SHAR": {
+      "survival": 0.6805555555555556,
+      "n_pairs": 360,
+      "n_tasks": 8,
+      "max_r": 0.8932038834951457,
+      "range": 0.6056221841487405,
+      "delta": 0.05
+    }
+  }
+}
