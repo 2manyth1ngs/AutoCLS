@@ -1,0 +1,136 @@
+{
+  "protocol": "results/behavior_recon/PROTOCOL.md",
+  "iters": 290,
+  "assembly": {
+    "filters": [
+      {
+        "src": "results\\candidate_survey\\baseline\\baseline_cache.jsonl",
+        "mode": "main",
+        "n_in": 1500,
+        "n_kept": 1340
+      },
+      {
+        "src": "results\\candidate_survey\\baseline_crop256\\baseline_cache.jsonl",
+        "mode": "crop",
+        "n_in": 160,
+        "n_kept": 160
+      },
+      {
+        "src": "results\\candidate_survey\\baseline\\trained_fill.jsonl",
+        "mode": "main",
+        "n_in": 142,
+        "n_kept": 140
+      },
+      {
+        "src": "results\\candidate_survey\\baseline_crop256\\trained_fill.jsonl",
+        "mode": "crop",
+        "n_in": 40,
+        "n_kept": 40
+      }
+    ]
+  },
+  "n_rows": 25,
+  "rows": {
+    "ArticularyWordRecognition": [
+      "k3"
+    ],
+    "CharacterTrajectories": [
+      "k3"
+    ],
+    "ChestAccel": [
+      "k1"
+    ],
+    "Cricket": [
+      "k1"
+    ],
+    "ERing": [
+      "k3"
+    ],
+    "ElectricDevices": [
+      "k1"
+    ],
+    "EthanolConcentration": [
+      "k3"
+    ],
+    "FingerMovements": [
+      "k3"
+    ],
+    "HandMovementDirection": [
+      "k3"
+    ],
+    "Handwriting": [
+      "k3"
+    ],
+    "Heartbeat": [
+      "k3"
+    ],
+    "InsectWingbeatSound": [
+      "k1"
+    ],
+    "MotorImagery": [
+      "k3"
+    ],
+    "NATOPS": [
+      "k3"
+    ],
+    "NonInvasiveFetalECGThorax1": [
+      "k1"
+    ],
+    "PAMAP2": [
+      "k1"
+    ],
+    "PTB-XL": [
+      "k1"
+    ],
+    "PhonemeSpectra": [
+      "k1"
+    ],
+    "SelfRegulationSCP1": [
+      "k3"
+    ],
+    "SelfRegulationSCP2": [
+      "k3"
+    ],
+    "SpokenArabicDigits": [
+      "k1"
+    ],
+    "USC-HAD": [
+      "k1"
+    ],
+    "UWaveGestureLibrary": [
+      "k3"
+    ],
+    "UniMiB-SHAR": [
+      "k1"
+    ],
+    "WISDM2019": [
+      "k1"
+    ]
+  },
+  "rows_dropped": [],
+  "excluded": [
+    "PenDigits"
+  ],
+  "panel_complete_tasks": {
+    "CharacterTrajectories": 8,
+    "UWaveGestureLibrary": 8,
+    "PhonemeSpectra": 8,
+    "Handwriting": 8,
+    "UniMiB-SHAR": 8
+  },
+  "step0_cells": 260,
+  "step0_expected": 260,
+  "rejects": {
+    "baseline": {
+      "plus_c": 140
+    },
+    "k1": {},
+    "k3": {
+      "lt3_reps": 0
+    },
+    "merge": {
+      "k1_dataset_has_k3": 440
+    },
+    "per_seed": {}
+  }
+}
