@@ -102,23 +102,156 @@
       }
     },
     "UWaveGestureLibrary": {
-      "n_complete_tasks": 2
+      "n_complete_tasks": 8,
+      "gate1": {
+        "t2_obs": 1.05,
+        "components": {
+          "improve": 0.5149999999999999,
+          "inert": 0.455,
+          "destroy": 0.08000000000000002
+        },
+        "p": 9.999000099990002e-05,
+        "n_perm": 10000
+      },
+      "gate2": {
+        "tasks": [
+          "UWaveGestureLibrary_00",
+          "UWaveGestureLibrary_01",
+          "UWaveGestureLibrary_02",
+          "UWaveGestureLibrary_03",
+          "UWaveGestureLibrary_04",
+          "UWaveGestureLibrary_05",
+          "UWaveGestureLibrary_06",
+          "UWaveGestureLibrary_07"
+        ],
+        "err_kernel": [
+          0.5057511947017268,
+          0.5498037144702319,
+          0.4662956604956616,
+          0.8262831107204175,
+          0.6781370063112899,
+          0.586465972011032,
+          0.7525300162777497,
+          0.5046459830863458
+        ],
+        "err_uniform": [
+          0.547,
+          0.5377777777777778,
+          0.5074444444444446,
+          0.8701111111111111,
+          0.6631111111111112,
+          0.6132222222222223,
+          0.7751111111111112,
+          0.501
+        ],
+        "direction": 1,
+        "p": 0.0546875
+      }
     },
     "PhonemeSpectra": {
-      "n_complete_tasks": 2
+      "n_complete_tasks": 8,
+      "gate1": {
+        "t2_obs": 0.46249999999999997,
+        "components": {
+          "improve": 0.00875,
+          "inert": 0.215,
+          "destroy": 0.23874999999999996
+        },
+        "p": 0.0888911108889111,
+        "n_perm": 10000
+      },
+      "gate2": {
+        "tasks": [
+          "PhonemeSpectra_00",
+          "PhonemeSpectra_01",
+          "PhonemeSpectra_02",
+          "PhonemeSpectra_03",
+          "PhonemeSpectra_04",
+          "PhonemeSpectra_05",
+          "PhonemeSpectra_06",
+          "PhonemeSpectra_07"
+        ],
+        "err_kernel": [
+          0.6320289668044548,
+          0.44370145673575534,
+          0.41736891747772153,
+          0.46015275558970264,
+          0.42105543024571235,
+          0.5636997160533137,
+          0.6967517047308468,
+          0.7342743856436036
+        ],
+        "err_uniform": [
+          0.5295555555555557,
+          0.41677777777777786,
+          0.4138888888888889,
+          0.41655555555555557,
+          0.48844444444444446,
+          0.5487777777777778,
+          0.6753333333333333,
+          0.6083333333333334
+        ],
+        "direction": -1,
+        "p": 0.9609375
+      }
     },
     "Handwriting": {
-      "n_complete_tasks": 2
+      "n_complete_tasks": 8,
+      "gate1": {
+        "t2_obs": 0.08250000000000002,
+        "components": {
+          "improve": 0.008750000000000015,
+          "inert": 0.03875000000000001,
+          "destroy": 0.035
+        },
+        "p": 0.11868813118688132,
+        "n_perm": 10000
+      },
+      "gate2": {
+        "tasks": [
+          "Handwriting_00",
+          "Handwriting_01",
+          "Handwriting_02",
+          "Handwriting_03",
+          "Handwriting_04",
+          "Handwriting_05",
+          "Handwriting_06",
+          "Handwriting_07"
+        ],
+        "err_kernel": [
+          0.22626924136147408,
+          0.031634031865303405,
+          0.02544938234496156,
+          0.055158057219734324,
+          0.03190824741689004,
+          0.03547340885177104,
+          0.04327259385115648,
+          0.41061911124510986
+        ],
+        "err_uniform": [
+          0.22133333333333335,
+          0.026888888888888893,
+          0.027999999999999997,
+          0.030444444444444448,
+          0.029444444444444447,
+          0.025,
+          0.027000000000000003,
+          0.4093333333333334
+        ],
+        "direction": -1,
+        "p": 0.98828125
+      }
     }
   },
   "gate1_pass": [
-    "UniMiB-SHAR"
+    "UniMiB-SHAR",
+    "UWaveGestureLibrary"
   ],
   "gate2_pooled_primary": {
-    "n_tasks": 8,
-    "p": 1.0,
+    "n_tasks": 32,
+    "p": 0.9944301112554967,
     "direction": -1
   },
-  "interim": true,
-  "interim_futility": false
+  "interim": false,
+  "interim_futility": null
 }
