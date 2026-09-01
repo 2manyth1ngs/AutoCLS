@@ -53,8 +53,9 @@ def labels_cfg():
 # ---- 注册表结构 ----
 
 def test_pool_sizes(registry):
-    assert len(registry.source) == 13    # Ethanol 降 reserve 后源池 13 活跃
-    assert len(registry.reserve) == 3
+    # 源池 v2 定稿（results/source_pool_v2）：Ethanol 晋级回填 → 源 14 / reserve 2
+    assert len(registry.source) == 14
+    assert len(registry.reserve) == 2
     assert len(registry.target) == 3
 
 
@@ -72,10 +73,11 @@ def test_target_pool_membership(registry):
     assert registry.names(ROLE_TARGET) == {"UCI-HAR", "Epilepsy", "FaceDetection"}
 
 
-def test_ethanol_demoted_to_reserve(registry):
-    # 本会话拍板：EthanolConcentration 从源池 ③ 降为 reserve（长端非 EEG 锚释放）
-    assert "EthanolConcentration" in registry.names(ROLE_RESERVE)
-    assert "EthanolConcentration" not in registry.names(ROLE_SOURCE)
+def test_ethanol_promoted_back_to_source(registry):
+    # 源池 v2 终判（2026-09-01）：确认存活率 0.474 过 40% 门 + 非 EEG 长锚锁位 →
+    # 由 reserve 升回 source，解除"长序列端全为 EEG 域"共线 limitation。
+    assert "EthanolConcentration" in registry.names(ROLE_SOURCE)
+    assert "EthanolConcentration" not in registry.names(ROLE_RESERVE)
 
 
 def test_backbone_tested_flag(registry):

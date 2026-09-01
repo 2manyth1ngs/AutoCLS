@@ -1,0 +1,155 @@
+{
+  "protocol": "results/source_pool_v2/PROTOCOL.md",
+  "rejects": {},
+  "confirm_stats": {
+    "SpokenArabicDigits": {
+      "survival": 0.5740740740740741,
+      "n_pairs": 270,
+      "n_tasks": 6,
+      "max_r": 0.993485342019544,
+      "range": 0.732047433522812,
+      "delta": 0.03
+    },
+    "NATOPS": {
+      "survival": 0.32222222222222224,
+      "n_pairs": 270,
+      "n_tasks": 6,
+      "max_r": 1.0,
+      "range": 0.5185185185185186,
+      "delta": 0.06
+    },
+    "EthanolConcentration": {
+      "survival": 0.4740740740740741,
+      "n_pairs": 270,
+      "n_tasks": 6,
+      "max_r": 0.6923076923076923,
+      "range": 0.4439000489955904,
+      "delta": 0.05
+    },
+    "HandMovementDirection": {
+      "survival": 0.44814814814814813,
+      "n_pairs": 270,
+      "n_tasks": 6,
+      "max_r": 0.6875,
+      "range": 0.4121376811594203,
+      "delta": 0.06
+    },
+    "Cricket": {
+      "survival": 0.5296296296296297,
+      "n_pairs": 270,
+      "n_tasks": 6,
+      "max_r": 0.95,
+      "range": 0.6375,
+      "delta": 0.08
+    },
+    "SelfRegulationSCP2": {
+      "survival": 0.4074074074074074,
+      "n_pairs": 135,
+      "n_tasks": 3,
+      "max_r": 0.5964912280701754,
+      "range": 0.14912280701754382,
+      "delta": 0.05
+    }
+  },
+  "promoted": [
+    "EthanolConcentration",
+    "Cricket",
+    "HandMovementDirection"
+  ],
+  "eeg_rep_kept": true,
+  "source_pool_v2": [
+    "Handwriting",
+    "UniMiB-SHAR",
+    "PhonemeSpectra",
+    "UWaveGestureLibrary",
+    "EthanolConcentration",
+    "Cricket",
+    "HandMovementDirection",
+    "SelfRegulationSCP2"
+  ],
+  "culled": [
+    "CharacterTrajectories",
+    "ArticularyWordRecognition",
+    "Heartbeat"
+  ],
+  "target_pool": {
+    "Handwriting": {
+      "evalgap_med": 0.11746916508538907,
+      "headroom_med": 0.06693548387096776,
+      "max_r": 0.9435483870967742,
+      "verdict": "regular",
+      "n_tasks": 8
+    },
+    "UniMiB-SHAR": {
+      "evalgap_med": 0.05944625407166121,
+      "headroom_med": 0.05689749989424259,
+      "max_r": 0.8932038834951457,
+      "verdict": "regular",
+      "n_tasks": 8
+    },
+    "PhonemeSpectra": {
+      "evalgap_med": 0.07154226067092517,
+      "headroom_med": 0.009771986970684043,
+      "max_r": 0.6568627450980392,
+      "verdict": "showcase",
+      "n_tasks": 8
+    },
+    "UWaveGestureLibrary": {
+      "evalgap_med": 0.0357142857142857,
+      "headroom_med": 0.05859375,
+      "max_r": 0.9821428571428571,
+      "verdict": "out",
+      "n_tasks": 8
+    },
+    "EthanolConcentration": {
+      "evalgap_med": 0.048946110386788366,
+      "headroom_med": 0.0996977221202634,
+      "max_r": 0.6923076923076923,
+      "verdict": "out",
+      "n_tasks": 6
+    },
+    "Cricket": {
+      "evalgap_med": 0.06597222222222221,
+      "headroom_med": 0.015625,
+      "max_r": 0.95,
+      "verdict": "showcase",
+      "n_tasks": 6
+    }
+  },
+  "target_regular": [
+    "Handwriting",
+    "UniMiB-SHAR"
+  ],
+  "predictions": {
+    "PS1": {
+      "claim": "SAD 确认 ≥40%",
+      "prior": 0.7,
+      "hit": true
+    },
+    "PS2": {
+      "claim": "Ethanol 确认 ≥40%",
+      "prior": 0.6,
+      "hit": true
+    },
+    "PS3": {
+      "claim": "晋级总数 ≥2",
+      "prior": 0.75,
+      "hit": true
+    },
+    "PS4": {
+      "claim": "HW @290 净空 <0.05",
+      "prior": 0.85,
+      "hit": false
+    },
+    "PS5": {
+      "claim": "SCP2 确认 ≥30%",
+      "prior": 0.6,
+      "hit": true
+    },
+    "PS6": {
+      "claim": "常规靶 ≥2",
+      "prior": 0.6,
+      "hit": true
+    }
+  }
+}

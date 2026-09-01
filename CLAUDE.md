@@ -50,11 +50,16 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
   够格）；③端到端搜索目标（须过预检闸，现仅 HW 强 / UM 弱）。③的资格独立于②，新数据集
   过 `6_target_preflight` 即可入③。
 - 源池重排（L≥50 剔除 PenDigits/LSST 后）见 `results/route_a_pool/REPORT.md`。
-- **长序列端与 EEG 域在源池耦合**：EthanolConcentration（唯一非 EEG 长锚，Spectro/L1024）
-  降为 reserve 后，源池长序列端（L>800：SCP1 896 / SCP2 1152 及 MotorImagery 512）**全为
-  EEG/MEG 域**。"长序列"与"EEG 域"两个因子在源池中共线，比较器可能难分辨它偏好的是**长度**
-  还是**域**。写论文时列为 limitation；若需解耦，从 reserve 回填 Ethanol 补一个非 EEG 长锚。
+- **长序列端与 EEG 域共线：v1 期存在，源池 v2 已解除**（2026-09-01）。Ethanol
+  （Spectro/L1024，唯一非 EEG 长锚）经确认轮 0.474 过闸晋级回源池，长端不再全为 EEG/MEG。
   源/目标/reserve 池组成的唯一真源为 `configs/source_pool.yaml`（δ 仍在 labels.yaml）。
+- **源池 v2 定稿（`results/source_pool_v2/REPORT.md`）**：活跃源 8 = 核心 4（HW/UM/PS/
+  UWave）+ 晋级 3（Ethanol/Cricket/HMD）+ SCP2 低权（只供 label 与全局先验，不作 LOO 折、
+  不入靶池）；靶池常规 = HW/UM，展示 = PS/Cricket。**新 limitation**：SAD 退役后语音域
+  仅剩 PS，NATOPS 退役后短序列端（L=51）清空。
+- **净空/增益是口径量，不是数据集属性**：HW 对 GGS 的净空在工作点口径为 0.004、在 @290
+  为 0.067（靶池档因此从"展示"变"常规"）。任何增益/净空数字必须带 @iters 口径引用，
+  真值/top-K 裁判/外部锚三处同口径（铁律 2 增补）。
 
 ## 复用 AutoCTS++（repo: decisionintelligence/AutoCTS_plusplus）
 - `Ts2vec_model/` → `autocls/task_embed/ts2vec_wrapper.py`

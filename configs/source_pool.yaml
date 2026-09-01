@@ -3,6 +3,16 @@
 # 依据 results/route_a_pool/REPORT.md（L≥50 重排的 14 源池）+ 本会话拍板：
 #   EthanolConcentration 降为 reserve → 源池 13 活跃。
 #
+# 【源池 v2 定稿 2026-09-01】协议 results/source_pool_v2/PROTOCOL.md（锁 4e91057）、
+#   终判 results/source_pool_v2/{analysis.json,REPORT.md}（283 格 @290，全 RTX 5090）。
+#   源池 v2（8）= 核心 4（Handwriting/UniMiB-SHAR/PhonemeSpectra/UWaveGestureLibrary）
+#   + 晋级 3（EthanolConcentration/Cricket/HandMovementDirection）
+#   + EEG 低权 1（SelfRegulationSCP2：只供 label/毒性先验粮草，不作 LOO 折、不入靶池）。
+#   退役：CharacterTrajectories / ArticularyWordRecognition（贴顶）、Heartbeat（死平）、
+#         SpokenArabicDigits / NATOPS（确认轮 max≥0.99 贴顶）。
+#   靶池档：常规靶 Handwriting / UniMiB-SHAR；展示靶 PhonemeSpectra / Cricket。
+#   role_v2 字段 = 本次终判结论；未标注者维持原角色（v2 未评估，勿当已判）。
+#
 # 约定：
 # - δ 不在此定义：configs/labels.yaml: delta_per_dataset 是 δ 唯一真源（防 split-brain）。
 #   本文件只管"哪些数据集、什么角色、切多少任务、裁多长、类别子集档"。
@@ -40,29 +50,37 @@ target_pool:
   - {name: Epilepsy,      source: uea,      domain: HAR,     n_channels: 3,   n_classes: 4, l_enc: 206, crop_len: null, n_classes_range: [3, 4], planned_tasks: 8}
   - {name: FaceDetection, source: uea,      domain: EEG/MEG, n_channels: 144, n_classes: 2, l_enc: 62,  crop_len: null, n_classes_range: [2, 2], planned_tasks: 8}
 
-# 源池（13 活跃）
+# 源池（13 活跃；role_v2 见文件头的源池 v2 定稿）
 source_pool:
   # ① 探针实测可靠骨干（tested=true，δ 已填死）
-  - {name: SpokenArabicDigits,       domain: Audio,   n_channels: 13, n_classes: 10, l_enc: 93,   crop_len: null, n_classes_range: [6, 10], planned_tasks: 16, tested: true}
-  - {name: PhonemeSpectra,           domain: Audio,   n_channels: 11, n_classes: 39, l_enc: 217,  crop_len: null, n_classes_range: [4, 8],  planned_tasks: 18, tested: true}
-  - {name: Cricket,                  domain: HAR,     n_channels: 6,  n_classes: 12, l_enc: 256,  crop_len: 256,  n_classes_range: [6, 10], planned_tasks: 10, tested: true}
+  # SAD：v2 确认轮存活率 0.574 达标，但 6 任务口径 max R'=0.993 触贴顶判据（n=2 初筛 0.964
+  #      未暴露）→ v2 退役。语音域覆盖因此缺失，写 limitation。
+  - {name: SpokenArabicDigits,       domain: Audio,   n_channels: 13, n_classes: 10, l_enc: 93,   crop_len: null, n_classes_range: [6, 10], planned_tasks: 16, tested: true,  role_v2: retired_ceiling}
+  - {name: PhonemeSpectra,           domain: Audio,   n_channels: 11, n_classes: 39, l_enc: 217,  crop_len: null, n_classes_range: [4, 8],  planned_tasks: 18, tested: true,  role_v2: core}
+  - {name: Cricket,                  domain: HAR,     n_channels: 6,  n_classes: 12, l_enc: 256,  crop_len: 256,  n_classes_range: [6, 10], planned_tasks: 10, tested: true,  role_v2: promoted}
   # ② 未实测切片主力（高类数，SNR 预探针后入池）
-  - {name: CharacterTrajectories,    domain: Motion,  n_channels: 3,  n_classes: 20, l_enc: 182,  crop_len: null, n_classes_range: [6, 10], planned_tasks: 16, tested: false}
-  - {name: Handwriting,              domain: HAR,     n_channels: 3,  n_classes: 26, l_enc: 152,  crop_len: null, n_classes_range: [8, 14], planned_tasks: 12, tested: false}
-  - {name: UWaveGestureLibrary,      domain: HAR,     n_channels: 3,  n_classes: 8,  l_enc: 315,  crop_len: null, n_classes_range: [4, 8],  planned_tasks: 10, tested: false}
-  - {name: ArticularyWordRecognition,domain: Motion,  n_channels: 9,  n_classes: 25, l_enc: 144,  crop_len: null, n_classes_range: [6, 12], planned_tasks: 8,  tested: false}
-  - {name: NATOPS,                   domain: HAR,     n_channels: 24, n_classes: 6,  l_enc: 51,   crop_len: null, n_classes_range: [3, 6],  planned_tasks: 10, tested: false}
+  - {name: CharacterTrajectories,    domain: Motion,  n_channels: 3,  n_classes: 20, l_enc: 182,  crop_len: null, n_classes_range: [6, 10], planned_tasks: 16, tested: false, role_v2: retired_ceiling}
+  - {name: Handwriting,              domain: HAR,     n_channels: 3,  n_classes: 26, l_enc: 152,  crop_len: null, n_classes_range: [8, 14], planned_tasks: 12, tested: false, role_v2: core}
+  - {name: UWaveGestureLibrary,      domain: HAR,     n_channels: 3,  n_classes: 8,  l_enc: 315,  crop_len: null, n_classes_range: [4, 8],  planned_tasks: 10, tested: false, role_v2: core}
+  - {name: ArticularyWordRecognition,domain: Motion,  n_channels: 9,  n_classes: 25, l_enc: 144,  crop_len: null, n_classes_range: [6, 12], planned_tasks: 8,  tested: false, role_v2: retired_ceiling}
+  # NATOPS：n=2 初筛 0.58 → n=6 确认 0.322（且 max=1.000）→ v2 退役。n 小假阳的又一例。
+  - {name: NATOPS,                   domain: HAR,     n_channels: 24, n_classes: 6,  l_enc: 51,   crop_len: null, n_classes_range: [3, 6],  planned_tasks: 10, tested: false, role_v2: retired_confirm_fail}
   - {name: ERing,                    domain: HAR,     n_channels: 4,  n_classes: 6,  l_enc: 65,   crop_len: null, n_classes_range: [3, 6],  planned_tasks: 6,  tested: false}
   # ③ 长度/领域多样性填充（EEG/MEG 支撑目标 FaceDetection；2 类靠通道/样本子集造多样性）
   - {name: MotorImagery,             domain: EEG/MEG, n_channels: 64, n_classes: 2,  l_enc: 512,  crop_len: 512,  n_classes_range: [2, 2],  planned_tasks: 4,  tested: false}
   - {name: SelfRegulationSCP1,       domain: EEG/MEG, n_channels: 6,  n_classes: 2,  l_enc: 896,  crop_len: null, n_classes_range: [2, 2],  planned_tasks: 2,  tested: false}
-  - {name: SelfRegulationSCP2,       domain: EEG/MEG, n_channels: 7,  n_classes: 2,  l_enc: 1152, crop_len: null, n_classes_range: [2, 2],  planned_tasks: 3,  tested: false}
-  - {name: HandMovementDirection,    domain: EEG/MEG, n_channels: 10, n_classes: 4,  l_enc: 400,  crop_len: null, n_classes_range: [2, 4],  planned_tasks: 6,  tested: false}
+  # SCP2：确认 0.407 过 30% 门 → EEG 低权代表（label/先验粮草；不作 LOO 折、不入靶池）
+  - {name: SelfRegulationSCP2,       domain: EEG/MEG, n_channels: 7,  n_classes: 2,  l_enc: 1152, crop_len: null, n_classes_range: [2, 2],  planned_tasks: 3,  tested: false, role_v2: low_weight_eeg}
+  - {name: HandMovementDirection,    domain: EEG/MEG, n_channels: 10, n_classes: 4,  l_enc: 400,  crop_len: null, n_classes_range: [2, 4],  planned_tasks: 6,  tested: false, role_v2: promoted}
+  # ④ 源池 v2 晋级回填（2026-09-01）：Ethanol 确认 0.474 过线 + 非 EEG 长锚锁位 →
+  #    由 reserve 升入 source，解除"长序列端全为 EEG 域"的共线 limitation。
+  - {name: EthanolConcentration,     domain: Spectro, n_channels: 3,  n_classes: 4,  l_enc: 1024, crop_len: 1024, n_classes_range: [2, 4],  planned_tasks: 8,  tested: false, role_v2: promoted}
 
 # reserve（预探针后若源池任务 <100 或某源被踢，按需回填；并入源池时再补 δ + 过 SNR 闸）
-# 注：EthanolConcentration 原为 REPORT 源池 ③ 的非 EEG 长锚；降 reserve 后源池 L>800 端
-#     全为 EEG/MEG 域（CLAUDE.md 已知 limitation：长度偏好与域偏好在源池耦合）。
+# 注：EthanolConcentration 原降 reserve 使源池 L>800 端全为 EEG/MEG 域（长度×域共线
+#     limitation）。**v2 确认轮 0.474 过线且锁位生效 → 已回填源池**（下方 source_pool 之外
+#     单列，见 promoted_v2），共线 limitation 因此解除；stage1 的 SNR 0.97 判定被 6 任务
+#     确认口径取代（口径不同：SNR 探针 vs δ 存活率）。
 reserve:
-  - {name: EthanolConcentration,     domain: Spectro, n_channels: 3,  n_classes: 4,  l_enc: 1024, crop_len: 1024, n_classes_range: [2, 4],  planned_tasks: 8,  tested: false}
-  - {name: Heartbeat,                domain: Audio,   n_channels: 61, n_classes: 2,  l_enc: 405,  crop_len: null, n_classes_range: [2, 2],  planned_tasks: 4,  tested: false}
+  - {name: Heartbeat,                domain: Audio,   n_channels: 61, n_classes: 2,  l_enc: 405,  crop_len: null, n_classes_range: [2, 2],  planned_tasks: 4,  tested: false, role_v2: retired_deadflat}
   - {name: FingerMovements,          domain: EEG/MEG, n_channels: 28, n_classes: 2,  l_enc: 50,   crop_len: null, n_classes_range: [2, 2],  planned_tasks: 4,  tested: false}
