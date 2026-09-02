@@ -449,7 +449,15 @@ class TestConfig:
         assert cfg["settf_windows"] == 100
         assert cfg["ctx_encoding"] == "onehot"
         assert cfg["noise_probe"] == {"slices": 2, "reps": [1, 2]}
-        assert cfg["delta_per_dataset_budget"] == {}
+        # 未标定时是空表；`32_pq_generate_rprime.py --calibrate --apply-delta` 回填后
+        # 是 8 数据集 × 3 预算的全表（覆盖度闸保证不会是半张）。两种都合法，
+        # 别让"跑过标定"这件事把本用例判红。
+        dpb = cfg["delta_per_dataset_budget"]
+        assert dpb == {} or (
+            set(dpb) == set(pq.PQ_DATASETS)
+            and all(set(v) == set(pq.BUDGETS)
+                    and all(isinstance(x, float) for x in v.values())
+                    for v in dpb.values())), dpb
         assert cfg["evolution"] == {"ks": 2000, "kp": 50, "generations": 20,
                                     "p_cross": 0.8, "p_mut": 0.2, "top_k": 3}
 
