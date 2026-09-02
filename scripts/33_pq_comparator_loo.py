@@ -119,12 +119,20 @@ class ArmSpec:
 E_SOURCES = ("fold", "per_dataset", "unfit", None)   # interfaces 绑定枚举
 
 
-class SoftLabelUnavailable(RuntimeError):
-    """A7 soft 臂的噪声模型材料不足（探针 cell/重复对太少、或全落同一制式）。
+class ArmUnavailable(RuntimeError):
+    """这份缓存喂不出该臂（训练记录为空、δ 过滤后考侧无配对、软 label 材料不足…）。
 
-    不是 bug 而是"这份缓存喂不出软 label"：--train 捕获后**跳过该臂并大声打印**，
-    其余臂照跑（冒烟缓存 1 切片 × 2 CLS 必然触发；真实网格 320 条探针不会）。
+    不是 bug 而是"材料不够"：--train 捕获后**跳过该 (臂, 折, 种子) 并大声打印**，
+    记进 `<outdir>/skipped.json`，其余臂照跑。典型触发是薄冒烟缓存（如 2 CLS/切片
+    全是 shared → A4 wo_shared 的 random-only 训练集为空）；真实网格 20 CLS/切片不会。
+
+    **例外见 _require_material：主臂 main 在 S1 上永不静默跳过**——它是判读表的
+    唯一数据源，缺了整轮结论就没了，宁可当场炸。
     """
+
+
+class SoftLabelUnavailable(ArmUnavailable):
+    """A7 soft 臂的噪声模型材料不足（探针 cell/重复对太少、或全落同一制式）。"""
 
 
 ARMS: dict[str, ArmSpec] = {
@@ -660,11 +668,14 @@ class PQContext:
             (ROOT / "configs" / "pretrain_tclsc.yaml").read_text(encoding="utf-8"))
         # --epochs 覆盖时 curriculum 一并夹住：epochs=2 而 curriculum=40 会让整跑停在
         # "只见 shared 配对"的第一阶段，random 记录一条都没进过训练（冒烟/标定失真）。
+        # 夹到 **epochs 的一半**（下限 1）而不是 epochs 本身：夹成 epochs 时全部 epoch
+        # 仍在 curriculum 阶段，薄目录（每切片 1 个 shared）里凑不出 shared–shared 对，
+        # 于是每个 epoch 配出 0 对、模型一步没训——冒烟看着"跑通"其实什么都没学。
         self.cfg = dict(cfg)
         if epochs:
             self.cfg["epochs"] = int(epochs)
             self.cfg["curriculum_epochs"] = min(int(cfg["curriculum_epochs"]),
-                                                int(epochs))
+                                                max(1, int(epochs) // 2))
         self.nz = int(self.ra["nz"])
         self.settf_windows = int(settf_windows or self.pq_cfg["settf_windows"])
         self.settf_t_max = int(self.pq_cfg["settf_t_max"])
@@ -689,9 +700,9 @@ class PQContext:
     # ---------------------------------------------------------- 划分 / 记录
     def split_for(self, spec: ArmSpec, fold: str):
         if spec.split == "S1":
-            if fold not in self.slices_by_ds:
-                sys.exit(f"折靶 {fold!r} 在缓存里没有任何切片（现有 "
-                         f"{sorted(self.slices_by_ds)}）")
+            _require_material(
+                spec, fold, fold in self.slices_by_ds,
+                f"折靶在缓存里没有任何切片（现有 {sorted(self.slices_by_ds)}）")
             train_ds, test_ds = pq.fold_split(fold)
             train_ds = [d for d in train_ds if d in self.slices_by_ds]
             train_slices = [s for d in train_ds for s in self.slices_by_ds[d]]
@@ -699,7 +710,12 @@ class PQContext:
         else:
             all_slices = [s for d in sorted(self.slices_by_ds)
                           for s in self.slices_by_ds[d]]
-            train_slices, test_slices = pq.s2_split(all_slices)
+            try:
+                train_slices, test_slices = pq.s2_split(all_slices)
+            except ValueError as exc:
+                # s2_split 只定义了 6 切片 / 3 切片两档；薄缓存（每数据集 1 个切片）
+                # 给不出 S2 划分——S2 两臂是上界对照，缺席只是少一列，跳过即可。
+                _require_material(spec, fold, False, f"S2 划分不可用（{exc}）")
             train_ds, test_ds = sorted(self.slices_by_ds), S2_FOLD
         return train_ds, test_ds, sorted(train_slices), sorted(test_slices)
 
@@ -813,6 +829,21 @@ class PQContext:
                 "太少或全落在同一制式") from exc
 
 
+def _require_material(spec: ArmSpec, fold: str, ok: bool, reason: str) -> None:
+    """材料自检：不足则跳过该臂——**主臂 main 在 S1 上例外，仍然硬炸**。
+
+    判读表（协议 §5 全部五个码）只读 A0 = main 的 S1 折；它要是被静默跳过，
+    analysis 会安静地给出一个建立在空气上的 AMBIGUOUS。其余臂缺席只是少一列对照，
+    如实记进 skipped.json 即可。
+    """
+    if ok:
+        return
+    if spec.name == "main" and spec.split == "S1":
+        raise AssertionError(f"main/{fold}（主臂，判读表唯一数据源）: {reason}")
+    # 只带 reason：打印方 (cmd_train / analyze) 负责加 "<臂>/<折>" 前缀，别叠两遍
+    raise ArmUnavailable(reason)
+
+
 def _history_loss(history: list[dict], idx: int) -> float:
     return float(history[idx]["loss"]) if history else float("nan")
 
@@ -827,12 +858,17 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
     train_ds, test_ds, train_slices, test_slices = ctx.split_for(spec, fold)
     train_records = filter_train_records(spec, ctx.records(train_slices))
     test_records = ctx.records(test_slices)
-    assert train_records, f"{spec.name}/{fold}: 训练记录为空（缓存缺该折数据集？）"
+    _require_material(spec, fold, bool(train_records),
+                      "训练记录为空（缓存缺该折数据集，或该臂的 origin 过滤把记录清空了"
+                      "——A4 wo_shared 只吃 random-10，薄缓存里可能一条都没有）")
     assert not (set(train_slices) & set(test_slices)), "训练/考侧切片重叠"
 
     delta_train = ctx.delta_map(train_slices)
     delta_test = ctx.delta_map(test_slices)
     fwd = forward_pairs_pq(test_records, ctx.task_type, delta_test)
+    _require_material(spec, fold, bool(fwd),
+                      f"δ 过滤后考侧无单向对（{len(test_records)} 条考侧记录，"
+                      "同切片 CLS 太少或 R' 差都小于 δ）")
     directed = with_reversed(fwd)
     all_records = list(train_records) + list(test_records)
     wk = pq.windows_key_of(all_records)
@@ -894,11 +930,18 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
 
     med, robust_table = ctx.robust_delta_map(train_ds, test_slices)
     fwd_r = forward_pairs_pq(test_records, ctx.task_type, robust_table)
-    rob = engine.evaluate(with_reversed(fwd_r), return_correct=True)
     robust = {"delta_by_budget": {str(k): v for k, v in med.items()},
-              "n_forward": len(fwd_r), "acc": rob["acc"], "loss": rob["loss"],
-              "acc_forward": float(np.mean(rob["correct"][:len(fwd_r)]))
-              if fwd_r else float("nan")}
+              "n_forward": len(fwd_r)}
+    if fwd_r:
+        rob = engine.evaluate(with_reversed(fwd_r), return_correct=True)
+        robust.update(acc=rob["acc"], loss=rob["loss"],
+                      acc_forward=float(np.mean(rob["correct"][:len(fwd_r)])))
+    else:
+        # 稳健读数是**副读数**：训练侧 δ 中位数比目标自己的 δ 严时可能一条对都不剩，
+        # 空 pairs 会让 SetTF 的 torch.stack 炸（引擎不接受空批）。副读数缺席就缺席，
+        # 绝不因此判死整个臂——主读数 normal 仍在。
+        robust.update(acc=None, loss=None, acc_forward=None,
+                      note="训练侧 δ 中位数过严：考侧无单向对，稳健读数缺席")
 
     res = {
         "fold": fold, "split": spec.split, "arm": spec.name, "seed": seed,
@@ -925,6 +968,9 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
         "n_test_pairs_forward": len(fwd), "n_test_pairs_directed": len(directed),
         "train_seconds": train_seconds, "device": ctx.device,
         "bce_first": _history_loss(history, 0), "bce_last": _history_loss(history, -1),
+        # 每 epoch 实际配出的训练对数：薄缓存下可能为 0（每任务只剩 1 条记录 → 无从配对），
+        # 那种 run 的 normal 只是未训练模型的读数，判读时必须看这个字段。
+        "train_pairs_last": (int(history[-1]["n_pairs"]) if history else 0),
         "robust_pooled_delta": robust,
         **blocks,
     }
@@ -972,12 +1018,33 @@ def _fmt_block(name: str, blk: Optional[dict]) -> str:
             f"{blk['tier']}")
 
 
+def load_skipped(outdir) -> list[dict]:
+    """`<outdir>/skipped.json` → [{arm, fold, seed, reason}]（缺文件= 空表）。"""
+    path = Path(outdir) / "skipped.json"
+    if not path.exists():
+        return []
+    return json.loads(path.read_text(encoding="utf-8")).get("skipped", [])
+
+
+def _write_skipped(outdir: Path, skips: list[dict], attempted: set) -> None:
+    """合并历史与本轮：本轮**试过**的组合以本轮结果为准（跑成了就把旧记录抹掉），
+    没试过的组合保留历史（分片/续跑时别把别的分片的跳过记录吃掉）。"""
+    keep = [r for r in load_skipped(outdir)
+            if (r.get("arm"), r.get("fold"), r.get("seed")) not in attempted]
+    payload = sorted(keep + skips, key=lambda r: (r["arm"], r["fold"], r["seed"]))
+    (Path(outdir) / "skipped.json").write_text(
+        json.dumps({"skipped": payload, "n": len(payload)}, indent=2,
+                   ensure_ascii=False), encoding="utf-8")
+
+
 def cmd_train(outdir: Path, *, arms: Sequence[str], folds: Optional[Sequence[str]],
               seeds: Optional[Sequence[int]], resume: bool, device: str,
               epochs: Optional[int], settf_windows: Optional[int]) -> None:
     ctx = PQContext(outdir, device=device, epochs=epochs, settf_windows=settf_windows)
     print(f"缓存 {len(ctx.cache)} 行 | 预算 {ctx.budgets} | 数据集 "
           f"{sorted(ctx.slices_by_ds)} | device={device}", flush=True)
+    skips: list[dict] = []          # 本轮跳过的 (臂, 折, 种子)，逐条即时落盘
+    attempted: set = set()          # 本轮试过的组合：成功的要把历史 skip 记录清掉
     for name in arms:
         spec = ARMS[name]
         arm_folds = ((folds if spec.split == "S1" else (S2_FOLD,)) if folds
@@ -986,20 +1053,26 @@ def cmd_train(outdir: Path, *, arms: Sequence[str], folds: Optional[Sequence[str
         for fold in arm_folds:
             for seed in arm_seeds:
                 out_path = outdir / "runs" / fold / f"{name}_s{seed}.json"
+                attempted.add((name, fold, int(seed)))
                 if resume and out_path.exists():
                     print(f"[{fold}/{name}_s{seed}] 已有结果，跳过", flush=True)
                     continue
                 try:
                     res, correct = run_arm(ctx, spec, fold, seed)
-                except SoftLabelUnavailable as exc:
-                    print(f"[SKIP] {fold}/{name}_s{seed}：{exc}——本臂跳过，"
-                          "其余臂继续（analysis 里该臂缺席即此原因）", flush=True)
+                except ArmUnavailable as exc:
+                    reason = str(exc)
+                    print(f"[SKIP] {name}/{fold}: {reason}（seed {seed}）"
+                          "——本臂跳过，其余臂继续；见 skipped.json", flush=True)
+                    skips.append({"arm": name, "fold": fold, "seed": int(seed),
+                                  "reason": reason})
+                    _write_skipped(outdir, skips, attempted)
                     continue
                 out_path.parent.mkdir(parents=True, exist_ok=True)
                 out_path.write_text(json.dumps(res, indent=2, ensure_ascii=False,
                                                default=float), encoding="utf-8")
                 np.savez_compressed(
                     out_path.with_name(f"{name}_s{seed}_correct.npz"), **correct)
+                _write_skipped(outdir, skips, attempted)   # 这次跑成了 → 清历史 skip
                 print(f"[{fold}/{name}_s{seed}] {res['train_seconds']}s | "
                       f"normal {res['normal']['acc']:.4f} | "
                       f"{_fmt_block('within', res['within'])} | "
@@ -1122,6 +1195,7 @@ def analyze(outdir) -> dict:
     outdir = Path(outdir)
     runs = [json.loads(p.read_text(encoding="utf-8"))
             for p in sorted((outdir / "runs").glob("*/*.json"))]
+    skipped = load_skipped(outdir)
     by_arm: dict[str, dict[str, list]] = defaultdict(lambda: defaultdict(list))
     for r in runs:
         by_arm[r["arm"]][r["fold"]].append(r)
@@ -1250,6 +1324,9 @@ def analyze(outdir) -> dict:
         },
         "verdict": verdict, "predictions": predictions, "cost": cost,
         "fold_meta_check": fold_meta,
+        # 被跳过的 (臂, 折, 种子)：per_arm_fold 里**不伪造**这些条目，缺席即在此列表
+        "skipped": skipped, "n_skipped": len(skipped),
+        "skipped_arms": sorted({r["arm"] for r in skipped}),
     }
     return out
 
@@ -1268,6 +1345,8 @@ def cmd_analyze(outdir: Path) -> dict:
             print(f"{arm:<16}{fold:<24}{e['seed']:>4}{e['normal_acc']:>9.4f}"
                   f"{str(t['within']):>12}{str(t['cross']):>12}"
                   f"{str(t['budget']):>12}")
+    for r in res["skipped"]:
+        print(f"[SKIP] {r['arm']}/{r['fold']} s{r['seed']}: {r['reason']}")
     t = res["tests"]
     print(f"\npooled cross Δ p={t['pooled_cross_delta_p']} | "
           f"Q3(A0−A6) Δ̄={t['Q3_A0_minus_A6_mean']} p={t['Q3_p']} | "
@@ -1282,10 +1361,13 @@ def cmd_analyze(outdir: Path) -> dict:
 
 # ================================================================ 冒烟
 def synth_smoke_inputs(outdir: Path, *, datasets: Sequence[str], n_slices: int,
-                       n_cls: int, budgets: Sequence[int], seed: int = 0) -> None:
+                       n_cls: int, budgets: Sequence[int], seed: int = 0,
+                       origins: Sequence[str] = ("shared", "random")) -> None:
     """Task 5 冒烟缓存缺席时的**合成回落**：R' 缓存 / 噪声探针 / δ 表 / tasks.json。
 
     **不产特征**——窗口合成在 synth_smoke_features（复用 Task 5 缓存时同样要跑）。
+    `origins=("shared",)` 复现 32 号冒烟的形状（目录前缀 = 全 shared，零 random）：
+    该形状下 A4 wo_shared 的训练集为空，用来验证"跳过而不是中断整轮"。
 
     合成 R' 刻意可分（同切片相邻 CLS 差 0.02 > δ=0.01），且**锚在该切片真实的
     iters=0 基线带上**（起点 = 均值 − 带 − 0.05）——这样最低几个 CLS 落在 strict
@@ -1308,8 +1390,11 @@ def synth_smoke_inputs(outdir: Path, *, datasets: Sequence[str], n_slices: int,
         for i in range(n_slices):
             slc = f"{d}_{i:02d}"
             cat = pq.catalog_for_slice(space, slc)
-            n_sh = max(1, n_cls // 2)
-            chosen = cat[:n_sh] + cat[pq.N_SHARED:pq.N_SHARED + (n_cls - n_sh)]
+            if tuple(origins) == ("shared",):
+                chosen = cat[:n_cls]                     # 32 号冒烟形状：全 shared
+            else:
+                n_sh = max(1, n_cls // 2)
+                chosen = cat[:n_sh] + cat[pq.N_SHARED:pq.N_SHARED + (n_cls - n_sh)]
             tasks[slc] = {"task_id": slc, "dataset": d, "task_type": "classification",
                           "classes": [0, 1], "n_train": 100, "n_eval": 300}
             mean, band = bands.get(slc, (0.50, 0.02))
@@ -1397,7 +1482,6 @@ def run_smoke(outdir, *, epochs: int = 2, arms: Optional[Sequence[str]] = None,
     labels_cfg = yaml.safe_load(
         (ROOT / "configs" / "labels.yaml").read_text(encoding="utf-8"))
     nz = int(labels_cfg["route_a"]["nz"])
-    fold_list = list(folds) if folds else [d for d in datasets if d in pq.FOLD_TARGETS]
     cache_path = outdir / "rprime_cache.jsonl"
     if not cache_path.exists():
         synth_smoke_inputs(outdir, datasets=datasets, n_slices=n_slices, n_cls=n_cls,
@@ -1407,6 +1491,11 @@ def run_smoke(outdir, *, epochs: int = 2, arms: Optional[Sequence[str]] = None,
     # 特征无论缓存来自哪里都要有：切片清单从缓存自身读（Task 5 的冒烟切片可能与
     # 本地 datasets/n_slices 默认值不同），折目录清单取 fold_list ∪ all8。
     slices = sorted({k[0] for k in load_rprime_cache(cache_path)})
+    # 折靶也从缓存推导：32 号冒烟只覆盖它自己那几个数据集，写死 Handwriting 会在
+    # 缓存不含该数据集时直接判死整条链（本轮 review 的复现路径）。
+    fold_list = (list(folds) if folds else
+                 [d for d in sorted({pq.dataset_of(x) for x in slices})
+                  if d in pq.FOLD_TARGETS])
     n_feat = synth_smoke_features(outdir, slices=slices, folds=fold_list,
                                   settf_windows=settf_windows, t_max=t_max, nz=nz)
     print(f"[smoke] 切片 {len(slices)} | 合成特征槽位 {n_feat}", flush=True)
@@ -1449,7 +1538,7 @@ def main() -> None:
         cmd_calibrate_windows(args.outdir, args.device, args.settf_windows)
     if args.smoke:
         run_smoke(args.outdir, epochs=args.epochs or 2, arms=args.arms,
-                  folds=args.folds or ("Handwriting",),
+                  folds=args.folds,
                   seeds=tuple(args.seeds) if args.seeds else (0,),
                   device=args.device, settf_windows=args.settf_windows or 4)
     if args.train:

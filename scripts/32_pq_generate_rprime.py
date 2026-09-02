@@ -30,7 +30,7 @@ R'（`autocls.labeling.evaluate_rprime_trajectory`，Task 1）。主缓存 45×2
     python scripts/32_pq_generate_rprime.py --fill --ggs --noise-probe --resume
     python scripts/32_pq_generate_rprime.py --calibrate --apply-delta
     python scripts/32_pq_generate_rprime.py --verify
-    python scripts/32_pq_generate_rprime.py --smoke --outdir results/mx3_pq_smoke/gen32
+    python scripts/32_pq_generate_rprime.py --smoke --outdir results/mx3_pq_smoke
 """
 from __future__ import annotations
 
@@ -70,8 +70,10 @@ from scripts import pq_common as pq  # noqa: E402
 
 ORIGIN_GGS = "ggs"                    # 主缓存里 GGS 锚的 origin（shared/random 之外）
 DEFAULT_OUTDIR = pq.OUT
-# smoke 默认落在自己的子目录：results/mx3_pq_smoke 根目录被 33 号脚本的 smoke
-# 夹具占着（同名的 rprime_cache.jsonl/tasks.json），混在一起会互相污染。
+# smoke 默认落在子目录：33 号的 smoke 会向 results/mx3_pq_smoke **捧造一份合成
+# rprime_cache.jsonl**（device_name="smoke"，18 切片 × 8 CLS × 60/120/290 = 432 行），
+# 与本脚本跑出来的真行 schema 完全一样，混在同一份文件里只能靠 device_name 分辨
+# （fix 轮 2 实测，见报告）。链路要串在一起时显式传 --outdir 即可。
 SMOKE_OUTDIR = pq.OUT.with_name("mx3_pq_smoke") / "gen32"
 SMOKE_DATASETS = ("Handwriting", "UniMiB-SHAR")
 SMOKE_CHECKPOINTS = (4, 8, 12)
@@ -266,15 +268,30 @@ def cell_states(cells: Sequence, index, budgets: Sequence[int]) -> dict[str, lis
 
 # ---------------------------------------------------------------- 网格计划
 def build_plan(names: Sequence[str] = pq.PQ_DATASETS, *, space: CLSSpace | None = None,
-               n_slices: int | None = None, n_cls: int | None = None,
+               n_slices: int | None = None, n_cls: int | dict[str, int] | None = None,
                include_ggs: bool = True) -> list[Cell]:
     """全网格计划（**零数据加载**：只读注册表 + CLSSpace，verify/计数可离线用）。
 
     每切片 = pq.catalog_for_slice 的 20 个（10 shared 在前、10 random 在后）+ 1 个
     GGS 锚（origin="ggs"）。`n_slices`/`n_cls` 只给 smoke 用：取每数据集前 n 个切片、
-    每切片目录前 n 个 CLS（前缀稳定，故 smoke 的格子与全量网格逐键同缓存）。
+    **每个 origin 各取前 n 个** CLS（n_cls=1 → 1 shared + 1 random + GGS）。
+
+    注意 `n_cls` 是**按 origin 分组**截的，不是整个目录取前 n：后者会让 smoke
+    只有 shared，于是 33 号的 wo_shared（只用 random）与 soft 两臂拿不到任何材料，
+    32→33→34 的链路根本跑不通（fix 轮 2）。两组都是"前缀截断"：shared 来自
+    探针目录前 10 的前 n，random 来自同一条 seed=42 / task_id 派生的采样流（逐个
+    接受制，加大 n 不改变前 n′ 个取值）——故 smoke 的格子与全量网格**逐键同缓存**。
+
+    `n_cls` 可以是整数（每个 origin 同一个上限），也可以是
+    `{origin: n}`（各 origin 不同上限；smoke 用 `{shared: 2, random: 1}`——两个
+    shared 才能给 33 号课程期凑出 shared–shared 配对，fix 轮 3）。dict 里
+    没列的 origin 上限为 0（整组排除）。
     """
     space = space or CLSSpace.from_yaml()
+    limits: dict[str, int] | None = None
+    if n_cls is not None:
+        limits = ({o: int(n_cls) for o in (pq.ORIGIN_SHARED, pq.ORIGIN_RANDOM)}
+                  if isinstance(n_cls, int) else {k: int(v) for k, v in n_cls.items()})
     shared = None
     ggs = pq.ggs_cls() if include_ggs else None
     ggs_key = pq.cls_key(ggs) if include_ggs else None
@@ -287,8 +304,14 @@ def build_plan(names: Sequence[str] = pq.PQ_DATASETS, *, space: CLSSpace | None 
             entries = pq.catalog_for_slice(space, sid, shared)
             if shared is None:       # 探针目录只读一次（10 个 shared 全网格共用）
                 shared = [(c, k) for org, c, k in entries if org == pq.ORIGIN_SHARED]
-            if n_cls is not None:
-                entries = entries[:n_cls]
+            if limits is not None:
+                taken: dict[str, int] = defaultdict(int)
+                kept = []
+                for org, c, k in entries:
+                    if taken[org] < limits.get(org, 0):
+                        taken[org] += 1
+                        kept.append((org, c, k))
+                entries = kept
             plan += [Cell(sid, org, c, k) for org, c, k in entries]
             if include_ggs:
                 plan.append(Cell(sid, ORIGIN_GGS, ggs, ggs_key))
@@ -604,8 +627,9 @@ def busy_inflight(outdir: Path, extra: Path | None = None) -> list[Path]:
     文件层面做不到，而猜错的代价是把别人正在追加的行整段吞掉。残留由操作方显式
     清空（refuse 消息会列出路径）。
     """
-    return [p for p in inflight_files(outdir, extra)
-            if p.read_text(encoding="utf-8", errors="replace").strip()]
+    return sorted((p for p in inflight_files(outdir, extra)
+                   if p.read_text(encoding="utf-8", errors="replace").strip()),
+                  key=str)
 
 
 # ---------------------------------------------------------------- 阶段：δ 标定
@@ -837,11 +861,17 @@ def stage1_consistency(result: dict, *, path: Path = STAGE1_NOISE, budget: int =
 def verify(outdir: Path, plan: Sequence[Cell], noise_cells: Sequence[NoiseCell],
            budgets: Sequence[int], *, inflight_extra: Path | None = None,
            oom_log: Path | None = None, allow_terminal: bool = False) -> dict:
-    """收官校验：计数 / null / 重复键 / 设备混杂 / 半条轨迹 / inflight / OOM。
+    """收官校验：计数 / null / 重复键 / 设备混杂 / 半条轨迹 / 毒轨迹 / inflight / OOM。
 
-    硬失败（退出码非 0）：缺格、半条轨迹、重复键、null 却无 error、inflight 非空。
-    只告警：device_name 混杂（跨机器 R' 有 ±0.005 级差，成本锚也会失真）、
-    terminal 格（有 error 的终局失败，是可查清单不是空洞）、OOM 记录。
+    硬失败（退出码非 0）：缺格、半条轨迹、重复键、null 却无 error、噪声缺格、
+    inflight 非空、**毒轨迹**（除非 --allow-terminal）。
+    只告警：device_name 混杂（跨机器 R' 有 ±0.005 级差，成本锚也会失真）、OOM 记录。
+
+    **计数与行顺序无关**（fix 轮 3 复查）：每个数字要么是对 rows 的 sum/len，
+    要么是把 rows 建成字典后**按 plan 顺序**查表（plan 由注册表 + CLS 目录确定）。
+    唯一受顺序影响的是 `cache_index` 对**重复键**的"后行覆盖前行"（与
+    labeling.load_rprime_cache 同约定）：同一键一好一坏时，状态取決于哪行在后。
+    但重复键本身就是硬失败，那一跑已经是红的，不存在"靠顺序蒙混过关"。
     """
     outdir = Path(outdir)
     budgets = tuple(int(b) for b in budgets)
@@ -971,7 +1001,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--apply-delta", action="store_true")
     ap.add_argument("--verify", action="store_true")
     ap.add_argument("--smoke", action="store_true",
-                    help="2 数据集 × 切片 00 × 2 CLS × checkpoints(4,8,12) 全流程")
+                    help="2 数据集 × 切片 00 × 5 CLS（2 shared/2 random/GGS）"
+                         " × checkpoints(4,8,12) 全流程")
     return ap
 
 
@@ -1004,9 +1035,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         outdir = Path(args.outdir) if args.outdir is not None else SMOKE_OUTDIR
         names = SMOKE_DATASETS
         budgets = tuple(args.checkpoints or SMOKE_CHECKPOINTS)
-        n_slices, n_cls = 1, 1
+        # 2 shared + 2 random + GGS = 每切片 5 条。**两边都必须是 2**：配对是
+        # 同切片内两两组，只有 1 条时那一类根本组不出对——shared 不够则 33 号
+        # 课程期无 shared–shared，random 不够则 wo_shared 臂（只吃 random）根本不训练
+        # （fix 轮 3 + 追加）。
+        n_slices = 1
+        n_cls = {pq.ORIGIN_SHARED: 2, pq.ORIGIN_RANDOM: 2}
         noise_slices, noise_reps = 1, (1,)
-        noise_origins = (pq.ORIGIN_SHARED, ORIGIN_GGS)
+        # 噪声探针只跑 shared（与全量口径一致）：重复对是拿来标 δ 的，
+        # 混进 GGS/random 会把不同性质的格摄进同一个 P95。
+        noise_origins = (pq.ORIGIN_SHARED,)
         do = dict(tasks=True, fill=True, ggs=True, noise=True, calibrate=True,
                   verify=True)
         resume, redo_partial = True, args.redo_partial

@@ -29,6 +29,9 @@ g32 = importlib.import_module("scripts.32_pq_generate_rprime")
 
 ROOT = Path(__file__).resolve().parents[1]
 B2 = (60, 120)          # 两预算的合成网格（单测用，省一半合成行）
+# smoke 的每切片 CLS 上限（与脚本 --smoke 分支同值）：2 shared + 2 random + GGS。
+# 两边都是 2 才能各自组出同类配对（shared–shared / random–random）。
+SMOKE_NCLS = {"shared": 2, "random": 2}
 
 
 # --------------------------------------------------------------- 合成夹具
@@ -305,10 +308,57 @@ class TestPlan:
         assert len(keys) == len(set(keys))     # 撞键会让两个 origin 写同一条缓存键
 
     def test_limits_for_smoke(self):
-        plan = g32.build_plan(("Handwriting", "UniMiB-SHAR"), n_slices=1, n_cls=1)
-        assert [c.slice_id for c in plan] == ["Handwriting_00", "Handwriting_00",
-                                              "UniMiB-SHAR_00", "UniMiB-SHAR_00"]
-        assert [c.origin for c in plan] == ["shared", "ggs", "shared", "ggs"]
+        """n_cls 按 origin 分组截：1 shared + 1 random + GGS。
+
+        整个目录取前 n 会让 smoke 只剩 shared，于是 33 号的 wo_shared（只用
+        random）与 soft 两臂无材料，32→33→34 链路跑不通（fix 轮 2）。
+        """
+        plan = g32.build_plan(("Handwriting", "UniMiB-SHAR"), n_slices=1,
+                              n_cls=SMOKE_NCLS)
+        assert [c.slice_id for c in plan] == (["Handwriting_00"] * 5
+                                              + ["UniMiB-SHAR_00"] * 5)
+        assert [c.origin for c in plan] == ["shared", "shared", "random",
+                                            "random", "ggs"] * 2
+
+    def test_int_n_cls_applies_to_every_origin(self):
+        plan = g32.build_plan(("Handwriting",), n_slices=1, n_cls=2)
+        assert [c.origin for c in plan] == ["shared", "shared", "random",
+                                            "random", "ggs"]
+
+    def test_origin_absent_from_dict_is_excluded(self):
+        plan = g32.build_plan(("Handwriting",), n_slices=1,
+                              n_cls={pq.ORIGIN_SHARED: 1})
+        assert [c.origin for c in plan] == ["shared", "ggs"]
+
+    def test_smoke_keys_match_the_full_grid(self):
+        """smoke 的 shared/random 键必须是全量网格同切片同 organ 的**第一个**。
+
+        否则 smoke 跑出来的 R' 与全量网格不同缓存键，"小规模试跑与全量
+        共享缓存"（sample_random_cls 的逐个接受制前缀稳定）就是句空话。
+        """
+        full = g32.build_plan(("Handwriting", "UniMiB-SHAR"))
+        first = {}
+        for c in full:
+            first.setdefault((c.slice_id, c.origin), c.cls_key)
+        prefix: dict[tuple, list] = {}
+        for c in full:
+            prefix.setdefault((c.slice_id, c.origin), []).append(c.cls_key)
+        got: dict[tuple, list] = {}
+        for c in g32.build_plan(("Handwriting", "UniMiB-SHAR"), n_slices=1,
+                                n_cls=SMOKE_NCLS):
+            assert c.cls_key == first[(c.slice_id, c.origin)] or c.origin != "ggs"
+            got.setdefault((c.slice_id, c.origin), []).append(c.cls_key)
+        for k, keys in got.items():                 # 逐个都得是全量同组的前缀
+            assert keys == prefix[k][:len(keys)], (k, keys, prefix[k][:3])
+
+    def test_smoke_noise_plan_is_shared_only(self):
+        """两个 shared 都进噪声探针 → 每个 (数据集, 预算) 拿到 2 个重复对。"""
+        plan = g32.build_plan(("Handwriting", "UniMiB-SHAR"), n_slices=1,
+                              n_cls=SMOKE_NCLS)
+        cells = g32.noise_plan(plan, n_slices=1, reps=(1,),
+                               origins=(pq.ORIGIN_SHARED,))
+        assert len(cells) == 4 and {c.origin for c in cells} == {"shared"}
+        assert len({c.cls_key for c in cells}) == 2
 
 
 # --------------------------------------------------------------- verify
@@ -366,6 +416,32 @@ class TestVerify:
         write_rows(tmp_path / "rprime_cache.jsonl", self._terminal_rows())
         rep = g32.verify(tmp_path, self._plan(cls_a), [], B2, allow_terminal=True)
         assert rep["ok"] and rep["n_terminal"] == 1
+
+    def test_counting_is_row_order_independent(self, tmp_path, cls_a):
+        """行顺序不得影响任何计数（fix 轮 3 复查）。
+
+        缓存是 8 个进程并发追加的，行顺序本来就不确定；若 verify 的结论随顺序
+        变，"同一份数据两次校验两个结果"会把人带到完全错误的排查方向。
+        """
+        import random as _random
+
+        rows = self._good_rows()
+        ncells = [g32.NoiseCell("Cricket_00", "shared", cls_a, "k1", 1)]
+        nrows = [cache_row("Cricket_00", "k1", b, 0.5, seed=1) for b in B2]
+        base = None
+        for seed in range(5):
+            d = tmp_path / f"s{seed}"
+            shuffled, nshuf = list(rows), list(nrows)
+            _random.Random(seed).shuffle(shuffled)
+            _random.Random(seed + 100).shuffle(nshuf)
+            write_rows(d / "rprime_cache.jsonl", shuffled)
+            write_rows(d / "noise_probe.jsonl", nshuf)
+            rep = g32.verify(d, self._plan(cls_a), ncells, B2)
+            rep.pop("inflight")                      # 只有路径前缀不同
+            if base is None:
+                base = rep
+            assert rep == base, seed
+        assert base["ok"] and base["n_rows"] == 4 and base["n_noise"] == 2
 
     def test_noise_terminal_also_gated(self, tmp_path, cls_a):
         """毒噪声格不算"缺行"，却让那格凑不齐重复对 → δ 站在更少样本上。"""
@@ -741,9 +817,15 @@ def test_smoke_end_to_end(tmp_path, monkeypatch):
     rows = [json.loads(x) for x in
             (tmp_path / "rprime_cache.jsonl").read_text(encoding="utf-8").splitlines()
             if x.strip()]
-    assert len(rows) == 2 * 2 * 3          # 2 数据集 × 2 CLS × 3 截点
+    assert len(rows) == 2 * 5 * 3          # 2 数据集 × 5 CLS × 3 截点（24 主 + 6 GGS）
     assert {r["iters"] for r in rows} == {4, 8, 12}
-    assert {r["origin"] for r in rows} == {"shared", "ggs"}
+    assert {r["origin"] for r in rows} == {"shared", "random", "ggs"}
+    # 33 号的 wo_shared 臂只吃 random：每个切片至少得有一条
+    assert len({r["task_id"] for r in rows if r["origin"] == "random"}) == 2
+    noise = [json.loads(x) for x in
+             (tmp_path / "noise_probe.jsonl").read_text(encoding="utf-8").splitlines()
+             if x.strip()]
+    assert len(noise) == 2 * 2 * 3 and {r["origin"] for r in noise} == {"shared"}
     assert all(math.isfinite(r["r_prime"]) for r in rows)
     cal = json.loads((tmp_path / "delta_calibration.json").read_text(encoding="utf-8"))
     assert set(cal) == {"Handwriting", "UniMiB-SHAR"}
@@ -769,14 +851,35 @@ def test_smoke_partial_recovery(tmp_path, monkeypatch):
                                      and r["iters"] == 12)), encoding="utf-8")
     assert g32.main(["--smoke", "--outdir", str(tmp_path)]) == 1      # verify 判红
     left = [x for x in cache.read_text(encoding="utf-8").splitlines() if x.strip()]
-    assert len(left) == 11                                            # 未重跑
+    assert len(left) == 29                                            # 未重跑
     assert g32.main(["--smoke", "--outdir", str(tmp_path), "--redo-partial"]) == 0
     back = [json.loads(x) for x in
             cache.read_text(encoding="utf-8").splitlines() if x.strip()]
-    assert len(back) == 12
+    assert len(back) == 30
     keys = [(r["task_id"], r["cls_key"], r["iters"]) for r in back]
     assert len(keys) == len(set(keys))                                # 零重复键
     assert list(tmp_path.glob("rprime_cache.jsonl.bak-*"))            # 备份留痕
+
+
+@pytest.mark.skipif(not _HAS_DATA, reason="需要 aeon + data/uea_cache")
+def test_smoke_twice_into_same_outdir_is_idempotent(tmp_path, monkeypatch):
+    """同一个 outdir 连跑两次 --smoke：第二次**零新增行**且 verify 仍通过。
+
+    Task 6 曾报"第二次只剩 3 行、verify 报 missing 5"（当时另一个 agent 在并发
+    rm -rf 同一目录，已判定为干扰）。这条护栏把"无干扰时必须幂等"钉死：
+    冗余写入会制造同键重复行（verify 的硬闸），漏写则直接缺格。
+    """
+    monkeypatch.setattr(g32, "evaluate_rprime_trajectory", _fake_evaluator)
+    cache, noise = tmp_path / "rprime_cache.jsonl", tmp_path / "noise_probe.jsonl"
+    assert g32.main(["--smoke", "--outdir", str(tmp_path)]) == 0
+    first_cache, first_noise = cache.read_bytes(), noise.read_bytes()
+    assert g32.main(["--smoke", "--outdir", str(tmp_path)]) == 0
+    assert cache.read_bytes() == first_cache      # 一个字节都不该多
+    assert noise.read_bytes() == first_noise
+    rows = [json.loads(x) for x in
+            cache.read_text(encoding="utf-8").splitlines() if x.strip()]
+    keys = [(r["task_id"], r["cls_key"], r["iters"]) for r in rows]
+    assert len(rows) == 30 and len(keys) == len(set(keys))
 
 
 @pytest.mark.skipif(not _HAS_DATA, reason="需要 aeon + data/uea_cache")
@@ -800,7 +903,7 @@ def test_smoke_terminal_gate_and_retry(tmp_path, monkeypatch):
                      "--retry-terminal"]) == 0                          # 剔旧行重跑
     back = [json.loads(x) for x in
             cache.read_text(encoding="utf-8").splitlines() if x.strip()]
-    assert len(back) == 12
+    assert len(back) == 30
     assert all(r["r_prime"] is not None for r in back)
     keys = [(r["task_id"], r["cls_key"], r["iters"]) for r in back]
     assert len(keys) == len(set(keys))

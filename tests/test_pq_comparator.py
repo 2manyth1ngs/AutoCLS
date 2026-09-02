@@ -363,7 +363,14 @@ class TestCurriculumClamp:
                       device="cpu", settf_windows=2, t_max=6, folds=("Handwriting",))
         ctx = m33.PQContext(tmp_path, device="cpu", epochs=2, settf_windows=2)
         assert ctx.cfg["epochs"] == 2
-        assert ctx.cfg["curriculum_epochs"] == 2      # min(40, 2)
+        # min(40, max(1, 2 // 2)) = 1：留出后半程给 random，否则薄目录下 0 对可配
+        assert ctx.cfg["curriculum_epochs"] == 1
+        assert m33.PQContext(tmp_path, device="cpu", epochs=1,
+                             settf_windows=2).cfg["curriculum_epochs"] == 1
+        assert m33.PQContext(tmp_path, device="cpu", epochs=10,
+                             settf_windows=2).cfg["curriculum_epochs"] == 5
+        assert m33.PQContext(tmp_path, device="cpu", epochs=200,
+                             settf_windows=2).cfg["curriculum_epochs"] == 40
         full = m33.PQContext(tmp_path, device="cpu", settf_windows=2)
         assert full.cfg["curriculum_epochs"] == 40    # 不覆盖时原样
 
@@ -610,6 +617,89 @@ class TestSmoke:
         assert not (tmp_path / "runs" / "Handwriting" / "soft_s0.json").exists()
         assert (tmp_path / "runs" / "Handwriting" / "cls_only_s0.json").exists()
         assert res["verdict"]["code"]
+
+    def test_shared_only_cache_skips_wo_shared_and_continues(self, tmp_path, capsys):
+        """32 号冒烟（每切片只有 shared + GGS、零 random）→ A4 训练集为空。
+
+        整轮不得中断：跳过 A4、记 skipped.json、其余臂照跑、analysis 列出。
+        """
+        m33.synth_smoke_inputs(tmp_path, datasets=("Handwriting", "Cricket"),
+                               n_slices=3, n_cls=4, budgets=pq.BUDGETS,
+                               origins=("shared",))
+        res = m33.run_smoke(tmp_path, epochs=1, arms=("wo_shared", "cls_only"),
+                            device="cpu", settf_windows=2, t_max=6,
+                            folds=("Handwriting",))
+        out = capsys.readouterr().out
+        assert "[SKIP] wo_shared/Handwriting:" in out
+        assert not (tmp_path / "runs" / "Handwriting" / "wo_shared_s0.json").exists()
+        assert (tmp_path / "runs" / "Handwriting" / "cls_only_s0.json").exists()
+        skipped = json.loads(
+            (tmp_path / "skipped.json").read_text(encoding="utf-8"))["skipped"]
+        assert [(r["arm"], r["fold"], r["seed"]) for r in skipped] == [
+            ("wo_shared", "Handwriting", 0)]
+        assert res["skipped"] == skipped and res["n_skipped"] == 1
+        assert res["skipped_arms"] == ["wo_shared"]
+        assert "wo_shared" not in res["per_arm_fold"]       # 不伪造条目
+        assert "cls_only" in res["per_arm_fold"]
+
+    def test_main_with_empty_records_still_raises(self, tmp_path):
+        """主臂是判读表唯一数据源：材料缺席必须当场炸，绝不静默跳过。"""
+        m33.synth_smoke_inputs(tmp_path, datasets=("Handwriting", "Cricket"),
+                               n_slices=3, n_cls=4, budgets=pq.BUDGETS)
+        m33.synth_smoke_features(tmp_path, slices=["Handwriting_00"],
+                                 folds=("Handwriting",), settf_windows=2, t_max=6,
+                                 nz=256)
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2)
+        ctx.slices_by_ds = {"Handwriting": ctx.slices_by_ds["Handwriting"]}  # 训练侧清空
+        with pytest.raises(AssertionError, match="主臂"):
+            m33.run_arm(ctx, m33.ARMS["main"], "Handwriting", 0)
+
+    def test_non_main_arm_with_empty_records_is_skippable(self, tmp_path):
+        m33.synth_smoke_inputs(tmp_path, datasets=("Handwriting", "Cricket"),
+                               n_slices=3, n_cls=4, budgets=pq.BUDGETS)
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2)
+        ctx.slices_by_ds = {"Handwriting": ctx.slices_by_ds["Handwriting"]}
+        with pytest.raises(m33.ArmUnavailable):
+            m33.run_arm(ctx, m33.ARMS["cls_only"], "Handwriting", 0)
+
+    def test_soft_unavailable_is_an_arm_unavailable(self):
+        assert issubclass(m33.SoftLabelUnavailable, m33.ArmUnavailable)
+
+    def test_successful_rerun_clears_stale_skip_entry(self, tmp_path):
+        m33.synth_smoke_inputs(tmp_path, datasets=("Handwriting", "Cricket"),
+                               n_slices=3, n_cls=4, budgets=pq.BUDGETS,
+                               origins=("shared",))
+        m33.run_smoke(tmp_path, epochs=1, arms=("wo_shared",), device="cpu",
+                      settf_windows=2, t_max=6, folds=("Handwriting",))
+        assert len(m33.load_skipped(tmp_path)) == 1
+        # 换成有 random 的缓存重跑同一组合 → 历史 skip 记录必须消失
+        (tmp_path / "rprime_cache.jsonl").unlink()
+        m33.synth_smoke_inputs(tmp_path, datasets=("Handwriting", "Cricket"),
+                               n_slices=3, n_cls=4, budgets=pq.BUDGETS)
+        res = m33.run_smoke(tmp_path, epochs=1, arms=("wo_shared",), device="cpu",
+                            settf_windows=2, t_max=6, folds=("Handwriting",))
+        assert m33.load_skipped(tmp_path) == []
+        assert res["n_skipped"] == 0
+        assert "wo_shared" in res["per_arm_fold"]
+
+    def test_thin_cache_chain_skips_absent_fold_and_s2(self, tmp_path, capsys):
+        """32 号冒烟形状：每数据集 1 个切片、只覆盖部分数据集。
+
+        折靶从缓存推导（不再写死 Handwriting）；1 切片/数据集给不出 S2 划分 →
+        两个 S2 臂跳过；within 也因切片不足而缺席。整条链仍须走完并出 analysis。
+        """
+        m33.synth_smoke_inputs(tmp_path, datasets=("UniMiB-SHAR", "Cricket"),
+                               n_slices=1, n_cls=3, budgets=(4, 8, 12))
+        res = m33.run_smoke(tmp_path, epochs=1,
+                            arms=("main", "cls_b", "main_s2", "onehot_oracle"),
+                            device="cpu", settf_windows=2, t_max=6)
+        out = capsys.readouterr().out
+        assert "[SKIP] main_s2/S2:" in out and "[SKIP] onehot_oracle/S2:" in out
+        assert res["skipped_arms"] == ["main_s2", "onehot_oracle"]
+        assert all("S2 划分不可用" in r["reason"] for r in res["skipped"])
+        # 折靶推导：缓存里的 UniMiB-SHAR / Cricket 都跑了，Handwriting 不该出现
+        assert set(res["per_arm_fold"]["main"]) == {"UniMiB-SHAR", "Cricket"}
+        assert res["per_arm_fold"]["main"]["Cricket"]["tiers"]["within"] is None
 
     def test_analysis_carries_iron_law_flag_and_notes(self, tmp_path):
         m33.run_smoke(tmp_path, epochs=1, arms=("main",),
