@@ -25,13 +25,40 @@ export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 # 切片写全，每个数据集进程只跑造 R′ 那三个阶段。
 STAGES="--fill --ggs --noise-probe --resume"
 
+PIDS=()      # 本档已启动的后台 PID
+PNAMES=()    # 与 PIDS 同序的数据集名
+
 launch() {   # launch <dataset> —— 一个数据集一个进程，各自 --resume
   local ds="$1"
   nohup python scripts/32_pq_generate_rprime.py $STAGES \
         --datasets "$ds" --outdir "$OUT" \
         --inflight "$OUT/inflight_$ds.txt" --oom-log "$OUT/oom_failures.jsonl" \
         > "$LOG/pq_$ds.log" 2> "$LOG/pq_$ds.err" &
-  echo "  launched $ds pid=$!"
+  local pid=$!
+  PIDS+=("$pid"); PNAMES+=("$ds")
+  echo "  launched $ds pid=$pid"
+}
+
+# 逐 PID 等待并**逐个**报退出码。裸 `wait` 无参数时永远返回 0（POSIX），
+# 于是 `wait || echo ...` 是死代码：某个数据集进程崩了也一声不吭，要等到
+# finish.sh 的 --verify 才发现缺格，而那时已经过了几个小时（Minor 9）。
+wait_tier() {   # wait_tier <档名>
+  local tier="$1" rc=0 bad=0 i
+  if [ "${#PIDS[@]}" -gt 0 ]; then
+    for i in "${!PIDS[@]}"; do
+      if wait "${PIDS[$i]}"; then
+        echo "  ✅ ${PNAMES[$i]} (pid ${PIDS[$i]}) 退出 0"
+      else
+        rc=$?
+        bad=$((bad + 1))
+        echo "  ⚠️ ${PNAMES[$i]} (pid ${PIDS[$i]}) 退出码 $rc" \
+             "（见 $LOG/pq_${PNAMES[$i]}.err）"
+      fi
+    done
+  fi
+  [ "$bad" -eq 0 ] && echo "  $tier 全部退出 0" \
+                   || echo "  ⚠️ $tier 有 $bad 个进程非零退出，继续下一档"
+  PIDS=(); PNAMES=()
 }
 # 每进程一份 inflight（configs/runtime.yaml 头注释）：共用一份的话看门狗把毒条目
 # 归因到别的进程正在跑的那条上。rprime_cache.jsonl 反过来是共享的——单行 < 4096 B
@@ -73,13 +100,13 @@ echo "== 档 1：短序列端 5 并发"
 for ds in Handwriting UniMiB-SHAR PhonemeSpectra UWaveGestureLibrary Cricket; do
   launch "$ds"
 done
-wait || echo "  ⚠️ 档 1 有进程非零退出（见 $LOG/pq_*.err），继续"
+wait_tier "档 1"
 
 # 档 2：HandMovementDirection（l_enc 400 → 5.94 GiB）。与档 1 同跑合计 23.7 GiB
 #       贴着预算上沿，故独占一档。
 echo "== 档 2：HandMovementDirection"
 launch HandMovementDirection
-wait || echo "  ⚠️ 档 2 非零退出（见 $LOG/pq_HandMovementDirection.err）"
+wait_tier "档 2"
 
 # 档 3：长序列端串行链（Ethanol 1024→14.1 GiB，SCP2 1152→15.8 GiB；runtime.yaml
 #       §3.3 实测 2 个 SCP2 必 OOM，且 resize 最坏可把峰值推到 29 GiB）。

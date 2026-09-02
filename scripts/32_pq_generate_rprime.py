@@ -25,12 +25,17 @@ R'（`autocls.labeling.evaluate_rprime_trajectory`，Task 1）。主缓存 45×2
 - partial：有行但不齐且无 error → `--verify` 报出、`--fill --redo-partial` 才重跑；
 - missing：一行没有 → 跑。
 
-用法（各阶段幂等，顺序：tasks → fill/ggs/noise-probe → calibrate → verify）：
+用法（各阶段幂等，顺序：tasks → fill/ggs/noise-probe → calibrate → verify →
+reproduce-check）：
     python scripts/32_pq_generate_rprime.py --tasks
     python scripts/32_pq_generate_rprime.py --fill --ggs --noise-probe --resume
     python scripts/32_pq_generate_rprime.py --calibrate --apply-delta
     python scripts/32_pq_generate_rprime.py --verify
+    python scripts/32_pq_generate_rprime.py --reproduce-check
     python scripts/32_pq_generate_rprime.py --smoke --outdir results/mx3_pq_smoke
+
+退出码：1 = --verify 判红；3 = inflight 互锁；4 = --apply-delta 覆盖度不足；
+5 = 复现校验超差（PROTOCOL §8，除非 --allow-reproduction-breach）。
 """
 from __future__ import annotations
 
@@ -92,6 +97,24 @@ DONE, TERMINAL, PARTIAL, MISSING = "done", "terminal", "partial", "missing"
 
 # stage1 k3 @290 一致性判读带（比值落在带外只告警，不拦路）
 RATIO_BAND = (0.7, 1.4)
+
+# ---- 复现校验（PROTOCOL §8「复现校验（预注册容差）」，阈值先于数据写死） ----
+# 本次 @290 的 canonical 行 vs 旧缓存里同 (task_id, cls_key, weight_seed) 的行。
+# 旧缓存的 @290 是**同一条轨迹定义**（同切片、同 CLS、同权重种子），只是跑在别的
+# 机器/别的批次；对不上就说明这一轮的 R' 与历史数字不是一个口径，晋级/净空等
+# 既有结论全部失效——§8 点名"不过 → 停下诊断再进比较器阶段"。
+REPRO_BUDGET = 290
+REPRO_SOURCES = (
+    # 5090 对 5090（GGS 45 格、Cricket/Ethanol/HMD 02–05 × 10、SCP2_02 × 10）
+    ("source_pool_v2", ROOT / "results" / "source_pool_v2" / "rprime_cache.jsonl"),
+    # 混机（HW/PS/UWave/UM 的 4060 与 5090 各半，按 device_name 分桶）
+    ("wide_panel", ROOT / "results" / "wide_panel" / "rprime_cache.jsonl"),
+)
+# 桶 → (容差, 命中率下限, 配对中位 |Δ| 上限 or None)
+REPRO_TOL = {
+    "same_5090": {"tol": 0.02, "min_within": 0.90, "max_median": 0.01},
+    "mixed": {"tol": 0.03, "min_within": 0.85, "max_median": None},
+}
 
 
 class TaskMeta(NamedTuple):
@@ -857,6 +880,162 @@ def stage1_consistency(result: dict, *, path: Path = STAGE1_NOISE, budget: int =
     return out
 
 
+# ---------------------------------------------------------------- 阶段：复现校验
+def _is_5090(device_name) -> bool:
+    return "5090" in str(device_name or "")
+
+
+def repro_bucket(new_device, old_device) -> str:
+    """一对行落哪个容差桶：两端都是 5090 → 严档，其余（含未知设备）→ 混机档。
+
+    §8 把两份参照分别写作"5090 对 5090"与"混机"，但 wide_panel 里两种机器各占一半，
+    所以判据只能逐行按 `device_name` 分——按文件名一刀切会把其中 167 条 5090↔5090
+    的对子也放宽到 0.03，白丢一半的分辨力。
+    """
+    return ("same_5090" if _is_5090(new_device) and _is_5090(old_device)
+            else "mixed")
+
+
+def _repro_index(rows: Iterable[dict], *, budget: int,
+                 canonical_only: bool) -> dict[tuple, dict]:
+    """{(task_id, cls_key, weight_seed): 行}——只留该预算档的有限 R'。
+
+    `canonical_only`（新缓存侧）额外要求 `seed == 0`：噪声探针的 rep 行是**另一条
+    轨迹**（另一个 weight_seed 本就对不上，但 seed 字段是更直接的判据），混进来
+    只会让"重叠数"看着变大。旧缓存没有 seed 字段（全是 canonical），不设此闸。
+    """
+    out: dict[tuple, dict] = {}
+    for r in rows:
+        if int(r.get("iters", -1)) != int(budget):
+            continue
+        if canonical_only and int(r.get("seed") or 0) != 0:
+            continue
+        rp = r.get("r_prime")
+        if rp is None or not np.isfinite(rp):
+            continue
+        ws = r.get("weight_seed")
+        if ws is None:
+            continue
+        out[(r["task_id"], r["cls_key"], int(ws))] = r
+    return out
+
+
+def _repro_bucket_stats(pairs: Sequence[tuple[float, float]], rule: dict) -> dict:
+    """一个桶的判定：命中率 + 配对中位 |Δ| + 符号均值（后者只报，不设门）。"""
+    diffs = [new - old for new, old in pairs]
+    absd = sorted(abs(d) for d in diffs)
+    n_within = sum(1 for d in absd if d <= rule["tol"])
+    frac = n_within / len(absd)
+    median = statistics.median(absd)
+    ok = frac >= rule["min_within"] and (rule["max_median"] is None
+                                         or median <= rule["max_median"])
+    return {"n": len(absd), "n_within": n_within, "frac_within": frac,
+            "median_abs": median, "signed_mean": statistics.fmean(diffs),
+            "max_abs": absd[-1], "tol": rule["tol"],
+            "min_within": rule["min_within"], "max_median": rule["max_median"],
+            "ok": bool(ok)}
+
+
+def reproduce_check(outdir: Path, *, sources: Sequence[tuple[str, Path]] = None,
+                    budget: int = REPRO_BUDGET,
+                    tolerances: dict = None) -> dict:
+    """PROTOCOL §8 复现校验：新 @290 canonical 行 vs 旧缓存，落盘 reproduction_check.json。
+
+    连接键 = (task_id, cls_key, weight_seed)——**同一条轨迹的三要素**。只比 R'：
+    seconds/device 本就该不同，acc/f1 是 R' 的同源读数。
+
+    判定（阈值来自 §8，跑完不改）：
+    - 5090↔5090：≥90% 的对子 |ΔR'| ≤ 0.02 **且** 配对中位 |Δ| ≤ 0.01；
+    - 混机：≥85% 的对子 |ΔR'| ≤ 0.03（§8 没给中位门，故不设）。
+    档位**逐对按 device_name 分**（wide_panel 里 4060/5090 各占一半，按文件一刀切
+    会把其中 167 条 5090↔5090 也放宽到 0.03）；每个源另出一份 §8 原文口径的
+    `protocol_reading`（按文件定档、全部对子合并）作对照，只报不判。
+
+    **零重叠不是通过**：一个都没连上意味着切片定义/种子口径已经漂了（或者参照
+    缓存没上传），这时"没有反例"恰恰是最坏的信号，故与超差同样判红。
+    """
+    outdir = Path(outdir)
+    sources = tuple(sources if sources is not None else REPRO_SOURCES)
+    tolerances = tolerances if tolerances is not None else REPRO_TOL
+    new_rows = read_rows(outdir / "rprime_cache.jsonl")
+    new_idx = _repro_index(new_rows, budget=budget, canonical_only=True)
+    print(f"\n复现校验（@{budget}，PROTOCOL §8）：本次 canonical 行 {len(new_idx)}")
+
+    per_source: dict[str, dict] = {}
+    hard: list[str] = []
+    for name, path in sources:
+        path = Path(path)
+        entry: dict = {"path": str(path), "n_old_rows": 0, "n_matched": 0,
+                       "buckets": {}, "failures": [], "ok": False}
+        if not path.exists():
+            entry["failures"].append(
+                f"缺参照缓存 {path}（setup.sh 的 data_pq.tar.gz 清单里有它，"
+                "没解出来说明 bundle 漏打或路径不对）")
+            per_source[name] = entry
+            hard.append(f"{name}: 缺参照缓存")
+            print(f"  ❌ [{name}] 缺参照缓存 {path}")
+            continue
+        old_idx = _repro_index(read_rows(path), budget=budget,
+                               canonical_only=False)
+        entry["n_old_rows"] = len(old_idx)
+        buckets: dict[str, list[tuple[float, float]]] = defaultdict(list)
+        for key, old in old_idx.items():
+            new = new_idx.get(key)
+            if new is None:
+                continue
+            buckets[repro_bucket(new.get("device_name"),
+                                 old.get("device_name"))].append(
+                (float(new["r_prime"]), float(old["r_prime"])))
+        entry["n_matched"] = sum(len(v) for v in buckets.values())
+        if not entry["n_matched"]:
+            entry["failures"].append(
+                f"与 {path} 零重叠（旧 @{budget} 行 {len(old_idx)}，本次 canonical "
+                f"{len(new_idx)}）——切片/CLS/权重种子口径可能已漂，"
+                "**不得读作通过**")
+            per_source[name] = entry
+            hard.append(f"{name}: 零重叠")
+            print(f"  ❌ [{name}] 零重叠（旧 {len(old_idx)} 行）")
+            continue
+        for bname, pairs in sorted(buckets.items()):
+            st = _repro_bucket_stats(pairs, tolerances[bname])
+            entry["buckets"][bname] = st
+            flag = "✅" if st["ok"] else "❌"
+            print(f"  {flag} [{name}/{bname}] n={st['n']} 命中 "
+                  f"{st['n_within']}/{st['n']}={st['frac_within']:.3f}"
+                  f"（≥{st['min_within']:.2f} @tol {st['tol']}）| 中位 |Δ|="
+                  f"{st['median_abs']:.4f}"
+                  + (f"（≤{st['max_median']}）" if st["max_median"] else "")
+                  + f" | 符号均值 {st['signed_mean']:+.4f} | 最大 |Δ|="
+                    f"{st['max_abs']:.4f}")
+            if not st["ok"]:
+                entry["failures"].append(
+                    f"{bname}: 命中 {st['frac_within']:.3f} / 中位 "
+                    f"{st['median_abs']:.4f}（门 ≥{st['min_within']} @"
+                    f"{st['tol']}，中位 ≤{st['max_median']}）")
+        # 逐源汇总读数（§8 是**按文件**给阈值的：source_pool_v2 全 5090 走严档，
+        # wide_panel 含 4060 走混机档）。判红仍以逐对分桶为准——分桶只会更严，
+        # 绝不放宽；两个读数不一致时，操作方看得见分歧再决定要不要
+        # --allow-reproduction-breach，而不是被一个数字蒙住。
+        all_pairs = [p for v in buckets.values() for p in v]
+        srule = "mixed" if "mixed" in buckets else "same_5090"
+        entry["protocol_reading"] = {
+            "regime": srule, **_repro_bucket_stats(all_pairs, tolerances[srule])}
+        entry["ok"] = not entry["failures"]
+        if not entry["ok"]:
+            hard.append(f"{name}: " + "；".join(entry["failures"]))
+        per_source[name] = entry
+
+    rep = {"budget": int(budget), "ok": not hard,
+           "n_new_canonical": len(new_idx), "sources": per_source,
+           "hard_failures": hard,
+           "thresholds": {k: dict(v) for k, v in tolerances.items()}}
+    write_json_atomic(outdir / "reproduction_check.json", rep)
+    print("✅ 复现校验通过" if not hard
+          else f"❌ 复现校验失败: {'；'.join(hard)}", flush=True)
+    print(f"→ {outdir / 'reproduction_check.json'}", flush=True)
+    return rep
+
+
 # ---------------------------------------------------------------- 阶段：verify
 def verify(outdir: Path, plan: Sequence[Cell], noise_cells: Sequence[NoiseCell],
            budgets: Sequence[int], *, inflight_extra: Path | None = None,
@@ -892,6 +1071,10 @@ def verify(outdir: Path, plan: Sequence[Cell], noise_cells: Sequence[NoiseCell],
     nrows = read_rows(outdir / "noise_probe.jsonl")
     nidx = {(r["task_id"], r["cls_key"], int(r["iters"]), int(r["seed"])): r
             for r in nrows}
+    # 噪声缓存的同键重复与主缓存同罪（键**带 seed**：rep1/rep2 是两条独立轨迹，
+    # 不算重复）。同一 (切片, CLS, 预算, rep) 出现两次 = 那条轨迹跑了两遍，
+    # δ 会把同一份差值算进 P95 两次，标定值静默偏移，而主缓存那道闸对本文件失明。
+    n_noise_dup = len(nrows) - len(nidx)
     n_noise_missing = sum(
         1 for c in noise_cells for b in budgets
         if (c.slice_id, c.cls_key, b, c.rep) not in nidx)
@@ -912,7 +1095,8 @@ def verify(outdir: Path, plan: Sequence[Cell], noise_cells: Sequence[NoiseCell],
           f"terminal {len(states[TERMINAL])} / missing {len(states[MISSING])}"
           f"（共 {len(plan)} 格）｜噪声毒轨迹 {len(nstates[TERMINAL])}")
     print(f"noise_probe: {len(nrows)} 行 / 期望 {len(noise_cells) * len(budgets)}"
-          f"（缺 {n_noise_missing}，null 无 error {n_noise_null}）")
+          f"（缺 {n_noise_missing}，重复 {n_noise_dup}，"
+          f"null 无 error {n_noise_null}）")
     print(f"device_name: {devices if devices else '（无）'}"
           + ("  ⚠️ 跨设备混杂" if len(devices) > 1 else ""))
     if ooms:
@@ -943,6 +1127,8 @@ def verify(outdir: Path, plan: Sequence[Cell], noise_cells: Sequence[NoiseCell],
         hard.append(f"半条轨迹 {len(states[PARTIAL])}")
     if n_dup:
         hard.append(f"重复键 {n_dup}")
+    if n_noise_dup:
+        hard.append(f"噪声重复键 {n_noise_dup}")
     if n_null_no_error or n_noise_null:
         hard.append(f"null 无 error {n_null_no_error + n_noise_null}")
     if n_noise_missing:
@@ -960,7 +1146,8 @@ def verify(outdir: Path, plan: Sequence[Cell], noise_cells: Sequence[NoiseCell],
           flush=True)
     return {"ok": not hard, "hard_failures": hard, "n_rows": len(rows),
             "n_main": n_main, "n_ggs": n_ggs, "n_noise": len(nrows),
-            "n_duplicate": n_dup, "n_null_no_error": n_null_no_error,
+            "n_duplicate": n_dup, "n_noise_duplicate": n_noise_dup,
+            "n_null_no_error": n_null_no_error,
             "n_missing": len(states[MISSING]), "n_partial": len(states[PARTIAL]),
             "n_terminal": n_terminal_all, "n_done": len(states[DONE]),
             "n_terminal_main": len(states[TERMINAL]),
@@ -992,7 +1179,7 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--allow-terminal", action="store_true",
                     help="--verify 时把毒轨迹当已知损失放行（默认判红）")
     ap.add_argument("--checkpoints", nargs="+", type=int, default=None,
-                    help="覆盖预算档（仅 smoke/调试用；默认 configs 的 budgets）")
+                    help="覆盖预算档（仅 smoke/非生产 --outdir；默认 configs 的 budgets）")
     ap.add_argument("--tasks", action="store_true")
     ap.add_argument("--fill", action="store_true")
     ap.add_argument("--ggs", action="store_true")
@@ -1000,6 +1187,11 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--calibrate", action="store_true")
     ap.add_argument("--apply-delta", action="store_true")
     ap.add_argument("--verify", action="store_true")
+    ap.add_argument("--reproduce-check", action="store_true",
+                    help="PROTOCOL §8 复现校验：新 @290 行 vs source_pool_v2 / "
+                         "wide_panel 旧缓存（不过则非零退出）")
+    ap.add_argument("--allow-reproduction-breach", action="store_true",
+                    help="复现校验超差时仍返回 0（须人工确认后显式使用）")
     ap.add_argument("--smoke", action="store_true",
                     help="2 数据集 × 切片 00 × 5 CLS（2 shared/2 random/GGS）"
                          " × checkpoints(4,8,12) 全流程")
@@ -1010,15 +1202,25 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap = build_parser()
     args = ap.parse_args(argv)
     stages = (args.tasks, args.fill, args.ggs, args.noise_probe, args.calibrate,
-              args.verify, args.smoke)
+              args.verify, args.smoke, args.reproduce_check)
     if not any(stages):
         ap.error("至少指定一个阶段（--tasks/--fill/--ggs/--noise-probe/"
-                 "--calibrate/--verify/--smoke）")
+                 "--calibrate/--verify/--reproduce-check/--smoke）")
 
     if args.apply_delta and not args.calibrate:
         ap.error("--apply-delta 必须与 --calibrate 同跑（回填的是本次标定值）")
     if args.apply_delta and args.smoke:
         ap.error("--smoke 的 δ 是玩具口径（checkpoints 4/8/12），绝不回填 labels.yaml")
+    # --checkpoints 改的是**缓存键**（铁律 2 的 iters 口径）。作用在生产目录上，
+    # 跑出来的行与全量网格同 (task_id, cls_key) 却是另一个训练量，混进
+    # rprime_cache.jsonl 就再也分不出来。只在 smoke 或另开 --outdir 时放行。
+    if args.checkpoints and not args.smoke:
+        prod = (args.outdir is None
+                or Path(args.outdir).resolve() == DEFAULT_OUTDIR)
+        if prod:
+            print(f"❌ --checkpoints 会改 iters 口径，不得作用在真值网格目录 "
+                  f"{DEFAULT_OUTDIR}——请加 --smoke 或换一个 --outdir", flush=True)
+            sys.exit(2)     # 与定义漂移/smoke 误写同码：配置层硬错，开跑前就断
 
     cfg = pq.load_pq_config()
     labels_cfg = yaml.safe_load(
@@ -1166,6 +1368,16 @@ def main(argv: Sequence[str] | None = None) -> int:
                      oom_log=oom_log, allow_terminal=args.allow_terminal)
         if not rep["ok"]:
             return 1
+
+    if args.reproduce_check:
+        rep = reproduce_check(outdir)
+        if not rep["ok"]:
+            if not args.allow_reproduction_breach:
+                print("   §8：复现校验不过 → **停下诊断，不得进比较器阶段**。"
+                      "确认无碍才用 --allow-reproduction-breach 放行", flush=True)
+                return 5
+            print("   ⚠️ --allow-reproduction-breach：超差已被显式放行，"
+                  "报表须声明本轮 R' 与历史口径的偏差", flush=True)
     return 0
 
 

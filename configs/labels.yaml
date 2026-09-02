@@ -131,8 +131,14 @@ pq:
     slices: 2
     reps: [1, 2]
   # δ 按 (数据集, 预算) 查表——噪声尺度随训练量变（step0.5 的 iters U 形地板），
-  # 单一 per-dataset δ 会在某个预算档上放行噪声 label。空表 = 未标定：由
-  # `python scripts/32_*.py --calibrate --apply-delta` 回填后配对才放行（2c 同款 fail-fast）。
+  # 单一 per-dataset δ 会在某个预算档上放行噪声 label。
+  # **本表是 33 号配对读 δ 的唯一真源**（跑之前钉死的口径，随代码进版本库、可 diff
+  # 审计）；产物目录里的 results/mx3_pq/delta_calibration.json 只在场时作 ±1e-9
+  # 等值对账，不是真源，两者不等即 fail-fast（谁对谁错没有正确答案，只能停下）。
+  # 空表 = 未标定：由 `python scripts/32_pq_generate_rprime.py --calibrate
+  # --apply-delta` 回填后配对才放行（2c 同款 fail-fast）。
+  # 例外只有 --smoke：冒烟 δ 是玩具口径（checkpoints 4/8/12），32 号拒绝回填本表，
+  # 33 号 --smoke 因此改读产物目录那份。
   delta_per_dataset_budget: {}
   # 进化搜索（Algorithm 2；autocls/search/evolution.py 参数唯一真源）
   evolution:

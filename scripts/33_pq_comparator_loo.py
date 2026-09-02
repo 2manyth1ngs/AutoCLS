@@ -11,6 +11,12 @@
     python scripts/33_pq_comparator_loo.py --train --arms ... --folds ... --resume
         10 个臂 × 折 × 种子；训练用硬 δ 动态配对（A7 走软 label），评估在目标数据集
         的 δ 过滤单向对 + 反向；五档消融（within / cross / budget / zero_E / zero_ctx）
+        材料口径：每 (切片, 预算) **20 条 CLS**（10 shared + 10 random；GGS 是 34 号的
+        外部锚臂，`pq.build_records` 的 origin 过滤把它挡在比较器之外）→ 训练 2340 /
+        考侧 360 条记录。真值网格不满格即 exit 2（`--allow-partial-cache` 才放行，
+        analysis.json 会标 `partial_cache: true`）。
+        δ 只从 `configs/labels.yaml: pq.delta_per_dataset_budget` 读（唯一真源；
+        产物目录的 delta_calibration.json 在场时作 ±1e-9 对账，不是真源）。
     python scripts/33_pq_comparator_loo.py --analyze
         逐 (臂, 折) 中位种子档位 + pooled Wilcoxon + 判读码 + 预测对账 + 成本表
 
@@ -351,7 +357,13 @@ def get_fold_ts2vec(fold_dir: Path, target: str, fit_datasets: list[str], data: 
 def _encode_all_slices(feat_dir: Path, data: dict, shared, set_enc, *, ra: dict,
                        sample_num: int, t_max: int, names: Sequence[str],
                        allow_unfit: bool = False) -> int:
-    """把 names 里各数据集的全部 PQ 切片编码进 feat_dir（已存在的 npz 跳过 = --resume）。"""
+    """把 names 里各数据集的全部 PQ 切片编码进 feat_dir（已存在的 npz 跳过 = --resume）。
+
+    **窗口数不符即覆盖重编码**：`settf_windows` 是预注册旋钮（100 → 32），改了它
+    却拿旧 npz 跳过，就会出现"meta 记 32、实际喂 100"的静默漂移——标定出来的墙钟
+    与判读全对不上，而 --resume 一声不吭。改成重编码而不是报错：这一步本就是
+    "把特征做对"，重跑代价可控（一次前向），报错只会逼人手工 rm -rf 折目录。
+    """
     from autocls.data.task_slicer import materialize_task
     feat_dir.mkdir(parents=True, exist_ok=True)
     n = 0
@@ -360,8 +372,15 @@ def _encode_all_slices(feat_dir: Path, data: dict, shared, set_enc, *, ra: dict,
         for t in ds.slices:
             path = feat_dir / f"{t.task_id}.npz"
             if path.exists():
-                n += 1
-                continue
+                with np.load(path) as npz:
+                    have = int(npz["windows_repr"].shape[0])
+                    want = pq.expected_window_count(
+                        sample_num, pq.n_instances_from_meta(npz.get("META")))
+                if have == want:
+                    n += 1
+                    continue
+                print(f"  ↻ {path.name} 窗口数 {have} ≠ 期望 {want}"
+                      f"（settf_windows={sample_num}）→ 覆盖重编码", flush=True)
             Xt, _yt = materialize_task(t, ds.X, ds.y)
             feat = encode_slice_feature(
                 Xt, t.task_type, shared, set_enc, sample_num=sample_num,
@@ -651,15 +670,114 @@ def ablation_block(engine, directed: Sequence[Pair], n_fwd: int,
     return blocks, correct
 
 
+# ================================================================ δ 真源 / 网格闸
+def delta_table_from_labels(pq_cfg: dict) -> dict[tuple[str, int], float]:
+    """`configs/labels.yaml: pq.delta_per_dataset_budget` → {(数据集, 预算): δ}。
+
+    YAML 里预算键可能被解析成 int（`60:`）或 str（`"60":`），一律归一到 int。
+    """
+    raw = (pq_cfg or {}).get("delta_per_dataset_budget") or {}
+    return {(d, int(b)): float(v)
+            for d, per_b in raw.items() for b, v in (per_b or {}).items()}
+
+
+def load_delta_source(pq_cfg: dict, calibration_path, *,
+                      smoke: bool = False) -> tuple[dict[tuple[str, int], float], str]:
+    """δ 的唯一真源装载 + 对账 → ({(数据集, 预算): δ}, 来源说明)。
+
+    **真源是 configs/labels.yaml 的 `pq.delta_per_dataset_budget`**，不是产物目录里的
+    `delta_calibration.json`：δ 决定哪些配对成为 label，属于"跑之前钉死的口径"，
+    必须与代码一起进版本库、可被 diff 审计；产物目录会被 --fresh/重跑覆盖。
+    json 在场时逐项对账（±1e-9）——两者一旦不等，说明有人重标了 δ 却没回填
+    （或反过来手改了 labels.yaml），此时"该信哪个"没有正确答案，只能停下。
+
+    `smoke=True` 例外：冒烟的 δ 是玩具口径（32 号 --smoke 的 checkpoints 4/8/12），
+    32 号本身就拒绝把它回填 labels.yaml，故只能读产物目录那份。
+    """
+    calibration_path = Path(calibration_path)
+    if smoke:
+        if not calibration_path.exists():
+            sys.exit(f"缺 {calibration_path}：冒烟的 δ 只能来自产物目录"
+                     "（先跑 scripts/32_pq_generate_rprime.py --smoke）")
+        return (pq.load_delta_calibration(calibration_path),
+                f"{calibration_path.name}（smoke 口径，不进 labels.yaml）")
+
+    table = delta_table_from_labels(pq_cfg)
+    if not table:
+        sys.exit(
+            "configs/labels.yaml: pq.delta_per_dataset_budget 是空表——δ 未标定，"
+            "配对无从判优劣（2c 同款 fail-fast）。先跑："
+            "\n    python scripts/32_pq_generate_rprime.py --calibrate --apply-delta")
+    src = "configs/labels.yaml: pq.delta_per_dataset_budget"
+    if not calibration_path.exists():
+        return table, src
+    cal = pq.load_delta_calibration(calibration_path)
+    bad = []
+    for key in sorted(set(table) | set(cal)):
+        a, b = table.get(key), cal.get(key)
+        if a is None or b is None or abs(a - b) > 1e-9:
+            bad.append(f"{key[0]}@{key[1]}: labels.yaml={a} vs "
+                       f"{calibration_path.name}={b}")
+    if bad:
+        sys.exit(
+            f"δ 口径漂移：labels.yaml 与 {calibration_path} 不一致（±1e-9 判等）\n  "
+            + "\n  ".join(bad)
+            + "\n  两者必须同源：重标过就跑 `32 --calibrate --apply-delta` 回填，"
+              "别手改任何一边")
+    return table, f"{src}（与 {calibration_path.name} 对账一致）"
+
+
+def cache_grid_gaps(cache: dict, budgets: Sequence[int], *,
+                    datasets: Sequence[str] = pq.PQ_DATASETS,
+                    n_shared: int = pq.N_SHARED,
+                    n_random: int = pq.N_RANDOM) -> list[str]:
+    """真值网格的缺口清单（空表 = 满格）：数据集 × 注册表切片 × 预算 × 20 条有限 R'。
+
+    协议 §2 的目录是 **10 shared + 10 random**（GGS 是 34 号的外部锚，不计数，与
+    `pq.build_records` 的 origin 过滤同口径）。判读表、消融档位、regret 的分母全
+    按满格写死；半张网格跑出来的 acc 与"缺哪几格"耦合，读者却无从分辨。
+    """
+    bs = tuple(int(b) for b in budgets)
+    want = {pq.ORIGIN_SHARED: int(n_shared), pq.ORIGIN_RANDOM: int(n_random)}
+    counts: dict[tuple[str, int, str], int] = defaultdict(int)
+    for (tid, _key, it), rec in cache.items():
+        b = int(it)
+        if b not in bs:
+            continue
+        origin = rec.get("origin")
+        if origin not in want:
+            continue
+        rp = rec.get("r_prime")
+        if rp is None or not np.isfinite(rp):
+            continue
+        counts[(tid, b, origin)] += 1
+    present = {tid for (tid, _b, _o) in counts}
+    gaps: list[str] = []
+    for d in datasets:
+        slices = pq.pq_slice_ids(d)
+        if not any(s in present for s in slices):
+            gaps.append(f"{d}（整个数据集缺）")
+            continue
+        for s in slices:
+            for b in bs:
+                for origin, need in want.items():
+                    got = counts.get((s, b, origin), 0)
+                    if got != need:
+                        gaps.append(f"{s}@{b} {origin} {got}/{need}")
+    return gaps
+
+
 # ================================================================ 阶段 B：装配
 class PQContext:
     """一次 --train 会话的共享装载（缓存 / δ 表 / 配置 / CLS 编码器）。"""
 
     def __init__(self, outdir: Path, *, device: str, epochs: Optional[int] = None,
                  settf_windows: Optional[int] = None,
-                 budgets: Optional[Sequence[int]] = None):
+                 budgets: Optional[Sequence[int]] = None,
+                 smoke: bool = False, allow_partial_cache: bool = False):
         self.outdir = Path(outdir)
         self.device = device
+        self.smoke = bool(smoke)
         labels_cfg = yaml.safe_load(
             (ROOT / "configs" / "labels.yaml").read_text(encoding="utf-8"))
         self.task_type = labels_cfg["task_type"]
@@ -690,8 +808,33 @@ class PQContext:
                         (pq.BUDGETS if set(pq.BUDGETS) <= set(present)
                          else tuple(present)))
         self.slices_by_ds = _slices_by_dataset(sorted({k[0] for k in self.cache}))
-        self.calibration = pq.load_delta_calibration(
-            self.outdir / "delta_calibration.json")
+        # 满格闸（协议 §2 的 45 切片 × 20 CLS × 3 预算）：判读/消融/regret 的分母
+        # 都按满格写死，半张网格的读数与"缺哪几格"耦合，报表里却看不出来。
+        self.grid_gaps = cache_grid_gaps(self.cache, self.budgets)
+        self.partial_cache = bool(self.grid_gaps)
+        if self.grid_gaps and not self.smoke and not allow_partial_cache:
+            # 整数据集缺的条目**永远单列**：明细按数据集顺序排，头 20 条很容易被
+            # 第一个数据集的逐格缺口占满，读者会以为"只差 Handwriting 几格"。
+            whole = [g for g in self.grid_gaps if "整个数据集缺" in g]
+            detail = [g for g in self.grid_gaps if g not in whole][:20]
+            more = ("" if len(self.grid_gaps) <= len(whole) + len(detail)
+                    else f"\n    …… 共 {len(self.grid_gaps)} 处")
+            print(
+                f"❌ 真值网格不满格（{cache_path}）：共 {len(self.grid_gaps)} 处缺口\n"
+                + (f"  整个数据集缺：{whole}\n" if whole else "")
+                + (f"  明细：\n    " + "\n    ".join(detail) + more + "\n"
+                   if detail else "")
+                + "  先跑完 `python scripts/32_pq_generate_rprime.py --fill --ggs "
+                  "--noise-probe --resume` 并过 --verify；\n"
+                  "  确要在半张网格上出中间读数，显式加 --allow-partial-cache"
+                  "（analysis.json 会标 partial_cache: true）", flush=True)
+            sys.exit(2)     # 与 32 号的配置层硬错同码
+        if self.partial_cache:
+            print(f"⚠️ 真值网格不满格（{len(self.grid_gaps)} 处缺口）"
+                  f"{'：冒烟口径' if self.smoke else '：已按 --allow-partial-cache 放行'}",
+                  flush=True)
+        self.calibration, self.delta_source = load_delta_source(
+            self.pq_cfg, self.outdir / "delta_calibration.json", smoke=self.smoke)
         self.init_path = self.outdir / "set_encoder_init.pt"
         # 只缓存"当前特征目录"的窗口表征（键 = 切片 id）；换目录即清空，见 windows()
         self._windows_cache: dict[str, np.ndarray] = {}
@@ -757,6 +900,11 @@ class PQContext:
         进程内只缓存**当前一个特征目录**：45 切片 × (100, 152, 256) float32 ≈ 0.65 GiB，
         7 折 + all8 + per_dataset + unfit 十余个目录全留会吃掉 ~8 GiB 宿主内存。
         目录一换就整表清空（换回来会重读盘，代价远小于常驻）。
+
+        **窗口条数必须逐位等于 `settf_windows`**（预注册旋钮 100 → 32）：绝不截成
+        `[:n]`。截断会让"旋钮生效了"这件事在读数上不可分辨——喂进 SetTF 的是旧
+        npz 的前 n 个窗口，而 meta/报表里记的是新值；模型侧还完全不报错（SetTF
+        本就吃变长集合）。npz 与旋钮不符只有一个正确处置：重跑 --fit-folds。
         """
         feat_dir = self.feature_dir(spec, fold)
         if feat_dir is None:
@@ -777,7 +925,20 @@ class PQContext:
                 sys.exit(f"缺特征 {path}：先跑 --fit-folds / --fit-per-dataset")
             if s not in self._windows_cache:
                 with np.load(path) as npz:
-                    self._windows_cache[s] = npz["windows_repr"].astype(np.float32)
+                    w = npz["windows_repr"].astype(np.float32)
+                    want = pq.expected_window_count(
+                        self.settf_windows,
+                        pq.n_instances_from_meta(npz.get("META")))
+                if int(w.shape[0]) != want:
+                    sys.exit(
+                        f"{path} 的窗口数 {int(w.shape[0])} ≠ 期望 {want}"
+                        f"（settf_windows={self.settf_windows}，按切片实例数封顶）。"
+                        "特征是旧口径产的：\n"
+                        f"  先移走/删掉 {feat_dir}，再跑 `python "
+                        f"scripts/33_pq_comparator_loo.py --fit-folds "
+                        f"--settf-windows {self.settf_windows}`"
+                        "（A1 臂另需 --fit-per-dataset）")
+                self._windows_cache[s] = w
             out[s] = self._windows_cache[s]
         return out
 
@@ -947,6 +1108,10 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
         "fold": fold, "split": spec.split, "arm": spec.name, "seed": seed,
         "train_datasets": list(train_ds), "test_dataset": test_ds,
         "budgets": [int(b) for b in ctx.budgets],
+        # 这一跑站在满格网格上吗（--allow-partial-cache / 冒烟即 true）。
+        # analyze 把它抬到 analysis.json 顶层，判读引用必须先看这一位。
+        "partial_cache": bool(ctx.partial_cache),
+        "delta_source": ctx.delta_source,
         "settings": {
             "task_branch": spec.task_branch, "ctx_dim": cdim,
             "ctx_encoding": ctx.pq_cfg["ctx_encoding"], "ctx_kind": spec.ctx_kind,
@@ -1039,10 +1204,13 @@ def _write_skipped(outdir: Path, skips: list[dict], attempted: set) -> None:
 
 def cmd_train(outdir: Path, *, arms: Sequence[str], folds: Optional[Sequence[str]],
               seeds: Optional[Sequence[int]], resume: bool, device: str,
-              epochs: Optional[int], settf_windows: Optional[int]) -> None:
-    ctx = PQContext(outdir, device=device, epochs=epochs, settf_windows=settf_windows)
+              epochs: Optional[int], settf_windows: Optional[int],
+              smoke: bool = False, allow_partial_cache: bool = False) -> None:
+    ctx = PQContext(outdir, device=device, epochs=epochs, settf_windows=settf_windows,
+                    smoke=smoke, allow_partial_cache=allow_partial_cache)
     print(f"缓存 {len(ctx.cache)} 行 | 预算 {ctx.budgets} | 数据集 "
-          f"{sorted(ctx.slices_by_ds)} | device={device}", flush=True)
+          f"{sorted(ctx.slices_by_ds)} | δ 源 {ctx.delta_source} | device={device}",
+          flush=True)
     skips: list[dict] = []          # 本轮跳过的 (臂, 折, 种子)，逐条即时落盘
     attempted: set = set()          # 本轮试过的组合：成功的要把历史 skip 记录清掉
     for name in arms:
@@ -1094,9 +1262,11 @@ def project_run_minutes(train_seconds: float, total_seconds: float,
 
 
 def cmd_calibrate_windows(outdir: Path, device: str,
-                          settf_windows: Optional[int]) -> None:
+                          settf_windows: Optional[int],
+                          allow_partial_cache: bool = False) -> None:
     """预注册旋钮标定：折 Handwriting 的 A0 s0 跑一个 epoch，外推整跑墙钟。"""
-    ctx = PQContext(outdir, device=device, epochs=1, settf_windows=settf_windows)
+    ctx = PQContext(outdir, device=device, epochs=1, settf_windows=settf_windows,
+                    allow_partial_cache=allow_partial_cache)
     spec, fold = ARMS["main"], "Handwriting"
     full_epochs = yaml.safe_load(
         (ROOT / "configs" / "pretrain_tclsc.yaml").read_text(encoding="utf-8"))["epochs"]
@@ -1213,6 +1383,10 @@ def analyze(outdir) -> dict:
                 # "s2_oracle"（上界对照，本就不是 zero-shot）——判读引用必须带这个标。
                 "iron_law_6_compliant": settings.get("iron_law_6_compliant"),
                 "feature_fold": settings.get("feature_fold"),
+                # 铁律 6 可在 analysis.json 里**逐折自证**：训练侧数据集清单原样抄
+                # 出来，读者不必回去翻 runs/ 就能核对考侧不在其中。
+                "train_datasets": list(chosen.get("train_datasets") or []),
+                "partial_cache": chosen.get("partial_cache"),
                 "tiers": {k: (tier_of(chosen[k]) if chosen.get(k) else None)
                           for k in ("within", "cross", "budget")},
                 "mean_delta": {k: (chosen[k]["mean_delta"] if chosen.get(k) else None)
@@ -1309,6 +1483,11 @@ def analyze(outdir) -> dict:
 
     out = {
         "protocol": "results/mx3_pq/PROTOCOL.md",
+        # 任何一跑站在半张真值网格上，整份 analysis 的分母就不是协议写死的那个：
+        # 判读表/预测对账必须先声明这一位（缺字段的老 run 视为未知，按 False 计）。
+        "partial_cache": bool(any(r.get("partial_cache") for r in runs)),
+        "delta_sources": sorted({str(r["delta_source"]) for r in runs
+                                 if r.get("delta_source")}),
         "per_arm_fold": per_arm_fold,
         "tests": {
             "n_folds_A0": len(folds_a0), "folds_A0": folds_a0,
@@ -1500,8 +1679,10 @@ def run_smoke(outdir, *, epochs: int = 2, arms: Optional[Sequence[str]] = None,
                                   settf_windows=settf_windows, t_max=t_max, nz=nz)
     print(f"[smoke] 切片 {len(slices)} | 合成特征槽位 {n_feat}", flush=True)
     arm_list = list(arms) if arms else list(ALL_ARMS)
+    # smoke=True：冒烟缓存本就是薄网格（满格闸不适用），δ 也只能读产物目录那份
+    # 玩具口径（32 号拒绝把它回填 labels.yaml）——两个例外都由这一位统一开。
     cmd_train(outdir, arms=arm_list, folds=fold_list, seeds=seeds, resume=False,
-              device=device, epochs=epochs, settf_windows=settf_windows)
+              device=device, epochs=epochs, settf_windows=settf_windows, smoke=True)
     return cmd_analyze(outdir)
 
 
@@ -1522,6 +1703,9 @@ def main() -> None:
     ap.add_argument("--settf-windows", type=int, default=None,
                     help="覆盖 labels.yaml: pq.settf_windows（预注册旋钮）")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--allow-partial-cache", action="store_true",
+                    help="真值网格不满格时仍开跑（analysis.json 标 partial_cache: "
+                         "true；默认 exit 2）")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     ap.add_argument("--outdir", type=Path, default=OUT)
     args = ap.parse_args()
@@ -1535,7 +1719,8 @@ def main() -> None:
     if args.fit_per_dataset:
         cmd_fit_per_dataset(args.outdir, args.device, args.settf_windows)
     if args.calibrate_windows:
-        cmd_calibrate_windows(args.outdir, args.device, args.settf_windows)
+        cmd_calibrate_windows(args.outdir, args.device, args.settf_windows,
+                              allow_partial_cache=args.allow_partial_cache)
     if args.smoke:
         run_smoke(args.outdir, epochs=args.epochs or 2, arms=args.arms,
                   folds=args.folds,
@@ -1544,7 +1729,8 @@ def main() -> None:
     if args.train:
         cmd_train(args.outdir, arms=args.arms or list(ALL_ARMS), folds=args.folds,
                   seeds=args.seeds, resume=args.resume, device=args.device,
-                  epochs=args.epochs, settf_windows=args.settf_windows)
+                  epochs=args.epochs, settf_windows=args.settf_windows,
+                  allow_partial_cache=args.allow_partial_cache)
     if args.analyze:
         cmd_analyze(args.outdir)
 

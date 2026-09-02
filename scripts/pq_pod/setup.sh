@@ -17,6 +17,10 @@
 #       results/stage1_rerun_20260804/results/step0_snr_gate/noise_cache.jsonl
 #                                                 定义漂移闸 + @290 k3 一致性对账
 #       results/labels_workpoint/tasks.json       UniMiB-SHAR 的切片定义参照
+#       results/source_pool_v2/rprime_cache.jsonl   复现校验参照（全 5090，PROTOCOL §8）
+#       results/wide_panel/rprime_cache.jsonl       复现校验参照（4060/5090 混机，同上）
+#                                                 —— finish.sh 的 --reproduce-check 读这两份；
+#                                                    缺了整条收尾会判红（零重叠不算通过）
 #   md5_text_local.txt / md5_data_local.txt   本地清单（文本按 LF 归一化后的 md5）
 set -euo pipefail
 UP="${1:-/workspace/upload}"
@@ -50,6 +54,13 @@ find autocls scripts configs tests -type f \( -name '*.py' -o -name '*.yaml' -o 
 
 # 3) 数据 + 参照落盘
 tar --no-same-owner -xzf "$UP/data_pq.tar.gz" -C "$REPO"
+
+# 3b) bundle 期望：复现校验的两份旧缓存必须在场。md5 清单本来也会查它们，
+#     但只有 make_bundle.sh 打的包才带；这里显式点名，免得换个方式打包时
+#     一路跑到 finish.sh 最后一步才发现"零重叠"。
+for f in results/source_pool_v2/rprime_cache.jsonl results/wide_panel/rprime_cache.jsonl; do
+  [ -f "$f" ] || { echo "MISSING repro-reference $f（PROTOCOL §8 复现校验参照）"; exit 2; }
+done
 
 # 4) 一致性校验：文本按 LF 归一化 md5，二进制原样
 # 清单里的文件没解出来 = 漏了一份数据，必须报 MISSING 并判败；直接跑

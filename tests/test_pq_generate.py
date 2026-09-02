@@ -477,6 +477,196 @@ class TestVerify:
         rep = g32.verify(tmp_path, self._plan(cls_a), ncells, B2)
         assert rep["ok"] and rep["n_noise"] == 2
 
+    def test_noise_duplicate_keys_fail(self, tmp_path, cls_a):
+        """噪声缓存的同键重复行与主缓存同罪（Minor 8）。
+
+        噪声行的键带 seed：同一 (切片, CLS, 预算, rep) 出现两次，说明 rep 被跑了
+        两遍（--resume 失灵或并发重叠）。δ 会把同一条轨迹的差值算进 P95 两次，
+        标定值静默偏移，而主缓存那道零重复键的闸对噪声文件完全失明。
+        """
+        write_rows(tmp_path / "rprime_cache.jsonl", self._good_rows())
+        nrows = [cache_row("Cricket_00", "k1", b, 0.5, seed=1) for b in B2]
+        write_rows(tmp_path / "noise_probe.jsonl", nrows + nrows[:1])
+        ncells = [g32.NoiseCell("Cricket_00", "shared", cls_a, "k1", 1)]
+        rep = g32.verify(tmp_path, self._plan(cls_a), ncells, B2)
+        assert not rep["ok"] and rep["n_noise_duplicate"] == 1
+        assert any("噪声重复键" in h for h in rep["hard_failures"])
+
+    def test_noise_duplicate_ignores_rep_split(self, tmp_path, cls_a):
+        """rep1 / rep2 同 (切片, CLS, 预算) 不是重复：键必须带 seed。"""
+        write_rows(tmp_path / "rprime_cache.jsonl", self._good_rows())
+        write_rows(tmp_path / "noise_probe.jsonl",
+                   [cache_row("Cricket_00", "k1", b, 0.5, seed=r)
+                    for r in (1, 2) for b in B2])
+        ncells = [g32.NoiseCell("Cricket_00", "shared", cls_a, "k1", r)
+                  for r in (1, 2)]
+        rep = g32.verify(tmp_path, self._plan(cls_a), ncells, B2)
+        assert rep["ok"] and rep["n_noise_duplicate"] == 0
+
+
+# --------------------------------------------------------------- 复现校验（§8）
+def repro_row(slice_id, key, r_prime, *, weight_seed=7, iters=290, device="5090",
+              seed=0):
+    """复现校验只读这几个字段的行（新旧缓存共用同一个合成体）。"""
+    dev = {"5090": "NVIDIA GeForce RTX 5090",
+           "4060": "NVIDIA GeForce RTX 4060 Laptop GPU"}.get(device, device)
+    return {"dataset": pq.dataset_of(slice_id), "task_id": slice_id,
+            "cls_key": key, "iters": iters, "seed": seed, "origin": "shared",
+            "r_prime": r_prime, "weight_seed": weight_seed, "device_name": dev,
+            "error": None}
+
+
+class TestReproduceCheck:
+    """PROTOCOL §8：新 @290 行 vs 旧缓存同 (task_id, cls_key, weight_seed)。
+
+    5090↔5090 ≥90% 在 0.02 内且配对中位 |Δ| ≤ 0.01；混机 ≥85% 在 0.03 内。
+    """
+
+    KEYS = tuple(f"k{i}" for i in range(20))
+
+    def _write(self, tmp_path, *, new_offsets, old_device="5090",
+               new_device="5090", src_name="src_a"):
+        old = tmp_path / "old" / f"{src_name}.jsonl"
+        old.parent.mkdir(parents=True, exist_ok=True)
+        with open(old, "w", encoding="utf-8") as fh:
+            for i, k in enumerate(self.KEYS):
+                fh.write(json.dumps(repro_row(
+                    "Cricket_00", k, 0.50 + 0.001 * i, weight_seed=100 + i,
+                    device=old_device)) + "\n")
+        rows = [repro_row("Cricket_00", k, 0.50 + 0.001 * i + new_offsets[i],
+                          weight_seed=100 + i, device=new_device)
+                for i, k in enumerate(self.KEYS)]
+        write_rows(tmp_path / "rprime_cache.jsonl", rows)
+        return ((src_name, old),)
+
+    def test_within_tolerance_passes(self, tmp_path):
+        srcs = self._write(tmp_path, new_offsets=[0.001] * 20)
+        rep = g32.reproduce_check(tmp_path, sources=srcs)
+        assert rep["ok"], rep["hard_failures"]
+        s = rep["sources"]["src_a"]
+        assert s["n_matched"] == 20
+        b = s["buckets"]["same_5090"]
+        assert b["n"] == 20 and b["frac_within"] == 1.0
+        assert b["median_abs"] == pytest.approx(0.001, abs=1e-9)
+        assert b["signed_mean"] == pytest.approx(0.001, abs=1e-9)
+        assert (tmp_path / "reproduction_check.json").exists()
+
+    def test_breach_fraction_fails(self, tmp_path):
+        # 5 / 20 = 25% 超 0.02 → 命中率 0.75 < 0.90
+        offs = [0.05] * 5 + [0.001] * 15
+        srcs = self._write(tmp_path, new_offsets=offs)
+        rep = g32.reproduce_check(tmp_path, sources=srcs)
+        assert not rep["ok"]
+        assert rep["sources"]["src_a"]["buckets"]["same_5090"]["ok"] is False
+        assert any("src_a" in h for h in rep["hard_failures"])
+
+    def test_breach_median_fails(self, tmp_path):
+        """全部在 0.02 内，但配对中位 |Δ| = 0.015 > 0.01（§8 的第二个门）。"""
+        srcs = self._write(tmp_path, new_offsets=[0.015] * 20)
+        rep = g32.reproduce_check(tmp_path, sources=srcs)
+        b = rep["sources"]["src_a"]["buckets"]["same_5090"]
+        assert b["frac_within"] == 1.0 and b["ok"] is False
+        assert not rep["ok"]
+
+    def test_mixed_bucket_uses_loose_tolerance(self, tmp_path):
+        """新 5090 vs 旧 4060：走混机档（0.03 / 85%），同样的 Δ 不再判红。"""
+        srcs = self._write(tmp_path, new_offsets=[0.025] * 20, old_device="4060")
+        rep = g32.reproduce_check(tmp_path, sources=srcs)
+        s = rep["sources"]["src_a"]
+        assert "same_5090" not in s["buckets"]
+        assert s["buckets"]["mixed"]["n"] == 20 and rep["ok"]
+        # §8 原文口径（按文件定档）作对照读数：同样落混机档
+        assert s["protocol_reading"]["regime"] == "mixed"
+        assert s["protocol_reading"]["n"] == 20
+
+    def test_protocol_reading_is_reported_not_gating(self, tmp_path):
+        """分桶更严时，两个读数会不一致——如实并列，判红仍以分桶为准。"""
+        old = tmp_path / "old" / "src_a.jsonl"
+        old.parent.mkdir(parents=True, exist_ok=True)
+        rows_old, rows_new = [], []
+        for i, k in enumerate(self.KEYS):
+            dev = "5090" if i < 10 else "4060"
+            rows_old.append(repro_row("Cricket_00", k, 0.5, weight_seed=100 + i,
+                                      device=dev))
+            rows_new.append(repro_row("Cricket_00", k, 0.5 + 0.025,
+                                      weight_seed=100 + i, device="5090"))
+        old.write_text("".join(json.dumps(r) + "\n" for r in rows_old),
+                       encoding="utf-8")
+        write_rows(tmp_path / "rprime_cache.jsonl", rows_new)
+        rep = g32.reproduce_check(tmp_path, sources=(("src_a", old),))
+        s = rep["sources"]["src_a"]
+        assert s["buckets"]["same_5090"]["ok"] is False   # 0.025 > 0.02
+        assert s["buckets"]["mixed"]["ok"] is True        # 0.025 ≤ 0.03
+        assert s["protocol_reading"]["regime"] == "mixed"
+        assert s["protocol_reading"]["ok"] is True        # 按文件定档看是过的
+        assert not rep["ok"]                              # 判红以分桶为准
+
+    def test_no_overlap_is_not_a_pass(self, tmp_path):
+        """零重叠 ≠ 通过：必须给出可读的原因，且判红。"""
+        srcs = self._write(tmp_path, new_offsets=[0.001] * 20)
+        # 把新缓存换成别的 weight_seed（同 task/cls 但对不上轨迹）
+        (tmp_path / "rprime_cache.jsonl").write_text(
+            "".join(json.dumps(repro_row("Cricket_00", k, 0.5, weight_seed=9))
+                    + "\n" for k in self.KEYS), encoding="utf-8")
+        rep = g32.reproduce_check(tmp_path, sources=srcs)
+        assert not rep["ok"]
+        s = rep["sources"]["src_a"]
+        assert s["n_matched"] == 0 and s["ok"] is False
+        assert any("零重叠" in f for f in s["failures"]), s["failures"]
+
+    def test_missing_reference_cache_is_reported(self, tmp_path):
+        write_rows(tmp_path / "rprime_cache.jsonl",
+                   [repro_row("Cricket_00", "k1", 0.5)])
+        rep = g32.reproduce_check(
+            tmp_path, sources=(("src_a", tmp_path / "nope.jsonl"),))
+        assert not rep["ok"]
+        assert any("缺参照缓存" in f
+                   for f in rep["sources"]["src_a"]["failures"])
+
+    def test_only_canonical_at_290_is_joined(self, tmp_path):
+        """噪声 rep 行（seed≠0）与别的预算档不得混进复现校验。"""
+        srcs = self._write(tmp_path, new_offsets=[0.001] * 20)
+        write_rows(tmp_path / "rprime_cache.jsonl",
+                   [repro_row("Cricket_00", "k0", 0.9, weight_seed=100, seed=1),
+                    repro_row("Cricket_00", "k1", 0.9, weight_seed=101,
+                              iters=120)])
+        rep = g32.reproduce_check(tmp_path, sources=srcs)
+        assert rep["ok"] and rep["sources"]["src_a"]["n_matched"] == 20
+
+    def test_cli_exit_codes(self, tmp_path, monkeypatch):
+        srcs = self._write(tmp_path, new_offsets=[0.05] * 20)
+        monkeypatch.setattr(g32, "REPRO_SOURCES", srcs)
+        assert g32.main(["--reproduce-check", "--outdir", str(tmp_path)]) != 0
+        assert g32.main(["--reproduce-check", "--allow-reproduction-breach",
+                         "--outdir", str(tmp_path)]) == 0
+
+
+# --------------------------------------------------------------- --checkpoints 闸
+class TestCheckpointsGate:
+    """Minor 7：`--checkpoints` 会改口径，绝不允许作用在生产目录上。"""
+
+    def test_rejected_on_production_default(self):
+        with pytest.raises(SystemExit) as e:
+            g32.main(["--verify", "--checkpoints", "4", "8"])
+        assert e.value.code == 2
+
+    def test_rejected_on_explicit_production_outdir(self):
+        with pytest.raises(SystemExit) as e:
+            g32.main(["--verify", "--checkpoints", "4", "8",
+                      "--outdir", str(pq.OUT)])
+        assert e.value.code == 2
+
+    def test_allowed_with_smoke(self, tmp_path):
+        ap = g32.build_parser()
+        args = ap.parse_args(["--smoke", "--outdir", str(tmp_path),
+                              "--checkpoints", "4", "8"])
+        assert args.checkpoints == [4, 8]      # 解析层不拦，闸在 main 里
+
+    def test_allowed_on_other_outdir(self, tmp_path):
+        # 非生产目录：目录里没有网格，--verify 判红（返回 1）而不是 exit 2
+        assert g32.main(["--verify", "--checkpoints", "4", "8",
+                         "--datasets", "Cricket", "--outdir", str(tmp_path)]) == 1
+
 
 # --------------------------------------------------------------- δ 标定
 def _p95_ref(vals):

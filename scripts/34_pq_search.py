@@ -28,7 +28,9 @@ E-free 对照 = D2 的分母）、`cls_only`（A5，无任务支路，纯 CLS �
 - 铁律 3：进化 pick 的 R' 落 evo_cache.jsonl，按 (切片, cls_key, 预算) 恒幂等跳过；
   与主目录撞键的 pick 直接复用 rprime_cache.jsonl（canonical 种子相同 → 同一条轨迹）；
 - 铁律 7/8：排名侧只吃比较器输出的成对概率（autocls/search/rank.py 纯聚合），
-  "谁更优"的方向语义留在造 label 侧；本脚本不 import task_types。
+  "谁更优"的方向语义留在造 label 侧；本脚本只从 task_types 取 **task_type 取值
+  常量**（铁律 7 的唯一真源）来断言真值行确实是分类，不引 is_better——
+  regret/oracle 的方向是分类专用的、写死在 instance_arms 里，换任务类型要重写那段。
 
 不修改 autocls/**、不修改其它脚本：`scripts/5_target_zero_shot.pair_prob_matrix`
 不接 ctx，故此处实现本地变体 `pair_prob_matrix_ctx`（brief 明确要求）。
@@ -82,6 +84,7 @@ from autocls.search.rank import pair_vote_matrix, symmetrize  # noqa: E402
 from autocls.space.cls_encoder import CLSEncoder  # noqa: E402
 from autocls.space.cls_space import CLS, CLSSpace  # noqa: E402
 from autocls.task_embed import TaskSetEncoder  # noqa: E402
+from autocls.task_types import TASK_CLASSIFICATION  # noqa: E402
 from scripts import pq_common as pq  # noqa: E402
 
 # 25 号的定义原样复用（同一套 regret 语义，防漂移）
@@ -717,19 +720,65 @@ def check_windows_dim(w, model, *, meta=None, where: str = "") -> None:
             "`33_pq_comparator_loo.py --smoke` 让全目录同源")
 
 
+def check_windows_count(w, meta: Optional[dict], *,
+                        n_instances: Optional[int] = None,
+                        where: str = "") -> None:
+    """核对 `windows_repr` 的**条数** == 被打分模型 meta 的 `settf_windows`。
+
+    `settf_windows` 是协议 §3 的预注册旋钮（100 → 32）。33 号改了旋钮却没重跑
+    `--fit-folds` 时，34 号会拿旧 npz 的 100 个窗口去喂一个"记着 32"的模型：
+    形状不会报错（SetTF 本就吃变长集合），但 E 与训练时不同源，排名与 regret
+    全部失真且**无任何征兆**——比维度不符更危险，因为它不会崩。
+
+    期望值按切片实例数封顶（`pq.expected_window_count`）：源池里 Cricket_02 只有
+    90 个实例，`encode_task_windows` 的 `m = min(sample_num, N)` 让它在
+    settf_windows=100 下只可能有 90 行；写死 `== 100` 会把这一格永远判红。
+    """
+    want = None if not meta else meta.get("settf_windows")
+    if want is None:
+        return
+    exp = pq.expected_window_count(int(want), n_instances)
+    got = int(w.shape[0])
+    if got != exp:
+        raise ValueError(
+            f"特征与模型的 settf_windows 不是一套：{where} 有 {got} 个窗口，"
+            f"而该模型 meta 记的 settf_windows = {int(want)}"
+            + (f"（按切片实例数 {n_instances} 封顶后应为 {exp}）"
+               if exp != int(want) else "")
+            + "。旋钮改过却没重跑特征：先移走该折的 task_features/，再跑 "
+              f"`python scripts/33_pq_comparator_loo.py --fit-folds "
+              f"--settf-windows {int(want)}`")
+
+
+def slice_n_instances(outdir: Path, feature_fold: str,
+                      slice_id: str) -> Optional[int]:
+    """折特征 npz 的 META[3] → 该切片实例数（缺文件/缺 META → None）。"""
+    p = Path(outdir) / "folds" / feature_fold / "task_features" / f"{slice_id}.npz"
+    if not p.exists():
+        return None
+    with np.load(p) as z:
+        return pq.n_instances_from_meta(z.get("META"))
+
+
 def load_slice_windows(outdir: Path, feature_fold: str, slice_id: str, *,
-                       device: str = "cpu") -> Optional[torch.Tensor]:
+                       device: str = "cpu",
+                       meta: Optional[dict] = None) -> Optional[torch.Tensor]:
     """`folds/<feature_fold>/task_features/<slice>.npz` → windows_repr (m,T,D)。
 
     目录名是**特征折**（`meta["feature_fold"]`）而非模型折：S2 上界臂的权重记在
     `fold="S2"`，它的 E 却来自 `folds/all8/`。两者混用会静默读到别的折的 E。
+
+    传 `meta`（被打分模型的 meta）时顺带核对窗口条数（见 check_windows_count）。
     """
     p = Path(outdir) / "folds" / feature_fold / "task_features" / f"{slice_id}.npz"
     if not p.exists():
         return None
     with np.load(p) as z:
         w = np.asarray(z["windows_repr"], dtype=np.float32)
-    return torch.as_tensor(w, device=device)
+        n_inst = pq.n_instances_from_meta(z.get("META"))
+    t = torch.as_tensor(w, device=device)
+    check_windows_count(t, meta, n_instances=n_inst, where=str(p))
+    return t
 
 
 def target_slices(outdir: Path, target: str, catalog: dict, *,
@@ -870,6 +919,7 @@ def cmd_rank(outdir: Path, *, budgets: Sequence[int], folds: Sequence[str],
         # E 逐 (臂, 种子, 切片) 只算一次：SetTF 与比较器联合训练，种子间 E 不同；
         # 窗口表征逐 (特征折, 切片) 只读一次（(100,152,256) float16 ≈ 8 MB/切片）
         w_cache: dict[tuple[str, str], torch.Tensor] = {}
+        n_cache: dict[tuple[str, str], Optional[int]] = {}
         e_cache: dict[tuple[str, int, str], Optional[torch.Tensor]] = {}
         checked_ff: set[str] = set()
         for arm, mm in models.items():
@@ -887,10 +937,16 @@ def cmd_rank(outdir: Path, *, budgets: Sequence[int], folds: Sequence[str],
                         w = load_slice_windows(outdir, ff, s, device=device)
                         assert w is not None, f"folds/{ff}/{s} 特征缺失"
                         w_cache[(ff, s)] = w
-                    check_windows_dim(
-                        w_cache[(ff, s)], model, meta=meta,
-                        where=f"folds/{ff}/task_features/{s}.npz"
-                              f"（{target}/{arm}_s{i}）")
+                        n_cache[(ff, s)] = slice_n_instances(outdir, ff, s)
+                    where = (f"folds/{ff}/task_features/{s}.npz"
+                             f"（{target}/{arm}_s{i}）")
+                    # 两道闸都**逐模型**核对（缓存按 (特征折, 切片) 复用，而 meta
+                    # 逐臂/逐种子不同）：维度不符会崩在 SetTF 的矩阵乘里，条数不符
+                    # 则完全不崩——后者只能靠这里拦。
+                    check_windows_dim(w_cache[(ff, s)], model, meta=meta,
+                                      where=where)
+                    check_windows_count(w_cache[(ff, s)], meta,
+                                        n_instances=n_cache[(ff, s)], where=where)
                     with torch.no_grad():
                         e_cache[(arm, i, s)] = model.encode_tasks(
                             [w_cache[(ff, s)]])[0]
@@ -931,6 +987,24 @@ def cmd_rank(outdir: Path, *, budgets: Sequence[int], folds: Sequence[str],
 
 
 # ================================================================ --analyze
+def assert_truth_task_type(cache: dict,
+                           expect: str = TASK_CLASSIFICATION) -> None:
+    """真值行的 `task_type` 必须全是 classification（铁律 8 的方向承诺）。
+
+    regret / oracle / bottom-quartile 全部按 "R' 越大越优" 算死在本脚本里
+    （`instance_arms` 直接取 max）。混进一条 forecasting 行（MSE 越小越优），
+    那一格的"最优"就是最差——而数字看着完全正常。方向要改，得先经
+    `autocls.task_types.is_better` 重写这一整段，不是放宽这道断言。
+    """
+    seen = {str(r.get("task_type")) for r in cache.values()}
+    bad = sorted(t for t in seen if t != expect)
+    if bad:
+        raise ValueError(
+            f"真值缓存里出现非 {expect} 的 task_type {bad}——本脚本的 regret/"
+            "oracle 方向按分类（R' 越大越优）写死（铁律 8）；换任务类型须先把"
+            " instance_arms/regret_of 改成经 task_types.is_better 判优劣")
+
+
 def build_instances(rankings: dict, catalog: dict, ggs_key: str, cache: dict, *,
                     allow_incomplete: bool = False
                     ) -> tuple[list[dict], list[dict]]:
@@ -995,6 +1069,7 @@ def cmd_analyze(outdir: Path, *, budgets: Sequence[int],
     all_slices = [s for t in rankings for s in pq.pq_slice_ids(t)]
     catalog, _ggs, ggs_key = load_catalog(outdir, space, slices=all_slices)
     cache = load_rprime_cache(outdir / "rprime_cache.jsonl")
+    assert_truth_task_type(cache)
     rows, skipped = build_instances(rankings, catalog, ggs_key, cache,
                                     allow_incomplete=allow_incomplete)
     if not rows:
@@ -1175,7 +1250,8 @@ def cmd_evolve(outdir: Path, *, budgets: Sequence[int], folds: Sequence[str],
                     if ff not in checked_ff:     # 铁律 6：用特征前核对该特征折
                         assert_fold_features_compliant(outdir, ff)
                         checked_ff.add(ff)
-                    w = load_slice_windows(outdir, ff, slice00, device=device)
+                    w = load_slice_windows(outdir, ff, slice00, device=device,
+                                           meta=meta)
                     assert w is not None, \
                         f"folds/{ff}/{slice00} 特征缺失（33 号 --fit-folds）"
                     check_windows_dim(

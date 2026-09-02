@@ -322,7 +322,8 @@ class TestWindowsCacheEviction:
         m33.run_smoke(tmp_path, epochs=1, arms=("cls_only",),
                       datasets=("Handwriting", "Cricket"), n_slices=3, n_cls=4,
                       device="cpu", settf_windows=2, t_max=6, folds=("Handwriting",))
-        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2)
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2,
+                            smoke=True)
         slices = ["Handwriting_00", "Handwriting_01"]
         ctx.windows(m33.ARMS["main"], "Handwriting", slices)          # folds/…/task_features
         assert set(ctx._windows_cache) == set(slices)
@@ -335,7 +336,8 @@ class TestWindowsCacheEviction:
         m33.run_smoke(tmp_path, epochs=1, arms=("cls_only",),
                       datasets=("Handwriting", "Cricket"), n_slices=3, n_cls=4,
                       device="cpu", settf_windows=2, t_max=6, folds=("Handwriting",))
-        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2)
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2,
+                            smoke=True)
         ctx.windows(m33.ARMS["main"], "Handwriting", ["Handwriting_00"])
         ctx.windows(m33.ARMS["main"], "Handwriting", ["Handwriting_01"])
         assert set(ctx._windows_cache) == {"Handwriting_00", "Handwriting_01"}
@@ -361,17 +363,18 @@ class TestCurriculumClamp:
         m33.run_smoke(tmp_path, epochs=1, arms=("cls_only",),
                       datasets=("Handwriting", "Cricket"), n_slices=3, n_cls=4,
                       device="cpu", settf_windows=2, t_max=6, folds=("Handwriting",))
-        ctx = m33.PQContext(tmp_path, device="cpu", epochs=2, settf_windows=2)
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=2, settf_windows=2,
+                            smoke=True)
         assert ctx.cfg["epochs"] == 2
         # min(40, max(1, 2 // 2)) = 1：留出后半程给 random，否则薄目录下 0 对可配
         assert ctx.cfg["curriculum_epochs"] == 1
-        assert m33.PQContext(tmp_path, device="cpu", epochs=1,
+        assert m33.PQContext(tmp_path, device="cpu", epochs=1, smoke=True,
                              settf_windows=2).cfg["curriculum_epochs"] == 1
-        assert m33.PQContext(tmp_path, device="cpu", epochs=10,
+        assert m33.PQContext(tmp_path, device="cpu", epochs=10, smoke=True,
                              settf_windows=2).cfg["curriculum_epochs"] == 5
-        assert m33.PQContext(tmp_path, device="cpu", epochs=200,
+        assert m33.PQContext(tmp_path, device="cpu", epochs=200, smoke=True,
                              settf_windows=2).cfg["curriculum_epochs"] == 40
-        full = m33.PQContext(tmp_path, device="cpu", settf_windows=2)
+        full = m33.PQContext(tmp_path, device="cpu", settf_windows=2, smoke=True)
         assert full.cfg["curriculum_epochs"] == 40    # 不覆盖时原样
 
 
@@ -649,7 +652,8 @@ class TestSmoke:
         m33.synth_smoke_features(tmp_path, slices=["Handwriting_00"],
                                  folds=("Handwriting",), settf_windows=2, t_max=6,
                                  nz=256)
-        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2)
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2,
+                            smoke=True)
         ctx.slices_by_ds = {"Handwriting": ctx.slices_by_ds["Handwriting"]}  # 训练侧清空
         with pytest.raises(AssertionError, match="主臂"):
             m33.run_arm(ctx, m33.ARMS["main"], "Handwriting", 0)
@@ -657,7 +661,8 @@ class TestSmoke:
     def test_non_main_arm_with_empty_records_is_skippable(self, tmp_path):
         m33.synth_smoke_inputs(tmp_path, datasets=("Handwriting", "Cricket"),
                                n_slices=3, n_cls=4, budgets=pq.BUDGETS)
-        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2)
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2,
+                            smoke=True)
         ctx.slices_by_ds = {"Handwriting": ctx.slices_by_ds["Handwriting"]}
         with pytest.raises(m33.ArmUnavailable):
             m33.run_arm(ctx, m33.ARMS["cls_only"], "Handwriting", 0)
@@ -711,3 +716,270 @@ class TestSmoke:
         assert entry["feature_fold"] == "Handwriting"
         assert res["predictions"]["P1"]["note"]
         assert res["predictions"]["P10"]["note"]
+
+
+# ================================================================ 修复轮：旋钮/闸
+def _fake_pq_dataset(n=10, T=20, C=2):
+    """PQDataset 的最小替身（_encode_all_slices 只用 .X/.y/.slices）。"""
+    from autocls.data.task_slicer import SlicedTask
+
+    class _DS:
+        X = np.random.default_rng(0).standard_normal((n, T, C)).astype(np.float32)
+        y = np.array([i % 2 for i in range(n)], dtype=np.int64)
+        slices = [SlicedTask(task_id="Cricket_00", pool="Cricket", classes=(0, 1),
+                             channels=tuple(range(C)),
+                             sample_indices=tuple(range(n)))]
+
+    return _DS()
+
+
+def _smoke_dir(tmp_path, *, datasets=("Handwriting", "Cricket"), n_slices=3,
+               n_cls=4, settf_windows=2, t_max=6, folds=("Handwriting",)):
+    """最小合成目录（缓存 + δ 表 + 折特征），不训练——闸门测试的公共前置。"""
+    m33.synth_smoke_inputs(tmp_path, datasets=datasets, n_slices=n_slices,
+                           n_cls=n_cls, budgets=pq.BUDGETS)
+    slices = [f"{d}_{i:02d}" for d in datasets for i in range(n_slices)]
+    m33.synth_smoke_features(tmp_path, slices=slices, folds=folds,
+                             settf_windows=settf_windows, t_max=t_max, nz=256)
+    return slices
+
+
+class TestSettfWindowsKnob:
+    """`settf_windows` 是预注册旋钮（100 → 32），绝不允许静默失效。
+
+    旧行为：npz 里有多少窗口就喂多少，改了旋钮却没重跑 --fit-folds 时读到的
+    还是老 npz——meta 记 32、实际喂 100，标定出来的墙钟与判读全对不上。
+    """
+
+    def test_windows_count_mismatch_is_fatal(self, tmp_path):
+        _smoke_dir(tmp_path, settf_windows=2)
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=5,
+                            smoke=True)
+        with pytest.raises(SystemExit) as e:
+            ctx.windows(m33.ARMS["main"], "Handwriting", ["Handwriting_00"])
+        msg = str(e.value)
+        assert "settf_windows" in msg and "5" in msg and "2" in msg
+        assert "--fit-folds" in msg          # 可执行的修复动作
+
+    def test_matching_count_passes(self, tmp_path):
+        _smoke_dir(tmp_path, settf_windows=2)
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2,
+                            smoke=True)
+        w = ctx.windows(m33.ARMS["main"], "Handwriting", ["Handwriting_00"])
+        assert w["Handwriting_00"].shape[0] == 2      # 绝不截断成 [:n]
+
+    def test_encode_all_slices_reencodes_on_count_change(self, tmp_path,
+                                                         tiny_ts2vec, capsys):
+        """npz 已在盘但窗口数与本次 sample_num 不符 → 覆盖重编码（而非跳过）。"""
+        data = {"Cricket": _fake_pq_dataset()}
+        enc = TaskSetEncoder(dim_input=8, nz=8)
+        feat = tmp_path / "feat"
+        ra = {"embed_seed": 0}
+        n = m33._encode_all_slices(feat, data, tiny_ts2vec, enc, ra=ra,
+                                   sample_num=3, t_max=10, names=["Cricket"],
+                                   allow_unfit=True)
+        assert n == 1
+        with np.load(feat / "Cricket_00.npz") as z:
+            assert z["windows_repr"].shape[0] == 3
+        capsys.readouterr()
+        m33._encode_all_slices(feat, data, tiny_ts2vec, enc, ra=ra, sample_num=6,
+                               t_max=10, names=["Cricket"], allow_unfit=True)
+        with np.load(feat / "Cricket_00.npz") as z:
+            assert z["windows_repr"].shape[0] == 6     # 覆盖重编码
+        assert "重编码" in capsys.readouterr().out
+
+    def test_encode_all_slices_skips_when_count_matches(self, tmp_path,
+                                                        tiny_ts2vec):
+        data = {"Cricket": _fake_pq_dataset()}
+        enc = TaskSetEncoder(dim_input=8, nz=8)
+        feat = tmp_path / "feat"
+        ra = {"embed_seed": 0}
+        m33._encode_all_slices(feat, data, tiny_ts2vec, enc, ra=ra, sample_num=3,
+                               t_max=10, names=["Cricket"], allow_unfit=True)
+        stamp = (feat / "Cricket_00.npz").stat().st_mtime_ns
+        m33._encode_all_slices(feat, data, tiny_ts2vec, enc, ra=ra, sample_num=3,
+                               t_max=10, names=["Cricket"], allow_unfit=True)
+        assert (feat / "Cricket_00.npz").stat().st_mtime_ns == stamp   # --resume
+
+    def test_capped_slice_is_not_reencoded_forever(self, tmp_path, tiny_ts2vec):
+        """实例数 < settf_windows 的切片（源池里 Cricket_02 只有 90 个）。
+
+        encode_task_windows 取 min(sample_num, N)，所以那一格**只可能**有 N 行。
+        判据若写死 `== settf_windows`，它会每次重编码、且 windows() 永远判红。
+        """
+        data = {"Cricket": _fake_pq_dataset(n=10)}
+        enc = TaskSetEncoder(dim_input=8, nz=8)
+        feat, ra = tmp_path / "feat", {"embed_seed": 0}
+        m33._encode_all_slices(feat, data, tiny_ts2vec, enc, ra=ra, sample_num=25,
+                               t_max=10, names=["Cricket"], allow_unfit=True)
+        with np.load(feat / "Cricket_00.npz") as z:
+            assert z["windows_repr"].shape[0] == 10       # 被实例数封顶
+        stamp = (feat / "Cricket_00.npz").stat().st_mtime_ns
+        m33._encode_all_slices(feat, data, tiny_ts2vec, enc, ra=ra, sample_num=25,
+                               t_max=10, names=["Cricket"], allow_unfit=True)
+        assert (feat / "Cricket_00.npz").stat().st_mtime_ns == stamp   # 不再重编码
+        assert pq.expected_window_count(25, 10) == 10
+        assert pq.expected_window_count(25, 90) == 25
+
+
+class TestPartialCacheGate:
+    """33 号绝不在半张真值网格上出判读（Important 3）。"""
+
+    def test_thin_cache_exits_2(self, tmp_path):
+        _smoke_dir(tmp_path)
+        with pytest.raises(SystemExit) as e:
+            m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2)
+        assert e.value.code == 2
+
+    def test_missing_list_is_actionable(self, tmp_path, capsys):
+        _smoke_dir(tmp_path, datasets=("Handwriting",), n_slices=1, n_cls=4)
+        with pytest.raises(SystemExit) as e:
+            m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2)
+        assert e.value.code == 2
+        msg = capsys.readouterr().out
+        assert "UniMiB-SHAR" in msg                    # 整个数据集缺
+        assert "--allow-partial-cache" in msg
+        assert "32_pq_generate_rprime" in msg
+
+    def test_allow_flag_marks_partial(self, tmp_path, monkeypatch):
+        _smoke_dir(tmp_path)
+        # δ 真源另有其闸（TestDeltaTruthSource）：这里只测满格闸的放行位
+        monkeypatch.setattr(m33, "load_delta_source", lambda *a, **k: ({}, "stub"))
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2,
+                            allow_partial_cache=True)
+        assert ctx.partial_cache is True and ctx.grid_gaps
+
+    def test_smoke_is_exempt(self, tmp_path):
+        _smoke_dir(tmp_path)
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2,
+                            smoke=True)
+        assert ctx.partial_cache is True              # 如实标记，但不拦路
+
+    def test_grid_gaps_on_full_synthetic_grid(self):
+        """满格（8 数据集 × 注册表切片 × 每预算 10+10 有限记录）→ 零缺口。"""
+        cache = {}
+        for d in pq.PQ_DATASETS:
+            for s in pq.pq_slice_ids(d):
+                for o, n in (("shared", pq.N_SHARED), ("random", pq.N_RANDOM)):
+                    for j in range(n):
+                        for b in pq.BUDGETS:
+                            cache[(s, f"{o}{j}", b)] = {
+                                "task_id": s, "cls_key": f"{o}{j}", "iters": b,
+                                "origin": o, "r_prime": 0.5}
+        assert m33.cache_grid_gaps(cache, pq.BUDGETS) == []
+        # 抠掉一格 R'（写成 null）→ 该 (切片, 预算) 立刻少一条
+        cache[("Cricket_00", "shared0", 60)]["r_prime"] = None
+        gaps = m33.cache_grid_gaps(cache, pq.BUDGETS)
+        assert len(gaps) == 1 and "Cricket_00@60" in gaps[0] and "9/10" in gaps[0]
+
+    def test_ggs_rows_do_not_count_toward_the_20(self):
+        cache = {}
+        for b in pq.BUDGETS:
+            for j in range(pq.N_SHARED):
+                cache[("Cricket_00", f"s{j}", b)] = {
+                    "task_id": "Cricket_00", "cls_key": f"s{j}", "iters": b,
+                    "origin": "shared", "r_prime": 0.5}
+            cache[("Cricket_00", "ggs", b)] = {
+                "task_id": "Cricket_00", "cls_key": "ggs", "iters": b,
+                "origin": "ggs", "r_prime": 0.99}
+        gaps = m33.cache_grid_gaps(cache, pq.BUDGETS, datasets=("Cricket",))
+        assert any("random 0/10" in g for g in gaps)
+
+    def test_analyze_carries_train_datasets_and_flag(self, tmp_path):
+        runs = [_run_json(d, "main", 0, acc=0.8) for d in pq.FOLD_TARGETS]
+        for r in runs:
+            r["train_datasets"] = sorted(pq.fold_split(r["fold"])[0])
+            r["partial_cache"] = False
+        runs[0]["partial_cache"] = True
+        _write_runs(tmp_path, runs)
+        res = m33.analyze(tmp_path)
+        target = runs[0]["fold"]
+        entry = res["per_arm_fold"]["main"][target]
+        assert entry["train_datasets"] == sorted(pq.fold_split(target)[0])
+        assert target not in entry["train_datasets"]        # 铁律 6 可核对
+        assert entry["partial_cache"] is True
+        assert res["partial_cache"] is True                 # 任一跑不满格即标记
+
+    def test_analyze_flag_false_on_full_grid(self, tmp_path):
+        runs = [_run_json(d, "main", 0, acc=0.8) for d in pq.FOLD_TARGETS]
+        for r in runs:
+            r["partial_cache"] = False
+        _write_runs(tmp_path, runs)
+        assert m33.analyze(tmp_path)["partial_cache"] is False
+
+
+class TestDeltaTruthSource:
+    """δ 的唯一真源是 configs/labels.yaml: pq.delta_per_dataset_budget（Minor 6）。"""
+
+    CAL = {"Cricket": {"60": {"delta": 0.03}, "120": {"delta": 0.04}}}
+
+    def _cal(self, tmp_path, payload=None):
+        p = tmp_path / "delta_calibration.json"
+        p.write_text(json.dumps(payload if payload is not None else self.CAL),
+                     encoding="utf-8")
+        return p
+
+    def test_empty_labels_table_is_fatal(self, tmp_path):
+        with pytest.raises(SystemExit) as e:
+            m33.load_delta_source({"delta_per_dataset_budget": {}},
+                                  tmp_path / "nope.json")
+        msg = str(e.value)
+        assert "--calibrate" in msg and "--apply-delta" in msg
+
+    def test_labels_table_is_the_source(self, tmp_path):
+        cfg = {"delta_per_dataset_budget": {"Cricket": {60: 0.03, 120: 0.04}}}
+        table, src = m33.load_delta_source(cfg, tmp_path / "nope.json")
+        assert table == {("Cricket", 60): 0.03, ("Cricket", 120): 0.04}
+        assert "labels.yaml" in src
+
+    def test_cross_check_passes_within_1e_9(self, tmp_path):
+        cfg = {"delta_per_dataset_budget":
+               {"Cricket": {60: 0.03 + 1e-12, 120: 0.04}}}
+        table, src = m33.load_delta_source(cfg, self._cal(tmp_path))
+        assert table[("Cricket", 60)] == pytest.approx(0.03)
+        assert "对账" in src
+
+    def test_mismatch_exits_with_both_values(self, tmp_path):
+        cfg = {"delta_per_dataset_budget": {"Cricket": {60: 0.03, 120: 0.05}}}
+        with pytest.raises(SystemExit) as e:
+            m33.load_delta_source(cfg, self._cal(tmp_path))
+        msg = str(e.value)
+        assert "0.05" in msg and "0.04" in msg and "Cricket" in msg
+
+    def test_missing_key_is_a_mismatch(self, tmp_path):
+        cfg = {"delta_per_dataset_budget": {"Cricket": {60: 0.03}}}
+        with pytest.raises(SystemExit) as e:
+            m33.load_delta_source(cfg, self._cal(tmp_path))
+        assert "Cricket" in str(e.value) and "120" in str(e.value)
+
+    def test_smoke_reads_the_json(self, tmp_path):
+        table, src = m33.load_delta_source({"delta_per_dataset_budget": {}},
+                                           self._cal(tmp_path), smoke=True)
+        assert table == {("Cricket", 60): 0.03, ("Cricket", 120): 0.04}
+        assert "smoke" in src
+
+    def test_context_in_smoke_uses_json(self, tmp_path):
+        _smoke_dir(tmp_path)
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2,
+                            smoke=True)
+        assert ctx.calibration[("Handwriting", 60)] == pytest.approx(0.01)
+        assert "smoke" in ctx.delta_source
+
+
+class TestFoldMaterialHasNoTarget:
+    """铁律 6 的两条使用点：δ 表与噪声模型都不得含考侧数据集。"""
+
+    def test_delta_map_and_prob_model_exclude_target(self, tmp_path):
+        datasets = ("Handwriting", "Cricket", "UniMiB-SHAR")
+        _smoke_dir(tmp_path, datasets=datasets, n_slices=3, n_cls=6,
+                   folds=("Handwriting",))
+        ctx = m33.PQContext(tmp_path, device="cpu", epochs=1, settf_windows=2,
+                            smoke=True)
+        target = "Handwriting"
+        train_ds = [d for d in datasets if d != target]
+        train_slices = [s for d in train_ds
+                        for s in ctx.slices_by_ds.get(d, [])]
+        dmap = ctx.delta_map(train_slices)
+        assert dmap and all(pq.dataset_of(t) != target for t in dmap)
+        pm = ctx.prob_model(train_ds)
+        assert pm.models and all(d != target for d, _b in pm.models)

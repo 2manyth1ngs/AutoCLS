@@ -1471,6 +1471,7 @@ class TestWindowsDimGuard:
                   embedding_dim=4, fz=4)
         g34.check_windows_dim(torch.zeros(3, 4, 16), m, where="ok")
 
+
     def test_rank_raises_before_the_matmul(self, tmp_path):
         """把 16 维假特征塞进 256 维真模型的折里，--rank 必须先报可读的错。"""
         _fake33_dir(tmp_path, n_slices=1, dim=256)
@@ -1498,6 +1499,88 @@ class TestWindowsDimGuard:
             g34.cmd_evolve(tmp_path, budgets=SMOKE_BUDGETS,
                            folds=("Handwriting",),
                            evolution=dict(g34.SMOKE_EVOLUTION))
+
+
+class TestWindowsCountGuard:
+    """特征的窗口条数必须等于被打分模型 meta 的 settf_windows（预注册旋钮）。
+
+    33 号改了 `--settf-windows` 却没重跑 `--fit-folds` 时，34 号会拿旧 npz 的
+    100 个窗口去喂一个"记着 32"的模型——形状对得上（SetTF 吃变长集合），
+    E 却与训练时不同源，排名与 regret 全部失真且无任何报错。
+    """
+
+    def test_count_mismatch_raises(self):
+        w = torch.zeros(7, 4, 16)
+        with pytest.raises(ValueError) as e:
+            g34.check_windows_count(w, {"settf_windows": 3},
+                                    where="folds/X/task_features/Y.npz")
+        msg = str(e.value)
+        assert "7" in msg and "3" in msg and "Y.npz" in msg
+        assert "--fit-folds" in msg
+
+    def test_matching_count_silent(self):
+        g34.check_windows_count(torch.zeros(3, 4, 16), {"settf_windows": 3},
+                                where="ok")
+
+    def test_meta_without_key_is_skipped(self):
+        g34.check_windows_count(torch.zeros(3, 4, 16), {}, where="ok")
+        g34.check_windows_count(torch.zeros(3, 4, 16), None, where="ok")
+
+    def test_loader_asserts_when_meta_given(self, tmp_path):
+        _fake33_dir(tmp_path, n_slices=1, dim=256)      # n_windows=3
+        with pytest.raises(ValueError, match="settf_windows"):
+            g34.load_slice_windows(tmp_path, "Handwriting", "Handwriting_00",
+                                   meta={"settf_windows": 5})
+        w = g34.load_slice_windows(tmp_path, "Handwriting", "Handwriting_00",
+                                   meta={"settf_windows": 3})
+        assert w.shape[0] == 3
+
+    def test_rank_raises_on_stale_window_count(self, tmp_path):
+        _fake33_dir(tmp_path, n_slices=1, dim=256)
+        npz = (tmp_path / "folds" / "Handwriting" / "task_features"
+               / "Handwriting_00.npz")
+        with np.load(npz) as z:
+            d = {k: z[k] for k in z.files}
+        d["windows_repr"] = np.zeros((9, 4, 256), dtype=np.float16)   # 3 → 9
+        np.savez_compressed(npz, **d)
+        with pytest.raises(ValueError, match="settf_windows"):
+            g34.cmd_rank(tmp_path, budgets=SMOKE_BUDGETS, folds=("Handwriting",))
+
+    def test_evolve_raises_on_stale_window_count(self, tmp_path):
+        _fake33_dir(tmp_path, n_slices=1, dim=256)
+        npz = (tmp_path / "folds" / "Handwriting" / "task_features"
+               / "Handwriting_00.npz")
+        with np.load(npz) as z:
+            d = {k: z[k] for k in z.files}
+        d["windows_repr"] = np.zeros((9, 4, 256), dtype=np.float16)
+        np.savez_compressed(npz, **d)
+        with pytest.raises(ValueError, match="settf_windows"):
+            g34.cmd_evolve(tmp_path, budgets=SMOKE_BUDGETS,
+                           folds=("Handwriting",),
+                           evolution=dict(g34.SMOKE_EVOLUTION))
+
+
+class TestTruthTaskType:
+    """铁律 8：regret 的方向承诺绑在 task_type 上，混进别的类型即拒判。"""
+
+    def test_non_classification_truth_row_is_rejected(self, tmp_path):
+        g34.main(["--smoke", "--outdir", str(tmp_path)])
+        cache = tmp_path / "rprime_cache.jsonl"
+        rows = [json.loads(x) for x in
+                cache.read_text(encoding="utf-8").splitlines() if x.strip()]
+        rows[0]["task_type"] = "forecasting"
+        cache.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n"
+                                 for r in rows), encoding="utf-8")
+        with pytest.raises(ValueError) as e:
+            g34.cmd_analyze(tmp_path, budgets=SMOKE_BUDGETS)
+        msg = str(e.value)
+        assert "task_type" in msg and "forecasting" in msg
+        assert "classification" in msg
+
+    def test_classification_only_passes(self, tmp_path):
+        g34.main(["--smoke", "--outdir", str(tmp_path)])
+        res = g34.cmd_analyze(tmp_path, budgets=SMOKE_BUDGETS)
+        assert res["gates"]["D1"] is not None
 
 
 # ---------------------------------------------------------------- 端到端 smoke

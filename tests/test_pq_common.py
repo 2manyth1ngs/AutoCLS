@@ -191,6 +191,30 @@ class TestBuildRecords:
                                 slices=["Handwriting_00"])
         assert {pq.dataset_of(r.task_id) for r in recs} == {"Handwriting"}
 
+    def test_ggs_rows_are_excluded(self, synth_cache, make_cls):
+        """GGS 是 34 号的**外部锚臂**，不是比较器的训练/考试材料。
+
+        混进来会让每个 (切片, 预算) 变成 21 条 CLS，配对数与计划（2340/360）对不上，
+        而且 GGS 在真值里常年贴顶——比较器等于白拿一条"永远赢"的样本。
+        """
+        enc = CLSEncoder(CLSSpace.from_yaml())
+        ggs = make_cls(jitter=0.7)
+        gkey = cls_key(ggs)
+        for b in (60, 120):
+            synth_cache[("Handwriting_00", gkey, b)] = {
+                "task_id": "Handwriting_00", "cls_key": gkey, "iters": b,
+                "origin": "ggs", "r_prime": 0.99, "n_eval": 300, "seed": 0,
+                "cls": dataclasses.asdict(ggs)}
+        recs = pq.build_records(synth_cache, enc, budgets=pq.BUDGETS,
+                                slices=["Handwriting_00"])
+        assert {r.origin for r in recs} == {"shared", "random"}
+        assert gkey not in {r.key for r in recs}
+        # 显式放行时才回来（消融/诊断用）
+        recs_all = pq.build_records(synth_cache, enc, budgets=pq.BUDGETS,
+                                    slices=["Handwriting_00"],
+                                    origins=("shared", "random", "ggs"))
+        assert gkey in {r.key for r in recs_all}
+
     def test_windows_key_and_context(self, synth_cache):
         enc = CLSEncoder(CLSSpace.from_yaml())
         recs = pq.build_records(synth_cache, enc, budgets=pq.BUDGETS,

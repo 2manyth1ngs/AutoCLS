@@ -374,20 +374,58 @@ def build_records(
     *,
     budgets: Sequence[int] = BUDGETS,
     slices: Iterable | None = None,
+    origins: Sequence[str] = (ORIGIN_SHARED, ORIGIN_RANDOM),
 ) -> list[ClsRecord]:
     """R' 缓存 → ClsRecord（task_id 改写成 engine task id）。
 
     每个预算各调一次 comparator_records（它按 iters 精确取，铁律 2）；缓存里缺的
     预算自然缺席（不补 NaN，也不报错——32 分批灌数据时 33 仍可先跑已有预算）。
+
+    **`origins` 默认剔掉 GGS**（协议 §2 的目录 = 10 shared + 10 random；GGS 是
+    34 号的**外部锚臂**，不是比较器的材料）：留着它每个 (切片, 预算) 就成了 21 条
+    CLS，配对数与计划（训练 2340 / 考侧 360）对不上，而且 GGS 在真值里常年贴顶
+    ——等于白送比较器一条"永远赢"的样本。要做诊断/消融时显式放行即可。
     """
     keep = None if slices is None else set(_as_slice_ids(slices))
+    keep_origin = None if origins is None else set(origins)
     out: list[ClsRecord] = []
     for b in budgets:
         for r in comparator_records(cache, encoder, iters=int(b)):
             if keep is not None and r.task_id not in keep:
                 continue
+            if keep_origin is not None and r.origin not in keep_origin:
+                continue
             out.append(dataclasses.replace(r, task_id=engine_task_id(r.task_id, b)))
     return out
+
+
+# ------------------------------------------------- 窗口条数（settf_windows 旋钮）
+def n_instances_from_meta(meta: Any) -> Optional[int]:
+    """task_features npz 的 `META` → 该切片的实例数 N（META[3] = log10 N）。
+
+    形状契约见 interfaces.md「Task 6 → Task 7」：META = [log10 T, log10 C,
+    n_classes, log10 N]。给不出（缺 META / 长度不足）时返回 None。
+    """
+    if meta is None:
+        return None
+    arr = np.asarray(meta, dtype=float).reshape(-1)
+    if arr.size < 4 or not np.isfinite(arr[3]):
+        return None
+    return int(round(float(10.0 ** arr[3])))
+
+
+def expected_window_count(settf_windows: int,
+                          n_instances: Optional[int] = None) -> int:
+    """npz 里**应该**有多少个窗口 = min(settf_windows, 切片实例数)。
+
+    `task_embed.encode_task_windows` 取 `m = min(sample_num, N)`——源池里
+    Cricket_02 只有 90 个实例，settf_windows=100 时它**只可能**编出 90 行。
+    所以"预注册旋钮是否真的生效"的判据不是 `== settf_windows`（那会让这一格
+    永远判红），而是这个封顶值；N ≥ 旋钮的 44/45 格上二者等价。
+    N 未知（老 npz 无 META）时退回旋钮本身。
+    """
+    w = int(settf_windows)
+    return w if n_instances is None else min(w, int(n_instances))
 
 
 def windows_key_of(records: Iterable[ClsRecord]) -> dict[str, str]:
@@ -745,6 +783,7 @@ __all__ = [
     "pq_slice_ids", "all_pq_slices", "PQDataset", "load_pq_datasets",
     "write_tasks_json", "load_tasks_json", "catalog_for_slice", "ggs_cls",
     "canonical_seeds", "noise_seed", "build_records", "windows_key_of",
+    "n_instances_from_meta", "expected_window_count",
     "context_of", "fold_split", "s2_split", "calibrate_delta",
     "load_delta_calibration", "delta_map_for_fold", "baseline_bands",
     "within_assignment_slices", "cross_assignment_slices", "budget_assignment",
