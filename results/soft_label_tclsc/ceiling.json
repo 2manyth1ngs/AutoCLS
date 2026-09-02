@@ -1,0 +1,131 @@
+{
+  "hard_delta": {
+    "pooled": {
+      "ceiling": 0.952513966480447,
+      "mass": 358.0,
+      "n_votes": 358
+    },
+    "Handwriting": {
+      "ceiling": 1.0,
+      "mass": 176.0,
+      "n_votes": 176
+    },
+    "UniMiB-SHAR": {
+      "ceiling": 0.989010989010989,
+      "mass": 182.0,
+      "n_votes": 182
+    }
+  },
+  "delta_zero": {
+    "pooled": {
+      "ceiling": 0.7472984206151289,
+      "mass": 1203.0,
+      "n_votes": 1203
+    },
+    "Handwriting": {
+      "ceiling": 0.8865384615384615,
+      "mass": 520.0,
+      "n_votes": 520
+    },
+    "UniMiB-SHAR": {
+      "ceiling": 0.7774524158125915,
+      "mass": 683.0,
+      "n_votes": 683
+    }
+  },
+  "soft_student_t": {
+    "pooled": {
+      "ceiling": 0.8006010626788075,
+      "mass": 861.1508954301472,
+      "n_votes": 1203
+    },
+    "Handwriting": {
+      "ceiling": 0.9262511240059373,
+      "mass": 404.6909335444535,
+      "n_votes": 520
+    },
+    "UniMiB-SHAR": {
+      "ceiling": 0.8401557839812333,
+      "mass": 456.4599618856935,
+      "n_votes": 683
+    }
+  },
+  "soft_empirical": {
+    "pooled": {
+      "ceiling": 0.8028031824641869,
+      "mass": 853.7843983735263,
+      "n_votes": 1203
+    },
+    "Handwriting": {
+      "ceiling": 0.9235706007013051,
+      "mass": 405.52999893110524,
+      "n_votes": 520
+    },
+    "UniMiB-SHAR": {
+      "ceiling": 0.8454507716760689,
+      "mass": 448.25439944242106,
+      "n_votes": 683
+    }
+  },
+  "soft_student_t_midband": {
+    "pooled": {
+      "ceiling": 0.7057822546536425,
+      "mass": 462.52756972841837,
+      "n_votes": 710
+    },
+    "Handwriting": {
+      "ceiling": 0.878078453437272,
+      "mass": 214.9494805271708,
+      "n_votes": 305
+    },
+    "UniMiB-SHAR": {
+      "ceiling": 0.7455894914031068,
+      "mass": 247.57808920124754,
+      "n_votes": 405
+    }
+  },
+  "soft_student_t_highband": {
+    "pooled": {
+      "ceiling": 0.9341861538079756,
+      "mass": 383.37331916093416,
+      "n_votes": 389
+    },
+    "Handwriting": {
+      "ceiling": 0.9949042567476384,
+      "mass": 185.85869782175047,
+      "n_votes": 190
+    },
+    "UniMiB-SHAR": {
+      "ceiling": 0.9804290778645413,
+      "mass": 197.51462133918352,
+      "n_votes": 199
+    }
+  },
+  "soft_student_t_lowband": {
+    "pooled": {
+      "ceiling": 0.7865498436495665,
+      "mass": 15.250006540794782,
+      "n_votes": 104
+    },
+    "Handwriting": {
+      "ceiling": 0.9149258661729827,
+      "mass": 3.8827551955323134,
+      "n_votes": 25
+    },
+    "UniMiB-SHAR": {
+      "ceiling": 0.8133910022207876,
+      "mass": 11.367251345262467,
+      "n_votes": 79
+    }
+  },
+  "reproduction_check": {
+    "hard_delta_pooled": 0.952513966480447,
+    "expected": 0.9525,
+    "pass": true,
+    "delta_zero_pooled": 0.7472984206151289,
+    "expected_zero": 0.7473,
+    "pass_zero": true,
+    "hard_HW": 1.0,
+    "hard_UM": 0.989010989010989
+  }
+}

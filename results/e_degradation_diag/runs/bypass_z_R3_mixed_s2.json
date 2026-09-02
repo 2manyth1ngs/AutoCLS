@@ -1,0 +1,187 @@
+{
+  "run_id": "R3_mixed_s2",
+  "arm": "bypass_z",
+  "seed": 2,
+  "train_tids": [
+    "Handwriting_00",
+    "Handwriting_01",
+    "Handwriting_02",
+    "Handwriting_03",
+    "Handwriting_04",
+    "Handwriting_05",
+    "Handwriting_09",
+    "Handwriting_10",
+    "Handwriting_11",
+    "UniMiB-SHAR_00",
+    "UniMiB-SHAR_01",
+    "UniMiB-SHAR_02",
+    "UniMiB-SHAR_03",
+    "UniMiB-SHAR_04",
+    "UniMiB-SHAR_05",
+    "UniMiB-SHAR_08",
+    "UniMiB-SHAR_09",
+    "UniMiB-SHAR_10",
+    "UniMiB-SHAR_12",
+    "UniMiB-SHAR_13",
+    "UniMiB-SHAR_14"
+  ],
+  "test_tids": [
+    "Handwriting_06",
+    "Handwriting_07",
+    "Handwriting_08",
+    "UniMiB-SHAR_06",
+    "UniMiB-SHAR_07",
+    "UniMiB-SHAR_11",
+    "UniMiB-SHAR_15"
+  ],
+  "n_train_records": 420,
+  "train_seconds": 11.9,
+  "bce_first": 0.7054705619812012,
+  "bce_last": 0.1535459707180659,
+  "device": "cuda",
+  "n_test_pairs_directed": 1320,
+  "n_test_pairs_forward": 660,
+  "normal": {
+    "acc": 0.7689393939393939,
+    "loss": 0.5965754389762878,
+    "binom_p_forward": 1.7495025631156535e-45
+  },
+  "within": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.7651515151515151,
+        "loss": 0.5978171825408936,
+        "delta_acc": 0.0037878787878787845,
+        "mcnemar": {
+          "b": 3,
+          "c": 0,
+          "p": 0.125
+        }
+      },
+      {
+        "seed": 1,
+        "acc": 0.7651515151515151,
+        "loss": 0.5978171825408936,
+        "delta_acc": 0.0037878787878787845,
+        "mcnemar": {
+          "b": 3,
+          "c": 0,
+          "p": 0.125
+        }
+      },
+      {
+        "seed": 2,
+        "acc": 0.7651515151515151,
+        "loss": 0.5978171825408936,
+        "delta_acc": 0.0037878787878787845,
+        "mcnemar": {
+          "b": 3,
+          "c": 0,
+          "p": 0.125
+        }
+      },
+      {
+        "seed": 3,
+        "acc": 0.7666666666666667,
+        "loss": 0.5976969003677368,
+        "delta_acc": 0.002272727272727204,
+        "mcnemar": {
+          "b": 3,
+          "c": 1,
+          "p": 0.3125
+        }
+      },
+      {
+        "seed": 4,
+        "acc": 0.7681818181818182,
+        "loss": 0.5977610349655151,
+        "delta_acc": 0.0007575757575757347,
+        "mcnemar": {
+          "b": 2,
+          "c": 1,
+          "p": 0.5
+        }
+      }
+    ],
+    "mean_delta": 0.0028787878787878583,
+    "min_delta": 0.0007575757575757347,
+    "max_delta": 0.0037878787878787845,
+    "n_sig": 0,
+    "pass": false
+  },
+  "cross": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.7643939393939394,
+        "loss": 0.6035303473472595,
+        "delta_acc": 0.004545454545454519,
+        "mcnemar": {
+          "b": 2,
+          "c": 0,
+          "p": 0.25
+        }
+      },
+      {
+        "seed": 1,
+        "acc": 0.7689393939393939,
+        "loss": 0.60333251953125,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 1,
+          "c": 1,
+          "p": 0.75
+        }
+      },
+      {
+        "seed": 2,
+        "acc": 0.7643939393939394,
+        "loss": 0.6016509532928467,
+        "delta_acc": 0.004545454545454519,
+        "mcnemar": {
+          "b": 2,
+          "c": 0,
+          "p": 0.25
+        }
+      },
+      {
+        "seed": 3,
+        "acc": 0.7643939393939394,
+        "loss": 0.6041297316551208,
+        "delta_acc": 0.004545454545454519,
+        "mcnemar": {
+          "b": 1,
+          "c": 0,
+          "p": 0.5
+        }
+      },
+      {
+        "seed": 4,
+        "acc": 0.7659090909090909,
+        "loss": 0.605287492275238,
+        "delta_acc": 0.00303030303030305,
+        "mcnemar": {
+          "b": 1,
+          "c": 0,
+          "p": 0.5
+        }
+      }
+    ],
+    "mean_delta": 0.0033333333333333214,
+    "min_delta": 0.0,
+    "max_delta": 0.004545454545454519,
+    "n_sig": 0,
+    "pass": false
+  },
+  "zero": {
+    "acc": 0.7681818181818182,
+    "loss": 0.5254898071289062,
+    "delta_acc": 0.0007575757575757347,
+    "mcnemar": {
+      "b": 11,
+      "c": 20,
+      "p": 0.9646222270093858
+    }
+  }
+}

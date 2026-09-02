@@ -1,0 +1,176 @@
+{
+  "student_t": {
+    "kind": "student_t",
+    "kappa": 0.595,
+    "min_regime_n": 5,
+    "per_dataset": {
+      "Handwriting": {
+        "n_cells": {
+          "nd": 20,
+          "dest": 0
+        },
+        "n_diffs": {
+          "nd": 60,
+          "dest": 0
+        },
+        "abs_diff_median": {
+          "nd": 0.02890322580645166,
+          "dest": null
+        },
+        "abs_diff_p95": {
+          "nd": 0.10999999999999993,
+          "dest": null
+        },
+        "n_ref": 140.0,
+        "noise_tasks": [
+          "Handwriting_00",
+          "Handwriting_01"
+        ],
+        "model": {
+          "kind": "student_t",
+          "df": 4.010178098241639,
+          "scale": {
+            "nd": 0.03911132812499915
+          },
+          "n_samples": null
+        },
+        "factor_range": [
+          0.9604120492516877,
+          1.1241720894053269
+        ]
+      },
+      "UniMiB-SHAR": {
+        "n_cells": {
+          "nd": 17,
+          "dest": 3
+        },
+        "n_diffs": {
+          "nd": 60,
+          "dest": 0
+        },
+        "abs_diff_median": {
+          "nd": 0.019543973941368087,
+          "dest": null
+        },
+        "abs_diff_p95": {
+          "nd": 0.07540716612377846,
+          "dest": null
+        },
+        "n_ref": 307.0,
+        "noise_tasks": [
+          "UniMiB-SHAR_00",
+          "UniMiB-SHAR_01"
+        ],
+        "model": {
+          "kind": "student_t",
+          "df": 4.680911842344185,
+          "scale": {
+            "nd": 0.02531738281249913
+          },
+          "n_samples": null
+        },
+        "factor_range": [
+          0.9980725761756586,
+          1.00097175007312
+        ]
+      }
+    },
+    "n_strict_cells": {
+      "Handwriting": 20,
+      "UniMiB-SHAR": 86
+    }
+  },
+  "empirical": {
+    "kind": "empirical",
+    "kappa": 0.595,
+    "min_regime_n": 5,
+    "per_dataset": {
+      "Handwriting": {
+        "n_cells": {
+          "nd": 20,
+          "dest": 0
+        },
+        "n_diffs": {
+          "nd": 60,
+          "dest": 0
+        },
+        "abs_diff_median": {
+          "nd": 0.02890322580645166,
+          "dest": null
+        },
+        "abs_diff_p95": {
+          "nd": 0.10999999999999993,
+          "dest": null
+        },
+        "n_ref": 140.0,
+        "noise_tasks": [
+          "Handwriting_00",
+          "Handwriting_01"
+        ],
+        "model": {
+          "kind": "empirical",
+          "df": null,
+          "scale": {
+            "nd": 1.0
+          },
+          "n_samples": 120
+        },
+        "factor_range": [
+          0.9604120492516877,
+          1.1241720894053269
+        ]
+      },
+      "UniMiB-SHAR": {
+        "n_cells": {
+          "nd": 17,
+          "dest": 3
+        },
+        "n_diffs": {
+          "nd": 60,
+          "dest": 0
+        },
+        "abs_diff_median": {
+          "nd": 0.019543973941368087,
+          "dest": null
+        },
+        "abs_diff_p95": {
+          "nd": 0.07540716612377846,
+          "dest": null
+        },
+        "n_ref": 307.0,
+        "noise_tasks": [
+          "UniMiB-SHAR_00",
+          "UniMiB-SHAR_01"
+        ],
+        "model": {
+          "kind": "empirical",
+          "df": null,
+          "scale": {
+            "nd": 1.0
+          },
+          "n_samples": 120
+        },
+        "factor_range": [
+          0.9980725761756586,
+          1.00097175007312
+        ]
+      }
+    },
+    "n_strict_cells": {
+      "Handwriting": 20,
+      "UniMiB-SHAR": 86
+    }
+  },
+  "p_band": {
+    "n_pairs": 5320,
+    "share_pmax_lt_0.6": 0.08402255639097744,
+    "share_mid_0.6_0.97": 0.4394736842105263,
+    "share_pmax_ge_0.97": 0.47650375939849626,
+    "mass_share_mid": 0.37853425612188135
+  },
+  "f_eff_hard_delta": {
+    "mean": 0.004207902052085831,
+    "n_surviving": 2391,
+    "p90": 0.013231536398893295
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "F1": {
+    "init_degenerate": true,
+    "trained_degenerate": true,
+    "L1_min_cos": 0.9919568178829454,
+    "L1_rel_disp": 0.05391170415028532,
+    "L2_min_cos": 0.9999244876195024,
+    "L2_rel_disp": 0.059297958049152444,
+    "L0_cross_cos": 0.8260067400645678,
+    "label": "退化确认；联合训练修不好"
+  },
+  "F2": {
+    "rho_c": 0.059185942124823414,
+    "status": "confirmed"
+  },
+  "F3": {
+    "code": "label_side_single_cause_upgraded",
+    "label": "两臂双零：label 侧单因证据升级",
+    "arms": {
+      "bypass_raw": {
+        "median_run": "R2_mixed_s1",
+        "normal_acc": 0.7924242424242425,
+        "within": {
+          "mean_delta": 0.0,
+          "n_sig": 0,
+          "pass": false
+        },
+        "cross": {
+          "mean_delta": 0.0,
+          "n_sig": 0,
+          "pass": false
+        },
+        "within_tier": "zero",
+        "cross_tier": "zero",
+        "zero_delta": 0.002272727272727315,
+        "r4_within_tier": "zero"
+      },
+      "bypass_z": {
+        "median_run": "R1_mixed_s0",
+        "normal_acc": 0.8106060606060606,
+        "within": {
+          "mean_delta": -0.00045454545454550745,
+          "n_sig": 0,
+          "pass": false
+        },
+        "cross": {
+          "mean_delta": -0.0006060606060606765,
+          "n_sig": 0,
+          "pass": false
+        },
+        "within_tier": "zero",
+        "cross_tier": "zero",
+        "zero_delta": -0.002272727272727315,
+        "r4_within_tier": "zero"
+      }
+    },
+    "L0_precheck": {
+      "cross_cos": 0.8260067400645678,
+      "effective_rank": 1.0626346571018654,
+      "pass": false
+    }
+  },
+  "settf_same_machine": {
+    "normal_acc": 0.8075757575757576,
+    "within_tier": "zero",
+    "cross_tier": "zero",
+    "zero_delta": -0.002272727272727204
+  }
+}

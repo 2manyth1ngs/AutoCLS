@@ -1,0 +1,243 @@
+{
+  "arms": {
+    "H0": {
+      "n_runs": 3,
+      "median_seed": 1,
+      "hard_normal_acc_mean": 0.7838383838383839,
+      "hard_normal_acc_median_run": 0.771969696969697,
+      "within": {
+        "mean_delta": 0.0,
+        "n_sig": 0,
+        "pass": false
+      },
+      "cross": {
+        "mean_delta": 0.0,
+        "n_sig": 0,
+        "pass": false
+      },
+      "within_tier": "zero",
+      "cross_tier": "zero",
+      "zero_delta": 0.0007575757575757347,
+      "soft_acc_w_mean": 0.7399505722989487,
+      "soft_mid_acc_mean": 0.64937106918239,
+      "soft_within_delta_acc_w": 0.0,
+      "soft_within_ci_pos": 0,
+      "soft_within_tier_detectable": false
+    },
+    "S1": {
+      "n_runs": 3,
+      "median_seed": 1,
+      "hard_normal_acc_mean": 0.8063131313131313,
+      "hard_normal_acc_median_run": 0.8075757575757576,
+      "within": {
+        "mean_delta": 0.0,
+        "n_sig": 0,
+        "pass": false
+      },
+      "cross": {
+        "mean_delta": 0.0,
+        "n_sig": 0,
+        "pass": false
+      },
+      "within_tier": "zero",
+      "cross_tier": "zero",
+      "zero_delta": 0.0,
+      "soft_acc_w_mean": 0.756965515133309,
+      "soft_mid_acc_mean": 0.6550314465408804,
+      "soft_within_delta_acc_w": 0.0,
+      "soft_within_ci_pos": 0,
+      "soft_within_tier_detectable": false
+    },
+    "S2": {
+      "n_runs": 3,
+      "median_seed": 1,
+      "hard_normal_acc_mean": 0.8002525252525251,
+      "hard_normal_acc_median_run": 0.7946969696969697,
+      "within": {
+        "mean_delta": 0.0,
+        "n_sig": 0,
+        "pass": false
+      },
+      "cross": {
+        "mean_delta": -0.0013636363636364112,
+        "n_sig": 0,
+        "pass": false
+      },
+      "within_tier": "zero",
+      "cross_tier": "zero",
+      "zero_delta": -0.00303030303030305,
+      "soft_acc_w_mean": 0.750973207762213,
+      "soft_mid_acc_mean": 0.6484276729559749,
+      "soft_within_delta_acc_w": 0.00024920435698887465,
+      "soft_within_ci_pos": 0,
+      "soft_within_tier_detectable": false
+    },
+    "S1e": {
+      "n_runs": 1,
+      "median_seed": 0,
+      "hard_normal_acc_mean": 0.8295454545454546,
+      "hard_normal_acc_median_run": 0.8295454545454546,
+      "within": {
+        "mean_delta": 0.0,
+        "n_sig": 0,
+        "pass": false
+      },
+      "cross": {
+        "mean_delta": 0.00015151515151516913,
+        "n_sig": 0,
+        "pass": false
+      },
+      "within_tier": "zero",
+      "cross_tier": "zero",
+      "zero_delta": -0.002272727272727204,
+      "soft_acc_w_mean": 0.7705909419516219,
+      "soft_mid_acc_mean": 0.6556603773584906,
+      "soft_within_delta_acc_w": 0.0,
+      "soft_within_ci_pos": 0,
+      "soft_within_tier_detectable": false
+    },
+    "Cshared": {
+      "n_runs": 3,
+      "median_seed": 0,
+      "hard_normal_acc_mean": 0.5974747474747475,
+      "hard_normal_acc_median_run": 0.6121212121212121,
+      "within": {
+        "mean_delta": 0.00015151515151514693,
+        "n_sig": 0,
+        "pass": false
+      },
+      "cross": {
+        "mean_delta": 0.0019696969696969104,
+        "n_sig": 0,
+        "pass": false
+      },
+      "within_tier": "zero",
+      "cross_tier": "zero",
+      "zero_delta": -0.0060606060606061,
+      "soft_acc_w_mean": 0.588326270662992,
+      "soft_mid_acc_mean": 0.570440251572327,
+      "soft_within_delta_acc_w": 0.00014122391826973946,
+      "soft_within_ci_pos": 0,
+      "soft_within_tier_detectable": false
+    },
+    "X": {
+      "n_runs": 3,
+      "median_seed": 1,
+      "hard_normal_acc_mean": 0.8058080808080809,
+      "hard_normal_acc_median_run": 0.8015151515151515,
+      "within": {
+        "mean_delta": 0.0,
+        "n_sig": 0,
+        "pass": false
+      },
+      "cross": {
+        "mean_delta": 0.0,
+        "n_sig": 0,
+        "pass": false
+      },
+      "within_tier": "zero",
+      "cross_tier": "zero",
+      "zero_delta": 0.0007575757575757347,
+      "soft_acc_w_mean": 0.7598171928664349,
+      "soft_mid_acc_mean": 0.6581761006289307,
+      "soft_within_delta_acc_w": -0.00038031405949661145,
+      "soft_within_ci_pos": 0,
+      "soft_within_tier_detectable": false
+    }
+  },
+  "Q1": {
+    "per_arm": {
+      "S1": "zero",
+      "S2": "zero"
+    },
+    "read": "zero"
+  },
+  "Q2": {
+    "gap_mean": -0.32679521276595747,
+    "gaps": [
+      -0.2954343971631206,
+      -0.36923758865248235,
+      -0.31571365248226946
+    ],
+    "shared_acc": [
+      0.8645833333333334,
+      0.8958333333333334,
+      0.8697916666666666
+    ],
+    "random_acc": [
+      0.5691489361702128,
+      0.526595744680851,
+      0.5540780141843972
+    ],
+    "assumption_holds": false
+  },
+  "Q3a": {
+    "soft_student_t_pooled": 0.8006010626788075,
+    "hard_delta_pooled": 0.952513966480447,
+    "delta_zero_pooled": 0.7472984206151289,
+    "midband_pooled": 0.7057822546536425,
+    "midband_mass_share": 0.5371039758338573,
+    "reads": "soft label 集含被 δ 弃掉的任务依赖质量",
+    "reproduction": {
+      "hard_delta_pooled": 0.952513966480447,
+      "expected": 0.9525,
+      "pass": true,
+      "delta_zero_pooled": 0.7472984206151289,
+      "expected_zero": 0.7473,
+      "pass_zero": true,
+      "hard_HW": 1.0,
+      "hard_UM": 0.989010989010989
+    }
+  },
+  "Q3b": {
+    "curve": {
+      "0.0": 0.7848484848484849,
+      "0.1": 0.7863636363636364,
+      "0.2": 0.7678030303030303,
+      "0.3": 0.7367424242424243,
+      "0.4": 0.6928030303030304
+    },
+    "f_star": 0.20951219512195113,
+    "f_eff_hard_delta": 0.004207902052085831,
+    "reads": "label 噪声不是比较器瓶颈（f* > f_eff）"
+  },
+  "X": {
+    "X_tier": "zero",
+    "S1_tier": "zero",
+    "X_vs_S1": "same"
+  },
+  "flip_runs_detail": {
+    "F10_s0": {
+      "seed": 0,
+      "acc": 0.7946969696969697
+    },
+    "F10_s1": {
+      "seed": 1,
+      "acc": 0.7780303030303031
+    },
+    "F20_s0": {
+      "seed": 0,
+      "acc": 0.7787878787878788
+    },
+    "F20_s1": {
+      "seed": 1,
+      "acc": 0.7568181818181818
+    },
+    "F30_s0": {
+      "seed": 0,
+      "acc": 0.7507575757575757
+    },
+    "F30_s1": {
+      "seed": 1,
+      "acc": 0.7227272727272728
+    },
+    "F40_s0": {
+      "seed": 0,
+      "acc": 0.6984848484848485
+    },
+    "F40_s1": {
+      "seed": 1,
+      "acc": 0.6871212121212121
+    }
+  }
+}

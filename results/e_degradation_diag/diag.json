@@ -1,0 +1,131 @@
+{
+  "n_tasks": 28,
+  "groups": {
+    "UniMiB-SHAR": 16,
+    "Handwriting": 12
+  },
+  "L1_recompute_max_abs_diff_vs_npz": 8.940696716308594e-08,
+  "layers": {
+    "L0_ts2vec_meanpool": {
+      "within_cos": 0.9935792419615301,
+      "cross_cos": 0.8260067400645678,
+      "within_dist": 0.1783883052844802,
+      "cross_dist": 1.2049059595144558,
+      "separation_ratio": 6.754399945629635,
+      "min_cos": 0.7466575154115571,
+      "max_cos": 0.9998092277170071,
+      "n_within_pairs": 186,
+      "n_cross_pairs": 192,
+      "effective_rank": 1.0626346571018654,
+      "relative_dispersion": 0.3301379870244219,
+      "mean_norm": 1.8947295466613745,
+      "dim_var_spectrum": {
+        "max": 0.009545598057710785,
+        "median": 0.0006824727915007778,
+        "min": 7.970997372841913e-06,
+        "top5_share": 0.11641366475500506
+      },
+      "zscored": {
+        "within_cos": 0.7547984681980792,
+        "cross_cos": -0.7956047854963284,
+        "within_dist": 9.991600172405299,
+        "cross_dist": 30.406951664743257,
+        "separation_ratio": 3.0432514452210437,
+        "min_cos": -0.9687264918043238,
+        "max_cos": 0.987553963009814,
+        "n_within_pairs": 186,
+        "n_cross_pairs": 192,
+        "effective_rank": 1.5120098758838398
+      }
+    },
+    "L1_E_init": {
+      "within_cos": 0.9998658057505471,
+      "cross_cos": 0.9943395200651978,
+      "within_dist": 0.02422164364691044,
+      "cross_dist": 0.17764613061591872,
+      "separation_ratio": 7.334189752171428,
+      "min_cos": 0.9919568178829454,
+      "max_cos": 0.9999925539621961,
+      "n_within_pairs": 186,
+      "n_cross_pairs": 192,
+      "effective_rank": 1.047111648183224,
+      "relative_dispersion": 0.05391170415028532,
+      "mean_norm": 1.630553950296878,
+      "dim_var_spectrum": {
+        "max": 0.00023815142812727712,
+        "median": 1.2666855852562876e-05,
+        "min": 2.1430313404095817e-07,
+        "top5_share": 0.12691684490425992
+      },
+      "zscored": {
+        "within_cos": 0.7932513120071301,
+        "cross_cos": -0.8296874895373275,
+        "within_dist": 9.009882255288758,
+        "cross_dist": 30.73451516210999,
+        "separation_ratio": 3.4112005341766785,
+        "min_cos": -0.9696201518071277,
+        "max_cos": 0.9914027038212666,
+        "n_within_pairs": 186,
+        "n_cross_pairs": 192,
+        "effective_rank": 1.3637354811786004
+      }
+    },
+    "L2_E_trained": {
+      "within_cos": 0.9999992931786169,
+      "cross_cos": 0.9999483580831866,
+      "within_dist": 0.4377967513091349,
+      "cross_dist": 4.164824071328085,
+      "separation_ratio": 9.513145218355538,
+      "min_cos": 0.9999244876195024,
+      "max_cos": 0.9999999831201527,
+      "n_within_pairs": 186,
+      "n_cross_pairs": 192,
+      "effective_rank": 1.0001658889153682,
+      "relative_dispersion": 0.059297958049152444,
+      "mean_norm": 34.40280598310266,
+      "dim_var_spectrum": {
+        "max": 0.165867783655438,
+        "median": 0.0063649110862613375,
+        "min": 1.6709561695291422e-06,
+        "top5_share": 0.1653121677773094
+      },
+      "zscored": {
+        "within_cos": 0.9674330514761814,
+        "cross_cos": -0.974621692225275,
+        "within_dist": 4.460180328814032,
+        "cross_dist": 31.66385551747767,
+        "separation_ratio": 7.099232134835484,
+        "min_cos": -0.9990587712860043,
+        "max_cos": 0.99967583953183,
+        "n_within_pairs": 186,
+        "n_cross_pairs": 192,
+        "effective_rank": 1.0294059412249286
+      }
+    }
+  },
+  "set_fc": {
+    "rho_c": 0.059185942124823414,
+    "set_fc_std_norm_across_tasks": 1.3591985702514648,
+    "set_fc_mean_norm": 22.44826316833496,
+    "set_fc_zero_norm": 0.24900943040847778,
+    "cls_fc_std_norm_across_pairs": 2.39741587638855,
+    "cls_fc_mean_norm": 3.7308833599090576,
+    "set_fc_active_dims": 42,
+    "set_fc_varying_dims": 42,
+    "std_ratio_set_over_cls": 0.5669431756241441
+  },
+  "sensitivity": {
+    "E": 1.904494047164917,
+    "cls_a": 14.140993118286133,
+    "E_grad_norm": 0.056260112673044205,
+    "cls_grad_norm": 4.162980079650879,
+    "E_norm": 33.8837890625,
+    "cls_norm": 3.394277572631836,
+    "ratio_E_over_cls": 0.1346789459010598
+  },
+  "L0_precheck": {
+    "cross_cos": 0.8260067400645678,
+    "effective_rank": 1.0626346571018654,
+    "pass": false
+  }
+}

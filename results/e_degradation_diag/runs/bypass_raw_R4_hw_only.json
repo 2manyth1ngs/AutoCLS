@@ -1,0 +1,171 @@
+{
+  "run_id": "R4_hw_only",
+  "arm": "bypass_raw",
+  "seed": 0,
+  "train_tids": [
+    "Handwriting_00",
+    "Handwriting_01",
+    "Handwriting_02",
+    "Handwriting_03",
+    "Handwriting_04",
+    "Handwriting_05",
+    "Handwriting_09",
+    "Handwriting_10",
+    "Handwriting_11"
+  ],
+  "test_tids": [
+    "Handwriting_06",
+    "Handwriting_07",
+    "Handwriting_08"
+  ],
+  "n_train_records": 180,
+  "train_seconds": 7.8,
+  "bce_first": 0.6912233233451843,
+  "bce_last": 0.22255153208971024,
+  "device": "cuda",
+  "n_test_pairs_directed": 578,
+  "n_test_pairs_forward": 289,
+  "normal": {
+    "acc": 0.7525951557093425,
+    "loss": 0.6129536628723145,
+    "binom_p_forward": 7.289172588238511e-21
+  },
+  "within": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.7525951557093425,
+        "loss": 0.6128513813018799,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 1,
+        "acc": 0.7525951557093425,
+        "loss": 0.6128513813018799,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 2,
+        "acc": 0.7525951557093425,
+        "loss": 0.6128513813018799,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 3,
+        "acc": 0.7525951557093425,
+        "loss": 0.6128513813018799,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 4,
+        "acc": 0.7525951557093425,
+        "loss": 0.6131731271743774,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      }
+    ],
+    "mean_delta": 0.0,
+    "min_delta": 0.0,
+    "max_delta": 0.0,
+    "n_sig": 0,
+    "pass": false
+  },
+  "cross": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.7525951557093425,
+        "loss": 0.6063249707221985,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 1,
+        "acc": 0.7525951557093425,
+        "loss": 0.6054855585098267,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 2,
+        "acc": 0.7525951557093425,
+        "loss": 0.6037121415138245,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 3,
+        "acc": 0.7525951557093425,
+        "loss": 0.604924738407135,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 4,
+        "acc": 0.7525951557093425,
+        "loss": 0.6043940782546997,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      }
+    ],
+    "mean_delta": 0.0,
+    "min_delta": 0.0,
+    "max_delta": 0.0,
+    "n_sig": 0,
+    "pass": false
+  },
+  "zero": {
+    "acc": 0.7525951557093425,
+    "loss": 0.5775347352027893,
+    "delta_acc": 0.0,
+    "mcnemar": {
+      "b": 0,
+      "c": 0,
+      "p": 1.0
+    }
+  }
+}

@@ -200,6 +200,57 @@ class TCLSCEngine:
 
     # ------------------------------------------------------------------ 评估
 
+    def _build_e_map(
+        self, tids: list[str], *, e_mode: str, seed: int,
+        e_assignment: Optional[dict[str, str]],
+    ) -> dict[str, torch.Tensor]:
+        """按 e_mode 给每个测试任务配 E（normal/shuffle/assign/zero；语义见 evaluate）。"""
+        if e_mode not in ("normal", "shuffle", "assign", "zero"):
+            raise ValueError(f"未知 e_mode={e_mode!r}（可选 normal/shuffle/assign/zero）")
+        if (e_assignment is not None) != (e_mode == "assign"):
+            raise ValueError("e_assignment 当且仅当 e_mode='assign' 时给出")
+        if e_mode == "assign":
+            missing = [t for t in tids if t not in e_assignment]
+            if missing:
+                raise ValueError(f"e_assignment 缺任务映射: {missing}")
+            unknown = sorted({e_assignment[t] for t in tids} - set(self.task_windows))
+            if unknown:
+                raise ValueError(f"e_assignment 目标任务无特征: {unknown}")
+            src = sorted({e_assignment[t] for t in tids})
+            rows = self.model.encode_tasks([self.task_windows[t] for t in src])
+            idx = {t: i for i, t in enumerate(src)}
+            return {t: rows[idx[e_assignment[t]]] for t in tids}
+        e_rows = self.model.encode_tasks([self.task_windows[t] for t in tids])
+        if e_mode == "zero":
+            e_rows = torch.zeros_like(e_rows)
+        elif e_mode == "shuffle":
+            e_rows = e_rows[torch.as_tensor(
+                derangement(len(tids), np.random.default_rng(seed)), device=self.device)]
+        return {t: e_rows[i] for i, t in enumerate(tids)}
+
+    def predict(
+        self, pairs: Sequence, *, e_mode: str = "normal", seed: int = 0,
+        e_assignment: Optional[dict[str, str]] = None,
+    ) -> np.ndarray:
+        """逐样本 P(a 优于 b)（numpy, 与 pairs 同序）。pairs 只需有 task_id/vec_a/vec_b
+        （Pair 或 soft_labels.SoftPair 均可）；E 消融语义同 evaluate。"""
+        return self._predict_tensor(pairs, e_mode=e_mode, seed=seed,
+                                    e_assignment=e_assignment).cpu().numpy()
+
+    def _predict_tensor(self, pairs: Sequence, *, e_mode: str, seed: int,
+                        e_assignment: Optional[dict[str, str]]) -> torch.Tensor:
+        tids = sorted({p.task_id for p in pairs})
+        self.model.eval()
+        outs = []
+        with torch.no_grad():
+            e_map = self._build_e_map(tids, e_mode=e_mode, seed=seed, e_assignment=e_assignment)
+            for batch in self._batches(pairs):
+                a = self._stack([p.vec_a for p in batch])
+                b = self._stack([p.vec_b for p in batch])
+                E = torch.stack([e_map[p.task_id] for p in batch])
+                outs.append(self.model(a, b, E))
+        return torch.cat(outs) if outs else torch.zeros(0, device=self.device)
+
     def evaluate(
         self, pairs: Sequence[Pair], *, e_mode: str = "normal", seed: int = 0,
         e_assignment: Optional[dict[str, str]] = None, return_correct: bool = False,
@@ -218,56 +269,19 @@ class TCLSCEngine:
         判读：消融后大幅下降 → 真 task-aware；几乎不变 → 退化为忽略 E 的
         通用 CLS 排序器（很可能是源任务多样性不足的必然结果，印证转路线 A）。
         """
-        if e_mode not in ("normal", "shuffle", "assign", "zero"):
-            raise ValueError(f"未知 e_mode={e_mode!r}（可选 normal/shuffle/assign/zero）")
-        if (e_assignment is not None) != (e_mode == "assign"):
-            raise ValueError("e_assignment 当且仅当 e_mode='assign' 时给出")
-        tids = sorted({p.task_id for p in pairs})
-        self.model.eval()
-        with torch.no_grad():
-            if e_mode == "assign":
-                missing = [t for t in tids if t not in e_assignment]
-                if missing:
-                    raise ValueError(f"e_assignment 缺任务映射: {missing}")
-                unknown = sorted({e_assignment[t] for t in tids}
-                                 - set(self.task_windows))
-                if unknown:
-                    raise ValueError(f"e_assignment 目标任务无特征: {unknown}")
-                src = sorted({e_assignment[t] for t in tids})
-                rows = self.model.encode_tasks([self.task_windows[t] for t in src])
-                idx = {t: i for i, t in enumerate(src)}
-                e_map = {t: rows[idx[e_assignment[t]]] for t in tids}
-            else:
-                e_rows = self.model.encode_tasks([self.task_windows[t] for t in tids])
-                if e_mode == "zero":
-                    e_rows = torch.zeros_like(e_rows)
-                elif e_mode == "shuffle":
-                    e_rows = e_rows[torch.as_tensor(
-                        derangement(len(tids), np.random.default_rng(seed)),
-                        device=self.device)]
-                e_map = {t: e_rows[i] for i, t in enumerate(tids)}
-
-            losses_sum, n_correct = 0.0, 0
-            correct_flags: list[bool] = []
-            for batch in self._batches(pairs):
-                a = self._stack([p.vec_a for p in batch])
-                b = self._stack([p.vec_b for p in batch])
-                E = torch.stack([e_map[p.task_id] for p in batch])
-                y = torch.as_tensor([float(p.y) for p in batch], device=self.device)
-                out = self.model(a, b, E)
-                losses_sum += self.criterion(out, y).item() * len(batch)
-                hit = torch.round(out) == y
-                n_correct += hit.sum().item()
-                if return_correct:
-                    correct_flags += [bool(v) for v in hit.cpu().numpy()]
+        out = self._predict_tensor(pairs, e_mode=e_mode, seed=seed, e_assignment=e_assignment)
         n = len(pairs)
+        with torch.no_grad():
+            y = torch.as_tensor([float(p.y) for p in pairs], device=self.device)
+            loss = self.criterion(out, y).item() if n else float("nan")
+            hit = (torch.round(out) == y)
         res = {
             "e_mode": e_mode, "n": n,
-            "acc": n_correct / n if n else float("nan"),
-            "loss": losses_sum / n if n else float("nan"),
+            "acc": (hit.sum().item() / n) if n else float("nan"),
+            "loss": loss,
         }
         if return_correct:
-            res["correct"] = np.asarray(correct_flags, dtype=bool)
+            res["correct"] = hit.cpu().numpy().astype(bool)
         return res
 
     # ------------------------------------------------------------------ 内部

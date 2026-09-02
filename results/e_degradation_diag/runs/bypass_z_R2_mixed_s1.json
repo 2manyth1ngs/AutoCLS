@@ -1,0 +1,187 @@
+{
+  "run_id": "R2_mixed_s1",
+  "arm": "bypass_z",
+  "seed": 1,
+  "train_tids": [
+    "Handwriting_00",
+    "Handwriting_01",
+    "Handwriting_02",
+    "Handwriting_03",
+    "Handwriting_04",
+    "Handwriting_05",
+    "Handwriting_09",
+    "Handwriting_10",
+    "Handwriting_11",
+    "UniMiB-SHAR_00",
+    "UniMiB-SHAR_01",
+    "UniMiB-SHAR_02",
+    "UniMiB-SHAR_03",
+    "UniMiB-SHAR_04",
+    "UniMiB-SHAR_05",
+    "UniMiB-SHAR_08",
+    "UniMiB-SHAR_09",
+    "UniMiB-SHAR_10",
+    "UniMiB-SHAR_12",
+    "UniMiB-SHAR_13",
+    "UniMiB-SHAR_14"
+  ],
+  "test_tids": [
+    "Handwriting_06",
+    "Handwriting_07",
+    "Handwriting_08",
+    "UniMiB-SHAR_06",
+    "UniMiB-SHAR_07",
+    "UniMiB-SHAR_11",
+    "UniMiB-SHAR_15"
+  ],
+  "n_train_records": 420,
+  "train_seconds": 11.8,
+  "bce_first": 0.7022758722305298,
+  "bce_last": 0.14730115234851837,
+  "device": "cuda",
+  "n_test_pairs_directed": 1320,
+  "n_test_pairs_forward": 660,
+  "normal": {
+    "acc": 0.7954545454545454,
+    "loss": 0.5580218434333801,
+    "binom_p_forward": 4.591554923226863e-56
+  },
+  "within": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.7962121212121213,
+        "loss": 0.5602081418037415,
+        "delta_acc": -0.0007575757575758457,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 1,
+        "acc": 0.7962121212121213,
+        "loss": 0.5602081418037415,
+        "delta_acc": -0.0007575757575758457,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 2,
+        "acc": 0.7962121212121213,
+        "loss": 0.5602081418037415,
+        "delta_acc": -0.0007575757575758457,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 3,
+        "acc": 0.7954545454545454,
+        "loss": 0.5598971843719482,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      },
+      {
+        "seed": 4,
+        "acc": 0.796969696969697,
+        "loss": 0.5605200529098511,
+        "delta_acc": -0.0015151515151515804,
+        "mcnemar": {
+          "b": 0,
+          "c": 0,
+          "p": 1.0
+        }
+      }
+    ],
+    "mean_delta": -0.0007575757575758235,
+    "min_delta": -0.0015151515151515804,
+    "max_delta": 0.0,
+    "n_sig": 0,
+    "pass": false
+  },
+  "cross": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.8015151515151515,
+        "loss": 0.5592708587646484,
+        "delta_acc": -0.0060606060606061,
+        "mcnemar": {
+          "b": 4,
+          "c": 5,
+          "p": 0.74609375
+        }
+      },
+      {
+        "seed": 1,
+        "acc": 0.8007575757575758,
+        "loss": 0.5592672228813171,
+        "delta_acc": -0.005303030303030365,
+        "mcnemar": {
+          "b": 4,
+          "c": 5,
+          "p": 0.74609375
+        }
+      },
+      {
+        "seed": 2,
+        "acc": 0.8007575757575758,
+        "loss": 0.5622205138206482,
+        "delta_acc": -0.005303030303030365,
+        "mcnemar": {
+          "b": 4,
+          "c": 6,
+          "p": 0.828125
+        }
+      },
+      {
+        "seed": 3,
+        "acc": 0.7954545454545454,
+        "loss": 0.5604984760284424,
+        "delta_acc": 0.0,
+        "mcnemar": {
+          "b": 5,
+          "c": 4,
+          "p": 0.5
+        }
+      },
+      {
+        "seed": 4,
+        "acc": 0.8022727272727272,
+        "loss": 0.5624904632568359,
+        "delta_acc": -0.006818181818181834,
+        "mcnemar": {
+          "b": 4,
+          "c": 6,
+          "p": 0.828125
+        }
+      }
+    ],
+    "mean_delta": -0.004696969696969732,
+    "min_delta": -0.006818181818181834,
+    "max_delta": 0.0,
+    "n_sig": 0,
+    "pass": false
+  },
+  "zero": {
+    "acc": 0.7984848484848485,
+    "loss": 0.48134705424308777,
+    "delta_acc": -0.00303030303030305,
+    "mcnemar": {
+      "b": 0,
+      "c": 3,
+      "p": 1.0
+    }
+  }
+}
