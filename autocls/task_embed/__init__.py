@@ -29,6 +29,7 @@ from typing import Optional
 
 import numpy as np
 import torch
+import torch.nn.functional as F
 
 from ..task_types import TASK_CLASSIFICATION, validate_task_type
 from .set_transformer import TaskSetEncoder
@@ -41,6 +42,7 @@ __all__ = [
     "encode_task_windows",
     "embed_task",
     "task_windows",
+    "pool_time_axis",
 ]
 
 
@@ -60,6 +62,34 @@ def task_windows(X: np.ndarray, task_type: str) -> np.ndarray:
         f"task_type={task_type!r} 的窗口逻辑未实现——forecasting 为 S=P+Q 滑窗"
         "（generate_task_feature.py sample_split 语义），接入时在此补分支"
     )
+
+
+def pool_time_axis(reprs: np.ndarray, t_max: int) -> np.ndarray:
+    """时间轴封顶：(m, T, D) → (m, min(T, t_max), D)（MX-3-PQ 协议 §3）。
+
+    动机：Set-Transformer（IntraSetPool/InterSetPool，set_transformer.py）的注意力
+    代价 ∝ T²——每个窗口表征矩阵是 400·T² 个 float（batch 400 的经验上限口径），
+    T 一旦过大（长序列端如 EthanolConcentration L=1024）显存/时间双爆。封顶阈值
+    由 configs/labels.yaml: pq.settf_t_max（=152，覆盖本轮源池 8 个数据集的窗口长度）
+    唯一给定，本函数不硬编码该值。
+
+    T <= t_max 时原样返回（identity，不额外分配/拷贝语义上等价于恒等映射）；
+    否则沿时间轴做自适应平均池化到恰好 t_max 个 bin（torch.nn.functional.
+    adaptive_avg_pool1d 语义：T 整除 t_max 时为非重叠等长 bin 的均值，不整除时
+    bin 边界按 adaptive pooling 的标准取整规则）。计算在 torch（float32）里做，
+    结果转回 numpy 并转换回输入的原始 dtype（半精度 windows_repr 落盘产物同样
+    适用，不因内部升精度而改变对外 dtype 契约）。
+    """
+    reprs = np.asarray(reprs)
+    assert reprs.ndim == 3, f"reprs 应为 (m, T, D)，得到 {reprs.shape}"
+    _, t, _ = reprs.shape
+    if t <= t_max:
+        return reprs
+
+    dtype = reprs.dtype
+    x = torch.from_numpy(reprs.astype(np.float32, copy=False)).permute(0, 2, 1)  # (m, D, T)
+    pooled = F.adaptive_avg_pool1d(x, t_max).permute(0, 2, 1).contiguous()  # (m, t_max, D)
+    return pooled.numpy().astype(dtype, copy=False)
 
 
 def fit_shared_ts2vec(
@@ -103,6 +133,7 @@ def encode_task_windows(
     sample_num: int = 100,    # ← generate_task_feature.py --sample_num 默认 100
     seed: int = 0,
     encoding_window=None,
+    allow_unfit: bool = False,
 ) -> np.ndarray:
     """采样任务窗口并用共享冻结 TS2Vec 编码：通道当独立实例、表征跨通道均值。
 
@@ -111,12 +142,24 @@ def encode_task_windows(
     再对表征取通道均值（← generate_task_feature.py L137-140）。
     返回 (m, T, D)；encoding_window='full_series' 时返回 (m, D)——后者是
     sanity check 的"TS2Vec 级基线"（不过 SetTF 验证任务分布信号）。
+
+    allow_unfit=True：放宽"必须先 fit_shared_ts2vec 训练过"的门槛，只保留
+    frozen（仍不放宽 input_dims==1）——供 MX-3-PQ A2「w/o TS2Vec」消融臂使用：
+    该臂用随机初始化（未训练）的单变量 TS2Vec 权重直接冻结后当特征提取器，
+    衡量"TS2Vec 预训练本身"对任务嵌入的贡献。仍要求显式 freeze()（不能隐式
+    绕过铁律 6 的"训练数据来源必须可追溯"约束——未训练也必须显式声明"不训练"
+    意图，而非漏调 freeze）。
     """
     assert X.ndim == 3, f"X 应为 (N, T, C)，得到 {X.shape}"
     assert shared_ts2vec.input_dims == 1, \
         "只接受单变量共享 TS2Vec（fit_shared_ts2vec 产出）；多变量+零填充方案已被诊断否决"
-    assert shared_ts2vec.frozen and shared_ts2vec.n_iters > 0, \
-        "共享 TS2Vec 必须先经 fit_shared_ts2vec 在源池上训练并冻结（铁律 6）"
+    if allow_unfit:
+        assert shared_ts2vec.frozen, \
+            "allow_unfit=True 仍要求已冻结（w/o TS2Vec 消融臂用随机初始化编码器，" \
+            "但必须显式 freeze() 声明「不训练」意图）"
+    else:
+        assert shared_ts2vec.frozen and shared_ts2vec.n_iters > 0, \
+            "共享 TS2Vec 必须先经 fit_shared_ts2vec 在源池上训练并冻结（铁律 6）"
 
     rng = np.random.default_rng(seed)
     m = min(sample_num, X.shape[0])

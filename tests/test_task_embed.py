@@ -9,7 +9,12 @@ import numpy as np
 import pytest
 import torch
 
-from autocls.task_embed import embed_task, encode_task_windows, fit_shared_ts2vec
+from autocls.task_embed import (
+    embed_task,
+    encode_task_windows,
+    fit_shared_ts2vec,
+    pool_time_axis,
+)
 from autocls.task_embed.set_transformer import TaskSetEncoder
 from autocls.task_embed.ts2vec_wrapper import TS2VecWrapper
 
@@ -252,3 +257,60 @@ class TestEmbedTask:
         w.fit(_toy(c=1), n_iters=2)
         with pytest.raises(AssertionError):
             embed_task(_toy(), w, **PIPE)
+
+
+# ---------------------------------------------------------------- pool_time_axis
+class TestPoolTimeAxis:
+    def test_identity_when_t_le_t_max(self):
+        # T <= t_max：原样返回（恒等映射，含 T 恰好等于 t_max 的边界）
+        reprs = np.random.default_rng(0).standard_normal((3, 4, 5)).astype(np.float32)
+        np.testing.assert_array_equal(pool_time_axis(reprs, t_max=4), reprs)
+        np.testing.assert_array_equal(pool_time_axis(reprs, t_max=10), reprs)
+
+    def test_exact_bin_mean_semantics(self):
+        # T=8 → t_max=4，整除场景下每 bin 精确是相邻 2 个时间步的均值
+        reprs = np.arange(8, dtype=np.float32).reshape(1, 8, 1)
+        out = pool_time_axis(reprs, t_max=4)
+        assert out.shape == (1, 4, 1)
+        expected = np.array([0.5, 2.5, 4.5, 6.5], dtype=np.float32).reshape(1, 4, 1)
+        np.testing.assert_allclose(out, expected, atol=1e-6)
+
+    def test_exact_bin_count_multi_dim(self):
+        # (m, T, D) 多样本多通道：只沿时间轴 T 缩到 t_max，m/D 不变
+        reprs = np.random.default_rng(1).standard_normal((3, 8, 5)).astype(np.float32)
+        out = pool_time_axis(reprs, t_max=4)
+        assert out.shape == (3, 4, 5)
+
+    def test_dtype_preserved(self):
+        reprs64 = np.random.default_rng(2).standard_normal((2, 8, 3)).astype(np.float64)
+        assert pool_time_axis(reprs64, t_max=4).dtype == np.float64
+
+        reprs16 = reprs64.astype(np.float16)
+        assert pool_time_axis(reprs16, t_max=4).dtype == np.float16
+
+        reprs32 = reprs64.astype(np.float32)
+        assert pool_time_axis(reprs32, t_max=4).dtype == np.float32
+
+
+# ---------------------------------------------------------------- encode_task_windows allow_unfit
+class TestEncodeTaskWindowsAllowUnfit:
+    def test_allow_unfit_encodes_never_fit_frozen_wrapper(self):
+        # A2「w/o TS2Vec」消融臂：随机初始化编码器不训练、直接冻结即可使用
+        w = TS2VecWrapper(input_dims=1, device="cpu", seed=0, **TINY)
+        w.freeze()
+        assert w.n_iters == 0
+        out = encode_task_windows(_toy(c=3), w, sample_num=4, seed=0, allow_unfit=True)
+        assert out.shape == (4, 16, TINY["output_dims"])
+
+    def test_allow_unfit_false_still_rejects_unfit(self):
+        # 默认（allow_unfit=False）仍拒绝未训练编码器，铁律 6 门槛不因新参数松动
+        w = TS2VecWrapper(input_dims=1, device="cpu", seed=0, **TINY)
+        w.freeze()
+        with pytest.raises(AssertionError):
+            encode_task_windows(_toy(c=3), w, sample_num=4, seed=0)
+
+    def test_allow_unfit_still_requires_frozen(self):
+        # allow_unfit=True 也不能绕过 frozen 门槛——必须显式声明「不训练」意图
+        w = TS2VecWrapper(input_dims=1, device="cpu", seed=0, **TINY)
+        with pytest.raises(AssertionError):
+            encode_task_windows(_toy(c=3), w, sample_num=4, seed=0, allow_unfit=True)
