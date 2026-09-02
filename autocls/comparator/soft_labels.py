@@ -305,14 +305,9 @@ class SoftTCLSCEngine(TCLSCEngine):
                 w = torch.as_tensor([p.w for p in batch], dtype=torch.float32, device=self.device)
                 if float(w.sum()) <= 0:
                     continue
-                tids = sorted({p.task_id for p in batch})
-                e_unique = self.model.encode_tasks([self.task_windows[t] for t in tids])
-                idx = {t: i for i, t in enumerate(tids)}
-                E = e_unique[torch.as_tensor([idx[p.task_id] for p in batch], device=self.device)]
-                a = self._stack([p.vec_a for p in batch])
-                b = self._stack([p.vec_b for p in batch])
+                a, b, E, ctx, _ = self._encode_batch(batch, grad=True)  # 与硬 label 同一条编码路径
                 target = torch.as_tensor([p.p for p in batch], dtype=torch.float32, device=self.device)
-                out = self.model(a, b, E)
+                out = self.model(a, b, E, ctx)
                 bce = torch.nn.functional.binary_cross_entropy(out, target, reduction="none")
                 loss = (w * bce).sum() / w.sum()
                 self.optimizer.zero_grad()
