@@ -241,3 +241,295 @@ def test_append_oom_failure_is_append_only(tmp_path):
     append_oom_failure(p, {"task_id": "B", "error": "y"})
     ids = [json.loads(x)["task_id"] for x in p.read_text(encoding="utf-8").splitlines()]
     assert ids == ["A", "B"]
+
+
+# ---------------------------------------------------------------------------
+# guarded_run_multi：一条轨迹 → 多行（60/120/290）原子落盘（MX-3-PQ T1）
+# 一次评估产出三行，若中途落盘一半再崩，--resume 会看到"这个 budget 有了、
+# 那个没有"，而缺的那行必须重跑整条轨迹 → 已落盘的行来自另一条轨迹，
+# trajectory_id 相同却不同权重。故三行只能全成功后一起追加。
+# ---------------------------------------------------------------------------
+
+ITERS_LIST = (60, 120, 290)
+
+
+def _traj(*, r=0.7):
+    """模拟 evaluate_rprime_trajectory 的返回：{iters: rec}。"""
+    return {b: {"r_prime": r + b / 1000.0, "checkpoint_iters": list(ITERS_LIST)}
+            for b in ITERS_LIST}
+
+
+def _multi_row(iters, rec):
+    return {"task_id": "Handwriting_03", "cls_key": "deadbeef12ab",
+            "dataset": "Handwriting", **rec}
+
+
+def _multi_paths(tmp_path: Path):
+    return (tmp_path / "rprime_cache.jsonl", tmp_path / "inflight.txt",
+            tmp_path / "oom_failures.jsonl")
+
+
+def test_guarded_run_multi_writes_all_rows_in_iters_order(tmp_path):
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+    rows = guarded_run_multi(
+        _traj, _multi_row, cache_path=cache, inflight_path=inflight,
+        task_id="Handwriting_03", cls_key="deadbeef12ab", iters_list=ITERS_LIST,
+        on_oom=ON_OOM_SKIP, oom_log_path=oom_log, log=lambda _m: None)
+    assert [r["iters"] for r in rows] == [60, 120, 290]
+    written = [json.loads(x) for x in cache.read_text(encoding="utf-8").splitlines()]
+    assert [w["iters"] for w in written] == [60, 120, 290]
+    assert all(w["checkpoint_iters"] == [60, 120, 290] for w in written)
+    assert all(w["task_id"] == "Handwriting_03" for w in written)
+    assert written[0]["r_prime"] == 0.76
+    assert inflight.read_text(encoding="utf-8").strip() == ""
+    assert not oom_log.exists()
+
+
+def test_guarded_run_multi_marks_inflight_while_running(tmp_path):
+    # 看门狗协议（Part A-3）：跑的过程中 inflight 非空，进程被杀才计得上毒条目
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+    seen = {}
+
+    def fn():
+        seen["text"] = inflight.read_text(encoding="utf-8")
+        return _traj()
+
+    guarded_run_multi(fn, _multi_row, cache_path=cache, inflight_path=inflight,
+                      task_id="Handwriting_03", cls_key="deadbeef12ab",
+                      iters_list=ITERS_LIST, on_oom=ON_OOM_SKIP, oom_log_path=oom_log,
+                      log=lambda _m: None)
+    tid, key, it = seen["text"].split("\t")
+    assert tid == "Handwriting_03" and key == "deadbeef12ab"
+    assert int(it) == 290  # 轨迹的 max_iters（cloud_run.sh 按裸整数拼 JSON）
+
+
+def test_guarded_run_multi_oom_writes_nothing(tmp_path):
+    # ①② OOM 一行都不能写：缓存里没有这条轨迹 → --resume 视作未跑 → 会重试
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+    msgs = []
+
+    def boom():
+        raise RprimeOOM("CUDA out of memory. Tried to allocate 15.80 GiB")
+
+    rows = guarded_run_multi(
+        boom, _multi_row, cache_path=cache, inflight_path=inflight,
+        task_id="Handwriting_03", cls_key="deadbeef12ab", iters_list=ITERS_LIST,
+        on_oom=ON_OOM_SKIP, oom_log_path=oom_log, log=msgs.append)
+    assert rows is None
+    assert not cache.exists(), "OOM 写了缓存行 = 这条轨迹永久丢失"
+    assert not oom_log.exists()
+    assert inflight.exists() and inflight.read_text(encoding="utf-8").strip() == ""
+    assert any("OOM" in m for m in msgs)
+
+
+def test_guarded_run_multi_record_mode_logs_every_iters(tmp_path):
+    # ④ worker=1 仍 OOM：三个 budget 各记一条终局失败，"哪些格子没有 R'"可查
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+    msgs = []
+
+    def boom():
+        raise RprimeOOM("CUDA out of memory")
+
+    rows = guarded_run_multi(
+        boom, _multi_row, cache_path=cache, inflight_path=inflight,
+        task_id="Handwriting_03", cls_key="deadbeef12ab", iters_list=ITERS_LIST,
+        on_oom=ON_OOM_RECORD, oom_log_path=oom_log,
+        context={"dataset": "Handwriting", "workers": 1}, log=msgs.append)
+    assert rows is None and not cache.exists()
+    recs = [json.loads(x) for x in oom_log.read_text(encoding="utf-8").splitlines()]
+    assert [r["iters"] for r in recs] == [60, 120, 290]
+    assert all(r["task_id"] == "Handwriting_03" and r["cls_key"] == "deadbeef12ab"
+               for r in recs)
+    assert all(r["checkpoint_iters"] == [60, 120, 290] for r in recs)
+    assert all(r["dataset"] == "Handwriting" and r["workers"] == 1 for r in recs)
+    assert all("out of memory" in r["error"].lower() for r in recs)
+    assert any("oom_failures" in m for m in msgs)
+
+
+def test_guarded_run_multi_is_atomic_when_row_building_fails(tmp_path):
+    # 原子性：合成第 3 行时炸掉，前两行也不许留在缓存里（半条轨迹 = 混权重的 label）
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+
+    def bad_row(iters, rec):
+        if iters == 290:
+            raise KeyError("cls")
+        return _multi_row(iters, rec)
+
+    with pytest.raises(KeyError):
+        guarded_run_multi(_traj, bad_row, cache_path=cache, inflight_path=inflight,
+                          task_id="Handwriting_03", cls_key="deadbeef12ab",
+                          iters_list=ITERS_LIST, on_oom=ON_OOM_SKIP,
+                          oom_log_path=oom_log, log=lambda _m: None)
+    assert not cache.exists(), "轨迹只写了一半 → --resume 会把两条轨迹的行混在一起"
+
+
+def test_guarded_run_multi_rejects_missing_iters(tmp_path):
+    # fn 少返回一个 budget（回调没触发等）必须炸，不能静默少写一行
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+
+    def partial():
+        return {60: {"r_prime": 0.7}, 120: {"r_prime": 0.8}}
+
+    with pytest.raises(ValueError):
+        guarded_run_multi(partial, _multi_row, cache_path=cache, inflight_path=inflight,
+                          task_id="Handwriting_03", cls_key="deadbeef12ab",
+                          iters_list=ITERS_LIST, on_oom=ON_OOM_SKIP,
+                          oom_log_path=oom_log, log=lambda _m: None)
+    assert not cache.exists()
+
+
+def test_guarded_run_multi_passes_fn_kwargs(tmp_path):
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+    got = {}
+
+    def fn(**kw):
+        got.update(kw)
+        return _traj()
+
+    guarded_run_multi(fn, _multi_row, cache_path=cache, inflight_path=inflight,
+                      task_id="Handwriting_03", cls_key="deadbeef12ab",
+                      iters_list=ITERS_LIST, on_oom=ON_OOM_SKIP, oom_log_path=oom_log,
+                      log=lambda _m: None, weight_seed=11, split_seed=22)
+    assert got == {"weight_seed": 11, "split_seed": 22}
+
+
+def test_guarded_run_multi_lets_ordinary_exception_propagate(tmp_path):
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+
+    def boom():
+        raise KeyboardInterrupt()
+
+    with pytest.raises(KeyboardInterrupt):
+        guarded_run_multi(boom, _multi_row, cache_path=cache, inflight_path=inflight,
+                          task_id="T_00", cls_key="k", iters_list=ITERS_LIST,
+                          on_oom=ON_OOM_SKIP, oom_log_path=oom_log, log=lambda _m: None)
+
+
+# ---------------------------------------------------------------------------
+# 修复轮 1：原子性必须是"一次 write"，budget 集合必须对账
+# ---------------------------------------------------------------------------
+
+
+def test_guarded_run_multi_appends_whole_trajectory_in_one_write(tmp_path, monkeypatch):
+    # N 次 open/write/close 之间被 SIGKILL（spot 抢占的日常）就留下 60/120 有、
+    # 290 没有的半条轨迹——正是本函数声称不可能发生的状态。整条轨迹只许开一次
+    # 文件、写一次。
+    import builtins
+
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+    real_open = builtins.open
+    opens, writes = [], []
+
+    class _SpyFile:
+        def __init__(self, fh):
+            self._fh = fh
+
+        def write(self, s):
+            writes.append(s)
+            return self._fh.write(s)
+
+        def __enter__(self):
+            self._fh.__enter__()
+            return self
+
+        def __exit__(self, *a):
+            return self._fh.__exit__(*a)
+
+        def __getattr__(self, name):
+            return getattr(self._fh, name)
+
+    def spy_open(file, mode="r", *a, **kw):
+        fh = real_open(file, mode, *a, **kw)
+        if Path(file) == cache:
+            opens.append(mode)
+            return _SpyFile(fh)
+        return fh
+
+    monkeypatch.setattr(builtins, "open", spy_open)
+    guarded_run_multi(_traj, _multi_row, cache_path=cache, inflight_path=inflight,
+                      task_id="Handwriting_03", cls_key="deadbeef12ab",
+                      iters_list=ITERS_LIST, on_oom=ON_OOM_SKIP, oom_log_path=oom_log,
+                      log=lambda _m: None)
+    assert opens == ["a"], f"轨迹落盘开了 {len(opens)} 次文件：{opens}"
+    assert len(writes) == 1, f"轨迹分 {len(writes)} 次写入 → 中途被杀留半条"
+    assert writes[0].count("\n") == 3
+    assert len(cache.read_text(encoding="utf-8").splitlines()) == 3
+
+
+def test_guarded_run_multi_rejects_extra_budget(tmp_path):
+    # fn 多返回一个 budget：静默丢弃 = 那条 R' 白跑且 checkpoint_iters 会撒谎说
+    # "这是一条完整的 2 budget 轨迹"
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+    with pytest.raises(ValueError):
+        guarded_run_multi(_traj, _multi_row, cache_path=cache, inflight_path=inflight,
+                          task_id="Handwriting_03", cls_key="deadbeef12ab",
+                          iters_list=(60, 120), on_oom=ON_OOM_SKIP,
+                          oom_log_path=oom_log, log=lambda _m: None)
+    assert not cache.exists()
+
+
+def test_guarded_run_multi_rejects_duplicate_iters(tmp_path):
+    # iters_list 有重复 → 同一行被追加两遍（缓存里出现两条同键记录）
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+    with pytest.raises(ValueError):
+        guarded_run_multi(_traj, _multi_row, cache_path=cache, inflight_path=inflight,
+                          task_id="Handwriting_03", cls_key="deadbeef12ab",
+                          iters_list=(60, 60, 120), on_oom=ON_OOM_SKIP,
+                          oom_log_path=oom_log, log=lambda _m: None)
+    assert not cache.exists()
+
+
+def test_guarded_run_multi_keeps_row_authored_checkpoint_iters(tmp_path):
+    # checkpoint_iters 由 evaluate_rprime_trajectory 署名（它才知道这条轨迹实际
+    # 打了哪些截点）。本函数只核对、不改写——改写就等于把不一致抹平成谎言。
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+
+    def lying_traj():
+        recs = _traj()
+        for rec in recs.values():
+            rec["checkpoint_iters"] = [60, 120]   # 与 iters_list 不符
+        return recs
+
+    with pytest.raises(ValueError):
+        guarded_run_multi(lying_traj, _multi_row, cache_path=cache,
+                          inflight_path=inflight, task_id="Handwriting_03",
+                          cls_key="deadbeef12ab", iters_list=ITERS_LIST,
+                          on_oom=ON_OOM_SKIP, oom_log_path=oom_log, log=lambda _m: None)
+    assert not cache.exists()
+
+
+def test_guarded_run_multi_row_keeps_trajectory_checkpoint_iters(tmp_path):
+    # 正常路径：落盘的 checkpoint_iters 就是 rec 自带的那份（不是本函数塞的）
+    from autocls.oom_guard import guarded_run_multi
+
+    cache, inflight, oom_log = _multi_paths(tmp_path)
+    rows = guarded_run_multi(_traj, _multi_row, cache_path=cache,
+                             inflight_path=inflight, task_id="Handwriting_03",
+                             cls_key="deadbeef12ab", iters_list=ITERS_LIST,
+                             on_oom=ON_OOM_SKIP, oom_log_path=oom_log,
+                             log=lambda _m: None)
+    assert all(r["checkpoint_iters"] == list(ITERS_LIST) for r in rows)

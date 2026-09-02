@@ -15,7 +15,7 @@ iteration 计量一致）。
 """
 from __future__ import annotations
 
-from typing import Optional
+from typing import Callable, Optional, Sequence
 
 import numpy as np
 import torch
@@ -41,6 +41,8 @@ def pretrain_encoder(
     seed: int = 0,
     use_swa: bool = False,
     verbose: bool = False,
+    checkpoints: Sequence[int] = (),
+    on_checkpoint: Optional[Callable[[int, nn.Module], None]] = None,
 ) -> list[float]:
     """按 cls_cfg 对 encoder 做对比预训练（就地更新权重），返回每遍数据的平均损失。
 
@@ -58,7 +60,33 @@ def pretrain_encoder(
     共 K+1 个快照的等权 running mean；官方 encode 用平均权重（ts2vec.py:177）、
     梯度只更新原始权重。此处训练结束把平均参数拷回 encoder（后续只有评估，与官方
     eval 走平均权重等价）。AveragedModel 不消耗 RNG，训练轨迹与关闭时逐位相同。
+
+    checkpoints / on_checkpoint（MX-3-PQ：一条轨迹上取多个 budget 的 R'）：
+    每次 optimizer.step() 后 step 自增，若 step 命中 checkpoints 就以
+    `(step, encoder)` 调一次 on_checkpoint——回调跑的是下游评估器（内部
+    encoder.eval() + no_grad 前向），故回调返回后本函数立即 encoder.train() 恢复
+    训练模式，否则截点之后的 iters 会静默跑在 eval 模式下变成另一条轨迹。
+    评估不碰 optimizer 状态、也不消耗本函数的 gen（增强/打乱用独立
+    torch.Generator），故打不打截点的最终权重逐位相同（tests/test_cl_trainer.py
+    的 bit-identical 用例是这条性质的护栏）——budget=290 的 R' 因此仍是原口径。
+    checkpoints 必须是 1..max_iters 内严格递增的整数（越界/重复/乱序都意味着
+    某个 budget 永不触发 = 静默少一条 R'，一律 ValueError）；use_swa 在训练**结束
+    时**才把平均权重拷回 encoder，与途中截点看到的原始权重是两种口径，禁止组合。
     """
+    checkpoints = tuple(int(c) for c in checkpoints)
+    if checkpoints:
+        if list(checkpoints) != sorted(set(checkpoints)):
+            raise ValueError(f"checkpoints={checkpoints} 必须严格递增且不重复")
+        if checkpoints[0] < 1 or checkpoints[-1] > max_iters:
+            raise ValueError(
+                f"checkpoints={checkpoints} 必须落在 1..max_iters={max_iters} 内，"
+                "否则该截点永不触发（静默少一条 R'）")
+        if use_swa:
+            raise ValueError(
+                "use_swa 与 checkpoints 不可同用：SWA 的平均权重训练结束才拷回 "
+                "encoder，途中截点读到的是原始权重，两种口径无法混在一条轨迹里")
+    ckpt_set = set(checkpoints)
+
     device = device or ("cuda" if torch.cuda.is_available() else "cpu")
     encoder = encoder.to(device)
     encoder.train()
@@ -99,6 +127,9 @@ def pretrain_encoder(
             if swa_model is not None:
                 swa_model.update_parameters(encoder)  # 逐 iter（官方 ts2vec.py:152）
             step += 1
+            if step in ckpt_set and on_checkpoint is not None:
+                on_checkpoint(step, encoder)
+                encoder.train()   # 回调里的评估器会 encoder.eval()，必须恢复
             batch_losses.append(loss.item())
 
         if not batch_losses:  # 整遍数据无一 batch 可训练，step 永不推进

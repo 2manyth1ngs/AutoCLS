@@ -124,3 +124,92 @@ def guarded_run(
     append_jsonl(cache_path, row)
     clear_inflight(inflight)
     return row
+
+
+def guarded_run_multi(
+    fn: Callable[..., dict],
+    make_row: Callable[[int, dict], dict],
+    *,
+    cache_path: str | Path,
+    inflight_path: str | Path,
+    task_id: str,
+    cls_key: str,
+    iters_list: tuple[int, ...],
+    on_oom: str = ON_OOM_SKIP,
+    oom_log_path: Optional[str | Path] = None,
+    context: Optional[dict] = None,
+    log: Callable[[str], None] = print,
+    **fn_kwargs,
+) -> Optional[list[dict]]:
+    """跑一条**多截点轨迹**并把它的 N 行原子落盘（MX-3-PQ 的 guarded_run 版）。
+
+    `fn(**fn_kwargs)` 返回 `{iters: rec}`（evaluate_rprime_trajectory 的形状），
+    `make_row(iters, rec)` 由调用方合成该 budget 的完整缓存行（dataset/tag/cls
+    等元数据它自己知道）；本函数只保证两件事写死在行上：`iters` 与
+    `checkpoint_iters`——它们是"这行属于哪条轨迹的哪个 budget"的唯一凭据，
+    交给调用方就会被漏写。返回落盘的行（按 iters 升序）；OOM 返回 None。
+
+    **原子性是本函数存在的理由**：N 行先全部合成完，再由 append_jsonl_many 一次
+    open + 一次 write 整段落盘。若逐行 append（N 次 open/write/close），进程在两次
+    追加之间被杀就留下"60/120 有、290 没有"的缓存，--resume 只补 290 → 补出来的行
+    来自另一条权重轨迹，却与前两行共享同一个 trajectory_id，budget 间比较就此
+    掺进轨迹噪声（δ_nd 0.030 量级）。make_row 自己抛错时同样一行不写。
+
+    **budget 对账**：`sorted(recs)` 必须与 `iters_list` 完全相等才落盘——多返回的
+    budget 被静默丢弃 = 那条 R' 白跑，少返回的 = 静默少一行；`iters_list` 自身重复
+    则会把同一行写两遍。两者一律 ValueError。每行的 `checkpoint_iters` 保留
+    evaluate_rprime_trajectory 署名的那份（它才知道这条轨迹实际打了哪些截点），
+    本函数只核对不改写——改写等于把不一致抹平成谎言。
+
+    与 guarded_run 的其余语义逐条一致：开跑前 mark_inflight 打点、OOM 清 inflight
+    且一行不写（规矩 2/3）、on_oom=record 时记 oom_failures.jsonl（规矩 4，
+    **每个 budget 各一条**，让"哪些格子没有 R'"逐格可查）、非 OOM 异常照常上抛。
+    inflight 打点的 iters 写轨迹的 max_iters：cloud_run.sh 把该字段裸拼进 JSON，
+    只能是单个整数；毒条目隔离因此只隔离 max budget 那一行，其余 budget 下一轮
+    resume 仍会重试整条轨迹（比写坏 JSON 让看门狗静默失效强）。
+    """
+    from .labeling import append_jsonl_many, clear_inflight, mark_inflight
+
+    iters_list = tuple(int(b) for b in iters_list)
+    if not iters_list:
+        raise ValueError("iters_list 不能为空")
+    if len(set(iters_list)) != len(iters_list):
+        raise ValueError(f"iters_list={iters_list} 有重复 budget——同一行会被写两遍")
+    iters_list = tuple(sorted(iters_list))
+
+    mark_inflight(inflight_path, task_id, cls_key, max(iters_list))
+    try:
+        recs = fn(**fn_kwargs)
+    except RprimeOOM as e:
+        clear_inflight(inflight_path)      # 规矩 3：不留 inflight → 不计入毒条目
+        who = f"{task_id}/{cls_key[:8]} iters={list(iters_list)}"
+        if on_oom == ON_OOM_RECORD:
+            path = oom_log_path or Path(cache_path).with_name("oom_failures.jsonl")
+            for b in iters_list:
+                append_oom_failure(path, {
+                    "task_id": task_id, "cls_key": cls_key, "iters": b,
+                    "checkpoint_iters": list(iters_list),
+                    **(context or {}), "error": str(e)})
+            log(f"❌ OOM（已降到 worker=1 仍不够显存）{who} → 记入 oom_failures.jsonl，"
+                f"该轨迹全部 budget 无 R'：{e}")
+        else:
+            log(f"⚠️ OOM {who} → 不写缓存（整条轨迹保持未跑），留待 worker=1 串行"
+                f"收尾重试：{e}")
+        return None                        # 规矩 2：缓存里没有这条 → resume 会重试
+    if sorted(recs) != list(iters_list):
+        raise ValueError(
+            f"{task_id}/{cls_key[:8]}: 轨迹 budget 与 iters_list 不符——fn 返回 "
+            f"{sorted(recs)}，期望 {list(iters_list)}（多的会被静默丢弃、少的会"
+            "静默少写一行，两种都不允许）")
+    rows = []
+    for b in iters_list:
+        row = {**make_row(b, recs[b]), "iters": b}
+        if row.get("checkpoint_iters") != list(iters_list):
+            raise ValueError(
+                f"{task_id}/{cls_key[:8]} iters={b}: 行自带的 checkpoint_iters="
+                f"{row.get('checkpoint_iters')} 与 iters_list={list(iters_list)} 不符"
+                "——本函数只核对不改写（改写等于把不一致抹平成谎言）")
+        rows.append(row)
+    append_jsonl_many(cache_path, rows)    # 全部合成成功后一次写入（原子性）
+    clear_inflight(inflight_path)
+    return rows

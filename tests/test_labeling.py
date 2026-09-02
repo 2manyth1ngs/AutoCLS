@@ -340,21 +340,22 @@ class TestTaskTypeDispatchPoints:
 # ---------------------------------------------------------------- evaluate_rprime
 # 单条 (task, cls) → R' 的共享助手（generate_labels 与 step0 共用，不 fork 第 3 份）。
 # 显式 weight_seed/split_seed 让 step0 能同时跑 canonical（对齐全量缓存）与噪声种子。
-class TestEvaluateRprime:
-    def _tiny_task_data(self, n=80, T=32, C=2, seed=0):
-        rng = np.random.default_rng(seed)
-        X = rng.standard_normal((n, T, C)).astype(np.float32)
-        y = np.array([0, 1] * (n // 2), dtype=np.int64)
-        X[y == 1] += 2.5  # 可分：early-val 后 acc 应明显 off-chance
-        task = SlicedTask(
-            task_id="src_00", pool="source", classes=(0, 1),
-            channels=tuple(range(C)), sample_indices=tuple(range(n)),
-            tag="", task_type=TASK_CLASSIFICATION,
-        )
-        return task, X, y
+def _tiny_task_data(n=80, T=32, C=2, seed=0):
+    rng = np.random.default_rng(seed)
+    X = rng.standard_normal((n, T, C)).astype(np.float32)
+    y = np.array([0, 1] * (n // 2), dtype=np.int64)
+    X[y == 1] += 2.5  # 可分：early-val 后 acc 应明显 off-chance
+    task = SlicedTask(
+        task_id="src_00", pool="source", classes=(0, 1),
+        channels=tuple(range(C)), sample_indices=tuple(range(n)),
+        tag="", task_type=TASK_CLASSIFICATION,
+    )
+    return task, X, y
 
+
+class TestEvaluateRprime:
     def test_returns_finite_r_prime_and_fields(self, make_cls):
-        task, X, y = self._tiny_task_data()
+        task, X, y = _tiny_task_data()
         rec = evaluate_rprime(
             task, make_cls(), X, y,
             weight_seed=run_seed_for("src_00", "k"),
@@ -367,7 +368,7 @@ class TestEvaluateRprime:
         assert rec["n_train"] > 0 and rec["n_eval"] > 0
 
     def test_deterministic_for_fixed_seeds(self, make_cls):
-        task, X, y = self._tiny_task_data()
+        task, X, y = _tiny_task_data()
         kw = dict(weight_seed=123, split_seed=456, iters=30, batch_size=32, device="cpu")
         r1 = evaluate_rprime(task, make_cls(), X, y, **kw)["r_prime"]
         r2 = evaluate_rprime(task, make_cls(), X, y, **kw)["r_prime"]
@@ -375,7 +376,7 @@ class TestEvaluateRprime:
 
     def test_split_seed_changes_partition(self, make_cls):
         # 不同 split_seed → 不同 eval 划分 → R' 通常不同（step0 噪声测量的前提）
-        task, X, y = self._tiny_task_data()
+        task, X, y = _tiny_task_data()
         base = dict(weight_seed=123, iters=30, batch_size=32, device="cpu")
         r1 = evaluate_rprime(task, make_cls(), X, y, split_seed=1, **base)["r_prime"]
         r2 = evaluate_rprime(task, make_cls(), X, y, split_seed=2, **base)["r_prime"]
@@ -384,7 +385,7 @@ class TestEvaluateRprime:
     def test_records_device_name_cpu(self, make_cls):
         # 缓存记录无硬件字段时，跨机的 seconds/R' 锚点无法区分（full-iters §1.6
         # 的 5.6× 估时事故根因之一）。device="cpu" 必须记 CPU 标识而非显卡名。
-        task, X, y = self._tiny_task_data()
+        task, X, y = _tiny_task_data()
         rec = evaluate_rprime(
             task, make_cls(), X, y, weight_seed=1, split_seed=2,
             iters=5, batch_size=32, device="cpu",
@@ -394,9 +395,134 @@ class TestEvaluateRprime:
 
     @pytest.mark.skipif(not torch.cuda.is_available(), reason="无 CUDA")
     def test_records_device_name_cuda(self, make_cls):
-        task, X, y = self._tiny_task_data()
+        task, X, y = _tiny_task_data()
         rec = evaluate_rprime(
             task, make_cls(), X, y, weight_seed=1, split_seed=2,
             iters=5, batch_size=32, device="cuda",
         )
         assert rec["device_name"] == torch.cuda.get_device_name(0)
+
+
+# ------------------------------------------------- evaluate_rprime_trajectory
+# MX-3-PQ：一条预训练轨迹在 60/120/290 三个 budget 各取一次 R'（同一权重轨迹
+# 上打点，而不是跑三条独立轨迹）——三倍 GPU 账单省掉，且 budget 间差异是纯
+# 训练量差异。与 evaluate_rprime 共用 _prepare_task_split，口径必须逐位一致。
+_TRAJ_KEYS = {
+    "r_prime", "acc", "f1", "svm_c", "n_train", "n_eval", "weight_seed",
+    "split_seed", "device_name", "swa", "seconds", "error",
+    "checkpoint_iters", "trajectory_seconds",
+}
+
+
+class TestEvaluateRprimeTrajectory:
+    def test_matches_single_run_at_every_checkpoint(self, make_cls):
+        # 决定性质：轨迹截点的 R' 必须与"单跑到该 iters"逐位相同，否则 PQ 缓存
+        # 与既有 (task, cls, iters) 缓存不是同一口径，两边数字不可混用。
+        from autocls.labeling import evaluate_rprime_trajectory
+
+        task, X, y = _tiny_task_data()
+        kw = dict(weight_seed=123, split_seed=456, batch_size=32, device="cpu")
+        traj = evaluate_rprime_trajectory(task, make_cls(), X, y, checkpoints=(4, 8), **kw)
+        assert set(traj) == {4, 8}
+        for it in (4, 8):
+            single = evaluate_rprime(task, make_cls(), X, y, iters=it, **kw)
+            assert traj[it]["r_prime"] == single["r_prime"], f"iters={it} 口径不一致"
+            assert traj[it]["acc"] == single["acc"]
+            assert traj[it]["f1"] == single["f1"]
+            assert traj[it]["svm_c"] == single["svm_c"]
+            assert traj[it]["n_train"] == single["n_train"]
+            assert traj[it]["n_eval"] == single["n_eval"]
+
+    def test_record_fields_and_cumulative_seconds(self, make_cls):
+        from autocls.labeling import evaluate_rprime_trajectory
+
+        task, X, y = _tiny_task_data()
+        traj = evaluate_rprime_trajectory(
+            task, make_cls(), X, y, weight_seed=1, split_seed=2,
+            checkpoints=(4, 8), batch_size=32, device="cpu",
+        )
+        for it, rec in traj.items():
+            assert _TRAJ_KEYS <= set(rec), f"iters={it} 缺字段 {_TRAJ_KEYS - set(rec)}"
+            assert rec["error"] is None
+            assert rec["swa"] is False
+            assert rec["checkpoint_iters"] == [4, 8]
+            assert rec["weight_seed"] == 1 and rec["split_seed"] == 2
+            assert rec["device_name"].startswith("cpu")
+        # seconds = 到该截点（含本次评估）的累计墙钟，单调不减且 ≤ 轨迹总时长
+        assert traj[4]["seconds"] <= traj[8]["seconds"]
+        assert traj[8]["seconds"] <= traj[8]["trajectory_seconds"]
+        assert traj[4]["trajectory_seconds"] == traj[8]["trajectory_seconds"]
+
+    def test_ordinary_error_marks_every_checkpoint_nan(self, make_cls, monkeypatch):
+        # 训练发散是"这条 CLS 的属性"：整条轨迹作废，三个 budget 全记 NaN+error
+        # 落盘（--resume 不再重试），与 evaluate_rprime 的既有约定一致。
+        from autocls.labeling import evaluate_rprime_trajectory
+
+        def boom(*_a, **_kw):
+            raise RuntimeError("boom")
+
+        monkeypatch.setattr("autocls.contrastive.cl_trainer.pretrain_encoder", boom)
+        task, X, y = _tiny_task_data()
+        traj = evaluate_rprime_trajectory(
+            task, make_cls(), X, y, weight_seed=1, split_seed=2,
+            checkpoints=(4, 8), batch_size=32, device="cpu",
+        )
+        assert set(traj) == {4, 8}
+        for rec in traj.values():
+            assert np.isnan(rec["r_prime"])
+            assert rec["error"] == "RuntimeError: boom"
+            assert rec["checkpoint_iters"] == [4, 8]
+            assert rec["n_train"] > 0 and rec["n_eval"] > 0  # 切分字段仍须落盘
+
+    def test_oom_raises_and_never_records(self, make_cls, monkeypatch):
+        # OOM 与这条 CLS 的好坏无关：绝不能记成 NaN 结论（否则永久丢 3 条 label）
+        from autocls.labeling import evaluate_rprime_trajectory
+        from autocls.oom_guard import RprimeOOM
+
+        def boom(*_a, **_kw):
+            raise RuntimeError("CUDA out of memory. Tried to allocate 15.80 GiB")
+
+        monkeypatch.setattr("autocls.contrastive.cl_trainer.pretrain_encoder", boom)
+        task, X, y = _tiny_task_data()
+        with pytest.raises(RprimeOOM):
+            evaluate_rprime_trajectory(
+                task, make_cls(), X, y, weight_seed=1, split_seed=2,
+                checkpoints=(4, 8), batch_size=32, device="cpu",
+            )
+
+    @pytest.mark.parametrize("checkpoints", [(), (8, 4), (4, 4), (0, 4)])
+    def test_invalid_checkpoints_fail_fast(self, make_cls, checkpoints):
+        # 调用方 bug 必须**抛出**，不能落进 except Exception 变成"每个 budget
+        # 一条 NaN+error"——那几行会进缓存且 --resume 永不重试（静默丢 label）
+        from autocls.labeling import evaluate_rprime_trajectory
+
+        task, X, y = _tiny_task_data()
+        with pytest.raises(ValueError):
+            evaluate_rprime_trajectory(
+                task, make_cls(), X, y, weight_seed=1, split_seed=2,
+                checkpoints=checkpoints, batch_size=32, device="cpu",
+            )
+
+
+class TestPrepareTaskSplit:
+    """evaluate_rprime 与 trajectory 的共用切分入口（不得 fork 第二份切分逻辑）。"""
+
+    def test_matches_split_task_train_eval(self):
+        from autocls.labeling import _prepare_task_split
+
+        task, X, y = _tiny_task_data()
+        Xt, yt, tr, ev = _prepare_task_split(task, X, y, split_seed=42, eval_ratio=0.3)
+        exp_tr, exp_ev = split_task_train_eval(
+            yt, task.task_type, eval_ratio=0.3, seed=42)
+        assert np.array_equal(tr, exp_tr) and np.array_equal(ev, exp_ev)
+        assert Xt.shape[0] == len(y) and len(yt) == len(y)
+
+    def test_explicit_split_indices_bypass_stratification(self):
+        # 出路 A 的跨受试者组切分由调用方注入（split_seed 仍作切分来源标识落盘）
+        from autocls.labeling import _prepare_task_split
+
+        task, X, y = _tiny_task_data()
+        tr_in, ev_in = np.arange(0, 60), np.arange(60, 80)
+        _, _, tr, ev = _prepare_task_split(
+            task, X, y, split_seed=42, eval_ratio=0.3, split_indices=(tr_in, ev_in))
+        assert np.array_equal(tr, tr_in) and np.array_equal(ev, ev_in)

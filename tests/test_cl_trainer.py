@@ -118,3 +118,106 @@ class TestPretrainEncoder:
             )
             results.append(losses[0])
         assert results[0] == results[1]
+
+
+# ---------------------------------------------------------------------------
+# 截点回调（MX-3-PQ T1）：一条轨迹在 60/120/290 三个 budget 各取一次 R'。
+# 单跑三次 = 三倍 GPU 账单且三条不同轨迹，只有"同一条轨迹上打点"才让
+# (slice, cls) 的 budget 间差异是纯训练量差异（预算维度 ctx 的前提）。
+# 铁律 2 不变：max_iters 仍显式传参，checkpoints 只是在途取样，不改训练量语义。
+# ---------------------------------------------------------------------------
+
+
+class TestCheckpoints:
+    def test_callback_fires_at_exact_steps(self, make_cls):
+        # n=32, batch=8 → 4 步/遍；截点跨 pass 边界（3 在第一遍内，7/10 在后续遍）
+        seen = []
+        pretrain_encoder(
+            _small_encoder(), make_cls(), _toy_data(n=32),
+            max_iters=10, batch_size=8, seed=0, device="cpu",
+            checkpoints=(3, 7, 10), on_checkpoint=lambda step, _enc: seen.append(step),
+        )
+        assert seen == [3, 7, 10]
+
+    def test_trainer_restores_train_mode_after_callback(self, make_cls):
+        # 回调里跑的是下游评估器（内部 encoder.eval()）——训练循环必须自己恢复
+        # train()，否则截点之后的 iters 全在 eval 模式下训练（静默变成另一条轨迹）
+        modes = []
+
+        def cb(_step, enc):
+            modes.append(enc.training)
+            enc.eval()
+
+        pretrain_encoder(
+            _small_encoder(), make_cls(), _toy_data(n=32),
+            max_iters=10, batch_size=8, seed=0, device="cpu",
+            checkpoints=(3, 7, 10), on_checkpoint=cb,
+        )
+        assert modes == [True, True, True]
+
+    def test_checkpoint_eval_leaves_trajectory_bit_identical(self, make_cls):
+        # 决定性质：截点处跑真实下游特征提取，最终权重必须与"不打截点"的同种子跑
+        # 逐位相同——否则 budget=290 的 R' 就不是原口径的 R'，缓存不可比。
+        from autocls.downstream.linear_eval import encode_features
+
+        X = _toy_data(n=32)
+        torch.manual_seed(123)
+        ref = _small_encoder()
+        pretrain_encoder(ref, make_cls(), X, max_iters=8, batch_size=8, seed=7, device="cpu")
+
+        torch.manual_seed(123)
+        ckpt = _small_encoder()
+        pretrain_encoder(
+            ckpt, make_cls(), X, max_iters=8, batch_size=8, seed=7, device="cpu",
+            checkpoints=(4, 8),
+            on_checkpoint=lambda _s, enc: encode_features(enc, X[:8], device="cpu"),
+        )
+
+        a, b = ref.state_dict(), ckpt.state_dict()
+        assert list(a) == list(b)
+        for k in a:
+            assert torch.equal(a[k], b[k]), f"截点评估扰动了训练轨迹：{k}"
+
+    def test_checkpoint_at_skipped_batch_boundary_still_fires(self, make_cls):
+        # n=5, batch=2 → 每遍 batch 为 2/2/1，末尾单样本被跳过（不计 step）
+        # → 2 步/遍。截点 3/6 都落在"跨遍"的位置上，必须照样触发。
+        seen = []
+        pretrain_encoder(
+            _small_encoder(), make_cls(), _toy_data(n=5),
+            max_iters=6, batch_size=2, seed=0, device="cpu",
+            checkpoints=(3, 6), on_checkpoint=lambda step, _enc: seen.append(step),
+        )
+        assert seen == [3, 6]
+
+    @pytest.mark.parametrize("checkpoints", [
+        (7, 3),        # 未排序
+        (3, 3, 7),     # 重复
+        (3, 12),       # 超过 max_iters → 永不触发，静默少一条 R'
+        (0, 3),        # 非正 → 永不触发
+    ])
+    def test_invalid_checkpoints_rejected(self, make_cls, checkpoints):
+        with pytest.raises(ValueError):
+            pretrain_encoder(
+                _small_encoder(), make_cls(), _toy_data(n=32),
+                max_iters=10, batch_size=8, seed=0, device="cpu",
+                checkpoints=checkpoints, on_checkpoint=lambda *_a: None,
+            )
+
+    def test_swa_with_checkpoints_rejected(self, make_cls):
+        # SWA 把平均权重在训练**结束时**拷回 encoder，途中截点看到的是原始权重
+        # ——两种口径混在一条轨迹里无法解释，直接禁止组合
+        with pytest.raises(ValueError):
+            pretrain_encoder(
+                _small_encoder(), make_cls(), _toy_data(n=32),
+                max_iters=10, batch_size=8, seed=0, device="cpu",
+                use_swa=True, checkpoints=(5, 10), on_checkpoint=lambda *_a: None,
+            )
+
+    def test_no_checkpoints_keeps_old_behavior(self, make_cls, monkeypatch):
+        # 既有调用方（2b/step0/24/25/27）一律不传 checkpoints，行为零改动
+        created = _patch_step_counter(monkeypatch)
+        losses = pretrain_encoder(
+            _small_encoder(), make_cls(), _toy_data(n=32),
+            max_iters=10, batch_size=8, seed=0, device="cpu",
+        )
+        assert created[0].step_count == 10 and len(losses) == 3

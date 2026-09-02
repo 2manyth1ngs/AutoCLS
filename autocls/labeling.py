@@ -382,6 +382,24 @@ def append_jsonl(path: str | Path, rec: dict) -> None:
         fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
 
+def append_jsonl_many(path: str | Path, recs: list[dict]) -> None:
+    """一次 open + 一次 write 追加多行——多行必须**同生共死**时用（MX-3-PQ 轨迹）。
+
+    与逐条 append_jsonl 的唯一差别是崩溃窗口：N 次 open/write/close 之间被
+    SIGKILL（spot 抢占的日常）会留下半条轨迹——60/120 有、290 没有——而 --resume
+    只补 290，补出来的行来自另一条权重轨迹却与前两行共享同一个 trajectory_id。
+    合成完整段文本再一次写入，把窗口压到单次写调用内（追加模式下这一段要么整段
+    落盘要么一字节没落），是本仓库层面能给的最强保证。
+    """
+    recs = list(recs)
+    if not recs:
+        return
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    payload = "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in recs)
+    with open(path, "a", encoding="utf-8") as fh:
+        fh.write(payload)
+
+
 def load_rprime_cache(path: str | Path) -> dict[tuple[str, str, int], dict]:
     """读 R' 缓存：{(task_id, cls_key, iters): record}。iters 入键防 early/full 混用（铁律 2）。"""
     path = Path(path)
@@ -457,6 +475,35 @@ def device_label(device: Optional[str]) -> str:
     return f"cpu:{platform.processor() or platform.machine()}"
 
 
+def _prepare_task_split(
+    task,
+    X: np.ndarray,
+    y: np.ndarray,
+    *,
+    split_seed: int,
+    eval_ratio: float,
+    split_indices: Optional[tuple[np.ndarray, np.ndarray]] = None,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """物化切片任务 + 定 train/eval 划分 → (Xt, yt, tr_idx, ev_idx)。
+
+    evaluate_rprime 与 evaluate_rprime_trajectory 的共用入口：两者的 R' 必须来自
+    **同一个** train/eval 划分，否则轨迹截点的数字与既有单跑缓存不可比。
+    split_indices 显式给出时绕过分层切分（出路 A 的跨受试者组切分由调用方注入，
+    split_seed 仍原样落盘作切分来源标识）。materialize_task 惰性导入，保持
+    labeling 的纯函数部分无 torch/数据依赖。
+    """
+    from .data.task_slicer import materialize_task
+
+    Xt, yt = materialize_task(task, X, y)
+    if split_indices is not None:
+        tr_idx, ev_idx = split_indices
+    else:
+        tr_idx, ev_idx = split_task_train_eval(
+            yt, task.task_type, eval_ratio=eval_ratio, seed=split_seed,
+        )
+    return Xt, yt, tr_idx, ev_idx
+
+
 def evaluate_rprime(
     task,
     cls_cfg: CLS,
@@ -498,17 +545,13 @@ def evaluate_rprime(
     from .oom_guard import RprimeOOM, is_oom_error
 
     from .contrastive.cl_trainer import pretrain_encoder
-    from .data.task_slicer import materialize_task
     from .downstream import resolve_evaluator
     from .encoders.registry import build_encoder
 
-    Xt, yt = materialize_task(task, X, y)
-    if split_indices is not None:
-        tr_idx, ev_idx = split_indices
-    else:
-        tr_idx, ev_idx = split_task_train_eval(
-            yt, task.task_type, eval_ratio=eval_ratio, seed=split_seed,
-        )
+    Xt, yt, tr_idx, ev_idx = _prepare_task_split(
+        task, X, y, split_seed=split_seed, eval_ratio=eval_ratio,
+        split_indices=split_indices,
+    )
     rec: dict = {"seconds": None, "error": None, "r_prime": float("nan")}
     t0 = time.perf_counter()
     try:
@@ -544,3 +587,113 @@ def evaluate_rprime(
         "device_name": device_label(device), "swa": bool(use_swa),
     })
     return rec
+
+
+def evaluate_rprime_trajectory(
+    task,
+    cls_cfg: CLS,
+    X: np.ndarray,
+    y: np.ndarray,
+    *,
+    weight_seed: int,
+    split_seed: int,
+    checkpoints: tuple[int, ...],
+    eval_ratio: float = 0.3,
+    batch_size: int = 128,
+    lr: float = 1e-3,
+    device: Optional[str] = None,
+) -> dict[int, dict]:
+    """一条预训练轨迹 → 多个 budget 的 R'：{iters: record}（MX-3-PQ）。
+
+    只跑一次 max_iters=max(checkpoints) 的预训练，途中每命中一个 checkpoint 就用
+    当前权重跑一次下游评估（cl_trainer 的 on_checkpoint，见其文档）。与"每个
+    budget 各跑一条轨迹"的关键差异：**同一条轨迹**——budget 间的 R' 差异是纯训练
+    量差异，不掺入不同权重轨迹的地板噪声（δ_nd 0.030 量级，results/step0*）；
+    顺带省掉近 2/3 的 GPU 账单。截点评估不扰动训练（tests/test_cl_trainer.py 的
+    bit-identical 护栏），故 traj[b]["r_prime"] 与 evaluate_rprime(iters=b) 逐位
+    相同，PQ 缓存与既有 (task, cls, iters) 缓存同口径（铁律 2）。
+
+    每条 record 的字段与 evaluate_rprime 一致（r_prime/acc/f1/svm_c/n_train/
+    n_eval/weight_seed/split_seed/device_name/swa/seconds/error），另加：
+    - checkpoint_iters: 本次轨迹的全部截点（同一 trajectory_id 的行共有）；
+    - trajectory_seconds: 轨迹总墙钟（含全部截点评估）；
+    - seconds: 到该截点为止的累计墙钟（含本截点的评估），故随 iters 单调不减。
+
+    错误语义与 evaluate_rprime 完全一致：
+    - 训练发散等普通异常 = 这条 CLS 的属性 → **整条轨迹**每个 checkpoint 都记
+      r_prime=NaN + error 落盘（半条轨迹落盘会让 --resume 把两条不同权重轨迹的
+      行混进同一个 trajectory_id）；
+    - 显存/内存不足抛 RprimeOOM，绝不落盘（autocls/oom_guard.py 规矩 1/2）。
+      调用方须走 oom_guard.guarded_run_multi（多行原子落盘）。
+    """
+    import time
+
+    import torch
+
+    from .oom_guard import RprimeOOM, is_oom_error
+
+    from .contrastive.cl_trainer import pretrain_encoder
+    from .downstream import resolve_evaluator
+    from .encoders.registry import build_encoder
+
+    # 截点合法性在 try 之前查：pretrain_encoder 里的同一道闸抛的 ValueError 会被
+    # 下面的 except Exception 吞成"每个 budget 一条 NaN+error"，而那些行会进缓存
+    # 且 --resume 永不重试——调用方的 bug 就此变成静默丢 label。
+    checkpoints = tuple(int(c) for c in checkpoints)
+    if not checkpoints:
+        raise ValueError("checkpoints 不能为空——轨迹至少要有一个 budget 取样点")
+    if list(checkpoints) != sorted(set(checkpoints)) or checkpoints[0] < 1:
+        raise ValueError(f"checkpoints={checkpoints} 必须是 ≥1 的严格递增整数")
+
+    Xt, yt, tr_idx, ev_idx = _prepare_task_split(
+        task, X, y, split_seed=split_seed, eval_ratio=eval_ratio,
+    )
+    recs: dict[int, dict] = {}
+    t0 = time.perf_counter()
+    try:
+        torch.manual_seed(weight_seed)  # 权重初始化可复现（与 evaluate_rprime 同规则）
+        encoder = build_encoder(input_dims=Xt.shape[-1])
+        evaluator = resolve_evaluator(task.task_type)  # 铁律 7 分发点
+
+        def _on_checkpoint(step: int, enc) -> None:
+            metrics = evaluator(
+                enc, Xt[tr_idx], yt[tr_idx], Xt[ev_idx], yt[ev_idx],
+                device=device, seed=weight_seed,
+            )
+            rec: dict = {"seconds": None, "error": None, "r_prime": float("nan")}
+            rec.update(metrics)
+            rec["r_prime"] = float(metrics["r_prime"])
+            rec["seconds"] = round(time.perf_counter() - t0, 1)
+            recs[step] = rec
+
+        pretrain_encoder(
+            encoder, cls_cfg, Xt[tr_idx], max_iters=max(checkpoints),
+            batch_size=batch_size, lr=lr, device=device, seed=weight_seed,
+            checkpoints=checkpoints, on_checkpoint=_on_checkpoint,
+        )
+        missing = [b for b in checkpoints if b not in recs]
+        if missing:  # 训练循环少触发了截点 = 代码 bug，宁可整条记 error 也不静默少行
+            raise RuntimeError(f"截点 {missing} 未触发（max_iters={max(checkpoints)}）")
+    except Exception as e:  # 训练发散等视作该 CLS 的坏结果，不中断实验
+        if is_oom_error(e):
+            # 显存/内存不足：与这条 CLS 的好坏无关，不得落盘成结论（同 evaluate_rprime）
+            try:
+                torch.cuda.empty_cache()
+            except Exception:  # noqa: BLE001 —— 无 CUDA 或已崩，清理失败不掩盖 OOM
+                pass
+            raise RprimeOOM(f"{type(e).__name__}: {e}") from e
+        seconds = round(time.perf_counter() - t0, 1)
+        err = f"{type(e).__name__}: {e}"
+        recs = {b: {"seconds": seconds, "error": err, "r_prime": float("nan")}
+                for b in checkpoints}
+
+    trajectory_seconds = round(time.perf_counter() - t0, 1)
+    common = {
+        "n_train": int(len(tr_idx)), "n_eval": int(len(ev_idx)),
+        "weight_seed": int(weight_seed), "split_seed": int(split_seed),
+        "device_name": device_label(device), "swa": False,
+        "checkpoint_iters": list(checkpoints), "trajectory_seconds": trajectory_seconds,
+    }
+    for rec in recs.values():
+        rec.update(common)
+    return {b: recs[b] for b in checkpoints}
