@@ -16,3 +16,10 @@ full_iters: 2320
 early_iters: 290
 batch_size: 128
 lr: 1.0e-3
+
+# --- MX-3-PQ 预算档（scripts/pq_common.py: BUDGETS；labels.yaml: pq.budgets 同值）---
+# budgets 是**同一条轨迹的 checkpoint**（一次预训练跑到 290，途中在 60/120 各评估
+# 一次），不是三次独立训练——成本 ≈1 次 290，却得到 3 个训练量口径的 R'。
+# early_iters / full_iters 是既有的另两条口径，**原样不动**（历史缓存与已发布判定
+# 全按原口径引用，铁律 2）；290 与 early_iters 数值相同纯属口径重合，不共享语义。
+budgets: [60, 120, 290]

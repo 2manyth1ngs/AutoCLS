@@ -101,3 +101,44 @@ delta_per_dataset:
   # reserve（回填时启用；checklist C1 要求 13 源 + 3 reserve 全覆盖，Ethanol 在上）
   Heartbeat:                 0.05   # N/C≈204
   FingerMovements:           0.05   # N/C≈208
+
+# --- MX-3-PQ（scripts/32–34；公共装载 scripts/pq_common.py）---
+# 源池 v2 定稿 8 个数据集 × 7 折 leave-one-dataset-out（SelfRegulationSCP2 是 EEG
+# 低权：只供 label 与全局先验，不作折靶）。每数据集取注册表切片的前
+# n_slices_per_dataset 个（SCP2 的 planned_tasks=3，**不覆盖注册表**），每切片 20 CLS
+# （10 shared 探针目录 + 10 random），每条轨迹在 budgets 三个 checkpoint 上评估 R'。
+# 值的唯一真源仍是各自的位置：CLS 档位在 space.yaml（铁律 1）、池组成在
+# source_pool.yaml/candidate_pool.yaml、训练量在 train.yaml（budgets 两处对账，
+# pq_common.load_pq_config 开跑前 fail-fast）。
+pq:
+  budgets: [60, 120, 290]      # 同一条轨迹的 checkpoint；与 train.yaml budgets 逐位一致
+  n_slices_per_dataset: 6
+  datasets:
+    - Handwriting
+    - UniMiB-SHAR
+    - PhonemeSpectra
+    - UWaveGestureLibrary
+    - EthanolConcentration
+    - Cricket
+    - HandMovementDirection
+    - SelfRegulationSCP2
+  training_only: [SelfRegulationSCP2]
+  settf_t_max: 152             # SetTF 前的时间轴池化上限（Handwriting 的 l_enc，长序列按此对齐）
+  settf_windows: 100           # 每任务编码窗口数（route_a.sample_num 同口径）
+  ctx_encoding: onehot         # 预算 → ctx 向量的编码（比较器只看到通用向量，铁律 7）
+  # δ 重标定探针：每数据集前 2 个切片 × 10 shared CLS × 2 个额外 weight seed（k=3）
+  noise_probe:
+    slices: 2
+    reps: [1, 2]
+  # δ 按 (数据集, 预算) 查表——噪声尺度随训练量变（step0.5 的 iters U 形地板），
+  # 单一 per-dataset δ 会在某个预算档上放行噪声 label。空表 = 未标定：由
+  # `python scripts/32_*.py --calibrate --apply-delta` 回填后配对才放行（2c 同款 fail-fast）。
+  delta_per_dataset_budget: {}
+  # 进化搜索（Algorithm 2；autocls/search/evolution.py 参数唯一真源）
+  evolution:
+    ks: 2000
+    kp: 50
+    generations: 20
+    p_cross: 0.8
+    p_mut: 0.2
+    top_k: 3
