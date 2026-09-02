@@ -606,7 +606,7 @@ def load_catalog(outdir: Path, space: CLSSpace, *,
     if doc is not None:
         shared = [_cls_entry(d) for d in doc["shared"]]
         # 切片全集 = 调用方给的 slices ∪ random 表的键：shared 对全部切片共用，
-        # 某切片 random 为空（32 的 smoke 就是这样）时它仍是个合法的候选集，
+        # 某切片的 random 名单为空时它仍是个合法的候选集（只有 shared 候选），
         # 只按 random 的键建表会让这种切片整个消失（静默少实例）。
         tids = sorted(set(doc["random"]) | set(slices or ()))
         cat = {}
@@ -661,6 +661,60 @@ def load_fold_models(outdir: Path, target: str, *, arms: Sequence[str] = RANK_AR
             models.append((m.to(device), meta))
         out[arm] = models
     return out
+
+
+def set_encoder_dim_input(model, meta: Optional[dict] = None) -> Optional[int]:
+    """该模型的 SetTF/均值池化编码器**期望的窗口特征维** D。
+
+    取值优先级（都取"输入维的事实"，绝不拿输出维凑数）：
+    1. TaskSetEncoder：`intra_setpool.enc[0].mab.fc_q.in_features`
+       （SetPool → SAB → MAB.fc_q 是第一个吃 dim_input 的线性层）；
+    2. MeanPoolTaskEncoder：标准化缓冲区 `mu` 的长度**就是** dim_input；
+    3. `meta["dim_input"]`（本脚本 smoke fixture 会写；33 号不写该键）；
+    4. 兜底 `enc.nz`——**那是输出维**，只在前三条都拿不到时才用，并且告警。
+       对 TaskSetEncoder 而言 nz 与 dim_input 可以不等（如 dim_input=16, nz=8），
+       静默拿它当输入维会让维度闸放行本该拦下的错配。
+    不吃 E 的臂返回 None。
+    """
+    enc = getattr(model, "set_encoder", None)
+    if enc is None:
+        return None
+    try:
+        return int(enc.intra_setpool.enc[0].mab.fc_q.in_features)
+    except (AttributeError, IndexError, TypeError):
+        pass
+    mu = getattr(enc, "mu", None)          # MeanPoolTaskEncoder：逐维标准化缓冲
+    if mu is not None and getattr(mu, "shape", None):
+        return int(mu.shape[0])
+    if meta is not None and meta.get("dim_input") is not None:
+        return int(meta["dim_input"])
+    nz = getattr(enc, "nz", None)
+    if nz is not None:
+        print(f"⚠️ 无法从 {type(enc).__name__} 读出 dim_input，退而用 nz={nz}"
+              "（那是**输出**维）作维度闸的期望值；meta 里补 dim_input 可消除本告警",
+              flush=True)
+        return int(nz)
+    return None
+
+
+def check_windows_dim(w, model, *, meta=None, where: str = "") -> None:
+    """喂进 SetTF 之前核对 `windows_repr` 的最后一维 == 编码器的 dim_input。
+
+    不核对的后果就是评审轮 2 的现场：16 维合成窗口撞上 33 号真模型的 256 维
+    SetTF，报 `mat1 and mat2 shapes cannot be multiplied (24x16 and 256x256)`
+    ——错误发生在注意力的矩阵乘法里，堆栈完全看不出"特征和模型不是一套"。
+    """
+    want = set_encoder_dim_input(model, meta)
+    if want is None:
+        return
+    got = int(w.shape[-1])
+    if got != want:
+        raise ValueError(
+            f"特征与模型不是一套：{where} 的 windows_repr 最后一维 = {got}，"
+            f"而该模型的 set_encoder 期望 dim_input = {want}。"
+            "常见原因是同一个目录里混了 33 号的真产物与 34 号 --smoke 的合成"
+            "替身——用 `--smoke --fresh` 清掉合成部分重来，或先跑完 "
+            "`33_pq_comparator_loo.py --smoke` 让全目录同源")
 
 
 def load_slice_windows(outdir: Path, feature_fold: str, slice_id: str, *,
@@ -833,6 +887,10 @@ def cmd_rank(outdir: Path, *, budgets: Sequence[int], folds: Sequence[str],
                         w = load_slice_windows(outdir, ff, s, device=device)
                         assert w is not None, f"folds/{ff}/{s} 特征缺失"
                         w_cache[(ff, s)] = w
+                    check_windows_dim(
+                        w_cache[(ff, s)], model, meta=meta,
+                        where=f"folds/{ff}/task_features/{s}.npz"
+                              f"（{target}/{arm}_s{i}）")
                     with torch.no_grad():
                         e_cache[(arm, i, s)] = model.encode_tasks(
                             [w_cache[(ff, s)]])[0]
@@ -1120,6 +1178,10 @@ def cmd_evolve(outdir: Path, *, budgets: Sequence[int], folds: Sequence[str],
                     w = load_slice_windows(outdir, ff, slice00, device=device)
                     assert w is not None, \
                         f"folds/{ff}/{slice00} 特征缺失（33 号 --fit-folds）"
+                    check_windows_dim(
+                        w, model, meta=meta,
+                        where=f"folds/{ff}/task_features/{slice00}.npz"
+                              f"（{target}/{arm}）")
                     with torch.no_grad():
                         e_rows.append(model.encode_tasks([w])[0])
                 t0 = time.time()
@@ -1231,6 +1293,246 @@ def cmd_evaluate_evo(outdir: Path, *, budgets: Sequence[int],
 
 
 # ================================================================ smoke fixture
+# --smoke 会写的 34 相关产物（--fresh 清理范围；**永不含** R' 缓存与 32 号产物）
+# --fresh 绝不删的东西。判据不是"看着像派生产物"，而是**这些文件可能装着真跑
+# 的结果**：R' 缓存与噪声探针要真 GPU；`evo_cache.jsonl` 装的是 --evaluate-evo
+# 的真 R' 行（轮 3 评审：它原先被当成"派生产物"删掉了，那是真的数据损失）；
+# rankings/evo_picks/search_analysis 可能来自真产物目录上的真跑。
+# fixture **从不写**这几个里的任何一个（除 rprime_cache/cls_catalog 在 absent
+# 档合成时会写，那两个会进 written 清单，按清单删仍是"只删自己写过的"）。
+SMOKE_KEEP = ("rprime_cache.jsonl", "noise_probe.jsonl", "cls_catalog.json",
+              "tasks.json", "delta_calibration.json",
+              "evo_cache.jsonl", "evo_picks.json", "rankings.json",
+              "search_analysis.json")
+
+
+def fixture_manifest(outdir: Path) -> Optional[set[str]]:
+    """本脚本的 fixture 在该目录写过哪些文件（`SMOKE_FIXTURE.json` 的 `written`）。
+
+    返回 None = **没有清单**：要么目录不是我们造的（33 号的真产物），要么是轮 2
+    之前的老标记。"没有清单"必须一路传导到 `--fresh`（拒绝删任何东西）与
+    `mixed_state_message`（不推荐 `--fresh`）——删自己没写过的文件是轮 3 评审
+    点名的事故。
+    """
+    marker = Path(outdir) / FIXTURE_MARKER
+    if not marker.exists():
+        return None
+    try:
+        written = json.loads(marker.read_text(encoding="utf-8")).get("written")
+    except json.JSONDecodeError:
+        return None
+    return set(written) if written else None
+
+
+def budgets_from_models(outdir: Path, targets: Sequence[str]
+                        ) -> Optional[tuple[int, ...]]:
+    """从既有 main 臂存档的 meta 读预算口径（复用 33 号产物时以文件为准）。
+
+    33 号的 smoke 口径将来若从 4/8/12 改成别的，34 号不该因为自己写死
+    SMOKE_BUDGETS 就把整目录判成"真假混用"——预算是**读**出来的，不是猜的。
+    """
+    mdir = Path(outdir) / "models"
+    for t in targets:
+        for p in sorted(mdir.glob(f"{t}/main_s*.pt")):
+            try:
+                _m, meta = load_pq_model(p)
+            except Exception:                      # noqa: BLE001（体检不抛）
+                continue
+            got = tuple(int(b) for b in meta.get("budgets", ()))
+            if got:
+                return got
+    return None
+
+
+def mixed_state_message(outdir: Path, state: dict) -> str:
+    """`mixed` 档的报错正文：逐条点名哪儿对不上 + 与该目录**实情相符**的出路。
+
+    出路② `--fresh` **只在该目录确有 fixture 清单时**才提（轮 3 评审）：清单不在
+    就说明这儿的 models/folds 不是我们写的，推荐 --fresh 等于教人删别人的 GPU
+    产物——而且 --fresh 自己也会拒绝执行。
+    """
+    lines = [f"{outdir} 处于**真假混用**状态（模型 {state['n_models']} / 特征 "
+             f"{state['n_features']}），34 号不能在这上面整套复用。逐条："]
+    lines += [f"  - {r}" for r in state["reasons"]]
+    lines.append("出路：")
+    lines.append("  ① 先把 33 号跑完：`python scripts/33_pq_comparator_loo.py "
+                 f"--smoke --outdir {outdir}`（让全目录同源）；")
+    if state.get("has_manifest"):
+        lines.append("  ② 或清掉本脚本 fixture 写过的合成件重来："
+                     "`python scripts/34_pq_search.py --smoke --fresh "
+                     f"--outdir {outdir}`（**只删清单内的 fixture 文件**，"
+                     "33 号的 models/folds 与各类缓存一律不动）。")
+    else:
+        lines.append(f"  ② 或换一个空目录跑合成 smoke：`--smoke --outdir <新目录>`。"
+                     "（本目录没有 fixture 清单 = 这些产物不是 34 号写的，"
+                     "`--fresh` 会拒绝执行，也**不要**手删 models/folds——"
+                     "那是 33 号的 GPU 产物。）")
+    lines.append("34 号绝不逐文件补洞——16 维合成窗口撞 256 维真 SetTF 正是这么来的。")
+    return "\n".join(lines)
+
+
+def smoke_dir_state(outdir: Path, *, targets: Sequence[str],
+                    budgets: Sequence[int]) -> dict:
+    """`--smoke` 前的目录体检：`absent` / `reusable` / `mixed`。
+
+    评审轮 2 的事故根因：原来的 fixture 逐文件"存在就跳过"，于是 33 号只产出
+    `main_s0` + 切片 `_00` 特征时，34 号把缺的 `main_s1/s2` 与切片 `_01` 特征
+    用 16 维合成件补齐——同一个目录里 256 维真模型与 16 维假特征并存，
+    一路跑到 SetTF 的矩阵乘法才炸。**修法是按目录整体决策，不再逐文件补洞。**
+
+    - `absent`：没有任何折靶可用 → 整套合成；
+    - `reusable`：至少一个折靶自洽（有 main 臂模型，且它在**自己的特征折目录**
+      里至少有一个切片特征、维度与该模型 set_encoder 一致）→ **一件不合成**，
+      只跑这些折靶；
+    - `mixed`：某折靶**真假混着**——维度不符 / 预算口径不同 / 模型读不出来 /
+      fixture 清单里的文件与非清单文件在同一折里共存。
+
+    两条轮 3 评审钉死的口径：
+    1. **特征归属按折目录限定**。33 号把**每个数据集的全部切片**都编进**每个**
+       折目录（`folds/Handwriting/task_features/UniMiB-SHAR_00.npz` 是正常产物），
+       所以"按切片名跨全部折目录找特征"会把 UniMiB 的特征算到 UniMiB 头上，
+       于是"只训了 Handwriting"这种**合法的部分 33 跑**被误判成 mixed，报错再把
+       操作者引向 `--fresh`——那会删掉 GPU 产的折特征。只在
+       `folds/<该模型的 feature_fold>/task_features/` 下找该折靶自己的切片。
+    2. **该折靶没有 main 模型 = `skipped`**（不管有多少特征）。33 号只训了部分
+       折是常态；没有模型就没法排名，跳过即可，不是"混用"。
+
+    返回 {state, reasons, usable, skipped, skipped_why, slices,
+          n_models, n_features, has_manifest}。
+    """
+    outdir = Path(outdir)
+    mdir, fdir = outdir / "models", outdir / "folds"
+    have_models = sorted(mdir.glob("*/*.pt")) if mdir.exists() else []
+    have_feats = sorted(fdir.glob("*/task_features/*.npz")) if fdir.exists() else []
+    manifest = fixture_manifest(outdir)
+    base = {"n_models": len(have_models), "n_features": len(have_feats),
+            "has_manifest": manifest is not None}
+    if not have_models and not have_feats:
+        return {"state": "absent", "reasons": [], "slices": {}, "usable": [],
+                "skipped": list(targets), "skipped_why": {}, **base}
+
+    def _is_fixture(p: Path) -> Optional[bool]:
+        """该文件是不是本脚本 fixture 写的（无清单 → None = 无从判断）。"""
+        if manifest is None:
+            return None
+        return p.relative_to(outdir).as_posix() in manifest
+
+    reasons: list[str] = []
+    resolved: dict[str, list[str]] = {}
+    skipped: list[str] = []
+    skipped_why: dict[str, str] = {}
+    for t in targets:
+        main_paths = [p for p in have_models
+                      if p.parent.name == t and p.name.startswith("main_s")]
+        t_models = [p for p in have_models if p.parent.name == t]
+        if not main_paths:
+            # 口径 2：没有 main 模型就是"这折没训"，与它有多少特征无关。
+            skipped.append(t)
+            skipped_why[t] = (
+                f"缺 models/{t}/main_s*.pt"
+                + (f"（该折另有 {len(t_models)} 个非 main 臂模型）" if t_models
+                   else "（该折一件模型都没有）"))
+            continue
+        try:
+            model, meta = load_pq_model(main_paths[0])
+        except Exception as e:                        # noqa: BLE001（体检要吞异常）
+            reasons.append(f"{t}：models/{t}/{main_paths[0].name} 读不出来（{e}）")
+            continue
+        got_budgets = tuple(int(b) for b in meta.get("budgets", ()))
+        if got_budgets and got_budgets != tuple(int(b) for b in budgets):
+            reasons.append(f"{t}：模型 budgets={list(got_budgets)} ≠ 本次 "
+                           f"{list(budgets)}（ctx one-hot 口径不一致）")
+            continue
+        # 口径 1：只在该模型自己的特征折目录下找**该折靶自己的**切片
+        ff = feature_fold_of(meta, t) or t
+        want_dim = set_encoder_dim_input(model, meta)
+        ok_slices: list[str] = []
+        used: list[Path] = list(main_paths)
+        for sid in pq.pq_slice_ids(t):
+            p = fdir / ff / "task_features" / f"{sid}.npz"
+            if not p.exists():
+                continue
+            used.append(p)
+            with np.load(p) as z:
+                d = int(z["windows_repr"].shape[-1])
+            if want_dim is not None and d != want_dim:
+                reasons.append(f"{t}：{p.relative_to(outdir).as_posix()} 的特征维 "
+                               f"{d} ≠ main 臂 set_encoder 的 {want_dim}"
+                               "（真假产物混用）")
+            else:
+                ok_slices.append(sid)
+        # 清单判混用：同一折里 fixture 写的与非 fixture 的文件共存
+        flags = {_is_fixture(p) for p in used}
+        if {True, False} <= flags:
+            synth = [p.relative_to(outdir).as_posix() for p in used if _is_fixture(p)]
+            real = [p.relative_to(outdir).as_posix()
+                    for p in used if _is_fixture(p) is False]
+            reasons.append(
+                f"{t}：同一折里 fixture 合成件与非 fixture 产物共存——"
+                f"合成 {synth[:3]}{'…' if len(synth) > 3 else ''} vs "
+                f"既有 {real[:3]}{'…' if len(real) > 3 else ''}")
+        if not ok_slices and t not in {r.split("：")[0] for r in reasons}:
+            skipped.append(t)
+            skipped_why[t] = f"folds/{ff}/task_features/ 下没有它自己的切片特征"
+            continue
+        resolved[t] = ok_slices
+    usable = sorted(k for k, v in resolved.items() if v)
+    if reasons:
+        state = "mixed"
+    elif usable:
+        state = "reusable"
+    else:
+        state = "absent"           # 目录里的东西与本次折靶无关
+    return {"state": state, "reasons": reasons, "slices": resolved,
+            "usable": usable, "skipped": skipped, "skipped_why": skipped_why,
+            **base}
+
+
+def fresh_smoke_dir(outdir: Path) -> list[str]:
+    """`--fresh`：**只删本脚本 fixture 自己写过的文件**，一件多的都不删。
+
+    轮 3 评审的事故：上一版在"没有清单"时退回 `rmtree(models/)` 与
+    `rmtree(folds/)`，而那两处装的是 33 号用 GPU 产的折 TS2Vec 与特征；
+    `evo_cache.jsonl`（--evaluate-evo 的真 R' 行）也被当成派生产物删掉。
+    更糟的是上一版 `mixed` 误判会把操作者**主动引向** `--fresh`。
+
+    现在的铁规矩：
+    - 没有 `SMOKE_FIXTURE.json` 的 `written` 清单 → **拒绝执行**（退出并说明），
+      绝不猜哪些文件"看起来像合成的"；
+    - 有清单 → 逐条删清单里的文件（外加 SMOKE_KEEP 双保险），最后删标记本身；
+    - 目录里其余一切（33 号的 models/folds、32 号的缓存、真跑出的
+      rankings/evo_cache/…）**原样不动**。清单外的东西不归 --fresh 管。
+    """
+    outdir = Path(outdir)
+    assert_not_production(outdir, "--fresh（清理合成 fixture）")
+    manifest = fixture_manifest(outdir)
+    if manifest is None:
+        sys.exit(
+            f"--fresh 拒绝执行：{outdir} 里没有 {FIXTURE_MARKER} 的 `written` "
+            "清单，也就是说本脚本的 fixture 没在这儿写过东西——目录里的 "
+            "models/ 与 folds/ 是别人（33 号，GPU 产物）的，"
+            "`rprime_cache.jsonl` / `evo_cache.jsonl` 装的是真 R' 行。"
+            "--fresh 只删自己写过的文件，绝不按「看着像合成的」去猜。"
+            "要重造合成 fixture 请换一个空目录 --outdir；"
+            "要清理这个目录请自行确认后手动删除。")
+    removed: list[str] = []
+    for rel in sorted(manifest):
+        p = outdir / rel
+        if p.name in SMOKE_KEEP:
+            continue              # 双保险：清单里若混进真跑产物一律不删
+        if p.exists() and p.is_file():
+            p.unlink()
+            removed.append(rel)
+    marker = outdir / FIXTURE_MARKER
+    if marker.exists():
+        marker.unlink()
+        removed.append(FIXTURE_MARKER)
+    kept = sorted(n for n in SMOKE_KEEP if (outdir / n).exists())
+    print(f"--fresh：按清单删掉 {len(removed)} 个 fixture 文件；"
+          f"保留 {kept}（真跑产物 / 造一次要真 GPU），清单外一切未动", flush=True)
+    return removed
+
+
 def _fake_rprime(slice_id: str, key: str, b: int) -> float:
     """合成 R'（仅 fixture 用）：(切片, cls, 预算) 的确定性伪随机，非任何真实结果。"""
     rng = np.random.default_rng(
@@ -1249,11 +1551,31 @@ def write_smoke_fixture(outdir: Path, *, targets: Sequence[str] = SMOKE_TARGETS,
     的产物缺席时也能端到端跑通 34 号自己的四个阶段；把替身写在这里，`--smoke`
     与单测共用同一份构造，不会出现"测试过了但 --smoke 走另一条路"的漂移。
     产物**全是合成数字**（`_fake_rprime`），落在 --outdir 指定的临时目录，
-    绝不允许写进 results/mx3_pq（cmd_smoke 有硬闸）；任何报表都不得引用。
-    已存在的文件原样保留（幂等：重复 --smoke 得到逐位相同的排名）。
+    绝不允许写进 results/mx3_pq（写入端首行硬闸）；任何报表都不得引用。
+
+    **整体决策，不逐文件补洞**（评审轮 2）：进来先过 `smoke_dir_state`——目录里
+    已有 33 号产物就一件不合成（`reusable`，由 cmd_smoke 走复用分支），真假混用
+    一律报错。本函数只负责 `absent` 那一档：**要么整套写，要么不写**。32 号的
+    产物（目录 / R' 缓存）单独判断：它们与模型维度无关，缺了就补。
+    写出的每个文件都记进标记的 `written` 清单，`--fresh` 据此精确回滚。
     """
     outdir = Path(outdir)
     assert_not_production(outdir, "write_smoke_fixture（合成 fixture）")
+    written: list[str] = []
+
+    def _note(p):
+        written.append(Path(p).relative_to(outdir).as_posix())
+        return p
+
+    state = smoke_dir_state(outdir, targets=targets, budgets=budgets)
+    if state["state"] == "mixed":
+        raise ValueError(mixed_state_message(outdir, state))
+    if state["state"] == "reusable":
+        raise ValueError(
+            f"{outdir} 已有 33 号的真产物（模型 {state['n_models']} / 特征 "
+            f"{state['n_features']} / 可用折靶 {state['usable']}）——不该再合成"
+            "替身（真假混用正是评审轮 2 的事故）。cmd_smoke 会自动走复用分支；"
+            "要强制重造请先 `--smoke --fresh`")
     (outdir / "models").mkdir(parents=True, exist_ok=True)
     space = CLSSpace.from_yaml()
     encoder = CLSEncoder(space)
@@ -1269,7 +1591,7 @@ def write_smoke_fixture(outdir: Path, *, targets: Sequence[str] = SMOKE_TARGETS,
     catalog = {s: pq.catalog_for_slice(space, s, shared)
                for t in targets for s in slices[t]}
     if not cat_path.exists():
-        cat_path.write_text(json.dumps({
+        _note(cat_path).write_text(json.dumps({
             "shared": [{"cls_key": k, "cls": dataclasses.asdict(c)}
                        for c, k in shared],
             "random": {s: [{"cls_key": k, "cls": dataclasses.asdict(c)}
@@ -1281,7 +1603,7 @@ def write_smoke_fixture(outdir: Path, *, targets: Sequence[str] = SMOKE_TARGETS,
     # ② 合成真值网格（20 条目录 CLS + GGS）× 预算
     cache_path = outdir / "rprime_cache.jsonl"
     if not cache_path.exists():
-        with open(cache_path, "w", encoding="utf-8", newline="\n") as fh:
+        with open(_note(cache_path), "w", encoding="utf-8", newline="\n") as fh:
             for t in targets:
                 for s in slices[t]:
                     entries = list(catalog[s]) + [("ggs", ggs, ggs_key)]
@@ -1311,7 +1633,7 @@ def write_smoke_fixture(outdir: Path, *, targets: Sequence[str] = SMOKE_TARGETS,
         # smoke 上也真的执行一遍，而不是走"meta 缺席只告警"的旁路
         meta_path = outdir / "folds" / t / "shared_ts2vec.meta.json"
         if not meta_path.exists():
-            meta_path.write_text(json.dumps({
+            _note(meta_path).write_text(json.dumps({
                 "fold": t, "fit_datasets": sorted(pq.fold_split(t)[0]),
                 "synthetic": True,
                 "note": "合成 fixture 的折 meta——无对应权重文件，禁止引用",
@@ -1322,7 +1644,7 @@ def write_smoke_fixture(outdir: Path, *, targets: Sequence[str] = SMOKE_TARGETS,
                 continue
             rng = np.random.default_rng([seed, ti, si])
             np.savez_compressed(
-                p,
+                _note(p),
                 windows_repr=rng.standard_normal(
                     (n_windows, t_max, dim_input)).astype(np.float16),
                 E_init=rng.standard_normal(nz).astype(np.float32),
@@ -1353,27 +1675,65 @@ def write_smoke_fixture(outdir: Path, *, targets: Sequence[str] = SMOKE_TARGETS,
                     "settf_windows": n_windows, "settf_t_max": t_max,
                     "budgets": [int(b) for b in budgets],
                     "ctx_encoding": "onehot", "dim_input": dim_input,
-                    "synthetic": True}}, path)
+                    "synthetic": True}}, _note(path))
 
-    marker = {"synthetic": True, "targets": list(targets),
+    marker = {"synthetic": True, "source": "34_pq_search.write_smoke_fixture",
+              "targets": list(targets),
               "slices": {t: slices[t] for t in targets},
               "budgets": [int(b) for b in budgets],
+              "dim_input": int(dim_input), "nz": int(nz),
+              "written": sorted(written),
               "note": "合成 fixture（Task 5/6 产物替身）——数字全是假的，禁止引用"}
     (outdir / FIXTURE_MARKER).write_text(
         json.dumps(marker, indent=2, ensure_ascii=False), encoding="utf-8")
     return marker
 
 
-def cmd_smoke(outdir: Path, *, device: str = "cpu") -> None:
-    """合成 fixture → --rank → --evolve（tiny 参数）→ --analyze，本地 <1 min。"""
+def cmd_smoke(outdir: Path, *, device: str = "cpu", fresh: bool = False,
+              budgets: Optional[Sequence[int]] = None) -> None:
+    """fixture（合成或复用 33 号真产物）→ --rank → --evolve → --analyze。
+
+    **目录整体决策**（评审轮 2 的修法）：
+    - `absent`：整套合成，走 SMOKE_BUDGETS（4/8/12）小口径；
+    - `reusable`：33 号产物齐备 → **一件不合成**，预算改从模型 meta 读
+      （33 号的 smoke 也是 4/8/12，但口径以文件为准，不由本函数假设）；
+    - `mixed`：报清单并退出（详见 mixed_state_message）。
+    `--fresh` 先清掉 34 号自己的合成/派生产物（永不动 R' 缓存），再按上面判定。
+    """
     outdir = Path(outdir)
     assert_not_production(outdir, "--smoke（合成数字会污染真值缓存，铁律 3）")
-    write_smoke_fixture(outdir)
-    cmd_rank(outdir, budgets=SMOKE_BUDGETS, folds=SMOKE_TARGETS, device=device)
-    cmd_evolve(outdir, budgets=SMOKE_BUDGETS, folds=SMOKE_TARGETS, device=device,
+    if fresh:
+        fresh_smoke_dir(outdir)
+    # 预算口径：命令行 > 既有 main 存档的 meta（复用 33 号产物时以文件为准）
+    #  > SMOKE_BUDGETS（自己合成时的小口径）
+    bud = (tuple(int(b) for b in budgets) if budgets
+           else budgets_from_models(outdir, SMOKE_TARGETS) or SMOKE_BUDGETS)
+    state = smoke_dir_state(outdir, targets=SMOKE_TARGETS, budgets=bud)
+    if state["state"] == "mixed":
+        sys.exit(mixed_state_message(outdir, state))
+    folds = SMOKE_TARGETS
+    # 目录里的东西是谁造的：有本脚本的标记 = 上一轮自己合成的，否则当 33 号真产物
+    own = (outdir / FIXTURE_MARKER).exists()
+    whose = "本目录既有的合成 fixture" if own else " 33 号既有产物"
+    if state["state"] == "reusable":
+        folds = tuple(state["usable"])
+        n_sl = sum(len(v) for v in state["slices"].values())
+        print(f"[smoke] 复用{whose}（模型 {state['n_models']} / 特征 "
+              f"{state['n_features']} / 折靶 {list(folds)} / 可用切片 {n_sl}），"
+              "**不写任何合成件**", flush=True)
+        if state["skipped"]:
+            print(f"[smoke] 折靶 {state['skipped']} 在该目录里没有任何产物，"
+                  "本次不参与（33 号只跑了一部分折时的正常情形）", flush=True)
+    else:
+        write_smoke_fixture(outdir, budgets=bud)
+    cmd_rank(outdir, budgets=bud, folds=folds, device=device)
+    cmd_evolve(outdir, budgets=bud, folds=folds, device=device,
                evolution=dict(SMOKE_EVOLUTION))
-    cmd_analyze(outdir, budgets=SMOKE_BUDGETS)
-    print(f"--smoke 收官（全部数字为合成 fixture，禁止引用）→ {outdir}", flush=True)
+    cmd_analyze(outdir, budgets=bud)
+    tag = (f"复用{whose}" + ("，禁止引用" if own else "")
+           if state["state"] == "reusable"
+           else "全部数字为合成 fixture，禁止引用")
+    print(f"--smoke 收官（{tag}）→ {outdir}", flush=True)
 
 
 # ================================================================ CLI
@@ -1385,6 +1745,9 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
     ap.add_argument("--evaluate-evo", action="store_true",
                     help="进化 pick 的真 R'（GPU）")
     ap.add_argument("--smoke", action="store_true", help="合成 fixture 端到端")
+    ap.add_argument("--fresh", action="store_true",
+                    help="--smoke 前清掉 34 号的合成/派生产物（models/folds/"
+                         "rankings/evo_*/analysis），**不动 R' 缓存**")
     ap.add_argument("--resume", action="store_true",
                     help="（--evaluate-evo 恒按缓存键跳过；本开关只为与 32 号 CLI 对称）")
     ap.add_argument("--allow-incomplete", action="store_true",
@@ -1413,8 +1776,11 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
             or args.smoke):
         ap.error("至少指定 --rank / --analyze / --evolve / --evaluate-evo / --smoke")
     if args.smoke:
-        cmd_smoke(outdir, device=args.device)
+        cmd_smoke(outdir, device=args.device, fresh=args.fresh,
+                  budgets=args.budgets)
         return
+    if args.fresh:
+        ap.error("--fresh 只在 --smoke 下有意义（它清的是 smoke 目录的合成产物）")
 
     budgets = resolve_budgets(outdir, args.budgets)
     folds = tuple(args.folds) if args.folds else pq.FOLD_TARGETS

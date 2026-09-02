@@ -20,6 +20,7 @@ from __future__ import annotations
 import dataclasses
 import importlib
 import json
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -1087,6 +1088,416 @@ class TestEProvenance:
             "换掉 windows_repr 后 main 排名没变——E 没真的进比较器"
         assert arm(before, "cls_b") == arm(after, "cls_b")
         assert arm(before, "cls_only") == arm(after, "cls_only")
+
+
+# ================================================================ 评审修复轮 2
+def _fake33_dir(tmp_path, *, targets=("Handwriting",), n_slices=2, dim=256,
+                budgets=SMOKE_BUDGETS):
+    """造一个"看起来就是 33 号产出"的目录：真实维度 + 无 fixture 标记。"""
+    g34.write_smoke_fixture(tmp_path, targets=targets, n_slices=n_slices,
+                            budgets=budgets, dim_input=dim, nz=dim,
+                            n_windows=3, t_max=4)
+    (tmp_path / g34.FIXTURE_MARKER).unlink()      # 抹掉"是我合成的"痕迹
+    return tmp_path
+
+
+class TestSmokeDirState:
+    """发现（轮 2）：--smoke 必须按目录整体决策，绝不真假混用。"""
+
+    def test_absent_dir_is_absent(self, tmp_path):
+        st = g34.smoke_dir_state(tmp_path, targets=SMOKE_TARGETS,
+                                 budgets=SMOKE_BUDGETS)
+        assert st["state"] == "absent" and st["n_models"] == 0
+
+    def test_complete_33_outputs_are_reusable(self, tmp_path):
+        _fake33_dir(tmp_path)
+        st = g34.smoke_dir_state(tmp_path, targets=("Handwriting",),
+                                 budgets=SMOKE_BUDGETS)
+        assert st["state"] == "reusable", st["reasons"]
+        assert st["slices"]["Handwriting"] == ["Handwriting_00", "Handwriting_01"]
+
+    def test_features_without_models_is_skipped_not_mixed(self, tmp_path):
+        """轮 3：没有 main 模型 = 这折没训，与它有多少特征无关，绝不是混用。"""
+        _fake33_dir(tmp_path)
+        shutil.rmtree(tmp_path / "models")
+        st = g34.smoke_dir_state(tmp_path, targets=("Handwriting",),
+                                 budgets=SMOKE_BUDGETS)
+        assert st["state"] == "absent", st["reasons"]
+        assert st["reasons"] == []
+        assert st["skipped"] == ["Handwriting"]
+        assert "main_s*.pt" in st["skipped_why"]["Handwriting"]
+
+    def test_partial_33_run_is_reusable(self, tmp_path):
+        """轮 3 评审复现：33 号只训了 Handwriting，但每个折目录里都有全部数据集的
+        切片特征（33 的正常产物）——不得因为 UniMiB 的特征在场就判 mixed。"""
+        _fake33_dir(tmp_path, targets=("Handwriting",), n_slices=1, dim=256)
+        # 33 号把**每个数据集**的切片都编进**每个**折目录
+        feat = tmp_path / "folds" / "Handwriting" / "task_features"
+        src = feat / "Handwriting_00.npz"
+        (feat / "UniMiB-SHAR_00.npz").write_bytes(src.read_bytes())
+        st = g34.smoke_dir_state(tmp_path, targets=SMOKE_TARGETS,
+                                 budgets=SMOKE_BUDGETS)
+        assert st["state"] == "reusable", st["reasons"]
+        assert st["usable"] == ["Handwriting"]
+        assert st["skipped"] == ["UniMiB-SHAR"]
+        assert st["reasons"] == []
+
+    def test_partial_33_run_smoke_runs_handwriting_only(self, tmp_path):
+        _fake33_dir(tmp_path, targets=("Handwriting",), n_slices=1, dim=256)
+        feat = tmp_path / "folds" / "Handwriting" / "task_features"
+        (feat / "UniMiB-SHAR_00.npz").write_bytes(
+            (feat / "Handwriting_00.npz").read_bytes())
+        g34.main(["--smoke", "--outdir", str(tmp_path)])
+        rk = json.loads((tmp_path / "rankings.json").read_text(encoding="utf-8"))
+        assert list(rk) == ["Handwriting"]
+        assert not (tmp_path / g34.FIXTURE_MARKER).exists()
+
+    def test_slice_only_present_in_another_fold_does_not_count(self, tmp_path):
+        """轮 3 口径 1：切片特征必须在**本模型的 feature_fold** 目录下才算数。
+
+        同名切片躺在别的折目录（如 folds/all8/）里绝不能顶替——那是另一份 fit 池
+        编出来的 E（all8 含全部 8 个数据集，用在 S1 折上就是铁律 6 违例）。
+        """
+        _fake33_dir(tmp_path, targets=("Handwriting",), n_slices=2, dim=256)
+        own = tmp_path / "folds" / "Handwriting" / "task_features"
+        other = tmp_path / "folds" / "all8" / "task_features"
+        other.mkdir(parents=True)
+        # 把 _01 从本折目录**移到** all8：本折目录里就只剩 _00 了
+        (other / "Handwriting_01.npz").write_bytes(
+            (own / "Handwriting_01.npz").read_bytes())
+        (own / "Handwriting_01.npz").unlink()
+        st = g34.smoke_dir_state(tmp_path, targets=("Handwriting",),
+                                 budgets=SMOKE_BUDGETS)
+        assert st["state"] == "reusable", st["reasons"]
+        assert st["slices"]["Handwriting"] == ["Handwriting_00"], \
+            "别的折目录里的同名切片被算进来了（E 会来自错误的 fit 池）"
+
+    def test_foreign_slice_features_do_not_count_for_a_target(self, tmp_path):
+        """UniMiB 的特征躺在 Handwriting 折目录里，不该算成 UniMiB 有特征。"""
+        _fake33_dir(tmp_path, targets=("Handwriting",), n_slices=1, dim=256)
+        feat = tmp_path / "folds" / "Handwriting" / "task_features"
+        (feat / "UniMiB-SHAR_00.npz").write_bytes(
+            (feat / "Handwriting_00.npz").read_bytes())
+        st = g34.smoke_dir_state(tmp_path, targets=("UniMiB-SHAR",),
+                                 budgets=SMOKE_BUDGETS)
+        assert st["state"] == "absent" and st["skipped"] == ["UniMiB-SHAR"]
+        assert st["reasons"] == []
+
+    def test_dim_mismatch_is_mixed_and_named(self, tmp_path):
+        """轮 2 的原始事故形状：256 维真模型 + 16 维合成特征同处一目录。"""
+        _fake33_dir(tmp_path, n_slices=2, dim=256)
+        npz = (tmp_path / "folds" / "Handwriting" / "task_features"
+               / "Handwriting_01.npz")
+        with np.load(npz) as z:
+            d = {k: z[k] for k in z.files}
+        d["windows_repr"] = np.zeros((3, 4, 16), dtype=np.float16)   # 16 维假件
+        np.savez_compressed(npz, **d)
+        st = g34.smoke_dir_state(tmp_path, targets=("Handwriting",),
+                                 budgets=SMOKE_BUDGETS)
+        assert st["state"] == "mixed"
+        joined = " ".join(st["reasons"])
+        assert "Handwriting_01.npz" in joined and "16" in joined and "256" in joined
+
+    def test_target_with_no_artifacts_at_all_is_skipped_not_mixed(self, tmp_path):
+        """33 号只跑了一个折时的正常情形：另一个折没产物 = 不参与，不是混用。"""
+        _fake33_dir(tmp_path, targets=("Handwriting",), n_slices=1, dim=256)
+        st = g34.smoke_dir_state(tmp_path, targets=SMOKE_TARGETS,
+                                 budgets=SMOKE_BUDGETS)
+        assert st["state"] == "reusable", st["reasons"]
+        assert st["usable"] == ["Handwriting"]
+        assert st["skipped"] == ["UniMiB-SHAR"]
+
+    def test_smoke_runs_only_the_usable_folds(self, tmp_path):
+        _fake33_dir(tmp_path, targets=("Handwriting",), n_slices=1, dim=256)
+        g34.main(["--smoke", "--outdir", str(tmp_path)])
+        rk = json.loads((tmp_path / "rankings.json").read_text(encoding="utf-8"))
+        assert list(rk) == ["Handwriting"]
+        assert not (tmp_path / g34.FIXTURE_MARKER).exists()
+
+    def test_budget_mismatch_is_mixed(self, tmp_path):
+        _fake33_dir(tmp_path, budgets=SMOKE_BUDGETS)
+        st = g34.smoke_dir_state(tmp_path, targets=("Handwriting",),
+                                 budgets=pq.BUDGETS)
+        assert st["state"] == "mixed"
+        assert any("budgets" in r for r in st["reasons"])
+
+    def _mixed_dir(self, tmp_path):
+        """造一个真正 mixed 的目录：256 维模型 + 16 维特征。"""
+        _fake33_dir(tmp_path, targets=("Handwriting",), n_slices=1, dim=256)
+        npz = (tmp_path / "folds" / "Handwriting" / "task_features"
+               / "Handwriting_00.npz")
+        with np.load(npz) as z:
+            d = {k: z[k] for k in z.files}
+        d["windows_repr"] = np.zeros((3, 4, 16), dtype=np.float16)
+        np.savez_compressed(npz, **d)
+        return tmp_path
+
+    def test_mixed_message_without_manifest_never_suggests_fresh(self, tmp_path):
+        """轮 3：没有 fixture 清单时推荐 --fresh = 教人删别人的 GPU 产物。"""
+        self._mixed_dir(tmp_path)                      # _fake33_dir 已删掉标记
+        st = g34.smoke_dir_state(tmp_path, targets=("Handwriting",),
+                                 budgets=SMOKE_BUDGETS)
+        assert st["state"] == "mixed" and st["has_manifest"] is False
+        msg = g34.mixed_state_message(tmp_path, st)
+        assert "33_pq_comparator_loo.py --smoke" in msg
+        assert "--fresh" not in msg or "拒绝执行" in msg
+        assert "--smoke --outdir <新目录>" in msg
+
+    def test_mixed_message_with_manifest_offers_fresh(self, tmp_path):
+        g34.write_smoke_fixture(tmp_path, targets=("Handwriting",), n_slices=1,
+                                budgets=SMOKE_BUDGETS)
+        npz = (tmp_path / "folds" / "Handwriting" / "task_features"
+               / "Handwriting_00.npz")
+        with np.load(npz) as z:
+            d = {k: z[k] for k in z.files}
+        d["windows_repr"] = np.zeros((3, 4, 999), dtype=np.float16)
+        np.savez_compressed(npz, **d)
+        st = g34.smoke_dir_state(tmp_path, targets=("Handwriting",),
+                                 budgets=SMOKE_BUDGETS)
+        assert st["state"] == "mixed" and st["has_manifest"] is True
+        assert "--smoke --fresh" in g34.mixed_state_message(tmp_path, st)
+
+
+class TestSmokeAllOrNothing:
+    def test_smoke_on_mixed_dir_exits_with_message(self, tmp_path):
+        _fake33_dir(tmp_path, targets=("Handwriting",), n_slices=1, dim=256)
+        npz = (tmp_path / "folds" / "Handwriting" / "task_features"
+               / "Handwriting_00.npz")
+        with np.load(npz) as z:
+            d = {k: z[k] for k in z.files}
+        d["windows_repr"] = np.zeros((3, 4, 16), dtype=np.float16)
+        np.savez_compressed(npz, **d)
+        with pytest.raises(SystemExit) as e:
+            g34.main(["--smoke", "--outdir", str(tmp_path)])
+        assert "真假混用" in str(e.value)
+
+    def test_fixture_refuses_to_fill_holes(self, tmp_path):
+        """write_smoke_fixture 本身也拦：不再逐文件补洞。"""
+        _fake33_dir(tmp_path)
+        with pytest.raises(ValueError, match="真产物|混用"):
+            g34.write_smoke_fixture(tmp_path, targets=("Handwriting",),
+                                    n_slices=2, budgets=SMOKE_BUDGETS)
+
+    def test_smoke_reuses_33_outputs_without_writing_synthetics(self, tmp_path):
+        _fake33_dir(tmp_path, n_slices=2, dim=256)
+        before = {p: p.stat().st_mtime_ns
+                  for p in sorted(tmp_path.rglob("*"))
+                  if p.is_file() and p.suffix in (".pt", ".npz")}
+        assert before, "夹具没造出模型/特征"
+        g34.main(["--smoke", "--outdir", str(tmp_path)])
+        after = {p: p.stat().st_mtime_ns
+                 for p in sorted(tmp_path.rglob("*"))
+                 if p.is_file() and p.suffix in (".pt", ".npz")}
+        assert after == before, "复用分支不该动任何模型/特征文件"
+        assert not (tmp_path / g34.FIXTURE_MARKER).exists(), \
+            "复用分支不该写合成标记"
+        assert (tmp_path / "rankings.json").exists()
+        assert (tmp_path / "search_analysis.json").exists()
+
+    def test_smoke_synthesizes_when_absent(self, tmp_path):
+        g34.main(["--smoke", "--outdir", str(tmp_path)])
+        marker = json.loads((tmp_path / g34.FIXTURE_MARKER)
+                            .read_text(encoding="utf-8"))
+        assert marker["synthetic"] is True and marker["written"]
+        assert any(w.endswith(".pt") for w in marker["written"])
+        assert any(w.endswith(".npz") for w in marker["written"])
+
+    def test_smoke_adopts_budgets_from_existing_models(self, tmp_path):
+        _fake33_dir(tmp_path, n_slices=1, dim=256, budgets=(60, 120, 290))
+        assert g34.budgets_from_models(tmp_path, ("Handwriting",)) == (60, 120, 290)
+        g34.main(["--smoke", "--outdir", str(tmp_path)])
+        an = json.loads((tmp_path / "search_analysis.json")
+                        .read_text(encoding="utf-8"))
+        assert an["budgets"] == [60, 120, 290]
+
+
+class TestFresh:
+    def test_fresh_removes_synthetics_but_keeps_rprime_cache(self, tmp_path):
+        g34.main(["--smoke", "--outdir", str(tmp_path)])
+        cache = tmp_path / "rprime_cache.jsonl"
+        cache_bytes = cache.read_bytes()
+        assert (tmp_path / "models").exists()
+        g34.fresh_smoke_dir(tmp_path)
+        assert cache.read_bytes() == cache_bytes, "--fresh 动了 R 缓存"
+        assert not (tmp_path / g34.FIXTURE_MARKER).exists()
+        assert not list((tmp_path / "models").rglob("*.pt"))
+        assert not list((tmp_path / "folds").rglob("*.npz"))
+        # 轮 3：真跑产物一律留着（它们不是 fixture 写的）
+        for name in ("rankings.json", "search_analysis.json", "evo_picks.json"):
+            assert (tmp_path / name).exists(), name
+
+    def test_fresh_without_manifest_refuses_and_touches_nothing(self, tmp_path):
+        """轮 3 的事故：无清单时删整个 models/ 与 folds/（33 号的 GPU 产物）。"""
+        _fake33_dir(tmp_path)                       # 无标记 → 无清单
+        (tmp_path / "rankings.json").write_text("{}", encoding="utf-8")
+        (tmp_path / "evo_cache.jsonl").write_text(
+            json.dumps({"task_id": "Handwriting_00", "r_prime": 0.7}) + "\n",
+            encoding="utf-8")
+        before = {p: (p.stat().st_mtime_ns, p.read_bytes())
+                  for p in sorted(tmp_path.rglob("*")) if p.is_file()}
+        with pytest.raises(SystemExit) as e:
+            g34.fresh_smoke_dir(tmp_path)
+        msg = str(e.value)
+        assert "拒绝执行" in msg and "written" in msg
+        after = {p: (p.stat().st_mtime_ns, p.read_bytes())
+                 for p in sorted(tmp_path.rglob("*")) if p.is_file()}
+        assert after == before, "--fresh 动了它没写过的文件"
+        assert (tmp_path / "models").exists() and (tmp_path / "folds").exists()
+        assert (tmp_path / "evo_cache.jsonl").exists()
+
+    def test_fresh_never_deletes_evo_cache(self, tmp_path):
+        """evo_cache.jsonl 装的是 --evaluate-evo 的真 R 行，绝不能当派生产物删。"""
+        g34.main(["--smoke", "--outdir", str(tmp_path)])
+        evo = tmp_path / "evo_cache.jsonl"
+        evo.write_text(json.dumps({"task_id": "Handwriting_00",
+                                   "cls_key": "abc", "iters": 4,
+                                   "r_prime": 0.66}) + "\n", encoding="utf-8")
+        raw = evo.read_bytes()
+        g34.fresh_smoke_dir(tmp_path)
+        assert evo.read_bytes() == raw, "--fresh 删/改了真 R 行"
+        assert "evo_cache.jsonl" in g34.SMOKE_KEEP
+
+    def test_smoke_keep_covers_real_run_outputs(self):
+        for name in ("rprime_cache.jsonl", "noise_probe.jsonl",
+                     "evo_cache.jsonl", "evo_picks.json", "rankings.json",
+                     "search_analysis.json", "cls_catalog.json", "tasks.json",
+                     "delta_calibration.json"):
+            assert name in g34.SMOKE_KEEP, name
+
+    def test_fresh_only_removes_manifest_files(self, tmp_path):
+        g34.main(["--smoke", "--outdir", str(tmp_path)])
+        manifest = g34.fixture_manifest(tmp_path)
+        assert manifest
+        stranger = tmp_path / "models" / "Handwriting" / "not_mine.pt"
+        stranger.write_bytes(b"not written by the fixture")
+        removed = g34.fresh_smoke_dir(tmp_path)
+        assert stranger.exists(), "--fresh 删了清单外的文件"
+        assert set(removed) <= manifest | {g34.FIXTURE_MARKER}
+
+    def test_fresh_then_smoke_rebuilds(self, tmp_path):
+        g34.main(["--smoke", "--outdir", str(tmp_path)])
+        g34.main(["--smoke", "--fresh", "--outdir", str(tmp_path)])
+        assert (tmp_path / "search_analysis.json").exists()
+
+    def test_fresh_refuses_production(self, monkeypatch, tmp_path):
+        prod = tmp_path / "prod"
+        prod.mkdir()
+        monkeypatch.setattr(pq, "OUT", prod)
+        with pytest.raises(SystemExit):
+            g34.fresh_smoke_dir(prod)
+
+    def test_fresh_outside_smoke_is_argparse_error(self, tmp_path):
+        with pytest.raises(SystemExit):
+            g34.main(["--rank", "--fresh", "--outdir", str(tmp_path)])
+
+
+class TestWindowsDimGuard:
+    """发现（轮 2）2：喂进 SetTF 之前必须核对特征维 == 编码器 dim_input。"""
+
+    def test_dim_input_read_from_settf_layer(self):
+        from autocls.comparator import TCLSC
+        from autocls.task_embed import TaskSetEncoder
+        m = TCLSC(cls_dim=5, set_encoder=TaskSetEncoder(dim_input=37, nz=8),
+                  embedding_dim=4, fz=4)
+        assert g34.set_encoder_dim_input(m) == 37
+
+    def test_dim_input_for_meanpool_and_none(self):
+        from autocls.comparator import TCLSC
+        from autocls.comparator.mean_pool_encoder import MeanPoolTaskEncoder
+        m = TCLSC(cls_dim=5, set_encoder=MeanPoolTaskEncoder(dim_input=19),
+                  embedding_dim=4, fz=4)
+        assert g34.set_encoder_dim_input(m) == 19
+        none_arm = TCLSC(cls_dim=5, set_encoder=None, embedding_dim=4, fz=4,
+                         task_branch="none")
+        assert g34.set_encoder_dim_input(none_arm) is None
+
+    def test_meanpool_dim_is_read_not_guessed(self, capsys):
+        """MeanPool 的 dim_input 从 mu 缓冲读（长度就是输入维），不走 nz 兜底告警。"""
+        from autocls.comparator import TCLSC
+        from autocls.comparator.mean_pool_encoder import MeanPoolTaskEncoder
+        m = TCLSC(cls_dim=5, set_encoder=MeanPoolTaskEncoder(dim_input=19),
+                  embedding_dim=4, fz=4)
+        capsys.readouterr()
+        assert g34.set_encoder_dim_input(m) == 19
+        assert "nz" not in capsys.readouterr().out, "MeanPool 不该走 nz 兜底"
+
+    def test_unknown_encoder_falls_back_to_nz_with_warning(self, capsys):
+        """兜底用的是**输出**维：可以用，但必须吭声（轮 3 评审第 4 条）。"""
+        class _Stub:
+            nz = 8                       # 只有输出维，读不出输入维
+
+        class _M:
+            set_encoder = _Stub()
+
+        capsys.readouterr()
+        assert g34.set_encoder_dim_input(_M()) == 8
+        out = capsys.readouterr().out
+        assert "nz" in out and "输出" in out, out
+
+    def test_meta_dim_input_preferred_over_nz_fallback(self, capsys):
+        class _Stub:
+            nz = 8
+
+        class _M:
+            set_encoder = _Stub()
+
+        capsys.readouterr()
+        assert g34.set_encoder_dim_input(_M(), {"dim_input": 33}) == 33
+        assert "nz" not in capsys.readouterr().out, "有 meta 就不该走 nz 兜底"
+
+    def test_layer_wins_over_stale_meta(self):
+        from autocls.comparator import TCLSC
+        from autocls.task_embed import TaskSetEncoder
+        m = TCLSC(cls_dim=5, set_encoder=TaskSetEncoder(dim_input=37, nz=8),
+                  embedding_dim=4, fz=4)
+        assert g34.set_encoder_dim_input(m, {"dim_input": 256}) == 37
+
+    def test_mismatch_raises_actionable_error(self):
+        from autocls.comparator import TCLSC
+        from autocls.task_embed import TaskSetEncoder
+        m = TCLSC(cls_dim=5, set_encoder=TaskSetEncoder(dim_input=256, nz=8),
+                  embedding_dim=4, fz=4)
+        w = torch.zeros(3, 4, 16)
+        with pytest.raises(ValueError) as e:
+            g34.check_windows_dim(w, m, where="folds/X/task_features/Y.npz")
+        msg = str(e.value)
+        assert "16" in msg and "256" in msg and "Y.npz" in msg
+        assert "--fresh" in msg
+
+    def test_matching_dim_is_silent(self):
+        from autocls.comparator import TCLSC
+        from autocls.task_embed import TaskSetEncoder
+        m = TCLSC(cls_dim=5, set_encoder=TaskSetEncoder(dim_input=16, nz=8),
+                  embedding_dim=4, fz=4)
+        g34.check_windows_dim(torch.zeros(3, 4, 16), m, where="ok")
+
+    def test_rank_raises_before_the_matmul(self, tmp_path):
+        """把 16 维假特征塞进 256 维真模型的折里，--rank 必须先报可读的错。"""
+        _fake33_dir(tmp_path, n_slices=1, dim=256)
+        npz = (tmp_path / "folds" / "Handwriting" / "task_features"
+               / "Handwriting_00.npz")
+        with np.load(npz) as z:
+            d = {k: z[k] for k in z.files}
+        d["windows_repr"] = np.zeros((3, 4, 16), dtype=np.float16)
+        np.savez_compressed(npz, **d)
+        with pytest.raises(ValueError) as e:
+            g34.cmd_rank(tmp_path, budgets=SMOKE_BUDGETS, folds=("Handwriting",))
+        msg = str(e.value)
+        assert "特征与模型不是一套" in msg and "256" in msg
+        assert "mat1 and mat2" not in msg          # 不再是 SetTF 里的天书
+
+    def test_evolve_raises_before_the_matmul(self, tmp_path):
+        _fake33_dir(tmp_path, n_slices=1, dim=256)
+        npz = (tmp_path / "folds" / "Handwriting" / "task_features"
+               / "Handwriting_00.npz")
+        with np.load(npz) as z:
+            d = {k: z[k] for k in z.files}
+        d["windows_repr"] = np.zeros((3, 4, 16), dtype=np.float16)
+        np.savez_compressed(npz, **d)
+        with pytest.raises(ValueError, match="特征与模型不是一套"):
+            g34.cmd_evolve(tmp_path, budgets=SMOKE_BUDGETS,
+                           folds=("Handwriting",),
+                           evolution=dict(g34.SMOKE_EVOLUTION))
 
 
 # ---------------------------------------------------------------- 端到端 smoke
