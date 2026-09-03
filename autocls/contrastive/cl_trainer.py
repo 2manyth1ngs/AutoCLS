@@ -22,7 +22,7 @@ import torch
 from torch import nn
 
 from ..space.cls_space import CLS
-from .augmentations import augment_two_views
+from .augmentations import CROP_MODES, augment_two_views
 from .emb_transform import apply_emb_transform
 from .pair_construction import total_contrastive_loss
 
@@ -43,8 +43,18 @@ def pretrain_encoder(
     verbose: bool = False,
     checkpoints: Sequence[int] = (),
     on_checkpoint: Optional[Callable[[int, nn.Module], None]] = None,
+    drop_last: bool = False,
+    crop_mode: str = "fixed",
 ) -> list[float]:
     """按 cls_cfg 对 encoder 做对比预训练（就地更新权重），返回每遍数据的平均损失。
+
+    drop_last / crop_mode（全量协议对齐 results/protocol_alignment 的 opt-in 开关，
+    默认关、默认路径逐位不变——tests/test_cl_trainer.py::TestDropLastAndCropMode 金标）：
+    - drop_last=True：每遍数据丢掉不足 batch_size 的残批（TS2Vec 官方
+      DataLoader(..., drop_last=True)，reference ts2vec.py:93-94），残批不计 step；
+      N<batch_size 时整遍无可训 batch → ValueError（与既有 <2 样本判据同一出口）。
+    - crop_mode="ts2vec"：crop 增强改走官方逐迭代 crop_l~U[2,T] + 逐行偏移
+      （augmentations.sample_crop_coords_ts2vec，ts2vec.py:126-132）；"fixed" 为既有口径。
 
     恰好执行 max_iters 次 optimizer.step() 后停止；因 <2 样本被跳过的 batch 不计入。
     每完整遍历一遍数据后用同一 generator 重新 randperm 洗牌，故当 max_iters 为
@@ -86,6 +96,8 @@ def pretrain_encoder(
                 "use_swa 与 checkpoints 不可同用：SWA 的平均权重训练结束才拷回 "
                 "encoder，途中截点读到的是原始权重，两种口径无法混在一条轨迹里")
     ckpt_set = set(checkpoints)
+    if crop_mode not in CROP_MODES:
+        raise ValueError(f"未知 crop_mode={crop_mode!r}（可选 {CROP_MODES}）")
 
     device = device or ("cuda" if torch.cuda.is_available() else "cpu")
     encoder = encoder.to(device)
@@ -110,10 +122,13 @@ def pretrain_encoder(
             if step >= max_iters:
                 break
             idx = perm[start : start + batch_size]
+            if drop_last and idx.numel() < batch_size:  # 官方 drop_last：残批不训不计 step
+                continue
             if idx.numel() < 2:  # B=1 无负样本实例，损失恒 0，跳过（不计入 step）
                 continue
             x = X[idx]
-            v1, v2, sl1, sl2 = augment_two_views(x, aug_params, order=cls_cfg.order, generator=gen)
+            v1, v2, sl1, sl2 = augment_two_views(x, aug_params, order=cls_cfg.order, generator=gen,
+                                                 crop_mode=crop_mode)
 
             z1 = encoder(v1.to(device))[:, sl1]
             z2 = encoder(v2.to(device))[:, sl2]
@@ -133,7 +148,9 @@ def pretrain_encoder(
             batch_losses.append(loss.item())
 
         if not batch_losses:  # 整遍数据无一 batch 可训练，step 永不推进
-            raise ValueError(f"N={N}, batch_size={batch_size}: 所有 batch 均 <2 样本，无法训练")
+            raise ValueError(
+                f"N={N}, batch_size={batch_size}, drop_last={drop_last}: 整遍数据无可训 "
+                "batch（全部 <2 样本，或 drop_last 下 N<batch_size），无法训练")
         mean_loss = float(np.mean(batch_losses))
         pass_losses.append(mean_loss)
         if verbose:
