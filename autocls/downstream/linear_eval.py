@@ -59,6 +59,11 @@ SVM_GRIDS = ("legacy", "ts2vec")
 # `grep SVC reference/` 为空——来源 yuezhihan/ts2vec，沿自 T-Loss 官方评估代码）
 TS2VEC_C_GRID = [0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000, 10000, np.inf]
 TS2VEC_MAX_SAMPLES = 10000
+# 官方网格把 'max_iter': [10000000] 与 C 一并列进 param_grid——这不是装饰：C=inf（硬间隔）在
+# 不可分的多类数据上 SMO 几乎不收敛（PhonemeSpectra 39 类 n=2652/折：无界 >15 min 未完，
+# 1e7 上限 7.4 s，val_acc 与 C=1e4 同为 0.20；HW n=150 两者都 <1 s）。漏掉它就是"更不忠实
+# 且不可终止"。sklearn 默认 -1 = 无界。
+TS2VEC_SVM_MAX_ITER = 10_000_000
 
 
 def _fit_svm_ts2vec(feats: np.ndarray, y: np.ndarray) -> SVC:
@@ -77,9 +82,12 @@ def _fit_svm_ts2vec(feats: np.ndarray, y: np.ndarray) -> SVC:
     """
     nb_classes = int(np.unique(y).shape[0])
     n = int(feats.shape[0])
-    base = SVC(C=np.inf, kernel="rbf", gamma="scale")
     if n // nb_classes < 5 or n < 50:
-        return base.fit(feats, y)
+        # 官方回退分支：SVC(C=inf, gamma='scale') 直接拟合（小样本，默认无界 max_iter）
+        return SVC(C=np.inf, kernel="rbf", gamma="scale").fit(feats, y)
+    # 官方网格的 base estimator：param_grid 里的单值项（kernel rbf / gamma scale /
+    # max_iter 1e7 / 其余 sklearn 默认）写进 estimator，只有 C 真正扫描
+    base = SVC(C=np.inf, kernel="rbf", gamma="scale", max_iter=TS2VEC_SVM_MAX_ITER)
     if n > TS2VEC_MAX_SAMPLES:
         from sklearn.model_selection import train_test_split
         feats, _f2, y, _y2 = train_test_split(feats, y, train_size=TS2VEC_MAX_SAMPLES,

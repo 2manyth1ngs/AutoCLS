@@ -63,6 +63,11 @@ warnings.filterwarnings("ignore", category=UserWarning, module=r"sklearn\.metric
 warnings.filterwarnings("ignore", category=UserWarning, module=r"sklearn\.model_selection.*")
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+try:  # 官方网格的 C=inf 在 max_iter=1e7 上限处提前终止是预期行为（linear_eval 注释），不刷屏
+    from sklearn.exceptions import ConvergenceWarning
+    warnings.filterwarnings("ignore", category=ConvergenceWarning)
+except ImportError:  # pragma: no cover
+    pass
 
 from autocls.contrastive.cl_trainer import pretrain_encoder  # noqa: E402
 from autocls.data.uea import load_uea_pair  # noqa: E402

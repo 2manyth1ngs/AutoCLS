@@ -144,6 +144,8 @@ class TestSvmGrid:
         cs = g["grid"]["C"]
         assert np.isinf(cs[-1]) and 1e-4 in cs and 1e4 in cs and len(cs) == 10
         assert g["est"].gamma == "scale" and g["est"].kernel == "rbf"
+        # 官方 param_grid 里的 'max_iter': [10000000]：C=inf 在不可分多类数据上无界不收敛
+        assert g["est"].max_iter == 10_000_000
         assert clf is g["est"]                        # 返回 best_estimator_
 
     def test_ts2vec_fallback_small_n_uses_c_inf(self, monkeypatch):
