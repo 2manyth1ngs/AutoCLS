@@ -80,8 +80,13 @@ def pretrain_encoder(
     torch.Generator），故打不打截点的最终权重逐位相同（tests/test_cl_trainer.py
     的 bit-identical 用例是这条性质的护栏）——budget=290 的 R' 因此仍是原口径。
     checkpoints 必须是 1..max_iters 内严格递增的整数（越界/重复/乱序都意味着
-    某个 budget 永不触发 = 静默少一条 R'，一律 ValueError）；use_swa 在训练**结束
-    时**才把平均权重拷回 encoder，与途中截点看到的原始权重是两种口径，禁止组合。
+    某个 budget 永不触发 = 静默少一条 R'，一律 ValueError）。
+
+    use_swa × checkpoints（MX-4 WP3：官方协议 ts2vec_official 开 SWA，淘汰赛又要在同一条
+    轨迹上取截点）：截点把 AveragedModel 的**当前平均权重**（swa_model.module）交给回调，
+    而不是正在训练的原始权重。TS2Vec 的 SWA 是等权 running mean，任意步 b 的快照就是
+    "单独训 b 步的 SWA 终值"（同 seed 逐位相同，tests/test_cl_trainer.py 钉死）；原始权重、
+    optimizer 与随机流不受回调影响，终点权重与不打截点逐位相同。
     """
     checkpoints = tuple(int(c) for c in checkpoints)
     if checkpoints:
@@ -91,10 +96,6 @@ def pretrain_encoder(
             raise ValueError(
                 f"checkpoints={checkpoints} 必须落在 1..max_iters={max_iters} 内，"
                 "否则该截点永不触发（静默少一条 R'）")
-        if use_swa:
-            raise ValueError(
-                "use_swa 与 checkpoints 不可同用：SWA 的平均权重训练结束才拷回 "
-                "encoder，途中截点读到的是原始权重，两种口径无法混在一条轨迹里")
     ckpt_set = set(checkpoints)
     if crop_mode not in CROP_MODES:
         raise ValueError(f"未知 crop_mode={crop_mode!r}（可选 {CROP_MODES}）")
@@ -143,8 +144,12 @@ def pretrain_encoder(
                 swa_model.update_parameters(encoder)  # 逐 iter（官方 ts2vec.py:152）
             step += 1
             if step in ckpt_set and on_checkpoint is not None:
-                on_checkpoint(step, encoder)
+                # SWA 开启时交出当前平均权重的模块（= 训到此步的 SWA 终值），否则交原始 encoder
+                target = swa_model.module if swa_model is not None else encoder
+                on_checkpoint(step, target)
                 encoder.train()   # 回调里的评估器会 encoder.eval()，必须恢复
+                if swa_model is not None:
+                    swa_model.module.train()
             batch_losses.append(loss.item())
 
         if not batch_losses:  # 整遍数据无一 batch 可训练，step 永不推进

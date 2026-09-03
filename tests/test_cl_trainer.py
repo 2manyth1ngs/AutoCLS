@@ -203,15 +203,64 @@ class TestCheckpoints:
                 checkpoints=checkpoints, on_checkpoint=lambda *_a: None,
             )
 
-    def test_swa_with_checkpoints_rejected(self, make_cls):
-        # SWA 把平均权重在训练**结束时**拷回 encoder，途中截点看到的是原始权重
-        # ——两种口径混在一条轨迹里无法解释，直接禁止组合
-        with pytest.raises(ValueError):
-            pretrain_encoder(
-                _small_encoder(), make_cls(), _toy_data(n=32),
-                max_iters=10, batch_size=8, seed=0, device="cpu",
-                use_swa=True, checkpoints=(5, 10), on_checkpoint=lambda *_a: None,
-            )
+    # ---- SWA × 截点（MX-4 WP3）：官方协议 ts2vec_official 开 SWA，而淘汰赛要在同一条
+    # 轨迹上取截点。语义：截点把 AveragedModel 的**当前平均权重**交给回调（TS2Vec 的
+    # SWA 是等权 running mean，任意步的快照都是合法终值），训练随机流与原始权重不动。
+    def test_swa_checkpoint_snapshot_equals_shorter_swa_run(self, make_cls):
+        # 同 seed 下，截点 b 的平均权重快照 ≡ 单独训 b 步的 SWA 终值（逐位）
+        X = _toy_data(n=32)
+        torch.manual_seed(123)
+        short = _small_encoder()
+        pretrain_encoder(short, make_cls(), X, max_iters=4, batch_size=8, seed=7,
+                         device="cpu", use_swa=True)
+
+        snaps = {}
+        torch.manual_seed(123)
+        long = _small_encoder()
+        pretrain_encoder(
+            long, make_cls(), X, max_iters=8, batch_size=8, seed=7, device="cpu",
+            use_swa=True, checkpoints=(4, 8),
+            on_checkpoint=lambda s, enc: snaps.__setitem__(
+                s, {k: v.detach().clone() for k, v in enc.state_dict().items()}),
+        )
+        a, b = short.state_dict(), snaps[4]
+        assert list(a) == list(b)
+        for k in a:
+            assert torch.equal(a[k], b[k]), f"截点 4 的 SWA 快照 ≠ 单独训 4 步的 SWA 终值：{k}"
+        # 最后一个截点的快照 ≡ 训练结束拷回 encoder 的平均权重
+        for k, v in long.state_dict().items():
+            assert torch.equal(v, snaps[8][k])
+
+    def test_swa_checkpoint_module_is_average_not_raw(self, make_cls):
+        # 回调拿到的是平均权重，不是正在训练的原始权重
+        diffs = []
+
+        def cb(_s, enc):
+            diffs.append(enc)
+
+        raw = _small_encoder()
+        pretrain_encoder(raw, make_cls(), _toy_data(n=32), max_iters=8, batch_size=8,
+                         seed=7, device="cpu", use_swa=True, checkpoints=(4,), on_checkpoint=cb)
+        assert diffs and diffs[0] is not raw
+
+    def test_swa_with_checkpoints_final_weights_bit_identical(self, make_cls):
+        # 打截点（回调里跑真实特征提取）不得扰动 SWA 轨迹与终点权重
+        from autocls.downstream.linear_eval import encode_features
+
+        X = _toy_data(n=32)
+        torch.manual_seed(123)
+        ref = _small_encoder()
+        pretrain_encoder(ref, make_cls(), X, max_iters=8, batch_size=8, seed=7,
+                         device="cpu", use_swa=True)
+        torch.manual_seed(123)
+        ckpt = _small_encoder()
+        pretrain_encoder(
+            ckpt, make_cls(), X, max_iters=8, batch_size=8, seed=7, device="cpu",
+            use_swa=True, checkpoints=(4, 8),
+            on_checkpoint=lambda _s, enc: encode_features(enc, X[:8], device="cpu"),
+        )
+        for k, v in ref.state_dict().items():
+            assert torch.equal(v, ckpt.state_dict()[k]), f"SWA 截点评估扰动了轨迹：{k}"
 
     def test_no_checkpoints_keeps_old_behavior(self, make_cls, monkeypatch):
         # 既有调用方（2b/step0/24/25/27）一律不传 checkpoints，行为零改动
