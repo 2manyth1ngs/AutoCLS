@@ -374,13 +374,19 @@ def fresh_instances(target: str, cat_z: Sequence[dict], probe: Sequence[dict],
         oracle = max(fresh.values())
         ranked = rank_by(prior, keys)
         path = sh_path(ranked, traj, (6, 3, 3), stages)
+        # 两臂同规则：选择只能用 canonical 轨迹（部署时可得的信息），新鲜真值只用来打分。
+        # prior3 = 先验 top-3 里按 canonical@b 最好的那条；*_fresh_max = 用新鲜真值挑 = 乐观上界。
         pick_sh = sh_pick(path[-1], traj, b)
+        pick_p3 = sh_pick(ranked[:K_TOP], traj, b)
         arms = {"oracle": oracle, "prior1": fresh[ranked[0]],
-                "prior3": max(fresh[k] for k in ranked[:K_TOP]),
-                MAIN_SH: fresh[pick_sh], "random1": float(np.mean(list(fresh.values())))}
+                "prior3": fresh[pick_p3],
+                "prior3_fresh_max": max(fresh[k] for k in ranked[:K_TOP]),
+                MAIN_SH: fresh[pick_sh],
+                MAIN_SH + "_fresh_max": max(fresh[k] for k in path[-1]),
+                "random1": float(np.mean(list(fresh.values())))}
         same = {k: float(traj[k][b]) for k in keys}
         arms_same = {"oracle": max(same.values()), "prior1": same[ranked[0]],
-                     "prior3": max(same[k] for k in ranked[:K_TOP]), MAIN_SH: same[pick_sh]}
+                     "prior3": same[pick_p3], MAIN_SH: same[pick_sh]}
         out.append({"fold": target, "slice": s, "n_keys": len(keys), "arms": arms,
                     "regret": {k: oracle - v for k, v in arms.items()},
                     "regret_same_trajectory": {k: arms_same["oracle"] - v for k, v in arms_same.items()}})

@@ -190,3 +190,30 @@ def test_gates_and_verdict_codes():
     assert g36.verdict_code(g) == "SH-PARTIAL"
     g["G1"]["pass"] = False
     assert g36.verdict_code(g) == "SH-DEAD"
+
+
+# ---------------------------------------------------------------- G4：新鲜种子真值
+def test_fresh_instances_both_arms_commit_with_canonical_then_score_fresh():
+    """选择只能用 canonical 轨迹（部署可得），真值换成探针 rep 均值——两臂同规则。"""
+    target = "A"
+    cat_rows = []
+    probe = []
+    traj = {"a": {60: 0.9, 120: 0.9, 290: 0.90}, "b": {60: 0.5, 120: 0.8, 290: 0.95},
+            "c": {60: 0.1, 120: 0.1, 290: 0.10}}
+    fresh = {"a": (0.7, 0.7), "b": (0.6, 0.6), "c": (0.1, 0.1)}     # b 的 canonical 0.95 是运气
+    for k, tr in traj.items():
+        for b, r in tr.items():
+            cat_rows.append({"task_id": "A_00", "dataset": target, "iters": b, "cls_key": k,
+                             "origin": "shared", "r_prime": r, "seconds": 1.0, "z": 0.0})
+        for rep, r in zip((1, 2), fresh[k]):
+            probe.append({"task_id": "A_00", "dataset": target, "iters": 290, "cls_key": k,
+                          "seed": rep, "r_prime": r})
+    prior = {"a": 1.0, "b": 0.5, "c": 0.0}
+    rows = g36.fresh_instances(target, cat_rows, probe, prior)
+    assert len(rows) == 1
+    arms = rows[0]["arms"]
+    # canonical 下 prior top-3 里最好的是 b(0.95)；换新鲜真值 b 只有 0.6，a 才是 0.7
+    assert arms["prior3"] == pytest.approx(0.6)             # 按 canonical 选 b，新鲜真值 0.6
+    assert arms["prior3_fresh_max"] == pytest.approx(0.7)   # 用新鲜真值挑 = 乐观上界
+    assert arms["SH6-3-3_prior"] == pytest.approx(0.6)      # SH 幸存 a,b,(c) → canonical 选 b
+    assert rows[0]["regret"]["prior3"] == pytest.approx(0.1)
