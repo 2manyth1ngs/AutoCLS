@@ -149,3 +149,67 @@ def test_decode_restores_inactive_none(encoder):
 def test_decode_rejects_wrong_shape(encoder):
     with pytest.raises(ValueError):
         encoder.decode(np.zeros(encoder.dim + 1, dtype=np.float32))
+
+
+# ---------------------------------------------------------------- binned 模式（MX-4 WP2）
+# 字段结构化代理需要按档位 one-hot 的编码：ratio 字段的效应非单调（crop 0.2 与 0.5 相差
+# 一个 z），1 维线性标量逼模型从一维里学非单调，是 T-CLSC 0.72 对 0.9 天花板缺口的一部分。
+# 约定：numeric / log_numeric / categorical 一律 one-hot(len(choices))，bool 仍 1 维，
+# None 无效档仍全零；默认 mode="scalar" 逐位不变（旧缓存 / T-CLSC 不受影响）。
+
+def _expected_binned_dim(space):
+    dim = 0
+    for name in space.field_names:
+        spec = space.field_spec(name)
+        dim += 1 if spec["type"] == "bool" else len(spec["choices"])
+    return dim
+
+
+def test_binned_dim_from_space_spec(space):
+    enc = CLSEncoder(space, mode="binned")
+    assert enc.dim == _expected_binned_dim(space)
+    assert enc.dim > CLSEncoder(space).dim
+
+
+def test_default_mode_is_scalar_and_unchanged(space, encoder):
+    assert CLSEncoder(space).mode == "scalar"
+    assert encoder.mode == "scalar"
+    v_default = encoder.encode(_active_cls())
+    v_explicit = CLSEncoder(space, mode="scalar").encode(_active_cls())
+    assert np.array_equal(v_default, v_explicit)
+
+
+def test_binned_numeric_is_onehot_at_choice_index(space):
+    enc = CLSEncoder(space, mode="binned")
+    v = enc.encode(_active_cls())
+    sl = enc.field_slices
+    for name, value in [("rescale", 0.95), ("jitter", 0.5), ("resize", 0.0),
+                        ("temperature", 1.0), ("order", 3), ("norm", "l2")]:
+        seg = v[sl[name]]
+        assert seg.sum() == 1.0, name
+        assert int(seg.argmax()) == space.choices(name).index(value), name
+    assert v[sl["temporal"]].shape == (1,) and v[sl["temporal"]][0] == 1.0
+    assert v[sl["cross_scale"]][0] == 0.0
+
+
+def test_binned_inactive_none_is_all_zeros(space):
+    enc = CLSEncoder(space, mode="binned")
+    v = enc.encode(_inactive_cls())
+    sl = enc.field_slices
+    assert np.all(v[sl["kernel"]] == 0.0) and np.all(v[sl["pool"]] == 0.0)
+    assert v[sl["adj_neighbor"]][0] == 0.0
+    assert v.dtype == np.float32 and np.all((v == 0.0) | (v == 1.0))
+
+
+def test_binned_roundtrip_exact(space):
+    enc = CLSEncoder(space, mode="binned")
+    rng = np.random.default_rng(3)
+    for _ in range(500):
+        c = space.sample_random(rng)
+        assert enc.decode(enc.encode(c)) == c
+    assert enc.decode(enc.encode(_inactive_cls())) == _inactive_cls()
+
+
+def test_unknown_mode_rejected(space):
+    with pytest.raises(ValueError):
+        CLSEncoder(space, mode="onehot")
