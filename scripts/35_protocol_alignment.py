@@ -559,7 +559,10 @@ def execute(cells: list[dict], args, tag: str) -> None:
     done = load_done(runs) if args.resume else {}
     todo = pending(cells, done)
     print(f"[{tag}] 计划 {len(cells)} 格，已有 {len(cells) - len(todo)}，待跑 {len(todo)}", flush=True)
-    with parallel_backend("threading", n_jobs=1):
+    # joblib 后端：本机 Windows 上 loky spawn 占 R' 单条 99% 耗时（memory），故默认 threading；
+    # Linux pod 上 GridSearchCV(n_jobs=-1) 用 loky 才有真并行（PhonemeSpectra cv=5×10C 是耗时大头）。
+    backend_kw = {"n_jobs": 1} if args.joblib_backend == "threading" else {}
+    with parallel_backend(args.joblib_backend, **backend_kw):
         for i, cell in enumerate(todo):
             arrays = load_arrays(cell["dataset"])
             who = (f"{cell['dataset']}/{cell['arm']}/{cell['cls_key'][:8]} s{cell['seed']} "
@@ -914,6 +917,8 @@ def main() -> None:
                     help="all=每跑记 2×2 评估变体；protocol=只记协议自身网格（PhonemeSpectra 省时）")
     ap.add_argument("--outdir", default=str(OUTDIR_DEFAULT), help="冒烟务必改到别处（铁律 3）")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    ap.add_argument("--joblib-backend", choices=("threading", "loky"), default="threading",
+                    help="GridSearchCV 并行后端：Windows 本机用 threading（loky spawn 太慢）；Linux pod 用 loky")
     args = ap.parse_args()
 
     protos = load_protocols(TRAIN_YAML)

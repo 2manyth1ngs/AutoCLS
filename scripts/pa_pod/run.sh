@@ -18,6 +18,7 @@ stage() {  # stage <名字> <参数...>
   local name="$1"; shift
   echo "== [$(date -u +%H:%M:%S)] $name"
   python scripts/35_protocol_alignment.py "$@" --resume --outdir "$OUT" \
+      --joblib-backend "${JOBLIB_BACKEND:-loky}" \
       >> "$LOG/pa_$name.log" 2>&1 || echo "  ⚠️ $name 非零退出（见 $LOG/pa_$name.log）"
   tail -3 "$LOG/pa_$name.log"
 }
