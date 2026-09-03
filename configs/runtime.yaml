@@ -64,6 +64,24 @@ workers:
 # （分块求和 = 整体求和，等价性见 tests/test_triplet_chunking.py）。2^26 = 268 MiB/张量。
 # 调小更省显存、Python 侧分块循环变多；调大反之。
 #
+# AUTOCLS_INFONCE_CHUNK_ELEMS：InfoNCE 相似度矩阵的分块阈值（sim 的元素数 B·n·n），
+# 同一个文件同一条注入链。MX-3-PQ 12 条 OOM 跳过的轨迹里 10 条是 info_nce+temporal
+# （Ethanol L=1024 / SCP2 L=1152，resize 后 n=2T≈2048~2304 → sim 单张 2.7 GB，
+# 而不分块路径还要再物化 ~4.5 份同形张量）。**纯内存旋钮**：InfoNCE 的 log_softmax
+# 只在每个实例自己的 (n, n) 上取，前导维之间独立，分块 = 整体（等价性见
+# tests/test_infonce_chunking.py）。阈值以下走原路径、逐位不变，已缓存的 R' 照样复现。
+# 2^26 在 B=128/n=2304 上 → 每块 12 个实例、共 11 块。**注意**：阈值按元素数判，
+# instance 对比的 (T, 2B, 2B) 在 T>1024 时也会走分块（同样精确，只是多一条与旧缓存
+# 的结合序差异）；想把新路径只留给 temporal，把本项调到 2^28 以上即可。
+#
+# 这两个阈值同时还是"**要不要物化相似度矩阵**"的判据（Round 2，2026-09-03）：
+# pair_construction 的 temporal 与 cross-scale 在越阈值时改从**表征**逐块算损失，
+# (B, m, n) 的 sim 与它的梯度缓冲全程不存在（losses.masked_info_nce_from_reprs /
+# masked_triplet_from_reprs）。于是损失步的峰值变成
+#     ≈ 7 × (分块预算的字节数) + O(B·n·C)
+# —— **不再含 n² 项**，resize 把 n 推到 2T 也不会把峰值推上去。2^26 对应块工作集
+# ~1.7 GiB；长序列端若还要余量，把这两项一起调到 2^24（~0.4 GiB）即可，纯内存旋钮。
+#
 # PYTORCH_CUDA_ALLOC_CONF：阶段1 那 69 条 OOM 的报错里有 "7.58 GiB is reserved by
 # PyTorch but unallocated"——每 iteration 的张量尺寸随 resize 随机浮动（SCP2 的
 # n=2T 在 1152~4378 间跳），缓存分配器的分段极易碎片化。expandable_segments 让
@@ -74,4 +92,5 @@ env:
   OPENBLAS_NUM_THREADS: "1"
   NUMEXPR_NUM_THREADS: "1"
   AUTOCLS_TRIPLET_CHUNK_ELEMS: "67108864"
+  AUTOCLS_INFONCE_CHUNK_ELEMS: "67108864"
   PYTORCH_CUDA_ALLOC_CONF: "expandable_segments:True"

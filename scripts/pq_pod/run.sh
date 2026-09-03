@@ -18,6 +18,9 @@ cd "$REPO"; mkdir -p "$LOG" "$OUT"
 # 单条 R' 慢 4.2×（route-a-throughput-omp1-and-worker-scaling）。
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
 export AUTOCLS_TRIPLET_CHUNK_ELEMS=67108864
+# InfoNCE 侧同款分块（tests/test_infonce_chunking.py）：本轮 12 条 OOM 跳过里 10 条
+# 是 info_nce+temporal @ Ethanol/SCP2（n=2T≈2048~2304），不设的话长序列端照旧跳格。
+export AUTOCLS_INFONCE_CHUNK_ELEMS=67108864
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 # 注意不带 --tasks：tasks.json / cls_catalog.json 是 8 个进程共享的单份产物，

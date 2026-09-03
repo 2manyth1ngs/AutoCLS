@@ -20,7 +20,41 @@ import torch
 import torch.nn.functional as F
 
 from ..space.cls_space import CLS
-from .losses import contrastive_loss, cross_sim, pairwise_sim
+from .losses import (
+    contrastive_loss,
+    cross_sim,
+    masked_info_nce_from_reprs,
+    masked_triplet_from_reprs,
+    pairwise_sim,
+    should_chunk_info_nce,
+    should_chunk_triplet,
+)
+
+
+def _maybe_from_reprs(za, zb, pos, valid, *, loss_type, sim_func, temperature):
+    """相似度矩阵大到越过分块阈值时，**不物化 sim**，直接从表征算损失。
+
+    返回 None 表示"没越阈值，照旧走 sim 路径"——阈值以下调用点的代码一字未动，
+    逐位与改动前相同（已缓存 R' 的复现红线）。
+
+    为什么每个造 (B, m, n) sim 的地方都要挂这道闸：上云 MX-3-PQ 第二轮补跑后仍有
+    6 条 OOM，其中 4 条 info_nce（3 条 cross_scale=True：Ethanol_04/5080c0fb、
+    Ethanol_04/161cc0db、SCP2_01/5fc0e960；另 Ethanol_00/84631f08 无 cross-scale）
+    + 2 条 triplet（Ethanol_03/87315d0d、SCP2_00/54d10b1f，均 cross_scale=True）。
+    cross_scale=True 时层级循环会在**每个尺度**各造一次 temporal sim、再各造两次
+    cross-scale sim，只挡最外层那一次是不够的。
+
+    za: (B, m, C) anchor 集；zb=None 表示自比（temporal），否则 (B, n, C) 候选集
+    （cross-scale）。掩码是两视图共用的 (m, n)，到分块体里再零拷贝广播。
+    """
+    B, m = za.shape[0], za.shape[1]
+    n = m if zb is None else zb.shape[1]
+    numel = B * m * n
+    if loss_type == "info_nce" and should_chunk_info_nce(numel):
+        return masked_info_nce_from_reprs(za, sim_func, pos, valid, temperature, zb=zb)
+    if loss_type == "triplet" and should_chunk_triplet(numel):
+        return masked_triplet_from_reprs(za, sim_func, pos, valid, temperature, zb=zb)
+    return None
 
 
 def instance_contrast_loss(
@@ -74,7 +108,6 @@ def temporal_contrast_loss(
     if T == 1:
         return z1.new_tensor(0.0)
     z = torch.cat([z1, z2], dim=1)      # (B, 2T, C)：每个实例一组候选
-    sim = pairwise_sim(z, sim_func)     # (B, 2T, 2T)
 
     n = 2 * T
     t = torch.arange(T, device=z1.device)
@@ -88,6 +121,17 @@ def temporal_contrast_loss(
             pos[adj + off + 1, adj + off] = True
     valid = ~torch.eye(n, dtype=torch.bool, device=z1.device)
 
+    # 阈值之上不物化 (B, 2T, 2T)：sim 在块内现算现扔（判据在造 sim **之前**问）。
+    # 这是长序列端 OOM 的正解 —— 只分块 sim 的版本里 sim 本体 + 其梯度缓冲仍按
+    # n² 涨（SCP2 最坏 n=2T=4378 → 9.1 GiB × 2），Ethanol_00/84631f08 因此还是
+    # 在 30.12 GiB 挂掉。cross_scale=True 时本函数在**每个尺度**都被调一次，
+    # 这道闸因此逐尺度生效。
+    out = _maybe_from_reprs(z, None, pos, valid, loss_type=loss_type,
+                            sim_func=sim_func, temperature=temperature)
+    if out is not None:
+        return out
+
+    sim = pairwise_sim(z, sim_func)     # (B, 2T, 2T)
     return contrastive_loss(
         sim, pos.expand_as(sim), loss_type=loss_type,
         temperature=temperature, valid_mask=valid.expand_as(sim),
@@ -126,7 +170,6 @@ def cross_scale_contrast_loss(
     """
     B, Tf, _ = z_fine.shape
     Tc = z_coarse.shape[1]
-    sim = cross_sim(z_coarse, z_fine, sim_func)  # (B, Tc, Tf)
 
     tc = torch.arange(Tc, device=z_fine.device)
     tf = torch.arange(Tf, device=z_fine.device)
@@ -134,6 +177,14 @@ def cross_scale_contrast_loss(
     pos = (tf.unsqueeze(0) // kernel) == tc.unsqueeze(1)  # (Tc, Tf)
     valid = torch.ones_like(pos)
 
+    # 同 temporal 的那道闸：(B, Tc, Tf) 在长序列端同样是 GB 级（Tf 被 resize 推到
+    # 2L，Tc=Tf/kernel），剩下 6 条 OOM 里 5 条带 cross_scale=True。
+    out = _maybe_from_reprs(z_coarse, z_fine, pos, valid, loss_type=loss_type,
+                            sim_func=sim_func, temperature=temperature)
+    if out is not None:
+        return out
+
+    sim = cross_sim(z_coarse, z_fine, sim_func)  # (B, Tc, Tf)
     return contrastive_loss(
         sim, pos.expand_as(sim), loss_type=loss_type,
         temperature=temperature, valid_mask=valid.expand_as(sim),
