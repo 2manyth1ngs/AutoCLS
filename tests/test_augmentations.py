@@ -270,3 +270,87 @@ class TestAugmentTwoViews:
             v1, v2, sl1, sl2 = augment_two_views(x, params, order=order, generator=_gen(order))
             assert torch.isfinite(v1).all() and torch.isfinite(v2).all()
             assert sl1.stop - sl1.start >= 1
+
+
+# ---------- crop_mode="ts2vec"：官方逐迭代 crop_l~U[2,T] + 逐行偏移 ----------
+# 镜像 reference/AutoCTS_plusplus/NAS_Net/ts2vec.py:126-132（全量协议对齐用，
+# 默认 "fixed" 路径逐位不变）。
+
+from autocls.contrastive.augmentations import (  # noqa: E402
+    _crop_per_row,
+    sample_crop_coords_ts2vec,
+)
+
+
+class TestCropTs2vec:
+    _params = dict(resize=0.0, rescale=0.0, jitter=0.0, point_mask=0.0, freq_mask=0.0, crop=0.5)
+
+    def test_fixed_mode_is_default_and_bitwise_equal(self):
+        x = _x()
+        a = augment_two_views(x, self._params, order=0, generator=_gen(5))
+        b = augment_two_views(x, self._params, order=0, generator=_gen(5), crop_mode="fixed")
+        for u, v in zip(a[:2], b[:2]):
+            assert torch.equal(u, v)
+        assert a[2] == b[2] and a[3] == b[3]
+
+    def test_shared_segment_aligned_per_row(self):
+        x = _x(B=8, T=64)
+        for seed in range(6):
+            v1, v2, sl1, sl2 = augment_two_views(
+                x, self._params, order=0, generator=_gen(seed), crop_mode="ts2vec")
+            assert torch.equal(v1[:, sl1], v2[:, sl2])
+            crop_l = sl1.stop - sl1.start
+            assert 2 <= crop_l <= x.shape[1]
+            assert sl1.stop <= v1.shape[1] and sl2.stop <= v2.shape[1]
+            # 官方 out1[:, -crop_l:] / out2[:, :crop_l]
+            assert sl2.start == 0 and sl1.stop == v1.shape[1]
+
+    def test_shared_segment_is_row_subsequence_of_input(self):
+        # 每行的共享段必须来自该行原序列的同一段（逐行偏移后仍对齐）
+        x = _x(B=6, T=48)
+        coords = sample_crop_coords_ts2vec(6, 48, generator=_gen(3))
+        v1, v2, sl1, sl2 = _crop_per_row(x, x, coords)
+        crop_l, left, _right, _eleft, _eright, offset = coords
+        for b in range(6):
+            s = int(offset[b]) + left
+            assert torch.equal(v1[b, sl1], x[b, s:s + crop_l])
+            assert torch.equal(v2[b, sl2], x[b, s:s + crop_l])
+
+    def test_per_row_offsets_differ(self):
+        # 逐行偏移是本模式与 fixed 的本质区别：B=32 下不可能全同
+        coords = sample_crop_coords_ts2vec(32, 128, generator=_gen(0))
+        offset = coords[-1]
+        assert tuple(offset.shape) == (32,)
+        assert len(set(int(o) for o in offset)) > 1
+
+    def test_indices_within_bounds(self):
+        T = 40
+        for seed in range(50):
+            crop_l, left, right, eleft, eright, offset = sample_crop_coords_ts2vec(
+                16, T, generator=_gen(seed))
+            assert 2 <= crop_l <= T and 0 <= left and right == left + crop_l <= T
+            assert 0 <= eleft <= left and right <= eright <= T
+            assert int(offset.min()) + eleft >= 0
+            assert int(offset.max()) + eright <= T
+
+    def test_p0_identity_in_both_modes(self):
+        x = _x()
+        params = dict(self._params, crop=0.0)
+        for mode in ("fixed", "ts2vec"):
+            v1, v2, sl1, sl2 = augment_two_views(x, params, order=0, generator=_gen(), crop_mode=mode)
+            assert torch.equal(v1, x) and torch.equal(v2, x)
+            assert torch.equal(v1[:, sl1], x)
+
+    def test_unknown_mode_raises(self):
+        with pytest.raises(ValueError):
+            augment_two_views(_x(), self._params, order=0, generator=_gen(), crop_mode="random")
+
+    def test_ts2vec_mode_with_prior_augs_all_orders(self):
+        # 与其他增强组合 × 5 种顺序：共享段仍对齐、数值有限
+        x = _x(B=4, T=64)
+        params = dict(resize=0.3, rescale=0.3, jitter=0.3, point_mask=0.3, freq_mask=0.3, crop=0.5)
+        for order in range(5):
+            v1, v2, sl1, sl2 = augment_two_views(
+                x, params, order=order, generator=_gen(order), crop_mode="ts2vec")
+            assert sl1.stop - sl1.start == sl2.stop - sl2.start >= 2
+            assert torch.isfinite(v1).all() and torch.isfinite(v2).all()

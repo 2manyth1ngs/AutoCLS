@@ -23,3 +23,41 @@ lr: 1.0e-3
 # early_iters / full_iters 是既有的另两条口径，**原样不动**（历史缓存与已发布判定
 # 全按原口径引用，铁律 2）；290 与 early_iters 数值相同纯属口径重合，不共享语义。
 budgets: [60, 120, 290]
+
+# --- 全量协议对齐（results/protocol_alignment，2026-09-03）：具名训练协议 ---
+# 铁律 2 增补：除 early/full/budgets 三条既有口径外，UEA 官方 train/test 划分上的
+# "全量锚"有两个具名协议。scripts/35_protocol_alignment.py 读此块；上面所有既有键
+# 原样不动（旧缓存、R'@290 标签协议、MX-2 anchor_cache 全按原口径引用）。
+#   legacy_full     = 冻结的 scripts/25_mx2_endtoend.py::cmd_anchor 口径（iters/batch_size/lr
+#                     必须与本文件 full_iters/batch_size/lr 三键一致，35 号 load_protocols
+#                     漂移即 fail-fast）。
+#   ts2vec_official = TS2Vec 官方口径（reference/AutoCTS_plusplus/NAS_Net/ts2vec.py 与
+#                     yuezhihan/ts2vec train.py）：
+#       iters_rule ts2vec_size → 200 if N·T·C ≤ 1e5 else 600（ts2vec.py:77；仍是显式 int
+#                     传入 pretrain_encoder 并逐行落盘，铁律 2 不变）
+#       batch_size 8（官方 train.py 默认 --batch-size 8；repr-dims 320）
+#       drop_last  true（ts2vec.py:93-94 DataLoader(drop_last=True)）
+#       swa        true（ts2vec.py:53-54 AveragedModel 初始快照 + :152 逐 iter update）
+#       crop_mode  fixed（官方逐行偏移裁剪是阶梯项 crop_mode=ts2vec，不进协议基线）
+#       scaler     train（datautils.load_UEA：StandardScaler 只在 TRAIN 上 fit）
+#       svm_grid   ts2vec（tasks/classification.py::fit_svm：C∈{1e-4..1e4,inf}, cv=5，
+#                     n//k<5 或 n<50 回退 C=inf）
+protocols:
+  legacy_full:
+    iters: 2320
+    batch_size: 128
+    lr: 1.0e-3
+    drop_last: false
+    swa: false
+    crop_mode: fixed
+    scaler: split
+    svm_grid: legacy
+  ts2vec_official:
+    iters_rule: ts2vec_size
+    batch_size: 8
+    lr: 1.0e-3
+    drop_last: true
+    swa: true
+    crop_mode: fixed
+    scaler: train
+    svm_grid: ts2vec

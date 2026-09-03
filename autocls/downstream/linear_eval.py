@@ -54,10 +54,62 @@ def encode_features(
     return np.concatenate(feats, axis=0)
 
 
+SVM_GRIDS = ("legacy", "ts2vec")
+# TS2Vec 官方 tasks/classification.py::fit_svm 的 C 网格（转录；官方仓库未 vendored，
+# `grep SVC reference/` 为空——来源 yuezhihan/ts2vec，沿自 T-Loss 官方评估代码）
+TS2VEC_C_GRID = [0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000, 10000, np.inf]
+TS2VEC_MAX_SAMPLES = 10000
+
+
+def _fit_svm_ts2vec(feats: np.ndarray, y: np.ndarray) -> SVC:
+    """TS2Vec 官方 fit_svm 转录（全量协议对齐 M9/M10；仅 grid="ts2vec" 时走此路）。
+
+    官方逻辑逐行：
+        nb_classes = len(unique(y)); train_size = n
+        svm = SVC(C=np.inf, gamma='scale')
+        if train_size // nb_classes < 5 or train_size < 50: return svm.fit(features, y)
+        grid = GridSearchCV(svm, {'C': [1e-4..1e4, inf], kernel rbf, gamma scale, ...}, cv=5)
+        if train_size > 10000: 分层子样本 10000（train_test_split random_state=0）
+        grid.fit(features, y); return grid.best_estimator_
+    官方把 SVC 其余参数（degree/coef0/tol/cache_size/max_iter=1e7 等）以单值列进网格，
+    数值上等于默认值（max_iter=1e7 vs -1 无限：实践等价），此处只列真正变化的 C。
+    best_estimator_ 由 GridSearchCV refit 在（子样本后的）全部特征上重拟合——与官方同。
+    """
+    nb_classes = int(np.unique(y).shape[0])
+    n = int(feats.shape[0])
+    base = SVC(C=np.inf, kernel="rbf", gamma="scale")
+    if n // nb_classes < 5 or n < 50:
+        return base.fit(feats, y)
+    if n > TS2VEC_MAX_SAMPLES:
+        from sklearn.model_selection import train_test_split
+        feats, _f2, y, _y2 = train_test_split(feats, y, train_size=TS2VEC_MAX_SAMPLES,
+                                              random_state=0)
+    grid_params = {"C": list(TS2VEC_C_GRID)}
+    grid = GridSearchCV(base, grid_params, cv=5, n_jobs=-1)
+    try:
+        grid.fit(feats, y)
+    except _POOL_ERRORS:
+        print("[fit_svm/ts2vec] 进程池损坏（BrokenProcessPool 类），串行 n_jobs=1 重试",
+              flush=True)
+        grid = GridSearchCV(base, grid_params, cv=5, n_jobs=1)
+        grid.fit(feats, y)
+    best = grid.best_estimator_
+    best.cv_score_ = float(grid.best_score_)   # 记录用（可作 top-K 内的无泄漏选择依据）
+    return best
+
+
 def fit_svm(
-    feats: np.ndarray, y: np.ndarray, seed: int = 0, search_cap: int = 3000
+    feats: np.ndarray, y: np.ndarray, seed: int = 0, search_cap: int = 3000,
+    grid: str = "legacy",
 ) -> SVC:
-    """SVM-RBF；在 ≤search_cap 的分层抽样上网格选 C，再全量拟合。"""
+    """SVM-RBF；在 ≤search_cap 的分层抽样上网格选 C，再全量拟合。
+
+    grid（默认 "legacy"，既有路径一字未动）："ts2vec" 走官方网格转录 _fit_svm_ts2vec。
+    """
+    if grid not in SVM_GRIDS:
+        raise ValueError(f"未知 svm grid={grid!r}（可选 {SVM_GRIDS}）")
+    if grid == "ts2vec":
+        return _fit_svm_ts2vec(feats, y)
     rng = np.random.default_rng(seed)
     if feats.shape[0] > search_cap:
         idx = rng.permutation(feats.shape[0])[:search_cap]
@@ -90,14 +142,19 @@ def evaluate_classification(
     y_test: np.ndarray,
     device: Optional[str] = None,
     seed: int = 0,
+    grid: str = "legacy",
 ) -> dict:
-    """预训练后 encoder 的下游分类评估，返回 {'acc', 'f1', 'svm_c'}。"""
+    """预训练后 encoder 的下游分类评估，返回 {'acc', 'f1', 'svm_c', 'svm_grid'}。
+
+    grid 默认 "legacy"（既有口径）；"ts2vec" = 官方网格（见 fit_svm）。
+    """
     train_feats = encode_features(encoder, X_train, device=device)
     test_feats = encode_features(encoder, X_test, device=device)
-    clf = fit_svm(train_feats, y_train, seed=seed)
+    clf = fit_svm(train_feats, y_train, seed=seed, grid=grid)
     pred = clf.predict(test_feats)
     return {
         "acc": float(accuracy_score(y_test, pred)),
         "f1": float(f1_score(y_test, pred, average="macro")),
         "svm_c": float(clf.C),
+        "svm_grid": grid,
     }

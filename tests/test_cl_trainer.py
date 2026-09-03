@@ -221,3 +221,92 @@ class TestCheckpoints:
             max_iters=10, batch_size=8, seed=0, device="cpu",
         )
         assert created[0].step_count == 10 and len(losses) == 3
+
+
+# ---------------------------------------------------------------------------
+# 全量协议对齐（results/protocol_alignment）：两个 opt-in 开关。
+# drop_last：TS2Vec 官方 DataLoader(drop_last=True)（reference ts2vec.py:93-94），
+#            bs 8 时残批被丢；crop_mode="ts2vec"：官方逐迭代 crop_l~U[2,T] + 逐行偏移
+#            （ts2vec.py:126-132）。两者默认关，默认路径必须与 test_swa 的金标逐位相同
+#            （历史缓存复现红线，铁律 5 先测后写）。
+# ---------------------------------------------------------------------------
+
+
+def _params_md5(encoder) -> str:
+    import hashlib
+    return hashlib.md5(
+        b"".join(p.detach().numpy().tobytes() for p in encoder.parameters())
+    ).hexdigest()
+
+
+def _golden_run(make_cls, **kw):
+    """与 tests/test_swa.py::_run 同口径（seed_model=123, seed_train=7, bs 8, 8 iters）。"""
+    torch.manual_seed(123)
+    enc = _small_encoder()
+    losses = pretrain_encoder(
+        enc, make_cls(), _toy_data(), max_iters=8, batch_size=8, seed=7,
+        device="cpu", **kw,
+    )
+    return enc, losses
+
+
+GOLDEN_LOSSES = ["0x1.0d3a434000000p+1", "0x1.02187e4000000p+1"]   # test_swa 金标
+GOLDEN_MD5 = "73fc381ee7d702aa37bb148a7fbf4164"
+
+
+class TestDropLastAndCropMode:
+    def test_switches_keyword_only_and_default_off(self):
+        sig = inspect.signature(pretrain_encoder)
+        p = sig.parameters["drop_last"]
+        assert p.kind is inspect.Parameter.KEYWORD_ONLY and p.default is False
+        q = sig.parameters["crop_mode"]
+        assert q.kind is inspect.Parameter.KEYWORD_ONLY and q.default == "fixed"
+
+    def test_default_path_bitwise_matches_golden(self, make_cls):
+        # 不传 / 显式传默认值，都必须逐位复现加开关前的金标（loss hex + 参数 md5）
+        for kw in ({}, {"drop_last": False, "crop_mode": "fixed"}):
+            enc, losses = _golden_run(make_cls, **kw)
+            assert [float.hex(float(l)) for l in losses] == GOLDEN_LOSSES
+            assert _params_md5(enc) == GOLDEN_MD5
+
+    def test_drop_last_steps_per_pass(self, make_cls, monkeypatch):
+        # n=20, bs=8 → 残批 4 样本：默认 3 步/遍（8/8/4）；drop_last 只 2 步/遍（8/8）
+        created = _patch_step_counter(monkeypatch)
+        losses = pretrain_encoder(
+            _small_encoder(), make_cls(), _toy_data(n=20),
+            max_iters=5, batch_size=8, seed=0, device="cpu", drop_last=True,
+        )
+        assert created[0].step_count == 5
+        assert len(losses) == 3            # 2+2+1 → 3 遍
+        losses_off = pretrain_encoder(
+            _small_encoder(), make_cls(), _toy_data(n=20),
+            max_iters=5, batch_size=8, seed=0, device="cpu",
+        )
+        assert len(losses_off) == 2        # 3+2 → 2 遍
+
+    def test_drop_last_n_below_batch_raises(self, make_cls):
+        # N<bs 且 drop_last：整遍无可训 batch → 必须 ValueError 而非死循环
+        with pytest.raises(ValueError):
+            pretrain_encoder(
+                _small_encoder(), make_cls(), _toy_data(n=5),
+                max_iters=4, batch_size=8, seed=0, device="cpu", drop_last=True,
+            )
+
+    def test_invalid_crop_mode_raises(self, make_cls):
+        with pytest.raises(ValueError):
+            pretrain_encoder(
+                _small_encoder(), make_cls(), _toy_data(),
+                max_iters=2, batch_size=8, seed=0, device="cpu", crop_mode="random",
+            )
+
+    def test_crop_mode_ts2vec_runs_finite_and_differs(self, make_cls):
+        _, fixed = _golden_run(make_cls)
+        _, ts2v = _golden_run(make_cls, crop_mode="ts2vec")
+        assert all(np.isfinite(l) for l in ts2v)
+        assert fixed != ts2v               # 裁剪坐标分布不同 → 轨迹不同
+
+    def test_crop_mode_ts2vec_with_crop_zero_matches_fixed(self, make_cls):
+        # crop=0 → 增强跳过，两种模式必须逐位相同（模式只在 crop 启用时生效）
+        _, a = _golden_run(lambda: make_cls(crop=0.0))
+        _, b = _golden_run(lambda: make_cls(crop=0.0), crop_mode="ts2vec")
+        assert a == b

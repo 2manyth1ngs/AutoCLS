@@ -1,0 +1,200 @@
+{
+  "Handwriting": {
+    "dataset": "Handwriting",
+    "budget": 290,
+    "arm": "main",
+    "n_slices": 6,
+    "top1": "a1f67db45e64",
+    "top3": [
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "9092e36eefe1"
+    ],
+    "borda": {
+      "4f7d413581f6": 48,
+      "cffb55035c3a": 36,
+      "8c4aa28336d6": 30,
+      "f48e5da1d899": 13,
+      "a1f67db45e64": 54,
+      "e490b88ee785": 17,
+      "9092e36eefe1": 42,
+      "65627517fa32": 6,
+      "20be4f7443e8": 0,
+      "8b87d66faad3": 24
+    },
+    "per_slice_top1": [
+      "a1f67db45e64",
+      "a1f67db45e64",
+      "a1f67db45e64",
+      "4373c6d69206",
+      "7f27f632df44",
+      "6897a5d280f7"
+    ],
+    "cls_only_top1": "9092e36eefe1"
+  },
+  "UWaveGestureLibrary": {
+    "dataset": "UWaveGestureLibrary",
+    "budget": 290,
+    "arm": "main",
+    "n_slices": 6,
+    "top1": "9092e36eefe1",
+    "top3": [
+      "9092e36eefe1",
+      "cffb55035c3a",
+      "8b87d66faad3"
+    ],
+    "borda": {
+      "4f7d413581f6": 27,
+      "cffb55035c3a": 45,
+      "8c4aa28336d6": 13,
+      "f48e5da1d899": 11,
+      "a1f67db45e64": 38,
+      "e490b88ee785": 17,
+      "9092e36eefe1": 54,
+      "65627517fa32": 26,
+      "20be4f7443e8": 0,
+      "8b87d66faad3": 39
+    },
+    "per_slice_top1": [
+      "9092e36eefe1",
+      "9092e36eefe1",
+      "9092e36eefe1",
+      "9092e36eefe1",
+      "9092e36eefe1",
+      "9092e36eefe1"
+    ],
+    "cls_only_top1": "9092e36eefe1"
+  },
+  "PhonemeSpectra": {
+    "dataset": "PhonemeSpectra",
+    "budget": 290,
+    "arm": "main",
+    "n_slices": 6,
+    "top1": "9092e36eefe1",
+    "top3": [
+      "9092e36eefe1",
+      "cffb55035c3a",
+      "8b87d66faad3"
+    ],
+    "borda": {
+      "4f7d413581f6": 17,
+      "cffb55035c3a": 48,
+      "8c4aa28336d6": 22,
+      "f48e5da1d899": 4,
+      "a1f67db45e64": 38,
+      "e490b88ee785": 15,
+      "9092e36eefe1": 54,
+      "65627517fa32": 30,
+      "20be4f7443e8": 2,
+      "8b87d66faad3": 40
+    },
+    "per_slice_top1": [
+      "9092e36eefe1",
+      "9092e36eefe1",
+      "9092e36eefe1",
+      "9092e36eefe1",
+      "9092e36eefe1",
+      "9092e36eefe1"
+    ],
+    "cls_only_top1": "9092e36eefe1"
+  },
+  "EthanolConcentration": {
+    "dataset": "EthanolConcentration",
+    "budget": 290,
+    "arm": "main",
+    "n_slices": 6,
+    "top1": "a1f67db45e64",
+    "top3": [
+      "a1f67db45e64",
+      "9092e36eefe1",
+      "4f7d413581f6"
+    ],
+    "borda": {
+      "4f7d413581f6": 42,
+      "cffb55035c3a": 24,
+      "8c4aa28336d6": 36,
+      "f48e5da1d899": 18,
+      "a1f67db45e64": 54,
+      "e490b88ee785": 30,
+      "9092e36eefe1": 48,
+      "65627517fa32": 6,
+      "20be4f7443e8": 0,
+      "8b87d66faad3": 12
+    },
+    "per_slice_top1": [
+      "a059ad581f02",
+      "a1f67db45e64",
+      "b8595c266391",
+      "37d62d1bea47",
+      "e4c3661c1faa",
+      "a1f67db45e64"
+    ],
+    "cls_only_top1": "a1f67db45e64"
+  },
+  "Cricket": {
+    "dataset": "Cricket",
+    "budget": 290,
+    "arm": "main",
+    "n_slices": 6,
+    "top1": "9092e36eefe1",
+    "top3": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6"
+    ],
+    "borda": {
+      "4f7d413581f6": 42,
+      "cffb55035c3a": 36,
+      "8c4aa28336d6": 30,
+      "f48e5da1d899": 18,
+      "a1f67db45e64": 48,
+      "e490b88ee785": 24,
+      "9092e36eefe1": 54,
+      "65627517fa32": 6,
+      "20be4f7443e8": 0,
+      "8b87d66faad3": 12
+    },
+    "per_slice_top1": [
+      "9092e36eefe1",
+      "052238bb3c23",
+      "00ebdd992483",
+      "9092e36eefe1",
+      "e45e3ecfe331",
+      "66eb2bd5b563"
+    ],
+    "cls_only_top1": "9092e36eefe1"
+  },
+  "HandMovementDirection": {
+    "dataset": "HandMovementDirection",
+    "budget": 290,
+    "arm": "main",
+    "n_slices": 6,
+    "top1": "9092e36eefe1",
+    "top3": [
+      "9092e36eefe1",
+      "4f7d413581f6",
+      "a1f67db45e64"
+    ],
+    "borda": {
+      "4f7d413581f6": 48,
+      "cffb55035c3a": 30,
+      "8c4aa28336d6": 36,
+      "f48e5da1d899": 18,
+      "a1f67db45e64": 42,
+      "e490b88ee785": 24,
+      "9092e36eefe1": 54,
+      "65627517fa32": 6,
+      "20be4f7443e8": 0,
+      "8b87d66faad3": 12
+    },
+    "per_slice_top1": [
+      "9092e36eefe1",
+      "23c62a4c72c0",
+      "de0fcc13982a",
+      "9092e36eefe1",
+      "9092e36eefe1",
+      "9092e36eefe1"
+    ],
+    "cls_only_top1": "9092e36eefe1"
+  }
+}

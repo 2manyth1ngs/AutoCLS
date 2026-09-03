@@ -237,3 +237,112 @@ def test_variable_length_pretrain_no_crash(name, pad_L, make_cls):
         max_iters=20, batch_size=32, device="cpu", seed=0,
     )
     assert losses and all(np.isfinite(v) for v in losses)
+
+
+# ---- 全量协议对齐（M8）：load_uea_pair(scaler="split"|"train") ----
+# "split"（既有口径）= 两次 load_uea_cached 逐位相同；"train"（TS2Vec 官方
+# datautils.load_UEA 语义）= 统计量只在 TRAIN 真实步上拟合、TEST 用同一统计量、
+# 两切分共用目标长度、标签在两切分并集上编码。pad_and_zscore 拆成
+# _fit_channel_stats + _apply_pad_zscore 后组合输出必须逐位不变（金标 md5）。
+
+import hashlib  # noqa: E402
+
+from autocls.data import uea as uea_mod  # noqa: E402
+from autocls.data.uea import load_uea_pair  # noqa: E402
+
+
+def _golden_ragged_seqs():
+    rng = np.random.default_rng(20260903)
+    seqs = [rng.normal(loc=3.0, scale=2.0, size=(L, 3)) for L in (7, 12, 5, 12, 9)]
+    seqs[2][:, 1] = 4.0
+    return seqs
+
+
+def test_pad_and_zscore_refactor_bitwise_golden():
+    # 2026-09-03 拆分前捕获（scratchpad）：输出逐位不变是历史缓存的复现红线
+    seqs = _golden_ragged_seqs()
+    X = pad_and_zscore(seqs)
+    Xc = pad_and_zscore(seqs, crop_len=8)
+    assert X.shape == (5, 12, 3) and X.dtype == np.float32
+    assert hashlib.md5(X.tobytes()).hexdigest() == "be7af9a43b420a4d49231048257ba205"
+    assert Xc.shape == (5, 8, 3)
+    assert hashlib.md5(Xc.tobytes()).hexdigest() == "9bca18e6ec69c9b758130a4dbb757d10"
+
+
+def _fake_raw(monkeypatch, train, test):
+    """monkeypatch _load_raw_seqs：不依赖 aeon/.ts 文件的合成两切分。"""
+    def fake(name, split, cache_dir):
+        seqs, y = train if split == "TRAIN" else test
+        return [np.asarray(s, dtype=np.float64) for s in seqs], np.asarray(y)
+    monkeypatch.setattr(uea_mod, "_load_raw_seqs", fake)
+
+
+def _synthetic_splits(seed=0):
+    rng = np.random.default_rng(seed)
+    tr = ([rng.normal(loc=2.0, scale=3.0, size=(5, 2)) for _ in range(12)],
+          ["a", "b", "c"] * 4)
+    te = ([rng.normal(loc=5.0, scale=1.0, size=(7, 2)) for _ in range(6)],
+          ["a", "b"] * 3)                       # TEST 缺类 "c"
+    return tr, te
+
+
+def test_load_uea_pair_split_equals_two_cached(monkeypatch, tmp_path):
+    _fake_raw(monkeypatch, *_synthetic_splits())
+    Xtr, ytr, Xte, yte = load_uea_pair("Fake", cache_dir=tmp_path, scaler="split")
+    Xtr2, ytr2 = load_uea_cached("Fake", "TRAIN", cache_dir=tmp_path)
+    Xte2, yte2 = load_uea_cached("Fake", "TEST", cache_dir=tmp_path)
+    assert np.array_equal(Xtr, Xtr2) and np.array_equal(Xte, Xte2)
+    assert Xtr.tobytes() == Xtr2.tobytes() and Xte.tobytes() == Xte2.tobytes()
+    assert np.array_equal(ytr, ytr2) and np.array_equal(yte, yte2)
+
+
+def test_load_uea_pair_split_matches_real_cache_bitwise():
+    name = "Handwriting"
+    if not (CACHE / name / f"{name}_TRAIN.ts").exists():
+        pytest.skip("Handwriting 缓存缺失")
+    Xtr, ytr, Xte, yte = load_uea_pair(name, cache_dir=CACHE, scaler="split")
+    Xtr2, ytr2 = load_uea_cached(name, "TRAIN", cache_dir=CACHE)
+    Xte2, yte2 = load_uea_cached(name, "TEST", cache_dir=CACHE)
+    assert Xtr.tobytes() == Xtr2.tobytes() and Xte.tobytes() == Xte2.tobytes()
+    assert np.array_equal(ytr, ytr2) and np.array_equal(yte, yte2)
+
+
+def test_load_uea_pair_train_scaler_stats_from_train_only(monkeypatch, tmp_path):
+    tr, te = _synthetic_splits()
+    _fake_raw(monkeypatch, tr, te)
+    Xtr, ytr, Xte, yte = load_uea_pair("Fake", cache_dir=tmp_path, scaler="train")
+    # 目标长度 = 两切分真实长度最大值（7），TRAIN 也 pad 到 7
+    assert Xtr.shape == (12, 7, 2) and Xte.shape == (6, 7, 2)
+    # TRAIN 真实步 z-score 后均值≈0/std≈1
+    real_tr = Xtr[:, :5].reshape(-1, 2)
+    assert np.allclose(real_tr.mean(axis=0), 0.0, atol=1e-5)
+    assert np.allclose(real_tr.std(axis=0), 1.0, atol=1e-4)
+    # TEST 用 TRAIN 统计量：TEST 本身 loc=5/scale=1 ≠ TRAIN 的 2/3 → 不会是 0 均值
+    real_te = Xte[:, :7].reshape(-1, 2)
+    stacked = np.concatenate([np.asarray(s) for s in tr[0]], axis=0)
+    mean, std = stacked.mean(axis=0), stacked.std(axis=0)
+    expect = np.concatenate([(np.asarray(s) - mean) / std for s in te[0]], axis=0)
+    assert np.allclose(real_te, expect.astype(np.float32), atol=1e-6)
+    assert not np.allclose(real_te.mean(axis=0), 0.0, atol=1e-2)
+
+
+def test_load_uea_pair_train_labels_consistent_across_splits(monkeypatch, tmp_path):
+    tr, te = _synthetic_splits()
+    _fake_raw(monkeypatch, tr, te)
+    _Xtr, ytr, _Xte, yte = load_uea_pair("Fake", cache_dir=tmp_path, scaler="train")
+    # 并集编码：a→0, b→1, c→2；TEST 只有 a/b 但 id 与 TRAIN 一致（不重排成 0/1）
+    assert ytr.tolist() == [0, 1, 2] * 4
+    assert yte.tolist() == [0, 1] * 3
+    assert ytr.dtype == np.int64 and yte.dtype == np.int64
+
+
+def test_load_uea_pair_train_crop_len(monkeypatch, tmp_path):
+    _fake_raw(monkeypatch, *_synthetic_splits())
+    Xtr, _ytr, Xte, _yte = load_uea_pair("Fake", cache_dir=tmp_path, scaler="train", crop_len=4)
+    assert Xtr.shape[1] == 4 and Xte.shape[1] == 4
+
+
+def test_load_uea_pair_unknown_scaler_raises(monkeypatch, tmp_path):
+    _fake_raw(monkeypatch, *_synthetic_splits())
+    with pytest.raises(ValueError):
+        load_uea_pair("Fake", cache_dir=tmp_path, scaler="global")

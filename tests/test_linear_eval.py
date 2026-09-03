@@ -98,3 +98,84 @@ class TestFitSvmPoolFallback:
         X, y = _separable_data(seed=0)
         with pytest.raises(ValueError, match="bad data"):
             le.fit_svm(X.max(axis=1), y, seed=0)
+
+
+# ---------------------------------------------------------------------------
+# SVM 网格开关（全量协议对齐 M9/M10）：grid="legacy"（既有 C∈{1,10,100}, cv=3）
+# 与 grid="ts2vec"（TS2Vec 官方 tasks/classification.py::fit_svm 转录：
+# n//k<5 或 n<50 → SVC(C=inf) 直接拟合；否则 C∈{1e-4..1e4, inf}, cv=5）。
+# ---------------------------------------------------------------------------
+
+
+class TestSvmGrid:
+    def _stub(self, monkeypatch, calls):
+        import autocls.downstream.linear_eval as le
+
+        class _StubGrid:
+            def __init__(self, est, grid, cv=None, n_jobs=None):
+                calls.append({"grid": grid, "cv": cv, "est": est})
+                self.best_params_ = {"C": 10.0}
+                self.best_estimator_ = est
+                self.best_score_ = 0.5
+
+            def fit(self, X, y):
+                self.best_estimator_.fit(X, y)
+                return self
+
+        monkeypatch.setattr(le, "GridSearchCV", _StubGrid)
+        return le
+
+    def test_default_grid_is_legacy_and_unchanged(self, monkeypatch):
+        import inspect
+        calls = []
+        le = self._stub(monkeypatch, calls)
+        X, y = _separable_data(seed=0)
+        le.fit_svm(X.max(axis=1), y, seed=0)
+        assert calls[0]["grid"] == {"C": [1.0, 10.0, 100.0]} and calls[0]["cv"] == 3
+        assert inspect.signature(le.fit_svm).parameters["grid"].default == "legacy"
+
+    def test_ts2vec_grid_has_inf_and_cv5(self, monkeypatch):
+        calls = []
+        le = self._stub(monkeypatch, calls)
+        X, y = _separable_data(n_per_class=40, seed=0)   # n=80, k=2 → 走网格
+        clf = le.fit_svm(X.max(axis=1), y, seed=0, grid="ts2vec")
+        g = calls[0]
+        assert g["cv"] == 5
+        cs = g["grid"]["C"]
+        assert np.isinf(cs[-1]) and 1e-4 in cs and 1e4 in cs and len(cs) == 10
+        assert g["est"].gamma == "scale" and g["est"].kernel == "rbf"
+        assert clf is g["est"]                        # 返回 best_estimator_
+
+    def test_ts2vec_fallback_small_n_uses_c_inf(self, monkeypatch):
+        calls = []
+        le = self._stub(monkeypatch, calls)
+        X, y = _separable_data(n_per_class=20, seed=0)   # n=40 < 50 → 回退
+        clf = le.fit_svm(X.max(axis=1), y, seed=0, grid="ts2vec")
+        assert calls == []                            # 未进网格
+        assert np.isinf(clf.C)
+        assert clf.predict(X.max(axis=1)).shape == (40,)
+
+    def test_ts2vec_fallback_few_per_class(self, monkeypatch):
+        calls = []
+        le = self._stub(monkeypatch, calls)
+        rng = np.random.default_rng(0)
+        feats = rng.normal(size=(60, 4))
+        y = np.arange(60) % 13                        # 60//13=4 < 5 → 回退
+        clf = le.fit_svm(feats, y, seed=0, grid="ts2vec")
+        assert calls == [] and np.isinf(clf.C)
+
+    def test_unknown_grid_raises(self):
+        from autocls.downstream.linear_eval import fit_svm
+        X, y = _separable_data(seed=0)
+        with pytest.raises(ValueError):
+            fit_svm(X.max(axis=1), y, grid="rbf_wide")
+
+    def test_evaluate_classification_records_grid(self):
+        enc = _IdentityEncoder()
+        X_train, y_train = _separable_data(seed=0)
+        X_test, y_test = _separable_data(seed=1)
+        res = evaluate_classification(enc, X_train, y_train, X_test, y_test, device="cpu")
+        assert res["svm_grid"] == "legacy"
+        res2 = evaluate_classification(enc, X_train, y_train, X_test, y_test,
+                                       device="cpu", grid="ts2vec")
+        assert res2["svm_grid"] == "ts2vec" and res2["acc"] > 0.95

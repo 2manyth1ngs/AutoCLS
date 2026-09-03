@@ -23,16 +23,26 @@ ENCODERS: dict[str, type[nn.Module]] = {
 }
 
 
-def build_encoder(input_dims: int, config_path: str | Path = DEFAULT_ENCODER_YAML) -> nn.Module:
+def build_encoder(
+    input_dims: int,
+    config_path: str | Path = DEFAULT_ENCODER_YAML,
+    overrides: dict | None = None,
+) -> nn.Module:
     """按 yaml 配置实例化一个**未预训练**的 encoder。
 
     "固定 encoder" 语义：架构固定；每个 CLS 各自调用本函数拿到新实例、
     从头预训练一份权重（不是权重冻结）。
+
+    overrides（默认 None = 零改动）：覆盖 yaml 里该 encoder 的构造参数——仅供全量
+    协议对齐的 --ladder 阶段打开 dilated_cnn 的 input_mask / repr_dropout；造 label
+    的所有调用方一律不传，故默认路径与历史完全一致。
     """
     with open(config_path, encoding="utf-8") as fh:
         cfg = yaml.safe_load(fh)
     name = cfg["encoder"]
     if name not in ENCODERS:
         raise ValueError(f"未知 encoder: {name}（可选: {sorted(ENCODERS)}）")
-    kwargs = cfg.get(name) or {}
+    kwargs = dict(cfg.get(name) or {})
+    if overrides:
+        kwargs.update(overrides)
     return ENCODERS[name](input_dims=input_dims, **kwargs)

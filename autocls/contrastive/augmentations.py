@@ -65,6 +65,62 @@ def _crop_with_coords(
     return va[:, t1:t1p], vb[:, t2:t2p], sl1, sl2
 
 
+# 全量协议对齐（results/protocol_alignment，M6）：crop_mode="ts2vec"。
+# 镜像 TS2Vec 官方 fit 循环 reference/AutoCTS_plusplus/NAS_Net/ts2vec.py:126-132
+# （与 yuezhihan/ts2vec 逐行一致）：每次迭代重采 crop_l~U[2,T]、共享段位置、两侧
+# 外延，再给 batch 内每一行一个独立偏移 crop_offset~U[-eleft, T-eright]，故两视图
+# 的共享段虽等长但逐行落在原序列的不同位置。fixed 模式（既有口径）整批共用一组
+# 坐标、共享长度由 p 固定——默认路径一字未动（历史缓存复现红线）。
+# 官方取法：out1 = net(x[offset+eleft : offset+right])[:, -crop_l:]，
+#          out2 = net(x[offset+left  : offset+eright])[:, :crop_l]。
+TS2VEC_CROP_MIN = 2   # 官方 low=2**(temporal_unit+1)，temporal_unit=0
+
+
+def sample_crop_coords_ts2vec(
+    B: int, T: int, generator: Optional[torch.Generator] = None
+) -> tuple[int, int, int, int, int, torch.Tensor]:
+    """采样官方式裁剪坐标 (crop_l, left, right, eleft, eright, offset[B])。
+
+    用 torch.randint + 本地 generator 替代官方的全局 np.random（可复现且不污染
+    全局 RNG），分布逐项相同：闭区间上界按官方 high=…+1 的语义换算。
+    """
+    if T < TS2VEC_CROP_MIN:
+        raise ValueError(f"crop_mode='ts2vec' 要求 T≥{TS2VEC_CROP_MIN}，得到 T={T}")
+
+    def _randint(low: int, high_inclusive: int, size=(1,)) -> torch.Tensor:
+        return torch.randint(low, high_inclusive + 1, size, generator=generator)
+
+    crop_l = int(_randint(TS2VEC_CROP_MIN, T).item())          # U[2, T]
+    left = int(_randint(0, T - crop_l).item())                  # 共享段起点
+    right = left + crop_l
+    eleft = int(_randint(0, left).item())                       # v1 向左外延起点
+    eright = int(_randint(right, T).item())                     # v2 向右外延终点
+    offset = _randint(-eleft, T - eright, size=(B,))            # 逐行偏移
+    return crop_l, left, right, eleft, eright, offset
+
+
+def _take_per_row(A: torch.Tensor, start: torch.Tensor, num_elem: int) -> torch.Tensor:
+    """(B, T, C) 逐行取 [start_b, start_b+num_elem)（← ts2vec_model/utils.py::take_per_row）。"""
+    idx = start[:, None] + torch.arange(num_elem)
+    return A[torch.arange(A.shape[0])[:, None], idx]
+
+
+def _crop_per_row(
+    va: torch.Tensor, vb: torch.Tensor,
+    coords: tuple[int, int, int, int, int, torch.Tensor],
+) -> tuple[torch.Tensor, torch.Tensor, slice, slice]:
+    """按官方式坐标逐行裁剪两个视图；共享段 = v1[:, -crop_l:] = v2[:, :crop_l]。"""
+    crop_l, left, right, eleft, eright, offset = coords
+    v1 = _take_per_row(va, offset + eleft, right - eleft)
+    v2 = _take_per_row(vb, offset + left, eright - left)
+    sl1 = slice(v1.shape[1] - crop_l, v1.shape[1])
+    sl2 = slice(0, crop_l)
+    return v1, v2, sl1, sl2
+
+
+CROP_MODES = ("fixed", "ts2vec")
+
+
 def crop_views(
     x: torch.Tensor, p: float, generator: Optional[torch.Generator] = None
 ) -> tuple[torch.Tensor, torch.Tensor, slice, slice]:
@@ -158,12 +214,18 @@ def augment_two_views(
     params: dict[str, float],
     order: int,
     generator: Optional[torch.Generator] = None,
+    crop_mode: str = "fixed",
 ) -> tuple[torch.Tensor, torch.Tensor, slice, slice]:
     """按 ORDERS[order] 依次施加 6 种增强，生成两个视图。
 
     params：{增强名: p}，p=0.0 跳过该增强。
     返回 (v1, v2, sl1, sl2)，sl1/sl2 含义同 crop_views；未启用 crop 时为全长切片。
+    crop_mode（默认 "fixed"，既有口径逐位不变）："ts2vec" 时 crop 走官方式逐迭代
+    crop_l~U[2,T] + 逐行偏移（见 sample_crop_coords_ts2vec），此时 p 只当开关
+    （p=0 不裁，p>0 裁；共享长度不再由 p 决定）。
     """
+    if crop_mode not in CROP_MODES:
+        raise ValueError(f"未知 crop_mode={crop_mode!r}（可选 {CROP_MODES}）")
     v1, v2 = x, x
     sl1 = sl2 = None
     for name in ORDERS[order]:
@@ -177,6 +239,10 @@ def augment_two_views(
                 raise RuntimeError("resize 必须在两视图分叉前施加（Table 8 中恒排第一）")
             v1 = v2 = resize(v1, p, generator=generator)
         elif name == "crop":
+            if crop_mode == "ts2vec":
+                coords_r = sample_crop_coords_ts2vec(v1.shape[0], v1.shape[1], generator)
+                v1, v2, sl1, sl2 = _crop_per_row(v1, v2, coords_r)
+                continue
             # 两视图可能已被前置增强分叉，用共享坐标分别裁剪以保证共享段对齐
             coords = sample_crop_coords(v1.shape[1], p, generator)
             v1, v2, sl1, sl2 = _crop_with_coords(v1, v2, coords)

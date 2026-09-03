@@ -46,16 +46,36 @@ def pad_and_zscore(
     """
     if not seqs:
         raise ValueError("seqs 为空")
-    C = seqs[0].shape[1]
-    real = [np.asarray(s, dtype=np.float64)[:crop_len] if crop_len else np.asarray(s, dtype=np.float64)
-            for s in seqs]
+    real = _crop_real(seqs, crop_len)
     target = crop_len if crop_len is not None else max(s.shape[0] for s in real)
+    mean, std = _fit_channel_stats(real, eps=eps)
+    return _apply_pad_zscore(real, target, mean, std)
 
+
+# pad_and_zscore 的三段拆分（全量协议对齐 M8，2026-09-03）：组合后输出逐位不变
+# （tests/test_uea.py::test_pad_and_zscore_refactor_bitwise_golden），拆开只为让
+# load_uea_pair(scaler="train") 能"只在 TRAIN 真实步上拟合统计量、套用到 TEST"。
+
+def _crop_real(seqs: list[np.ndarray], crop_len: int | None) -> list[np.ndarray]:
+    """各序列转 float64 并按 crop_len 截断前缀（None 不截）。"""
+    return [np.asarray(s, dtype=np.float64)[:crop_len] if crop_len else np.asarray(s, dtype=np.float64)
+            for s in seqs]
+
+
+def _fit_channel_stats(real: list[np.ndarray], eps: float = 1e-8) -> tuple[np.ndarray, np.ndarray]:
+    """按通道在**真实步**上拟合 (mean, std)；常值通道 std<eps 按 1 处理。"""
     stacked = np.concatenate(real, axis=0)  # (sum_ti, C) 仅真实步
     mean = stacked.mean(axis=0)
     std = stacked.std(axis=0)
     std = np.where(std < eps, 1.0, std)
+    return mean, std
 
+
+def _apply_pad_zscore(
+    real: list[np.ndarray], target: int, mean: np.ndarray, std: np.ndarray
+) -> np.ndarray:
+    """用给定统计量 z-score 并右侧零填充到 target 长度 → (N, target, C) float32。"""
+    C = real[0].shape[1]
     out = np.zeros((len(real), target, C), dtype=np.float32)
     for i, s in enumerate(real):
         t = min(s.shape[0], target)
@@ -168,3 +188,42 @@ def load_uea_merged(
     Xt = pad_and_zscore(seqs, crop_len=crop_len)
     yi, _ = encode_labels(y)
     return Xt, yi
+
+
+SCALER_MODES = ("split", "train")
+
+
+def load_uea_pair(
+    name: str,
+    *,
+    cache_dir: str | Path = DEFAULT_CACHE,
+    crop_len: int | None = None,
+    scaler: str = "split",
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """官方 TRAIN/TEST 两切分一起加载 → (Xtr, ytr, Xte, yte)（全量协议对齐 M8）。
+
+    scaler="split"（既有口径）：与依次调用 load_uea_cached(name, "TRAIN") /
+        load_uea_cached(name, "TEST") **逐位相同**（各切分自己的统计量、自己的
+        目标长度、自己的标签编码）。
+    scaler="train"（TS2Vec 官方 datautils.load_UEA 语义）：StandardScaler 只在
+        TRAIN 上 fit（按通道、全部真实时间步，ddof=0）后 transform 两切分；目标长度
+        取两切分真实长度最大值（等长数据集 = L）；标签 id 在两切分**并集**上编码
+        （官方在 TRAIN 唯一值上编码——两者在"TEST 类集 ⊆ TRAIN 类集"时一致，并集
+        更稳，TEST 缺某类时 id 也不重排）。
+    """
+    if scaler not in SCALER_MODES:
+        raise ValueError(f"未知 scaler={scaler!r}（可选 {SCALER_MODES}）")
+    if scaler == "split":
+        Xtr, ytr = load_uea_cached(name, "TRAIN", cache_dir=cache_dir, crop_len=crop_len)
+        Xte, yte = load_uea_cached(name, "TEST", cache_dir=cache_dir, crop_len=crop_len)
+        return Xtr, ytr, Xte, yte
+    seqs_tr, y_tr = _load_raw_seqs(name, "TRAIN", cache_dir)
+    seqs_te, y_te = _load_raw_seqs(name, "TEST", cache_dir)
+    real_tr, real_te = _crop_real(seqs_tr, crop_len), _crop_real(seqs_te, crop_len)
+    target = (crop_len if crop_len is not None
+              else max(s.shape[0] for s in real_tr + real_te))
+    mean, std = _fit_channel_stats(real_tr)            # 只在 TRAIN 真实步上拟合
+    Xtr = _apply_pad_zscore(real_tr, target, mean, std)
+    Xte = _apply_pad_zscore(real_te, target, mean, std)
+    y_all, _classes = encode_labels(np.concatenate([np.asarray(y_tr), np.asarray(y_te)]))
+    return Xtr, y_all[: len(y_tr)], Xte, y_all[len(y_tr):]
