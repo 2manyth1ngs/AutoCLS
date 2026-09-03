@@ -76,7 +76,22 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 - ✅ **MX-4 WP2**：字段结构化代理，SUR-WIN，S3（开放空间）不过（`results/mx4_surrogate/REPORT.md`）
 - **MX-4 WP3 全量部署**：SH 在 UEA 官方划分靶 {HW, UWave, PS, Ethanol, Cricket, HMD} 上选 CLS，对表 GGS / TS2Vec；**依赖 `protocol-alignment` 分支落地 `protocols.ts2vec_official`** ← 下一步
 - MX-4 WP4（增强不变性画像作数据集级任务特征）默认不做，除非用户明确要保留"E 有用"的可能性
+- **MX-4 WP5 学习曲线外推器（路径二，用户 2026-09-03 记录，尚未开工）** ← 见下节
 - 论文：正翼 = 零样本排名 + SH 验证 + 字段主效应 + 成本表；负翼 = task-aware 五轮判负 + 开放空间外推判死（analysis/limitations）
+
+## 路径二：给学习部分加一个真有增益的组件（用户 2026-09-03 记录，可能后续开工）
+
+**为什么**：现在的头条"先验 + 淘汰赛"审稿人会问"学习在哪"——先验 7 折第一名都是同一条配置（等于一个学来的默认），GBDT 在 top-1 上没超过先验，淘汰赛是 Hyperband 的常规组件。路径一（WP3 全量协议 + 候选扩到 50–100 + Hyperband/随机/BOHB 基线）把证据做实；路径二给"从源池学到、在目标上用"加一个有实证增益的模型。
+
+**首选：学习曲线外推器（WP5）**
+- 现象：SH 在 @60 / @120 淘汰时只看当前分数，而 @60→@290 的秩相关中位只有 0.72；最后一级只留 1 条 regret 翻倍（0.036 vs 0.018），说明早截点的淘汰决策有可改进空间。
+- 数据（已有，零 GPU）：`results/mx3_pq/rprime_cache.jsonl` 2835 行 = 945 条三截点轨迹 {60,120,290}；更密的截点在 `results/workpoint_followup/candidates/trained_fill.jsonl`（iters {6,12,30,60,120}）、`results/iters_workpoint/{candidates,uea}/`（{3,6,12,15,30,60,120}）、`results/step05_iters_floor/scan_cache.jsonl`（{60,120,240} × 3 种子）；4060/5090 混机记录带 `device_name`。
+- 模型：输入 = 已观测截点的 z（@60 或 @60+@120）⊕ CLS 字段编码（binned）⊕ 切片级统计（n_train、n_eval、类数、iters=0 基线）；输出 = z@290（或 P(进 top-3@290)）。候选形态：GBDT 回归 / 分位回归（给淘汰用的不确定性）/ 排序损失。铁律 6/7 同口径：只用训练侧轨迹拟合，模块不含数据集概念。
+- 接入：`36_prior_sh_sim.py` 的 `sh_path` 把"按 traj[k][b_prev] 留前 k"换成"按外推器预测的 z@b_final 留前 k"，其余臂表 / 成本口径不变；缓存模拟即可判定，无需新 GPU。
+- 判读（写 PROTOCOL 时定，先验先于数据）：主门 = 外推淘汰的 SH6-3-3 regret@290 < 现行 0.018（配对 Wilcoxon，n=42）；次门 = 在更省的档位（SH4-2-2 或 SH6-3-1）追平 0.018；新鲜种子复核同 WP1 G4。不过 → 学习曲线在本栈只是"看当前分"的等价物，如实入负翼。
+- 论文骨架若成立："从源池学两样东西——配置先验 + 学习曲线——驱动目标侧淘汰赛"；模型简单但学到的东西说得清楚。
+
+**次选：WP4 增强不变性画像**（机制性任务特征，与 CLS 字段同坐标，n=7–8 也可辨识；风险更高，先验 ~30%），设计见 memory `mx4-diagnosis-prior-beats-tclsc` 与计划文件 §5。
 
 ## 目录
 `autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}`（`search/surrogate.py` 代理、`search/rank.py` 聚合、`search/evolution.py` 仅保留）+ `scripts/`（MX-3-PQ：`32–34_pq_*`、`pq_common.py`；MX-4：`36_prior_sh_sim.py`、`37_surrogate_loo.py`）+ `configs/*.yaml` + `tests/`。分支：`mx4`（MX-4 代码与结果）、`protocol-alignment`（全量协议对齐）。
