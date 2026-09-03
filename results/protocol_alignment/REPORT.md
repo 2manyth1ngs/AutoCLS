@@ -108,4 +108,11 @@ catalog 1.2 h）；A2 后用实测秒/iter 重估。
 9. 单种子目录（catalog）噪声地板 δ_nd≈0.03（memory: iters 地板）——Spearman 只作方向性读数。
 10. bs 扫描的"等遍"按 drop_last 口径 N//bs 步/遍换算（200/44/11），bs 128 时每遍只 1 步、丢 22 样本。
 
+### 0.7 补充（2026-09-03 09:10 UTC，写于 `--ladder` 开跑之前；`--reproduce` 已出 P1=不过）
+P1 不过（TS2VEC_EQUIV@official 0.437±0.019）→ 阶梯将跑。若阶梯**采纳**了成分（单 rung Δ ≥ +0.03），
+六靶再跑第二遍 `--targets --ladder-overrides <rung>`（stage `targets_ladder`，臂名加 `+ladder`），
+rung = 采纳者中 Δ 最大的**单一实测配置**（不拼未实测的组合）。头条 P2 仍按 §0.4 的主口径
+（plain `ts2vec_official`）判读；+ladder 第二遍是次读数，报在 §4b，用于回答"补上 encoder 训练期
+成分后能否追平"。判线、阈值、picks 不变。
+
 （§1–§7 由 `--analyze` 结果填写；§0 之后不改判线。）

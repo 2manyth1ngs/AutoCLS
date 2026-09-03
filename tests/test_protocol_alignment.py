@@ -342,3 +342,36 @@ class TestAggregate:
                    "C": {"mean": 0.45, "cv_mean": 0.70}}
         best, cv_sel = pa.top3_selection(["A", "B", "C"], per_cls)
         assert best == "B" and cv_sel == "C"
+
+
+# ---------------------------------------------------------------- §0.7 +ladder 第二遍
+class TestLadderSecondPass:
+    def test_parse_overrides(self):
+        assert pa.parse_ladder_overrides(None) is None and pa.parse_ladder_overrides("") is None
+        assert pa.parse_ladder_overrides("ladder_input_mask") == {"input_mask": "binomial"}
+        assert pa.parse_ladder_overrides('{"repr_dropout": 0.1}') == {"repr_dropout": 0.1}
+        with pytest.raises(ValueError):
+            pa.parse_ladder_overrides('{"bogus": 1}')
+
+    def test_adopted_rung_is_best_adopted(self):
+        summ = {"ladder_crop_ts2vec": {"delta": -0.02, "adopt": False},
+                "ladder_input_mask": {"delta": 0.09, "adopt": True},
+                "ladder_repr_dropout": {"delta": 0.04, "adopt": True},
+                "ladder_all": {"delta": 0.05, "adopt": True}}
+        assert pa.adopted_ladder_rung(summ) == "ladder_input_mask"
+        assert pa.adopted_ladder_rung({"ladder_all": {"delta": 0.01, "adopt": False}}) is None
+
+    def test_targets_second_pass_keys_and_stage(self):
+        protos = pa.load_protocols(ROOT / "configs" / "train.yaml")
+        sizes = {"Handwriting": (150, 152, 3)}
+        kA = cls_key(pa.TS2VEC_EQUIV)
+        picks = {"Handwriting": {"top1": kA, "top3": [kA], "cls_only_top1": kA}}
+        key2cls = {kA: pa.TS2VEC_EQUIV}
+        base = pa.targets_worklist(protos, sizes, picks, key2cls, datasets=("Handwriting",), seeds=(0,))
+        second = pa.targets_worklist(protos, sizes, picks, key2cls, datasets=("Handwriting",), seeds=(0,),
+                                     overrides={"input_mask": "binomial"}, suffix="+ladder")
+        assert {c["stage"] for c in base} == {"targets"}
+        assert {c["stage"] for c in second} == {"targets_ladder"}
+        assert all(a.endswith("+ladder") for c in second for a in c["arm_names"])
+        assert all(c["options"]["input_mask"] == "binomial" for c in second)
+        assert {c["key"] for c in base}.isdisjoint({c["key"] for c in second})

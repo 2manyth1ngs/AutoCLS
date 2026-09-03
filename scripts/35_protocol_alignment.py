@@ -381,6 +381,29 @@ def ladder_worklist(protos: dict, sizes: dict, seeds=SEEDS, dataset: str = "Hand
             for arm, ov in LADDER for s in seeds]
 
 
+def parse_ladder_overrides(spec: Optional[str]) -> Optional[dict]:
+    """--ladder-overrides 取值：阶梯 rung 名（ladder_input_mask 等）或 JSON 字典；空/None → None。"""
+    if not spec:
+        return None
+    for name, ov in LADDER:
+        if spec == name:
+            return dict(ov)
+    ov = json.loads(spec)
+    if not isinstance(ov, dict) or not ov:
+        raise ValueError(f"--ladder-overrides 须为 rung 名或非空 JSON 字典，得到 {spec!r}")
+    run_options({"batch_size": 8, "lr": 1e-3, "drop_last": True, "swa": True, "crop_mode": "fixed",
+                 "scaler": "train", "svm_grid": "ts2vec"}, ov)   # 只校验键合法
+    return ov
+
+
+def adopted_ladder_rung(ladder_summary: dict) -> Optional[str]:
+    """REPORT §0.7：+ladder 第二遍用**实测过的单一配置** = 采纳（Δ≥+0.03）的 rung 里 Δ 最大者。"""
+    cands = [(v["delta"], k) for k, v in ladder_summary.items() if v.get("adopt")]
+    if not cands:
+        return None
+    return max(cands)[1]
+
+
 def official_worklist(protos: dict, sizes: dict, datasets=TARGETS, seeds=SEEDS) -> list[dict]:
     p = protos["ts2vec_official"]
     return [_cell("official", d, "ts2vec_official", p, sizes, arm_names=["official_ts2vec"],
@@ -410,15 +433,20 @@ def target_arms(picks: dict, key2cls: dict) -> list[dict]:
 
 
 def targets_worklist(protos: dict, sizes: dict, picks_by_ds: dict, key2cls: dict,
-                     datasets=TARGETS, seeds=SEEDS) -> list[dict]:
+                     datasets=TARGETS, seeds=SEEDS, overrides: Optional[dict] = None,
+                     suffix: str = "") -> list[dict]:
+    """六靶工单。overrides/suffix（REPORT §0.7 补充）：阶梯采纳成分后的第二遍
+    （臂名加 "+ladder" 后缀、stage="targets_ladder"），主口径（无 overrides）不变。"""
     p = protos["ts2vec_official"]
     out = []
+    stage = "targets_ladder" if overrides else "targets"
     for d in datasets:
         for a in target_arms(picks_by_ds[d], key2cls):
             for s in seeds:
-                out.append(_cell("targets", d, "ts2vec_official", p, sizes, arm_names=a["arms"],
+                out.append(_cell(stage, d, "ts2vec_official", p, sizes,
+                                 arm_names=[x + suffix for x in a["arms"]],
                                  cls_key_=a["cls_key"], cls=a["cls"], seed=s,
-                                 space_legal=a["space_legal"]))
+                                 overrides=overrides, space_legal=a["space_legal"]))
     return out
 
 
@@ -625,7 +653,9 @@ def build_stage_cells(stage: str, protos: dict, sizes: dict, args) -> list[dict]
         (Path(args.outdir)).mkdir(parents=True, exist_ok=True)
         (Path(args.outdir) / "picks.json").write_text(
             json.dumps(picks, indent=2, ensure_ascii=False), encoding="utf-8")
-        return targets_worklist(protos, sizes, picks, key2cls, datasets=ds, seeds=seeds)
+        ov = parse_ladder_overrides(getattr(args, "ladder_overrides", None))
+        return targets_worklist(protos, sizes, picks, key2cls, datasets=ds, seeds=seeds,
+                                overrides=ov, suffix=("+ladder" if ov else ""))
     if stage == "catalog":
         _picks, _k2c, cat = load_mx3_picks()
         return catalog_worklist(protos, sizes, cat, datasets=ds, seed=seeds[0])
@@ -863,6 +893,42 @@ def cmd_analyze(args) -> None:
                           "median_count": n_median, "P2_cv_parity_count": n_parity_cv,
                           "n_datasets": len(targets_out)}
 
+    # §4b +ladder 第二遍（若跑）
+    tgl = _rows_by(rows, "targets_ladder")
+    out["ladder_adopted_rung"] = adopted_ladder_rung(lad_out) if lad_out else None
+    if tgl:
+        md += ["", f"## §4b 六靶 +ladder 第二遍（ts2vec_official + 采纳成分 "
+                   f"{out['ladder_adopted_rung']}；REPORT §0.7；次读数，非头条）", "",
+               "| 数据集 | TS2Vec 论文 | TS2VEC_EQUIV+L | GGS+L | zs_top1+L | zs_top3(best)+L | zs_top3(cv)+L | 判定(top3) |",
+               "|---|---:|---:|---:|---:|---:|---:|---|"]
+        tl_out = {}
+        for d, rs in _group(tgl, lambda r: r["dataset"]).items():
+            per_cls = {k: summarize_seeds(v) for k, v in _group(rs, lambda r: r["cls_key"]).items()}
+            arm_of = {a: r["cls_key"] for r in rs for a in r["arm_names"]}
+
+            def m2(a, _p=per_cls, _a=arm_of):
+                return _p[_a[a]]["mean"] if a in _a else float("nan")
+
+            top3_keys = [k for k in picks.get(d, {}).get("top3", []) if k in per_cls]
+            best, cv_sel = (top3_selection(top3_keys, per_cls) if top3_keys else (None, None))
+            zs3 = per_cls[best]["mean"] if best else float("nan")
+            zs3cv = per_cls[cv_sel]["mean"] if cv_sel else float("nan")
+            row = TABLE10[d]
+            tl_out[d] = {"per_cls": per_cls, "zs_top1": m2("zs_top1+ladder"), "zs_top3_best": zs3,
+                         "zs_top3_cv": zs3cv, "ts2vec_equiv": m2("ts2vec_equiv+ladder"),
+                         "ggs": m2("ggs+ladder"), "ggs_table5": m2("ggs_table5+ladder"),
+                         "verdict_top3": verdict(zs3, row), "verdict_top3_cv": verdict(zs3cv, row),
+                         "verdict_equiv": verdict(m2("ts2vec_equiv+ladder"), row)}
+        for d in TARGETS:
+            if d in tl_out:
+                t = tl_out[d]
+                md.append(f"| {d} | {TABLE10[d]['TS2Vec']:.3f} | {t['ts2vec_equiv']:.3f} | {t['ggs']:.3f} | "
+                          f"{t['zs_top1']:.3f} | {t['zs_top3_best']:.3f} | {t['zs_top3_cv']:.3f} | {t['verdict_top3']} |")
+        n_par = sum(1 for t in tl_out.values() if t["verdict_top3"] == "parity")
+        n_med = sum(1 for t in tl_out.values() if t["verdict_top3"] in ("parity", "median"))
+        md += ["", f"+ladder：zs_top3 parity {n_par}/{len(tl_out)}，≥中位数 {n_med}/{len(tl_out)}"]
+        out["targets_ladder"] = {"per_dataset": tl_out, "parity_count": n_par, "median_count": n_med}
+
     # §5 目录 vs R'@290 Spearman
     cat = _rows_by(rows, "catalog")
     cat_out = {}
@@ -922,6 +988,9 @@ def main() -> None:
                     help="all=每跑记 2×2 评估变体；protocol=只记协议自身网格（PhonemeSpectra 省时）")
     ap.add_argument("--outdir", default=str(OUTDIR_DEFAULT), help="冒烟务必改到别处（铁律 3）")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    ap.add_argument("--ladder-overrides", default=None,
+                    help="--targets 的第二遍（REPORT §0.7）：rung 名（如 ladder_input_mask）或 JSON 字典；"
+                         "臂名加 +ladder 后缀、stage=targets_ladder；不传 = 主口径")
     ap.add_argument("--joblib-backend", choices=("threading", "loky"), default="threading",
                     help="GridSearchCV 并行后端：Windows 本机用 threading（loky spawn 太慢）；Linux pod 用 loky")
     args = ap.parse_args()
