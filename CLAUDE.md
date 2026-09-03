@@ -1,94 +1,82 @@
 # CLAUDE.md — AutoCLS
 
-Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比学习策略空间（CLS）** 作为搜索对象，用 **AutoCTS++ 的零样本比较器机制** 来搜，encoder 固定。
+Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比学习策略空间（CLS）** 作为搜索对象，先做**零样本排名**给出候选名单，再在目标数据集上用**逐次减半**的少量真实试跑定冠军，encoder 固定。
 
-**主张定稿（出路 X，用户 2026-08-30 拍板，勿回退）**：① 通用 CLS 质量排序（任务无关先验，留出 0.77–0.87/跨数据集 0.69–0.71）+ top-K 真评估；② 任务感知**可行性/脆弱度预测**（新模型，(E, cls)→三态 提升/惰性/破坏；数据集毒性 0→0.75 已坐实 p<0.001）；③ 端到端指标 = 双向 leave-one-dataset-out（UM↔HW，按任务报 28 个搜索实例的 regret+成本表）+ 全量 HW/UCI-HAR 标准协议对 TS2Vec 论文公开数字的外部锚。**细粒度 task-aware 排序在本栈判死勿复活**：任务信号幅度 0.007–0.013 < 轨迹噪声地板 0.030（评估扩容/iters 扫描/换族探针三重排除，见 memory 与 results/step0*、step1_encoder_probe、destruction_matrix）。
+**主张定稿（MX-4，用户 2026-09-03 拍板，取代出路 X，勿回退）**：
+① **零样本排名**（头条）：任务无关的 CLS 质量排序器 = **源池先验**（shared 探针在源池全部切片×预算上 within-task z 分数的均值）+ **字段结构化代理**（GBDT 在 CLS 字段编码上拟合 within-task z，`autocls/search/surrogate.py`，目录外候选由它打分）。7 折 leave-one-dataset-out：先验@1 regret 0.046、代理配对准确率 0.78 / regret@1 0.056，均显著优于 T-CLSC（0.074 / 0.735）与手工强默认 GGS（0.068）（`results/mx4_prior_sh`、`results/mx4_surrogate`）。
+② **目标侧逐次减半验证**：零样本名单前 6 条各训到 @60 → 留 3 条到 @120 → 3 条到 b_final 取最好（SH6-3-3）。@290 regret 0.018、中位 0、垫底 0/42，成本 ≈3.6 次全跑（与 AutoCTS++ 式 top-3 真评估同档，后者 0.041）。**最后一级必须留 3 条**（只留 1 条 regret 翻倍）。
+③ **任务感知靠测量不靠预测**：数据集级 CLS×数据集交互真实存在（R' 方差分解 @290：任务 73% / CLS 13% / 交互 14%，交互均方 = 噪声 140×，几乎全在数据集级），由目标侧 @60/@120 截点直接读出；E / SetTF / 可行性预测器全部关闭，T-CLSC 降为消融对照。
+**两条判死**：(a) **细粒度 task-aware 排序**在配对 δ 标签 + ≤8 数据集口径下不可辨识（M3/C2/MX-1 系列/实验 1-2/MX-3-PQ 五轮判负；δ 存活对里好-好对只 1.6–4.3%，任务盲天花板按 shared–shared 对诚实算是 0.86–0.92 而非 0.97）；(b) **开放空间零样本外推**：任何代理对目录外候选系统性高估（进化 CLS 预测 z +0.52 vs 真 +0.05，到训练集字段汉明距离 8 vs 目录 3），bag-10 LCB 只砍 44%，信任域一刀切全砍——搜索只在源池已评估配置邻域提名，且必须过目标侧真评估（BO 式回灌才可立项）。
 
-完整设计见 `TECHNICAL_DESIGN.md`。
+完整设计见 `TECHNICAL_DESIGN.md`（已过期，待按 MX-4 重写）；MX-4 计划与诊断见 memory `mx4-diagnosis-prior-beats-tclsc`。
 
 本机python环境：Anaconda 下的名为pytorch的虚拟环境
 
 ## 核心概念
 - **CLS**：一个对比学习策略 = 19 个离散字段的配置向量（AutoCL Table 1）。这是"要搜的架构"。
-- **T-CLSC**：比较器，输入 `(任务嵌入 E, cls_a, cls_b)` 输出二值 y（哪个 CLS 在该任务上更好）。负责排序；其配对 label 样式**不变**。
-- **可行性预测器**（出路 X 新增）：输入 `(E, cls)` 输出三态（提升/惰性/破坏）。看门层：预判未见数据集的空间毒性与安全边界；label 须绑 iters 口径（@290 起步）。二者分工：预测器剪雷区/判可评性，比较器排序，top-K 完整评估定冠军。**训练侧不过滤破坏配置**（它们是 avoid-worst 的粮草），过滤只在推理侧。
-- **early-validation**：造训练 label 时只对比预训练 575 iters（≈5 epoch 等量）就评估，用来快速排名。**只有最终 top-K 才做完整预训练。**
+- **零样本排序器**（MX-4）：先验 + 字段代理，输入 CLS 向量（不看任务），输出质量分；`surrogate.pairwise_matrix` 把分数变成 `autocls/search/rank.py` 可消费的 P 矩阵，胜场/Borda/进化一行不改。
+- **逐次减半（SH）**：同一条预训练轨迹的截点 {60,120,290} 各评一次 R'，逐级淘汰；部署选中的就是那条轨迹（继续训练即可），缓存模拟与部署零近似。
+- **T-CLSC**：AutoCTS++ 式比较器 `(E, cls_a, cls_b)→y`，**只作消融对照**（MX-3-PQ 判 B-DEAD；本质是常数排序器，偏离常数时 regret 翻倍）。代码与铁律 7 保留，不再投入。
+- **early-validation / 截点评估**：造 R' 时一条轨迹到 290 iters，@60/@120/@290 各评一次（`evaluate_rprime_trajectory`），逐位等于分开训。**只有 SH 幸存者跑到 b_final。**
 - **固定 encoder**：架构固定、每个 CLS 各自重新预训练一份权重（不是权重冻结）。
+- **字段主效应**（论文分析章）：分组置换重要性 temperature 0.28 ≫ sim_func 0.17 > norm 0.09 > freq_mask 0.08；temporal / cross_scale / pool / adj_neighbor / loss_type 平均惰性；ratio 字段档位效应非单调，只报字段级排名不报逐档。
 
 ## 关键决策（已定，勿改）
-1. CLS 编码用 **向量 + MLP**（方案 A），不用图/GIN。
-2. encoder 两者可切换：`dilated_cnn`（默认，TS2Vec式）/ `transformer`，由 `configs/encoder.yaml` 控制。**transformer 分支已探针判死**（2026-08-29，`results/step1_encoder_probe` 四问全败：随机 attention 特征在贴顶数据集上比随机卷积**更强**——贴顶跨架构家族成立；HW 对照崩 3/20；地板 0.030 不降。勿再投入调参）。
-3. 第一阶段只做**分类**（HAR / Epilepsy）。转预测任务已探针判死（噪声继承自预训练轨迹，`results/forecast_noise_probe` 红灯）。
-4. **k 放大（Y-B 加强版）搁置未关闭**：k≈6–9 @120 工作点在数学上可压 δ 至信号之下，用户曾表态不在乎成本；X 期间不投入，若重启从 memory `outlet-x-confirmed-roadmap` 进入。
-5. 原目标池 {UCI-HAR, Epilepsy, FaceDetection} **从主结果退役**（三种死法判不可评，`results/target_preflight`），写进 limitations/预检案例；全量 UCI-HAR 标准协议仍可当外部锚（区别于切片舞台）。
+1. CLS 编码用 **向量**（方案 A），不用图/GIN。两种模式同出 `configs/space.yaml`：`scalar` 32 维（T-CLSC、旧缓存，逐位不变）/ `binned` 按档 one-hot（代理）。
+2. encoder 两者可切换：`dilated_cnn`（默认，TS2Vec式）/ `transformer`，由 `configs/encoder.yaml` 控制。**transformer 分支已探针判死**（2026-08-29，`results/step1_encoder_probe`，无 REPORT 仅缓存，写论文前须补 `--analyze`）。
+3. 第一阶段只做**分类**。转预测任务已探针判死（`results/forecast_noise_probe` 红灯）。
+4. **k 放大（Y-B）搁置未关闭**；SH 的目标侧测量已承接大部分它想解决的问题，重启前先算账。
+5. 原目标池 {UCI-HAR, Epilepsy, FaceDetection} **从主结果退役**（`results/target_preflight`）；全量 UCI-HAR 仍可当外部锚。
+6. **头条臂 = SH6-3-3_prior**；SH10-4-3 只好 0.002 但贵 30%，不作默认。all20@60→top3 与 SH 同带但成本 1.8×——先验的价值是省一半探测预算。
+7. **AutoCTS++ Algorithm 2 进化搜索**只保留代码，不作零样本适应度使用（D3 5/21 + WP2 S3 不过）。
 
 ## 铁律
 1. `configs/space.yaml` 是策略空间**唯一真源**，代码不得硬编码取值集合。
-2. `cl_trainer` 的 `max_iters`（参数更新次数）必须显式传参，early-val 与最终评估禁止混用；跨任务训练量必须用 iters 而非 epoch 保证一致（early=290, full=2320，STD_BATCH_SIZE=128，固化在 `configs/train.yaml`。基准为 M1 实测 bs=128（40 epoch=2320 iters，ACC 0.9372），非早期 bs=64 误算；early:full 保持 M2 验证的 1:8 比例）。
-3. 所有 `(task, cls) → R'` 结果必须落盘缓存，脚本支持 `--resume`。这是最贵的一步。
-4. `task_embed/` 相关代码必须先读 AutoCTS++ 真实源码再适配，注释标注对应原文件+公式号。
-5. 先写 `tests/` 再写实现。与论文有出入的补全须注释标注"论文未给全，按 X 语义补全"（如附录 A 的 resize/rescale 公式被截断）。
-6. 共享 TS2Vec 仅在【源池】训练、冻结后编码所有任务；目标池/未见数据集绝不参与 TS2Vec 训练，防 zero-shot 数据泄漏。API 上由 `fit_shared_ts2vec(source_data)` 显式传入训练数据，`embed_task` 只接受已冻结的单变量编码器。
-7. **任务类型显式分发**：项目支持多种下游任务类型（当前仅 `classification`，将来加 `forecasting` 等）。task 数据结构必须带显式 `task_type` 字段（当前恒为 `classification`）；凡按任务类型不同而行为不同的逻辑，必须通过 `task_type` 显式分发，禁止隐式假设"就是分类"。已知分发点：task_slicer 切片策略、task_embed 窗口逻辑、downstream 评估器、early-val 的 R' 优劣方向。任务无关模块（cls_space/cls_encoder/contrastive/encoders/comparator/search）绝不能引入任务类型假设，保持纯粹。新增任务类型时应是"在各分发点加 case"，而非重构核心。`autocls/task_types.py` 是 task_type 取值唯一真源。
-8. **R' 优劣方向抽象**：early-val 的 R' 优劣方向随任务类型不同（分类 ACC 越大越优；预测 MSE 越小越优）。造 label 时 y 的定义禁止写死方向，必须经统一比较函数 `is_better(r1, r2, task_type)`（`autocls/task_types.py`）判定，把"什么叫更优"交给任务类型。当前 classification: 大者优；forecasting: 小者优的分支留 stub 接口。
+2. `cl_trainer` 的 `max_iters`（参数更新次数）必须显式传参，early-val 与最终评估禁止混用；跨任务训练量必须用 iters 而非 epoch 保证一致（early=290, full=2320，STD_BATCH_SIZE=128，固化在 `configs/train.yaml`；多保真截点 `budgets=[60,120,290]` 是同一轨迹的 checkpoint，非三次独立训练）。**增补**：任何 regret / 增益 / 净空数字必须带 @b_final 与实例数 n；多保真成本按 iters 逐级累加（k0·b0 + k1·(b1−b0) + …）并用缓存 `seconds` 增量换算 GPU 秒，三处（真值 / 裁判 / 外部锚）同口径。
+3. 所有 `(task, cls, iters) → R'` 结果必须落盘缓存，脚本支持 `--resume`。这是最贵的一步。
+4. `task_embed/` 相关代码必须先读 AutoCTS++ 真实源码再适配，注释标注对应原文件+公式号（现仅消融用）。
+5. 先写 `tests/` 再写实现。与论文有出入的补全须注释标注"论文未给全，按 X 语义补全"。每个实验先写 PROTOCOL（判读带先于数据）+ 协议锁 commit 再跑；探索读数先看过的必须在 PROTOCOL §0 如实声明。
+6. 先验 / 代理 / 共享 TS2Vec 仅在【源池训练侧】拟合；目标数据集绝不参与（fold_split 保证），只在考试时前向 / 短训。
+7. **任务类型显式分发**：task 数据结构必须带显式 `task_type`；凡按任务类型不同而行为不同的逻辑必须通过 `task_type` 显式分发。任务无关模块（cls_space/cls_encoder/contrastive/encoders/comparator/search 含 surrogate）绝不能引入任务类型或数据集概念。`autocls/task_types.py` 是 task_type 取值唯一真源。
+8. **R' 优劣方向抽象**：造 label / 排名时"更优"必须经 `is_better(r1, r2, task_type)` 判定；代理的目标 z 分数在脚本层按任务归一化，模块只见向量。
 
-## 已知 limitation（encoder 适用边界）
-- **L≥50 是固定 encoder 的适用边界**（路线 A 探针实证，`results/route_a_probe`）。根因：默认
-  encoder 是 10 层膨胀 CNN，dilation 逐层翻倍到 2^9=512，感受野为 **L≥100** 设计；序列过短时
-  被 padding 主导，任何 CLS（含破坏性增强）都收敛到同一贴顶表征，R' 与 CLS 质量**零相关**
-  （PenDigits L=8：CLS spread SNR 0.39，比正常长度窄 ~20×）。**L<50 的数据集只产噪声 label，
-  一律不入源池**（编码长度口径：变长数据集 pad 到 ≥50 且 SNR>1 的可留，如 SpokenArabicDigits
-  真实 4–93 → pad 93 → SNR 2.24）。L 在 30–50 之间须先过 SNR 检查再入池。写论文时列为 limitation。
-- **δ 非全局常数**：R' 噪声随 n_eval 变小 / R' 离天花板而涨（探针实测 0.0075→0.0495，4× 跨度），
-  δ=0.02 是 HAR 特调值。改 **per-dataset δ**（`configs/labels.yaml: delta_per_dataset`）。
-- **R' 噪声结构定稿（2026-08-29）**：噪声 = 计数成分（∝1/√n_eval，β=0.502）+ 轨迹地板
-  （cls×seed 交互，UM 谷底 δ_nd=0.030@120 iters，U 形曲线 240 掉头）。两制式 δ（退化判据
-  隔离破坏 CLS 后标定）白拿 ~40%。**旧的任务信号幅度估计（outlet_y 的 0.023–0.033）已作废
-  勿引**——k=1 差值噪声膨胀 3–4×，干净口径 p50=0.0072。共享种子配对/SWA/per-CLS δ 均已
-  枪毙勿重提。
-- **端到端目标三档阶梯**：①未见任务（多）；②可行性预测目标（16 UEA 轮转 LOO，贴顶数据集
-  够格）；③端到端搜索目标（须过预检闸，现仅 HW 强 / UM 弱）。③的资格独立于②，新数据集
-  过 `6_target_preflight` 即可入③。
-- 源池重排（L≥50 剔除 PenDigits/LSST 后）见 `results/route_a_pool/REPORT.md`。
-- **长序列端与 EEG 域共线：v1 期存在，源池 v2 已解除**（2026-09-01）。Ethanol
-  （Spectro/L1024，唯一非 EEG 长锚）经确认轮 0.474 过闸晋级回源池，长端不再全为 EEG/MEG。
-  源/目标/reserve 池组成的唯一真源为 `configs/source_pool.yaml`（δ 仍在 labels.yaml）。
-- **源池 v2 定稿（`results/source_pool_v2/REPORT.md`）**：活跃源 8 = 核心 4（HW/UM/PS/
-  UWave）+ 晋级 3（Ethanol/Cricket/HMD）+ SCP2 低权（只供 label 与全局先验，不作 LOO 折、
-  不入靶池）；靶池常规 = HW/UM，展示 = PS/Cricket。**新 limitation**：SAD 退役后语音域
-  仅剩 PS，NATOPS 退役后短序列端（L=51）清空。
-- **净空/增益是口径量，不是数据集属性**：HW 对 GGS 的净空在工作点口径为 0.004、在 @290
-  为 0.067（靶池档因此从"展示"变"常规"）。任何增益/净空数字必须带 @iters 口径引用，
-  真值/top-K 裁判/外部锚三处同口径（铁律 2 增补）。
+## 已知 limitation（encoder 适用边界与测量地板）
+- **L≥50 是固定 encoder 的适用边界**（`results/route_a_probe`）：10 层膨胀 CNN 感受野为 L≥100 设计，短序列被 padding 主导，R' 与 CLS 质量零相关。L<50 不入源池；30–50 须过 SNR 检查。
+- **测量分辨率是硬地板**：单跑 R' 噪声 sd 0.035–0.048（k=3 探针），δ 0.06–0.19；oracle 与第二名真差均值 0.020。非破坏半区在 k=1 下不可分辨（所有排序器在真 top-10 内配对 acc 0.43–0.51），臂间 0.01–0.02 的 regret 差在噪声内；"oracle"含赢家诅咒。
+- **δ 非全局常数**：按 (数据集, 预算) 查表 `configs/labels.yaml: pq.delta_per_dataset_budget`（噪声在 @120 达峰）。
+- **R' 噪声结构**：计数成分（∝1/√n_eval）+ 轨迹地板（cls×seed 交互）；共享种子配对 / SWA / per-CLS δ / 软 label 均已判负勿重提。
+- **SH 的 G4 保留**：新鲜种子真值下 SH 只比先验@3 好 0.002（p=0.64，n=14）——头条量级是部署口径（同轨迹），"选出更好的配置"只能写"不差"。
+- **源池 v2**（`results/source_pool_v2/REPORT.md`）：活跃源 8 = HW/UM/PS/UWave + Ethanol/Cricket/HMD + SCP2 低权（只训练不作折）；靶 = 7 折轮转。语音域仅 PS、短序列端空。
+- **净空/增益是口径量**：HW 对 GGS 的净空 @工作点 0.004、@290 0.067；GGS 在 HW 近 oracle（regret 0.026）而先验 0.061，是先验唯一输 GGS 的数据集。
+- **全量标准协议绝对值**（HW 0.34–0.39 vs TS2Vec 0.515）是训练口径差，由 `protocol-alignment` 分支处理（`configs/train.yaml: protocols.ts2vec_official`）；WP3 部署对表依赖它。
 
-## 复用 AutoCTS++（repo: decisionintelligence/AutoCTS_plusplus）
+## 复用 AutoCTS++（repo: decisionintelligence/AutoCTS_plusplus）——现仅消融对照
 - `Ts2vec_model/` → `autocls/task_embed/ts2vec_wrapper.py`
 - `AHC/set_encoder/` → `autocls/task_embed/set_transformer.py`
 - `AHC/ahc_engine.py` → `autocls/comparator/tclsc_engine.py`（GIN 支路换成 MLP）
-- `exps/random_search.py` → `scripts/3_pretrain_tclsc.py` + `4_zero_shot_search.py`
+- `exps/random_search.py` → `scripts/33_pq_comparator_loo.py` + `34_pq_search.py`（进化搜索 `autocls/search/evolution.py`，不作零样本适应度）
 
-## 数据流（出路 X 版）
+## 数据流（MX-4 版）
 ```
-离线: 源数据→切片成任务 t_i →(冻结共享TS2Vec+SetTF 得 E_i);(采样CLS)
-     →对(t_i,cls)跑预训练+下游评估得 R'
-     →配对 (E_i,cls_a,cls_b,y) →BCE训T-CLSC（排序）
-     →三态 (E_i,cls,y∈{提升/惰性/破坏}) →训可行性预测器（看门）
-在线: 未见D→冻结encoder前向得E（推理，非训练，铁律6）
-     →可行性预测器判毒性/剪雷区→T-CLSC两两比较排名→top-K完整预训练真评估→选 cls*
-展示: leave-one-dataset-out——目标数据集从离线一切训练中抠除（TS2Vec fit/label/δ标定），
-     仅考试时前向编码。UM→HW 主方向、HW→UM 反方向。
+离线: 源数据→切片 t_i →采样 CLS（shared-10 探针 + 每切片 random-10）
+     →对 (t_i, cls) 跑一条预训练轨迹，@{60,120,290} 各评一次 R'（缓存 (task, cls, iters)）
+     →within-(t_i, b) z 分数 →先验（shared 均值）+ 字段代理（GBDT on CLSEncoder(binned) ⊕ b/290）
+在线: 未见 D→零样本排名（shared 按先验、目录外按代理，只在信任域内提名）
+     →前 6 条 @60 →留 3 条 @120 →3 条到 b_final →取最好 = cls*（≈3.6 次全跑）
+展示: 7 折 leave-one-dataset-out（先验/代理只见训练侧，目标只考试）；
+     外部锚 = 全量标准协议（UEA 官方划分）对 GGS / TS2Vec 公开数字（WP3）
 ```
 
-## 里程碑（出路 X 版，2026-08-30 重排）
-- ✅ M0 骨架 / M1 单 CLS 预训练（HAR 0.9372）/ M2 early-val 相关性（ρ=0.85）
-- ✅ M3 T-CLSC 留出配对准确率（0.77–0.87；跨数据集 0.69–0.71）
-- **MX-1 可行性预测器**：三态 label（@290 破坏矩阵数据起步，零 GPU）→ 16 折
-  leave-one-dataset-out 预测数据集毒性 vs 任务盲基线；E 消融在此目标重新预注册 ← **下一步**
-- **MX-2 端到端展示（论文头条指标）**：双向 leave-one-dataset-out（UM→HW 主 / HW→UM 副），
-  按任务 28 个搜索实例报 regret（vs 直接搜索上界/GGS/随机/垫底）+ 成本表（1–2 数量级）；
-  外部锚 = 零样本选中 CLS 在全量 Handwriting（+可选 UCI-HAR）标准协议 vs TS2Vec 论文公开数字
-- MX-3 消融（w/o TS2Vec / SetTF / shared samples）+ 耗时表 + 论文
-  （正翼=排序/脆弱度/端到端；负翼=三重排除证据链降格为 analysis/limitations）
+## 里程碑
+- ✅ M0 骨架 / M1 单 CLS 预训练（HAR 0.9372）/ M2 early-val 相关性（ρ=0.85）/ M3 T-CLSC 留出配对
+- ✅ MX-1 系列（可行性预测器 / 先验收缩 / 选源课程）全部预注册判负——负翼
+- ✅ MX-2 双向 LOO（T-CLSC 头条 p=6.3e-07；GGS 在 HW 近 oracle、@3 输 random@3、外部锚未达线）
+- ✅ MX-3-PQ 7 折 × 3 预算：B-DEAD（E / 预算描述符零贡献）；T-CLSC 本身输给零训练先验（p=1.9e-06）
+- ✅ **MX-4 WP1**（2026-09-03）：先验 + SH，SH-WIN（`results/mx4_prior_sh/REPORT.md`）
+- ✅ **MX-4 WP2**：字段结构化代理，SUR-WIN，S3（开放空间）不过（`results/mx4_surrogate/REPORT.md`）
+- **MX-4 WP3 全量部署**：SH 在 UEA 官方划分靶 {HW, UWave, PS, Ethanol, Cricket, HMD} 上选 CLS，对表 GGS / TS2Vec；**依赖 `protocol-alignment` 分支落地 `protocols.ts2vec_official`** ← 下一步
+- MX-4 WP4（增强不变性画像作数据集级任务特征）默认不做，除非用户明确要保留"E 有用"的可能性
+- 论文：正翼 = 零样本排名 + SH 验证 + 字段主效应 + 成本表；负翼 = task-aware 五轮判负 + 开放空间外推判死（analysis/limitations）
 
 ## 目录
-`autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}` + `scripts/1-5_*.py` + `configs/*.yaml` + `tests/`
+`autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}`（`search/surrogate.py` 代理、`search/rank.py` 聚合、`search/evolution.py` 仅保留）+ `scripts/`（MX-3-PQ：`32–34_pq_*`、`pq_common.py`；MX-4：`36_prior_sh_sim.py`、`37_surrogate_loo.py`）+ `configs/*.yaml` + `tests/`。分支：`mx4`（MX-4 代码与结果）、`protocol-alignment`（全量协议对齐）。
