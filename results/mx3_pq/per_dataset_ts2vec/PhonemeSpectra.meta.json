@@ -1,0 +1,14 @@
+{
+  "protocol": "autocts_style_per_dataset",
+  "fit_datasets": [
+    "PhonemeSpectra"
+  ],
+  "iron_law_6_compliant": false,
+  "n_instances": 4096,
+  "t_max": 217,
+  "n_iters": 600,
+  "batch_size": 32,
+  "embed_seed": 0,
+  "device_name": "NVIDIA GeForce RTX 5090",
+  "seconds": 7.4
+}

@@ -1,0 +1,16 @@
+== verify 00:49:23
+verify exit=0
+== reproduce-check 00:49:26
+reproduce exit=0
+== train-parallel 00:49:28
+== train-rescan 04:28:49
+train exit=0  runs=60
+== analyze-33 04:51:20
+analyze33 exit=0
+== rank-34 04:51:22
+rank exit=0
+== evolve-34 04:51:33
+evolve exit=0
+== analyze-34 05:41:43
+analyze34 exit=0
+CHAIN_DONE 05:41:45

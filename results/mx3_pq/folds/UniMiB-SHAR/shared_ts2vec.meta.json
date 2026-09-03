@@ -1,0 +1,20 @@
+{
+  "fold": "UniMiB-SHAR",
+  "fit_datasets": [
+    "Cricket",
+    "EthanolConcentration",
+    "HandMovementDirection",
+    "Handwriting",
+    "PhonemeSpectra",
+    "SelfRegulationSCP2",
+    "UWaveGestureLibrary"
+  ],
+  "n_instances": 16068,
+  "t_max": 1152,
+  "n_iters": 600,
+  "batch_size": 32,
+  "embed_seed": 0,
+  "max_instances_per_dataset": 4096,
+  "device_name": "NVIDIA GeForce RTX 5090",
+  "seconds": 18.0
+}

@@ -1,0 +1,1598 @@
+{
+  "protocol": "results/mx3_pq/PROTOCOL.md",
+  "partial_cache": false,
+  "delta_sources": [
+    "configs/labels.yaml: pq.delta_per_dataset_budget（与 delta_calibration.json 对账一致）"
+  ],
+  "per_arm_fold": {
+    "autocts_style": {
+      "Cricket": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8593859036985345,
+        "iron_law_6_compliant": false,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "pass",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": -0.000697836706210797,
+          "cross": 0.03258897418004185,
+          "budget": 0.0
+        },
+        "train_seconds": 636.4
+      },
+      "EthanolConcentration": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.45951629863301785,
+        "iron_law_6_compliant": false,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": -0.0003154574132492427,
+          "cross": -0.0014721345951630327,
+          "budget": 0.0
+        },
+        "train_seconds": 690.2
+      },
+      "HandMovementDirection": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.6045454545454545,
+        "iron_law_6_compliant": false,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0,
+          "cross": -0.000909090909090926,
+          "budget": 0.0
+        },
+        "train_seconds": 795.3
+      },
+      "Handwriting": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.7293485560779046,
+        "iron_law_6_compliant": false,
+        "feature_fold": null,
+        "train_datasets": [
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "pass",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0,
+          "cross": 0.024445936870382767,
+          "budget": 0.0
+        },
+        "train_seconds": 666.6
+      },
+      "PhonemeSpectra": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.7644761029411765,
+        "iron_law_6_compliant": false,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "pass",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 4.59558823530104e-05,
+          "cross": 0.02467830882352946,
+          "budget": 0.0
+        },
+        "train_seconds": 595.0
+      },
+      "UWaveGestureLibrary": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8822950819672131,
+        "iron_law_6_compliant": false,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "pass",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": -0.0001311475409836227,
+          "cross": 0.03232786885245895,
+          "budget": -0.0001311475409836227
+        },
+        "train_seconds": 629.7
+      },
+      "UniMiB-SHAR": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8016647531572905,
+        "iron_law_6_compliant": false,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "pass",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0005166475315729225,
+          "cross": 0.03920780711825489,
+          "budget": 0.0
+        },
+        "train_seconds": 624.2
+      }
+    },
+    "cls_b": {
+      "Cricket": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8461270062805304,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": -0.0002093510118632125
+        },
+        "train_seconds": 18.5
+      },
+      "EthanolConcentration": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.444794952681388,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": 0.0004206098843322792
+        },
+        "train_seconds": 20.0
+      },
+      "HandMovementDirection": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.6090909090909091,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": -0.002272727272727204
+        },
+        "train_seconds": 21.5
+      },
+      "Handwriting": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.7296843519140362,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": 0.0
+        },
+        "train_seconds": 18.0
+      },
+      "PhonemeSpectra": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.7585018382352942,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": -0.0005974264705882026
+        },
+        "train_seconds": 17.1
+      },
+      "UWaveGestureLibrary": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8577049180327869,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": 0.0003278688524590345
+        },
+        "train_seconds": 18.7
+      },
+      "UniMiB-SHAR": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.7775545350172216,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": -0.00011481056257174327
+        },
+        "train_seconds": 18.4
+      }
+    },
+    "cls_only": {
+      "Cricket": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8538032100488485,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "train_seconds": 19.8
+      },
+      "EthanolConcentration": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.43796004206098843,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "train_seconds": 20.4
+      },
+      "HandMovementDirection": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.5977272727272728,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "train_seconds": 22.7
+      },
+      "Handwriting": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.7300201477501679,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "train_seconds": 19.0
+      },
+      "PhonemeSpectra": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.7352941176470589,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "train_seconds": 17.9
+      },
+      "UWaveGestureLibrary": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8537704918032787,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "train_seconds": 18.5
+      },
+      "UniMiB-SHAR": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8051090700344432,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": null,
+          "budget": null
+        },
+        "train_seconds": 18.7
+      }
+    },
+    "main": {
+      "Cricket": {
+        "seed": 1,
+        "n_seeds": 3,
+        "normal_acc": 0.8443824145150035,
+        "iron_law_6_compliant": true,
+        "feature_fold": "Cricket",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "detectable",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0,
+          "cross": 0.011025819958129835,
+          "budget": 0.0
+        },
+        "train_seconds": 640.8
+      },
+      "EthanolConcentration": {
+        "seed": 0,
+        "n_seeds": 3,
+        "normal_acc": 0.46004206098843325,
+        "iron_law_6_compliant": true,
+        "feature_fold": "EthanolConcentration",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0,
+          "cross": -0.0033648790746582335,
+          "budget": 0.0
+        },
+        "train_seconds": 683.5
+      },
+      "HandMovementDirection": {
+        "seed": 1,
+        "n_seeds": 3,
+        "normal_acc": 0.6636363636363637,
+        "iron_law_6_compliant": true,
+        "feature_fold": "HandMovementDirection",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "ambiguous",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0,
+          "cross": 0.010909090909090957,
+          "budget": 0.0
+        },
+        "train_seconds": 787.5
+      },
+      "Handwriting": {
+        "seed": 1,
+        "n_seeds": 3,
+        "normal_acc": 0.7192746809939556,
+        "iron_law_6_compliant": true,
+        "feature_fold": "Handwriting",
+        "train_datasets": [
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 6.71591672263272e-05,
+          "cross": -0.0016118200134318528,
+          "budget": -0.0002014775016789816
+        },
+        "train_seconds": 637.1
+      },
+      "PhonemeSpectra": {
+        "seed": 2,
+        "n_seeds": 3,
+        "normal_acc": 0.65625,
+        "iron_law_6_compliant": true,
+        "feature_fold": "PhonemeSpectra",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": -0.0046875,
+          "cross": -0.08814338235294117,
+          "budget": 4.595588235294379e-05
+        },
+        "train_seconds": 319.9
+      },
+      "UWaveGestureLibrary": {
+        "seed": 2,
+        "n_seeds": 3,
+        "normal_acc": 0.8478688524590164,
+        "iron_law_6_compliant": true,
+        "feature_fold": "UWaveGestureLibrary",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "detectable",
+          "cross": "detectable",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.017377049180327918,
+          "cross": 0.014950819672131188,
+          "budget": -0.00039344262295075704
+        },
+        "train_seconds": 629.7
+      },
+      "UniMiB-SHAR": {
+        "seed": 0,
+        "n_seeds": 3,
+        "normal_acc": 0.7898966704936854,
+        "iron_law_6_compliant": true,
+        "feature_fold": "UniMiB-SHAR",
+        "train_datasets": [
+          "Handwriting",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "ambiguous",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.00011481056257169885,
+          "cross": 0.004822043628013773,
+          "budget": 0.0
+        },
+        "train_seconds": 620.8
+      }
+    },
+    "soft": {
+      "Cricket": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.866364270760642,
+        "iron_law_6_compliant": true,
+        "feature_fold": "Cricket",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "pass",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0,
+          "cross": 0.06978367062107471,
+          "budget": 0.0
+        },
+        "train_seconds": 1116.6
+      },
+      "Handwriting": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.708865010073875,
+        "iron_law_6_compliant": true,
+        "feature_fold": "Handwriting",
+        "train_datasets": [
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "pass",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0004029550033579188,
+          "cross": 0.037139019476158455,
+          "budget": 0.0
+        },
+        "train_seconds": 2051.5
+      },
+      "UniMiB-SHAR": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8223306544202067,
+        "iron_law_6_compliant": true,
+        "feature_fold": "UniMiB-SHAR",
+        "train_datasets": [
+          "Handwriting",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "pass",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0,
+          "cross": 0.048737083811710734,
+          "budget": 0.0
+        },
+        "train_seconds": 2056.9
+      }
+    },
+    "wo_settf": {
+      "Cricket": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8785764131193301,
+        "iron_law_6_compliant": true,
+        "feature_fold": "Cricket",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "pass",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0027215631542219397,
+          "cross": 0.03740404745289605,
+          "budget": 0.0002093510118632125
+        },
+        "train_seconds": 24.2
+      },
+      "EthanolConcentration": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.4526813880126183,
+        "iron_law_6_compliant": true,
+        "feature_fold": "EthanolConcentration",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": -0.000525762355415349,
+          "cross": 0.0003154574132492205,
+          "budget": 0.0
+        },
+        "train_seconds": 25.3
+      },
+      "HandMovementDirection": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.6068181818181818,
+        "iron_law_6_compliant": true,
+        "feature_fold": "HandMovementDirection",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": -0.001818181818181852,
+          "cross": -0.016363636363636358,
+          "budget": 0.0
+        },
+        "train_seconds": 22.0
+      },
+      "Handwriting": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.7206178643384822,
+        "iron_law_6_compliant": true,
+        "feature_fold": "Handwriting",
+        "train_datasets": [
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "pass",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": -0.0002686366689053088,
+          "cross": 0.02887844190732034,
+          "budget": 0.000335795836131636
+        },
+        "train_seconds": 22.7
+      },
+      "PhonemeSpectra": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.6681985294117647,
+        "iron_law_6_compliant": true,
+        "feature_fold": "PhonemeSpectra",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": -0.0014246323529411465,
+          "cross": -0.06084558823529409,
+          "budget": -9.191176470588758e-05
+        },
+        "train_seconds": 22.0
+      },
+      "UWaveGestureLibrary": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.860655737704918,
+        "iron_law_6_compliant": true,
+        "feature_fold": "UWaveGestureLibrary",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "detectable",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.00026229508196717877,
+          "cross": 0.018229508196721245,
+          "budget": 0.00013114754098357827
+        },
+        "train_seconds": 23.1
+      },
+      "UniMiB-SHAR": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.7930539609644087,
+        "iron_law_6_compliant": true,
+        "feature_fold": "UniMiB-SHAR",
+        "train_datasets": [
+          "Handwriting",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "pass",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.00011481056257174327,
+          "cross": 0.02479908151549941,
+          "budget": 0.0
+        },
+        "train_seconds": 22.8
+      }
+    },
+    "wo_shared": {
+      "Cricket": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.6154919748778785,
+        "iron_law_6_compliant": true,
+        "feature_fold": "Cricket",
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0,
+          "cross": 0.0012561060711793193,
+          "budget": 0.0
+        },
+        "train_seconds": 403.7
+      },
+      "Handwriting": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.6252518468770987,
+        "iron_law_6_compliant": true,
+        "feature_fold": "Handwriting",
+        "train_datasets": [
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "ambiguous",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": -0.0004029550033579854,
+          "cross": 0.0006715916722631832,
+          "budget": 0.0
+        },
+        "train_seconds": 409.9
+      },
+      "UniMiB-SHAR": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.5640068886337543,
+        "iron_law_6_compliant": true,
+        "feature_fold": "UniMiB-SHAR",
+        "train_datasets": [
+          "Handwriting",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": -0.0001722158438576482,
+          "cross": 0.0008036739380022695,
+          "budget": 0.0
+        },
+        "train_seconds": 390.6
+      }
+    },
+    "wo_ts2vec": {
+      "Cricket": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8405443126308444,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0,
+          "cross": 0.0018841591067690234,
+          "budget": 0.0
+        },
+        "train_seconds": 642.9
+      },
+      "Handwriting": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.7219610476830087,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "UniMiB-SHAR",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0,
+          "cross": 0.0048354600402954915,
+          "budget": 0.0
+        },
+        "train_seconds": 641.5
+      },
+      "UniMiB-SHAR": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.802812858783008,
+        "iron_law_6_compliant": true,
+        "feature_fold": null,
+        "train_datasets": [
+          "Handwriting",
+          "PhonemeSpectra",
+          "UWaveGestureLibrary",
+          "EthanolConcentration",
+          "Cricket",
+          "HandMovementDirection",
+          "SelfRegulationSCP2"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "detectable",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": -0.0005740528128587829,
+          "cross": 0.014695752009184826,
+          "budget": -0.00022962112514353096
+        },
+        "train_seconds": 624.0
+      }
+    },
+    "main_s2": {
+      "S2": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.8164806303348654,
+        "iron_law_6_compliant": "s2_oracle",
+        "feature_fold": "all8",
+        "train_datasets": [
+          "Cricket",
+          "EthanolConcentration",
+          "HandMovementDirection",
+          "Handwriting",
+          "PhonemeSpectra",
+          "SelfRegulationSCP2",
+          "UWaveGestureLibrary",
+          "UniMiB-SHAR"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": "zero",
+          "cross": "ambiguous",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": 0.0003355704697987072,
+          "cross": 0.0026592252133946113,
+          "budget": 6.565988181219672e-05
+        },
+        "train_seconds": 218.0
+      }
+    },
+    "onehot_oracle": {
+      "S2": {
+        "seed": 0,
+        "n_seeds": 1,
+        "normal_acc": 0.7931713722915299,
+        "iron_law_6_compliant": "s2_oracle",
+        "feature_fold": null,
+        "train_datasets": [
+          "Cricket",
+          "EthanolConcentration",
+          "HandMovementDirection",
+          "Handwriting",
+          "PhonemeSpectra",
+          "SelfRegulationSCP2",
+          "UWaveGestureLibrary",
+          "UniMiB-SHAR"
+        ],
+        "partial_cache": false,
+        "tiers": {
+          "within": null,
+          "cross": "zero",
+          "budget": "zero"
+        },
+        "mean_delta": {
+          "within": null,
+          "cross": -0.0018384766907419304,
+          "budget": 0.0002954694681549963
+        },
+        "train_seconds": 1.6
+      }
+    }
+  },
+  "tests": {
+    "n_folds_A0": 7,
+    "folds_A0": [
+      "Cricket",
+      "EthanolConcentration",
+      "HandMovementDirection",
+      "Handwriting",
+      "PhonemeSpectra",
+      "UWaveGestureLibrary",
+      "UniMiB-SHAR"
+    ],
+    "cross_tiers": [
+      "detectable",
+      "zero",
+      "ambiguous",
+      "zero",
+      "zero",
+      "detectable",
+      "ambiguous"
+    ],
+    "budget_tiers": [
+      "zero",
+      "zero",
+      "zero",
+      "zero",
+      "zero",
+      "zero",
+      "zero"
+    ],
+    "pooled_cross_delta_p": 0.2890625,
+    "pooled_cross_delta_mean": -0.007344615324809358,
+    "Q3_A0_minus_A6_mean": -0.00601535259510122,
+    "Q3_p": 0.46875,
+    "Q3_n_folds": 7,
+    "A1_minus_A0_mean": 0.017125872562019084,
+    "A1_gt_A0_p": 0.1484375,
+    "A1_n_folds": 7,
+    "A0_pooled_normal_acc": 0.7243603187919463
+  },
+  "verdict": {
+    "code": "B-DEAD",
+    "conditions": {
+      "e_alive": false,
+      "e_detect": false,
+      "label_blind": false,
+      "e_pathway": false,
+      "b_dead": true
+    },
+    "counts": {
+      "cross_pass": 0,
+      "cross_detectable_or_better": 2,
+      "cross_zero": 3,
+      "budget_pass": 0,
+      "budget_zero": 7,
+      "n_folds": 7
+    },
+    "unmet": [],
+    "pooled_p": 0.2890625,
+    "q3_delta": -0.00601535259510122,
+    "q3_p": 0.46875,
+    "a8_cross_tier": "zero"
+  },
+  "predictions": {
+    "P1": {
+      "desc": "A0 pooled normal acc ∈ [0.70, 0.85]",
+      "value": 0.7243603187919463,
+      "hit": true,
+      "n_runs_pooled": 21,
+      "note": "pooled = A0 **全部种子**按单向对数加权（3×7 = 21 跑）；P2/P3 的档位则取每折 within Δ̄ 的中位种子，两者口径不同"
+    },
+    "P2": {
+      "desc": "A0 cross 档位 zero 于 ≥5/7 折",
+      "value": 3,
+      "hit": false
+    },
+    "P3": {
+      "desc": "A0 budget 档位 pass 于 ≥5/7 折",
+      "value": 0,
+      "hit": false
+    },
+    "P4": {
+      "desc": "Q3：A0 − A6 ≥ 0.01 且 p<0.05",
+      "value": [
+        -0.00601535259510122,
+        0.46875
+      ],
+      "hit": false
+    },
+    "P5": {
+      "desc": "A1 cross ≥ detectable 于 ≥4/7 折",
+      "value": 5,
+      "hit": true
+    },
+    "P6": {
+      "desc": "A8 cross pass（S2）",
+      "value": "zero",
+      "hit": false
+    },
+    "P7": {
+      "desc": "D1/D2（端到端 regret）",
+      "value": null,
+      "hit": null,
+      "note": "由 scripts/34_pq_search.py 产出"
+    },
+    "P8": {
+      "desc": "D3（进化 top-3）",
+      "value": null,
+      "hit": null,
+      "note": "由 scripts/34_pq_search.py 产出"
+    },
+    "P9": {
+      "desc": "δ@290 ≥ δ@120 于 ≥6/8 数据集",
+      "hit": false,
+      "value": 3,
+      "n_datasets_ge": 3,
+      "n_datasets": 8
+    },
+    "P10": {
+      "desc": "A4 比 A0 低 ≥0.03 于 ≥5/7 覆盖折",
+      "value": 3,
+      "n_covered": 3,
+      "hit": false,
+      "note": "阈值 ≥5 是**绝对折数**（协议 §6 原文）：A4 默认只覆盖 3 折（HW/UM/Cricket），此时 hit 在数学上不可达——n_covered <5 时应读 value/n_covered 的比例，不读 hit"
+    }
+  },
+  "cost": {
+    "autocts_style": {
+      "n_runs": 7,
+      "total_seconds": 4637.4,
+      "mean_seconds": 662.4857142857143
+    },
+    "cls_b": {
+      "n_runs": 7,
+      "total_seconds": 132.2,
+      "mean_seconds": 18.885714285714283
+    },
+    "cls_only": {
+      "n_runs": 7,
+      "total_seconds": 137.0,
+      "mean_seconds": 19.571428571428573
+    },
+    "main": {
+      "n_runs": 21,
+      "total_seconds": 13044.0,
+      "mean_seconds": 621.1428571428571
+    },
+    "soft": {
+      "n_runs": 3,
+      "total_seconds": 5225.0,
+      "mean_seconds": 1741.6666666666667
+    },
+    "wo_settf": {
+      "n_runs": 7,
+      "total_seconds": 162.10000000000002,
+      "mean_seconds": 23.157142857142862
+    },
+    "wo_shared": {
+      "n_runs": 3,
+      "total_seconds": 1204.1999999999998,
+      "mean_seconds": 401.3999999999999
+    },
+    "wo_ts2vec": {
+      "n_runs": 3,
+      "total_seconds": 1908.4,
+      "mean_seconds": 636.1333333333333
+    },
+    "main_s2": {
+      "n_runs": 1,
+      "total_seconds": 218.0,
+      "mean_seconds": 218.0
+    },
+    "onehot_oracle": {
+      "n_runs": 1,
+      "total_seconds": 1.6,
+      "mean_seconds": 1.6
+    }
+  },
+  "fold_meta_check": {
+    "Cricket": {
+      "fit_datasets": [
+        "EthanolConcentration",
+        "HandMovementDirection",
+        "Handwriting",
+        "PhonemeSpectra",
+        "SelfRegulationSCP2",
+        "UWaveGestureLibrary",
+        "UniMiB-SHAR"
+      ],
+      "target_excluded": true
+    },
+    "EthanolConcentration": {
+      "fit_datasets": [
+        "Cricket",
+        "HandMovementDirection",
+        "Handwriting",
+        "PhonemeSpectra",
+        "SelfRegulationSCP2",
+        "UWaveGestureLibrary",
+        "UniMiB-SHAR"
+      ],
+      "target_excluded": true
+    },
+    "HandMovementDirection": {
+      "fit_datasets": [
+        "Cricket",
+        "EthanolConcentration",
+        "Handwriting",
+        "PhonemeSpectra",
+        "SelfRegulationSCP2",
+        "UWaveGestureLibrary",
+        "UniMiB-SHAR"
+      ],
+      "target_excluded": true
+    },
+    "Handwriting": {
+      "fit_datasets": [
+        "Cricket",
+        "EthanolConcentration",
+        "HandMovementDirection",
+        "PhonemeSpectra",
+        "SelfRegulationSCP2",
+        "UWaveGestureLibrary",
+        "UniMiB-SHAR"
+      ],
+      "target_excluded": true
+    },
+    "PhonemeSpectra": {
+      "fit_datasets": [
+        "Cricket",
+        "EthanolConcentration",
+        "HandMovementDirection",
+        "Handwriting",
+        "SelfRegulationSCP2",
+        "UWaveGestureLibrary",
+        "UniMiB-SHAR"
+      ],
+      "target_excluded": true
+    },
+    "UWaveGestureLibrary": {
+      "fit_datasets": [
+        "Cricket",
+        "EthanolConcentration",
+        "HandMovementDirection",
+        "Handwriting",
+        "PhonemeSpectra",
+        "SelfRegulationSCP2",
+        "UniMiB-SHAR"
+      ],
+      "target_excluded": true
+    },
+    "UniMiB-SHAR": {
+      "fit_datasets": [
+        "Cricket",
+        "EthanolConcentration",
+        "HandMovementDirection",
+        "Handwriting",
+        "PhonemeSpectra",
+        "SelfRegulationSCP2",
+        "UWaveGestureLibrary"
+      ],
+      "target_excluded": true
+    },
+    "all8": {
+      "fit_datasets": [
+        "Cricket",
+        "EthanolConcentration",
+        "HandMovementDirection",
+        "Handwriting",
+        "PhonemeSpectra",
+        "SelfRegulationSCP2",
+        "UWaveGestureLibrary",
+        "UniMiB-SHAR"
+      ],
+      "target_excluded": true
+    }
+  },
+  "skipped": [],
+  "n_skipped": 0,
+  "skipped_arms": []
+}

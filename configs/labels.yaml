@@ -139,7 +139,39 @@ pq:
   # --apply-delta` 回填后配对才放行（2c 同款 fail-fast）。
   # 例外只有 --smoke：冒烟 δ 是玩具口径（checkpoints 4/8/12），32 号拒绝回填本表，
   # 33 号 --smoke 因此改读产物目录那份。
-  delta_per_dataset_budget: {}
+  delta_per_dataset_budget:
+    Handwriting:
+      60: 0.110
+      120: 0.195
+      290: 0.160
+    UniMiB-SHAR:
+      60: 0.060
+      120: 0.085
+      290: 0.070
+    PhonemeSpectra:
+      60: 0.055
+      120: 0.070
+      290: 0.070
+    UWaveGestureLibrary:
+      60: 0.055
+      120: 0.120
+      290: 0.075
+    EthanolConcentration:
+      60: 0.065
+      120: 0.090
+      290: 0.060
+    Cricket:
+      60: 0.105
+      120: 0.175
+      290: 0.180
+    HandMovementDirection:
+      60: 0.190
+      120: 0.190
+      290: 0.135
+    SelfRegulationSCP2:
+      60: 0.065
+      120: 0.090
+      290: 0.100
   # 进化搜索（Algorithm 2；autocls/search/evolution.py 参数唯一真源）
   evolution:
     ks: 2000

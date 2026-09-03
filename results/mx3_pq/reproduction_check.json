@@ -1,0 +1,107 @@
+{
+  "budget": 290,
+  "ok": false,
+  "n_new_canonical": 945,
+  "sources": {
+    "source_pool_v2": {
+      "path": "/workspace/wp/CLS/results/source_pool_v2/rprime_cache.jsonl",
+      "n_old_rows": 283,
+      "n_matched": 175,
+      "buckets": {
+        "same_5090": {
+          "n": 175,
+          "n_within": 133,
+          "frac_within": 0.76,
+          "median_abs": 0.0,
+          "signed_mean": -0.0003010706789633247,
+          "max_abs": 0.29166666666666663,
+          "tol": 0.02,
+          "min_within": 0.9,
+          "max_median": 0.01,
+          "ok": false
+        }
+      },
+      "failures": [
+        "same_5090: 命中 0.760 / 中位 0.0000（门 ≥0.9 @0.02，中位 ≤0.01）"
+      ],
+      "ok": false,
+      "protocol_reading": {
+        "regime": "same_5090",
+        "n": 175,
+        "n_within": 133,
+        "frac_within": 0.76,
+        "median_abs": 0.0,
+        "signed_mean": -0.0003010706789633247,
+        "max_abs": 0.29166666666666663,
+        "tol": 0.02,
+        "min_within": 0.9,
+        "max_median": 0.01,
+        "ok": false
+      }
+    },
+    "wide_panel": {
+      "path": "/workspace/wp/CLS/results/wide_panel/rprime_cache.jsonl",
+      "n_old_rows": 320,
+      "n_matched": 180,
+      "buckets": {
+        "mixed": {
+          "n": 73,
+          "n_within": 69,
+          "frac_within": 0.9452054794520548,
+          "median_abs": 0.0,
+          "signed_mean": 0.002825447546166363,
+          "max_abs": 0.07189542483660133,
+          "tol": 0.03,
+          "min_within": 0.85,
+          "max_median": null,
+          "ok": true
+        },
+        "same_5090": {
+          "n": 107,
+          "n_within": 96,
+          "frac_within": 0.897196261682243,
+          "median_abs": 0.0,
+          "signed_mean": -0.00028742603831791456,
+          "max_abs": 0.13709677419354838,
+          "tol": 0.02,
+          "min_within": 0.9,
+          "max_median": 0.01,
+          "ok": false
+        }
+      },
+      "failures": [
+        "same_5090: 命中 0.897 / 中位 0.0000（门 ≥0.9 @0.02，中位 ≤0.01）"
+      ],
+      "ok": false,
+      "protocol_reading": {
+        "regime": "mixed",
+        "n": 180,
+        "n_within": 168,
+        "frac_within": 0.9333333333333333,
+        "median_abs": 0.0,
+        "signed_mean": 0.0009750171376118204,
+        "max_abs": 0.13709677419354838,
+        "tol": 0.03,
+        "min_within": 0.85,
+        "max_median": null,
+        "ok": true
+      }
+    }
+  },
+  "hard_failures": [
+    "source_pool_v2: same_5090: 命中 0.760 / 中位 0.0000（门 ≥0.9 @0.02，中位 ≤0.01）",
+    "wide_panel: same_5090: 命中 0.897 / 中位 0.0000（门 ≥0.9 @0.02，中位 ≤0.01）"
+  ],
+  "thresholds": {
+    "same_5090": {
+      "tol": 0.02,
+      "min_within": 0.9,
+      "max_median": 0.01
+    },
+    "mixed": {
+      "tol": 0.03,
+      "min_within": 0.85,
+      "max_median": null
+    }
+  }
+}

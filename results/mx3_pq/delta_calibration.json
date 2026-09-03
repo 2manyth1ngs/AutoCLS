@@ -1,0 +1,330 @@
+{
+  "Cricket": {
+    "60": {
+      "delta": 0.105,
+      "p95": 0.10000000000000009,
+      "quantum_floor": 0.07142857142857142,
+      "n_diffs": 60,
+      "diff_median": 0.0357142857142857,
+      "diff_max": 0.17857142857142855,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 5,
+      "delta_nd": 0.1,
+      "n_diffs_nd": 45
+    },
+    "120": {
+      "delta": 0.17500000000000002,
+      "p95": 0.17499999999999993,
+      "quantum_floor": 0.07142857142857142,
+      "n_diffs": 60,
+      "diff_median": 0.035714285714285754,
+      "diff_max": 0.28571428571428575,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 8,
+      "delta_nd": 0.075,
+      "n_diffs_nd": 36
+    },
+    "290": {
+      "delta": 0.18,
+      "p95": 0.17500000000000004,
+      "quantum_floor": 0.07142857142857142,
+      "n_diffs": 60,
+      "diff_median": 0.0357142857142857,
+      "diff_max": 0.28571428571428575,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 8,
+      "delta_nd": 0.075,
+      "n_diffs_nd": 36
+    }
+  },
+  "EthanolConcentration": {
+    "60": {
+      "delta": 0.065,
+      "p95": 0.06369426751592355,
+      "quantum_floor": 0.02564102564102564,
+      "n_diffs": 60,
+      "diff_median": 0.012820512820512886,
+      "diff_max": 0.08974358974358976,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 4,
+      "delta_nd": 0.075,
+      "n_diffs_nd": 48
+    },
+    "120": {
+      "delta": 0.09,
+      "p95": 0.08917197452229297,
+      "quantum_floor": 0.02564102564102564,
+      "n_diffs": 60,
+      "diff_median": 0.02564102564102566,
+      "diff_max": 0.1282051282051282,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 8,
+      "delta_nd": 0.065,
+      "n_diffs_nd": 36
+    },
+    "290": {
+      "delta": 0.06,
+      "p95": 0.0573248407643312,
+      "quantum_floor": 0.02564102564102564,
+      "n_diffs": 60,
+      "diff_median": 0.02547770700636942,
+      "diff_max": 0.0641025641025641,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 8,
+      "delta_nd": 0.06,
+      "n_diffs_nd": 36
+    }
+  },
+  "HandMovementDirection": {
+    "60": {
+      "delta": 0.19,
+      "p95": 0.1875,
+      "quantum_floor": 0.0625,
+      "n_diffs": 60,
+      "diff_median": 0.050724637681159424,
+      "diff_max": 0.28125,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 0,
+      "delta_nd": 0.19,
+      "n_diffs_nd": 60
+    },
+    "120": {
+      "delta": 0.19,
+      "p95": 0.1875,
+      "quantum_floor": 0.0625,
+      "n_diffs": 60,
+      "diff_median": 0.06748188405797101,
+      "diff_max": 0.21875,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 2,
+      "delta_nd": 0.19,
+      "n_diffs_nd": 54
+    },
+    "290": {
+      "delta": 0.135,
+      "p95": 0.13043478260869562,
+      "quantum_floor": 0.0625,
+      "n_diffs": 60,
+      "diff_median": 0.02898550724637683,
+      "diff_max": 0.1875,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 0,
+      "delta_nd": 0.135,
+      "n_diffs_nd": 60
+    }
+  },
+  "Handwriting": {
+    "60": {
+      "delta": 0.11,
+      "p95": 0.10967741935483866,
+      "quantum_floor": 0.016,
+      "n_diffs": 60,
+      "diff_median": 0.028903225806451605,
+      "diff_max": 0.16000000000000003,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 0,
+      "delta_nd": 0.11,
+      "n_diffs_nd": 60
+    },
+    "120": {
+      "delta": 0.195,
+      "p95": 0.1935483870967742,
+      "quantum_floor": 0.016,
+      "n_diffs": 60,
+      "diff_median": 0.025806451612903264,
+      "diff_max": 0.512,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 1,
+      "delta_nd": 0.085,
+      "n_diffs_nd": 57
+    },
+    "290": {
+      "delta": 0.16,
+      "p95": 0.15999999999999998,
+      "quantum_floor": 0.016,
+      "n_diffs": 60,
+      "diff_median": 0.0387096774193548,
+      "diff_max": 0.21935483870967742,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 4,
+      "delta_nd": 0.12,
+      "n_diffs_nd": 48
+    }
+  },
+  "PhonemeSpectra": {
+    "60": {
+      "delta": 0.055,
+      "p95": 0.052117263843648176,
+      "quantum_floor": 0.006514657980456026,
+      "n_diffs": 60,
+      "diff_median": 0.019543973941368087,
+      "diff_max": 0.08766233766233766,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 7,
+      "delta_nd": 0.055,
+      "n_diffs_nd": 39
+    },
+    "120": {
+      "delta": 0.07,
+      "p95": 0.06818181818181818,
+      "quantum_floor": 0.006514657980456026,
+      "n_diffs": 60,
+      "diff_median": 0.022727272727272707,
+      "diff_max": 0.10064935064935066,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 8,
+      "delta_nd": 0.07,
+      "n_diffs_nd": 36
+    },
+    "290": {
+      "delta": 0.07,
+      "p95": 0.06818181818181818,
+      "quantum_floor": 0.006514657980456026,
+      "n_diffs": 60,
+      "diff_median": 0.019512246710943787,
+      "diff_max": 0.11038961038961043,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 7,
+      "delta_nd": 0.075,
+      "n_diffs_nd": 39
+    }
+  },
+  "SelfRegulationSCP2": {
+    "60": {
+      "delta": 0.065,
+      "p95": 0.06140350877192985,
+      "quantum_floor": 0.017543859649122806,
+      "n_diffs": 60,
+      "diff_median": 0.02631578947368418,
+      "diff_max": 0.08771929824561403,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 8,
+      "delta_nd": 0.075,
+      "n_diffs_nd": 36
+    },
+    "120": {
+      "delta": 0.09,
+      "p95": 0.08771929824561409,
+      "quantum_floor": 0.017543859649122806,
+      "n_diffs": 60,
+      "diff_median": 0.03508771929824561,
+      "diff_max": 0.10526315789473689,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 10,
+      "delta_nd": 0.1,
+      "n_diffs_nd": 30
+    },
+    "290": {
+      "delta": 0.1,
+      "p95": 0.09649122807017546,
+      "quantum_floor": 0.017543859649122806,
+      "n_diffs": 60,
+      "diff_median": 0.02631578947368418,
+      "diff_max": 0.13157894736842113,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 7,
+      "delta_nd": 0.09,
+      "n_diffs_nd": 39
+    }
+  },
+  "UWaveGestureLibrary": {
+    "60": {
+      "delta": 0.055,
+      "p95": 0.0546875,
+      "quantum_floor": 0.017857142857142856,
+      "n_diffs": 60,
+      "diff_median": 0.0234375,
+      "diff_max": 0.1171875,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 3,
+      "delta_nd": 0.045,
+      "n_diffs_nd": 51
+    },
+    "120": {
+      "delta": 0.12,
+      "p95": 0.11607142857142849,
+      "quantum_floor": 0.017857142857142856,
+      "n_diffs": 60,
+      "diff_median": 0.026785714285714246,
+      "diff_max": 0.1640625,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 3,
+      "delta_nd": 0.12,
+      "n_diffs_nd": 51
+    },
+    "290": {
+      "delta": 0.075,
+      "p95": 0.0714285714285714,
+      "quantum_floor": 0.017857142857142856,
+      "n_diffs": 60,
+      "diff_median": 0.01785714285714285,
+      "diff_max": 0.2232142857142857,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 3,
+      "delta_nd": 0.055,
+      "n_diffs_nd": 51
+    }
+  },
+  "UniMiB-SHAR": {
+    "60": {
+      "delta": 0.06,
+      "p95": 0.05863192182410426,
+      "quantum_floor": 0.006514657980456026,
+      "n_diffs": 60,
+      "diff_median": 0.013029315960912058,
+      "diff_max": 0.1237785016286645,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 4,
+      "delta_nd": 0.035,
+      "n_diffs_nd": 48
+    },
+    "120": {
+      "delta": 0.085,
+      "p95": 0.08469055374592838,
+      "quantum_floor": 0.006514657980456026,
+      "n_diffs": 60,
+      "diff_median": 0.019543973941368087,
+      "diff_max": 0.18892508143322478,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 5,
+      "delta_nd": 0.05,
+      "n_diffs_nd": 45
+    },
+    "290": {
+      "delta": 0.07,
+      "p95": 0.06514657980456029,
+      "quantum_floor": 0.006514657980456026,
+      "n_diffs": 60,
+      "diff_median": 0.016286644951140072,
+      "diff_max": 0.12703583061889245,
+      "n_cells": 20,
+      "n_cells_incomplete": 0,
+      "n_cells_strict": 6,
+      "delta_nd": 0.05,
+      "n_diffs_nd": 42
+    }
+  }
+}

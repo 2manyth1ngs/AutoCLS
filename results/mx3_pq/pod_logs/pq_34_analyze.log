@@ -1,0 +1,12 @@
+
+===== MX-3-PQ 搜索判读 =====
+实例 126（跳过 0）｜平均 regret：tclsc1 0.0745 | tclsc3 0.0383 | clsb1 0.0785 | clsonly1 0.0810 | ggs 0.0680 | random1 0.1339 | random3 0.0518 | bottom 0.3937
+  D1（tclsc1 < random1）p=2.412e-15 n=126 → 过
+  D2（tclsc1 < clsb1）p=0.0955 n=126 → 不过
+  D3：5/21（满格 21）≥ 11 → 不过
+  avoid-worst（垫底四分位命中）：tclsc1 9/126 clsb1 14/126 clsonly1 13/126
+  成本@60: top3 1052s vs 目录直搜 5381s（外推 full 208058s，197.8×）
+  成本@120: top3 2104s vs 目录直搜 10732s（外推 full 207485s，98.6×）
+  成本@290: top3 5040s vs 目录直搜 25752s（外推 full 206016s，40.9×）
+  成本@pooled: top3 8196s vs 目录直搜 41865s（外推 full 621559s，75.8×）
+→ results/mx3_pq/search_analysis.json

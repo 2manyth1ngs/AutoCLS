@@ -1,0 +1,8 @@
+[32] outdir=results/mx3_pq 数据集=['Handwriting', 'UniMiB-SHAR', 'PhonemeSpectra', 'UWaveGestureLibrary', 'EthanolConcentration', 'Cricket', 'HandMovementDirection', 'SelfRegulationSCP2'] budgets=[60, 120, 290] device=cuda resume=False
+
+rprime_cache: 2835 行（主 2700/期望 2700，GGS 135/期望 135）| 唯一键 2835 | 重复 0 | null 无 error 0
+轨迹状态: done 945 / partial 0 / terminal 0 / missing 0（共 945 格）｜噪声毒轨迹 0
+noise_probe: 960 行 / 期望 960（缺 0，重复 0，null 无 error 0）
+device_name: ['NVIDIA GeForce RTX 5090']
+⚠️ oom_failures: 18 条 {'EthanolConcentration': 12, 'SelfRegulationSCP2': 6}
+✅ verify 通过

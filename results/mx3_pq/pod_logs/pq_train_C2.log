@@ -1,0 +1,9 @@
+缓存 2835 行 | 预算 (60, 120, 290) | 数据集 ['Cricket', 'EthanolConcentration', 'HandMovementDirection', 'Handwriting', 'PhonemeSpectra', 'SelfRegulationSCP2', 'UWaveGestureLibrary', 'UniMiB-SHAR'] | δ 源 configs/labels.yaml: pq.delta_per_dataset_budget（与 delta_calibration.json 对账一致） | device=cuda
+[Handwriting/wo_ts2vec_s0] 641.5s | normal 0.7220 | within Δ̄=+0.0000 sig 0/5 zero | cross Δ̄=+0.0048 sig 1/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[UniMiB-SHAR/wo_ts2vec_s0] 624.0s | normal 0.8028 | within Δ̄=-0.0006 sig 0/5 zero | cross Δ̄=+0.0147 sig 4/5 detectable | budget Δ̄=-0.0002 sig 0/5 zero
+[Cricket/wo_ts2vec_s0] 642.9s | normal 0.8405 | within Δ̄=+0.0000 sig 0/5 zero | cross Δ̄=+0.0019 sig 1/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[Handwriting/wo_shared_s0] 409.9s | normal 0.6253 | within Δ̄=-0.0004 sig 0/5 zero | cross Δ̄=+0.0007 sig 3/5 ambiguous | budget Δ̄=+0.0000 sig 0/5 zero
+[UniMiB-SHAR/wo_shared_s0] 390.6s | normal 0.5640 | within Δ̄=-0.0002 sig 0/5 zero | cross Δ̄=+0.0008 sig 0/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[Cricket/wo_shared_s0] 403.7s | normal 0.6155 | within Δ̄=+0.0000 sig 0/5 zero | cross Δ̄=+0.0013 sig 1/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[Handwriting/soft_s0] 2051.5s | normal 0.7089 | within Δ̄=+0.0004 sig 0/5 zero | cross Δ̄=+0.0371 sig 5/5 pass | budget Δ̄=+0.0000 sig 0/5 zero
+[UniMiB-SHAR/soft_s0] 2056.9s | normal 0.8223 | within Δ̄=+0.0000 sig 0/5 zero | cross Δ̄=+0.0487 sig 5/5 pass | budget Δ̄=+0.0000 sig 0/5 zero

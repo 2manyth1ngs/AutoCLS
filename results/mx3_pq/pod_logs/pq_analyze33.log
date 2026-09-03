@@ -1,0 +1,63 @@
+
+===== MX-3-PQ 比较器（7 折 A0）=====
+臂               折                         种子   normal      within       cross      budget
+autocts_style   Cricket                    0   0.8594        zero        pass        zero
+autocts_style   EthanolConcentration       0   0.4595        zero        zero        zero
+autocts_style   HandMovementDirection      0   0.6045        zero        zero        zero
+autocts_style   Handwriting                0   0.7293        zero        pass        zero
+autocts_style   PhonemeSpectra             0   0.7645        zero        pass        zero
+autocts_style   UWaveGestureLibrary        0   0.8823        zero        pass        zero
+autocts_style   UniMiB-SHAR                0   0.8017        zero        pass        zero
+cls_b           Cricket                    0   0.8461        None        None        zero
+cls_b           EthanolConcentration       0   0.4448        None        None        zero
+cls_b           HandMovementDirection      0   0.6091        None        None        zero
+cls_b           Handwriting                0   0.7297        None        None        zero
+cls_b           PhonemeSpectra             0   0.7585        None        None        zero
+cls_b           UWaveGestureLibrary        0   0.8577        None        None        zero
+cls_b           UniMiB-SHAR                0   0.7776        None        None        zero
+cls_only        Cricket                    0   0.8538        None        None        None
+cls_only        EthanolConcentration       0   0.4380        None        None        None
+cls_only        HandMovementDirection      0   0.5977        None        None        None
+cls_only        Handwriting                0   0.7300        None        None        None
+cls_only        PhonemeSpectra             0   0.7353        None        None        None
+cls_only        UWaveGestureLibrary        0   0.8538        None        None        None
+cls_only        UniMiB-SHAR                0   0.8051        None        None        None
+main            Cricket                    1   0.8444        zero  detectable        zero
+main            EthanolConcentration       0   0.4600        zero        zero        zero
+main            HandMovementDirection      1   0.6636        zero   ambiguous        zero
+main            Handwriting                1   0.7193        zero        zero        zero
+main            PhonemeSpectra             2   0.6562        zero        zero        zero
+main            UWaveGestureLibrary        2   0.8479  detectable  detectable        zero
+main            UniMiB-SHAR                0   0.7899        zero   ambiguous        zero
+main_s2         S2                         0   0.8165        zero   ambiguous        zero
+onehot_oracle   S2                         0   0.7932        None        zero        zero
+soft            Cricket                    0   0.8664        zero        pass        zero
+soft            Handwriting                0   0.7089        zero        pass        zero
+soft            UniMiB-SHAR                0   0.8223        zero        pass        zero
+wo_settf        Cricket                    0   0.8786        zero        pass        zero
+wo_settf        EthanolConcentration       0   0.4527        zero        zero        zero
+wo_settf        HandMovementDirection      0   0.6068        zero        zero        zero
+wo_settf        Handwriting                0   0.7206        zero        pass        zero
+wo_settf        PhonemeSpectra             0   0.6682        zero        zero        zero
+wo_settf        UWaveGestureLibrary        0   0.8607        zero  detectable        zero
+wo_settf        UniMiB-SHAR                0   0.7931        zero        pass        zero
+wo_shared       Cricket                    0   0.6155        zero        zero        zero
+wo_shared       Handwriting                0   0.6253        zero   ambiguous        zero
+wo_shared       UniMiB-SHAR                0   0.5640        zero        zero        zero
+wo_ts2vec       Cricket                    0   0.8405        zero        zero        zero
+wo_ts2vec       Handwriting                0   0.7220        zero        zero        zero
+wo_ts2vec       UniMiB-SHAR                0   0.8028        zero  detectable        zero
+
+pooled cross Δ p=0.2890625 | Q3(A0−A6) Δ̄=-0.00601535259510122 p=0.46875 | A1−A0 Δ̄=0.017125872562019084 p=0.1484375
+[判读] → B-DEAD  {'cross_pass': 0, 'cross_detectable_or_better': 2, 'cross_zero': 3, 'budget_pass': 0, 'budget_zero': 7, 'n_folds': 7}
+  P1 A0 pooled normal acc ∈ [0.70, 0.85]: hit=True value=0.7243603187919463
+  P10 A4 比 A0 低 ≥0.03 于 ≥5/7 覆盖折: hit=False value=3
+  P2 A0 cross 档位 zero 于 ≥5/7 折: hit=False value=3
+  P3 A0 budget 档位 pass 于 ≥5/7 折: hit=False value=0
+  P4 Q3：A0 − A6 ≥ 0.01 且 p<0.05: hit=False value=[-0.00601535259510122, 0.46875]
+  P5 A1 cross ≥ detectable 于 ≥4/7 折: hit=True value=5
+  P6 A8 cross pass（S2）: hit=False value=zero
+  P7 D1/D2（端到端 regret）: hit=None value=None
+  P8 D3（进化 top-3）: hit=None value=None
+  P9 δ@290 ≥ δ@120 于 ≥6/8 数据集: hit=False value=3
+→ results/mx3_pq/analysis.json

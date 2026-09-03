@@ -1,0 +1,34 @@
+== 档 0：tasks.json / cls_catalog.json（含定义漂移闸）
+[32] outdir=results/mx3_pq 数据集=['Handwriting', 'UniMiB-SHAR', 'PhonemeSpectra', 'UWaveGestureLibrary', 'EthanolConcentration', 'Cricket', 'HandMovementDirection', 'SelfRegulationSCP2'] budgets=[60, 120, 290] device=cuda resume=False
+[Handwriting] 定义对账通过（2 个切片 classes 与既有落盘一致）
+[UniMiB-SHAR] 定义对账通过（2 个切片 classes 与既有落盘一致）
+⚠️ [PhonemeSpectra] 无参照定义（阶段1/工作点落盘未找到）→ 跳过漂移对账
+[UWaveGestureLibrary] 定义对账通过（2 个切片 classes 与既有落盘一致）
+[EthanolConcentration] 定义对账通过（2 个切片 classes 与既有落盘一致）
+⚠️ [Cricket] 无参照定义（阶段1/工作点落盘未找到）→ 跳过漂移对账
+[HandMovementDirection] 定义对账通过（2 个切片 classes 与既有落盘一致）
+[SelfRegulationSCP2] 定义对账通过（2 个切片 classes 与既有落盘一致）
+→ results/mx3_pq/tasks.json（本次 45 切片，累计 45）
+→ results/mx3_pq/cls_catalog.json（shared 10 / random 450 切片累计 / ggs 1）
+== 档 1：短序列端 5 并发
+  launched Handwriting pid=40308
+  launched UniMiB-SHAR pid=40309
+  launched PhonemeSpectra pid=40310
+  launched UWaveGestureLibrary pid=40311
+  launched Cricket pid=40312
+  ✅ Handwriting (pid 40308) 退出 0
+  ✅ UniMiB-SHAR (pid 40309) 退出 0
+  ✅ PhonemeSpectra (pid 40310) 退出 0
+  ✅ UWaveGestureLibrary (pid 40311) 退出 0
+  ✅ Cricket (pid 40312) 退出 0
+  档 1 全部退出 0
+== 档 2：HandMovementDirection
+  launched HandMovementDirection pid=82952
+  ✅ HandMovementDirection (pid 82952) 退出 0
+  档 2 全部退出 0
+== 档 3：长序列端串行 Ethanol → SCP2
+  serial EthanolConcentration
+  serial SelfRegulationSCP2
+name, memory.used [MiB], utilization.gpu [%]
+NVIDIA GeForce RTX 5090, 2 MiB, 0 %
+== run done → 收尾请跑 bash scripts/pq_pod/finish.sh

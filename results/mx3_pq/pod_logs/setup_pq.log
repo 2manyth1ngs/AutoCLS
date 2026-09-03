@@ -1,0 +1,26 @@
+== torch fingerprint (before)
+torch 2.8.0+cu128 cuda 12.8 arch sm_120
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ModuleNotFoundError: No module named 'scipy'
+
+Successfully installed aeon-1.3.0 deprecated-1.3.1 iniconfig-2.3.0 joblib-1.5.3 llvmlite-0.44.0 numba-0.61.2 pandas-2.3.3 pluggy-1.6.0 pytest-9.1.1 pytz-2026.3.post1 scikit-learn-1.7.2 scipy-1.15.3 threadpoolctl-3.6.0 tzdata-2026.3 wrapt-2.4.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+== torch fingerprint (after)
+torch 2.8.0+cu128 cuda 12.8 arch sm_120
+== md5 check: ALL MATCH
+........................................................................ [ 81%]
+.................................................                        [100%]
+265 passed in 25.80s
+[32] outdir=results/mx3_pq 数据集=['Handwriting', 'UniMiB-SHAR', 'PhonemeSpectra', 'UWaveGestureLibrary', 'EthanolConcentration', 'Cricket', 'HandMovementDirection', 'SelfRegulationSCP2'] budgets=[60, 120, 290] device=cuda resume=False
+[Handwriting] 定义对账通过（2 个切片 classes 与既有落盘一致）
+[UniMiB-SHAR] 定义对账通过（2 个切片 classes 与既有落盘一致）
+⚠️ [PhonemeSpectra] 无参照定义（阶段1/工作点落盘未找到）→ 跳过漂移对账
+[UWaveGestureLibrary] 定义对账通过（2 个切片 classes 与既有落盘一致）
+[EthanolConcentration] 定义对账通过（2 个切片 classes 与既有落盘一致）
+⚠️ [Cricket] 无参照定义（阶段1/工作点落盘未找到）→ 跳过漂移对账
+[HandMovementDirection] 定义对账通过（2 个切片 classes 与既有落盘一致）
+[SelfRegulationSCP2] 定义对账通过（2 个切片 classes 与既有落盘一致）
+→ results/mx3_pq/tasks.json（本次 45 切片，累计 45）
+→ results/mx3_pq/cls_catalog.json（shared 10 / random 450 切片累计 / ggs 1）
+== setup done

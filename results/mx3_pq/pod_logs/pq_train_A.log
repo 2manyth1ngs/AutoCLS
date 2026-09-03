@@ -1,0 +1,22 @@
+缓存 2835 行 | 预算 (60, 120, 290) | 数据集 ['Cricket', 'EthanolConcentration', 'HandMovementDirection', 'Handwriting', 'PhonemeSpectra', 'SelfRegulationSCP2', 'UWaveGestureLibrary', 'UniMiB-SHAR'] | δ 源 configs/labels.yaml: pq.delta_per_dataset_budget（与 delta_calibration.json 对账一致） | device=cuda
+[Handwriting/main_s0] 666.2s | normal 0.7058 | within Δ̄=-0.0096 sig 0/5 zero | cross Δ̄=-0.0028 sig 0/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[Handwriting/main_s1] 637.1s | normal 0.7193 | within Δ̄=+0.0001 sig 0/5 zero | cross Δ̄=-0.0016 sig 0/5 zero | budget Δ̄=-0.0002 sig 0/5 zero
+[Handwriting/main_s2] 638.3s | normal 0.6995 | within Δ̄=+0.0003 sig 0/5 zero | cross Δ̄=+0.0127 sig 2/5 ambiguous | budget Δ̄=+0.0003 sig 0/5 zero
+[UniMiB-SHAR/main_s0] 620.8s | normal 0.7899 | within Δ̄=+0.0001 sig 0/5 zero | cross Δ̄=+0.0048 sig 2/5 ambiguous | budget Δ̄=+0.0000 sig 0/5 zero
+[UniMiB-SHAR/main_s1] 623.8s | normal 0.8220 | within Δ̄=-0.0006 sig 0/5 zero | cross Δ̄=+0.0100 sig 2/5 ambiguous | budget Δ̄=+0.0000 sig 0/5 zero
+[UniMiB-SHAR/main_s2] 620.1s | normal 0.8002 | within Δ̄=+0.0002 sig 0/5 zero | cross Δ̄=+0.0191 sig 3/5 detectable | budget Δ̄=+0.0000 sig 0/5 zero
+[PhonemeSpectra/main_s0] 594.9s | normal 0.5938 | within Δ̄=-0.0265 sig 0/5 zero | cross Δ̄=-0.1471 sig 0/5 zero | budget Δ̄=-0.0002 sig 0/5 zero
+[PhonemeSpectra/main_s1] 425.2s | normal 0.6723 | within Δ̄=+0.0005 sig 0/5 zero | cross Δ̄=-0.0732 sig 0/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[PhonemeSpectra/main_s2] 319.9s | normal 0.6562 | within Δ̄=-0.0047 sig 0/5 zero | cross Δ̄=-0.0881 sig 0/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[UWaveGestureLibrary/main_s0] 340.8s | normal 0.7993 | within Δ̄=+0.0024 sig 1/5 zero | cross Δ̄=-0.0489 sig 0/5 zero | budget Δ̄=-0.0002 sig 0/5 zero
+[UWaveGestureLibrary/main_s1] 628.5s | normal 0.8311 | within Δ̄=+0.0264 sig 5/5 pass | cross Δ̄=+0.0062 sig 3/5 detectable | budget Δ̄=+0.0003 sig 0/5 zero
+[UWaveGestureLibrary/main_s2] 629.7s | normal 0.8479 | within Δ̄=+0.0174 sig 5/5 detectable | cross Δ̄=+0.0150 sig 3/5 detectable | budget Δ̄=-0.0004 sig 0/5 zero
+[EthanolConcentration/main_s0] 683.5s | normal 0.4600 | within Δ̄=+0.0000 sig 0/5 zero | cross Δ̄=-0.0034 sig 0/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[EthanolConcentration/main_s1] 685.2s | normal 0.4727 | within Δ̄=+0.0000 sig 0/5 zero | cross Δ̄=+0.0020 sig 0/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[EthanolConcentration/main_s2] 670.2s | normal 0.4485 | within Δ̄=-0.0013 sig 0/5 zero | cross Δ̄=-0.0052 sig 0/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[Cricket/main_s0] 641.5s | normal 0.8517 | within Δ̄=+0.0000 sig 0/5 zero | cross Δ̄=+0.0265 sig 4/5 pass | budget Δ̄=+0.0000 sig 0/5 zero
+[Cricket/main_s1] 640.8s | normal 0.8444 | within Δ̄=+0.0000 sig 0/5 zero | cross Δ̄=+0.0110 sig 4/5 detectable | budget Δ̄=+0.0000 sig 0/5 zero
+[Cricket/main_s2] 627.8s | normal 0.8496 | within Δ̄=+0.0001 sig 0/5 zero | cross Δ̄=+0.0122 sig 3/5 detectable | budget Δ̄=+0.0005 sig 0/5 zero
+[HandMovementDirection/main_s0] 787.9s | normal 0.6182 | within Δ̄=+0.0000 sig 0/5 zero | cross Δ̄=+0.0018 sig 0/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[HandMovementDirection/main_s1] 787.5s | normal 0.6636 | within Δ̄=+0.0000 sig 0/5 zero | cross Δ̄=+0.0109 sig 0/5 ambiguous | budget Δ̄=+0.0000 sig 0/5 zero
+[HandMovementDirection/main_s2] 774.3s | normal 0.6864 | within Δ̄=+0.0000 sig 0/5 zero | cross Δ̄=-0.0005 sig 0/5 zero | budget Δ̄=+0.0000 sig 0/5 zero

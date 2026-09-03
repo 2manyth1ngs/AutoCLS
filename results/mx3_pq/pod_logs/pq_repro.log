@@ -1,0 +1,9 @@
+[32] outdir=results/mx3_pq 数据集=['Handwriting', 'UniMiB-SHAR', 'PhonemeSpectra', 'UWaveGestureLibrary', 'EthanolConcentration', 'Cricket', 'HandMovementDirection', 'SelfRegulationSCP2'] budgets=[60, 120, 290] device=cuda resume=False
+
+复现校验（@290，PROTOCOL §8）：本次 canonical 行 945
+  ❌ [source_pool_v2/same_5090] n=175 命中 133/175=0.760（≥0.90 @tol 0.02）| 中位 |Δ|=0.0000（≤0.01） | 符号均值 -0.0003 | 最大 |Δ|=0.2917
+  ✅ [wide_panel/mixed] n=73 命中 69/73=0.945（≥0.85 @tol 0.03）| 中位 |Δ|=0.0000 | 符号均值 +0.0028 | 最大 |Δ|=0.0719
+  ❌ [wide_panel/same_5090] n=107 命中 96/107=0.897（≥0.90 @tol 0.02）| 中位 |Δ|=0.0000（≤0.01） | 符号均值 -0.0003 | 最大 |Δ|=0.1371
+❌ 复现校验失败: source_pool_v2: same_5090: 命中 0.760 / 中位 0.0000（门 ≥0.9 @0.02，中位 ≤0.01）；wide_panel: same_5090: 命中 0.897 / 中位 0.0000（门 ≥0.9 @0.02，中位 ≤0.01）
+→ results/mx3_pq/reproduction_check.json
+   ⚠️ --allow-reproduction-breach：超差已被显式放行，报表须声明本轮 R' 与历史口径的偏差

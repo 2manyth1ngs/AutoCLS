@@ -1,0 +1,24 @@
+  [Handwriting] TS2Vec fit (17164, 1152, 1) 21s → results/mx3_pq/folds/Handwriting/shared_ts2vec.pt
+[Handwriting] 特征 45 + 未训练 45 齐
+  [UniMiB-SHAR] TS2Vec fit (16068, 1152, 1) 18s → results/mx3_pq/folds/UniMiB-SHAR/shared_ts2vec.pt
+[UniMiB-SHAR] 特征 45 + 未训练 45 齐
+  [PhonemeSpectra] TS2Vec fit (16068, 1152, 1) 18s → results/mx3_pq/folds/PhonemeSpectra/shared_ts2vec.pt
+[PhonemeSpectra] 特征 45 + 未训练 45 齐
+  [UWaveGestureLibrary] TS2Vec fit (18844, 1152, 1) 18s → results/mx3_pq/folds/UWaveGestureLibrary/shared_ts2vec.pt
+[UWaveGestureLibrary] 特征 45 + 未训练 45 齐
+  [EthanolConcentration] TS2Vec fit (18592, 1152, 1) 18s → results/mx3_pq/folds/EthanolConcentration/shared_ts2vec.pt
+[EthanolConcentration] 特征 45 + 未训练 45 齐
+  [Cricket] TS2Vec fit (19084, 1152, 1) 19s → results/mx3_pq/folds/Cricket/shared_ts2vec.pt
+[Cricket] 特征 45 + 未训练 45 齐
+  [HandMovementDirection] TS2Vec fit (17824, 1152, 1) 20s → results/mx3_pq/folds/HandMovementDirection/shared_ts2vec.pt
+[HandMovementDirection] 特征 45 + 未训练 45 齐
+  [all8] TS2Vec fit (20164, 1152, 1) 20s → results/mx3_pq/folds/all8/shared_ts2vec.pt
+[all8] 特征 45 + 未训练 45 齐
+[Handwriting] per-dataset TS2Vec + 6 切片特征（non-compliant 副臂）
+[UniMiB-SHAR] per-dataset TS2Vec + 6 切片特征（non-compliant 副臂）
+[PhonemeSpectra] per-dataset TS2Vec + 6 切片特征（non-compliant 副臂）
+[UWaveGestureLibrary] per-dataset TS2Vec + 6 切片特征（non-compliant 副臂）
+[EthanolConcentration] per-dataset TS2Vec + 6 切片特征（non-compliant 副臂）
+[Cricket] per-dataset TS2Vec + 6 切片特征（non-compliant 副臂）
+[HandMovementDirection] per-dataset TS2Vec + 6 切片特征（non-compliant 副臂）
+[SelfRegulationSCP2] per-dataset TS2Vec + 3 切片特征（non-compliant 副臂）

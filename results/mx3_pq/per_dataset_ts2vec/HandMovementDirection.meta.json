@@ -1,0 +1,14 @@
+{
+  "protocol": "autocts_style_per_dataset",
+  "fit_datasets": [
+    "HandMovementDirection"
+  ],
+  "iron_law_6_compliant": false,
+  "n_instances": 2340,
+  "t_max": 400,
+  "n_iters": 600,
+  "batch_size": 32,
+  "embed_seed": 0,
+  "device_name": "NVIDIA GeForce RTX 5090",
+  "seconds": 8.8
+}
