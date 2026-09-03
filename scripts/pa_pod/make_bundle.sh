@@ -11,7 +11,7 @@ DATA="data/uea_cache/Handwriting data/uea_cache/UWaveGestureLibrary data/uea_cac
 data/uea_cache/EthanolConcentration data/uea_cache/Cricket data/uea_cache/HandMovementDirection \
 results/mx3_pq/rankings.json results/mx3_pq/cls_catalog.json \
 results/protocol_alignment/REPORT.md results/protocol_alignment/picks.json"
-tar -czf "$B/data_pa.tar.gz" $DATA
+tar --force-local -czf "$B/data_pa.tar.gz" $DATA
 # 文本清单：按 LF 归一化 md5；数据清单：.ts 原样 md5、json/md 按 LF
 : > "$B/md5_text_local.txt"
 git ls-files autocls scripts configs tests | while read -r f; do
