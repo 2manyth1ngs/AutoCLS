@@ -17,3 +17,6 @@ autocls/data/HAR/
 # 协议探针的 max-pool 特征 dump（可由 scripts/protocol_probe.py --dump 按种子重建，数百 MB，不入库）
 results/protocol_probe/feats/
 results/protocol_probe/*.err
+
+# WP3 本地冒烟产物（可再生）
+results/mx4_deploy/smoke/
