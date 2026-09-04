@@ -1,0 +1,158 @@
+{
+ "protocol": "results/mx4_deploy_har/PROTOCOL.md",
+ "gates_kind": "H",
+ "n_targets": 1,
+ "n_targets_with_3_seeds": 1,
+ "per_target": {
+  "HAR": {
+   "paper_ts2vec": 0.93,
+   "paper_median": 0.93,
+   "paper_reference": {
+    "TS2Vec": 0.93,
+    "AutoCL": 0.963,
+    "GGS": 0.937,
+    "InfoTS": 0.93,
+    "TS-TCC": 0.904,
+    "CPC": 0.839
+   },
+   "budgets": [
+    580,
+    1160,
+    2320
+   ],
+   "n_candidates": 21,
+   "champion_key": "4f7d413581f6",
+   "champion_seed0": 0.9395995928062436,
+   "champion_mean": 0.9351883271123177,
+   "champion_in_shared": true,
+   "champion_is_ggs": false,
+   "prior3_key": "cffb55035c3a",
+   "prior3_seed0": 0.9256871394638616,
+   "prior3_mean": 0.9178825924669155,
+   "sh_seed0": 0.9395995928062436,
+   "catalog_max": 0.9395995928062436,
+   "catalog_max_key": "4f7d413581f6",
+   "ggs_seed0_here": 0.9382422802850356,
+   "pa_reference": {
+    "ggs": null,
+    "ts2vec_equiv": null,
+    "zs_top1": null,
+    "ggs_seed0": null,
+    "zs_top3_best": null
+   },
+   "ggs_consistency_abs_delta": null,
+   "spearman_slice_vs_official": null,
+   "spearman_rank25_vs_100": 0.8584415584415584,
+   "arms": {
+    "oracle": 0.9395995928062436,
+    "prior1": 0.9134713267729895,
+    "prior3": 0.9256871394638616,
+    "hybrid1": 0.9134713267729895,
+    "hybrid3": 0.9256871394638616,
+    "random1": 0.8627821674988283,
+    "random3": 0.9264851984049027,
+    "bottom": 0.37258228707159824,
+    "SH6-3-3_prior": 0.9395995928062436,
+    "SH6-3-1_prior": 0.9382422802850356,
+    "SH6-3_prior": 0.9395995928062436,
+    "SH6-3-3_hybrid": 0.9395995928062436,
+    "SH6-3-1_hybrid": 0.9382422802850356,
+    "SH6-3_hybrid": 0.9395995928062436,
+    "SH6-3-3_random": 0.9326942653545979,
+    "all@580->top1": 0.9395995928062436,
+    "all@580->top3": 0.9395995928062436
+   },
+   "regret": {
+    "oracle": 0.0,
+    "prior1": 0.026128266033254133,
+    "prior3": 0.013912453342382003,
+    "hybrid1": 0.026128266033254133,
+    "hybrid3": 0.013912453342382003,
+    "random1": 0.07681742530741531,
+    "random3": 0.013114394401340879,
+    "bottom": 0.5670173057346454,
+    "SH6-3-3_prior": 0.0,
+    "SH6-3-1_prior": 0.001357312521207965,
+    "SH6-3_prior": 0.0,
+    "SH6-3-3_hybrid": 0.0,
+    "SH6-3-1_hybrid": 0.001357312521207965,
+    "SH6-3_hybrid": 0.0,
+    "SH6-3-3_random": 0.0069053274516457375,
+    "all@580->top1": 0.0,
+    "all@580->top3": 0.0
+   },
+   "cost_iters": {
+    "prior1": 2320,
+    "prior3": 6960,
+    "hybrid1": 2320,
+    "hybrid3": 6960,
+    "random1": 2320,
+    "random3": 6960,
+    "catalog_direct": 48720,
+    "SH6-3-3_prior": 8700,
+    "SH6-3-1_prior": 6380,
+    "SH6-3_prior": 10440,
+    "SH6-3-3_hybrid": 8700,
+    "SH6-3-1_hybrid": 6380,
+    "SH6-3_hybrid": 10440,
+    "SH6-3-3_random": 8700,
+    "all@580->top1": 13920,
+    "all@580->top3": 17400
+   },
+   "cost_seconds": {
+    "prior1": 729.0999999999999,
+    "prior3": 1708.8999999999999,
+    "hybrid1": 729.0999999999999,
+    "hybrid3": 1708.8999999999999,
+    "random1": 364.7190476190476,
+    "random3": 1094.1571428571428,
+    "catalog_direct": 7659.099999999999,
+    "SH6-3-3_prior": 1875.3,
+    "SH6-3-1_prior": 1199.1,
+    "SH6-3_prior": 2051.7,
+    "SH6-3-3_hybrid": 1875.3,
+    "SH6-3-1_hybrid": 1199.1,
+    "SH6-3_hybrid": 2051.7,
+    "all@580->top1": 2130.5,
+    "all@580->top3": 3008.5
+   },
+   "picks": {
+    "prior1": "9092e36eefe1",
+    "prior3": "cffb55035c3a",
+    "hybrid1": "9092e36eefe1",
+    "hybrid3": "cffb55035c3a",
+    "SH6-3-3_prior": "4f7d413581f6",
+    "SH6-3-1_prior": "c92058f26c1d",
+    "SH6-3_prior": "4f7d413581f6",
+    "SH6-3-3_hybrid": "4f7d413581f6",
+    "SH6-3-1_hybrid": "c92058f26c1d",
+    "SH6-3_hybrid": "4f7d413581f6",
+    "all@580->top1": "4f7d413581f6",
+    "all@580->top3": "4f7d413581f6"
+   },
+   "champion_f1_seed0": 0.9404064852532142,
+   "champion_f1_mean": 0.9360316784918027,
+   "ggs_f1_seed0": 0.9387661805222803
+  }
+ },
+ "gates": {
+  "H1": {
+   "value": 0.9351883271123177,
+   "line": 0.9298,
+   "pass": true
+  },
+  "H2": {
+   "value": 0.9351883271123177,
+   "line": 0.93,
+   "pass": true
+  },
+  "H3": {
+   "sh": 0.9395995928062436,
+   "prior3": 0.9256871394638616,
+   "pass": true
+  }
+ },
+ "verdict": "HAR-WIN",
+ "verdict_note": "主门用 3 种子均值",
+ "predictions": null
+}

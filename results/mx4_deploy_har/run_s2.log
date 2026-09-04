@@ -1,0 +1,7 @@
+[data] HAR: train=(7352, 128, 9) test=(2947, 128, 9) classes=6
+[S2] 计划 4 格，已有 0，待跑 4
+[S2 1/4] HAR/final_SH6-3-3_prior/4f7d4135 s1 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.934 0.926 0.929] (380.1s+9.0s)
+[S2 2/4] HAR/final_SH6-3-3_prior/4f7d4135 s2 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.929 0.927 0.937] (373.6s+8.5s)
+[S2 3/4] HAR/final_prior3/cffb5503 s1 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.932 0.927 0.919] (469.2s+9.4s)
+[S2 4/4] HAR/final_prior3/cffb5503 s2 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.918 0.919 0.909] (529.1s+10.7s)
+[S2] 收官
