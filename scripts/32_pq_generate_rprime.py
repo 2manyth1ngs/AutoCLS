@@ -236,7 +236,7 @@ def make_row_for(iters: int, rec: dict, *, dataset: str, task, cls_key: str,
             **rec,
             "r_prime": float(rp) if finite else None,
             **({"twin_of": twin_of} if twin_of is not None else {}),
-            "cls": dataclasses.asdict(cls_cfg)}
+            "cls": cls_cfg.to_dict()}      # legacy 行与历史行逐键相同；孪生行多 input_mask
 
 
 def row_builder(*, dataset: str, task, cls_key: str, origin: str, cls_cfg: CLS,
@@ -544,16 +544,16 @@ def stage_tasks(outdir: Path, datasets: dict, plan: Sequence[Cell]) -> None:
     seen = set()
     for c in plan:
         if c.twin_of is not None:      # 孪生格单列（MX-4 WP6），不混进 shared/random/ggs
-            twins_cat.append({"cls_key": c.cls_key, "cls": dataclasses.asdict(c.cls),
+            twins_cat.append({"cls_key": c.cls_key, "cls": c.cls.to_dict(),
                               "twin_of": c.twin_of, "origin": c.origin, "slice_id": c.slice_id})
         elif c.origin == pq.ORIGIN_SHARED and c.cls_key not in seen:
             seen.add(c.cls_key)
-            shared.append({"cls_key": c.cls_key, "cls": dataclasses.asdict(c.cls)})
+            shared.append({"cls_key": c.cls_key, "cls": c.cls.to_dict()})
         elif c.origin == pq.ORIGIN_RANDOM:
             per_slice.setdefault(c.slice_id, []).append(
-                {"cls_key": c.cls_key, "cls": dataclasses.asdict(c.cls)})
+                {"cls_key": c.cls_key, "cls": c.cls.to_dict()})
         elif c.origin == ORIGIN_GGS and ggs is None:
-            ggs = {"cls_key": c.cls_key, "cls": dataclasses.asdict(c.cls)}
+            ggs = {"cls_key": c.cls_key, "cls": c.cls.to_dict()}
     cat_path = outdir / "cls_catalog.json"
     payload = {"shared": shared, "random": per_slice, "ggs": ggs}
     if twins_cat:

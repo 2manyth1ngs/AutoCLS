@@ -213,6 +213,17 @@ def test_key_payload_drops_default_extension_only(space):
     assert set(p2) == set(space.all_field_names)
 
 
+def test_to_dict_is_legacy_stable_serialization(space):
+    # 落盘序列化 = key_payload：legacy 配置与历史产物（19 键）逐字节相同，孪生多出 input_mask
+    c = space.sample_random(np.random.default_rng(10))
+    d = c.to_dict()
+    assert d == {k: v for k, v in dataclasses.asdict(c).items() if k != "input_mask"}
+    assert "input_mask" not in d and len(d) == 19
+    t = twin(c, input_mask="binomial")
+    assert t.to_dict() == dataclasses.asdict(t) and len(t.to_dict()) == 20
+    assert CLS(**d) == c and CLS(**t.to_dict()) == t
+
+
 def test_encoder_overrides_from_yaml_kwarg(space):
     c = space.sample_random(np.random.default_rng(9))
     assert space.encoder_overrides(c) == {}

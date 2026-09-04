@@ -246,7 +246,7 @@ def nominate(space: CLSSpace, enc: CLSEncoder, rows: Sequence[dict], *, exclude_
     Xf = np.hstack([Xc[ok], np.ones((len(ok), 1))])          # 预算特征 = 1.0（b_final）
     pred, _ = model.predict(Xf)
     order = sorted(range(len(ok)), key=lambda j: (-float(pred[j]), keys[ok[j]]))[:int(n)]
-    return [{"cls_key": keys[ok[j]], "cls": asdict(cands[keys[ok[j]]]),
+    return [{"cls_key": keys[ok[j]], "cls": cands[keys[ok[j]]].to_dict(),
              "pred_z": float(pred[j]), "hamming": int(ham[ok[j]])} for j in order]
 
 
@@ -477,7 +477,7 @@ def cmd_nominate(outdir: Path, *, datasets: Sequence[str] = TARGETS, all_source:
         if isinstance(catalog.get("ggs"), dict) and "cls_key" in catalog["ggs"] else None
     if ggs_entry is None:
         g = _g35._m1.GGS
-        ggs_entry = {"cls_key": cls_key(g), "cls": asdict(g)}
+        ggs_entry = {"cls_key": cls_key(g), "cls": g.to_dict()}
     out = {}
     for i, d in enumerate(datasets):
         exclude_ds = None if (all_source or d not in pool_datasets) else d

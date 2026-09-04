@@ -425,7 +425,7 @@ class TestTwinPlan:
         r = g32.make_row_for(60, rec, dataset="Cricket", task=task, cls_key="k",
                              origin="shared", cls_cfg=cls_a, weight_seed=7)
         assert "twin_of" not in r
-        assert r["cls"]["input_mask"] == "none"
+        assert "input_mask" not in r["cls"]          # legacy 行的 cls 与历史行逐键相同（to_dict）
         r2 = g32.make_row_for(60, rec, dataset="Cricket", task=task, cls_key="k2",
                               origin="shared", cls_cfg=twin(cls_a, input_mask="binomial"),
                               weight_seed=7, twin_of="k")

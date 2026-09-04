@@ -227,7 +227,7 @@ def test_s1_worklist_default_bitwise_unchanged():
     again = g39.s1_worklist(_PROTOS, _SIZES, _cands(), twins=None)
     assert base == again
     assert all("twin_of" not in c and c["options"]["input_mask"] == "none"
-               and c["cls"]["input_mask"] == "none" for c in base)
+               and "input_mask" not in c["cls"] for c in base)      # legacy 序列化不带扩展字段（与 WP3 行同键）
 
 
 def test_s1_worklist_twins_count_options_and_cls_agree():

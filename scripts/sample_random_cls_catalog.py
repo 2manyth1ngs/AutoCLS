@@ -46,7 +46,7 @@ def build_catalog(space: CLSSpace, *, n: int, seed: int) -> dict:
                  "har_rank 字段刻意不存在"),
         "n": n,
         "seed": seed,
-        "cls": [{"cls_key": cls_key(c), "cls": asdict(c)} for c in sampled],
+        "cls": [{"cls_key": cls_key(c), "cls": c.to_dict()} for c in sampled],   # legacy 稳定序列化（已提交目录可再生成比对）
     }
 
 

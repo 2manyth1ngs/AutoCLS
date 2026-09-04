@@ -58,6 +58,12 @@ class CLS:
     # autocls/encoders/dilated_cnn.py 的 input_mask 开关）。默认 "none" = 旧行为。
     input_mask: str = "none"
 
+    def to_dict(self) -> dict[str, Any]:
+        """落盘序列化 = ``key_payload``：扩展字段取默认值时省略——legacy 配置写出的 dict 与
+        历史产物逐键相同（目录 / 缓存行 / 候选表可再生成比对），孪生多出扩展字段。
+        读回一律 ``CLS(**d)``（缺席的扩展字段取默认值）。"""
+        return key_payload(self)
+
 
 def extension_defaults() -> dict[str, Any]:
     """dataclass 里带默认值的字段 = 扩展字段 → {名: 默认值}（不硬编码名字）。"""

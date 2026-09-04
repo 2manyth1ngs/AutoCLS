@@ -328,7 +328,7 @@ def _cell(stage: str, dataset: str, protocol_name: str, protocol: dict, sizes: d
     return {"key": cache_key(dataset, protocol_name, cls_key_, seed, opts, it, arm=arm_names[0]),
             "stage": stage, "dataset": dataset, "protocol": protocol_name,
             "arm": arm_names[0], "arm_names": list(arm_names), "cls_key": cls_key_,
-            "cls": asdict(cls) if cls is not None else None, "space_legal": bool(space_legal),
+            "cls": cls.to_dict() if cls is not None else None, "space_legal": bool(space_legal),
             "seed": int(seed), "iters": it, "options": opts}
 
 
