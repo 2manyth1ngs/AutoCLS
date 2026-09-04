@@ -83,6 +83,70 @@ W1_MIN = 5
 W2_MIN = 4
 W3_RHO = 0.5
 SMOKE_ITERS = 8
+# ---- WP3b：UCI-HAR 外部锚（results/mx4_deploy_har/PROTOCOL.md）----
+# AutoCL Table 2（CIKM'24）UCI-HAR acc；本栈 legacy_full 口径 GGS 锚 0.9348（results/m1_rerun）
+HAR_TABLE2: dict[str, dict[str, float]] = {
+    "HAR": {"TS2Vec": 0.930, "AutoCL": 0.963, "GGS": 0.937, "InfoTS": 0.930, "TS-TCC": 0.904, "CPC": 0.839},
+}
+HAR_GGS_ANCHOR = 0.9348
+HAR_MARGIN = 0.005
+SIZES_EXTRA = {"HAR": (7352, 128, 9)}
+ANCHORS_EXTRA = {"HAR": (166.6, 20.5)}      # (pretrain s, eval s) @ legacy_full，4060，M1 锚
+HAR_NPZ_DEFAULT = ROOT / "data" / "HAR" / "har.npz"
+
+
+def paper_reference(dataset: str) -> dict[str, float]:
+    if dataset in _g35.TABLE10:
+        return dict(_g35.TABLE10[dataset])
+    if dataset in HAR_TABLE2:
+        return dict(HAR_TABLE2[dataset])
+    raise KeyError(f"{dataset!r} 无文献参照表")
+
+
+def paper_ts2vec(dataset: str) -> float:
+    return float(paper_reference(dataset)["TS2Vec"])
+
+
+def paper_median(dataset: str) -> float:
+    return float(statistics.median(paper_reference(dataset).values()))
+
+
+def har_arrays(npz_path) -> dict:
+    """har.npz（train 统计量 z-score）→ 与 35 号 load_arrays 同形状的字典；两种 scaler 同一份 test。"""
+    from autocls.data.datasets import load_har
+    Xtr, ytr, Xte, yte = load_har(npz_path)
+    return {"Xtr": Xtr, "ytr": ytr, "Xte_split": Xte, "Xte_train": Xte, "yte": yte}
+
+
+_HAR_CACHE: dict[str, dict] = {}
+
+
+def load_arrays_any(dataset: str, har_npz=None) -> dict:
+    if dataset == "HAR":
+        key = str(har_npz or HAR_NPZ_DEFAULT)
+        if key not in _HAR_CACHE:
+            _HAR_CACHE[key] = har_arrays(key)
+            a = _HAR_CACHE[key]
+            print(f"[data] HAR: train={a['Xtr'].shape} test={a['Xte_train'].shape} "
+                  f"classes={len(np.unique(a['ytr']))}", flush=True)
+        return _HAR_CACHE[key]
+    return _g35.load_arrays(dataset)
+
+
+def run_gates_har(per: Mapping[str, dict], *, ggs_anchor: float = HAR_GGS_ANCHOR,
+                  margin: float = HAR_MARGIN) -> dict:
+    """WP3b：H1 冠军 3 种子 ≥ GGS 锚 − margin；H2 ≥ 论文 TS2Vec；H3 seed 0 SH ≥ prior3。"""
+    v = per["HAR"]
+    champ = v["champion_mean"] if v.get("champion_mean") is not None else v["champion_seed0"]
+    return {"H1": {"value": champ, "line": ggs_anchor - margin, "pass": bool(champ >= ggs_anchor - margin)},
+            "H2": {"value": champ, "line": v["paper_ts2vec"], "pass": bool(champ >= v["paper_ts2vec"])},
+            "H3": {"sh": v["sh_seed0"], "prior3": v["prior3_seed0"], "pass": bool(v["sh_seed0"] >= v["prior3_seed0"])}}
+
+
+def verdict_code_har(g: Mapping[str, dict]) -> str:
+    if not g["H1"]["pass"]:
+        return "HAR-DEAD"
+    return "HAR-WIN" if g["H3"]["pass"] else "HAR-PARITY"
 # 单个截点评估的墙钟上限：官方 SVM 网格的 C=∞ 在退化特征（破坏性 CLS，如 20be4f74 × PhonemeSpectra
 # 39 类 OvO）上可达数十分钟不收敛；超时整格记 error 行跳过（这类格都在排名垫底，不进任何名单）。
 EVAL_TIMEOUT_S = 480
@@ -285,14 +349,15 @@ def deploy_arms(keys: Sequence[str], traj: Mapping[str, Mapping[int, float]],
             "picks": picks, "n_candidates": n, "budgets": stages}
 
 
-def s1_worklist(protos: dict, sizes: dict, cands: Mapping[str, dict], *, seed: int = 0) -> list[dict]:
-    p = protos[PROTOCOL]
+def s1_worklist(protos: dict, sizes: dict, cands: Mapping[str, dict], *, seed: int = 0,
+                protocol: str = PROTOCOL) -> list[dict]:
+    p = protos[protocol]
     out = []
     for d, c in cands.items():
         entries = ([("shared", e) for e in c["shared"]] + [("ggs", c["ggs"])]
                    + [("nominated", e) for e in c.get("nominated", [])])
         for arm, e in entries:
-            cell = _g35._cell("s1_catalog", d, PROTOCOL, p, sizes, arm_names=[arm],
+            cell = _g35._cell("s1_catalog", d, protocol, p, sizes, arm_names=[arm],
                               cls_key_=e["cls_key"], cls=CLS(**e["cls"]), seed=seed)
             cell["checkpoints"] = list(checkpoints_for(cell["iters"]))
             out.append(cell)
@@ -300,9 +365,10 @@ def s1_worklist(protos: dict, sizes: dict, cands: Mapping[str, dict], *, seed: i
 
 
 def finals_worklist(protos: dict, sizes: dict, picks: Mapping[str, Mapping[str, str]],
-                    key2cls: Mapping[str, dict], *, seeds: Sequence[int] = FINAL_SEEDS) -> list[dict]:
+                    key2cls: Mapping[str, dict], *, seeds: Sequence[int] = FINAL_SEEDS,
+                    protocol: str = PROTOCOL) -> list[dict]:
     """S2：每靶各臂冠军 × seeds；同一 CLS 被多个臂选中时合并成一格（arm_names 多个）。"""
-    p = protos[PROTOCOL]
+    p = protos[protocol]
     out = []
     for d, arms in picks.items():
         by_key: dict[str, list[str]] = {}
@@ -310,7 +376,7 @@ def finals_worklist(protos: dict, sizes: dict, picks: Mapping[str, Mapping[str, 
             by_key.setdefault(k, []).append("final_" + arm)
         for k, names in by_key.items():
             for s in seeds:
-                cell = _g35._cell("s2_finals", d, PROTOCOL, p, sizes, arm_names=names,
+                cell = _g35._cell("s2_finals", d, protocol, p, sizes, arm_names=names,
                                   cls_key_=k, cls=CLS(**key2cls[k]), seed=int(s))
                 cell["checkpoints"] = list(checkpoints_for(cell["iters"]))
                 out.append(cell)
@@ -344,11 +410,13 @@ def verdict_code(g: Mapping[str, dict]) -> str:
 
 
 # ---------------------------------------------------------------- 提名（零 GPU，协议锁产物）
-def cmd_nominate(outdir: Path, *, datasets: Sequence[str] = TARGETS) -> dict:
+def cmd_nominate(outdir: Path, *, datasets: Sequence[str] = TARGETS, all_source: bool = False) -> dict:
+    """候选目录：源池外目标（如 HAR）或 --all-source 时用全部 8 个源数据集拟合先验 / 提名；否则 LODO。"""
     rows = [r for r in read_jsonl(MX3 / "rprime_cache.jsonl") if r.get("error") is None]
     cat = [r for r in rows if r["origin"] != "ggs"]
     ggs_rows = [r for r in rows if r["origin"] == "ggs"]
     picks_by_ds, key2cls, catalog = _g35.load_mx3_picks()
+    pool_datasets = {r["dataset"] for r in cat}
     space = CLSSpace.from_yaml()
     enc = CLSEncoder(space, mode="binned")
     shared = [{"cls_key": e["cls_key"], "cls": e["cls"]} for e in catalog["shared"]]
@@ -359,8 +427,9 @@ def cmd_nominate(outdir: Path, *, datasets: Sequence[str] = TARGETS) -> dict:
         ggs_entry = {"cls_key": cls_key(g), "cls": asdict(g)}
     out = {}
     for i, d in enumerate(datasets):
-        train_cat = [r for r in cat if r["dataset"] != d]
-        train_ggs = [r for r in ggs_rows if r["dataset"] != d]
+        exclude_ds = None if (all_source or d not in pool_datasets) else d
+        train_cat = [r for r in cat if r["dataset"] != exclude_ds]
+        train_ggs = [r for r in ggs_rows if r["dataset"] != exclude_ds]
         prior = prior_with_ggs(train_cat, train_ggs)
         train_z = zscore_within(train_cat)
         exclude = {e["cls_key"] for e in shared} | {ggs_entry["cls_key"]}
@@ -370,8 +439,9 @@ def cmd_nominate(outdir: Path, *, datasets: Sequence[str] = TARGETS) -> dict:
         out[d] = {"shared": shared, "ggs": ggs_entry, "nominated": nom,
                   "prior": {k: round(v, 6) for k, v in prior.items()},
                   "prior_order": rank_by(prior, [e["cls_key"] for e in shared] + [ggs_entry["cls_key"]]),
-                  "tclsc_order": tclsc_order}
-        print(f"[nominate {d}] 先验前 3 {out[d]['prior_order'][:3]}；提名 {len(nom)} 条，"
+                  "tclsc_order": tclsc_order,
+                  "fit_on": ("all 8 source datasets" if exclude_ds is None else f"LODO excluding {d}")}
+        print(f"[nominate {d}] 拟合于 {out[d]['fit_on']}；先验前 3 {out[d]['prior_order'][:3]}；提名 {len(nom)} 条，"
               f"汉明 {[x['hamming'] for x in nom]}，预测 z {[round(x['pred_z'], 2) for x in nom]}", flush=True)
     outdir.mkdir(parents=True, exist_ok=True)
     (outdir / "candidates.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -443,7 +513,7 @@ def execute(cells: list[dict], args, tag: str) -> None:
     backend_kw = {"n_jobs": 1} if args.joblib_backend == "threading" else {}
     with parallel_backend(args.joblib_backend, **backend_kw):
         for i, cell in enumerate(todo):
-            arrays = _g35.load_arrays(cell["dataset"])
+            arrays = load_arrays_any(cell["dataset"], getattr(args, "har_npz", None))
             who = (f"{cell['dataset']}/{cell['arm']}/{cell['cls_key'][:8]} s{cell['seed']} "
                    f"iters={cell['iters']} ckpt={cell['checkpoints']}")
             inflight.write_text(f"{cell['key']}\t{who}", encoding="utf-8")
@@ -471,8 +541,16 @@ def load_candidates(outdir: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def sizes_for(datasets: Sequence[str], *, load: bool) -> dict:
-    return _g35.sizes_from_arrays(datasets) if load else {d: _g35.SIZES_SURVEY[d] for d in datasets}
+def sizes_for(datasets: Sequence[str], *, load: bool, har_npz=None) -> dict:
+    out = {}
+    for d in datasets:
+        if d in SIZES_EXTRA:
+            out[d] = (tuple(int(v) for v in load_arrays_any(d, har_npz)["Xtr"].shape) if load
+                      else SIZES_EXTRA[d])
+        else:
+            out[d] = (tuple(int(v) for v in _g35.load_arrays(d)["Xtr"].shape) if load
+                      else _g35.SIZES_SURVEY[d])
+    return out
 
 
 def _pa_targets_rows() -> list[dict]:
@@ -550,8 +628,9 @@ def cmd_analyze(outdir: Path, *, datasets: Sequence[str] = TARGETS) -> dict:
         rk100 = rank_by(acc_final, keys)
         rho_25_100 = float(spearmanr([rk25.index(k) for k in keys], [rk100.index(k) for k in keys]).correlation)
         per_target[d] = {
-            "paper_ts2vec": _g35.TABLE10[d]["TS2Vec"],
-            "paper_median": float(statistics.median(_g35.TABLE10[d].values())),
+            "paper_ts2vec": paper_ts2vec(d),
+            "paper_median": paper_median(d),
+            "paper_reference": paper_reference(d),
             "budgets": budgets, "n_candidates": len(keys),
             "champion_key": champ, "champion_seed0": row["arms"].get(MAIN_ARM),
             "champion_mean": three_seed(champ) if champ else None,
@@ -570,25 +649,44 @@ def cmd_analyze(outdir: Path, *, datasets: Sequence[str] = TARGETS) -> dict:
             "cost_seconds": row["cost_seconds"], "picks": row["picks"],
         }
         picks_out[d] = {MAIN_ARM: champ, "prior3": p3}
+        # macro-F1（HAR 协议要求同时报 acc / F1）：seed 0 的冠军与 3 种子均值
+        f1_final = {r["cls_key"]: float(r["checkpoint_results"][-1]["f1"]) for r in rows_d
+                    if r.get("checkpoint_results")}
+        per_target[d]["champion_f1_seed0"] = f1_final.get(champ) if champ else None
+        f1_extra = [float(r["f1"]) for r in s2 if r["dataset"] == d and r["cls_key"] == champ]
+        per_target[d]["champion_f1_mean"] = (float(np.mean([f1_final[champ]] + f1_extra))
+                                             if champ and champ in f1_final and len(f1_extra) == len(FINAL_SEEDS) else None)
+        per_target[d]["ggs_f1_seed0"] = f1_final.get(ggs_key)
         print(f"[analyze {d}] 候选 {len(keys)} 截点 {budgets}；oracle {row['arms']['oracle']:.3f} "
               f"SH {row['arms'].get(MAIN_ARM, float('nan')):.3f} prior3 {row['arms'].get('prior3', float('nan')):.3f} "
-              f"GGS {acc_final.get(ggs_key, float('nan')):.3f}（论文 TS2Vec {_g35.TABLE10[d]['TS2Vec']}）", flush=True)
-    gates = run_gates({d: {**v, "champion_mean": (v["champion_mean"] if v["champion_mean"] is not None else v["champion_seed0"])}
-                       for d, v in per_target.items()}) if per_target else None
+              f"GGS {acc_final.get(ggs_key, float('nan')):.3f}（论文 TS2Vec {paper_ts2vec(d)}）", flush=True)
+    per_eff = {d: {**v, "champion_mean": (v["champion_mean"] if v["champion_mean"] is not None else v["champion_seed0"])}
+               for d, v in per_target.items()}
+    har_mode = bool(per_target) and set(per_target) <= set(HAR_TABLE2)
+    if not per_target:
+        gates, verdict = None, None
+    elif har_mode:
+        gates, verdict = run_gates_har(per_eff), verdict_code_har(run_gates_har(per_eff))
+    else:
+        gates, verdict = run_gates(per_eff), verdict_code(run_gates(per_eff))
     n_full = sum(v["champion_mean"] is not None for v in per_target.values())
-    analysis = {"protocol": "results/mx4_deploy/PROTOCOL.md", "n_targets": len(per_target),
-                "n_targets_with_3_seeds": n_full, "per_target": per_target, "gates": gates,
-                "verdict": (verdict_code(gates) if gates else None),
-                "verdict_note": ("W1 用 3 种子均值" if n_full == len(per_target) else
-                                 f"W1 暂用 seed 0（3 种子均值只有 {n_full}/{len(per_target)} 靶）")}
-    analysis["predictions"] = predictions(per_target) if per_target else None
+    analysis = {"protocol": ("results/mx4_deploy_har/PROTOCOL.md" if har_mode else "results/mx4_deploy/PROTOCOL.md"),
+                "gates_kind": ("H" if har_mode else "W"),
+                "n_targets": len(per_target), "n_targets_with_3_seeds": n_full, "per_target": per_target,
+                "gates": gates, "verdict": verdict,
+                "verdict_note": ("主门用 3 种子均值" if n_full == len(per_target) else
+                                 f"主门暂用 seed 0（3 种子均值只有 {n_full}/{len(per_target)} 靶）")}
+    analysis["predictions"] = (predictions(per_target) if (per_target and not har_mode) else None)
     outdir.mkdir(parents=True, exist_ok=True)
     (outdir / "analysis.json").write_text(json.dumps(analysis, ensure_ascii=False, indent=1), encoding="utf-8")
     (outdir / "picks.json").write_text(json.dumps(picks_out, ensure_ascii=False, indent=1), encoding="utf-8")
     (outdir / "tables.md").write_text(markdown_tables(analysis), encoding="utf-8")
-    if gates:
+    if gates and analysis["gates_kind"] == "W":
         print(f"verdict {analysis['verdict']}（{analysis['verdict_note']}）；W1 {gates['W1']['n_parity']}/{gates['W1']['n']} "
               f"HW {gates['W1']['hw_parity']}；W2 {gates['W2']['n_ge']}/{gates['W2']['n']} Δ {gates['W2']['mean_diff']:+.3f}")
+    elif gates:
+        print(f"verdict {analysis['verdict']}（{analysis['verdict_note']}）；H1 {gates['H1']['value']:.4f} vs {gates['H1']['line']:.4f}；"
+              f"H3 SH {gates['H3']['sh']:.4f} vs prior3 {gates['H3']['prior3']:.4f}")
     return analysis
 
 
@@ -636,7 +734,16 @@ def markdown_tables(a: dict) -> str:
         L.append(f"| {d} | " + " | ".join(f"{v['arms'][x]:.3f}" if x in v["arms"] else "—" for x in arms) + " |")
     L.append("| 成本 iters（首靶） | " + " | ".join(
         str(next(iter(a["per_target"].values()))["cost_iters"].get(x, "—")) for x in arms) + " |")
-    if a.get("gates"):
+    if a.get("gates") and a.get("gates_kind") == "H":
+        g = a["gates"]
+        v = a["per_target"]["HAR"]
+        L += ["", "## 门（WP3b HAR）", "",
+              f"- H1：冠军 acc {g['H1']['value']:.4f} vs GGS 锚 − 0.005 = {g['H1']['line']:.4f} → {'✓' if g['H1']['pass'] else '✗'}",
+              f"- H2：冠军 acc vs TS2Vec {g['H2']['line']:.3f} → {'✓' if g['H2']['pass'] else '✗'}",
+              f"- H3：seed 0 SH {g['H3']['sh']:.4f} vs prior3 {g['H3']['prior3']:.4f} → {'✓' if g['H3']['pass'] else '✗'}",
+              f"- macro-F1：冠军 seed0 {v.get('champion_f1_seed0')} / 3 种子 {v.get('champion_f1_mean')}；GGS seed0 {v.get('ggs_f1_seed0')}",
+              "", f"读数码：**{a['verdict']}**（{a['verdict_note']}）"]
+    elif a.get("gates"):
         g = a["gates"]
         L += ["", "## 门", "",
               f"- W1：追平 {g['W1']['n_parity']}/{g['W1']['n']}，HW {'✓' if g['W1']['hw_parity'] else '✗'} → {'✓' if g['W1']['pass'] else '✗'}（{a['verdict_note']}）",
@@ -653,16 +760,16 @@ def markdown_tables(a: dict) -> str:
 
 
 # ---------------------------------------------------------------- CLI
-def cmd_dry_run(protos: dict, outdir: Path, datasets: Sequence[str]) -> None:
+def cmd_dry_run(protos: dict, outdir: Path, datasets: Sequence[str], *, protocol: str = PROTOCOL) -> None:
     cands = load_candidates(outdir)
     sizes = sizes_for(datasets, load=False)
-    cells = s1_worklist(protos, sizes, {d: cands[d] for d in datasets if d in cands})
+    cells = s1_worklist(protos, sizes, {d: cands[d] for d in datasets if d in cands}, protocol=protocol)
     pa = _pa_targets_rows()
     est = 0.0
     for d in datasets:
         rs = [r for r in pa if r["dataset"] == d]
-        pre = statistics.median(r["pretrain_seconds"] for r in rs) if rs else 30.0
-        ev = statistics.median(r["eval_seconds"] for r in rs) if rs else 1.0
+        pre = statistics.median(r["pretrain_seconds"] for r in rs) if rs else ANCHORS_EXTRA.get(d, (30.0, 1.0))[0]
+        ev = statistics.median(r["eval_seconds"] for r in rs) if rs else ANCHORS_EXTRA.get(d, (30.0, 1.0))[1]
         n = sum(c["dataset"] == d for c in cells)
         est += n * (pre + 3 * ev)
         print(f"  {d}: {n} 格 × ({pre:.1f}s + 3×{ev:.1f}s)")
@@ -709,21 +816,26 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
     ap.add_argument("--device", default=("cuda" if torch.cuda.is_available() else "cpu"))
     ap.add_argument("--outdir", default=str(OUT))
     ap.add_argument("--joblib-backend", default="threading", choices=("threading", "loky"))
+    ap.add_argument("--protocol", default=PROTOCOL, choices=("ts2vec_official", "legacy_full"),
+                    help="训练/评估协议（configs/train.yaml: protocols）；HAR 外部锚用 legacy_full")
+    ap.add_argument("--har-npz", default=str(HAR_NPZ_DEFAULT), help="UCI-HAR 缓存（data/HAR/har.npz）")
+    ap.add_argument("--all-source", action="store_true", help="先验 / 提名用全部源数据集拟合（目标不在源池时自动如此）")
     args = ap.parse_args(argv)
     datasets = tuple(args.datasets) if args.datasets else TARGETS
     protos = _g35.load_protocols()
     outdir = Path(args.outdir)
     if args.nominate:
-        cmd_nominate(outdir, datasets=datasets)
+        cmd_nominate(outdir, datasets=datasets, all_source=args.all_source)
     if args.dry_run:
-        cmd_dry_run(protos, outdir, datasets)
+        cmd_dry_run(protos, outdir, datasets, protocol=args.protocol)
     if args.smoke:
         cmd_smoke(protos, args)
         return
     if args.catalog:
         cands = load_candidates(outdir)
-        sizes = sizes_for(datasets, load=True)
-        execute(s1_worklist(protos, sizes, {d: cands[d] for d in datasets if d in cands}), args, "S1")
+        sizes = sizes_for(datasets, load=True, har_npz=args.har_npz)
+        execute(s1_worklist(protos, sizes, {d: cands[d] for d in datasets if d in cands}, protocol=args.protocol),
+                args, "S1")
     if args.finals:
         picks_path = outdir / "picks.json"
         if not picks_path.exists():
@@ -735,9 +847,9 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
             for e in list(c["shared"]) + [c["ggs"]] + list(c.get("nominated", [])):
                 key2cls[e["cls_key"]] = e["cls"]
         seeds = tuple(int(s) for s in args.seeds) if args.seeds else FINAL_SEEDS
-        sizes = sizes_for(datasets, load=True)
+        sizes = sizes_for(datasets, load=True, har_npz=args.har_npz)
         execute(finals_worklist(protos, sizes, {d: v for d, v in picks.items() if d in datasets and all(v.values())},
-                                key2cls, seeds=seeds), args, "S2")
+                                key2cls, seeds=seeds, protocol=args.protocol), args, "S2")
     if args.analyze:
         cmd_analyze(outdir, datasets=datasets)
     if not any((args.nominate, args.dry_run, args.catalog, args.finals, args.analyze)):

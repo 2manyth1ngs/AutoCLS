@@ -229,3 +229,54 @@ def test_eval_with_timeout_raises_on_slow_eval():
     import time as _t
     with pytest.raises(g39.EvalTimeout):
         g39.eval_with_timeout(lambda: _t.sleep(3), 1)
+
+
+# ---------------------------------------------------------------- WP3b：HAR 外部锚（legacy_full 协议）
+def test_har_arrays_from_npz(tmp_path):
+    rng = np.random.default_rng(0)
+    p = tmp_path / "har.npz"
+    np.savez(p, X_train=rng.normal(size=(8, 16, 3)).astype(np.float32), y_train=np.arange(8) % 2,
+             X_test=rng.normal(size=(4, 16, 3)).astype(np.float32), y_test=np.arange(4) % 2)
+    a = g39.har_arrays(p)
+    assert a["Xtr"].shape == (8, 16, 3) and a["yte"].shape == (4,)
+    assert np.array_equal(a["Xte_split"], a["Xte_train"])       # npz 已按 train 统计量 z-score，两种 scaler 同一份
+
+
+def test_paper_reference_har_and_uea():
+    assert g39.paper_ts2vec("HAR") == pytest.approx(0.930)
+    assert g39.paper_reference("HAR")["GGS"] == pytest.approx(0.937)
+    assert g39.paper_ts2vec("Handwriting") == pytest.approx(0.515)
+
+
+def test_checkpoints_for_legacy_full():
+    assert g39.checkpoints_for(2320) == (580, 1160, 2320)
+
+
+def test_sizes_for_har_without_loading():
+    assert g39.sizes_for(("HAR",), load=False) == {"HAR": (7352, 128, 9)}
+
+
+def test_s1_worklist_legacy_protocol_for_har():
+    protos = {"legacy_full": {"iters": 2320, "batch_size": 128, "lr": 1e-3, "drop_last": False,
+                              "swa": False, "crop_mode": "fixed", "scaler": "split", "svm_grid": "legacy"}}
+    space = CLSSpace.from_yaml()
+    from autocls.labeling import cls_key
+    from dataclasses import asdict
+    c = space.sample_random(np.random.default_rng(3))
+    cands = {"HAR": {"shared": [{"cls_key": cls_key(c), "cls": asdict(c)}],
+                     "ggs": {"cls_key": cls_key(c) + "x", "cls": asdict(c)}, "nominated": []}}
+    cells = g39.s1_worklist(protos, {"HAR": (7352, 128, 9)}, cands, protocol="legacy_full")
+    assert len(cells) == 2 and cells[0]["iters"] == 2320 and cells[0]["checkpoints"] == [580, 1160, 2320]
+    assert cells[0]["protocol"] == "legacy_full" and cells[0]["options"]["swa"] is False
+
+
+def test_har_gates_and_verdict():
+    per = {"HAR": {"champion_mean": 0.936, "prior3_mean": 0.93, "sh_seed0": 0.936, "prior3_seed0": 0.93,
+                   "paper_ts2vec": 0.930}}
+    g = g39.run_gates_har(per, ggs_anchor=0.935)
+    assert g["H1"]["pass"] and g["H2"]["pass"] and g["H3"]["pass"]
+    assert g39.verdict_code_har(g) == "HAR-WIN"
+    per["HAR"]["sh_seed0"] = 0.92
+    assert g39.verdict_code_har(g39.run_gates_har(per, ggs_anchor=0.935)) == "HAR-PARITY"
+    per["HAR"]["champion_mean"] = 0.90
+    assert g39.verdict_code_har(g39.run_gates_har(per, ggs_anchor=0.935)) == "HAR-DEAD"
