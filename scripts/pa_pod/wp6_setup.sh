@@ -53,7 +53,8 @@ echo "== md5 check: $( [ $fail = 0 ] && echo ALL MATCH || echo FAILED )"
 # 单测限 OMP=1（pod 上 pytest 不限线程会把 vCPU 打满，见 memory mx4-diagnosis）
 OMP_NUM_THREADS=1 python -m pytest tests/test_cls_space.py tests/test_cls_encoder.py tests/test_labeling_route_a.py \
     tests/test_sh_deploy.py tests/test_mask_field_sim.py -q 2>&1 | tail -3
-python scripts/40_mask_field_sim.py --c0 --outdir results/mx4_mask
+# C0 已在本机逐位通过（含 GBDT 折内数值，跨机浮点可能误报）；pod 上只用零 GBDT 的 --s0 做 40 号脚本冒烟
+python scripts/40_mask_field_sim.py --s0 --outdir results/mx4_mask
 python scripts/39_sh_deploy.py --dry-run --twins input_mask=binomial --twin-only --outdir results/mx4_mask \
     --legacy-runs results/mx4_deploy/runs.jsonl
 echo "== setup done"
