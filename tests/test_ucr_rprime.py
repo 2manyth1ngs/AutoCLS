@@ -59,7 +59,8 @@ def test_pool_entries_fields_and_crop():
     assert [e["name"] for e in ents] == ["A", "B"]
     a, b = ents
     assert a["crop_len"] is None and a["l_enc"] == 100 and a["n_classes_range"] == [2, 2] and a["planned_tasks"] == 1
-    assert b["crop_len"] == 1024 and b["l_enc"] == 1024 and b["n_channels"] == 1
+    assert b["crop_len"] == svy.CROP_LEN and b["l_enc"] == svy.CROP_LEN and b["n_channels"] == 1
+    assert svy.CROP_LEN == 512                      # 用户 2026-09-04 拍板（PROTOCOL §3）
 
 
 # ---------------------------------------------------------------- 整数据集任务
