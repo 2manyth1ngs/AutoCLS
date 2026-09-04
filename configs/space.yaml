@@ -44,6 +44,14 @@ fields:
   - {name: sim_func,    type: categorical, choices: ["dot", "cosine", "euclidean"]}
   - {name: temperature, type: log_numeric, choices: [0.01, 0.1, 1.0, 10.0, 100.0]}
 
+  # ---- 扩展字段（MX-4 WP6；opt-in）----
+  # 不进 field_names / sample_random / 默认 CLSEncoder（旧缓存键、32 维编码、采样 RNG 流逐位不变）；
+  # default 必须与 CLS dataclass 默认值相等（加载时互校）；encoder_kwarg = build_encoder(overrides) 的键。
+  # input_mask：TS2Vec 官方 encoder 的训练期二项时间步掩码（keep p=0.5），AutoCL Table 1 没有；
+  # protocol_alignment 显示它对干净配置 +0.08～+0.11、对重掩码配置 −0.125（双重掩码交互）。
+  - {name: input_mask, type: categorical, choices: ["none", "binomial"],
+     extension: true, default: "none", encoder_kwarg: input_mask}
+
 constraints:
   # 第 4 节合法性约束：kernel / pool / adj_neighbor 仅在 temporal 或
   # cross_scale 开启时有意义；关闭时置为无效档 null（而非随机值），

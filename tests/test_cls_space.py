@@ -19,9 +19,11 @@ def space():
 
 # ---------------------------------------------------------------- 结构
 
-def test_nineteen_fields_match_dataclass(space):
+def test_nineteen_legacy_fields_match_dataclass_without_defaults(space):
+    # MX-4 WP6 起 CLS 多出 opt-in 扩展字段（带默认值）；field_names 只暴露 19 个旧字段
+    legacy = [f.name for f in dataclasses.fields(CLS) if f.default is dataclasses.MISSING]
     assert len(space.field_names) == 19
-    assert space.field_names == [f.name for f in dataclasses.fields(CLS)]
+    assert space.field_names == legacy
 
 
 def test_choices_come_from_yaml(space):
@@ -62,6 +64,9 @@ def _small_config():
         {"name": "loss_type", "type": "categorical", "choices": ["info_nce"]},
         {"name": "sim_func", "type": "categorical", "choices": ["dot"]},
         {"name": "temperature", "type": "log_numeric", "choices": [0.1, 1.0]},
+        # 扩展字段（MX-4 WP6）：space.yaml 必须声明 dataclass 的全部字段，迷你空间同理
+        {"name": "input_mask", "type": "categorical", "choices": ["none", "binomial"],
+         "extension": True, "default": "none", "encoder_kwarg": "input_mask"},
     ]
     constraints = [{
         "when_any": ["temporal", "cross_scale"],
@@ -141,3 +146,126 @@ def test_validate_rejects_invalid(space):
     # 门控关闭时必须为无效档
     assert not space.validate(dataclasses.replace(inactive, kernel=2))
     assert not space.validate(dataclasses.replace(inactive, pool="avg"))
+
+
+# ---------------------------------------------------------------- 扩展字段（MX-4 WP6：opt-in，旧路径逐位不变）
+
+from autocls.space.cls_space import extension_defaults, key_payload, twin  # noqa: E402
+
+# 改代码前用旧代码采集的金标（scratchpad/golden_before.json，2026-09-04）
+GOLDEN_RNG0_FIRST5 = ["9bf55c58e8a4", "79db9191458b", "27ccba56efec", "72e67053d83b", "00cc00745b5d"]
+LEGACY_SPACE_SIZE = 4726613326050
+
+
+def test_all_field_names_cover_dataclass_and_extension_is_last(space):
+    assert space.all_field_names == [f.name for f in dataclasses.fields(CLS)]
+    assert space.extension_field_names == ["input_mask"]
+    assert space.all_field_names[:19] == space.field_names
+
+
+def test_extension_defaults_match_yaml(space):
+    assert extension_defaults() == {"input_mask": "none"}
+    for name in space.extension_field_names:
+        spec = space.field_spec(name)
+        assert spec["extension"] is True
+        assert spec["default"] in spec["choices"]
+        assert extension_defaults()[name] == spec["default"]
+
+
+def test_sample_random_never_sets_extension(space):
+    rng = np.random.default_rng(5)
+    assert all(space.sample_random(rng).input_mask == "none" for _ in range(2000))
+
+
+def test_sample_random_rng_stream_golden(space):
+    from autocls.labeling import cls_key
+    rng = np.random.default_rng(0)
+    assert [cls_key(space.sample_random(rng)) for _ in range(5)] == GOLDEN_RNG0_FIRST5
+
+
+def test_validate_checks_extension_value(space):
+    c = space.sample_random(np.random.default_rng(6))
+    assert space.validate(twin(c, input_mask="binomial"))
+    assert not space.validate(dataclasses.replace(c, input_mask="gaussian"))
+
+
+def test_space_size_default_excludes_extensions(space):
+    assert space.space_size() == LEGACY_SPACE_SIZE
+    assert space.space_size(include_extensions=True) == 2 * LEGACY_SPACE_SIZE
+
+
+def test_twin_only_touches_extension_fields(space):
+    c = space.sample_random(np.random.default_rng(7))
+    t = twin(c, input_mask="binomial")
+    assert t.input_mask == "binomial"
+    assert {n: getattr(t, n) for n in space.field_names} == {n: getattr(c, n) for n in space.field_names}
+    with pytest.raises(ValueError):
+        twin(c, jitter=0.5)
+
+
+def test_key_payload_drops_default_extension_only(space):
+    c = space.sample_random(np.random.default_rng(8))
+    p = key_payload(c)
+    assert "input_mask" not in p
+    assert set(p) == set(space.field_names)
+    p2 = key_payload(twin(c, input_mask="binomial"))
+    assert p2["input_mask"] == "binomial"
+    assert set(p2) == set(space.all_field_names)
+
+
+def test_encoder_overrides_from_yaml_kwarg(space):
+    c = space.sample_random(np.random.default_rng(9))
+    assert space.encoder_overrides(c) == {}
+    assert space.encoder_overrides(twin(c, input_mask="binomial")) == {"input_mask": "binomial"}
+
+
+def test_small_config_with_extension_sizes():
+    sp = CLSSpace(_small_config())
+    assert sp.field_names[-1] == "temperature"
+    assert sp.all_field_names[-1] == "input_mask"
+    assert sp.space_size() == 1024 * 3
+    assert sp.space_size(include_extensions=True) == 2 * 1024 * 3
+
+
+def _ext_patch(**patch):
+    cfg = _small_config()
+    cfg["fields"][-1] = {**cfg["fields"][-1], **patch}
+    return cfg
+
+
+def test_gate_rejects_extension_without_default():
+    cfg = _small_config()
+    del cfg["fields"][-1]["default"]
+    with pytest.raises(ValueError):
+        CLSSpace(cfg)
+
+
+def test_gate_rejects_extension_default_not_in_choices():
+    with pytest.raises(ValueError):
+        CLSSpace(_ext_patch(default="gaussian"))
+
+
+def test_gate_rejects_extension_default_mismatch_with_dataclass():
+    with pytest.raises(ValueError):
+        CLSSpace(_ext_patch(default="binomial"))
+
+
+def test_gate_rejects_missing_extension_field():
+    cfg = _small_config()
+    cfg["fields"].pop()
+    with pytest.raises(ValueError):
+        CLSSpace(cfg)
+
+
+def test_gate_rejects_extension_not_last():
+    cfg = _small_config()
+    cfg["fields"].insert(0, cfg["fields"].pop())
+    with pytest.raises(ValueError):
+        CLSSpace(cfg)
+
+
+def test_gate_rejects_constraint_referencing_extension():
+    cfg = _small_config()
+    cfg["constraints"].append({"when_any": ["input_mask"], "gated_fields": [], "inactive_value": None})
+    with pytest.raises(ValueError):
+        CLSSpace(cfg)

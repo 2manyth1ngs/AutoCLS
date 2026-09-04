@@ -29,7 +29,7 @@ import numpy as np
 
 from .comparator.tclsc_engine import ClsRecord, Pair, with_reversed
 from .space.cls_encoder import CLSEncoder
-from .space.cls_space import CLS, CLSSpace
+from .space.cls_space import CLS, CLSSpace, key_payload
 from .task_types import TASK_CLASSIFICATION, is_better, validate_task_type
 
 ORIGIN_SHARED = "shared"
@@ -37,9 +37,30 @@ ORIGIN_RANDOM = "random"
 
 
 def cls_key(cls_cfg: CLS) -> str:
-    """CLS 的稳定短哈希（缓存/配对引用键；与 m2 探针 cls_hash 同构）。"""
-    payload = json.dumps(asdict(cls_cfg), sort_keys=True)
+    """CLS 的稳定短哈希（缓存/配对引用键；与 m2 探针 cls_hash 同构）。
+
+    MX-4 WP6 起载荷经 ``key_payload``：扩展字段取默认值时不进哈希——旧配置的键逐字节
+    不变（tests/test_labeling_route_a.py 金标），孪生（扩展字段非默认）得新键。
+    """
+    payload = json.dumps(key_payload(cls_cfg), sort_keys=True)
     return hashlib.md5(payload.encode()).hexdigest()[:12]
+
+
+_EXT_SPACE: Optional[CLSSpace] = None
+
+
+def extension_overrides(cls_cfg: CLS, space: Optional[CLSSpace] = None) -> dict:
+    """扩展字段 → build_encoder(overrides=...)（映射键由 space.yaml 的 encoder_kwarg 声明）。
+
+    旧 CLS → {}（调用方据此传 None，encoder 构造与历史逐位相同）；孪生 → 如 {"input_mask": "binomial"}。
+    ``space`` 缺省用模块级惰性缓存的 configs/space.yaml。
+    """
+    global _EXT_SPACE
+    if space is None:
+        if _EXT_SPACE is None:
+            _EXT_SPACE = CLSSpace.from_yaml()
+        space = _EXT_SPACE
+    return space.encoder_overrides(cls_cfg)
 
 
 # ---------------------------------------------------------------------------
@@ -556,7 +577,8 @@ def evaluate_rprime(
     t0 = time.perf_counter()
     try:
         torch.manual_seed(weight_seed)  # 权重初始化可复现
-        encoder = build_encoder(input_dims=Xt.shape[-1])
+        # 扩展字段（如 input_mask）经 overrides 进 encoder；旧 CLS → None → 与历史逐位相同
+        encoder = build_encoder(input_dims=Xt.shape[-1], overrides=extension_overrides(cls_cfg) or None)
         pretrain_encoder(
             encoder, cls_cfg, Xt[tr_idx], max_iters=iters,
             batch_size=batch_size, lr=lr, device=device, seed=weight_seed,
@@ -652,7 +674,8 @@ def evaluate_rprime_trajectory(
     t0 = time.perf_counter()
     try:
         torch.manual_seed(weight_seed)  # 权重初始化可复现（与 evaluate_rprime 同规则）
-        encoder = build_encoder(input_dims=Xt.shape[-1])
+        # 扩展字段（如 input_mask）经 overrides 进 encoder；旧 CLS → None → 与历史逐位相同
+        encoder = build_encoder(input_dims=Xt.shape[-1], overrides=extension_overrides(cls_cfg) or None)
         evaluator = resolve_evaluator(task.task_type)  # 铁律 7 分发点
 
         def _on_checkpoint(step: int, enc) -> None:
