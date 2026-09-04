@@ -74,7 +74,7 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 - ✅ MX-3-PQ 7 折 × 3 预算：B-DEAD（E / 预算描述符零贡献）；T-CLSC 本身输给零训练先验（p=1.9e-06）
 - ✅ **MX-4 WP1**（2026-09-03）：先验 + SH，SH-WIN（`results/mx4_prior_sh/REPORT.md`）
 - ✅ **MX-4 WP2**：字段结构化代理，SUR-WIN，S3（开放空间）不过（`results/mx4_surrogate/REPORT.md`）
-- **MX-4 WP3 全量部署**：SH 在 UEA 官方划分靶 {HW, UWave, PS, Ethanol, Cricket, HMD} 上选 CLS，对表 GGS / TS2Vec；**依赖 `protocol-alignment` 分支落地 `protocols.ts2vec_official`** ← 下一步
+- ✅ **MX-4 WP3 全量部署**（2026-09-04，`results/mx4_deploy/REPORT.md`）：官方口径 SH6-3-3 冠军追平 TS2Vec **4/6**（UWave 0.918 / PS 0.256 / Cricket 0.986 / HMD 0.450 均超论文），**DEPLOY-DEAD**（预注册 W1 要 ≥5/6 且 HW 达标：HW 0.431 ✗、Ethanol 0.241 ✗）；W2 过（SH ≥ prior3 5/6）。HW 是**名单失败**：同目录 GGS 0.546 / e490b88e 0.542 被先验排到第 8/9，前 6 起跑没试；事后 SH10-4-3 选中 GGS（+33% 成本）。截点 25%→100% Spearman 中位 0.71（短轨迹早截点可用）；GGS seed 0 跨 torch 2.4/2.8 五靶逐位相同
 - MX-4 WP4（增强不变性画像作数据集级任务特征）默认不做，除非用户明确要保留"E 有用"的可能性
 - **MX-4 WP5 学习曲线外推器（路径二，用户 2026-09-03 记录，尚未开工）** ← 见下节
 - 论文：正翼 = 零样本排名 + SH 验证 + 字段主效应 + 成本表；负翼 = task-aware 五轮判负 + 开放空间外推判死（analysis/limitations）

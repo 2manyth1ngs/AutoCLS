@@ -1,0 +1,26 @@
+{
+ "Handwriting": {
+  "SH6-3-3_prior": "9092e36eefe1",
+  "prior3": "9092e36eefe1"
+ },
+ "UWaveGestureLibrary": {
+  "SH6-3-3_prior": "8c4aa28336d6",
+  "prior3": "a1f67db45e64"
+ },
+ "PhonemeSpectra": {
+  "SH6-3-3_prior": "4f7d413581f6",
+  "prior3": "cffb55035c3a"
+ },
+ "EthanolConcentration": {
+  "SH6-3-3_prior": "e490b88ee785",
+  "prior3": "9092e36eefe1"
+ },
+ "Cricket": {
+  "SH6-3-3_prior": "c92058f26c1d",
+  "prior3": "a1f67db45e64"
+ },
+ "HandMovementDirection": {
+  "SH6-3-3_prior": "9092e36eefe1",
+  "prior3": "9092e36eefe1"
+ }
+}

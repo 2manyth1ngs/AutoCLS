@@ -1,0 +1,19 @@
+== [07:25:39] catalog
+[S1 75/76] HandMovementDirection/nominated/430b82b3 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.189 0.176 0.189] (14.1s+0.3s)
+[S1 76/76] HandMovementDirection/nominated/745cacc0 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.324 0.284] (45.8s+0.3s)
+[S1] 收官
+== [08:41:16] analyze1
+[analyze Cricket] 候选 21 截点 [150, 300, 600]；oracle 1.000 SH 1.000 prior3 0.986 GGS 1.000（论文 TS2Vec 0.972）
+[analyze HandMovementDirection] 候选 21 截点 [150, 300, 600]；oracle 0.486 SH 0.378 prior3 0.378 GGS 0.284（论文 TS2Vec 0.338）
+verdict DEPLOY-DEAD（W1 暂用 seed 0（3 种子均值只有 0/6 靶））；W1 4/6 HW False；W2 5/6 Δ +0.007
+== [08:41:20] finals
+[S2 19/20] HandMovementDirection/final_SH6-3-3_prior/9092e36e s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.338 0.338 0.514] (41.7s+0.3s)
+[S2 20/20] HandMovementDirection/final_SH6-3-3_prior/9092e36e s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.392 0.324 0.459] (38.2s+0.3s)
+[S2] 收官
+== [08:57:55] analyze2
+[analyze Cricket] 候选 21 截点 [150, 300, 600]；oracle 1.000 SH 1.000 prior3 0.986 GGS 1.000（论文 TS2Vec 0.972）
+[analyze HandMovementDirection] 候选 21 截点 [150, 300, 600]；oracle 0.486 SH 0.378 prior3 0.378 GGS 0.284（论文 TS2Vec 0.338）
+verdict DEPLOY-DEAD（W1 用 3 种子均值）；W1 4/6 HW False；W2 5/6 Δ +0.007
+name, memory.used [MiB], utilization.gpu [%]
+NVIDIA GeForce RTX 4090, 2 MiB, 0 %
+== [08:57:59] wp3 done：拉回 results/mx4_deploy/{runs.jsonl,oom_failures.jsonl,analysis.json,picks.json,tables.md}

@@ -1,0 +1,8 @@
+== torch fingerprint (before)
+torch 2.4.1+cu124 cuda 12.4 dev NVIDIA GeForce RTX 4090
+deps present: scipy 1.15.3 sklearn 1.7.2 aeon 1.3.0
+== torch fingerprint (after)
+torch 2.4.1+cu124 cuda 12.4 dev NVIDIA GeForce RTX 4090
+== uea caches present
+== md5 check: ALL MATCH
+......Terminated

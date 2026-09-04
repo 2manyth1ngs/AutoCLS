@@ -1,0 +1,7 @@
+[analyze Handwriting] 候选 21 截点 [50, 100, 200]；oracle 0.546 SH 0.419 prior3 0.419 GGS 0.546（论文 TS2Vec 0.515）
+[analyze UWaveGestureLibrary] 候选 21 截点 [150, 300, 600]；oracle 0.931 SH 0.931 prior3 0.906 GGS 0.869（论文 TS2Vec 0.906）
+[analyze PhonemeSpectra] 候选 20 截点 [150, 300, 600]；oracle 0.251 SH 0.251 prior3 0.237 GGS 0.205（论文 TS2Vec 0.233）
+[analyze EthanolConcentration] 候选 21 截点 [150, 300, 600]；oracle 0.300 SH 0.274 prior3 0.285 GGS 0.236（论文 TS2Vec 0.308）
+[analyze Cricket] 候选 21 截点 [150, 300, 600]；oracle 1.000 SH 1.000 prior3 0.986 GGS 1.000（论文 TS2Vec 0.972）
+[analyze HandMovementDirection] 候选 21 截点 [150, 300, 600]；oracle 0.486 SH 0.378 prior3 0.378 GGS 0.284（论文 TS2Vec 0.338）
+verdict DEPLOY-DEAD（W1 暂用 seed 0（3 种子均值只有 0/6 靶））；W1 4/6 HW False；W2 5/6 Δ +0.007
