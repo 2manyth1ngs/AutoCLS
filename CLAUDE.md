@@ -29,6 +29,7 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 5. 原目标池 {UCI-HAR, Epilepsy, FaceDetection} **从主结果退役**（`results/target_preflight`）；全量 UCI-HAR 仍可当外部锚。
 6. **头条臂 = SH6-3-3_prior**；SH10-4-3 只好 0.002 但贵 30%，不作默认。all20@60→top3 与 SH 同带但成本 1.8×——先验的价值是省一半探测预算。
 7. **AutoCTS++ Algorithm 2 进化搜索**只保留代码，不作零样本适应度使用（D3 5/21 + WP2 S3 不过）。
+8. **学习曲线外推 / 早截点外推淘汰已判死（WP5，2026-09-04，用户拍板关闭）**：任何形式的"从早截点预测终点分来做淘汰"（GBDT / ridge / 斜率 / 往先验收缩 / 分位回归 / 排序损失）都不再提、不再立项、不再作为"学习在哪"的答案；SH 一律按当前截点分淘汰、最后一级留 3 条。证据 `results/mx4_lc_extrapolator/REPORT.md`，代码保留不删。
 
 ## 铁律
 1. `configs/space.yaml` 是策略空间**唯一真源**，代码不得硬编码取值集合。
@@ -76,22 +77,18 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 - ✅ **MX-4 WP2**：字段结构化代理，SUR-WIN，S3（开放空间）不过（`results/mx4_surrogate/REPORT.md`）
 - ✅ **MX-4 WP3 全量部署**（2026-09-04，`results/mx4_deploy/REPORT.md`）：官方口径 SH6-3-3 冠军追平 TS2Vec **4/6**（UWave 0.918 / PS 0.256 / Cricket 0.986 / HMD 0.450 均超论文），**DEPLOY-DEAD**（预注册 W1 要 ≥5/6 且 HW 达标：HW 0.431 ✗、Ethanol 0.241 ✗）；W2 过（SH ≥ prior3 5/6）。HW 是**名单失败**：同目录 GGS 0.546 / e490b88e 0.542 被先验排到第 8/9，前 6 起跑没试；事后 SH10-4-3 选中 GGS（+33% 成本）。截点 25%→100% Spearman 中位 0.71（短轨迹早截点可用）；GGS seed 0 跨 torch 2.4/2.8 五靶逐位相同
 - MX-4 WP4（增强不变性画像作数据集级任务特征）默认不做，除非用户明确要保留"E 有用"的可能性
-- **MX-4 WP5 学习曲线外推器（路径二，用户 2026-09-03 记录，尚未开工）** ← 见下节
-- 论文：正翼 = 零样本排名 + SH 验证 + 字段主效应 + 成本表；负翼 = task-aware 五轮判负 + 开放空间外推判死（analysis/limitations）
+- ✅ **MX-4 WP5 学习曲线外推器**（2026-09-04，分支 `wp5-lc`）：**LC-DEAD**——SH 淘汰规则换成外推器预测，头条臂 0.0184→0.0183（4 胜/4 负/34 平），省档位 SH4-2-2/6-3-1 追不平（0.035）；增益 LODO R² 0.02 = 测量地板（`results/mx4_lc_extrapolator/REPORT.md`）——负翼
+- 论文：正翼 = 零样本排名 + SH 验证 + 字段主效应 + 成本表；负翼 = task-aware 五轮判负 + 开放空间外推判死 + 学习曲线外推判死（analysis/limitations）
 
-## 路径二：给学习部分加一个真有增益的组件（用户 2026-09-03 记录，可能后续开工）
+## 路径二：给学习部分加一个真有增益的组件（用户 2026-09-03 记录；WP5 已关闭，其他方法另开会话讨论）
 
 **为什么**：现在的头条"先验 + 淘汰赛"审稿人会问"学习在哪"——先验 7 折第一名都是同一条配置（等于一个学来的默认），GBDT 在 top-1 上没超过先验，淘汰赛是 Hyperband 的常规组件。路径一（WP3 全量协议 + 候选扩到 50–100 + Hyperband/随机/BOHB 基线）把证据做实；路径二给"从源池学到、在目标上用"加一个有实证增益的模型。
 
-**首选：学习曲线外推器（WP5）**
-- 现象：SH 在 @60 / @120 淘汰时只看当前分数，而 @60→@290 的秩相关中位只有 0.72；最后一级只留 1 条 regret 翻倍（0.036 vs 0.018），说明早截点的淘汰决策有可改进空间。
-- 数据（已有，零 GPU）：`results/mx3_pq/rprime_cache.jsonl` 2835 行 = 945 条三截点轨迹 {60,120,290}；更密的截点在 `results/workpoint_followup/candidates/trained_fill.jsonl`（iters {6,12,30,60,120}）、`results/iters_workpoint/{candidates,uea}/`（{3,6,12,15,30,60,120}）、`results/step05_iters_floor/scan_cache.jsonl`（{60,120,240} × 3 种子）；4060/5090 混机记录带 `device_name`。
-- 模型：输入 = 已观测截点的 z（@60 或 @60+@120）⊕ CLS 字段编码（binned）⊕ 切片级统计（n_train、n_eval、类数、iters=0 基线）；输出 = z@290（或 P(进 top-3@290)）。候选形态：GBDT 回归 / 分位回归（给淘汰用的不确定性）/ 排序损失。铁律 6/7 同口径：只用训练侧轨迹拟合，模块不含数据集概念。
-- 接入：`36_prior_sh_sim.py` 的 `sh_path` 把"按 traj[k][b_prev] 留前 k"换成"按外推器预测的 z@b_final 留前 k"，其余臂表 / 成本口径不变；缓存模拟即可判定，无需新 GPU。
-- 判读（写 PROTOCOL 时定，先验先于数据）：主门 = 外推淘汰的 SH6-3-3 regret@290 < 现行 0.018（配对 Wilcoxon，n=42）；次门 = 在更省的档位（SH4-2-2 或 SH6-3-1）追平 0.018；新鲜种子复核同 WP1 G4。不过 → 学习曲线在本栈只是"看当前分"的等价物，如实入负翼。
-- 论文骨架若成立："从源池学两样东西——配置先验 + 学习曲线——驱动目标侧淘汰赛"；模型简单但学到的东西说得清楚。
+**WP5 学习曲线外推器：已关闭（关键决策 8），本节只留存档，勿再展开讨论。**
+读数 LC-DEAD（`results/mx4_lc_extrapolator/REPORT.md`，memory `mx4-wp5-lc-extrapolator-dead`）：头条臂 0.0184→0.0183（4/4/34 平），省档位追不平（0.035）；根因 = 增益 R'@290−R'@60 的 LODO R² 0.02，标签噪声地板淹没"晚熟"信号。
+留给后续立项的两个硬事实：**SH6-3-3 的 0.0184 里 0.0118 是先验 top-6 不含 oracle 的不可约部分**（淘汰规则最多改 0.0067），**最后一级留 3 条是硬要求**（任何规则只留 1 条都翻倍）。
 
 **次选：WP4 增强不变性画像**（机制性任务特征，与 CLS 字段同坐标，n=7–8 也可辨识；风险更高，先验 ~30%），设计见 memory `mx4-diagnosis-prior-beats-tclsc` 与计划文件 §5。
 
 ## 目录
-`autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}`（`search/surrogate.py` 代理、`search/rank.py` 聚合、`search/evolution.py` 仅保留）+ `scripts/`（MX-3-PQ：`32–34_pq_*`、`pq_common.py`；MX-4：`36_prior_sh_sim.py`、`37_surrogate_loo.py`）+ `configs/*.yaml` + `tests/`。分支：`mx4`（MX-4 代码与结果）、`protocol-alignment`（全量协议对齐）。
+`autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}`（`search/surrogate.py` 代理、`search/rank.py` 聚合、`search/learning_curve.py` 外推器（判死，保留）、`search/evolution.py` 仅保留）+ `scripts/`（MX-3-PQ：`32–34_pq_*`、`pq_common.py`；MX-4：`36_prior_sh_sim.py`、`37_surrogate_loo.py`、`38_lc_sh_sim.py`、`39_sh_deploy.py`）+ `configs/*.yaml` + `tests/`。分支：`mx4`（MX-4 代码与结果，WP3 在 worktree `.claude/worktrees/mx4`）、`protocol-alignment`（全量协议对齐）、`wp5-lc`（WP5，自 63d26fd，待合回 mx4）。
