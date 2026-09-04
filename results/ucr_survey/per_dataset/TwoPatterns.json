@@ -1,0 +1,23 @@
+{
+  "name": "TwoPatterns",
+  "n_train": 1000,
+  "n_test": 4000,
+  "n_total": 5000,
+  "n_channels": 1,
+  "length": 128,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 4,
+  "class_counts": {
+    "1": 1306,
+    "2": 1248,
+    "3": 1245,
+    "4": 1201
+  },
+  "min_class": 1201,
+  "imbalance_ratio": 1.087,
+  "seconds": 0.1,
+  "usable": true,
+  "reason": "ok"
+}

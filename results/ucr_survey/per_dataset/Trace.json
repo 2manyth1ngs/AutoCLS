@@ -1,0 +1,23 @@
+{
+  "name": "Trace",
+  "n_train": 100,
+  "n_test": 100,
+  "n_total": 200,
+  "n_channels": 1,
+  "length": 275,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 4,
+  "class_counts": {
+    "1": 50,
+    "2": 50,
+    "3": 50,
+    "4": 50
+  },
+  "min_class": 50,
+  "imbalance_ratio": 1.0,
+  "seconds": 7.2,
+  "usable": true,
+  "reason": "ok"
+}

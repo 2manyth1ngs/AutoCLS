@@ -1,0 +1,24 @@
+{
+  "name": "ECG5000",
+  "n_train": 500,
+  "n_test": 4500,
+  "n_total": 5000,
+  "n_channels": 1,
+  "length": 140,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 5,
+  "class_counts": {
+    "1": 2919,
+    "2": 1767,
+    "3": 96,
+    "4": 194,
+    "5": 24
+  },
+  "min_class": 24,
+  "imbalance_ratio": 121.625,
+  "seconds": 0.0,
+  "usable": true,
+  "reason": "ok"
+}

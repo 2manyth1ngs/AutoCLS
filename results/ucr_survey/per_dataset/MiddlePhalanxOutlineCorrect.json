@@ -1,0 +1,21 @@
+{
+  "name": "MiddlePhalanxOutlineCorrect",
+  "n_train": 600,
+  "n_test": 291,
+  "n_total": 891,
+  "n_channels": 1,
+  "length": 80,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "0": 337,
+    "1": 554
+  },
+  "min_class": 337,
+  "imbalance_ratio": 1.644,
+  "seconds": 6.3,
+  "usable": true,
+  "reason": "ok"
+}

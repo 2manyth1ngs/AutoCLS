@@ -1,0 +1,21 @@
+{
+  "name": "Yoga",
+  "n_train": 300,
+  "n_test": 3000,
+  "n_total": 3300,
+  "n_channels": 1,
+  "length": 426,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 1530,
+    "2": 1770
+  },
+  "min_class": 1530,
+  "imbalance_ratio": 1.157,
+  "seconds": 0.1,
+  "usable": true,
+  "reason": "ok"
+}

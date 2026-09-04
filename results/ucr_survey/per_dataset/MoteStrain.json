@@ -1,0 +1,21 @@
+{
+  "name": "MoteStrain",
+  "n_train": 20,
+  "n_test": 1252,
+  "n_total": 1272,
+  "n_channels": 1,
+  "length": 84,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 685,
+    "2": 587
+  },
+  "min_class": 587,
+  "imbalance_ratio": 1.167,
+  "seconds": 8.5,
+  "usable": true,
+  "reason": "ok"
+}

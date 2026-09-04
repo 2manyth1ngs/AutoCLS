@@ -1,0 +1,22 @@
+{
+  "name": "Meat",
+  "n_train": 60,
+  "n_test": 60,
+  "n_total": 120,
+  "n_channels": 1,
+  "length": 448,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 3,
+  "class_counts": {
+    "1": 40,
+    "2": 40,
+    "3": 40
+  },
+  "min_class": 40,
+  "imbalance_ratio": 1.0,
+  "seconds": 6.4,
+  "usable": false,
+  "reason": "n_eval<50"
+}

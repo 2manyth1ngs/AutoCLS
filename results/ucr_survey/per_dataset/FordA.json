@@ -1,0 +1,21 @@
+{
+  "name": "FordA",
+  "n_train": 3601,
+  "n_test": 1320,
+  "n_total": 4921,
+  "n_channels": 1,
+  "length": 500,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "-1": 2527,
+    "1": 2394
+  },
+  "min_class": 2394,
+  "imbalance_ratio": 1.056,
+  "seconds": 0.1,
+  "usable": true,
+  "reason": "ok"
+}

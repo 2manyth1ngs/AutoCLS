@@ -1,0 +1,21 @@
+{
+  "name": "DodgerLoopWeekend",
+  "n_train": 20,
+  "n_test": 138,
+  "n_total": 158,
+  "n_channels": 1,
+  "length": 288,
+  "equal_length": true,
+  "missing": true,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 112,
+    "2": 46
+  },
+  "min_class": 46,
+  "imbalance_ratio": 2.435,
+  "seconds": 5.6,
+  "usable": false,
+  "reason": "missing_values"
+}

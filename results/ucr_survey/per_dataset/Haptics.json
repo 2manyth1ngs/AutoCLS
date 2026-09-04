@@ -1,0 +1,24 @@
+{
+  "name": "Haptics",
+  "n_train": 155,
+  "n_test": 308,
+  "n_total": 463,
+  "n_channels": 1,
+  "length": 1092,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 5,
+  "class_counts": {
+    "1": 78,
+    "2": 92,
+    "3": 93,
+    "4": 100,
+    "5": 100
+  },
+  "min_class": 78,
+  "imbalance_ratio": 1.282,
+  "seconds": 12.6,
+  "usable": true,
+  "reason": "ok"
+}

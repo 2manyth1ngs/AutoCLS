@@ -1,0 +1,25 @@
+{
+  "name": "OSULeaf",
+  "n_train": 200,
+  "n_test": 242,
+  "n_total": 442,
+  "n_channels": 1,
+  "length": 427,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 6,
+  "class_counts": {
+    "1": 66,
+    "2": 84,
+    "3": 75,
+    "4": 97,
+    "5": 82,
+    "6": 38
+  },
+  "min_class": 38,
+  "imbalance_ratio": 2.553,
+  "seconds": 8.9,
+  "usable": true,
+  "reason": "ok"
+}

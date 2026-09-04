@@ -1,0 +1,21 @@
+{
+  "name": "TwoLeadECG",
+  "n_train": 23,
+  "n_test": 1139,
+  "n_total": 1162,
+  "n_channels": 1,
+  "length": 82,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 581,
+    "2": 581
+  },
+  "min_class": 581,
+  "imbalance_ratio": 1.0,
+  "seconds": 8.2,
+  "usable": true,
+  "reason": "ok"
+}

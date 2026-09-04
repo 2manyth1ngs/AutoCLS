@@ -1,0 +1,21 @@
+{
+  "name": "Ham",
+  "n_train": 109,
+  "n_test": 105,
+  "n_total": 214,
+  "n_channels": 1,
+  "length": 431,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 103,
+    "2": 111
+  },
+  "min_class": 103,
+  "imbalance_ratio": 1.078,
+  "seconds": 6.0,
+  "usable": true,
+  "reason": "ok"
+}

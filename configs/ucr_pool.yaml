@@ -1,0 +1,96 @@
+# WP7-UCR 语料注册表（由 results/ucr_survey/scripts/ucr_survey.py --aggregate 生成，勿手改）
+# 整数据集 = 一个任务：n_classes_range=[K,K]、planned_tasks=1；N 上限见 slice.n_samples（=源池切片同值）；
+# T>1024 前缀截断（crop_len），与源池 Ethanol 同口径。缓存目录 data/raw/ucr_cache（不混 uea_cache）。
+# 硬排除（与源池/靶同源，铁律 6）：['CricketX', 'CricketY', 'CricketZ', 'EthanolLevel', 'Phoneme', 'UWaveGestureLibraryAll', 'UWaveGestureLibraryX', 'UWaveGestureLibraryY', 'UWaveGestureLibraryZ']
+# 名字巧合已核非同源：['FaceAll', 'FaceFour', 'FacesUCR', 'HandOutlines', 'SemgHandMovementCh2']；Semg 三选一（丢 ['SemgHandGenderCh2', 'SemgHandSubjectCh2']）
+encode_length_floor: 50
+slice:
+  seed: 0
+  n_samples: 1024
+  min_samples: 32
+target_pool: []
+source_pool:
+  - {name: ACSF1, domain: UCR, source: uea, n_channels: 1, n_classes: 10, l_enc: 512, crop_len: 512, n_classes_range: [10, 10], planned_tasks: 1}  # N=200
+  - {name: Adiac, domain: UCR, source: uea, n_channels: 1, n_classes: 37, l_enc: 176, crop_len: null, n_classes_range: [37, 37], planned_tasks: 1}  # N=781
+  - {name: ArrowHead, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 251, crop_len: null, n_classes_range: [3, 3], planned_tasks: 1}  # N=211
+  - {name: BME, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 128, crop_len: null, n_classes_range: [3, 3], planned_tasks: 1}  # N=180
+  - {name: CBF, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 128, crop_len: null, n_classes_range: [3, 3], planned_tasks: 1}  # N=930
+  - {name: ChlorineConcentration, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 166, crop_len: null, n_classes_range: [3, 3], planned_tasks: 1}  # N=4307
+  - {name: CinCECGTorso, domain: UCR, source: uea, n_channels: 1, n_classes: 4, l_enc: 512, crop_len: 512, n_classes_range: [4, 4], planned_tasks: 1}  # N=1420
+  - {name: Computers, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 512, crop_len: 512, n_classes_range: [2, 2], planned_tasks: 1}  # N=500
+  - {name: DiatomSizeReduction, domain: UCR, source: uea, n_channels: 1, n_classes: 4, l_enc: 345, crop_len: null, n_classes_range: [4, 4], planned_tasks: 1}  # N=322
+  - {name: DistalPhalanxOutlineAgeGroup, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 80, crop_len: null, n_classes_range: [3, 3], planned_tasks: 1}  # N=539
+  - {name: DistalPhalanxOutlineCorrect, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 80, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=876
+  - {name: DistalPhalanxTW, domain: UCR, source: uea, n_channels: 1, n_classes: 6, l_enc: 80, crop_len: null, n_classes_range: [6, 6], planned_tasks: 1}  # N=539
+  - {name: ECG200, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 96, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=200
+  - {name: ECG5000, domain: UCR, source: uea, n_channels: 1, n_classes: 5, l_enc: 140, crop_len: null, n_classes_range: [5, 5], planned_tasks: 1}  # N=5000
+  - {name: ECGFiveDays, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 136, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=884
+  - {name: EOGHorizontalSignal, domain: UCR, source: uea, n_channels: 1, n_classes: 12, l_enc: 512, crop_len: 512, n_classes_range: [12, 12], planned_tasks: 1}  # N=724
+  - {name: EOGVerticalSignal, domain: UCR, source: uea, n_channels: 1, n_classes: 12, l_enc: 512, crop_len: 512, n_classes_range: [12, 12], planned_tasks: 1}  # N=724
+  - {name: Earthquakes, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 512, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=461
+  - {name: ElectricDevices, domain: UCR, source: uea, n_channels: 1, n_classes: 7, l_enc: 96, crop_len: null, n_classes_range: [7, 7], planned_tasks: 1}  # N=16637
+  - {name: FaceAll, domain: UCR, source: uea, n_channels: 1, n_classes: 14, l_enc: 131, crop_len: null, n_classes_range: [14, 14], planned_tasks: 1}  # N=2250
+  - {name: FacesUCR, domain: UCR, source: uea, n_channels: 1, n_classes: 14, l_enc: 131, crop_len: null, n_classes_range: [14, 14], planned_tasks: 1}  # N=2250
+  - {name: FiftyWords, domain: UCR, source: uea, n_channels: 1, n_classes: 50, l_enc: 270, crop_len: null, n_classes_range: [50, 50], planned_tasks: 1}  # N=905
+  - {name: Fish, domain: UCR, source: uea, n_channels: 1, n_classes: 7, l_enc: 463, crop_len: null, n_classes_range: [7, 7], planned_tasks: 1}  # N=350
+  - {name: FordA, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 500, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=4921
+  - {name: FordB, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 500, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=4446
+  - {name: FreezerRegularTrain, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 301, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=3000
+  - {name: FreezerSmallTrain, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 301, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=2878
+  - {name: Fungi, domain: UCR, source: uea, n_channels: 1, n_classes: 18, l_enc: 201, crop_len: null, n_classes_range: [18, 18], planned_tasks: 1}  # N=204
+  - {name: GunPoint, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 150, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=200
+  - {name: GunPointAgeSpan, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 150, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=451
+  - {name: GunPointMaleVersusFemale, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 150, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=451
+  - {name: GunPointOldVersusYoung, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 150, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=451
+  - {name: Ham, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 431, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=214
+  - {name: HandOutlines, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 512, crop_len: 512, n_classes_range: [2, 2], planned_tasks: 1}  # N=1370
+  - {name: Haptics, domain: UCR, source: uea, n_channels: 1, n_classes: 5, l_enc: 512, crop_len: 512, n_classes_range: [5, 5], planned_tasks: 1}  # N=463
+  - {name: InlineSkate, domain: UCR, source: uea, n_channels: 1, n_classes: 7, l_enc: 512, crop_len: 512, n_classes_range: [7, 7], planned_tasks: 1}  # N=650
+  - {name: InsectEPGRegularTrain, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 512, crop_len: 512, n_classes_range: [3, 3], planned_tasks: 1}  # N=311
+  - {name: InsectEPGSmallTrain, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 512, crop_len: 512, n_classes_range: [3, 3], planned_tasks: 1}  # N=266
+  - {name: InsectWingbeatSound, domain: UCR, source: uea, n_channels: 1, n_classes: 11, l_enc: 256, crop_len: null, n_classes_range: [11, 11], planned_tasks: 1}  # N=2200
+  - {name: LargeKitchenAppliances, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 512, crop_len: 512, n_classes_range: [3, 3], planned_tasks: 1}  # N=750
+  - {name: Mallat, domain: UCR, source: uea, n_channels: 1, n_classes: 8, l_enc: 512, crop_len: 512, n_classes_range: [8, 8], planned_tasks: 1}  # N=2400
+  - {name: MedicalImages, domain: UCR, source: uea, n_channels: 1, n_classes: 10, l_enc: 99, crop_len: null, n_classes_range: [10, 10], planned_tasks: 1}  # N=1141
+  - {name: MiddlePhalanxOutlineAgeGroup, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 80, crop_len: null, n_classes_range: [3, 3], planned_tasks: 1}  # N=554
+  - {name: MiddlePhalanxOutlineCorrect, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 80, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=891
+  - {name: MiddlePhalanxTW, domain: UCR, source: uea, n_channels: 1, n_classes: 6, l_enc: 80, crop_len: null, n_classes_range: [6, 6], planned_tasks: 1}  # N=553
+  - {name: MixedShapesRegularTrain, domain: UCR, source: uea, n_channels: 1, n_classes: 5, l_enc: 512, crop_len: 512, n_classes_range: [5, 5], planned_tasks: 1}  # N=2925
+  - {name: MixedShapesSmallTrain, domain: UCR, source: uea, n_channels: 1, n_classes: 5, l_enc: 512, crop_len: 512, n_classes_range: [5, 5], planned_tasks: 1}  # N=2525
+  - {name: MoteStrain, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 84, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=1272
+  - {name: NonInvasiveFetalECGThorax1, domain: UCR, source: uea, n_channels: 1, n_classes: 42, l_enc: 512, crop_len: 512, n_classes_range: [42, 42], planned_tasks: 1}  # N=3765
+  - {name: NonInvasiveFetalECGThorax2, domain: UCR, source: uea, n_channels: 1, n_classes: 42, l_enc: 512, crop_len: 512, n_classes_range: [42, 42], planned_tasks: 1}  # N=3765
+  - {name: OSULeaf, domain: UCR, source: uea, n_channels: 1, n_classes: 6, l_enc: 427, crop_len: null, n_classes_range: [6, 6], planned_tasks: 1}  # N=442
+  - {name: PhalangesOutlinesCorrect, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 80, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=2658
+  - {name: PigAirwayPressure, domain: UCR, source: uea, n_channels: 1, n_classes: 52, l_enc: 512, crop_len: 512, n_classes_range: [52, 52], planned_tasks: 1}  # N=312
+  - {name: PigArtPressure, domain: UCR, source: uea, n_channels: 1, n_classes: 52, l_enc: 512, crop_len: 512, n_classes_range: [52, 52], planned_tasks: 1}  # N=312
+  - {name: PigCVP, domain: UCR, source: uea, n_channels: 1, n_classes: 52, l_enc: 512, crop_len: 512, n_classes_range: [52, 52], planned_tasks: 1}  # N=312
+  - {name: Plane, domain: UCR, source: uea, n_channels: 1, n_classes: 7, l_enc: 144, crop_len: null, n_classes_range: [7, 7], planned_tasks: 1}  # N=210
+  - {name: PowerCons, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 144, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=360
+  - {name: ProximalPhalanxOutlineAgeGroup, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 80, crop_len: null, n_classes_range: [3, 3], planned_tasks: 1}  # N=605
+  - {name: ProximalPhalanxOutlineCorrect, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 80, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=891
+  - {name: ProximalPhalanxTW, domain: UCR, source: uea, n_channels: 1, n_classes: 6, l_enc: 80, crop_len: null, n_classes_range: [6, 6], planned_tasks: 1}  # N=605
+  - {name: RefrigerationDevices, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 512, crop_len: 512, n_classes_range: [3, 3], planned_tasks: 1}  # N=750
+  - {name: ScreenType, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 512, crop_len: 512, n_classes_range: [3, 3], planned_tasks: 1}  # N=750
+  - {name: SemgHandMovementCh2, domain: UCR, source: uea, n_channels: 1, n_classes: 6, l_enc: 512, crop_len: 512, n_classes_range: [6, 6], planned_tasks: 1}  # N=900
+  - {name: ShapeletSim, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 500, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=200
+  - {name: ShapesAll, domain: UCR, source: uea, n_channels: 1, n_classes: 60, l_enc: 512, crop_len: null, n_classes_range: [60, 60], planned_tasks: 1}  # N=1200
+  - {name: SmallKitchenAppliances, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 512, crop_len: 512, n_classes_range: [3, 3], planned_tasks: 1}  # N=750
+  - {name: SonyAIBORobotSurface1, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 70, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=621
+  - {name: SonyAIBORobotSurface2, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 65, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=980
+  - {name: StarLightCurves, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 512, crop_len: 512, n_classes_range: [3, 3], planned_tasks: 1}  # N=9236
+  - {name: Strawberry, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 235, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=983
+  - {name: SwedishLeaf, domain: UCR, source: uea, n_channels: 1, n_classes: 15, l_enc: 128, crop_len: null, n_classes_range: [15, 15], planned_tasks: 1}  # N=1125
+  - {name: Symbols, domain: UCR, source: uea, n_channels: 1, n_classes: 6, l_enc: 398, crop_len: null, n_classes_range: [6, 6], planned_tasks: 1}  # N=1020
+  - {name: SyntheticControl, domain: UCR, source: uea, n_channels: 1, n_classes: 6, l_enc: 60, crop_len: null, n_classes_range: [6, 6], planned_tasks: 1}  # N=600
+  - {name: ToeSegmentation1, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 277, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=268
+  - {name: ToeSegmentation2, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 343, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=166
+  - {name: Trace, domain: UCR, source: uea, n_channels: 1, n_classes: 4, l_enc: 275, crop_len: null, n_classes_range: [4, 4], planned_tasks: 1}  # N=200
+  - {name: TwoLeadECG, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 82, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=1162
+  - {name: TwoPatterns, domain: UCR, source: uea, n_channels: 1, n_classes: 4, l_enc: 128, crop_len: null, n_classes_range: [4, 4], planned_tasks: 1}  # N=5000
+  - {name: UMD, domain: UCR, source: uea, n_channels: 1, n_classes: 3, l_enc: 150, crop_len: null, n_classes_range: [3, 3], planned_tasks: 1}  # N=180
+  - {name: Wafer, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 152, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=7164
+  - {name: WordSynonyms, domain: UCR, source: uea, n_channels: 1, n_classes: 25, l_enc: 270, crop_len: null, n_classes_range: [25, 25], planned_tasks: 1}  # N=905
+  - {name: Worms, domain: UCR, source: uea, n_channels: 1, n_classes: 5, l_enc: 512, crop_len: 512, n_classes_range: [5, 5], planned_tasks: 1}  # N=258
+  - {name: WormsTwoClass, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 512, crop_len: 512, n_classes_range: [2, 2], planned_tasks: 1}  # N=258
+  - {name: Yoga, domain: UCR, source: uea, n_channels: 1, n_classes: 2, l_enc: 426, crop_len: null, n_classes_range: [2, 2], planned_tasks: 1}  # N=3300

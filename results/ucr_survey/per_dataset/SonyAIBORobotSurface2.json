@@ -1,0 +1,21 @@
+{
+  "name": "SonyAIBORobotSurface2",
+  "n_train": 27,
+  "n_test": 953,
+  "n_total": 980,
+  "n_channels": 1,
+  "length": 65,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 376,
+    "2": 604
+  },
+  "min_class": 376,
+  "imbalance_ratio": 1.606,
+  "seconds": 6.2,
+  "usable": true,
+  "reason": "ok"
+}

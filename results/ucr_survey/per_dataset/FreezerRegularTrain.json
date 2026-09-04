@@ -1,0 +1,21 @@
+{
+  "name": "FreezerRegularTrain",
+  "n_train": 150,
+  "n_test": 2850,
+  "n_total": 3000,
+  "n_channels": 1,
+  "length": 301,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 1500,
+    "2": 1500
+  },
+  "min_class": 1500,
+  "imbalance_ratio": 1.0,
+  "seconds": 0.0,
+  "usable": true,
+  "reason": "ok"
+}

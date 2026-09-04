@@ -1,0 +1,21 @@
+{
+  "name": "Earthquakes",
+  "n_train": 322,
+  "n_test": 139,
+  "n_total": 461,
+  "n_channels": 1,
+  "length": 512,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "0": 368,
+    "1": 93
+  },
+  "min_class": 93,
+  "imbalance_ratio": 3.957,
+  "seconds": 7.5,
+  "usable": true,
+  "reason": "ok"
+}

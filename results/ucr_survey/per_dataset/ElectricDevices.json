@@ -1,0 +1,26 @@
+{
+  "name": "ElectricDevices",
+  "n_train": 8926,
+  "n_test": 7711,
+  "n_total": 16637,
+  "n_channels": 1,
+  "length": 96,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 7,
+  "class_counts": {
+    "1": 1394,
+    "2": 4187,
+    "3": 1606,
+    "4": 2639,
+    "5": 4275,
+    "6": 1252,
+    "7": 1284
+  },
+  "min_class": 1252,
+  "imbalance_ratio": 3.415,
+  "seconds": 0.1,
+  "usable": true,
+  "reason": "ok"
+}

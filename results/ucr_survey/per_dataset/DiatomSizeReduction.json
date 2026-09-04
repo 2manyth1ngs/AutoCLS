@@ -1,0 +1,23 @@
+{
+  "name": "DiatomSizeReduction",
+  "n_train": 16,
+  "n_test": 306,
+  "n_total": 322,
+  "n_channels": 1,
+  "length": 345,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 4,
+  "class_counts": {
+    "1": 34,
+    "2": 98,
+    "3": 99,
+    "4": 91
+  },
+  "min_class": 34,
+  "imbalance_ratio": 2.912,
+  "seconds": 7.0,
+  "usable": true,
+  "reason": "ok"
+}

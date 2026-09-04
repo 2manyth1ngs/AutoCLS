@@ -1,0 +1,21 @@
+{
+  "name": "HouseTwenty",
+  "n_train": 40,
+  "n_test": 119,
+  "n_total": 159,
+  "n_channels": 1,
+  "length": 2000,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 89,
+    "2": 70
+  },
+  "min_class": 70,
+  "imbalance_ratio": 1.271,
+  "seconds": 8.6,
+  "usable": false,
+  "reason": "n_eval<50"
+}

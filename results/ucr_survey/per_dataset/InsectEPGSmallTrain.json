@@ -1,0 +1,22 @@
+{
+  "name": "InsectEPGSmallTrain",
+  "n_train": 17,
+  "n_test": 249,
+  "n_total": 266,
+  "n_channels": 1,
+  "length": 601,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 3,
+  "class_counts": {
+    "1": 95,
+    "2": 126,
+    "3": 45
+  },
+  "min_class": 45,
+  "imbalance_ratio": 2.8,
+  "seconds": 6.8,
+  "usable": true,
+  "reason": "ok"
+}

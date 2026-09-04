@@ -1,0 +1,21 @@
+{
+  "name": "FordB",
+  "n_train": 3636,
+  "n_test": 810,
+  "n_total": 4446,
+  "n_channels": 1,
+  "length": 500,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "-1": 2261,
+    "1": 2185
+  },
+  "min_class": 2185,
+  "imbalance_ratio": 1.035,
+  "seconds": 0.0,
+  "usable": true,
+  "reason": "ok"
+}

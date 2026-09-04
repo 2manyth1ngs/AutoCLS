@@ -1,0 +1,21 @@
+{
+  "name": "BirdChicken",
+  "n_train": 20,
+  "n_test": 20,
+  "n_total": 40,
+  "n_channels": 1,
+  "length": 512,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 20,
+    "2": 20
+  },
+  "min_class": 20,
+  "imbalance_ratio": 1.0,
+  "seconds": 4.8,
+  "usable": false,
+  "reason": "n_eval<50"
+}

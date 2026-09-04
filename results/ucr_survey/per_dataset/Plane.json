@@ -1,0 +1,26 @@
+{
+  "name": "Plane",
+  "n_train": 105,
+  "n_test": 105,
+  "n_total": 210,
+  "n_channels": 1,
+  "length": 144,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 7,
+  "class_counts": {
+    "1": 30,
+    "2": 30,
+    "3": 30,
+    "4": 30,
+    "5": 30,
+    "6": 30,
+    "7": 30
+  },
+  "min_class": 30,
+  "imbalance_ratio": 1.0,
+  "seconds": 7.6,
+  "usable": true,
+  "reason": "ok"
+}

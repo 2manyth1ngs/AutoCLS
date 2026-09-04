@@ -1,0 +1,29 @@
+{
+  "name": "MedicalImages",
+  "n_train": 381,
+  "n_test": 760,
+  "n_total": 1141,
+  "n_channels": 1,
+  "length": 99,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 10,
+  "class_counts": {
+    "1": 112,
+    "10": 594,
+    "2": 65,
+    "3": 75,
+    "4": 48,
+    "5": 45,
+    "6": 23,
+    "7": 49,
+    "8": 24,
+    "9": 106
+  },
+  "min_class": 23,
+  "imbalance_ratio": 25.826,
+  "seconds": 7.0,
+  "usable": true,
+  "reason": "ok"
+}

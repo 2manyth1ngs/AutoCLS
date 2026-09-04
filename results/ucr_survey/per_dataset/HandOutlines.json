@@ -1,0 +1,21 @@
+{
+  "name": "HandOutlines",
+  "n_train": 1000,
+  "n_test": 370,
+  "n_total": 1370,
+  "n_channels": 1,
+  "length": 2709,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "0": 495,
+    "1": 875
+  },
+  "min_class": 495,
+  "imbalance_ratio": 1.768,
+  "seconds": 47.6,
+  "usable": true,
+  "reason": "ok"
+}

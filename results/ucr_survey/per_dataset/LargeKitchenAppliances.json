@@ -1,0 +1,22 @@
+{
+  "name": "LargeKitchenAppliances",
+  "n_train": 375,
+  "n_test": 375,
+  "n_total": 750,
+  "n_channels": 1,
+  "length": 720,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 3,
+  "class_counts": {
+    "1": 250,
+    "2": 250,
+    "3": 250
+  },
+  "min_class": 250,
+  "imbalance_ratio": 1.0,
+  "seconds": 11.8,
+  "usable": true,
+  "reason": "ok"
+}

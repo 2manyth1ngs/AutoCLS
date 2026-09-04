@@ -1,0 +1,22 @@
+{
+  "name": "BME",
+  "n_train": 30,
+  "n_test": 150,
+  "n_total": 180,
+  "n_channels": 1,
+  "length": 128,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 3,
+  "class_counts": {
+    "1": 60,
+    "2": 60,
+    "3": 60
+  },
+  "min_class": 60,
+  "imbalance_ratio": 1.0,
+  "seconds": 5.8,
+  "usable": true,
+  "reason": "ok"
+}

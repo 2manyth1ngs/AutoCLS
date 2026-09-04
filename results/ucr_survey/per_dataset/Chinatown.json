@@ -1,0 +1,21 @@
+{
+  "name": "Chinatown",
+  "n_train": 20,
+  "n_test": 343,
+  "n_total": 363,
+  "n_channels": 1,
+  "length": 24,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 104,
+    "2": 259
+  },
+  "min_class": 104,
+  "imbalance_ratio": 2.49,
+  "seconds": 4.2,
+  "usable": false,
+  "reason": "L<50"
+}

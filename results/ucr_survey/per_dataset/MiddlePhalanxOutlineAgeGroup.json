@@ -1,0 +1,22 @@
+{
+  "name": "MiddlePhalanxOutlineAgeGroup",
+  "n_train": 400,
+  "n_test": 154,
+  "n_total": 554,
+  "n_channels": 1,
+  "length": 80,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 3,
+  "class_counts": {
+    "1": 92,
+    "2": 196,
+    "3": 266
+  },
+  "min_class": 92,
+  "imbalance_ratio": 2.891,
+  "seconds": 6.7,
+  "usable": true,
+  "reason": "ok"
+}

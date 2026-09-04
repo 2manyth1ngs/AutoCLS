@@ -1,0 +1,21 @@
+{
+  "name": "WormsTwoClass",
+  "n_train": 181,
+  "n_test": 77,
+  "n_total": 258,
+  "n_channels": 1,
+  "length": 900,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 109,
+    "2": 149
+  },
+  "min_class": 109,
+  "imbalance_ratio": 1.367,
+  "seconds": 12.2,
+  "usable": true,
+  "reason": "ok"
+}

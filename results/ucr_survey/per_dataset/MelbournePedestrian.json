@@ -1,0 +1,29 @@
+{
+  "name": "MelbournePedestrian",
+  "n_train": 1194,
+  "n_test": 2439,
+  "n_total": 3633,
+  "n_channels": 1,
+  "length": null,
+  "equal_length": false,
+  "missing": true,
+  "univariate": true,
+  "n_classes": 10,
+  "class_counts": {
+    "1": 365,
+    "10": 365,
+    "2": 365,
+    "3": 365,
+    "4": 365,
+    "5": 365,
+    "6": 365,
+    "7": 365,
+    "8": 349,
+    "9": 364
+  },
+  "min_class": 349,
+  "imbalance_ratio": 1.046,
+  "seconds": 6.5,
+  "usable": false,
+  "reason": "variable_length"
+}

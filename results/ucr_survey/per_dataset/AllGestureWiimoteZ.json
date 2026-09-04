@@ -1,0 +1,29 @@
+{
+  "name": "AllGestureWiimoteZ",
+  "n_train": 300,
+  "n_test": 700,
+  "n_total": 1000,
+  "n_channels": 1,
+  "length": null,
+  "equal_length": false,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 10,
+  "class_counts": {
+    "1": 100,
+    "10": 100,
+    "2": 100,
+    "3": 100,
+    "4": 100,
+    "5": 100,
+    "6": 100,
+    "7": 100,
+    "8": 100,
+    "9": 100
+  },
+  "min_class": 100,
+  "imbalance_ratio": 1.0,
+  "seconds": 7.4,
+  "usable": false,
+  "reason": "variable_length"
+}

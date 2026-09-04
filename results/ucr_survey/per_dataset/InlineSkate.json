@@ -1,0 +1,26 @@
+{
+  "name": "InlineSkate",
+  "n_train": 100,
+  "n_test": 550,
+  "n_total": 650,
+  "n_channels": 1,
+  "length": 1882,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 7,
+  "class_counts": {
+    "1": 62,
+    "2": 100,
+    "3": 103,
+    "4": 108,
+    "5": 117,
+    "6": 98,
+    "7": 62
+  },
+  "min_class": 62,
+  "imbalance_ratio": 1.887,
+  "seconds": 18.9,
+  "usable": true,
+  "reason": "ok"
+}

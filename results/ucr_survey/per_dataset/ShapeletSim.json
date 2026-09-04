@@ -1,0 +1,21 @@
+{
+  "name": "ShapeletSim",
+  "n_train": 20,
+  "n_test": 180,
+  "n_total": 200,
+  "n_channels": 1,
+  "length": 500,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "0": 100,
+    "1": 100
+  },
+  "min_class": 100,
+  "imbalance_ratio": 1.0,
+  "seconds": 8.5,
+  "usable": true,
+  "reason": "ok"
+}

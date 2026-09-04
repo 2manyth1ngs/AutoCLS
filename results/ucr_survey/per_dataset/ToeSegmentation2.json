@@ -1,0 +1,21 @@
+{
+  "name": "ToeSegmentation2",
+  "n_train": 36,
+  "n_test": 130,
+  "n_total": 166,
+  "n_channels": 1,
+  "length": 343,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "0": 124,
+    "1": 42
+  },
+  "min_class": 42,
+  "imbalance_ratio": 2.952,
+  "seconds": 7.8,
+  "usable": true,
+  "reason": "ok"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "DistalPhalanxOutlineAgeGroup",
+  "n_train": 400,
+  "n_test": 139,
+  "n_total": 539,
+  "n_channels": 1,
+  "length": 80,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 3,
+  "class_counts": {
+    "1": 45,
+    "2": 172,
+    "3": 322
+  },
+  "min_class": 45,
+  "imbalance_ratio": 7.156,
+  "seconds": 7.3,
+  "usable": true,
+  "reason": "ok"
+}

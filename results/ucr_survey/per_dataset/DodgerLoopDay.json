@@ -1,0 +1,26 @@
+{
+  "name": "DodgerLoopDay",
+  "n_train": 78,
+  "n_test": 80,
+  "n_total": 158,
+  "n_channels": 1,
+  "length": 288,
+  "equal_length": true,
+  "missing": true,
+  "univariate": true,
+  "n_classes": 7,
+  "class_counts": {
+    "1": 24,
+    "2": 21,
+    "3": 20,
+    "4": 22,
+    "5": 24,
+    "6": 25,
+    "7": 22
+  },
+  "min_class": 20,
+  "imbalance_ratio": 1.25,
+  "seconds": 8.3,
+  "usable": false,
+  "reason": "missing_values"
+}

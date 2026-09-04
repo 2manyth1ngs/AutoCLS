@@ -1,0 +1,21 @@
+{
+  "name": "Computers",
+  "n_train": 250,
+  "n_test": 250,
+  "n_total": 500,
+  "n_channels": 1,
+  "length": 720,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 250,
+    "2": 250
+  },
+  "min_class": 250,
+  "imbalance_ratio": 1.0,
+  "seconds": 12.2,
+  "usable": true,
+  "reason": "ok"
+}

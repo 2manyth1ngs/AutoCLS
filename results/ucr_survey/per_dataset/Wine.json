@@ -1,0 +1,21 @@
+{
+  "name": "Wine",
+  "n_train": 57,
+  "n_test": 54,
+  "n_total": 111,
+  "n_channels": 1,
+  "length": 234,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 57,
+    "2": 54
+  },
+  "min_class": 54,
+  "imbalance_ratio": 1.056,
+  "seconds": 6.7,
+  "usable": false,
+  "reason": "n_eval<50"
+}

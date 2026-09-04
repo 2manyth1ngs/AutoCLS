@@ -1,0 +1,21 @@
+{
+  "name": "ECGFiveDays",
+  "n_train": 23,
+  "n_test": 861,
+  "n_total": 884,
+  "n_channels": 1,
+  "length": 136,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 442,
+    "2": 442
+  },
+  "min_class": 442,
+  "imbalance_ratio": 1.0,
+  "seconds": 5.8,
+  "usable": true,
+  "reason": "ok"
+}

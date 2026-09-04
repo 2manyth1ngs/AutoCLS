@@ -1,0 +1,27 @@
+{
+  "name": "Mallat",
+  "n_train": 55,
+  "n_test": 2345,
+  "n_total": 2400,
+  "n_channels": 1,
+  "length": 1024,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 8,
+  "class_counts": {
+    "1": 300,
+    "2": 300,
+    "3": 300,
+    "4": 300,
+    "5": 300,
+    "6": 300,
+    "7": 300,
+    "8": 300
+  },
+  "min_class": 300,
+  "imbalance_ratio": 1.0,
+  "seconds": 33.8,
+  "usable": true,
+  "reason": "ok"
+}

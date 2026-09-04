@@ -1,0 +1,25 @@
+{
+  "name": "SemgHandMovementCh2",
+  "n_train": 450,
+  "n_test": 450,
+  "n_total": 900,
+  "n_channels": 1,
+  "length": 1500,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 6,
+  "class_counts": {
+    "1": 150,
+    "2": 150,
+    "3": 150,
+    "4": 150,
+    "5": 150,
+    "6": 150
+  },
+  "min_class": 150,
+  "imbalance_ratio": 1.0,
+  "seconds": 24.3,
+  "usable": true,
+  "reason": "ok"
+}

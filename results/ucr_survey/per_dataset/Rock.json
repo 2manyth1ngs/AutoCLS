@@ -1,0 +1,23 @@
+{
+  "name": "Rock",
+  "n_train": 20,
+  "n_test": 50,
+  "n_total": 70,
+  "n_channels": 1,
+  "length": 2844,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 4,
+  "class_counts": {
+    "1": 26,
+    "2": 14,
+    "3": 11,
+    "4": 19
+  },
+  "min_class": 11,
+  "imbalance_ratio": 2.364,
+  "seconds": 9.5,
+  "usable": false,
+  "reason": "n_eval<50"
+}

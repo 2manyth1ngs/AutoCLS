@@ -1,0 +1,21 @@
+{
+  "name": "Herring",
+  "n_train": 64,
+  "n_test": 64,
+  "n_total": 128,
+  "n_channels": 1,
+  "length": 512,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 77,
+    "2": 51
+  },
+  "min_class": 51,
+  "imbalance_ratio": 1.51,
+  "seconds": 5.8,
+  "usable": false,
+  "reason": "n_eval<50"
+}

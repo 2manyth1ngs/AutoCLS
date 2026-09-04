@@ -1,0 +1,21 @@
+{
+  "name": "PhalangesOutlinesCorrect",
+  "n_train": 1800,
+  "n_test": 858,
+  "n_total": 2658,
+  "n_channels": 1,
+  "length": 80,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "0": 960,
+    "1": 1698
+  },
+  "min_class": 960,
+  "imbalance_ratio": 1.769,
+  "seconds": 8.7,
+  "usable": true,
+  "reason": "ok"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "ProximalPhalanxOutlineCorrect",
+  "n_train": 600,
+  "n_test": 291,
+  "n_total": 891,
+  "n_channels": 1,
+  "length": 80,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "0": 286,
+    "1": 605
+  },
+  "min_class": 286,
+  "imbalance_ratio": 2.115,
+  "seconds": 6.9,
+  "usable": true,
+  "reason": "ok"
+}

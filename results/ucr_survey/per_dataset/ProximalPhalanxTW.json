@@ -1,0 +1,25 @@
+{
+  "name": "ProximalPhalanxTW",
+  "n_train": 400,
+  "n_test": 205,
+  "n_total": 605,
+  "n_channels": 1,
+  "length": 80,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 6,
+  "class_counts": {
+    "3": 18,
+    "4": 176,
+    "5": 98,
+    "6": 30,
+    "7": 31,
+    "8": 252
+  },
+  "min_class": 18,
+  "imbalance_ratio": 14.0,
+  "seconds": 7.1,
+  "usable": true,
+  "reason": "ok"
+}

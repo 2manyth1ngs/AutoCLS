@@ -1,0 +1,25 @@
+{
+  "name": "Symbols",
+  "n_train": 25,
+  "n_test": 995,
+  "n_total": 1020,
+  "n_channels": 1,
+  "length": 398,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 6,
+  "class_counts": {
+    "1": 181,
+    "2": 162,
+    "3": 167,
+    "4": 181,
+    "5": 162,
+    "6": 167
+  },
+  "min_class": 162,
+  "imbalance_ratio": 1.117,
+  "seconds": 14.3,
+  "usable": true,
+  "reason": "ok"
+}

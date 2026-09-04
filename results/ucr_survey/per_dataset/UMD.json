@@ -1,0 +1,22 @@
+{
+  "name": "UMD",
+  "n_train": 36,
+  "n_test": 144,
+  "n_total": 180,
+  "n_channels": 1,
+  "length": 150,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 3,
+  "class_counts": {
+    "1": 60,
+    "2": 60,
+    "3": 60
+  },
+  "min_class": 60,
+  "imbalance_ratio": 1.0,
+  "seconds": 6.6,
+  "usable": true,
+  "reason": "ok"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "DistalPhalanxTW",
+  "n_train": 400,
+  "n_test": 139,
+  "n_total": 539,
+  "n_channels": 1,
+  "length": 80,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 6,
+  "class_counts": {
+    "3": 47,
+    "4": 47,
+    "5": 121,
+    "6": 43,
+    "7": 26,
+    "8": 255
+  },
+  "min_class": 26,
+  "imbalance_ratio": 9.808,
+  "seconds": 5.8,
+  "usable": true,
+  "reason": "ok"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "PLAID",
+  "n_train": 537,
+  "n_test": 537,
+  "n_total": 1074,
+  "n_channels": 1,
+  "length": null,
+  "equal_length": false,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 11,
+  "class_counts": {
+    "0": 66,
+    "1": 175,
+    "10": 26,
+    "2": 115,
+    "3": 38,
+    "4": 156,
+    "5": 35,
+    "6": 114,
+    "7": 172,
+    "8": 139,
+    "9": 38
+  },
+  "min_class": 26,
+  "imbalance_ratio": 6.731,
+  "seconds": 11.9,
+  "usable": false,
+  "reason": "variable_length"
+}

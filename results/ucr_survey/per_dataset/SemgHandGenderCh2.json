@@ -1,0 +1,21 @@
+{
+  "name": "SemgHandGenderCh2",
+  "n_train": 300,
+  "n_test": 600,
+  "n_total": 900,
+  "n_channels": 1,
+  "length": 1500,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 540,
+    "2": 360
+  },
+  "min_class": 360,
+  "imbalance_ratio": 1.5,
+  "seconds": 25.8,
+  "usable": false,
+  "reason": "semg_duplicate"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "MixedShapesRegularTrain",
+  "n_train": 500,
+  "n_test": 2425,
+  "n_total": 2925,
+  "n_channels": 1,
+  "length": 1024,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 5,
+  "class_counts": {
+    "1": 558,
+    "2": 754,
+    "3": 518,
+    "4": 681,
+    "5": 414
+  },
+  "min_class": 414,
+  "imbalance_ratio": 1.821,
+  "seconds": 0.1,
+  "usable": true,
+  "reason": "ok"
+}

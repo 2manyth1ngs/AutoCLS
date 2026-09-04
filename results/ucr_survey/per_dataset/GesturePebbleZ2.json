@@ -1,0 +1,25 @@
+{
+  "name": "GesturePebbleZ2",
+  "n_train": 146,
+  "n_test": 158,
+  "n_total": 304,
+  "n_channels": 1,
+  "length": null,
+  "equal_length": false,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 6,
+  "class_counts": {
+    "1": 49,
+    "2": 45,
+    "3": 54,
+    "4": 53,
+    "5": 52,
+    "6": 51
+  },
+  "min_class": 45,
+  "imbalance_ratio": 1.2,
+  "seconds": 6.2,
+  "usable": false,
+  "reason": "variable_length"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "InsectWingbeatSound",
+  "n_train": 220,
+  "n_test": 1980,
+  "n_total": 2200,
+  "n_channels": 1,
+  "length": 256,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 11,
+  "class_counts": {
+    "1": 200,
+    "10": 200,
+    "11": 200,
+    "2": 200,
+    "3": 200,
+    "4": 200,
+    "5": 200,
+    "6": 200,
+    "7": 200,
+    "8": 200,
+    "9": 200
+  },
+  "min_class": 200,
+  "imbalance_ratio": 1.0,
+  "seconds": 0.0,
+  "usable": true,
+  "reason": "ok"
+}

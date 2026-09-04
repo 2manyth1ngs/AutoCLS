@@ -1,0 +1,23 @@
+{
+  "name": "CinCECGTorso",
+  "n_train": 40,
+  "n_test": 1380,
+  "n_total": 1420,
+  "n_channels": 1,
+  "length": 1639,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 4,
+  "class_counts": {
+    "1": 355,
+    "2": 355,
+    "3": 355,
+    "4": 355
+  },
+  "min_class": 355,
+  "imbalance_ratio": 1.0,
+  "seconds": 28.3,
+  "usable": true,
+  "reason": "ok"
+}

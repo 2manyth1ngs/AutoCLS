@@ -1,0 +1,23 @@
+{
+  "name": "FaceFour",
+  "n_train": 24,
+  "n_test": 88,
+  "n_total": 112,
+  "n_channels": 1,
+  "length": 350,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 4,
+  "class_counts": {
+    "1": 22,
+    "2": 34,
+    "3": 29,
+    "4": 27
+  },
+  "min_class": 22,
+  "imbalance_ratio": 1.545,
+  "seconds": 5.2,
+  "usable": false,
+  "reason": "n_eval<50"
+}

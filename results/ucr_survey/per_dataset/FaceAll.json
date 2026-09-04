@@ -1,0 +1,33 @@
+{
+  "name": "FaceAll",
+  "n_train": 560,
+  "n_test": 1690,
+  "n_total": 2250,
+  "n_channels": 1,
+  "length": 131,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 14,
+  "class_counts": {
+    "1": 112,
+    "10": 135,
+    "11": 48,
+    "12": 106,
+    "13": 327,
+    "14": 72,
+    "2": 178,
+    "3": 176,
+    "4": 171,
+    "5": 176,
+    "6": 187,
+    "7": 149,
+    "8": 273,
+    "9": 140
+  },
+  "min_class": 48,
+  "imbalance_ratio": 6.812,
+  "seconds": 10.8,
+  "usable": true,
+  "reason": "ok"
+}

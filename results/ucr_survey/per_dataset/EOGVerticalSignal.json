@@ -1,0 +1,31 @@
+{
+  "name": "EOGVerticalSignal",
+  "n_train": 362,
+  "n_test": 362,
+  "n_total": 724,
+  "n_channels": 1,
+  "length": 1250,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 12,
+  "class_counts": {
+    "1": 60,
+    "10": 60,
+    "11": 61,
+    "12": 59,
+    "2": 60,
+    "3": 60,
+    "4": 60,
+    "5": 61,
+    "6": 61,
+    "7": 61,
+    "8": 60,
+    "9": 61
+  },
+  "min_class": 59,
+  "imbalance_ratio": 1.034,
+  "seconds": 14.8,
+  "usable": true,
+  "reason": "ok"
+}

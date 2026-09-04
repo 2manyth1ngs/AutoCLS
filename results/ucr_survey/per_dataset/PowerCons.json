@@ -1,0 +1,21 @@
+{
+  "name": "PowerCons",
+  "n_train": 180,
+  "n_test": 180,
+  "n_total": 360,
+  "n_channels": 1,
+  "length": 144,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 180,
+    "2": 180
+  },
+  "min_class": 180,
+  "imbalance_ratio": 1.0,
+  "seconds": 7.7,
+  "usable": true,
+  "reason": "ok"
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Lightning7",
+  "n_train": 70,
+  "n_test": 73,
+  "n_total": 143,
+  "n_channels": 1,
+  "length": 319,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 7,
+  "class_counts": {
+    "0": 18,
+    "1": 17,
+    "2": 14,
+    "3": 19,
+    "4": 15,
+    "5": 38,
+    "6": 22
+  },
+  "min_class": 14,
+  "imbalance_ratio": 2.714,
+  "seconds": 3.5,
+  "usable": false,
+  "reason": "n_eval<50"
+}

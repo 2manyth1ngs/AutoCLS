@@ -1,0 +1,21 @@
+{
+  "name": "GunPointOldVersusYoung",
+  "n_train": 136,
+  "n_test": 315,
+  "n_total": 451,
+  "n_channels": 1,
+  "length": 150,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 215,
+    "2": 236
+  },
+  "min_class": 215,
+  "imbalance_ratio": 1.098,
+  "seconds": 6.4,
+  "usable": true,
+  "reason": "ok"
+}

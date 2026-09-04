@@ -1,0 +1,21 @@
+{
+  "name": "Coffee",
+  "n_train": 28,
+  "n_test": 28,
+  "n_total": 56,
+  "n_channels": 1,
+  "length": 286,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "0": 29,
+    "1": 27
+  },
+  "min_class": 27,
+  "imbalance_ratio": 1.074,
+  "seconds": 5.9,
+  "usable": false,
+  "reason": "n_eval<50"
+}

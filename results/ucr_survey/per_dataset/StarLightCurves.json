@@ -1,0 +1,22 @@
+{
+  "name": "StarLightCurves",
+  "n_train": 1000,
+  "n_test": 8236,
+  "n_total": 9236,
+  "n_channels": 1,
+  "length": 1024,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 3,
+  "class_counts": {
+    "1": 1329,
+    "2": 2580,
+    "3": 5327
+  },
+  "min_class": 1329,
+  "imbalance_ratio": 4.008,
+  "seconds": 0.3,
+  "usable": true,
+  "reason": "ok"
+}

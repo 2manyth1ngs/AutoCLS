@@ -1,0 +1,21 @@
+{
+  "name": "Lightning2",
+  "n_train": 60,
+  "n_test": 61,
+  "n_total": 121,
+  "n_channels": 1,
+  "length": 637,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "-1": 48,
+    "1": 73
+  },
+  "min_class": 48,
+  "imbalance_ratio": 1.521,
+  "seconds": 6.2,
+  "usable": false,
+  "reason": "n_eval<50"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "MiddlePhalanxTW",
+  "n_train": 399,
+  "n_test": 154,
+  "n_total": 553,
+  "n_channels": 1,
+  "length": 80,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 6,
+  "class_counts": {
+    "3": 82,
+    "4": 128,
+    "5": 66,
+    "6": 41,
+    "7": 34,
+    "8": 202
+  },
+  "min_class": 34,
+  "imbalance_ratio": 5.941,
+  "seconds": 5.7,
+  "usable": true,
+  "reason": "ok"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "ChlorineConcentration",
+  "n_train": 467,
+  "n_test": 3840,
+  "n_total": 4307,
+  "n_channels": 1,
+  "length": 166,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 3,
+  "class_counts": {
+    "1": 1000,
+    "2": 1000,
+    "3": 2307
+  },
+  "min_class": 1000,
+  "imbalance_ratio": 2.307,
+  "seconds": 0.0,
+  "usable": true,
+  "reason": "ok"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Worms",
+  "n_train": 181,
+  "n_test": 77,
+  "n_total": 258,
+  "n_channels": 1,
+  "length": 900,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 5,
+  "class_counts": {
+    "1": 109,
+    "2": 44,
+    "3": 35,
+    "4": 45,
+    "5": 25
+  },
+  "min_class": 25,
+  "imbalance_ratio": 4.36,
+  "seconds": 10.6,
+  "usable": true,
+  "reason": "ok"
+}

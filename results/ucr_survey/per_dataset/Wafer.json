@@ -1,0 +1,21 @@
+{
+  "name": "Wafer",
+  "n_train": 1000,
+  "n_test": 6164,
+  "n_total": 7164,
+  "n_channels": 1,
+  "length": 152,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "-1": 762,
+    "1": 6402
+  },
+  "min_class": 762,
+  "imbalance_ratio": 8.402,
+  "seconds": 0.1,
+  "usable": true,
+  "reason": "ok"
+}

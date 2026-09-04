@@ -1,0 +1,29 @@
+{
+  "name": "PickupGestureWiimoteZ",
+  "n_train": 50,
+  "n_test": 50,
+  "n_total": 100,
+  "n_channels": 1,
+  "length": null,
+  "equal_length": false,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 10,
+  "class_counts": {
+    "1": 10,
+    "10": 10,
+    "2": 10,
+    "3": 10,
+    "4": 10,
+    "5": 10,
+    "6": 10,
+    "7": 10,
+    "8": 10,
+    "9": 10
+  },
+  "min_class": 10,
+  "imbalance_ratio": 1.0,
+  "seconds": 6.2,
+  "usable": false,
+  "reason": "variable_length"
+}

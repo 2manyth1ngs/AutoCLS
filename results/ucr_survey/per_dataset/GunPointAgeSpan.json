@@ -1,0 +1,21 @@
+{
+  "name": "GunPointAgeSpan",
+  "n_train": 135,
+  "n_test": 316,
+  "n_total": 451,
+  "n_channels": 1,
+  "length": 150,
+  "equal_length": true,
+  "missing": false,
+  "univariate": true,
+  "n_classes": 2,
+  "class_counts": {
+    "1": 228,
+    "2": 223
+  },
+  "min_class": 223,
+  "imbalance_ratio": 1.022,
+  "seconds": 7.2,
+  "usable": true,
+  "reason": "ok"
+}
