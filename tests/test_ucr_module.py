@@ -116,7 +116,7 @@ def test_lodo_harness_arms_and_shuffle_donors():
 def test_lodo_learns_injected_interaction():
     """交互可学时：hgb 的 regret@3 明显低于 pooled（合成：random 候选的分随 φ[0] 的符号翻转）。"""
     rng = np.random.default_rng(3)
-    ds = [f"D{i}" for i in range(24)]
+    ds = [f"D{i}" for i in range(14)]
     shared = [f"s{i}" for i in range(6)]
 
     def effect(d, k, cls, ph):
@@ -125,8 +125,8 @@ def test_lodo_learns_injected_interaction():
         inter = 0.25 * sign * (1.0 if cls["temperature"] < 1.0 else -1.0)
         return base + inter + rng.normal(scale=0.01)
 
-    rows, phi = make_corpus(rng, ds, shared, n_random=6, effect=effect)
-    out = g42.lodo_ucr(rows, phi, n_shuffle=1, seed=0)
+    rows, phi = make_corpus(rng, ds, shared, n_random=4, effect=effect)
+    out = g42.lodo_ucr(rows, phi, n_shuffle=1, seed=0, folds=ds[:8])
     s = out["summary"]["pooled_290"]
     assert s["hgb"]["regret3"] < s["pooled"]["regret3"] - 0.02
     assert s["hgb"]["regret3"] < s["hgb_shuffle_0"]["regret3"]

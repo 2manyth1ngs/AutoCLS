@@ -84,4 +84,8 @@ CROP_LEN=512：档 C 成本约减半、并发可到 4 → 墙钟 ≈ 4.4 h ≈ $
 单条 50.8 s（无争用）、中位 88 s（与单测同跑）。（跑后修订记录写在下方。）
 
 ### 跑后修订记录（如实登记，不改判读线）
-（空）
+- 2026-09-04 pod `7r0xkwmqbeoxjm`（RTX 5090 32 GB，卷 hgj73ti51t EU-RO-1，$0.99/h；deploy 循环误开的第二个 pod `28w37wrhpqmmms` 22 s 内已 stop，confirm 3/3）。
+  torch 2.8.0+cu128 sm_120（与 MX-3-PQ 同指纹）；md5 ALL MATCH；pod 重算 tasks.json 与本地 84 任务逐项一致。
+- pilot（3 数据集并发，各 20 条）：ECG5000（T 140, N 1024）中位 16.8 s / p90 26.6；Ham（431, 214）23.1 / 49.8；StarLightCurves（512 截, 1024）29.6 / 65.6；
+  零 error 零 OOM。实测 = 模型的 0.6–0.85×（模型按 mx3_pq 切片拟合、含 ×1.25 均值修正）→ 全量 ≈ 11 GPU-h。
+- 全量分档：TIERS="0:200:7 201:512:4"（峰值模型 7×3.3 ≈ 23 GiB / 4×7.4 ≈ 30 GiB；并发档 --on-oom skip，finish.sh 串行重扫兜底）。
