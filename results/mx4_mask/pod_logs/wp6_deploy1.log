@@ -1,0 +1,7 @@
+[deploy Handwriting] 候选 42（开 21）oracle42 0.549 base 0.419 main(SH6-3-3_interleave) 0.419 measured 0.384
+[deploy UWaveGestureLibrary] 候选 42（开 21）oracle42 0.934 base 0.931 main(SH6-3-3_interleave) 0.912 measured 0.934
+[deploy PhonemeSpectra] 候选 40（开 20）oracle42 0.253 base 0.251 main(SH6-3-3_interleave) 0.237 measured 0.253
+[deploy EthanolConcentration] 候选 42（开 21）oracle42 0.331 base 0.274 main(SH6-3-3_interleave) 0.262 measured 0.262
+[deploy Cricket] 候选 42（开 21）oracle42 1.000 base 1.000 main(SH6-3-3_interleave) 0.972 measured 1.000
+[deploy HandMovementDirection] 候选 42（开 21）oracle42 0.486 base 0.378 main(SH6-3-3_interleave) 0.486 measured 0.486
+verdict MASK-DEAD；K3 4/6（HW False）；K4 3/6

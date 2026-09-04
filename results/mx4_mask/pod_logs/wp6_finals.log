@@ -1,0 +1,30 @@
+[data] Handwriting: train=(150, 152, 3) test=(850, 152, 3) classes=26 size=68400
+[data] UWaveGestureLibrary: train=(120, 315, 3) test=(320, 315, 3) classes=8 size=113400
+[data] PhonemeSpectra: train=(3315, 217, 11) test=(3353, 217, 11) classes=39 size=7912905
+[data] EthanolConcentration: train=(261, 1751, 3) test=(263, 1751, 3) classes=4 size=1371033
+[data] Cricket: train=(108, 1197, 6) test=(72, 1197, 6) classes=12 size=775656
+[data] HandMovementDirection: train=(160, 400, 10) test=(74, 400, 10) classes=4 size=640000
+[S2] 计划 22 格，已有 0，待跑 22
+[S2 1/22] Handwriting/final_SH12-3-3_measured/54f8fde3 s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.356 0.349 0.360] (17.1s+4.0s)
+[S2 2/22] Handwriting/final_SH12-3-3_measured/54f8fde3 s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.316 0.345 0.379] (8.5s+0.3s)
+[S2 3/22] Handwriting/final_SH10-4-3_prior_off/c92058f2 s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.360 0.509 0.538] (3.4s+0.3s)
+[S2 4/22] Handwriting/final_SH10-4-3_prior_off/c92058f2 s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.308 0.411 0.511] (3.3s+0.3s)
+[S2 5/22] UWaveGestureLibrary/final_SH6-3-3_interleave/382ca622 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.884 0.887 0.887] (37.5s+0.3s)
+[S2 6/22] UWaveGestureLibrary/final_SH6-3-3_interleave/382ca622 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.900 0.894 0.900] (30.6s+0.3s)
+[S2 7/22] UWaveGestureLibrary/final_SH12-3-3_measured/c6fc34c5 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.903 0.912 0.903] (36.4s+0.3s)
+[S2 8/22] UWaveGestureLibrary/final_SH12-3-3_measured/c6fc34c5 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.906 0.922 0.925] (36.5s+0.3s)
+[S2 9/22] PhonemeSpectra/final_SH12-3-3_measured/a59dc617 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.251 0.253 0.247] (40.0s+33.7s)
+[S2 10/22] PhonemeSpectra/final_SH12-3-3_measured/a59dc617 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.244 0.246 0.254] (34.3s+31.0s)
+[S2 11/22] EthanolConcentration/final_SH6-3-3_interleave/a51affe6 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.255 0.240 0.243] (27.5s+0.6s)
+[S2 12/22] EthanolConcentration/final_SH6-3-3_interleave/a51affe6 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.281 0.209 0.209] (24.7s+0.6s)
+[S2 13/22] EthanolConcentration/final_SH6-3-3_allon/15bc984d s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.262 0.274 0.255] (24.2s+0.6s)
+[S2 14/22] EthanolConcentration/final_SH6-3-3_allon/15bc984d s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.247 0.270 0.255] (24.6s+0.6s)
+[S2 15/22] EthanolConcentration/final_SH10-4-3_prior_off/cffb5503 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.278 0.319 0.289] (70.0s+0.6s)
+[S2 16/22] EthanolConcentration/final_SH10-4-3_prior_off/cffb5503 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.304 0.316 0.323] (69.9s+0.6s)
+[S2 17/22] Cricket/final_SH6-3-3_interleave/382ca622 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.972 0.986] (90.7s+0.3s)
+[S2 18/22] Cricket/final_SH6-3-3_interleave/382ca622 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.958] (95.7s+0.3s)
+[S2 19/22] Cricket/final_SH12-3-3_measured/a51affe6 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.986] (24.8s+0.3s)
+[S2 20/22] Cricket/final_SH12-3-3_measured/a51affe6 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.986 1.000] (21.4s+0.3s)
+[S2 21/22] HandMovementDirection/final_SH6-3-3_interleave/382ca622 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.392 0.378 0.392] (38.0s+0.3s)
+[S2 22/22] HandMovementDirection/final_SH6-3-3_interleave/382ca622 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.351 0.432 0.500] (36.0s+0.3s)
+[S2] 收官
