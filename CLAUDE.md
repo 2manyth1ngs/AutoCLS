@@ -29,6 +29,7 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 5. 原目标池 {UCI-HAR, Epilepsy, FaceDetection} **从主结果退役**（`results/target_preflight`）；全量 UCI-HAR 仍可当外部锚。
 6. **头条臂 = SH6-3-3_prior**；SH10-4-3 只好 0.002 但贵 30%，不作默认。all20@60→top3 与 SH 同带但成本 1.8×——先验的价值是省一半探测预算。
 7. **AutoCTS++ Algorithm 2 进化搜索**只保留代码，不作零样本适应度使用（D3 5/21 + WP2 S3 不过）。
+8. **学习曲线外推 / 早截点外推淘汰已判死（WP5，2026-09-04，用户拍板关闭）**：任何形式的"从早截点预测终点分来做淘汰"（GBDT / ridge / 斜率 / 往先验收缩 / 分位回归 / 排序损失）都不再提、不再立项、不再作为"学习在哪"的答案；SH 一律按当前截点分淘汰、最后一级留 3 条。证据 `results/mx4_lc_extrapolator/REPORT.md`，代码保留不删。
 
 ## 铁律
 1. `configs/space.yaml` 是策略空间**唯一真源**，代码不得硬编码取值集合。
@@ -79,16 +80,13 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 - ✅ **MX-4 WP5 学习曲线外推器**（2026-09-04，分支 `wp5-lc`）：**LC-DEAD**——SH 淘汰规则换成外推器预测，头条臂 0.0184→0.0183（4 胜/4 负/34 平），省档位 SH4-2-2/6-3-1 追不平（0.035）；增益 LODO R² 0.02 = 测量地板（`results/mx4_lc_extrapolator/REPORT.md`）——负翼
 - 论文：正翼 = 零样本排名 + SH 验证 + 字段主效应 + 成本表；负翼 = task-aware 五轮判负 + 开放空间外推判死 + 学习曲线外推判死（analysis/limitations）
 
-## 路径二：给学习部分加一个真有增益的组件（用户 2026-09-03 记录，可能后续开工）
+## 路径二：给学习部分加一个真有增益的组件（用户 2026-09-03 记录；WP5 已关闭，其他方法另开会话讨论）
 
 **为什么**：现在的头条"先验 + 淘汰赛"审稿人会问"学习在哪"——先验 7 折第一名都是同一条配置（等于一个学来的默认），GBDT 在 top-1 上没超过先验，淘汰赛是 Hyperband 的常规组件。路径一（WP3 全量协议 + 候选扩到 50–100 + Hyperband/随机/BOHB 基线）把证据做实；路径二给"从源池学到、在目标上用"加一个有实证增益的模型。
 
-**首选 WP5 学习曲线外推器：已跑，判死（2026-09-04，`results/mx4_lc_extrapolator/`，memory `mx4-wp5-lc-extrapolator-dead`）**
-- 做了什么：`autocls/search/learning_curve.py`（任务无关：原始 R'@观测截点 ⊕ CLS binned ⊕ 切片常量 → 增益，ridge/hgb）+ `scripts/38_lc_sh_sim.py`（可换评分器的 SH `sh_path_scored`，六种淘汰规则 cur/lc_hgb/lc_ridge/lc_hgb_nocls/blend/slope，C0 一致性锚死 WP1 头条臂逐位相同）。
-- 读数：L1 主门 ✗（0.0184→0.0183，4/4/34 平）、L2 省档位 ✗（SH4-2-2_lc 0.0356 / SH6-3-1_lc 0.0345，显著差于 0.0184）、L3 机制边缘 ✓（top-6 内 ρ 0.374 vs 0.360，95 对多对 4 对）、L4 新鲜种子描述性 ✓（0.0111 vs 0.0153，n=14，p=0.14）。
-- 根因：头顶只有 0.0067 可改（0.0184 里 0.0118 是先验 top-6 不含 oracle 的不可约部分）；增益 R'@290−R'@60 的 LODO R² 中位 0.02（残差 sd 0.072 ≈ 增益 sd 0.073），有无 CLS / ridge / hgb 同一结论——标签噪声地板淹没"晚熟"信号，与 task-aware 判死同根。
-- 顺带坐实：SH6-3-3 / SH10-4-3 对淘汰规则完全不敏感（六种规则 0.016–0.020）；只留 1 条的档位任何规则都翻倍，**最后一级留 3 条是硬要求**；候选集含 random 配置时外推器反而更差（all20@60→top3 0.0206 vs 0.0167）。
-- 路径二剩余方向：(a) 提高 warm start top-6 的 oracle 命中率（不可约 0.0118 是最大块；需开放空间提名 + 目标侧真评估回灌，零样本外推已判死）；(b) 降标签噪声（k>1，与省成本相悖，Y-B 搁置项）。本轮不立项。
+**WP5 学习曲线外推器：已关闭（关键决策 8），本节只留存档，勿再展开讨论。**
+读数 LC-DEAD（`results/mx4_lc_extrapolator/REPORT.md`，memory `mx4-wp5-lc-extrapolator-dead`）：头条臂 0.0184→0.0183（4/4/34 平），省档位追不平（0.035）；根因 = 增益 R'@290−R'@60 的 LODO R² 0.02，标签噪声地板淹没"晚熟"信号。
+留给后续立项的两个硬事实：**SH6-3-3 的 0.0184 里 0.0118 是先验 top-6 不含 oracle 的不可约部分**（淘汰规则最多改 0.0067），**最后一级留 3 条是硬要求**（任何规则只留 1 条都翻倍）。
 
 **次选：WP4 增强不变性画像**（机制性任务特征，与 CLS 字段同坐标，n=7–8 也可辨识；风险更高，先验 ~30%），设计见 memory `mx4-diagnosis-prior-beats-tclsc` 与计划文件 §5。
 
