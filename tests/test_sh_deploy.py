@@ -217,3 +217,15 @@ def test_gates_and_verdict():
     per["Handwriting"]["champion_mean"] = 0.40
     g = g39.run_gates(per, margin=0.03, hw_line=0.485)
     assert not g["W1"]["pass"] and g39.verdict_code(g) == "DEPLOY-DEAD"
+
+
+# ---------------------------------------------------------------- 截点评估墙钟上限
+def test_eval_with_timeout_passthrough_when_fast():
+    assert g39.eval_with_timeout(lambda: 42, 5) == 42
+
+
+@pytest.mark.skipif(not hasattr(__import__("signal"), "SIGALRM"), reason="SIGALRM 仅 Unix（pod）")
+def test_eval_with_timeout_raises_on_slow_eval():
+    import time as _t
+    with pytest.raises(g39.EvalTimeout):
+        g39.eval_with_timeout(lambda: _t.sleep(3), 1)

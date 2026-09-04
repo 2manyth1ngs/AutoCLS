@@ -5,6 +5,7 @@
     python scripts/pa_pod/pod_ctl.py status <pod_id>      # desiredStatus / runtime / SSH 端口
     python scripts/pa_pod/pod_ctl.py stop <pod_id>        # podStop
     python scripts/pa_pod/pod_ctl.py confirm-stopped <pod_id> [n]   # 连续 n 次查 EXITED（死规定）
+    python scripts/pa_pod/pod_ctl.py deploy <name> "<gpuTypeId>" <networkVolumeId>   # resume 无卡时新开同卷 pod
 
 API 事实（memory runpod-pods-image-volumes）：GraphQL https://api.runpod.io/graphql，
 `Authorization: Bearer <key>` + 自定义 User-Agent 才 200；REST https://rest.runpod.io/v1 亦可。
@@ -90,6 +91,20 @@ def cmd_confirm_stopped(pod_id: str, n: int = 3) -> None:
         raise SystemExit(2)
 
 
+def cmd_deploy(name: str, gpu: str, volume_id: str, image: str = "runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404") -> None:
+    """podFindAndDeployOnDemand：在网络卷所在数据中心新开一台 on-demand pod 并挂卷（resume 无卡时的备选）。"""
+    pub = (Path.home() / ".ssh" / "id_ed25519.pub").read_text(encoding="utf-8").strip()
+    q = """mutation($in: PodFindAndDeployOnDemandInput!) {
+      podFindAndDeployOnDemand(input: $in) { id desiredStatus costPerHr imageName machine { podHostId gpuDisplayName } }
+    }"""
+    inp = {"cloudType": "ALL", "gpuCount": 1, "volumeInGb": 0, "containerDiskInGb": 30,
+           "minVcpuCount": 2, "minMemoryInGb": 15, "gpuTypeId": gpu, "name": name, "imageName": image,
+           "dockerArgs": "", "ports": "22/tcp,8888/http", "volumeMountPath": "/workspace",
+           "networkVolumeId": volume_id, "env": [{"key": "PUBLIC_KEY", "value": pub}]}
+    d = gql(q, {"in": inp})
+    print("deploy →", d["podFindAndDeployOnDemand"])
+
+
 def main() -> None:
     a = sys.argv[1:]
     if not a:
@@ -105,6 +120,8 @@ def main() -> None:
         cmd_stop(a[1])
     elif cmd == "confirm-stopped":
         cmd_confirm_stopped(a[1], int(a[2]) if len(a) > 2 else 3)
+    elif cmd == "deploy":       # deploy <name> <gpuTypeId> <networkVolumeId>
+        cmd_deploy(a[1], a[2], a[3])
     else:
         raise SystemExit(__doc__)
 

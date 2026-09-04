@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import signal
 import statistics
 import sys
 import time
@@ -82,6 +83,37 @@ W1_MIN = 5
 W2_MIN = 4
 W3_RHO = 0.5
 SMOKE_ITERS = 8
+# 单个截点评估的墙钟上限：官方 SVM 网格的 C=∞ 在退化特征（破坏性 CLS，如 20be4f74 × PhonemeSpectra
+# 39 类 OvO）上可达数十分钟不收敛；超时整格记 error 行跳过（这类格都在排名垫底，不进任何名单）。
+EVAL_TIMEOUT_S = 480
+
+
+class EvalTimeout(Exception):
+    """截点评估超过 EVAL_TIMEOUT_S（Unix SIGALRM；Windows 无 SIGALRM 时不设上限）。"""
+
+
+def eval_with_timeout(fn, seconds: int):
+    """在 seconds 秒内运行 fn()，超时抛 EvalTimeout；顺带杀掉 loky 复用池里仍在算的 worker。"""
+    if not hasattr(signal, "SIGALRM") or seconds <= 0:
+        return fn()
+
+    def _alarm(_signum, _frame):
+        raise EvalTimeout(f"checkpoint eval exceeded {seconds}s")
+
+    old = signal.signal(signal.SIGALRM, _alarm)
+    signal.alarm(int(seconds))
+    try:
+        return fn()
+    except EvalTimeout:
+        try:
+            from joblib.externals.loky import get_reusable_executor
+            get_reusable_executor().shutdown(kill_workers=True)
+        except Exception:  # noqa: BLE001
+            pass
+        raise
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, old)
 
 
 # ---------------------------------------------------------------- 纯函数
@@ -360,7 +392,9 @@ def run_trajectory_cell(cell: dict, arrays: dict, device: str) -> dict:
         te = time.perf_counter()
         ftr = encode_features(module, Xtr, device=device)
         fte = encode_features(module, Xte, device=device)
-        v = _g35._svm_variants(ftr, ytr, {opts["scaler"]: fte}, yte, (grid,), seed)[f"{opts['scaler']}/{grid}"]
+        v = eval_with_timeout(
+            lambda: _g35._svm_variants(ftr, ytr, {opts["scaler"]: fte}, yte, (grid,), seed)[f"{opts['scaler']}/{grid}"],
+            EVAL_TIMEOUT_S)
         results.append({"iters": int(step), **v, "elapsed_pretrain_s": round(te - t0, 1),
                         "eval_seconds": round(time.perf_counter() - te, 1)})
         module.train()
