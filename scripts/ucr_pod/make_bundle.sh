@@ -8,12 +8,15 @@ set -euo pipefail
 B="${1:?bundle dir}"
 mkdir -p "$B"
 git -c core.autocrlf=false archive --format=tar -o "$B/code_head.tar" HEAD autocls scripts configs tests
-NAMES=$(python - <<'PY'
+PY="${PY:-D:/Anaconda/envs/pytorch/python.exe}"      # Git Bash 里裸 python 可能不是 pytorch 环境（无 yaml）
+NAMES=$("$PY" - <<'PYEOF'
 import yaml
 cfg = yaml.safe_load(open("configs/ucr_pool.yaml", encoding="utf-8"))
 print(" ".join(e["name"] for e in cfg["source_pool"]))
-PY
+PYEOF
 )
+[ -n "$NAMES" ] || { echo "ucr_pool.yaml 名单为空（python/yaml 不可用？）"; exit 2; }
+echo "datasets: $(echo $NAMES | wc -w)"
 DATA="results/route_a_probe/probe_cls_catalog.json results/ucr_rprime/tasks.json"
 for n in $NAMES; do DATA="$DATA data/candidates/raw/ucr_cache/$n"; done
 tar --force-local -czf "$B/data_ucr.tar.gz" $DATA
