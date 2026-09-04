@@ -76,22 +76,21 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 - ✅ **MX-4 WP2**：字段结构化代理，SUR-WIN，S3（开放空间）不过（`results/mx4_surrogate/REPORT.md`）
 - **MX-4 WP3 全量部署**：SH 在 UEA 官方划分靶 {HW, UWave, PS, Ethanol, Cricket, HMD} 上选 CLS，对表 GGS / TS2Vec；**依赖 `protocol-alignment` 分支落地 `protocols.ts2vec_official`** ← 下一步
 - MX-4 WP4（增强不变性画像作数据集级任务特征）默认不做，除非用户明确要保留"E 有用"的可能性
-- **MX-4 WP5 学习曲线外推器（路径二，用户 2026-09-03 记录，尚未开工）** ← 见下节
-- 论文：正翼 = 零样本排名 + SH 验证 + 字段主效应 + 成本表；负翼 = task-aware 五轮判负 + 开放空间外推判死（analysis/limitations）
+- ✅ **MX-4 WP5 学习曲线外推器**（2026-09-04，分支 `wp5-lc`）：**LC-DEAD**——SH 淘汰规则换成外推器预测，头条臂 0.0184→0.0183（4 胜/4 负/34 平），省档位 SH4-2-2/6-3-1 追不平（0.035）；增益 LODO R² 0.02 = 测量地板（`results/mx4_lc_extrapolator/REPORT.md`）——负翼
+- 论文：正翼 = 零样本排名 + SH 验证 + 字段主效应 + 成本表；负翼 = task-aware 五轮判负 + 开放空间外推判死 + 学习曲线外推判死（analysis/limitations）
 
 ## 路径二：给学习部分加一个真有增益的组件（用户 2026-09-03 记录，可能后续开工）
 
 **为什么**：现在的头条"先验 + 淘汰赛"审稿人会问"学习在哪"——先验 7 折第一名都是同一条配置（等于一个学来的默认），GBDT 在 top-1 上没超过先验，淘汰赛是 Hyperband 的常规组件。路径一（WP3 全量协议 + 候选扩到 50–100 + Hyperband/随机/BOHB 基线）把证据做实；路径二给"从源池学到、在目标上用"加一个有实证增益的模型。
 
-**首选：学习曲线外推器（WP5）**
-- 现象：SH 在 @60 / @120 淘汰时只看当前分数，而 @60→@290 的秩相关中位只有 0.72；最后一级只留 1 条 regret 翻倍（0.036 vs 0.018），说明早截点的淘汰决策有可改进空间。
-- 数据（已有，零 GPU）：`results/mx3_pq/rprime_cache.jsonl` 2835 行 = 945 条三截点轨迹 {60,120,290}；更密的截点在 `results/workpoint_followup/candidates/trained_fill.jsonl`（iters {6,12,30,60,120}）、`results/iters_workpoint/{candidates,uea}/`（{3,6,12,15,30,60,120}）、`results/step05_iters_floor/scan_cache.jsonl`（{60,120,240} × 3 种子）；4060/5090 混机记录带 `device_name`。
-- 模型：输入 = 已观测截点的 z（@60 或 @60+@120）⊕ CLS 字段编码（binned）⊕ 切片级统计（n_train、n_eval、类数、iters=0 基线）；输出 = z@290（或 P(进 top-3@290)）。候选形态：GBDT 回归 / 分位回归（给淘汰用的不确定性）/ 排序损失。铁律 6/7 同口径：只用训练侧轨迹拟合，模块不含数据集概念。
-- 接入：`36_prior_sh_sim.py` 的 `sh_path` 把"按 traj[k][b_prev] 留前 k"换成"按外推器预测的 z@b_final 留前 k"，其余臂表 / 成本口径不变；缓存模拟即可判定，无需新 GPU。
-- 判读（写 PROTOCOL 时定，先验先于数据）：主门 = 外推淘汰的 SH6-3-3 regret@290 < 现行 0.018（配对 Wilcoxon，n=42）；次门 = 在更省的档位（SH4-2-2 或 SH6-3-1）追平 0.018；新鲜种子复核同 WP1 G4。不过 → 学习曲线在本栈只是"看当前分"的等价物，如实入负翼。
-- 论文骨架若成立："从源池学两样东西——配置先验 + 学习曲线——驱动目标侧淘汰赛"；模型简单但学到的东西说得清楚。
+**首选 WP5 学习曲线外推器：已跑，判死（2026-09-04，`results/mx4_lc_extrapolator/`，memory `mx4-wp5-lc-extrapolator-dead`）**
+- 做了什么：`autocls/search/learning_curve.py`（任务无关：原始 R'@观测截点 ⊕ CLS binned ⊕ 切片常量 → 增益，ridge/hgb）+ `scripts/38_lc_sh_sim.py`（可换评分器的 SH `sh_path_scored`，六种淘汰规则 cur/lc_hgb/lc_ridge/lc_hgb_nocls/blend/slope，C0 一致性锚死 WP1 头条臂逐位相同）。
+- 读数：L1 主门 ✗（0.0184→0.0183，4/4/34 平）、L2 省档位 ✗（SH4-2-2_lc 0.0356 / SH6-3-1_lc 0.0345，显著差于 0.0184）、L3 机制边缘 ✓（top-6 内 ρ 0.374 vs 0.360，95 对多对 4 对）、L4 新鲜种子描述性 ✓（0.0111 vs 0.0153，n=14，p=0.14）。
+- 根因：头顶只有 0.0067 可改（0.0184 里 0.0118 是先验 top-6 不含 oracle 的不可约部分）；增益 R'@290−R'@60 的 LODO R² 中位 0.02（残差 sd 0.072 ≈ 增益 sd 0.073），有无 CLS / ridge / hgb 同一结论——标签噪声地板淹没"晚熟"信号，与 task-aware 判死同根。
+- 顺带坐实：SH6-3-3 / SH10-4-3 对淘汰规则完全不敏感（六种规则 0.016–0.020）；只留 1 条的档位任何规则都翻倍，**最后一级留 3 条是硬要求**；候选集含 random 配置时外推器反而更差（all20@60→top3 0.0206 vs 0.0167）。
+- 路径二剩余方向：(a) 提高 warm start top-6 的 oracle 命中率（不可约 0.0118 是最大块；需开放空间提名 + 目标侧真评估回灌，零样本外推已判死）；(b) 降标签噪声（k>1，与省成本相悖，Y-B 搁置项）。本轮不立项。
 
 **次选：WP4 增强不变性画像**（机制性任务特征，与 CLS 字段同坐标，n=7–8 也可辨识；风险更高，先验 ~30%），设计见 memory `mx4-diagnosis-prior-beats-tclsc` 与计划文件 §5。
 
 ## 目录
-`autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}`（`search/surrogate.py` 代理、`search/rank.py` 聚合、`search/evolution.py` 仅保留）+ `scripts/`（MX-3-PQ：`32–34_pq_*`、`pq_common.py`；MX-4：`36_prior_sh_sim.py`、`37_surrogate_loo.py`）+ `configs/*.yaml` + `tests/`。分支：`mx4`（MX-4 代码与结果）、`protocol-alignment`（全量协议对齐）。
+`autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}`（`search/surrogate.py` 代理、`search/rank.py` 聚合、`search/learning_curve.py` 外推器（判死，保留）、`search/evolution.py` 仅保留）+ `scripts/`（MX-3-PQ：`32–34_pq_*`、`pq_common.py`；MX-4：`36_prior_sh_sim.py`、`37_surrogate_loo.py`、`38_lc_sh_sim.py`、`39_sh_deploy.py`）+ `configs/*.yaml` + `tests/`。分支：`mx4`（MX-4 代码与结果，WP3 在 worktree `.claude/worktrees/mx4`）、`protocol-alignment`（全量协议对齐）、`wp5-lc`（WP5，自 63d26fd，待合回 mx4）。
