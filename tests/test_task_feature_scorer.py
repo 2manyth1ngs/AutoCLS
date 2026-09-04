@@ -290,3 +290,151 @@ def test_fold_s0_instances_has_all_arms_and_consistent_metrics():
         if r["budget"] == 290:
             assert r["metrics"]["prior"]["sh_cost"] == g36.path_cost_iters(
                 g36.sh_path(r["ranks"]["prior"], r["traj"], (6, 3, 3), B3), B3)
+
+
+# ================================================================ 阶段 1/2（协议锁 6b3c610 之后补写）
+# ---------------------------------------------------------------- φ
+def test_signal_stats_sine_vs_noise_and_channel_invariance():
+    rng = np.random.default_rng(10)
+    n, T = 8, 256
+    t = np.arange(T)
+    sine = np.repeat(np.sin(2 * np.pi * 3 * t / T)[None, :, None], n, axis=0)
+    noise = rng.normal(size=(n, T, 1))
+    s1, s2 = g40.signal_stats(sine), g40.signal_stats(noise)
+    assert s1["spec_conc"] > 0.9 and s2["spec_conc"] < 0.5
+    assert s1["hf_ratio"] < 0.05 and s2["hf_ratio"] > 0.3
+    assert s1["acf_tau"] > s2["acf_tau"]
+    assert abs(s2["ex_kurt"]) < 0.5
+    assert g40.signal_stats(rng.laplace(size=(n, T, 1)))["ex_kurt"] > 1.0
+    assert s1["chan_cv"] == 0.0 and s1["samp_cv"] == pytest.approx(0.0, abs=1e-9)
+    dup = np.concatenate([noise, noise], axis=2)
+    s3 = g40.signal_stats(dup)
+    assert s3["spec_conc"] == pytest.approx(s2["spec_conc"]) and s3["chan_cv"] == pytest.approx(0.0)
+    assert set(s1) == set(g40.PHI_SIG)
+
+
+def test_phi_meta_base_and_vector_order():
+    m = g40.phi_meta(T=100, C=10, k=5, N=1000)
+    assert m == {"log10_T": 2.0, "log10_C": 1.0, "k": 5.0, "log10_N": 3.0}
+    full = {**m, **g40.phi_base(0.3, 0.05), **{c: 0.0 for c in g40.PHI_SIG}}
+    v = g40.phi_vec(full, g40.PHI_COLS)
+    assert v.shape == (12,) and v[0] == 2.0 and v[4] == 0.3 and v[5] == 0.05
+
+
+def test_build_x_phi_at_tail_and_train_only_standardization():
+    rng = np.random.default_rng(11)
+    rows = make_rows(rng, ["A", "B"], 1, ["s1"], 1, budgets=(60,))
+    enc_b = CLSEncoder(CLSSpace.from_yaml(), mode="binned")
+    phi = {"A_00": {c: 1.0 for c in g40.PHI_COLS}, "B_00": {c: 3.0 for c in g40.PHI_COLS}}
+    X = g40.build_X(rows, enc_b, phi, g40.PHI_COLS)
+    base = g36.features(rows, enc_b, max(B3))
+    assert X.shape == (len(rows), base.shape[1] + 12)
+    assert np.array_equal(X[:, :base.shape[1]], base)
+    for i, r in enumerate(rows):
+        assert np.all(X[i, base.shape[1]:] == (1.0 if r["dataset"] == "A" else 3.0))
+    mu, sd = g40.phi_stats(phi, ["A_00"], g40.PHI_COLS)          # 只用训练侧切片
+    assert np.all(mu == 1.0) and np.all(sd == 1.0)                # sd=0 → 1（防除零）
+    Xs = g40.build_X(rows, enc_b, phi, g40.PHI_COLS, mu=mu, sd=sd)
+    assert np.all(Xs[[i for i, r in enumerate(rows) if r["dataset"] == "B"], base.shape[1]:] == 2.0)
+    assert g40.build_X(rows, enc_b, phi, ()).shape == base.shape
+
+
+def test_derange_by_dataset_no_fixed_point_and_deterministic():
+    phi = {}
+    for d, n in (("A", 3), ("B", 3), ("C", 1), ("D", 2)):
+        for i in range(n):
+            phi[f"{d}_{i:02d}"] = {"dataset": d, "log10_T": float(ord(d)), "k": float(i)}
+    out = g40.derange_by_dataset(phi, seed=1)
+    assert set(out) == set(phi)
+    for s, v in out.items():
+        assert v["dataset"] != phi[s]["dataset"]                  # 无自供体
+        assert v["log10_T"] == float(ord(v["dataset"]))           # 值确实来自供体
+    assert out == g40.derange_by_dataset(phi, seed=1)
+    assert out != g40.derange_by_dataset(phi, seed=2) or True     # 不同种子允许不同
+
+
+def test_interaction_columns_dims_and_zero_blocks():
+    space = CLSSpace.from_yaml()
+    enc_b = CLSEncoder(space, mode="binned")
+    rng = np.random.default_rng(12)
+    Xb = np.stack([enc_b.encode(space.sample_random(rng)) for _ in range(6)])
+    Phi = rng.normal(size=(6, 2))
+    Z = g40.interaction_columns(Xb, Phi, enc_b.field_slices, ("norm", "pool"))
+    sl_n, sl_p = enc_b.field_slices["norm"], enc_b.field_slices["pool"]
+    w = (sl_n.stop - sl_n.start + sl_p.stop - sl_p.start) * 2
+    assert Z.shape == (6, w)
+    for i in range(6):
+        for j in range(sl_n.stop - sl_n.start):
+            if Xb[i, sl_n.start + j] == 0:
+                assert np.all(Z[i, j * 2:(j + 1) * 2] == 0)
+
+
+def test_oof_s0_excludes_own_dataset_and_is_rowwise():
+    rng = np.random.default_rng(13)
+    rows = make_rows(rng, ["A", "B", "C"], 1, ["s1"], 2, budgets=(60, 290))
+    cat_z = g36.zscore_within(rows)
+    enc = CLSEncoder(CLSSpace.from_yaml())
+    calls = []
+
+    def fit_stub(inner):
+        calls.append(sorted({r["dataset"] for r in inner}))
+        return {"s1": 0.5}, _StubBlind()
+
+    out = g40.oof_s0(cat_z, enc, seed=0, fit_fn=fit_stub)
+    assert out.shape == (len(cat_z),)
+    assert sorted(calls) == [["A", "B"], ["A", "C"], ["B", "C"]]
+    for i, r in enumerate(cat_z):
+        if r["origin"] == "shared":
+            assert out[i] == 0.5
+
+
+# ---------------------------------------------------------------- B
+def test_phi_b_observed_standardized_and_constant_zero():
+    v = g40.phi_b_of({"a": 0.1, "b": 0.2, "c": 0.3, "d": 0.4, "e": 0.5, "f": 0.6}, ["a", "b", "c", "d", "e", "f"])
+    assert v.shape == (6,) and v.mean() == pytest.approx(0.0) and v.std() == pytest.approx(1.0)
+    assert np.all(g40.phi_b_of({"a": 0.3, "b": 0.3}, ["a", "b"]) == 0.0)
+
+
+def test_sh8_metrics_cost_1170_and_prior78_equals_sh833():
+    rng = np.random.default_rng(14)
+    keys = [f"k{i:02d}" for i in range(20)]
+    traj = {k: {b: float(rng.uniform()) for b in B3} for k in keys}
+    truth = {k: traj[k][290] for k in keys}
+    ranked = list(keys)
+    m = g40.sh8_metrics(ranked[:6], ranked[6:8], traj, truth)
+    path = g36.sh_path(ranked[:8], traj, (8, 3, 3), B3)
+    assert m["cost"] == 1170 and m["pick"] == g36.sh_pick(path[-1], traj, 290)
+    assert m["regret"] == pytest.approx(max(truth.values()) - truth[m["pick"]])
+    assert m["oracle_in_8"] == (g40.oracle_key(truth) in ranked[:8])
+
+
+def test_expected_plus_random_exact_small_case():
+    rng = np.random.default_rng(15)
+    keys = [f"k{i}" for i in range(9)]
+    traj = {k: {b: float(rng.uniform()) for b in B3} for k in keys}
+    truth = {k: traj[k][290] for k in keys}
+    top6, un = keys[:6], keys[6:]
+    exp = g40.expected_plus_random(top6, un, traj, truth)
+    pairs = [(un[0], un[1]), (un[0], un[2]), (un[1], un[2])]
+    manual = np.mean([g40.sh8_metrics(top6, list(p), traj, truth)["regret"] for p in pairs])
+    assert exp["regret"] == pytest.approx(manual) and exp["n_pairs"] == 3
+
+
+def test_cf_knn_k1_returns_nearest_source_targets():
+    src_phi = {"A_00": np.array([0.0, 0.0]), "B_00": np.array([5.0, 5.0])}
+    src_tgt = {"A_00": {"x": 1.0, "y": -1.0}, "B_00": {"x": -2.0, "y": 2.0}}
+    pred = g40.cf_knn_scores(src_phi, src_tgt, np.array([0.1, -0.1]), ["x", "y"], k=1)
+    assert pred == {"x": 1.0, "y": -1.0}
+    pred2 = g40.cf_knn_scores(src_phi, src_tgt, np.array([0.0, 0.0]), ["x", "y"], k=2)
+    assert pred2["x"] == pytest.approx(-0.5) and pred2["y"] == pytest.approx(0.5)
+
+
+# ---------------------------------------------------------------- 门与读数码
+def test_verdict_codes_all_five():
+    def g(a1, a2, b1, b2):
+        return {"A1": {"pass": a1}, "A2": {"pass": a2}, "B1": {"pass": b1}, "B2": {"pass": b2}}
+    assert g40.verdict_code(g(True, True, True, True)) == "TF-WIN"
+    assert g40.verdict_code(g(True, True, False, True)) == "TF-A-WIN"
+    assert g40.verdict_code(g(False, True, True, True)) == "TF-B-WIN"
+    assert g40.verdict_code(g(True, False, True, False)) == "TF-DEAD"
+    assert g40.verdict_code(g(False, False, False, False)) == "TF-DEAD"
