@@ -89,3 +89,8 @@ CROP_LEN=512：档 C 成本约减半、并发可到 4 → 墙钟 ≈ 4.4 h ≈ $
 - pilot（3 数据集并发，各 20 条）：ECG5000（T 140, N 1024）中位 16.8 s / p90 26.6；Ham（431, 214）23.1 / 49.8；StarLightCurves（512 截, 1024）29.6 / 65.6；
   零 error 零 OOM。实测 = 模型的 0.6–0.85×（模型按 mx3_pq 切片拟合、含 ×1.25 均值修正）→ 全量 ≈ 11 GPU-h。
 - 全量分档：TIERS="0:200:7 201:512:4"（峰值模型 7×3.3 ≈ 23 GiB / 4×7.4 ≈ 30 GiB；并发档 --on-oom skip，finish.sh 串行重扫兜底）。
+- 2026-09-05 收官：档 1（36 数据集，7 路）零 OOM；档 2（48 数据集，4 路，显存 31.8 GB 贴顶）122 条被 skip（长序列端：Haptics 14 / Fish 13 / EOG 11 / FreezerSmall 9 …），
+  改 2 路重扫（--on-oom record）全部补齐、零 record；基线 420 行；`--verify` 满格。拉回本地 md5 一致后 **stop pod + confirm-stopped 3/3**。
+  轨迹墙钟中位 30.2 s / 均值 34.6 s，串行等效 16.2 GPU-h；pod 计费 ≈ 11.6 h ≈ $11.5（含会话中断空转 ≈ 7 h）。
+- U1 读数：hgb 0.0209 vs pooled 0.0199（p=0.41）、vs 置换均值 p=0.41；twin p=0.083 → **U1 ✗，读数码 UCR-U1-DEAD**；U2/U3 按 §6 未执行（REPORT.md）。
+- 实现澄清：φ 置换 = 测试时换成 derangement 供体数据集的 φ（模型不重训）；`twin_knn` 只给 shared 打分，random 用任务盲 HGB；配对 acc 用 δ=0 全对（UCR 无 δ 标定）。

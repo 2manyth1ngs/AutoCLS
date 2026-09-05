@@ -1,0 +1,16 @@
+{
+ "n_datasets": 84,
+ "n_cells": 1680,
+ "states": {
+  "done": 1680,
+  "partial": 0,
+  "terminal": 0,
+  "missing": 0
+ },
+ "n_rows": 5040,
+ "dup_keys": 0,
+ "n_error_rows": 0,
+ "baseline_short": [],
+ "terminal": [],
+ "pass": true
+}
