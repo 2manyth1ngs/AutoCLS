@@ -1,0 +1,584 @@
+=== run_all start 2026-09-05T09:10:47
+[data] Handwriting: train=(150, 152, 3) test=(850, 152, 3) classes=26 size=68400
+[data] HandMovementDirection: train=(160, 400, 10) test=(74, 400, 10) classes=4 size=640000
+[data] UWaveGestureLibrary: train=(120, 315, 3) test=(320, 315, 3) classes=8 size=113400
+[data] Cricket: train=(108, 1197, 6) test=(72, 1197, 6) classes=12 size=775656
+[data] EthanolConcentration: train=(261, 1751, 3) test=(263, 1751, 3) classes=4 size=1371033
+[data] PhonemeSpectra: train=(3315, 217, 11) test=(3353, 217, 11) classes=39 size=7912905
+[loop Handwriting/bo_ucb/r1] 父本 ['e490b88e', 'c92058f2', '4f7d4135', '9092e36e', '65627517'] @50 [0.422, 0.365, 0.358, 0.349, 0.347]；提名 5 条 pred [1.05, 1.0, 0.92, 0.92, 0.98] std [0.13, 0.16, 0.21, 0.21, 0.14] 汉明 [2, 2, 2, 1, 1]（池 1081 / 半径内 1058）
+[Handwriting/bo_ucb/r1] 计划 5 格，已有 0，待跑 5
+[Handwriting/bo_ucb/r1 1/5] Handwriting/bo_ucb_r1/33da9184 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.276 0.308 0.407] (11.7s+0.9s)
+[Handwriting/bo_ucb/r1 2/5] Handwriting/bo_ucb_r1/4efaf3b1 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.498 0.533 0.478] (6.1s+0.9s)
+[Handwriting/bo_ucb/r1 3/5] Handwriting/bo_ucb_r1/9f78b6e6 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.419 0.509 0.546] (5.7s+0.9s)
+[Handwriting/bo_ucb/r1 4/5] Handwriting/bo_ucb_r1/ee5e922e s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.338 0.491 0.549] (5.5s+0.9s)
+[Handwriting/bo_ucb/r1 5/5] Handwriting/bo_ucb_r1/e24d2bc0 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.322 0.401 0.509] (5.5s+0.8s)
+[Handwriting/bo_ucb/r1] 收官
+[loop Handwriting/rand_nbr/r1] 父本 ['e490b88e', 'c92058f2', '4f7d4135', '9092e36e', '65627517'] @50 [0.422, 0.365, 0.358, 0.349, 0.347]；提名 5 条 pred [0.29, 0.33, 0.28, 0.22, 0.47] std [0.12, 0.14, 0.07, 0.23, 0.15] 汉明 [1, 2, 1, 3, 1]（池 1083 / 半径内 1062）
+[Handwriting/rand_nbr/r1] 计划 5 格，已有 0，待跑 5
+[Handwriting/rand_nbr/r1 1/5] Handwriting/rand_nbr_r1/9d7ae7be s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.408 0.427 0.460] (5.9s+0.8s)
+[Handwriting/rand_nbr/r1 2/5] Handwriting/rand_nbr_r1/314e2a27 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.151 0.149 0.166] (9.6s+0.9s)
+[Handwriting/rand_nbr/r1 3/5] Handwriting/rand_nbr_r1/1d3be0fd s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.416 0.464 0.512] (5.4s+0.9s)
+[Handwriting/rand_nbr/r1 4/5] Handwriting/rand_nbr_r1/1ed33a8f s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.251 0.322 0.472] (15.7s+0.9s)
+[Handwriting/rand_nbr/r1 5/5] Handwriting/rand_nbr_r1/7c16947a s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.336 0.325 0.304] (9.0s+0.9s)
+[Handwriting/rand_nbr/r1] 收官
+[loop Handwriting/bo_ucb/r2] 父本 ['4efaf3b1', 'e490b88e', '9f78b6e6', 'c92058f2', '4f7d4135'] @50 [0.498, 0.422, 0.419, 0.365, 0.358]；提名 5 条 pred [2.46, 2.51, 2.41, 2.41, 2.48] std [0.23, 0.15, 0.22, 0.22, 0.15] 汉明 [1, 1, 1, 1, 1]（池 946 / 半径内 933）
+[Handwriting/bo_ucb/r2] 计划 5 格，已有 0，待跑 5
+[Handwriting/bo_ucb/r2 1/5] Handwriting/bo_ucb_r2/9a2cbc1e s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.492 0.506 0.455] (6.4s+0.9s)
+[Handwriting/bo_ucb/r2 2/5] Handwriting/bo_ucb_r2/cbfeb01d s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.407 0.416 0.449] (6.0s+0.9s)
+[Handwriting/bo_ucb/r2 3/5] Handwriting/bo_ucb_r2/aefa9d20 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.458 0.502 0.494] (6.1s+0.9s)
+[Handwriting/bo_ucb/r2 4/5] Handwriting/bo_ucb_r2/7e0869a7 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.498 0.531 0.478] (6.1s+0.9s)
+[Handwriting/bo_ucb/r2 5/5] Handwriting/bo_ucb_r2/acfd081a s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.438 0.472 0.479] (6.1s+0.9s)
+[Handwriting/bo_ucb/r2] 收官
+[loop Handwriting/rand_nbr/r2] 父本 ['e490b88e', '1d3be0fd', '9d7ae7be', 'c92058f2', '4f7d4135'] @50 [0.422, 0.416, 0.408, 0.365, 0.358]；提名 5 条 pred [0.56, 0.01, 0.32, 0.28, 0.03] std [0.14, 0.14, 0.14, 0.08, 0.24] 汉明 [3, 1, 2, 1, 2]（池 1011 / 半径内 998）
+[Handwriting/rand_nbr/r2] 计划 5 格，已有 0，待跑 5
+[Handwriting/rand_nbr/r2 1/5] Handwriting/rand_nbr_r2/bfcaccab s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.364 0.367 0.392] (10.6s+0.9s)
+[Handwriting/rand_nbr/r2 2/5] Handwriting/rand_nbr_r2/c8193f6a s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.393 0.412 0.400] (5.5s+0.9s)
+[Handwriting/rand_nbr/r2 3/5] Handwriting/rand_nbr_r2/32f7983b s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.474 0.349 0.271] (9.0s+0.9s)
+[Handwriting/rand_nbr/r2 4/5] Handwriting/rand_nbr_r2/1bbe4e92 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.296 0.306 0.354] (5.9s+1.1s)
+[Handwriting/rand_nbr/r2 5/5] Handwriting/rand_nbr_r2/699215c5 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.421 0.452 0.445] (12.1s+0.9s)
+[Handwriting/rand_nbr/r2] 收官
+[loop Handwriting/bo_ucb/r3] 父本 ['4efaf3b1', '7e0869a7', '9a2cbc1e', 'aefa9d20', 'acfd081a'] @50 [0.498, 0.498, 0.492, 0.458, 0.438]；提名 5 条 pred [1.93, 1.92, 1.82, 1.77, 1.85] std [0.2, 0.2, 0.22, 0.24, 0.15] 汉明 [2, 1, 1, 2, 1]（池 839 / 半径内 839）
+[Handwriting/bo_ucb/r3] 计划 5 格，已有 0，待跑 5
+[Handwriting/bo_ucb/r3 1/5] Handwriting/bo_ucb_r3/91c593d2 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.372 0.393 0.422] (6.5s+0.9s)
+[Handwriting/bo_ucb/r3 2/5] Handwriting/bo_ucb_r3/f4f36b00 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.471 0.500 0.454] (6.1s+0.9s)
+[Handwriting/bo_ucb/r3 3/5] Handwriting/bo_ucb_r3/28bcb93f s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.493 0.524 0.545] (6.2s+0.9s)
+[Handwriting/bo_ucb/r3 4/5] Handwriting/bo_ucb_r3/31975d94 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.467 0.491 0.440] (6.2s+0.9s)
+[Handwriting/bo_ucb/r3 5/5] Handwriting/bo_ucb_r3/83330e26 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.509 0.485 0.453] (7.0s+0.9s)
+[Handwriting/bo_ucb/r3] 收官
+[loop Handwriting/rand_nbr/r3] 父本 ['32f7983b', 'e490b88e', '699215c5', '1d3be0fd', '9d7ae7be'] @50 [0.474, 0.422, 0.421, 0.416, 0.408]；提名 5 条 pred [0.93, 0.6, 1.45, 0.9, 0.68] std [0.29, 0.28, 0.22, 0.29, 0.17] 汉明 [1, 2, 2, 1, 2]（池 1030 / 半径内 1010）
+[Handwriting/rand_nbr/r3] 计划 5 格，已有 0，待跑 5
+[Handwriting/rand_nbr/r3 1/5] Handwriting/rand_nbr_r3/081d54a3 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.420 0.485 0.416] (11.2s+0.9s)
+[Handwriting/rand_nbr/r3 2/5] Handwriting/rand_nbr_r3/434d7441 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.476 0.461 0.447] (6.6s+0.9s)
+[Handwriting/rand_nbr/r3 3/5] Handwriting/rand_nbr_r3/3adabff7 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.498 0.499 0.295] (8.4s+0.9s)
+[Handwriting/rand_nbr/r3 4/5] Handwriting/rand_nbr_r3/0312694b s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.281 0.299 0.315] (10.8s+0.9s)
+[Handwriting/rand_nbr/r3 5/5] Handwriting/rand_nbr_r3/0d61127d s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.362 0.384 0.401] (9.1s+0.9s)
+[Handwriting/rand_nbr/r3] 收官
+[loop Handwriting] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[loop HandMovementDirection/bo_ucb/r1] 父本 ['a1f67db4', '65627517', '8b87d66f', '4b094450', '51b6f528'] @150 [0.392, 0.365, 0.365, 0.351, 0.351]；提名 5 条 pred [1.21, 1.15, 1.13, 1.07, 1.05] std [0.19, 0.2, 0.2, 0.26, 0.26] 汉明 [2, 1, 1, 3, 1]（池 1212 / 半径内 1178）
+[HandMovementDirection/bo_ucb/r1] 计划 5 格，已有 0，待跑 5
+[HandMovementDirection/bo_ucb/r1 1/5] HandMovementDirection/bo_ucb_r1/37268c8a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.365 0.392] (38.5s+0.9s)
+[HandMovementDirection/bo_ucb/r1 2/5] HandMovementDirection/bo_ucb_r1/b6d0c631 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.324 0.257 0.324] (37.3s+0.6s)
+[HandMovementDirection/bo_ucb/r1 3/5] HandMovementDirection/bo_ucb_r1/d5da9850 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.459 0.297 0.230] (41.2s+0.6s)
+[HandMovementDirection/bo_ucb/r1 4/5] HandMovementDirection/bo_ucb_r1/db04eba7 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.284 0.270 0.297] (32.4s+0.7s)
+[HandMovementDirection/bo_ucb/r1 5/5] HandMovementDirection/bo_ucb_r1/4ba1d435 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.351 0.311 0.351] (37.3s+0.8s)
+[HandMovementDirection/bo_ucb/r1] 收官
+[loop HandMovementDirection/rand_nbr/r1] 父本 ['a1f67db4', '65627517', '8b87d66f', '4b094450', '51b6f528'] @150 [0.392, 0.365, 0.365, 0.351, 0.351]；提名 5 条 pred [0.03, -0.41, 0.29, 0.21, 0.86] std [0.09, 0.27, 0.15, 0.13, 0.17] 汉明 [1, 2, 2, 3, 1]（池 1205 / 半径内 1164）
+[HandMovementDirection/rand_nbr/r1] 计划 5 格，已有 0，待跑 5
+[HandMovementDirection/rand_nbr/r1 1/5] HandMovementDirection/rand_nbr_r1/13170f35 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.216 0.243 0.257] (92.1s+0.8s)
+[HandMovementDirection/rand_nbr/r1 2/5] HandMovementDirection/rand_nbr_r1/48c55943 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.257 0.243 0.243] (89.6s+0.8s)
+[HandMovementDirection/rand_nbr/r1 3/5] HandMovementDirection/rand_nbr_r1/0f1eb9dd s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.392 0.405 0.365] (29.7s+0.6s)
+[HandMovementDirection/rand_nbr/r1 4/5] HandMovementDirection/rand_nbr_r1/9f9494bb s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.284 0.230 0.324] (44.2s+0.7s)
+[HandMovementDirection/rand_nbr/r1 5/5] HandMovementDirection/rand_nbr_r1/e80e3033 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.392 0.311 0.297] (42.2s+0.7s)
+[HandMovementDirection/rand_nbr/r1] 收官
+[loop HandMovementDirection/bo_ucb/r2] 父本 ['d5da9850', 'a1f67db4', '65627517', '8b87d66f', '4b094450'] @150 [0.459, 0.392, 0.365, 0.365, 0.351]；提名 5 条 pred [2.1, 2.21, 2.21, 2.13, 2.11] std [0.44, 0.28, 0.27, 0.33, 0.35] 汉明 [2, 1, 1, 1, 2]（池 1224 / 半径内 1184）
+[HandMovementDirection/bo_ucb/r2] 计划 5 格，已有 0，待跑 5
+[HandMovementDirection/bo_ucb/r2 1/5] HandMovementDirection/bo_ucb_r2/bff587d4 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.284 0.351 0.324] (42.5s+0.6s)
+[HandMovementDirection/bo_ucb/r2 2/5] HandMovementDirection/bo_ucb_r2/6d7151cc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.297 0.284 0.230] (60.1s+0.6s)
+[HandMovementDirection/bo_ucb/r2 3/5] HandMovementDirection/bo_ucb_r2/86231b4a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.338 0.392 0.405] (43.0s+0.6s)
+[HandMovementDirection/bo_ucb/r2 4/5] HandMovementDirection/bo_ucb_r2/070bf408 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.311 0.392 0.365] (43.0s+0.8s)
+[HandMovementDirection/bo_ucb/r2 5/5] HandMovementDirection/bo_ucb_r2/8889ec5e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.311 0.297 0.351] (65.3s+0.8s)
+[HandMovementDirection/bo_ucb/r2] 收官
+[loop HandMovementDirection/rand_nbr/r2] 父本 ['0f1eb9dd', 'a1f67db4', 'e80e3033', '65627517', '8b87d66f'] @150 [0.392, 0.392, 0.392, 0.365, 0.365]；提名 5 条 pred [0.72, -0.06, 0.83, 0.54, 1.13] std [0.16, 0.19, 0.16, 0.08, 0.23] 汉明 [2, 3, 1, 2, 2]（池 1159 / 半径内 1134）
+[HandMovementDirection/rand_nbr/r2] 计划 5 格，已有 0，待跑 5
+[HandMovementDirection/rand_nbr/r2 1/5] HandMovementDirection/rand_nbr_r2/41e7b12d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.216 0.311 0.324] (29.6s+0.8s)
+[HandMovementDirection/rand_nbr/r2 2/5] HandMovementDirection/rand_nbr_r2/dadf56c6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.284 0.297 0.311] (41.6s+0.6s)
+[HandMovementDirection/rand_nbr/r2 3/5] HandMovementDirection/rand_nbr_r2/b1175ef2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.324 0.378 0.243] (28.1s+0.6s)
+[HandMovementDirection/rand_nbr/r2 4/5] HandMovementDirection/rand_nbr_r2/88a3a948 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.365 0.473 0.432] (79.8s+0.8s)
+[HandMovementDirection/rand_nbr/r2 5/5] HandMovementDirection/rand_nbr_r2/02e3a0c4 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.459 0.365 0.311] (44.8s+0.8s)
+[HandMovementDirection/rand_nbr/r2] 收官
+[loop HandMovementDirection/bo_ucb/r3] 父本 ['d5da9850', 'a1f67db4', '65627517', '8b87d66f', '4b094450'] @150 [0.459, 0.392, 0.365, 0.365, 0.351]；提名 5 条 pred [1.43, 1.36, 1.39, 1.41, 1.32] std [0.43, 0.47, 0.45, 0.43, 0.46] 汉明 [2, 1, 1, 1, 1]（池 1207 / 半径内 1171）
+[HandMovementDirection/bo_ucb/r3] 计划 5 格，已有 0，待跑 5
+[HandMovementDirection/bo_ucb/r3 1/5] HandMovementDirection/bo_ucb_r3/d044d4d2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.365 0.311 0.324] (61.0s+0.8s)
+[HandMovementDirection/bo_ucb/r3 2/5] HandMovementDirection/bo_ucb_r3/7721946d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.351 0.392 0.311] (51.2s+0.7s)
+[HandMovementDirection/bo_ucb/r3 3/5] HandMovementDirection/bo_ucb_r3/3e6f54a7 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.459 0.297 0.270] (42.9s+0.6s)
+[HandMovementDirection/bo_ucb/r3 4/5] HandMovementDirection/bo_ucb_r3/b606f6cc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.351 0.365 0.338] (48.6s+0.7s)
+[HandMovementDirection/bo_ucb/r3 5/5] HandMovementDirection/bo_ucb_r3/b3c56e8a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.419 0.311 0.284] (44.1s+0.6s)
+[HandMovementDirection/bo_ucb/r3] 收官
+[loop HandMovementDirection/rand_nbr/r3] 父本 ['02e3a0c4', '0f1eb9dd', 'a1f67db4', 'e80e3033', '65627517'] @150 [0.459, 0.392, 0.392, 0.392, 0.365]；提名 5 条 pred [0.65, 0.61, -1.29, 0.72, 0.17] std [0.11, 0.24, 0.44, 0.14, 0.37] 汉明 [1, 1, 3, 3, 2]（池 1173 / 半径内 1138）
+[HandMovementDirection/rand_nbr/r3] 计划 5 格，已有 0，待跑 5
+[HandMovementDirection/rand_nbr/r3 1/5] HandMovementDirection/rand_nbr_r3/1db90037 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.324 0.338] (63.6s+0.6s)
+[HandMovementDirection/rand_nbr/r3 2/5] HandMovementDirection/rand_nbr_r3/f913784c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.405 0.378 0.405] (50.4s+0.7s)
+[HandMovementDirection/rand_nbr/r3 3/5] HandMovementDirection/rand_nbr_r3/378515c2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.270 0.257] (61.1s+0.9s)
+[HandMovementDirection/rand_nbr/r3 4/5] HandMovementDirection/rand_nbr_r3/372a6cb1 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.338 0.284] (31.8s+0.6s)
+[HandMovementDirection/rand_nbr/r3 5/5] HandMovementDirection/rand_nbr_r3/6d24240d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.243 0.230 0.243] (47.8s+0.9s)
+[HandMovementDirection/rand_nbr/r3] 收官
+[loop HandMovementDirection] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[loop UWaveGestureLibrary/bo_ucb/r1] 父本 ['8c4aa283', '9092e36e', 'c92058f2', '918c8db2', 'a1b1bbe7'] @150 [0.919, 0.897, 0.884, 0.881, 0.878]；提名 5 条 pred [1.25, 1.19, 1.2, 1.15, 1.12] std [0.26, 0.26, 0.24, 0.29, 0.3] 汉明 [2, 1, 2, 2, 1]（池 1136 / 半径内 1094）
+[UWaveGestureLibrary/bo_ucb/r1] 计划 5 格，已有 0，待跑 5
+[UWaveGestureLibrary/bo_ucb/r1 1/5] UWaveGestureLibrary/bo_ucb_r1/20ea4ba8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.884 0.903 0.912] (49.0s+1.0s)
+[UWaveGestureLibrary/bo_ucb/r1 2/5] UWaveGestureLibrary/bo_ucb_r1/994cee62 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.897 0.919 0.922] (36.8s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r1 3/5] UWaveGestureLibrary/bo_ucb_r1/c53479d1 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.897 0.916 0.903] (36.6s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r1 4/5] UWaveGestureLibrary/bo_ucb_r1/00d682c2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.887 0.906 0.897] (42.5s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r1 5/5] UWaveGestureLibrary/bo_ucb_r1/fdf07487 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.897 0.906 0.909] (36.0s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r1] 收官
+[loop UWaveGestureLibrary/rand_nbr/r1] 父本 ['8c4aa283', '9092e36e', 'c92058f2', '918c8db2', 'a1b1bbe7'] @150 [0.919, 0.897, 0.884, 0.881, 0.878]；提名 5 条 pred [0.38, 0.79, 0.84, 0.35, 1.05] std [0.18, 0.18, 0.33, 0.13, 0.27] 汉明 [2, 3, 1, 1, 2]（池 1159 / 半径内 1121）
+[UWaveGestureLibrary/rand_nbr/r1] 计划 5 格，已有 0，待跑 5
+[UWaveGestureLibrary/rand_nbr/r1 1/5] UWaveGestureLibrary/rand_nbr_r1/680611f6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.897 0.906 0.912] (59.8s+0.8s)
+[UWaveGestureLibrary/rand_nbr/r1 2/5] UWaveGestureLibrary/rand_nbr_r1/36ab42c7 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.828 0.878 0.903] (22.1s+0.8s)
+[UWaveGestureLibrary/rand_nbr/r1 3/5] UWaveGestureLibrary/rand_nbr_r1/95a4778c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.900 0.916 0.919] (39.4s+0.9s)
+[UWaveGestureLibrary/rand_nbr/r1 4/5] UWaveGestureLibrary/rand_nbr_r1/3e6657fe s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.912 0.919 0.916] (78.5s+0.8s)
+[UWaveGestureLibrary/rand_nbr/r1 5/5] UWaveGestureLibrary/rand_nbr_r1/090c7fe9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.919 0.909 0.900] (40.6s+0.9s)
+[UWaveGestureLibrary/rand_nbr/r1] 收官
+[loop UWaveGestureLibrary/bo_ucb/r2] 父本 ['8c4aa283', '9092e36e', '994cee62', 'c53479d1', 'fdf07487'] @150 [0.919, 0.897, 0.897, 0.897, 0.897]；提名 5 条 pred [1.27, 1.22, 1.24, 1.18, 1.11] std [0.23, 0.26, 0.18, 0.24, 0.3] 汉明 [2, 2, 2, 2, 2]（池 1182 / 半径内 1140）
+[UWaveGestureLibrary/bo_ucb/r2] 计划 5 格，已有 0，待跑 5
+[UWaveGestureLibrary/bo_ucb/r2 1/5] UWaveGestureLibrary/bo_ucb_r2/f5dfafae s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.900 0.919 0.928] (38.5s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r2 2/5] UWaveGestureLibrary/bo_ucb_r2/2542ddbd s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.912 0.897 0.934] (39.8s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r2 3/5] UWaveGestureLibrary/bo_ucb_r2/6e16d06b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.884 0.919 0.916] (38.4s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r2 4/5] UWaveGestureLibrary/bo_ucb_r2/8b45ec81 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.887 0.922 0.925] (30.5s+0.8s)
+[UWaveGestureLibrary/bo_ucb/r2 5/5] UWaveGestureLibrary/bo_ucb_r2/baaae538 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.903 0.897 0.916] (32.4s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r2] 收官
+[loop UWaveGestureLibrary/rand_nbr/r2] 父本 ['090c7fe9', '8c4aa283', '3e6657fe', '95a4778c', '680611f6'] @150 [0.919, 0.919, 0.912, 0.9, 0.897]；提名 5 条 pred [1.19, 0.69, -0.07, 0.69, 1.12] std [0.25, 0.09, 0.16, 0.14, 0.22] 汉明 [2, 2, 2, 2, 2]（池 1196 / 半径内 1122）
+[UWaveGestureLibrary/rand_nbr/r2] 计划 5 格，已有 0，待跑 5
+[UWaveGestureLibrary/rand_nbr/r2 1/5] UWaveGestureLibrary/rand_nbr_r2/bed75fb8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.872 0.841 0.803] (39.7s+0.9s)
+[UWaveGestureLibrary/rand_nbr/r2 2/5] UWaveGestureLibrary/rand_nbr_r2/26e730a9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.906 0.922 0.884] (58.8s+0.7s)
+[UWaveGestureLibrary/rand_nbr/r2 3/5] UWaveGestureLibrary/rand_nbr_r2/397bc442 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.903 0.909 0.925] (86.6s+0.9s)
+[UWaveGestureLibrary/rand_nbr/r2 4/5] UWaveGestureLibrary/rand_nbr_r2/d4201161 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.925 0.916 0.922] (106.1s+0.7s)
+[UWaveGestureLibrary/rand_nbr/r2 5/5] UWaveGestureLibrary/rand_nbr_r2/8f0052c0 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.778 0.841 0.859] (27.9s+0.9s)
+[UWaveGestureLibrary/rand_nbr/r2] 收官
+[loop UWaveGestureLibrary/bo_ucb/r3] 父本 ['8c4aa283', '2542ddbd', 'baaae538', 'f5dfafae', '9092e36e'] @150 [0.919, 0.912, 0.903, 0.9, 0.897]；提名 5 条 pred [1.47, 1.38, 1.37, 1.4, 1.39] std [0.25, 0.26, 0.26, 0.21, 0.21] 汉明 [3, 3, 2, 1, 2]（池 1176 / 半径内 1142）
+[UWaveGestureLibrary/bo_ucb/r3] 计划 5 格，已有 0，待跑 5
+[UWaveGestureLibrary/bo_ucb/r3 1/5] UWaveGestureLibrary/bo_ucb_r3/5939a7e3 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.897 0.925 0.925] (41.8s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r3 2/5] UWaveGestureLibrary/bo_ucb_r3/56964060 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.906 0.909 0.919] (49.5s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r3 3/5] UWaveGestureLibrary/bo_ucb_r3/722a258c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.866 0.866 0.891] (38.8s+1.1s)
+[UWaveGestureLibrary/bo_ucb/r3 4/5] UWaveGestureLibrary/bo_ucb_r3/a874ca71 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.894 0.903 0.916] (40.2s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r3 5/5] UWaveGestureLibrary/bo_ucb_r3/a77f92e3 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.866 0.847 0.844] (42.5s+0.9s)
+[UWaveGestureLibrary/bo_ucb/r3] 收官
+[loop UWaveGestureLibrary/rand_nbr/r3] 父本 ['d4201161', '090c7fe9', '8c4aa283', '3e6657fe', '26e730a9'] @150 [0.925, 0.919, 0.919, 0.912, 0.906]；提名 5 条 pred [-0.01, 0.52, 0.78, 0.64, 0.78] std [0.15, 0.29, 0.09, 0.14, 0.15] 汉明 [2, 2, 2, 3, 1]（池 1198 / 半径内 1148）
+[UWaveGestureLibrary/rand_nbr/r3] 计划 5 格，已有 0，待跑 5
+[UWaveGestureLibrary/rand_nbr/r3 1/5] UWaveGestureLibrary/rand_nbr_r3/bff3f54c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.794 0.800 0.819] (78.1s+0.8s)
+[UWaveGestureLibrary/rand_nbr/r3 2/5] UWaveGestureLibrary/rand_nbr_r3/fef005d8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.894 0.922 0.881] (40.9s+0.9s)
+[UWaveGestureLibrary/rand_nbr/r3 3/5] UWaveGestureLibrary/rand_nbr_r3/074e74f9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.925 0.909 0.928] (78.6s+0.7s)
+[UWaveGestureLibrary/rand_nbr/r3 4/5] UWaveGestureLibrary/rand_nbr_r3/d58d8701 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.884 0.919 0.922] (54.6s+0.9s)
+[UWaveGestureLibrary/rand_nbr/r3 5/5] UWaveGestureLibrary/rand_nbr_r3/befe1f59 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.903 0.906 0.894] (105.8s+0.8s)
+[UWaveGestureLibrary/rand_nbr/r3] 收官
+[loop UWaveGestureLibrary] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[loop Cricket/bo_ucb/r1] 父本 ['c92058f2', '8b87d66f', '375a7599', '483e3d31', '9092e36e'] @150 [1.0, 0.986, 0.972, 0.972, 0.972]；提名 5 条 pred [1.42, 1.32, 1.25, 1.23, 1.21] std [0.2, 0.22, 0.22, 0.24, 0.24] 汉明 [1, 2, 2, 2, 3]（池 1123 / 半径内 1117）
+[Cricket/bo_ucb/r1] 计划 5 格，已有 0，待跑 5
+[Cricket/bo_ucb/r1 1/5] Cricket/bo_ucb_r1/32b82a16 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 0.986] (42.3s+0.9s)
+[Cricket/bo_ucb/r1 2/5] Cricket/bo_ucb_r1/3ec908b7 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.944 0.944] (38.3s+0.9s)
+[Cricket/bo_ucb/r1 3/5] Cricket/bo_ucb_r1/8509edd8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.681 0.639 0.722] (83.1s+0.9s)
+[Cricket/bo_ucb/r1 4/5] Cricket/bo_ucb_r1/e42bd797 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 1.000 1.000] (43.0s+0.9s)
+[Cricket/bo_ucb/r1 5/5] Cricket/bo_ucb_r1/560b5174 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.972 0.972] (84.7s+0.9s)
+[Cricket/bo_ucb/r1] 收官
+[loop Cricket/rand_nbr/r1] 父本 ['c92058f2', '8b87d66f', '375a7599', '483e3d31', '9092e36e'] @150 [1.0, 0.986, 0.972, 0.972, 0.972]；提名 5 条 pred [1.3, -0.05, 0.98, 0.91, 0.91] std [0.27, 0.17, 0.21, 0.23, 0.14] 汉明 [1, 2, 2, 2, 1]（池 1110 / 半径内 1092）
+[Cricket/rand_nbr/r1] 计划 5 格，已有 0，待跑 5
+[Cricket/rand_nbr/r1 1/5] Cricket/rand_nbr_r1/222e7aa2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.958 0.986] (89.7s+0.9s)
+[Cricket/rand_nbr/r1 2/5] Cricket/rand_nbr_r1/5f194393 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.931 0.931 0.931] (108.9s+0.9s)
+[Cricket/rand_nbr/r1 3/5] Cricket/rand_nbr_r1/ea12a4e5 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.958 0.931] (78.8s+0.9s)
+[Cricket/rand_nbr/r1 4/5] Cricket/rand_nbr_r1/6e3e9743 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 0.958 0.958] (46.3s+0.9s)
+[Cricket/rand_nbr/r1 5/5] Cricket/rand_nbr_r1/baa04ac4 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.944 0.944] (45.1s+0.9s)
+[Cricket/rand_nbr/r1] 收官
+[loop Cricket/bo_ucb/r2] 父本 ['32b82a16', 'c92058f2', '560b5174', '8b87d66f', 'e42bd797'] @150 [1.0, 1.0, 0.986, 0.986, 0.986]；提名 5 条 pred [1.37, 1.17, 1.29, 1.23, 1.18] std [0.33, 0.46, 0.26, 0.25, 0.24] 汉明 [1, 3, 3, 2, 2]（池 1033 / 半径内 1023）
+[Cricket/bo_ucb/r2] 计划 5 格，已有 0，待跑 5
+[Cricket/bo_ucb/r2 1/5] Cricket/bo_ucb_r2/069779d8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.972 0.972] (94.7s+0.9s)
+[Cricket/bo_ucb/r2 2/5] Cricket/bo_ucb_r2/5fb6f262 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.972 0.958] (94.3s+0.9s)
+[Cricket/bo_ucb/r2 3/5] Cricket/bo_ucb_r2/eea7de58 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.972 0.972] (79.9s+0.9s)
+[Cricket/bo_ucb/r2 4/5] Cricket/bo_ucb_r2/a497f34f s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.958 0.958] (91.6s+0.9s)
+[Cricket/bo_ucb/r2 5/5] Cricket/bo_ucb_r2/5adf224b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.931] (93.4s+0.9s)
+[Cricket/bo_ucb/r2] 收官
+[loop Cricket/rand_nbr/r2] 父本 ['c92058f2', '8b87d66f', '222e7aa2', '375a7599', '483e3d31'] @150 [1.0, 0.986, 0.972, 0.972, 0.972]；提名 5 条 pred [0.65, 0.69, 0.01, 1.22, -0.04] std [0.21, 0.22, 0.16, 0.14, 0.18] 汉明 [2, 2, 2, 2, 1]（池 1109 / 半径内 1090）
+[Cricket/rand_nbr/r2] 计划 5 格，已有 0，待跑 5
+[Cricket/rand_nbr/r2 1/5] Cricket/rand_nbr_r2/65536677 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.958 0.944] (89.0s+0.9s)
+[Cricket/rand_nbr/r2 2/5] Cricket/rand_nbr_r2/f322be17 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.972 0.958] (143.7s+0.9s)
+[Cricket/rand_nbr/r2 3/5] Cricket/rand_nbr_r2/2904daa5 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 1.000] (135.3s+0.9s)
+[Cricket/rand_nbr/r2 4/5] Cricket/rand_nbr_r2/192b6d4a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.958] (90.4s+1.0s)
+[Cricket/rand_nbr/r2 5/5] Cricket/rand_nbr_r2/48ccaa5b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.958 0.931] (459.2s+1.4s)
+[Cricket/rand_nbr/r2] 收官
+[loop Cricket/bo_ucb/r3] 父本 ['32b82a16', 'c92058f2', '069779d8', '560b5174', '5fb6f262'] @150 [1.0, 1.0, 0.986, 0.986, 0.986]；提名 5 条 pred [1.16, 1.13, 1.08, 1.12, 1.04] std [0.26, 0.16, 0.19, 0.15, 0.22] 汉明 [2, 2, 1, 3, 2]（池 1062 / 半径内 1029）
+[Cricket/bo_ucb/r3] 计划 5 格，已有 0，待跑 5
+[Cricket/bo_ucb/r3 1/5] Cricket/bo_ucb_r3/f8c4f7e2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.944 0.958] (265.8s+1.2s)
+[Cricket/bo_ucb/r3 2/5] Cricket/bo_ucb_r3/a833cbe5 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.958 0.958] (114.6s+1.0s)
+[Cricket/bo_ucb/r3 3/5] Cricket/bo_ucb_r3/a226b4ad s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.958 0.986] (97.4s+1.1s)
+[Cricket/bo_ucb/r3 4/5] Cricket/bo_ucb_r3/7eed9c0a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.972 0.931] (60.5s+1.0s)
+[Cricket/bo_ucb/r3 5/5] Cricket/bo_ucb_r3/0deb0b75 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.986 0.972] (73.0s+0.9s)
+[Cricket/bo_ucb/r3] 收官
+[loop Cricket/rand_nbr/r3] 父本 ['c92058f2', '8b87d66f', '192b6d4a', '222e7aa2', '2904daa5'] @150 [1.0, 0.986, 0.972, 0.972, 0.972]；提名 5 条 pred [0.87, 0.96, 0.73, 0.91, 0.87] std [0.15, 0.29, 0.2, 0.28, 0.17] 汉明 [1, 3, 2, 2, 3]（池 1128 / 半径内 1099）
+[Cricket/rand_nbr/r3] 计划 5 格，已有 0，待跑 5
+[Cricket/rand_nbr/r3 1/5] Cricket/rand_nbr_r3/20e46aff s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.972 0.972] (92.3s+1.0s)
+[Cricket/rand_nbr/r3 2/5] Cricket/rand_nbr_r3/5be0d4fc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.986 0.972] (66.9s+0.9s)
+[Cricket/rand_nbr/r3 3/5] Cricket/rand_nbr_r3/b12a7990 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.986 0.986] (95.2s+0.9s)
+[Cricket/rand_nbr/r3 4/5] Cricket/rand_nbr_r3/b5b82660 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.944] (72.2s+0.9s)
+[Cricket/rand_nbr/r3 5/5] Cricket/rand_nbr_r3/0e9f4947 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.986 0.972] (66.5s+1.0s)
+[Cricket/rand_nbr/r3] 收官
+[loop Cricket] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[loop EthanolConcentration/bo_ucb/r1] 父本 ['65627517', 'cffb5503', '20be4f74', '9803700a', 'b8fc4fb7'] @150 [0.407, 0.35, 0.327, 0.304, 0.304]；提名 5 条 pred [0.71, 0.69, 0.68, 0.69, 0.71] std [0.2, 0.2, 0.19, 0.17, 0.15] 汉明 [2, 1, 1, 3, 2]（池 1182 / 半径内 1149）
+[EthanolConcentration/bo_ucb/r1] 计划 5 格，已有 0，待跑 5
+[EthanolConcentration/bo_ucb/r1 1/5] EthanolConcentration/bo_ucb_r1/a2eb701e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.312 0.335 0.266] (163.0s+2.1s)
+[EthanolConcentration/bo_ucb/r1 2/5] EthanolConcentration/bo_ucb_r1/2021cbc7 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.319 0.323 0.308] (181.3s+2.1s)
+[EthanolConcentration/bo_ucb/r1 3/5] EthanolConcentration/bo_ucb_r1/8f8f291b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.323 0.342 0.323] (246.3s+2.7s)
+[EthanolConcentration/bo_ucb/r1 4/5] EthanolConcentration/bo_ucb_r1/d4b2f177 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.293 0.289 0.274] (246.6s+2.6s)
+[EthanolConcentration/bo_ucb/r1 5/5] EthanolConcentration/bo_ucb_r1/55fc5b65 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.312 0.293 0.285] (131.9s+2.1s)
+[EthanolConcentration/bo_ucb/r1] 收官
+[loop EthanolConcentration/rand_nbr/r1] 父本 ['65627517', 'cffb5503', '20be4f74', '9803700a', 'b8fc4fb7'] @150 [0.407, 0.35, 0.327, 0.304, 0.304]；提名 5 条 pred [-0.12, 0.13, 0.28, -1.14, 0.34] std [0.25, 0.15, 0.19, 0.1, 0.12] 汉明 [2, 2, 2, 1, 2]（池 1219 / 半径内 1184）
+[EthanolConcentration/rand_nbr/r1] 计划 5 格，已有 0，待跑 5
+[EthanolConcentration/rand_nbr/r1 1/5] EthanolConcentration/rand_nbr_r1/2ec0ae50 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.251 0.259 0.300] (132.8s+2.0s)
+[EthanolConcentration/rand_nbr/r1 2/5] EthanolConcentration/rand_nbr_r1/153ba48d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.278 0.266 0.259] (114.8s+2.0s)
+[EthanolConcentration/rand_nbr/r1 3/5] EthanolConcentration/rand_nbr_r1/76d9889e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.274 0.270 0.262] (93.4s+2.1s)
+[EthanolConcentration/rand_nbr/r1 4/5] EthanolConcentration/rand_nbr_r1/efbd665b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.274 0.285 0.278] (87.4s+7.4s)
+[EthanolConcentration/rand_nbr/r1 5/5] EthanolConcentration/rand_nbr_r1/c2952c6e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.278 0.243 0.240] (88.7s+2.4s)
+[EthanolConcentration/rand_nbr/r1] 收官
+[loop EthanolConcentration/bo_ucb/r2] 父本 ['65627517', 'cffb5503', '20be4f74', '8f8f291b', '2021cbc7'] @150 [0.407, 0.35, 0.327, 0.323, 0.319]；提名 5 条 pred [0.98, 0.88, 0.95, 0.82, 0.9] std [0.15, 0.2, 0.1, 0.19, 0.12] 汉明 [2, 2, 2, 2, 1]（池 1238 / 半径内 1203）
+[EthanolConcentration/bo_ucb/r2] 计划 5 格，已有 0，待跑 5
+[EthanolConcentration/bo_ucb/r2 1/5] EthanolConcentration/bo_ucb_r2/a49dcf45 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.281 0.308 0.316] (184.7s+2.3s)
+[EthanolConcentration/bo_ucb/r2 2/5] EthanolConcentration/bo_ucb_r2/61cc92b8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.262 0.316 0.335] (175.9s+2.3s)
+[EthanolConcentration/bo_ucb/r2 3/5] EthanolConcentration/bo_ucb_r2/86f35511 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.274 0.312 0.323] (398.7s+3.2s)
+[EthanolConcentration/bo_ucb/r2 4/5] EthanolConcentration/bo_ucb_r2/cb76d4f9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.281 0.350 0.346] (227.4s+2.3s)
+[EthanolConcentration/bo_ucb/r2 5/5] EthanolConcentration/bo_ucb_r2/3569c7d8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.308 0.357 0.300] (237.5s+2.6s)
+[EthanolConcentration/bo_ucb/r2] 收官
+[loop EthanolConcentration/rand_nbr/r2] 父本 ['65627517', 'cffb5503', '20be4f74', '9803700a', 'b8fc4fb7'] @150 [0.407, 0.35, 0.327, 0.304, 0.304]；提名 5 条 pred [-1.35, -0.33, -0.43, -0.95, 0.01] std [0.2, 0.27, 0.16, 0.17, 0.13] 汉明 [3, 3, 2, 1, 2]（池 1208 / 半径内 1169）
+[EthanolConcentration/rand_nbr/r2] 计划 5 格，已有 0，待跑 5
+D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\model_selection\_validation.py:516: FitFailedWarning: 
+2 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+2 fits failed with the following error:
+Traceback (most recent call last):
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\model_selection\_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\svm\_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+[EthanolConcentration/rand_nbr/r2 1/5] EthanolConcentration/rand_nbr_r2/876a4737 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.342 0.285 0.266] (97.1s+25.6s)
+[EthanolConcentration/rand_nbr/r2 2/5] EthanolConcentration/rand_nbr_r2/51f7aef6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.262 0.266 0.270] (250.1s+3.9s)
+[EthanolConcentration/rand_nbr/r2 3/5] EthanolConcentration/rand_nbr_r2/76e90302 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.255 0.251] (109.7s+2.0s)
+[EthanolConcentration/rand_nbr/r2 4/5] EthanolConcentration/rand_nbr_r2/12a1a40d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.274 0.285 0.285] (85.5s+5.0s)
+[EthanolConcentration/rand_nbr/r2 5/5] EthanolConcentration/rand_nbr_r2/8cce50bb s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.361 0.365 0.335] (94.7s+1.9s)
+[EthanolConcentration/rand_nbr/r2] 收官
+[loop EthanolConcentration/bo_ucb/r3] 父本 ['65627517', 'cffb5503', '20be4f74', '8f8f291b', '2021cbc7'] @150 [0.407, 0.35, 0.327, 0.323, 0.319]；提名 5 条 pred [0.86, 0.79, 0.82, 0.76, 0.78] std [0.18, 0.22, 0.18, 0.23, 0.19] 汉明 [2, 3, 3, 3, 2]（池 1210 / 半径内 1186）
+[EthanolConcentration/bo_ucb/r3] 计划 5 格，已有 0，待跑 5
+[EthanolConcentration/bo_ucb/r3 1/5] EthanolConcentration/bo_ucb_r3/a31d6958 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.255 0.274 0.266] (166.8s+2.1s)
+[EthanolConcentration/bo_ucb/r3 2/5] EthanolConcentration/bo_ucb_r3/ec75d4f4 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.266 0.319 0.323] (108.5s+2.2s)
+[EthanolConcentration/bo_ucb/r3 3/5] EthanolConcentration/bo_ucb_r3/8608df47 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.255 0.262 0.213] (177.7s+2.3s)
+[EthanolConcentration/bo_ucb/r3 4/5] EthanolConcentration/bo_ucb_r3/d4cee02e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.285 0.293 0.278] (162.8s+2.4s)
+[EthanolConcentration/bo_ucb/r3 5/5] EthanolConcentration/bo_ucb_r3/77b039ff s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.304 0.293 0.293] (187.0s+2.3s)
+[EthanolConcentration/bo_ucb/r3] 收官
+[loop EthanolConcentration/rand_nbr/r3] 父本 ['65627517', '8cce50bb', 'cffb5503', '876a4737', '20be4f74'] @150 [0.407, 0.361, 0.35, 0.342, 0.327]；提名 5 条 pred [-0.01, 0.16, -0.15, 0.64, -0.78] std [0.23, 0.21, 0.1, 0.17, 0.18] 汉明 [1, 1, 1, 1, 2]（池 1242 / 半径内 1195）
+[EthanolConcentration/rand_nbr/r3] 计划 5 格，已有 0，待跑 5
+[EthanolConcentration/rand_nbr/r3 1/5] EthanolConcentration/rand_nbr_r3/f2b1ebb1 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.361 0.471 0.437] (86.6s+2.7s)
+[EthanolConcentration/rand_nbr/r3 2/5] EthanolConcentration/rand_nbr_r3/a5fc07fd s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.399 0.278 0.430] (87.9s+2.6s)
+[EthanolConcentration/rand_nbr/r3 3/5] EthanolConcentration/rand_nbr_r3/313eaa4a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.274 0.262 0.278] (99.0s+2.0s)
+[EthanolConcentration/rand_nbr/r3 4/5] EthanolConcentration/rand_nbr_r3/8f8f291b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.323 0.338 0.319] (223.2s+2.4s)
+[EthanolConcentration/rand_nbr/r3 5/5] EthanolConcentration/rand_nbr_r3/e734bc7a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.407 0.266 0.259] (112.3s+2.2s)
+[EthanolConcentration/rand_nbr/r3] 收官
+[loop EthanolConcentration] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[loop PhonemeSpectra/bo_ucb/r1] 父本 ['a1f67db4', '2501007e', '4f7d4135', 'cffb5503', 'f48e5da1'] @150 [0.246, 0.239, 0.238, 0.237, 0.234]；提名 5 条 pred [1.33, 1.35, 1.31, 1.33, 1.32] std [0.2, 0.14, 0.16, 0.14, 0.12] 汉明 [2, 2, 1, 2, 1]（池 1222 / 半径内 1194）
+[PhonemeSpectra/bo_ucb/r1] 计划 5 格，已有 0，待跑 5
+[PhonemeSpectra/bo_ucb/r1 1/5] PhonemeSpectra/bo_ucb_r1/d440d2da s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.213 0.174 0.124] (75.6s+37.4s)
+[PhonemeSpectra/bo_ucb/r1 2/5] PhonemeSpectra/bo_ucb_r1/a7908f27 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.240 0.239 0.220] (55.6s+33.7s)
+[PhonemeSpectra/bo_ucb/r1 3/5] PhonemeSpectra/bo_ucb_r1/91b6277f s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.209 0.175 0.122] (55.6s+35.6s)
+[PhonemeSpectra/bo_ucb/r1 4/5] PhonemeSpectra/bo_ucb_r1/44a25f69 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.245 0.228 0.218] (52.6s+33.7s)
+[PhonemeSpectra/bo_ucb/r1 5/5] PhonemeSpectra/bo_ucb_r1/18b4cd0c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.234 0.227 0.230] (53.1s+32.3s)
+[PhonemeSpectra/bo_ucb/r1] 收官
+[loop PhonemeSpectra/rand_nbr/r1] 父本 ['a1f67db4', '2501007e', '4f7d4135', 'cffb5503', 'f48e5da1'] @150 [0.246, 0.239, 0.238, 0.237, 0.234]；提名 5 条 pred [0.17, -0.1, -0.03, 0.26, 1.0] std [0.09, 0.17, 0.17, 0.15, 0.18] 汉明 [1, 2, 1, 1, 2]（池 1200 / 半径内 1174）
+[PhonemeSpectra/rand_nbr/r1] 计划 5 格，已有 0，待跑 5
+[PhonemeSpectra/rand_nbr/r1 1/5] PhonemeSpectra/rand_nbr_r1/569faff8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.242 0.224 0.222] (63.6s+32.9s)
+[PhonemeSpectra/rand_nbr/r1 2/5] PhonemeSpectra/rand_nbr_r1/3207fdbb s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.133 0.144 0.132] (73.5s+63.3s)
+[PhonemeSpectra/rand_nbr/r1 3/5] PhonemeSpectra/rand_nbr_r1/be878de2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.231 0.254 0.241] (64.6s+38.0s)
+[PhonemeSpectra/rand_nbr/r1 4/5] PhonemeSpectra/rand_nbr_r1/4f8ccb43 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.235 0.221 0.209] (63.3s+33.3s)
+[PhonemeSpectra/rand_nbr/r1 5/5] PhonemeSpectra/rand_nbr_r1/531d13d4 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.226 0.221 0.211] (55.7s+31.8s)
+[PhonemeSpectra/rand_nbr/r1] 收官
+[loop PhonemeSpectra/bo_ucb/r2] 父本 ['a1f67db4', '44a25f69', 'a7908f27', '2501007e', '4f7d4135'] @150 [0.246, 0.245, 0.24, 0.239, 0.238]；提名 5 条 pred [1.41, 1.36, 1.44, 1.4, 1.3] std [0.23, 0.21, 0.12, 0.15, 0.23] 汉明 [3, 2, 1, 1, 2]（池 1212 / 半径内 1163）
+[PhonemeSpectra/bo_ucb/r2] 计划 5 格，已有 0，待跑 5
+D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\model_selection\_validation.py:516: FitFailedWarning: 
+1 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+1 fits failed with the following error:
+Traceback (most recent call last):
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\model_selection\_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\svm\_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\model_selection\_validation.py:516: FitFailedWarning: 
+2 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+2 fits failed with the following error:
+Traceback (most recent call last):
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\model_selection\_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\svm\_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+[loop] Windows：截点评估上限 480s 走 loky 子进程（超时整格记 error）
+[data] Handwriting: train=(150, 152, 3) test=(850, 152, 3) classes=26 size=68400
+[data] HandMovementDirection: train=(160, 400, 10) test=(74, 400, 10) classes=4 size=640000
+[data] UWaveGestureLibrary: train=(120, 315, 3) test=(320, 315, 3) classes=8 size=113400
+[data] Cricket: train=(108, 1197, 6) test=(72, 1197, 6) classes=12 size=775656
+[data] EthanolConcentration: train=(261, 1751, 3) test=(263, 1751, 3) classes=4 size=1371033
+[data] PhonemeSpectra: train=(3315, 217, 11) test=(3353, 217, 11) classes=39 size=7912905
+[loop Handwriting/bo_ucb/r1] 复用已落盘提名 5 条
+[Handwriting/bo_ucb/r1] 计划 5 格，已有 5，待跑 0
+[Handwriting/bo_ucb/r1] 收官
+[loop Handwriting/rand_nbr/r1] 复用已落盘提名 5 条
+[Handwriting/rand_nbr/r1] 计划 5 格，已有 5，待跑 0
+[Handwriting/rand_nbr/r1] 收官
+[loop Handwriting/bo_ucb/r2] 复用已落盘提名 5 条
+[Handwriting/bo_ucb/r2] 计划 5 格，已有 5，待跑 0
+[Handwriting/bo_ucb/r2] 收官
+[loop Handwriting/rand_nbr/r2] 复用已落盘提名 5 条
+[Handwriting/rand_nbr/r2] 计划 5 格，已有 5，待跑 0
+[Handwriting/rand_nbr/r2] 收官
+[loop Handwriting/bo_ucb/r3] 复用已落盘提名 5 条
+[Handwriting/bo_ucb/r3] 计划 5 格，已有 5，待跑 0
+[Handwriting/bo_ucb/r3] 收官
+[loop Handwriting/rand_nbr/r3] 复用已落盘提名 5 条
+[Handwriting/rand_nbr/r3] 计划 5 格，已有 5，待跑 0
+[Handwriting/rand_nbr/r3] 收官
+[loop Handwriting] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[loop HandMovementDirection/bo_ucb/r1] 复用已落盘提名 5 条
+[HandMovementDirection/bo_ucb/r1] 计划 5 格，已有 5，待跑 0
+[HandMovementDirection/bo_ucb/r1] 收官
+[loop HandMovementDirection/rand_nbr/r1] 复用已落盘提名 5 条
+[HandMovementDirection/rand_nbr/r1] 计划 5 格，已有 5，待跑 0
+[HandMovementDirection/rand_nbr/r1] 收官
+[loop HandMovementDirection/bo_ucb/r2] 复用已落盘提名 5 条
+[HandMovementDirection/bo_ucb/r2] 计划 5 格，已有 5，待跑 0
+[HandMovementDirection/bo_ucb/r2] 收官
+[loop HandMovementDirection/rand_nbr/r2] 复用已落盘提名 5 条
+[HandMovementDirection/rand_nbr/r2] 计划 5 格，已有 5，待跑 0
+[HandMovementDirection/rand_nbr/r2] 收官
+[loop HandMovementDirection/bo_ucb/r3] 复用已落盘提名 5 条
+[HandMovementDirection/bo_ucb/r3] 计划 5 格，已有 5，待跑 0
+[HandMovementDirection/bo_ucb/r3] 收官
+[loop HandMovementDirection/rand_nbr/r3] 复用已落盘提名 5 条
+[HandMovementDirection/rand_nbr/r3] 计划 5 格，已有 5，待跑 0
+[HandMovementDirection/rand_nbr/r3] 收官
+[loop HandMovementDirection] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[loop UWaveGestureLibrary/bo_ucb/r1] 复用已落盘提名 5 条
+[UWaveGestureLibrary/bo_ucb/r1] 计划 5 格，已有 5，待跑 0
+[UWaveGestureLibrary/bo_ucb/r1] 收官
+[loop UWaveGestureLibrary/rand_nbr/r1] 复用已落盘提名 5 条
+[UWaveGestureLibrary/rand_nbr/r1] 计划 5 格，已有 5，待跑 0
+[UWaveGestureLibrary/rand_nbr/r1] 收官
+[loop UWaveGestureLibrary/bo_ucb/r2] 复用已落盘提名 5 条
+[UWaveGestureLibrary/bo_ucb/r2] 计划 5 格，已有 5，待跑 0
+[UWaveGestureLibrary/bo_ucb/r2] 收官
+[loop UWaveGestureLibrary/rand_nbr/r2] 复用已落盘提名 5 条
+[UWaveGestureLibrary/rand_nbr/r2] 计划 5 格，已有 5，待跑 0
+[UWaveGestureLibrary/rand_nbr/r2] 收官
+[loop UWaveGestureLibrary/bo_ucb/r3] 复用已落盘提名 5 条
+[UWaveGestureLibrary/bo_ucb/r3] 计划 5 格，已有 5，待跑 0
+[UWaveGestureLibrary/bo_ucb/r3] 收官
+[loop UWaveGestureLibrary/rand_nbr/r3] 复用已落盘提名 5 条
+[UWaveGestureLibrary/rand_nbr/r3] 计划 5 格，已有 5，待跑 0
+[UWaveGestureLibrary/rand_nbr/r3] 收官
+[loop UWaveGestureLibrary] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[loop Cricket/bo_ucb/r1] 复用已落盘提名 5 条
+[Cricket/bo_ucb/r1] 计划 5 格，已有 5，待跑 0
+[Cricket/bo_ucb/r1] 收官
+[loop Cricket/rand_nbr/r1] 复用已落盘提名 5 条
+[Cricket/rand_nbr/r1] 计划 5 格，已有 5，待跑 0
+[Cricket/rand_nbr/r1] 收官
+[loop Cricket/bo_ucb/r2] 复用已落盘提名 5 条
+[Cricket/bo_ucb/r2] 计划 5 格，已有 5，待跑 0
+[Cricket/bo_ucb/r2] 收官
+[loop Cricket/rand_nbr/r2] 复用已落盘提名 5 条
+[Cricket/rand_nbr/r2] 计划 5 格，已有 5，待跑 0
+[Cricket/rand_nbr/r2] 收官
+[loop Cricket/bo_ucb/r3] 复用已落盘提名 5 条
+[Cricket/bo_ucb/r3] 计划 5 格，已有 5，待跑 0
+[Cricket/bo_ucb/r3] 收官
+[loop Cricket/rand_nbr/r3] 复用已落盘提名 5 条
+[Cricket/rand_nbr/r3] 计划 5 格，已有 5，待跑 0
+[Cricket/rand_nbr/r3] 收官
+[loop Cricket] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[loop EthanolConcentration/bo_ucb/r1] 复用已落盘提名 5 条
+[EthanolConcentration/bo_ucb/r1] 计划 5 格，已有 5，待跑 0
+[EthanolConcentration/bo_ucb/r1] 收官
+[loop EthanolConcentration/rand_nbr/r1] 复用已落盘提名 5 条
+[EthanolConcentration/rand_nbr/r1] 计划 5 格，已有 5，待跑 0
+[EthanolConcentration/rand_nbr/r1] 收官
+[loop EthanolConcentration/bo_ucb/r2] 复用已落盘提名 5 条
+[EthanolConcentration/bo_ucb/r2] 计划 5 格，已有 5，待跑 0
+[EthanolConcentration/bo_ucb/r2] 收官
+[loop EthanolConcentration/rand_nbr/r2] 复用已落盘提名 5 条
+[EthanolConcentration/rand_nbr/r2] 计划 5 格，已有 5，待跑 0
+[EthanolConcentration/rand_nbr/r2] 收官
+[loop EthanolConcentration/bo_ucb/r3] 复用已落盘提名 5 条
+[EthanolConcentration/bo_ucb/r3] 计划 5 格，已有 5，待跑 0
+[EthanolConcentration/bo_ucb/r3] 收官
+[loop EthanolConcentration/rand_nbr/r3] 复用已落盘提名 5 条
+[EthanolConcentration/rand_nbr/r3] 计划 5 格，已有 5，待跑 0
+[EthanolConcentration/rand_nbr/r3] 收官
+[loop EthanolConcentration] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[loop PhonemeSpectra/bo_ucb/r1] 复用已落盘提名 5 条
+[PhonemeSpectra/bo_ucb/r1] 计划 5 格，已有 5，待跑 0
+[PhonemeSpectra/bo_ucb/r1] 收官
+[loop PhonemeSpectra/rand_nbr/r1] 复用已落盘提名 5 条
+[PhonemeSpectra/rand_nbr/r1] 计划 5 格，已有 5，待跑 0
+[PhonemeSpectra/rand_nbr/r1] 收官
+[loop PhonemeSpectra/bo_ucb/r2] 复用已落盘提名 5 条
+[PhonemeSpectra/bo_ucb/r2] 计划 5 格，已有 0，待跑 5
+[PhonemeSpectra/bo_ucb/r2 1/5] PhonemeSpectra/bo_ucb_r2/d39832ce s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[] (494.8s+Nones) ERROR EvalTimeout: checkpoint eval exceeded 480s (loky worker killed)
+[PhonemeSpectra/bo_ucb/r2 2/5] PhonemeSpectra/bo_ucb_r2/1594b150 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.245 0.237 0.234] (53.5s+33.6s)
+[PhonemeSpectra/bo_ucb/r2 3/5] PhonemeSpectra/bo_ucb_r2/e231f140 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.247 0.226 0.212] (49.3s+31.5s)
+[PhonemeSpectra/bo_ucb/r2 4/5] PhonemeSpectra/bo_ucb_r2/852a948d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.246 0.230 0.220] (50.0s+32.6s)
+[PhonemeSpectra/bo_ucb/r2 5/5] PhonemeSpectra/bo_ucb_r2/df3c4f14 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.237 0.220 0.221] (58.2s+33.3s)
+[PhonemeSpectra/bo_ucb/r2] 收官
+[loop PhonemeSpectra/rand_nbr/r2] 父本 ['a1f67db4', '569faff8', '2501007e', '4f7d4135', 'cffb5503'] @150 [0.246, 0.242, 0.239, 0.238, 0.237]；提名 5 条 pred [0.8, 0.46, 0.34, 0.41, 0.26] std [0.22, 0.1, 0.06, 0.09, 0.1] 汉明 [2, 2, 1, 2, 1]（池 1211 / 半径内 1175）
+[PhonemeSpectra/rand_nbr/r2] 计划 5 格，已有 0，待跑 5
+[PhonemeSpectra/rand_nbr/r2 1/5] PhonemeSpectra/rand_nbr_r2/fdfb8504 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.244 0.228 0.221] (50.1s+31.2s)
+[PhonemeSpectra/rand_nbr/r2 2/5] PhonemeSpectra/rand_nbr_r2/f44f5d2b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.157 0.139 0.106] (64.3s+39.2s)
+[PhonemeSpectra/rand_nbr/r2 3/5] PhonemeSpectra/rand_nbr_r2/26e885eb s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.238 0.238 0.251] (50.3s+32.1s)
+[PhonemeSpectra/rand_nbr/r2 4/5] PhonemeSpectra/rand_nbr_r2/7b893af2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.245 0.238 0.219] (82.5s+45.9s)
+[PhonemeSpectra/rand_nbr/r2 5/5] PhonemeSpectra/rand_nbr_r2/7c16947a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.239 0.231 0.245] (49.9s+32.3s)
+[PhonemeSpectra/rand_nbr/r2] 收官
+[loop PhonemeSpectra/bo_ucb/r3] 父本 ['e231f140', '852a948d', 'a1f67db4', '44a25f69', '1594b150'] @150 [0.247, 0.246, 0.246, 0.245, 0.245]；提名 5 条 pred [1.39, 1.36, 1.42, 1.35, 1.36] std [0.23, 0.25, 0.16, 0.21, 0.21] 汉明 [2, 2, 3, 2, 2]（池 1151 / 半径内 1108）
+[PhonemeSpectra/bo_ucb/r3] 计划 5 格，已有 0，待跑 5
+[PhonemeSpectra/bo_ucb/r3 1/5] PhonemeSpectra/bo_ucb_r3/480c1eb3 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.239 0.238 0.220] (52.2s+33.1s)
+[PhonemeSpectra/bo_ucb/r3 2/5] PhonemeSpectra/bo_ucb_r3/4b2df48d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.242 0.233 0.224] (44.5s+33.2s)
+[PhonemeSpectra/bo_ucb/r3 3/5] PhonemeSpectra/bo_ucb_r3/2e62607d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.251 0.245 0.215] (57.7s+33.4s)
+[PhonemeSpectra/bo_ucb/r3 4/5] PhonemeSpectra/bo_ucb_r3/19a76f33 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.233 0.213 0.221] (52.8s+33.5s)
+[PhonemeSpectra/bo_ucb/r3 5/5] PhonemeSpectra/bo_ucb_r3/1023f9f5 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.230 0.234 0.208] (53.6s+34.0s)
+[PhonemeSpectra/bo_ucb/r3] 收官
+[loop PhonemeSpectra/rand_nbr/r3] 父本 ['a1f67db4', '7b893af2', 'fdfb8504', '569faff8', '2501007e'] @150 [0.246, 0.245, 0.244, 0.242, 0.239]；提名 5 条 pred [0.47, 0.35, 1.06, 0.08, 1.08] std [0.12, 0.11, 0.17, 0.14, 0.17] 汉明 [2, 2, 3, 2, 1]（池 1225 / 半径内 1199）
+[PhonemeSpectra/rand_nbr/r3] 计划 5 格，已有 0，待跑 5
+[PhonemeSpectra/rand_nbr/r3 1/5] PhonemeSpectra/rand_nbr_r3/ce440e71 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.248 0.234 0.232] (51.7s+33.0s)
+[PhonemeSpectra/rand_nbr/r3 2/5] PhonemeSpectra/rand_nbr_r3/2aa20268 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.239 0.245 0.232] (65.4s+37.8s)
+[PhonemeSpectra/rand_nbr/r3 3/5] PhonemeSpectra/rand_nbr_r3/c0f43b65 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.235 0.223 0.224] (55.8s+32.6s)
+[PhonemeSpectra/rand_nbr/r3 4/5] PhonemeSpectra/rand_nbr_r3/57a1fd6e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.239 0.242 0.246] (84.0s+36.3s)
+[PhonemeSpectra/rand_nbr/r3 5/5] PhonemeSpectra/rand_nbr_r3/c3e364bc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.238 0.220 0.200] (50.8s+32.2s)
+[PhonemeSpectra/rand_nbr/r3] 收官
+[loop PhonemeSpectra] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[finals] Windows：截点评估上限 480s 走 loky 子进程（超时整格记 error）
+[data] Handwriting: train=(150, 152, 3) test=(850, 152, 3) classes=26 size=68400
+[data] HandMovementDirection: train=(160, 400, 10) test=(74, 400, 10) classes=4 size=640000
+[data] UWaveGestureLibrary: train=(120, 315, 3) test=(320, 315, 3) classes=8 size=113400
+[data] Cricket: train=(108, 1197, 6) test=(72, 1197, 6) classes=12 size=775656
+[data] EthanolConcentration: train=(261, 1751, 3) test=(263, 1751, 3) classes=4 size=1371033
+[data] PhonemeSpectra: train=(3315, 217, 11) test=(3353, 217, 11) classes=39 size=7912905
+[finals Handwriting] 冠军 {BO-SH: 4efaf3b1, RAND-SH: 434d7441}；待补种子格 4
+[finals HandMovementDirection] 冠军 {BO-SH: b3c56e8a, RAND-SH: f913784c}；待补种子格 4
+[finals UWaveGestureLibrary] 冠军 {BO-SH: 2542ddbd, RAND-SH: 074e74f9}；待补种子格 4
+[finals Cricket] 冠军 {BO-SH: c92058f2, RAND-SH: c92058f2}；待补种子格 0
+[finals EthanolConcentration] 冠军 {BO-SH: 8f8f291b, RAND-SH: a5fc07fd}；待补种子格 4
+[finals PhonemeSpectra] 冠军 {BO-SH: 852a948d, RAND-SH: ce440e71}；待补种子格 4
+[finals] 计划 20 格，已有 0，待跑 20
+[finals 1/20] Handwriting/final_BO-SH/4efaf3b1 s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.480 0.532 0.512] (16.9s+5.4s)
+[finals 2/20] Handwriting/final_BO-SH/4efaf3b1 s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.466 0.505 0.502] (6.7s+0.9s)
+[finals 3/20] Handwriting/final_RAND-SH/434d7441 s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.448 0.442 0.381] (8.2s+0.9s)
+[finals 4/20] Handwriting/final_RAND-SH/434d7441 s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.486 0.444 0.387] (6.8s+0.9s)
+[finals 5/20] HandMovementDirection/final_BO-SH/b3c56e8a s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.324 0.365 0.351] (44.5s+0.7s)
+[finals 6/20] HandMovementDirection/final_BO-SH/b3c56e8a s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.378 0.324 0.257] (41.5s+0.7s)
+[finals 7/20] HandMovementDirection/final_RAND-SH/f913784c s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.297 0.351] (48.6s+0.8s)
+[finals 8/20] HandMovementDirection/final_RAND-SH/f913784c s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.378 0.365 0.284] (48.2s+0.6s)
+[finals 9/20] UWaveGestureLibrary/final_BO-SH/2542ddbd s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.866 0.881 0.903] (42.5s+0.9s)
+[finals 10/20] UWaveGestureLibrary/final_BO-SH/2542ddbd s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.881 0.891 0.919] (39.1s+0.9s)
+[finals 11/20] UWaveGestureLibrary/final_RAND-SH/074e74f9 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.916 0.912 0.906] (76.7s+0.9s)
+[finals 12/20] UWaveGestureLibrary/final_RAND-SH/074e74f9 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.900 0.925 0.916] (77.8s+0.7s)
+[finals 13/20] EthanolConcentration/final_BO-SH/8f8f291b s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.304 0.297 0.323] (191.8s+2.1s)
+[finals 14/20] EthanolConcentration/final_BO-SH/8f8f291b s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.312 0.327 0.297] (231.1s+2.5s)
+D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\model_selection\_validation.py:516: FitFailedWarning: 
+4 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+4 fits failed with the following error:
+Traceback (most recent call last):
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\model_selection\_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\svm\_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+[finals 15/20] EthanolConcentration/final_RAND-SH/a5fc07fd s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.365 0.266 0.259] (96.6s+33.3s)
+[finals 16/20] EthanolConcentration/final_RAND-SH/a5fc07fd s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.403 0.422 0.430] (81.7s+2.2s)
+[finals 17/20] PhonemeSpectra/final_BO-SH/852a948d s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.234 0.217 0.208] (66.1s+35.6s)
+[finals 18/20] PhonemeSpectra/final_BO-SH/852a948d s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.219 0.210 0.183] (56.0s+34.1s)
+[finals 19/20] PhonemeSpectra/final_RAND-SH/ce440e71 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.237 0.239 0.229] (53.6s+33.2s)
+[finals 20/20] PhonemeSpectra/final_RAND-SH/ce440e71 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.234 0.228 0.225] (53.2s+33.6s)
+[finals] 收官
+[loop] Windows：截点评估上限 480s 走 loky 子进程（超时整格记 error）
+[data] HAR: train=(7352, 128, 9) test=(2947, 128, 9) classes=6
+[loop HAR/bo_ucb/r1] 父本 ['4f7d4135', '8c4aa283', 'c92058f2', 'f474f8e2', 'a1f67db4'] @580 [0.938, 0.932, 0.931, 0.93, 0.924]；提名 5 条 pred [0.99, 0.97, 0.92, 0.94, 0.92] std [0.25, 0.2, 0.25, 0.22, 0.24] 汉明 [2, 2, 2, 2, 1]（池 1070 / 半径内 1050）
+[HAR/bo_ucb/r1] 计划 5 格，已有 0，待跑 5
+[HAR/bo_ucb/r1 1/5] HAR/bo_ucb_r1/4ae604f7 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.914 0.935 0.921] (128.7s+13.0s)
+[HAR/bo_ucb/r1 2/5] HAR/bo_ucb_r1/eb7b2955 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.905 0.900 0.844] (106.9s+11.3s)
+[HAR/bo_ucb/r1 3/5] HAR/bo_ucb_r1/2f89ceaa s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.918 0.914 0.903] (118.6s+11.0s)
+[HAR/bo_ucb/r1 4/5] HAR/bo_ucb_r1/8ec844ef s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.923 0.920 0.914] (406.0s+10.4s)
+[HAR/bo_ucb/r1 5/5] HAR/bo_ucb_r1/279b37b3 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.922 0.919 0.933] (132.6s+9.1s)
+[HAR/bo_ucb/r1] 收官
+[loop HAR/rand_nbr/r1] 父本 ['4f7d4135', '8c4aa283', 'c92058f2', 'f474f8e2', 'a1f67db4'] @580 [0.938, 0.932, 0.931, 0.93, 0.924]；提名 5 条 pred [0.48, 0.48, -0.01, 0.49, 0.83] std [0.08, 0.08, 0.18, 0.13, 0.2] 汉明 [1, 2, 2, 1, 2]（池 1101 / 半径内 1081）
+[HAR/rand_nbr/r1] 计划 5 格，已有 0，待跑 5
+[HAR/rand_nbr/r1 1/5] HAR/rand_nbr_r1/8aed7556 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.908 0.911 0.900] (430.1s+10.1s)
+[HAR/rand_nbr/r1 2/5] HAR/rand_nbr_r1/5480eac7 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.935 0.930 0.920] (385.4s+8.9s)
+[HAR/rand_nbr/r1 3/5] HAR/rand_nbr_r1/94f740d8 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.921 0.915 0.887] (318.9s+10.3s)
+[HAR/rand_nbr/r1 4/5] HAR/rand_nbr_r1/ef9582b8 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.923 0.927 0.921] (743.2s+10.7s)
+[HAR/rand_nbr/r1 5/5] HAR/rand_nbr_r1/9a8165af s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.938 0.940 0.924] (190.4s+8.0s)
+[HAR/rand_nbr/r1] 收官
+[loop HAR/bo_ucb/r2] 父本 ['4f7d4135', '8c4aa283', 'c92058f2', 'f474f8e2', 'a1f67db4'] @580 [0.938, 0.932, 0.931, 0.93, 0.924]；提名 5 条 pred [0.75, 0.82, 0.82, 0.71, 0.7] std [0.21, 0.12, 0.11, 0.21, 0.2] 汉明 [2, 2, 1, 2, 2]（池 1090 / 半径内 1067）
+[HAR/bo_ucb/r2] 计划 5 格，已有 0，待跑 5
+[HAR/bo_ucb/r2 1/5] HAR/bo_ucb_r2/36fa7299 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.927 0.922 0.912] (123.8s+7.1s)
+[HAR/bo_ucb/r2 2/5] HAR/bo_ucb_r2/79d71b9b s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.918 0.920 0.908] (430.5s+11.5s)
+[HAR/bo_ucb/r2 3/5] HAR/bo_ucb_r2/d753240f s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.920 0.928 0.924] (457.0s+10.8s)
+[HAR/bo_ucb/r2 4/5] HAR/bo_ucb_r2/5a8b1e91 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.918 0.910 0.911] (310.1s+8.7s)
+[HAR/bo_ucb/r2 5/5] HAR/bo_ucb_r2/f6354ec5 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.926 0.932 0.918] (127.8s+8.1s)
+[HAR/bo_ucb/r2] 收官
+[loop HAR/rand_nbr/r2] 父本 ['9a8165af', '4f7d4135', '5480eac7', '8c4aa283', 'c92058f2'] @580 [0.938, 0.938, 0.935, 0.932, 0.931]；提名 5 条 pred [0.28, -0.31, 0.35, 0.33, 0.49] std [0.12, 0.15, 0.18, 0.09, 0.1] 汉明 [2, 3, 3, 1, 2]（池 1100 / 半径内 1052）
+[HAR/rand_nbr/r2] 计划 5 格，已有 0，待跑 5
+[HAR/rand_nbr/r2 1/5] HAR/rand_nbr_r2/7c0f3347 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.834 0.824 0.816] (319.7s+15.2s)
+[HAR/rand_nbr/r2 2/5] HAR/rand_nbr_r2/06be4d2b s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.674 0.547 0.531] (159.4s+26.3s)
+[HAR/rand_nbr/r2 3/5] HAR/rand_nbr_r2/ed03b6de s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.928 0.926 0.937] (174.8s+7.5s)
+[HAR/rand_nbr/r2 4/5] HAR/rand_nbr_r2/d1d1db3c s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.940 0.936 0.935] (377.2s+9.1s)
+[HAR/rand_nbr/r2 5/5] HAR/rand_nbr_r2/bca06c19 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.928 0.920 0.924] (316.8s+8.0s)
+[HAR/rand_nbr/r2] 收官
+[loop HAR/bo_ucb/r3] 父本 ['4f7d4135', '8c4aa283', 'c92058f2', 'f474f8e2', '36fa7299'] @580 [0.938, 0.932, 0.931, 0.93, 0.927]；提名 5 条 pred [0.8, 0.74, 0.75, 0.78, 0.7] std [0.21, 0.25, 0.24, 0.21, 0.28] 汉明 [2, 1, 2, 2, 2]（池 1042 / 半径内 1021）
+[HAR/bo_ucb/r3] 计划 5 格，已有 0，待跑 5
+[HAR/bo_ucb/r3 1/5] HAR/bo_ucb_r3/4a54ff98 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.916 0.918 0.913] (213.3s+6.8s)
+[HAR/bo_ucb/r3 2/5] HAR/bo_ucb_r3/9cddb2ec s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.923 0.927 0.918] (125.3s+7.3s)
+[HAR/bo_ucb/r3 3/5] HAR/bo_ucb_r3/7f4156ab s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.910 0.891 0.901] (742.2s+12.9s)
+[HAR/bo_ucb/r3 4/5] HAR/bo_ucb_r3/3de3de86 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.910 0.925 0.911] (131.1s+8.5s)
+[HAR/bo_ucb/r3 5/5] HAR/bo_ucb_r3/e3af56ad s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.935 0.930 0.922] (127.5s+7.4s)
+[HAR/bo_ucb/r3] 收官
+[loop HAR/rand_nbr/r3] 父本 ['d1d1db3c', '9a8165af', '4f7d4135', '5480eac7', '8c4aa283'] @580 [0.94, 0.938, 0.938, 0.935, 0.932]；提名 5 条 pred [0.37, 0.45, 0.54, 0.39, 0.52] std [0.21, 0.14, 0.19, 0.12, 0.23] 汉明 [3, 2, 2, 3, 2]（池 1175 / 半径内 1131）
+[HAR/rand_nbr/r3] 计划 5 格，已有 0，待跑 5
+[HAR/rand_nbr/r3 1/5] HAR/rand_nbr_r3/2c67420c s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.912 0.890 0.887] (637.0s+12.0s)
+[HAR/rand_nbr/r3 2/5] HAR/rand_nbr_r3/572121a5 s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.941 0.934 0.921] (382.3s+8.3s)
+[HAR/rand_nbr/r3 3/5] HAR/rand_nbr_r3/e89bdf8a s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.912 0.907 0.906] (187.8s+8.0s)
+[HAR/rand_nbr/r3 4/5] HAR/rand_nbr_r3/67f3eacc s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.924 0.919 0.910] (942.9s+13.4s)
+[HAR/rand_nbr/r3 5/5] HAR/rand_nbr_r3/e79fea9c s0 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.925 0.918 0.924] (390.6s+8.4s)
+[HAR/rand_nbr/r3] 收官
+[loop HAR] 完成 3 轮 × ('bo_ucb', 'rand_nbr')
+[finals] Windows：截点评估上限 480s 走 loky 子进程（超时整格记 error）
+[data] HAR: train=(7352, 128, 9) test=(2947, 128, 9) classes=6
+[finals HAR] 冠军 {BO-SH: 4f7d4135, RAND-SH: d1d1db3c}；待补种子格 2
+[finals] 计划 2 格，已有 0，待跑 2
+[finals 1/2] HAR/final_RAND-SH/d1d1db3c s1 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.928 0.938 0.946] (423.3s+16.5s)
+[finals 2/2] HAR/final_RAND-SH/d1d1db3c s2 iters=2320 ckpt=[580, 1160, 2320] acc@ckpt=[0.920 0.917 0.922] (428.2s+8.9s)
+[finals] 收官
+[simulate Handwriting] oracle_cat 0.546 | SH6-3-3_prior 0.419(3.75) | SH10-4-3_prior 0.546(5.00) | ONESHOT-SH 0.419(6.25) | MIX-SH 0.378(3.75) | BO-SH 0.478(7.50) | RAND-SH 0.447(7.50) | WP3 逐位 True
+[simulate HandMovementDirection] oracle_cat 0.486 | SH6-3-3_prior 0.378(3.75) | SH10-4-3_prior 0.378(5.00) | ONESHOT-SH 0.486(6.25) | MIX-SH 0.486(3.75) | BO-SH 0.284(7.50) | RAND-SH 0.405(7.50) | WP3 逐位 True
+[simulate UWaveGestureLibrary] oracle_cat 0.931 | SH6-3-3_prior 0.931(3.75) | SH10-4-3_prior 0.931(5.00) | ONESHOT-SH 0.931(6.25) | MIX-SH 0.831(3.75) | BO-SH 0.934(7.50) | RAND-SH 0.928(7.50) | WP3 逐位 True
+[simulate Cricket] oracle_cat 1.000 | SH6-3-3_prior 1.000(3.75) | SH10-4-3_prior 1.000(5.00) | ONESHOT-SH 1.000(6.25) | MIX-SH 0.986(3.75) | BO-SH 1.000(7.50) | RAND-SH 1.000(7.50) | WP3 逐位 True
+[simulate EthanolConcentration] oracle_cat 0.300 | SH6-3-3_prior 0.274(3.75) | SH10-4-3_prior 0.297(5.00) | ONESHOT-SH 0.285(6.25) | MIX-SH 0.293(3.75) | BO-SH 0.319(7.50) | RAND-SH 0.430(7.50) | WP3 逐位 True
+[simulate PhonemeSpectra] oracle_cat 0.251 | SH6-3-3_prior 0.251(3.75) | SH10-4-3_prior 0.251(5.00) | ONESHOT-SH 0.251(6.25) | MIX-SH 0.234(3.75) | BO-SH 0.220(7.25) | RAND-SH 0.232(7.50) | WP3 逐位 True
+[simulate HAR] oracle_cat 0.940 | SH6-3-3_prior 0.940(3.75) | SH10-4-3_prior 0.940(5.00) | ONESHOT-SH 0.940(6.25) | MIX-SH 0.927(3.75) | BO-SH 0.940(7.50) | RAND-SH 0.935(7.50) | WP3 逐位 True
+[analyze] 读数码 BO-DEAD；B1 1/6 B2 4 (Δ -0.0110, HW True) B3 3/5；HAR {'bo_sh_mean3': 0.9351883271123177, 'line': 0.935, 'pass': True, 'sh633_mean3': 0.9351883271123177, 'oracle_catalog': 0.9395995928062436, 'nominee_max': {'bo_ucb': 0.9334916864608076, 'rand_nbr': 0.9368849677638276}}
