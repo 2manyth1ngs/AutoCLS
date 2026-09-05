@@ -330,6 +330,43 @@ def verdict_code(g: Mapping[str, dict]) -> str:
     return "BO-LUCK"
 
 
+# ================================================================ Windows 截点评估超时
+def _child_eval(fn):
+    """loky worker 内执行：GridSearchCV 套 threading 后端（本机 loky spawn 占 R' 单条 99% 耗时）。"""
+    from joblib import parallel_backend
+    with parallel_backend("threading"):
+        return fn()
+
+
+def eval_with_timeout_win(fn, seconds: int):
+    """39 号 `eval_with_timeout` 在无 SIGALRM 平台的等价物：fn 送进单 worker 的 loky 子进程（cloudpickle），
+    seconds 内未返回 → 杀 worker、抛 `EvalTimeout`（整格记 error 行，与 WP3 4090 上 PS 一格超时同口径）。
+    seconds ≤ 0 → 同进程直跑不设上限。"""
+    if int(seconds) <= 0:
+        return fn()
+    from concurrent.futures import TimeoutError as FutTimeout
+    from joblib.externals.loky import get_reusable_executor
+    ex = get_reusable_executor(max_workers=1, timeout=900)
+    fut = ex.submit(_child_eval, fn)
+    try:
+        return fut.result(timeout=float(seconds))
+    except FutTimeout:
+        try:
+            ex.shutdown(kill_workers=True)
+        except Exception:  # noqa: BLE001
+            pass
+        raise _g39.EvalTimeout(f"checkpoint eval exceeded {seconds}s (loky worker killed)")
+
+
+def install_windows_eval_timeout() -> bool:
+    """无 SIGALRM（Windows）时把 39 号的 eval_with_timeout 换成子进程版；有 SIGALRM 时不动。返回是否安装。"""
+    import signal
+    if hasattr(signal, "SIGALRM"):
+        return False
+    _g39.eval_with_timeout = eval_with_timeout_win
+    return True
+
+
 # ================================================================ 数据装配
 def deploy_dir_of(dataset: str) -> Path:
     return DEPLOY_HAR if dataset == "HAR" else DEPLOY
@@ -595,6 +632,8 @@ def cmd_dry_run(datasets: Sequence[str], *, rounds: int, per_round: int) -> None
 
 def cmd_loop(args) -> None:
     outdir = Path(args.outdir)
+    if install_windows_eval_timeout():
+        print(f"[loop] Windows：截点评估上限 {_g39.EVAL_TIMEOUT_S}s 走 loky 子进程（超时整格记 error）", flush=True)
     protos = _g35.load_protocols()
     space = CLSSpace.from_yaml()
     enc = CLSEncoder(space, mode="binned")
@@ -647,6 +686,8 @@ def cmd_loop(args) -> None:
 
 def cmd_finals(args) -> None:
     outdir = Path(args.outdir)
+    if install_windows_eval_timeout():
+        print(f"[finals] Windows：截点评估上限 {_g39.EVAL_TIMEOUT_S}s 走 loky 子进程（超时整格记 error）", flush=True)
     protos = _g35.load_protocols()
     datasets = [d for d in LOOP_ORDER if d in set(args.datasets)]
     sizes = _g39.sizes_for(datasets, load=True, har_npz=args.har_npz)

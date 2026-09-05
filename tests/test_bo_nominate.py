@@ -300,3 +300,30 @@ def test_gate_b1_needs_three_of_six():
         pt[d]["oracle_pool"]["bo_ucb"] = 0.52
     g = g43.gates(pt)
     assert g["B1"]["n_pass"] == 3 and g["B1"]["pass"]
+
+
+# ---------------------------------------------------------------- Windows 截点评估超时（39 号 EVAL_TIMEOUT_S 在无 SIGALRM 平台的等价物）
+def test_eval_with_timeout_win_returns_value_and_kills_on_timeout():
+    import time
+    assert g43.eval_with_timeout_win(lambda: 42, 30) == 42
+    t0 = time.perf_counter()
+    with pytest.raises(g43._g39.EvalTimeout):
+        g43.eval_with_timeout_win(lambda: time.sleep(90), 3)
+    assert time.perf_counter() - t0 < 45
+    assert g43.eval_with_timeout_win(lambda: 7, 30) == 7      # worker 被杀后池可重建复用
+    assert g43.eval_with_timeout_win(lambda: 5, 0) == 5       # seconds ≤ 0 → 不设上限、同进程直跑
+
+
+def test_install_windows_eval_timeout_only_without_sigalrm(monkeypatch):
+    import signal
+    orig = g43._g39.eval_with_timeout
+    try:
+        monkeypatch.delattr(signal, "SIGALRM", raising=False)
+        assert g43.install_windows_eval_timeout() is True
+        assert g43._g39.eval_with_timeout is g43.eval_with_timeout_win
+        g43._g39.eval_with_timeout = orig
+        monkeypatch.setattr(signal, "SIGALRM", 14, raising=False)
+        assert g43.install_windows_eval_timeout() is False
+        assert g43._g39.eval_with_timeout is orig
+    finally:
+        g43._g39.eval_with_timeout = orig

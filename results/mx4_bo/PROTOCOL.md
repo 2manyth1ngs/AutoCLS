@@ -110,3 +110,9 @@ python scripts/43_bo_nominate.py --analyze --datasets <6 靶> HAR               
 ## 6. 不做的事
 不改 35/36/39/autocls；不动 SH 淘汰规则；不用代理分混排；提名只在信任域内且全部真评估；evo_cache（汉明 8）不用；
 不按结果调 κ / 半径 / 父本数 / 轮数（若要调，另开预注册）。
+
+## 7. 运行中修订（2026-09-05 14:10，不改判读带）
+PhonemeSpectra bo_ucb 第 2 轮首格（d39832ce）的 @25% SVM 网格评估在 Windows 上跑了 > 80 min 未返回（39 号注释已记载的 C=∞ 退化特征不收敛现象；
+WP3 在 4090/Linux 以 SIGALRM 480 s 截断、记 1 格 error）。Windows 无 SIGALRM，39 号的上限静默失效。修订：43 号在无 SIGALRM 平台把
+`eval_with_timeout` 换成 loky 单 worker 子进程版（`eval_with_timeout_win`，同 480 s、超时杀 worker、整格记 error 行），与 WP3 口径一致；
+两项单测。杀掉卡住的进程后 `--resume` 重启 run_all.ps1；此前 160 格结果不受影响（缓存键不变）。
