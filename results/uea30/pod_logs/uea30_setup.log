@@ -1,0 +1,146 @@
+== torch fingerprint (before)
+torch 2.8.0+cu128 cuda 12.8 dev NVIDIA GeForce RTX 4090
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ModuleNotFoundError: No module named 'scipy'
+
+Successfully installed aeon-1.3.0 deprecated-1.3.1 iniconfig-2.3.0 joblib-1.5.3 llvmlite-0.44.0 numba-0.61.2 pandas-2.3.3 pluggy-1.6.0 pytest-9.1.1 pytz-2026.3.post1 scikit-learn-1.7.2 scipy-1.15.3 threadpoolctl-3.6.0 tzdata-2026.3 wrapt-2.4.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+== torch fingerprint (after)
+torch 2.8.0+cu128 cuda 12.8 dev NVIDIA GeForce RTX 4090
+Filesystem                    Size  Used Avail Use% Mounted on
+mfs#eur-no-1.runpod.net:9421 1006T  219T  787T  22% /workspace
+== targets (23): RacketSports Libras ERing JapaneseVowels BasicMotions Epilepsy AtrialFibrillation NATOPS FingerMovements ArticularyWordRecognition Heartbeat DuckDuckGeese PEMS-SF CharacterTrajectories SelfRegulationSCP1 SelfRegulationSCP2 LSST StandWalkJump EigenWorms MotorImagery FaceDetection SpokenArabicDigits PenDigits
+  fetch https://zenodo.org/record/11206263/files/RacketSports_TRAIN.ts
+  saved RacketSports_TRAIN.ts  0.3 MB  md5 OK
+  fetch https://zenodo.org/record/11206263/files/RacketSports_TEST.ts
+  saved RacketSports_TEST.ts  0.3 MB  md5 OK
+[OK] RacketSports
+all ok: RacketSports
+  fetch https://zenodo.org/record/11206239/files/Libras_TRAIN.ts
+  saved Libras_TRAIN.ts  0.1 MB  md5 OK
+  fetch https://zenodo.org/record/11206239/files/Libras_TEST.ts
+  saved Libras_TEST.ts  0.1 MB  md5 OK
+[OK] Libras
+all ok: Libras
+  fetch https://zenodo.org/record/11206210/files/ERing_TRAIN.ts
+  saved ERing_TRAIN.ts  0.1 MB  md5 OK
+  fetch https://zenodo.org/record/11206210/files/ERing_TEST.ts
+  saved ERing_TEST.ts  0.8 MB  md5 OK
+[OK] ERing
+all ok: ERing
+  fetch https://zenodo.org/record/11206237/files/JapaneseVowels_TRAIN.ts
+  saved JapaneseVowels_TRAIN.ts  0.5 MB  md5 OK
+  fetch https://zenodo.org/record/11206237/files/JapaneseVowels_TEST.ts
+  saved JapaneseVowels_TEST.ts  0.6 MB  md5 OK
+[OK] JapaneseVowels
+all ok: JapaneseVowels
+  fetch https://zenodo.org/record/11206179/files/BasicMotions_TRAIN.ts
+  saved BasicMotions_TRAIN.ts  0.2 MB  md5 OK
+  fetch https://zenodo.org/record/11206179/files/BasicMotions_TEST.ts
+  saved BasicMotions_TEST.ts  0.2 MB  md5 OK
+[OK] BasicMotions
+all ok: BasicMotions
+  fetch https://zenodo.org/record/11206204/files/Epilepsy_TRAIN.ts
+  saved Epilepsy_TRAIN.ts  0.5 MB  md5 OK
+  fetch https://zenodo.org/record/11206204/files/Epilepsy_TEST.ts
+  saved Epilepsy_TEST.ts  0.5 MB  md5 OK
+[OK] Epilepsy
+all ok: Epilepsy
+  fetch https://zenodo.org/record/11206175/files/AtrialFibrillation_TRAIN.ts
+  saved AtrialFibrillation_TRAIN.ts  0.2 MB  md5 OK
+  fetch https://zenodo.org/record/11206175/files/AtrialFibrillation_TEST.ts
+  saved AtrialFibrillation_TEST.ts  0.2 MB  md5 OK
+[OK] AtrialFibrillation
+all ok: AtrialFibrillation
+[skip] NATOPS: 两文件已在且 md5 与清单一致
+all ok: NATOPS
+  fetch https://zenodo.org/record/11206220/files/FingerMovements_TRAIN.ts
+  saved FingerMovements_TRAIN.ts  2.3 MB  md5 OK
+  fetch https://zenodo.org/record/11206220/files/FingerMovements_TEST.ts
+  saved FingerMovements_TEST.ts  0.7 MB  md5 OK
+[OK] FingerMovements
+all ok: FingerMovements
+  fetch https://zenodo.org/record/11204924/files/ArticularyWordRecognition_TRAIN.ts
+  saved ArticularyWordRecognition_TRAIN.ts  2.9 MB  md5 OK
+  fetch https://zenodo.org/record/11204924/files/ArticularyWordRecognition_TEST.ts
+  saved ArticularyWordRecognition_TEST.ts  3.1 MB  md5 OK
+[OK] ArticularyWordRecognition
+all ok: ArticularyWordRecognition
+  fetch https://zenodo.org/record/11206229/files/Heartbeat_TRAIN.ts
+  saved Heartbeat_TRAIN.ts  43.8 MB  md5 OK
+  fetch https://zenodo.org/record/11206229/files/Heartbeat_TEST.ts
+  saved Heartbeat_TEST.ts  44.0 MB  md5 OK
+[OK] Heartbeat
+all ok: Heartbeat
+  fetch https://zenodo.org/record/11206189/files/DuckDuckGeese_TRAIN.ts
+  saved DuckDuckGeese_TRAIN.ts  152.5 MB  md5 OK
+  fetch https://zenodo.org/record/11206189/files/DuckDuckGeese_TEST.ts
+  saved DuckDuckGeese_TEST.ts  153.0 MB  md5 OK
+[OK] DuckDuckGeese
+all ok: DuckDuckGeese
+  fetch https://zenodo.org/record/11206252/files/PEMS-SF_TRAIN.ts
+  saved PEMS-SF_TRAIN.ts  254.9 MB  md5 OK
+  fetch https://zenodo.org/record/11206252/files/PEMS-SF_TEST.ts
+  saved PEMS-SF_TEST.ts  165.2 MB  md5 OK
+[OK] PEMS-SF
+all ok: PEMS-SF
+  fetch https://zenodo.org/record/11206183/files/CharacterTrajectories_TRAIN.ts
+  saved CharacterTrajectories_TRAIN.ts  4.7 MB  md5 OK
+  fetch https://zenodo.org/record/11206183/files/CharacterTrajectories_TEST.ts
+  saved CharacterTrajectories_TEST.ts  4.7 MB  md5 OK
+[OK] CharacterTrajectories
+all ok: CharacterTrajectories
+  fetch https://zenodo.org/record/11206265/files/SelfRegulationSCP1_TRAIN.ts
+  saved SelfRegulationSCP1_TRAIN.ts  8.5 MB  md5 OK
+  fetch https://zenodo.org/record/11206265/files/SelfRegulationSCP1_TEST.ts
+  saved SelfRegulationSCP1_TEST.ts  9.4 MB  md5 OK
+[OK] SelfRegulationSCP1
+all ok: SelfRegulationSCP1
+[skip] SelfRegulationSCP2: 两文件已在且 md5 与清单一致
+all ok: SelfRegulationSCP2
+  fetch https://zenodo.org/record/11206243/files/LSST_TRAIN.ts
+  saved LSST_TRAIN.ts  4.0 MB  md5 OK
+  fetch https://zenodo.org/record/11206243/files/LSST_TEST.ts
+  saved LSST_TEST.ts  4.0 MB  md5 OK
+[OK] LSST
+all ok: LSST
+  fetch https://zenodo.org/record/11206278/files/StandWalkJump_TRAIN.ts
+  saved StandWalkJump_TRAIN.ts  0.6 MB  md5 OK
+  fetch https://zenodo.org/record/11206278/files/StandWalkJump_TEST.ts
+  saved StandWalkJump_TEST.ts  0.8 MB  md5 OK
+[OK] StandWalkJump
+all ok: StandWalkJump
+  fetch https://zenodo.org/record/11206196/files/EigenWorms_TRAIN.ts
+  saved EigenWorms_TRAIN.ts  129.8 MB  md5 OK
+  fetch https://zenodo.org/record/11206196/files/EigenWorms_TEST.ts
+  saved EigenWorms_TEST.ts  132.8 MB  md5 OK
+[OK] EigenWorms
+all ok: EigenWorms
+  fetch https://zenodo.org/record/11206246/files/MotorImagery_TRAIN.ts
+  saved MotorImagery_TRAIN.ts  415.0 MB  md5 OK
+  fetch https://zenodo.org/record/11206246/files/MotorImagery_TEST.ts
+  saved MotorImagery_TEST.ts  122.4 MB  md5 OK
+[OK] MotorImagery
+all ok: MotorImagery
+  fetch https://zenodo.org/record/11206216/files/FaceDetection_TRAIN.ts
+  saved FaceDetection_TRAIN.ts  493.7 MB  md5 OK
+  fetch https://zenodo.org/record/11206216/files/FaceDetection_TEST.ts
+  saved FaceDetection_TEST.ts  295.4 MB  md5 OK
+[OK] FaceDetection
+all ok: FaceDetection
+[skip] SpokenArabicDigits: 两文件已在且 md5 与清单一致
+all ok: SpokenArabicDigits
+  fetch https://zenodo.org/record/11206259/files/PenDigits_TRAIN.ts
+  saved PenDigits_TRAIN.ts  0.6 MB  md5 OK
+  fetch https://zenodo.org/record/11206259/files/PenDigits_TEST.ts
+  saved PenDigits_TEST.ts  0.3 MB  md5 OK
+[OK] PenDigits
+all ok: PenDigits
+== uea .ts md5 check: ALL MATCH
+512	data/uea_cache
+mfs#eur-no-1.runpod.net:9421 1006T  219T  787T  22% /workspace
+== md5 check: ALL MATCH
+=========================== short test summary info ============================
+FAILED tests/test_uea30_deploy.py::test_uea30_arms_golden_six_targets - TypeE...
+1 failed, 97 passed, 1 deselected in 35.04s

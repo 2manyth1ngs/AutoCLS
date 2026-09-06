@@ -1,0 +1,21 @@
+== [15:42:58] catalog
+[S1 505/506] PenDigits/shared/39a53b9f s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.985 0.985 0.989] (45.3s+44.2s)
+[S1 506/506] PenDigits/ggs/a51affe6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.986 0.988] (40.2s+47.7s)
+[S1] 收官
+== [22:35:46] analyze1
+[analyze SpokenArabicDigits] A 候选 22（开 11）完整 True；oracle22 0.983 主 0.978/— 副 0.983/—†（论文 TS2Vec 0.988）
+[analyze PenDigits] A 候选 22（开 11）完整 True；oracle22 0.991 主 0.989/— 副 0.991/—†（论文 TS2Vec 0.989）
+verdict UEA30-WIN（主门暂用 seed 0（3 种子均值只有 0/23 靶））；U1 5/5 U2 14/15 U3 Δ -0.001 19/23；不完整 []
+== [22:35:50] finals
+[S2 79/80] PenDigits/final_SH20-3_both/54f8fde3 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.983 0.987] (39.6s+42.9s)
+[S2 80/80] PenDigits/final_SH20-3_both/54f8fde3 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.981 0.980 0.984] (39.5s+42.1s)
+[S2] 收官
+== [23:34:42] analyze2
+[analyze SpokenArabicDigits] A 候选 22（开 11）完整 True；oracle22 0.983 主 0.978/0.981 副 0.983/0.978†（论文 TS2Vec 0.988）
+[analyze PenDigits] A 候选 22（开 11）完整 True；oracle22 0.991 主 0.989/0.988 副 0.991/0.987†（论文 TS2Vec 0.989）
+verdict UEA30-WIN+TWIN（主门用 3 种子均值）；U1 5/5 U2 14/15 U3 Δ 0.001 20/23；不完整 []
+== [23:34:46] table30
+[table30] 30 行；均值 全 0.733（n=29）/ 剔 C 0.769 / 可评 0.710（n=11）
+name, memory.used [MiB], utilization.gpu [%]
+NVIDIA GeForce RTX 4090, 1 MiB, 0 %
+== [23:34:49] uea30 done：拉回 results/uea30/{runs.jsonl,oom_failures.jsonl,analysis.json,picks.json,tables.md,table30.md,table30.json,candidates.json} 与 /workspace/logs/uea30_*.log

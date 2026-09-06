@@ -1,0 +1,24 @@
+[analyze RacketSports] B 候选 22（开 11）完整 True；oracle22 0.868 主 0.868/0.855 副 0.868/0.855（论文 TS2Vec 0.855）
+[analyze Libras] B 候选 22（开 11）完整 True；oracle22 0.906 主 0.900/0.881 副 0.906/0.880†（论文 TS2Vec 0.867）
+[analyze ERing] E 候选 22（开 11）完整 True；oracle22 0.952 主 0.952/0.947 副 0.941/0.948†（论文 TS2Vec 0.874）
+[analyze JapaneseVowels] A 候选 22（开 11）完整 True；oracle22 0.984 主 0.984/0.982 副 0.981/0.979†（论文 TS2Vec 0.984）
+[analyze BasicMotions] A 候选 22（开 11）完整 True；oracle22 1.000 主 0.975/0.983 副 1.000/1.000（论文 TS2Vec 0.975）
+[analyze Epilepsy] A 候选 22（开 11）完整 True；oracle22 0.971 主 0.971/0.969 副 0.971/0.969（论文 TS2Vec 0.964）
+[analyze AtrialFibrillation] C 候选 22（开 11）完整 True；oracle22 0.333 主 0.333/0.200 副 0.267/0.200†（论文 TS2Vec 0.200）
+[analyze NATOPS] E 候选 22（开 11）完整 True；oracle22 0.956 主 0.956/0.950 副 0.944/0.937（论文 TS2Vec 0.928）
+[analyze FingerMovements] D 候选 22（开 11）完整 True；oracle22 0.590 主 0.540/0.513 副 0.570/0.543†（论文 TS2Vec 0.480）
+[analyze ArticularyWordRecognition] A 候选 22（开 11）完整 True；oracle22 0.980 主 0.977/0.978 副 0.980/0.982†（论文 TS2Vec 0.987）
+[analyze Heartbeat] D 候选 22（开 11）完整 True；oracle22 0.756 主 0.741/0.741 副 0.756/0.750†（论文 TS2Vec 0.683）
+[analyze DuckDuckGeese] C 候选 22（开 11）完整 True；oracle22 0.660 主 0.660/0.640 副 0.660/0.640（论文 TS2Vec 0.680）
+[analyze PEMS-SF] E 候选 22（开 11）完整 True；oracle22 0.803 主 0.786/0.771 副 0.803/0.767†（论文 TS2Vec 0.682）
+[analyze CharacterTrajectories] A 候选 22（开 11）完整 True；oracle22 0.994 主 0.993/0.994 副 0.993/0.994（论文 TS2Vec 0.995）
+[analyze SelfRegulationSCP1] E 候选 22（开 11）完整 True；oracle22 0.901 主 0.901/0.881 副 0.901/0.881（论文 TS2Vec 0.812）
+[analyze SelfRegulationSCP2] D 候选 22（开 11）完整 True；oracle22 0.606 主 0.606/0.593 副 0.544/0.537†（论文 TS2Vec 0.578）
+[analyze LSST] B 候选 22（开 11）完整 True；oracle22 0.580 主 0.580/0.575 副 0.580/0.575（论文 TS2Vec 0.537）
+[analyze StandWalkJump] C 候选 22（开 11）完整 True；oracle22 0.533 主 0.533/0.444 副 0.533/0.444（论文 TS2Vec 0.467）
+[analyze EigenWorms] E 候选 22（开 11）完整 True；oracle22 0.863 主 0.840/0.822 副 0.832/0.812†（论文 TS2Vec 0.847）
+[analyze MotorImagery] D 候选 22（开 11）完整 True；oracle22 0.630 主 0.590/0.537 副 0.630/0.593†（论文 TS2Vec 0.510）
+[analyze FaceDetection] D 候选 22（开 11）完整 True；oracle22 0.592 主 0.589/0.597 副 0.592/0.595†（论文 TS2Vec 0.501）
+[analyze SpokenArabicDigits] A 候选 22（开 11）完整 True；oracle22 0.983 主 0.978/0.981 副 0.983/0.978†（论文 TS2Vec 0.988）
+[analyze PenDigits] A 候选 22（开 11）完整 True；oracle22 0.991 主 0.989/0.988 副 0.991/0.987†（论文 TS2Vec 0.989）
+verdict UEA30-WIN+TWIN（主门用 3 种子均值）；U1 5/5 U2 14/15 U3 Δ 0.001 20/23；不完整 []

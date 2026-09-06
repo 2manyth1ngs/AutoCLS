@@ -168,4 +168,10 @@ md5 对账，失败再上传分包。每靶跑完从 `checkpoint_results` 回算
   三截点齐全（EigenWorms 分段 640×3597 训练正常；DuckDuckGeese 1345 通道正常；**PenDigits 单次截点评估 ≈ 15 s**（120 vCPU loky），
   远低于 480 s 上限与 84 s 锚）；`--dry-run` 506 格。主流程 `uea30_run.sh` 于 setup 通过后立即 nohup 启动（UTC 时间见
   `/workspace/logs/uea30_run.log` 首行）。
-- 待记：拉回 / 停机时间与费用。
+- 2026-09-06 15:42:58 UTC 主流程开跑；catalog 506 格 → 22:35:46；finals 80 格 → 23:34:42；`uea30 done` 23:34:49。18:45 UTC RunPod
+  "Possible Pod Issue"（网络抖动）通知，登 pod 核对进程 / 进度 / GPU 正常未中断。
+- 2026-09-06 23:36–23:45 UTC 拉回 `runs.jsonl`（md5 `ee7fedaa027c111d1c901c8f5a0b4c2d` 与 pod 同）+ 分析产物 + 8 份日志；收官重验
+  全绿（586 行 / 586 键 / 0 error / 0 空 acc / 全 3 截点 / inflight 空 / 无 OOM 文件）；本地 `--analyze`：`picks.json`、`tables.md`
+  与 pod 逐字节相同，`analysis.json` 仅两处 `cost_seconds` 浮点末位不同；**读数 UEA30-WIN+TWIN**。随后 `pod_ctl.py stop` +
+  `confirm-stopped 3/3 EXITED`（首次 confirm 因 runtime 字段未清报 0/3，5 分钟后 3/3）；uptime 29646 s = 8.24 h ≈ **$6.1**。
+- 结果见 `REPORT.md`；预测对账 5/8（P5 / P7 / P8 未中，均为"比预测更好或更便宜"方向）。

@@ -1,0 +1,94 @@
+{
+ "RacketSports": {
+  "SH10-4-3_prior": "9092e36eefe1",
+  "SH20-3_both": "9092e36eefe1"
+ },
+ "Libras": {
+  "SH10-4-3_prior": "9092e36eefe1",
+  "SH20-3_both": "382ca622d553"
+ },
+ "ERing": {
+  "SH10-4-3_prior": "9092e36eefe1",
+  "SH20-3_both": "382ca622d553"
+ },
+ "JapaneseVowels": {
+  "SH10-4-3_prior": "cffb55035c3a",
+  "SH20-3_both": "a59dc617a6a8"
+ },
+ "BasicMotions": {
+  "SH10-4-3_prior": "4f7d413581f6",
+  "SH20-3_both": "c92058f26c1d"
+ },
+ "Epilepsy": {
+  "SH10-4-3_prior": "4f7d413581f6",
+  "SH20-3_both": "4f7d413581f6"
+ },
+ "AtrialFibrillation": {
+  "SH10-4-3_prior": "c92058f26c1d",
+  "SH20-3_both": "382ca622d553"
+ },
+ "NATOPS": {
+  "SH10-4-3_prior": "a1f67db45e64",
+  "SH20-3_both": "4f7d413581f6"
+ },
+ "FingerMovements": {
+  "SH10-4-3_prior": "8b87d66faad3",
+  "SH20-3_both": "f11892cec7a8"
+ },
+ "ArticularyWordRecognition": {
+  "SH10-4-3_prior": "8c4aa28336d6",
+  "SH20-3_both": "382ca622d553"
+ },
+ "Heartbeat": {
+  "SH10-4-3_prior": "e490b88ee785",
+  "SH20-3_both": "720e170de9c0"
+ },
+ "DuckDuckGeese": {
+  "SH10-4-3_prior": "c92058f26c1d",
+  "SH20-3_both": "c92058f26c1d"
+ },
+ "PEMS-SF": {
+  "SH10-4-3_prior": "65627517fa32",
+  "SH20-3_both": "382ca622d553"
+ },
+ "CharacterTrajectories": {
+  "SH10-4-3_prior": "9092e36eefe1",
+  "SH20-3_both": "9092e36eefe1"
+ },
+ "SelfRegulationSCP1": {
+  "SH10-4-3_prior": "9092e36eefe1",
+  "SH20-3_both": "9092e36eefe1"
+ },
+ "SelfRegulationSCP2": {
+  "SH10-4-3_prior": "4f7d413581f6",
+  "SH20-3_both": "54f8fde32556"
+ },
+ "LSST": {
+  "SH10-4-3_prior": "e490b88ee785",
+  "SH20-3_both": "8b87d66faad3"
+ },
+ "StandWalkJump": {
+  "SH10-4-3_prior": "8c4aa28336d6",
+  "SH20-3_both": "8c4aa28336d6"
+ },
+ "EigenWorms": {
+  "SH10-4-3_prior": "a1f67db45e64",
+  "SH20-3_both": "39a53b9fe938"
+ },
+ "MotorImagery": {
+  "SH10-4-3_prior": "65627517fa32",
+  "SH20-3_both": "a51affe62ac5"
+ },
+ "FaceDetection": {
+  "SH10-4-3_prior": "9092e36eefe1",
+  "SH20-3_both": "382ca622d553"
+ },
+ "SpokenArabicDigits": {
+  "SH10-4-3_prior": "9092e36eefe1",
+  "SH20-3_both": "382ca622d553"
+ },
+ "PenDigits": {
+  "SH10-4-3_prior": "f48e5da1d899",
+  "SH20-3_both": "54f8fde32556"
+ }
+}
