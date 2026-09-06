@@ -162,4 +162,10 @@ md5 对账，失败再上传分包。每靶跑完从 `checkpoint_results` 回算
   "not enough free GPUs on the host"，按 pod_ctl 备选 `deploy` 在同卷同数据中心（EUR-NO-1）新开 **pod `mvqetmtt1t4azg`**
   （uea30-4090，RTX 4090 23 GB，120 vCPU，$0.74/h，镜像 runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404，torch 2.8+cu128，
   与 WP6 的 4090 pod 镜像 torch 2.4 不同——GGS seed 0 跨 2.4/2.8 五靶逐位相同，见 WP3 里程碑）。bundle HEAD 8b4c647。
-- 待记：`uea30_setup.sh` 冒烟的 `nvidia-smi` 峰值与 PenDigits 单次评估秒数；主流程开跑 / 拉回 / 停机时间与费用。
+- 2026-09-06 pod setup：依赖按 pin 装（torch 2.8.0+cu128 前后指纹不变）；23 靶 Zenodo 直下 `.ts` 原始字节 md5 全对、code/data
+  md5 全对；单测子集 97 通过（本机金标 `test_uea30_arms_golden_six_targets` 在 pod 上因卷副本 `mx4_mask/runs.jsonl` 147 行缺本机
+  补跑的 24 格 finals 而 TypeError，已 deselect，dee3837）；`--check` 23 靶全过（RSS 峰值 1.10 GB）；GPU 冒烟 7 靶 × 2 格 iters 8 全部
+  三截点齐全（EigenWorms 分段 640×3597 训练正常；DuckDuckGeese 1345 通道正常；**PenDigits 单次截点评估 ≈ 15 s**（120 vCPU loky），
+  远低于 480 s 上限与 84 s 锚）；`--dry-run` 506 格。主流程 `uea30_run.sh` 于 setup 通过后立即 nohup 启动（UTC 时间见
+  `/workspace/logs/uea30_run.log` 首行）。
+- 待记：拉回 / 停机时间与费用。
