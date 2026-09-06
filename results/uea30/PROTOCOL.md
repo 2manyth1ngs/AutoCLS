@@ -37,9 +37,10 @@ C / D 类，19/24）上落在预测带内、与 TS2Vec 同带。**不做**：排
 ## §1 固定项（协议锁时写死）
 
 - 代码基线 `mx4` 63694c0；分支 `wp10-uea30`；协议锁 commit 见 §7。
-- `configs/uea30.yaml` md5 `73bf2ec1d05efb648d15d6effbdd8b84`；`results/uea30/candidates.json` md5
-  `06de7163575754b248c8c86239f56ac4`（23 靶 × shared-10 + GGS；22 靶 `fit_on = all 8 source datasets`，SelfRegulationSCP2
-  `LODO excluding SelfRegulationSCP2`；`nominated = []`）。
+- `configs/uea30.yaml` md5 `73bf2ec1d05efb648d15d6effbdd8b84`（LF；`45.cfg_md5` 去 CR 后同值）；`results/uea30/candidates.json`
+  md5 `5eea62afa3055640512715017426b0e6`（去 CR 口径，与 pod 端 `md5_data_local.txt` 同法；本机 CRLF 原始字节为
+  `06de7163575754b248c8c86239f56ac4`）——23 靶 × shared-10 + GGS；22 靶 `fit_on = all 8 source datasets`，SelfRegulationSCP2
+  `LODO excluding SelfRegulationSCP2`；`nominated = []`。
 - **排序器不重训**：先验 = `results/mx3_pq/rprime_cache.jsonl` 上 `39.prior_with_ggs` 同码；GBDT 代理不参与（无提名）。
 - **不跑**：InsectWingbeat（用户拍板：L≤22 低于 encoder 适用边界 50，评估 25000/25000 占总成本 28%）；表内标注"未跑"。
 - **复用**：6 个 LODO 靶（Handwriting / UWave / PhonemeSpectra / Ethanol / Cricket / HMD）用 `results/mx4_deploy` + `results/mx4_mask`
@@ -154,4 +155,8 @@ md5 对账，失败再上传分包。每靶跑完从 `checkpoint_results` 回算
 
 ## §7 修订记录
 
-- 2026-09-06：协议锁 commit `<待填>`（yaml / 45 / 单测 / pod 脚本 / candidates.json / 本协议）。
+- 2026-09-06：协议锁 commit **a5b168f**（yaml / 45 / 单测 / pod 脚本 / candidates.json / 本协议；全量单测 2062 通过 / 3 个既有
+  失败：`test_cl_trainer` 与 `test_swa` 的 bitwise 金标受 torch 版本浮点影响、`test_pq_generate::TestApplyDelta`，WP6 时已在）。
+  本条与 §1 md5 口径说明为锁后回填（不改判读带）。
+- 待记：请示开 pod 的消息与用户同意时间；pod id / 卷 / 开机与停机时间；`uea30_setup.sh` 冒烟的 `nvidia-smi` 峰值与 PenDigits
+  单次评估秒数。
