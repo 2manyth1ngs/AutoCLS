@@ -52,8 +52,8 @@ def test_prior_from_sources_uses_only_shared_rows_of_named_sources():
 def test_eval_prior_on_target_metrics_hand_computed():
     space = CLSSpace.from_yaml()
     rng = np.random.default_rng(1)
-    rows, shared = _rows(space, rng, ["T"], n_slices=1, n_shared=4, n_random=2)
-    # 先验：shared[0] 最高 … shared[3] 最低
+    rows, shared = _rows(space, rng, ["T"], n_slices=1, n_shared=4, n_random=4)
+    # 先验：shared[0] 最高 … shared[3] 最低；random 无先验，按 key 升序垫底（36 号 rank_by 语义）
     prior = {k: float(3 - i) for i, k in enumerate(shared)}
     inst = g44.eval_prior_on_target(prior, rows, budgets=B3, ks=(2, 1, 1))
     assert len(inst) == 3 and {r["budget"] for r in inst} == set(B3)
@@ -61,10 +61,13 @@ def test_eval_prior_on_target_metrics_hand_computed():
         b = r["budget"]
         truth = {x["cls_key"]: x["r_prime"] for x in rows if int(x["iters"]) == b}
         oracle = max(truth.values())
-        assert r["oracle"] == pytest.approx(oracle) and r["n_candidates"] == 6
+        oracle_key = max(truth, key=truth.get)
+        ranked = g44._g36.rank_by(prior, sorted(truth))
+        assert ranked[:4] == shared and ranked[4:] == sorted(k for k in truth if k not in shared)
+        assert r["oracle"] == pytest.approx(oracle) and r["n_candidates"] == 8 and r["oracle_key"] == oracle_key
         assert r["regret1"] == pytest.approx(oracle - truth[shared[0]])
         assert r["regret3"] == pytest.approx(oracle - max(truth[k] for k in shared[:3]))
-        assert r["in_top6"] == (max(truth, key=truth.get) in shared)   # 只有 4 条 shared 有先验，前 6 = 全部 shared
+        assert r["in_top6"] == (oracle_key in ranked[:6])
         if b == B3[-1]:
             path = g44._g36.sh_path(shared, {k: {bb: truth_b for bb, truth_b in
                                                  ((int(x["iters"]), x["r_prime"]) for x in rows if x["cls_key"] == k)}

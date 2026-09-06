@@ -49,6 +49,7 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 - **SH 的 G4 保留**：新鲜种子真值下 SH 只比先验@3 好 0.002（p=0.64，n=14）——头条量级是部署口径（同轨迹），"选出更好的配置"只能写"不差"。
 - **源池 v2**（`results/source_pool_v2/REPORT.md`）：活跃源 8 = HW/UM/PS/UWave + Ethanol/Cricket/HMD + SCP2 低权（只训练不作折）；靶 = 7 折轮转。语音域仅 PS、短序列端空。
 - **净空/增益是口径量**：HW 对 GGS 的净空 @工作点 0.004、@290 0.067；GGS 在 HW 近 oracle（regret 0.026）而先验 0.061，是先验唯一输 GGS 的数据集。
+- **源池规模不是瓶颈**（`results/mx4_source_size/REPORT.md`，2026-09-06）：7 折 × k=1..7 全部子集，先验前 6 + SH6-3-3 与 regret@3 在 ≤2 个源即到地板（regret@3 @290 对 k 平坦 0.031–0.034；SH k=4 0.0231 vs k=7 0.0184），只有单默认 top-1 到 6–7 源才稳定（9092e36e vs cffb5503 平局，regret@1 0.082→0.052）；逐靶方向相反（HW/UniMiB 加源变好，Ethanol/PS/Cricket 变差）。论文只写"先验在 ≤4 个同域源上即收敛"，不写"加源提升精度"。
 - **全量标准协议绝对值**（HW 0.34–0.39 vs TS2Vec 0.515）是训练口径差，由 `protocol-alignment` 分支处理（`configs/train.yaml: protocols.ts2vec_official`）；WP3 部署对表依赖它。
 
 ## 复用 AutoCTS++（repo: decisionintelligence/AutoCTS_plusplus）——现仅消融对照
