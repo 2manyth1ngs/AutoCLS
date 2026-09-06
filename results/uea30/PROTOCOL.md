@@ -158,5 +158,8 @@ md5 对账，失败再上传分包。每靶跑完从 `checkpoint_results` 回算
 - 2026-09-06：协议锁 commit **a5b168f**（yaml / 45 / 单测 / pod 脚本 / candidates.json / 本协议；全量单测 2062 通过 / 3 个既有
   失败：`test_cl_trainer` 与 `test_swa` 的 bitwise 金标受 torch 版本浮点影响、`test_pq_generate::TestApplyDelta`，WP6 时已在）。
   本条与 §1 md5 口径说明为锁后回填（不改判读带）。
-- 待记：请示开 pod 的消息与用户同意时间；pod id / 卷 / 开机与停机时间；`uea30_setup.sh` 冒烟的 `nvidia-smi` 峰值与 PenDigits
-  单次评估秒数。
+- 2026-09-06 ~17:20（本地）：请示开 pod，用户同意"开 4090 pod（卷 tudo4ntlot）"。旧 4090 pod `5q5avhnjqmgvw9` resume 报
+  "not enough free GPUs on the host"，按 pod_ctl 备选 `deploy` 在同卷同数据中心（EUR-NO-1）新开 **pod `mvqetmtt1t4azg`**
+  （uea30-4090，RTX 4090 23 GB，120 vCPU，$0.74/h，镜像 runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404，torch 2.8+cu128，
+  与 WP6 的 4090 pod 镜像 torch 2.4 不同——GGS seed 0 跨 2.4/2.8 五靶逐位相同，见 WP3 里程碑）。bundle HEAD 8b4c647。
+- 待记：`uea30_setup.sh` 冒烟的 `nvidia-smi` 峰值与 PenDigits 单次评估秒数；主流程开跑 / 拉回 / 停机时间与费用。

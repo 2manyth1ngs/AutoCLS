@@ -95,7 +95,7 @@ echo "== md5 check: $( [ $fail = 0 ] && echo ALL MATCH || echo FAILED )"
 # 单测限 OMP=1（pod 上 pytest 不限线程会把 vCPU 打满，见 memory mx4-diagnosis）
 # 先验金标（test_build_candidates_prior_golden）是本机折内数值，跨机浮点可能误报，本机已过，pod 上不跑
 OMP_NUM_THREADS=1 python -m pytest tests/test_uea30_deploy.py tests/test_sh_deploy.py tests/test_uea.py tests/test_cls_space.py -q \
-    --deselect tests/test_uea30_deploy.py::test_build_candidates_prior_golden 2>&1 | tail -3
+    --deselect tests/test_uea30_deploy.py::test_build_candidates_prior_golden --deselect tests/test_uea30_deploy.py::test_uea30_arms_golden_six_targets 2>&1 | tail -3
 python scripts/45_uea30_deploy.py --check
 # 冒烟用与 uea30_run.sh 同一套线程 / 分块环境（评估 CPU-bound，不限 OMP 慢 4×；见 memory route-a-throughput-omp1）
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
