@@ -86,7 +86,13 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 - ✅ **MX-4 WP8-BO 目标侧提名回灌搜索**（2026-09-05，分支 `wp8-bo`，`results/mx4_bo/REPORT.md`）：**BO-DEAD**——判死 (b) 留的唯一出口（信任域汉明 ≤ 3 提名 + 靶侧 @25% 真评估回灌，bo_ucb vs 同成本 rand_nbr 各 3 轮 × 5 条，官方口径 6 靶 + HAR，本地 4060 7.4 GPU-h）：B1 头顶空间 1/6（只有 Ethanol）、B2 BO-SH 3 种子 vs SH6-3-3 均值差 −0.011（4 胜但 HMD −0.153 / PS −0.052）、B3 引导 3/6；瓶颈 = 回灌信号是早截点（池内 ρ(@25%, @100%) 0.22–0.79，@100% 最高的提名被第一级淘汰，代理只追 @25% 赢家），是关键决策 8 的同一地板。旁证：Ethanol 目录外 0.373（3 种子）> TS2Vec 0.308（目录非天花板）；HW BO-SH 0.497 过 TS2Vec 线但 SH10-4-3 拿 GGS 0.546 更便宜（名单问题）。**开放空间搜索关闭**——负翼
 - 论文：正翼 = 零样本排名 + SH 验证 + 字段主效应 + 成本表；负翼 = task-aware 五轮判负 + 开放空间外推判死 + 学习曲线外推判死（analysis/limitations）
 
-## 路径二：给学习部分加一个真有增益的组件（用户 2026-09-03 记录；WP5 已关闭，其他方法另开会话讨论）
+## 路径一（WP9，下一步，用户 2026-09-06 拍板新开会话执行）与 路径二（已全部关闭）
+
+**路径一 = 把证据做实**：官方口径 6 靶（+HAR 可选）每靶候选池扩到 80–100 条（shared-10 + GGS + 现有一次性提名 10 + 空间均匀随机补足，seed 0 完整 25/50/100% 轨迹），在缓存上零 GPU 模拟同成本对照：先验前 6 + SH6-3-3（3.75 全跑当量）vs Hyperband（η=2，三 rung = 三截点）/ 随机搜索 / 随机起点 SH / BOHB-TPE 式；冠军 3 种子；UCR 84 语料先验 + SH regret 表（零 GPU）；消融主表；AutoCL 搜索预算换算进成本表。估时 4090 ≈ 5.4 h / 5090 ≈ 3.5 h；PS 评估须 480 s 上限。交接细节见 memory `paper-positioning-and-path-one-handoff`。
+
+**论文定位（2026-09-06）**：task-aware 全线放弃。"首次"只能写成 "first to *learn* a task-agnostic CL strategy default from cross-dataset real evaluations, validated by target-side SH"，AutoML 前人必引（Pfisterer *Learning Multiple Defaults*、Winkelmolen *zero-shot HPO*、Feurer *Auto-sklearn 2.0* portfolio+SH、Probst *Tunability*）；"快"须等路径一的同成本基线；最硬的贡献是负翼（七轮预注册 task-aware 判负 + 噪声地板 + 开放空间早截点机制）。投稿：现证据 → CIKM/ECML-PKDD/ICDM（CCF-B）、AutoML Conf、TMLR；路径一后 → AAAI/IJCAI；R' 语料打包 → NeurIPS D&B。
+
+### 路径二存档（用户 2026-09-03 记录；WP5/WP6-TF/WP7-UCR/WP8-BO 全部判负关闭）
 
 **为什么**：现在的头条"先验 + 淘汰赛"审稿人会问"学习在哪"——先验 7 折第一名都是同一条配置（等于一个学来的默认），GBDT 在 top-1 上没超过先验，淘汰赛是 Hyperband 的常规组件。路径一（WP3 全量协议 + 候选扩到 50–100 + Hyperband/随机/BOHB 基线）把证据做实；路径二给"从源池学到、在目标上用"加一个有实证增益的模型。
 
@@ -97,4 +103,4 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 **次选：WP4 增强不变性画像**（机制性任务特征，与 CLS 字段同坐标，n=7–8 也可辨识；风险更高，先验 ~30%），设计见 memory `mx4-diagnosis-prior-beats-tclsc` 与计划文件 §5。
 
 ## 目录
-`autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}`（`search/surrogate.py` 代理、`search/rank.py` 聚合、`search/learning_curve.py` 外推器（判死，保留）、`search/evolution.py` 仅保留）+ `scripts/`（MX-3-PQ：`32–34_pq_*`、`pq_common.py`；MX-4：`36_prior_sh_sim.py`、`37_surrogate_loo.py`、`38_lc_sh_sim.py`、`39_sh_deploy.py`、`43_bo_nominate.py`）+ `configs/*.yaml` + `tests/`。分支：`mx4`（MX-4 代码与结果，WP3 在 worktree `.claude/worktrees/mx4`）、`protocol-alignment`（全量协议对齐）、`wp5-lc`（WP5，自 63d26fd，待合回 mx4）。
+`autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}`（`search/surrogate.py` 代理、`search/rank.py` 聚合、`search/learning_curve.py` 外推器（判死，保留）、`search/evolution.py` 仅保留）+ `scripts/`（MX-3-PQ：`32–34_pq_*`、`pq_common.py`；MX-4：`36_prior_sh_sim.py`、`37_surrogate_loo.py`、`38_lc_sh_sim.py`、`39_sh_deploy.py`、`43_bo_nominate.py`）+ `configs/*.yaml` + `tests/`。分支：**`wp8-bo`（742e09a）是当前超集**，含 `mx4`（WP3 在 worktree `.claude/worktrees/mx4`）、`protocol-alignment`、`wp5-lc`、`wp6-tf`、`wp7-ucr`；`wp6-mask`（input_mask 字段，WP6 S1）不在其中。路径一从 `wp8-bo` 新开 `wp9-p1`。
