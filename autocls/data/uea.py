@@ -227,3 +227,27 @@ def load_uea_pair(
     Xte = _apply_pad_zscore(real_te, target, mean, std)
     y_all, _classes = encode_labels(np.concatenate([np.asarray(y_tr), np.asarray(y_te)]))
     return Xtr, y_all[: len(y_tr)], Xte, y_all[len(y_tr):]
+
+
+def segment_train(X: np.ndarray, max_train_length: int) -> np.ndarray:
+    """官方 TS2Vec ``fit`` 的 ``max_train_length`` 分段（ts2vec.py:66-69 ``split_with_nan``），在加载层实现、
+    trainer 零改动（WP10-UEA30，只对 EigenWorms L=17984 生效）。
+
+    ``sections = L // max_train_length``；``sections < 2`` 原样返回**同一对象**；否则沿时间轴
+    ``np.array_split`` 成 sections 段，各段右侧补零到首段长度后沿样本轴拼接 → (N·sections, ceil(L/sections), C)，
+    样本 i 的第 j 段在下标 i·sections + j，dtype 不变。只用于预训练输入；截点评估仍编码全长序列（官方 SVM 用未切分的
+    train 编码）。论文未给全，按 X 语义补全：官方用 NaN 补齐再由 encoder 置零，本仓库增强链（freq_mask 的 FFT）不耐
+    NaN，这里直接补零 = z-score 后的通道均值，与 ``_apply_pad_zscore`` 的填充语义一致。
+    """
+    X = np.asarray(X)
+    if X.ndim != 3:
+        raise ValueError(f"X 须为 (N, T, C)，得到 shape={X.shape}")
+    sections = X.shape[1] // int(max_train_length)
+    if sections < 2:
+        return X
+    parts = np.array_split(X, sections, axis=1)
+    T = parts[0].shape[1]
+    out = np.zeros((X.shape[0] * sections, T, X.shape[2]), dtype=X.dtype)
+    for j, p in enumerate(parts):
+        out[j::sections, : p.shape[1]] = p
+    return out

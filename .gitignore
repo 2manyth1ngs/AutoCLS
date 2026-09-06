@@ -20,3 +20,4 @@ results/protocol_probe/*.err
 
 # WP3 本地冒烟产物（可再生）
 results/mx4_deploy/smoke/
+results/uea30/smoke/

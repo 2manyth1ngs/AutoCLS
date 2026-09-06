@@ -1,0 +1,672 @@
+# =====================================================================
+# WP10-UEA30：UEA 30 靶外 23 靶目标侧部署的唯一真源（scripts/45_uea30_deploy.py 读）
+# 协议 results/uea30/PROTOCOL.md；生成于 2026-09-06（scratchpad/build_uea30_yaml.py，一次性），之后以本文件为准。
+# - 尺寸 n_train / L / C / n_test / n_classes / chance：load_uea_pair(scaler="train") 实测（L = 填充长度，ragged 取
+#   TRAIN∪TEST 最大；chance = TEST 多数类占比）；iters 由 N·L·C 规则（35:resolve_iters_from_size）预填，--check 断言。
+# - literature：TS2Vec 论文（AAAI'22，arXiv 2106.10466 v4）Table 10，六行与 35:TABLE10 逐值对账、29 靶均值复核；
+#   6 个 LODO 靶与 HAR 不在此重复（真源仍 35:TABLE10 / 39:HAR_TABLE2，单测断言不相交）。InsectWingbeat DTW 论文缺。
+# - anchor_4090：单格预训练到 100% 的秒数 / 单次截点评估秒数（RTX 4090，checkpoint_results 段间差标定，PROTOCOL §0）。
+# - band：A/B/D 类的预注册预测带 = 上一会话 §5.1 区间按 1.96·sqrt(p(1−p)/n_test)（p = 区间中点）放宽后裁到 [0,1]；
+#   C/E 类无带（C 只报，E 走 U1）。order = 执行顺序（便宜靶先，评估重的 SAD/PenDigits/FaceDetection 最后）。
+# - class：A 贴顶 / B 短序列 L<50 / C n_test≤50 / D chance-EEG / E 有净空可评 / LODO = 6 个已跑源池靶。
+# =====================================================================
+protocol: ts2vec_official
+twin:
+  input_mask: binomial
+arms:
+  main: SH10-4-3_prior
+  secondary: SH20-3_both
+  reference:
+  - SH6-3-3_prior
+  - SH20-4-3_both
+gates:
+  parity_margin: 0.03
+  u1_min: 3
+  u2_min_rate: 0.8
+  u3_tol: 0.01
+  u3_min_rate: 0.6
+datasets:
+  RacketSports:
+    run: true
+    order: 1
+    class: B
+    n_train: 151
+    n_test: 152
+    L: 30
+    C: 6
+    n_classes: 4
+    iters: 200
+    chance: 0.2829
+    anchor_4090:
+      pretrain_s: 4.4
+      eval_s: 0.1
+    literature:
+      TS2Vec: 0.855
+      T-Loss: 0.855
+      TNC: 0.776
+      TS-TCC: 0.816
+      TST: 0.809
+      DTW: 0.803
+    band:
+    - 0.773
+    - 0.927
+  Libras:
+    run: true
+    order: 2
+    class: B
+    n_train: 180
+    n_test: 180
+    L: 45
+    C: 2
+    n_classes: 15
+    iters: 200
+    chance: 0.0667
+    anchor_4090:
+      pretrain_s: 4.6
+      eval_s: 0.2
+    literature:
+      TS2Vec: 0.867
+      T-Loss: 0.883
+      TNC: 0.817
+      TS-TCC: 0.822
+      TST: 0.656
+      DTW: 0.87
+    band:
+    - 0.8
+    - 0.93
+  ERing:
+    run: true
+    order: 3
+    class: E
+    n_train: 30
+    n_test: 270
+    L: 65
+    C: 4
+    n_classes: 6
+    iters: 200
+    chance: 0.1667
+    anchor_4090:
+      pretrain_s: 4.7
+      eval_s: 0.1
+    literature:
+      TS2Vec: 0.874
+      T-Loss: 0.133
+      TNC: 0.852
+      TS-TCC: 0.904
+      TST: 0.874
+      DTW: 0.133
+    band: null
+  JapaneseVowels:
+    run: true
+    order: 4
+    class: A
+    n_train: 270
+    n_test: 370
+    L: 29
+    C: 12
+    n_classes: 9
+    iters: 200
+    chance: 0.2378
+    anchor_4090:
+      pretrain_s: 4.4
+      eval_s: 0.3
+    literature:
+      TS2Vec: 0.984
+      T-Loss: 0.989
+      TNC: 0.978
+      TS-TCC: 0.93
+      TST: 0.978
+      DTW: 0.949
+    band:
+    - 0.946
+    - 1.0
+    note: ragged（7–29）：填充到 29；L<50 低于 encoder 适用边界（A+B）
+  BasicMotions:
+    run: true
+    order: 5
+    class: A
+    n_train: 40
+    n_test: 40
+    L: 100
+    C: 6
+    n_classes: 4
+    iters: 200
+    chance: 0.25
+    anchor_4090:
+      pretrain_s: 5.0
+      eval_s: 0.1
+    literature:
+      TS2Vec: 0.975
+      T-Loss: 1.0
+      TNC: 0.975
+      TS-TCC: 1.0
+      TST: 0.975
+      DTW: 0.975
+    band:
+    - 0.941
+    - 1.0
+  Epilepsy:
+    run: true
+    order: 6
+    class: A
+    n_train: 137
+    n_test: 138
+    L: 206
+    C: 3
+    n_classes: 4
+    iters: 200
+    chance: 0.2681
+    anchor_4090:
+      pretrain_s: 5.8
+      eval_s: 0.1
+    literature:
+      TS2Vec: 0.964
+      T-Loss: 0.971
+      TNC: 0.957
+      TS-TCC: 0.957
+      TST: 0.949
+      DTW: 0.964
+    band:
+    - 0.917
+    - 1.0
+    note: 预检判贴顶 + 重复对（关键决策 5）
+  AtrialFibrillation:
+    run: true
+    order: 7
+    class: C
+    n_train: 15
+    n_test: 15
+    L: 640
+    C: 2
+    n_classes: 3
+    iters: 200
+    chance: 0.3333
+    anchor_4090:
+      pretrain_s: 9.2
+      eval_s: 0.1
+    literature:
+      TS2Vec: 0.2
+      T-Loss: 0.133
+      TNC: 0.133
+      TS-TCC: 0.267
+      TST: 0.067
+      DTW: 0.2
+    band: null
+  NATOPS:
+    run: true
+    order: 8
+    class: E
+    n_train: 180
+    n_test: 180
+    L: 51
+    C: 24
+    n_classes: 6
+    iters: 600
+    chance: 0.1667
+    anchor_4090:
+      pretrain_s: 13.8
+      eval_s: 0.2
+    literature:
+      TS2Vec: 0.928
+      T-Loss: 0.917
+      TNC: 0.911
+      TS-TCC: 0.822
+      TST: 0.85
+      DTW: 0.883
+    band: null
+  FingerMovements:
+    run: true
+    order: 9
+    class: D
+    n_train: 316
+    n_test: 100
+    L: 50
+    C: 28
+    n_classes: 2
+    iters: 600
+    chance: 0.51
+    anchor_4090:
+      pretrain_s: 13.8
+      eval_s: 0.3
+    literature:
+      TS2Vec: 0.48
+      T-Loss: 0.58
+      TNC: 0.47
+      TS-TCC: 0.46
+      TST: 0.56
+      DTW: 0.53
+    band:
+    - 0.402
+    - 0.678
+  ArticularyWordRecognition:
+    run: true
+    order: 10
+    class: A
+    n_train: 275
+    n_test: 300
+    L: 144
+    C: 9
+    n_classes: 25
+    iters: 600
+    chance: 0.04
+    anchor_4090:
+      pretrain_s: 16.0
+      eval_s: 0.3
+    literature:
+      TS2Vec: 0.987
+      T-Loss: 0.943
+      TNC: 0.973
+      TS-TCC: 0.953
+      TST: 0.977
+      DTW: 0.987
+    band:
+    - 0.944
+    - 1.0
+  Heartbeat:
+    run: true
+    order: 11
+    class: D
+    n_train: 204
+    n_test: 205
+    L: 405
+    C: 61
+    n_classes: 2
+    iters: 600
+    chance: 0.722
+    anchor_4090:
+      pretrain_s: 22.1
+      eval_s: 0.7
+    literature:
+      TS2Vec: 0.683
+      T-Loss: 0.741
+      TNC: 0.746
+      TS-TCC: 0.751
+      TST: 0.746
+      DTW: 0.717
+    band:
+    - 0.639
+    - 0.801
+  DuckDuckGeese:
+    run: true
+    order: 12
+    class: C
+    n_train: 50
+    n_test: 50
+    L: 270
+    C: 1345
+    n_classes: 5
+    iters: 600
+    chance: 0.2
+    anchor_4090:
+      pretrain_s: 18.9
+      eval_s: 1.9
+    literature:
+      TS2Vec: 0.68
+      T-Loss: 0.65
+      TNC: 0.46
+      TS-TCC: 0.38
+      TST: 0.62
+      DTW: 0.6
+    band: null
+  PEMS-SF:
+    run: true
+    order: 13
+    class: E
+    n_train: 267
+    n_test: 173
+    L: 144
+    C: 963
+    n_classes: 7
+    iters: 600
+    chance: 0.1734
+    anchor_4090:
+      pretrain_s: 16.0
+      eval_s: 3.3
+    literature:
+      TS2Vec: 0.682
+      T-Loss: 0.676
+      TNC: 0.699
+      TS-TCC: 0.734
+      TST: 0.74
+      DTW: 0.711
+    band: null
+  CharacterTrajectories:
+    run: true
+    order: 14
+    class: A
+    n_train: 1422
+    n_test: 1436
+    L: 182
+    C: 3
+    n_classes: 20
+    iters: 600
+    chance: 0.0648
+    anchor_4090:
+      pretrain_s: 16.9
+      eval_s: 3.6
+    literature:
+      TS2Vec: 0.995
+      T-Loss: 0.993
+      TNC: 0.967
+      TS-TCC: 0.985
+      TST: 0.975
+      DTW: 0.989
+    band:
+    - 0.964
+    - 1.0
+    note: ragged（TRAIN ≤180 < TEST ≤182）：scaler=train 填充到 182；39 个 case 走 _parse_ts_tolerant
+  SelfRegulationSCP1:
+    run: true
+    order: 15
+    class: E
+    n_train: 268
+    n_test: 293
+    L: 896
+    C: 6
+    n_classes: 2
+    iters: 600
+    chance: 0.5017
+    anchor_4090:
+      pretrain_s: 33.6
+      eval_s: 0.4
+    literature:
+      TS2Vec: 0.812
+      T-Loss: 0.843
+      TNC: 0.799
+      TS-TCC: 0.823
+      TST: 0.754
+      DTW: 0.775
+    band: null
+  SelfRegulationSCP2:
+    run: true
+    order: 16
+    class: D
+    n_train: 200
+    n_test: 180
+    L: 1152
+    C: 7
+    n_classes: 2
+    iters: 600
+    chance: 0.5
+    anchor_4090:
+      pretrain_s: 39.6
+      eval_s: 0.3
+    literature:
+      TS2Vec: 0.578
+      T-Loss: 0.539
+      TNC: 0.55
+      TS-TCC: 0.533
+      TST: 0.55
+      DTW: 0.539
+    band:
+    - 0.427
+    - 0.653
+    note: 在源池（EEG 低权）：先验自动 LODO（39:483）
+  LSST:
+    run: true
+    order: 17
+    class: B
+    n_train: 2459
+    n_test: 2466
+    L: 36
+    C: 6
+    n_classes: 14
+    iters: 600
+    chance: 0.3151
+    anchor_4090:
+      pretrain_s: 13.4
+      eval_s: 10.4
+    literature:
+      TS2Vec: 0.537
+      T-Loss: 0.509
+      TNC: 0.595
+      TS-TCC: 0.474
+      TST: 0.408
+      DTW: 0.551
+    band:
+    - 0.51
+    - 0.58
+  StandWalkJump:
+    run: true
+    order: 18
+    class: C
+    n_train: 12
+    n_test: 15
+    L: 2500
+    C: 4
+    n_classes: 3
+    iters: 600
+    chance: 0.3333
+    anchor_4090:
+      pretrain_s: 71.1
+      eval_s: 0.1
+    literature:
+      TS2Vec: 0.467
+      T-Loss: 0.333
+      TNC: 0.4
+      TS-TCC: 0.333
+      TST: 0.267
+      DTW: 0.2
+    band: null
+  EigenWorms:
+    run: true
+    order: 19
+    class: E
+    n_train: 128
+    n_test: 131
+    L: 17984
+    C: 6
+    n_classes: 5
+    iters: 600
+    chance: 0.4198
+    anchor_4090:
+      pretrain_s: 82.8
+      eval_s: 1.5
+    literature:
+      TS2Vec: 0.847
+      T-Loss: 0.84
+      TNC: 0.84
+      TS-TCC: 0.779
+      TST: 0.748
+      DTW: 0.618
+    band: null
+    max_train_length: 3000
+    note: L=17984：训练侧官方 max_train_length=3000 分段（5 段 × 3597，uea.segment_train），评估全长
+  MotorImagery:
+    run: true
+    order: 20
+    class: D
+    n_train: 278
+    n_test: 100
+    L: 3000
+    C: 64
+    n_classes: 2
+    iters: 600
+    chance: 0.5
+    anchor_4090:
+      pretrain_s: 82.8
+      eval_s: 3.8
+    literature:
+      TS2Vec: 0.51
+      T-Loss: 0.58
+      TNC: 0.5
+      TS-TCC: 0.61
+      TST: 0.5
+      DTW: 0.5
+    band:
+    - 0.402
+    - 0.648
+  FaceDetection:
+    run: true
+    order: 21
+    class: D
+    n_train: 5890
+    n_test: 3524
+    L: 62
+    C: 144
+    n_classes: 2
+    iters: 600
+    chance: 0.5
+    anchor_4090:
+      pretrain_s: 14.1
+      eval_s: 57.7
+    literature:
+      TS2Vec: 0.501
+      T-Loss: 0.513
+      TNC: 0.536
+      TS-TCC: 0.544
+      TST: 0.534
+      DTW: 0.529
+    band:
+    - 0.483
+    - 0.547
+    note: 预检判 chance 型（results/target_preflight，关键决策 5）
+  SpokenArabicDigits:
+    run: true
+    order: 22
+    class: A
+    n_train: 6599
+    n_test: 2199
+    L: 93
+    C: 13
+    n_classes: 10
+    iters: 600
+    chance: 0.1
+    anchor_4090:
+      pretrain_s: 14.8
+      eval_s: 63.1
+    literature:
+      TS2Vec: 0.988
+      T-Loss: 0.905
+      TNC: 0.934
+      TS-TCC: 0.97
+      TST: 0.923
+      DTW: 0.963
+    band:
+    - 0.954
+    - 1.0
+    note: ragged（4–93）：填充到 93；上一会话 §5.1 误记 TS2Vec 0.932，论文 Table 10 为 0.988
+  PenDigits:
+    run: true
+    order: 23
+    class: A
+    n_train: 7494
+    n_test: 3498
+    L: 8
+    C: 2
+    n_classes: 10
+    iters: 600
+    chance: 0.1041
+    anchor_4090:
+      pretrain_s: 12.8
+      eval_s: 83.6
+    literature:
+      TS2Vec: 0.989
+      T-Loss: 0.981
+      TNC: 0.979
+      TS-TCC: 0.974
+      TST: 0.56
+      DTW: 0.977
+    band:
+    - 0.955
+    - 1.0
+    note: N·L·C = 119904 > 1e5 → 600 iters（临界，--check 断言）；L=8 远低于适用边界
+  InsectWingbeat:
+    run: false
+    class: B
+    n_train: 25000
+    n_test: 25000
+    L: 22
+    C: 200
+    n_classes: 10
+    iters: 600
+    chance: 0.1
+    anchor_4090:
+      pretrain_s: 13.1
+      eval_s: 241.1
+    literature:
+      TS2Vec: 0.466
+      T-Loss: 0.156
+      TNC: 0.469
+      TS-TCC: 0.264
+      TST: 0.105
+      DTW: null
+    band: null
+    reason: 用户拍板本轮不跑：L≤22 低于 encoder 适用边界 50，且单靶评估（25000/25000）占总成本 28%
+  Handwriting:
+    run: false
+    reuse: mx4_mask
+    class: LODO
+    n_train: 150
+    n_test: 850
+    L: 152
+    C: 3
+    n_classes: 26
+    chance: 0.0506
+    note: 6 个 LODO 靶：复用 results/mx4_deploy（legacy）+ results/mx4_mask（孪生 + finals）；文献数真源仍 35:TABLE10
+  UWaveGestureLibrary:
+    run: false
+    reuse: mx4_mask
+    class: LODO
+    n_train: 120
+    n_test: 320
+    L: 315
+    C: 3
+    n_classes: 8
+    chance: 0.125
+    note: 6 个 LODO 靶：复用 results/mx4_deploy（legacy）+ results/mx4_mask（孪生 + finals）；文献数真源仍 35:TABLE10
+  PhonemeSpectra:
+    run: false
+    reuse: mx4_mask
+    class: LODO
+    n_train: 3315
+    n_test: 3353
+    L: 217
+    C: 11
+    n_classes: 39
+    chance: 0.0256
+    note: 6 个 LODO 靶：复用 results/mx4_deploy（legacy）+ results/mx4_mask（孪生 + finals）；文献数真源仍 35:TABLE10
+  EthanolConcentration:
+    run: false
+    reuse: mx4_mask
+    class: LODO
+    n_train: 261
+    n_test: 263
+    L: 1751
+    C: 3
+    n_classes: 4
+    chance: 0.251
+    note: 6 个 LODO 靶：复用 results/mx4_deploy（legacy）+ results/mx4_mask（孪生 + finals）；文献数真源仍 35:TABLE10
+  Cricket:
+    run: false
+    reuse: mx4_mask
+    class: LODO
+    n_train: 108
+    n_test: 72
+    L: 1197
+    C: 6
+    n_classes: 12
+    chance: 0.0833
+    note: 6 个 LODO 靶：复用 results/mx4_deploy（legacy）+ results/mx4_mask（孪生 + finals）；文献数真源仍 35:TABLE10
+  HandMovementDirection:
+    run: false
+    reuse: mx4_mask
+    class: LODO
+    n_train: 160
+    n_test: 74
+    L: 400
+    C: 10
+    n_classes: 4
+    chance: 0.4054
+    note: 6 个 LODO 靶：复用 results/mx4_deploy（legacy）+ results/mx4_mask（孪生 + finals）；文献数真源仍 35:TABLE10
+  HAR:
+    run: false
+    reuse: mx4_deploy_har
+    protocol: legacy_full
+    class: E
+    n_train: 7352
+    n_test: 2947
+    L: 128
+    C: 9
+    n_classes: 6
+    note: UCI-HAR 外部锚（WP3b，SH6-3-3，legacy_full 截点 580/1160/2320）；文献数真源 39:HAR_TABLE2

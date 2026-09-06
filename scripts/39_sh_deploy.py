@@ -507,6 +507,7 @@ def run_trajectory_cell(cell: dict, arrays: dict, device: str) -> dict:
     check_extension_consistency(cell)     # 扩展字段两处真源不一致 → 训练前就断（不进 except）
     opts, seed, iters = cell["options"], int(cell["seed"]), int(cell["iters"])
     Xtr, ytr, yte = arrays["Xtr"], arrays["ytr"], arrays["yte"]
+    Xtr_fit = arrays.get("Xtr_fit", Xtr)   # WP10-UEA30：官方 max_train_length 分段只喂预训练；截点评估仍编码全长 Xtr
     Xte = arrays["Xte_" + opts["scaler"]]
     grid = opts["svm_grid"]
     results: list[dict] = []
@@ -533,7 +534,7 @@ def run_trajectory_cell(cell: dict, arrays: dict, device: str) -> dict:
             ov["repr_dropout"] = float(opts["repr_dropout"])
         enc = build_encoder(input_dims=Xtr.shape[-1], overrides=ov or None)
         losses = pretrain_encoder(
-            enc, cls, Xtr, max_iters=iters, batch_size=opts["batch_size"], lr=opts["lr"],
+            enc, cls, Xtr_fit, max_iters=iters, batch_size=opts["batch_size"], lr=opts["lr"],
             device=device, seed=seed, use_swa=opts["swa"], drop_last=opts["drop_last"],
             crop_mode=opts["crop_mode"], checkpoints=tuple(cell["checkpoints"]), on_checkpoint=on_ckpt)
     except Exception as e:  # noqa: BLE001
@@ -554,10 +555,13 @@ def run_trajectory_cell(cell: dict, arrays: dict, device: str) -> dict:
             "device_name": device_label(device),
             "first_pass_loss": (float(losses[0]) if losses else None),
             "last_pass_loss": (float(losses[-1]) if losses else None),
-            "n_train": int(Xtr.shape[0]), "n_test": int(len(yte)), "error": None}
+            "n_train": int(Xtr.shape[0]), "n_test": int(len(yte)), "error": None,
+            **({"n_train_fit": int(Xtr_fit.shape[0])} if "Xtr_fit" in arrays else {})}
 
 
-def execute(cells: list[dict], args, tag: str) -> None:
+def execute(cells: list[dict], args, tag: str, *, loader=None) -> None:
+    """``loader(dataset, har_npz) -> arrays``；默认 ``load_arrays_any``（调用时解析，旧调用逐位不变）。"""
+    loader = loader or load_arrays_any
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     runs, inflight, oom_log = outdir / "runs.jsonl", outdir / "inflight.txt", outdir / "oom_failures.jsonl"
@@ -567,7 +571,7 @@ def execute(cells: list[dict], args, tag: str) -> None:
     backend_kw = {"n_jobs": 1} if args.joblib_backend == "threading" else {}
     with parallel_backend(args.joblib_backend, **backend_kw):
         for i, cell in enumerate(todo):
-            arrays = load_arrays_any(cell["dataset"], getattr(args, "har_npz", None))
+            arrays = loader(cell["dataset"], getattr(args, "har_npz", None))
             who = (f"{cell['dataset']}/{cell['arm']}/{cell['cls_key'][:8]} s{cell['seed']} "
                    f"iters={cell['iters']} ckpt={cell['checkpoints']}")
             inflight.write_text(f"{cell['key']}\t{who}", encoding="utf-8")
