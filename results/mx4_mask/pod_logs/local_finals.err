@@ -1,0 +1,20 @@
+D:\Anaconda\envs\pytorch\lib\site-packages\torch\nn\modules\module.py:1367: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\model_selection\_validation.py:516: FitFailedWarning: 
+1 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+1 fits failed with the following error:
+Traceback (most recent call last):
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\model_selection\_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\sklearn\svm\_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)

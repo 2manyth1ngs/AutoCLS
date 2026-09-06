@@ -25,9 +25,10 @@ GGS3 = {"Handwriting": (0.532, 0.015), "UWaveGestureLibrary": (0.869, 0.003), "P
 TS2VEC_LOCAL3 = {"Handwriting": (0.529, 0.006), "UWaveGestureLibrary": (0.903, 0.009), "PhonemeSpectra": (0.235, 0.001),
                  "EthanolConcentration": (0.288, 0.016), "Cricket": (0.977, 0.007), "HandMovementDirection": (0.266, 0.039)}
 
-ARMS = [("SH6-3-3 掩码关（名单 6）", "prior_off", (6, 3, 3), False),
-        ("SH10-4-3 掩码关（名单 10）", "prior_off", (10, 4, 3), False),
-        ("SH20-4-3 两版都量（名单 10 + 掩码孪生）", "both10", (20, 4, 3), True)]
+ARMS = [("SH6-3-3 掩码关（名单 6）", "prior_off", (6, 3, 3), False, False),
+        ("SH10-4-3 掩码关（名单 10）", "prior_off", (10, 4, 3), False, False),
+        ("SH20-4-3 两版都量（名单 10 + 掩码孪生）", "both10", (20, 4, 3), True, False),
+        ("SH20-3 两版都量，从 50% 截点起", "both10", (20, 3), True, True)]
 
 def seeds_of(d, k, truth):
     ex = [float(r["acc"]) for r in s2 if r["dataset"] == d and r["cls_key"] == k]
@@ -44,10 +45,11 @@ for d in T:
     truth = {k: traj[k][bf] for k in keys}
     base = g40.wp3_rankings(cands[d], keys_off)["prior"]
     rows[d] = {}
-    for label, rk, ks, use_twins in ARMS:
+    for label, rk, ks, use_twins, two_level in ARMS:
         ranked = g40.measured_ranking(base, twin_map, 10) if use_twins else base
         ranked = [k for k in ranked if k in truth]
-        p = g36.sh_path(ranked, traj, ks, budgets); pick = g36.sh_pick(p[-1], traj, bf)
+        bud = budgets[1:] if two_level else budgets
+        p = g36.sh_path(ranked, traj, ks, bud); pick = g36.sh_pick(p[-1], traj, bf)
         s = seeds_of(d, pick, truth)
         rows[d][label] = (float(np.mean(s)), float(np.std(s)), len(s), pick, pick in set(twin_map.values()))
 
