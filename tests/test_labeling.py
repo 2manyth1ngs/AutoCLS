@@ -403,6 +403,44 @@ class TestEvaluateRprime:
         assert rec["device_name"] == torch.cuda.get_device_name(0)
 
 
+# ------------------------------------------------- 扩展字段 → encoder overrides（MX-4 WP6）
+# 标签侧两个入口是 input_mask 能否到达 encoder 的唯一变更点：旧 CLS 必须传 None（逐位不变），
+# 孪生必须把 space.yaml 声明的 encoder_kwarg 传给 build_encoder。
+class TestExtensionOverrides:
+    def test_none_for_legacy_and_binomial_for_twin(self, make_cls):
+        from autocls.labeling import extension_overrides
+        from autocls.space.cls_space import twin
+
+        assert extension_overrides(make_cls()) == {}
+        assert extension_overrides(twin(make_cls(), input_mask="binomial")) == {"input_mask": "binomial"}
+
+    @pytest.mark.parametrize("fn", ["evaluate_rprime", "evaluate_rprime_trajectory"])
+    def test_build_encoder_receives_overrides_only_for_twin(self, make_cls, monkeypatch, fn):
+        import autocls.encoders.registry as reg
+        import autocls.labeling as lab
+        from autocls.space.cls_space import twin
+
+        real_build = reg.build_encoder
+        seen = []
+
+        def spy(input_dims, *args, **kwargs):
+            seen.append(kwargs.get("overrides"))
+            return real_build(input_dims, *args, **kwargs)
+
+        # labeling 在函数内 `from .encoders.registry import build_encoder`，故打在 registry 模块上
+        monkeypatch.setattr(reg, "build_encoder", spy)
+        task, X, y = _tiny_task_data()
+        kw = dict(weight_seed=1, split_seed=2, batch_size=32, device="cpu")
+        for c in (make_cls(), twin(make_cls(), input_mask="binomial")):
+            if fn == "evaluate_rprime":
+                rec = lab.evaluate_rprime(task, c, X, y, iters=4, **kw)
+                assert rec["error"] is None
+            else:
+                traj = lab.evaluate_rprime_trajectory(task, c, X, y, checkpoints=(4,), **kw)
+                assert traj[4]["error"] is None
+        assert seen == [None, {"input_mask": "binomial"}]
+
+
 # ------------------------------------------------- evaluate_rprime_trajectory
 # MX-3-PQ：一条预训练轨迹在 60/120/290 三个 budget 各取一次 R'（同一权重轨迹
 # 上打点，而不是跑三条独立轨迹）——三倍 GPU 账单省掉，且 budget 间差异是纯

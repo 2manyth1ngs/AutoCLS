@@ -26,7 +26,7 @@ import time
 from collections import defaultdict
 from dataclasses import asdict
 from pathlib import Path
-from typing import Mapping, Optional, Sequence
+from typing import Collection, Mapping, Optional, Sequence
 
 import numpy as np
 import torch
@@ -246,7 +246,7 @@ def nominate(space: CLSSpace, enc: CLSEncoder, rows: Sequence[dict], *, exclude_
     Xf = np.hstack([Xc[ok], np.ones((len(ok), 1))])          # 预算特征 = 1.0（b_final）
     pred, _ = model.predict(Xf)
     order = sorted(range(len(ok)), key=lambda j: (-float(pred[j]), keys[ok[j]]))[:int(n)]
-    return [{"cls_key": keys[ok[j]], "cls": asdict(cands[keys[ok[j]]]),
+    return [{"cls_key": keys[ok[j]], "cls": cands[keys[ok[j]]].to_dict(),
              "pred_z": float(pred[j]), "hamming": int(ham[ok[j]])} for j in order]
 
 
@@ -349,10 +349,44 @@ def deploy_arms(keys: Sequence[str], traj: Mapping[str, Mapping[int, float]],
             "picks": picks, "n_candidates": n, "budgets": stages}
 
 
+_SPACE_SINGLETON: Optional[CLSSpace] = None
+
+
+def _space() -> CLSSpace:
+    global _SPACE_SINGLETON
+    if _SPACE_SINGLETON is None:
+        _SPACE_SINGLETON = CLSSpace.from_yaml()
+    return _SPACE_SINGLETON
+
+
+def check_extension_consistency(cell: Mapping) -> None:
+    """扩展字段有两处真源（CLS 字段 → build_encoder overrides；options.<encoder_kwarg> → cache_key）。
+
+    两者必须一致，否则孪生格会以掩码关训练却顶着掩码开的键（或反之）——在任何训练前 fail-fast。
+    """
+    space = _space()
+    cls = CLS(**cell["cls"])
+    want = space.encoder_overrides(cls)
+    opts = cell.get("options") or {}
+    for f in space.extension_field_names:
+        spec = space.field_spec(f)
+        kw, default = spec["encoder_kwarg"], spec["default"]
+        got, exp = opts.get(kw, default), want.get(kw, default)
+        if got != exp:
+            raise ValueError(f"格 {cell.get('key')}: CLS.{f}={getattr(cls, f)!r} 推出 {kw}={exp!r}，"
+                             f"但 options.{kw}={got!r}——两处真源不一致")
+
+
 def s1_worklist(protos: dict, sizes: dict, cands: Mapping[str, dict], *, seed: int = 0,
-                protocol: str = PROTOCOL) -> list[dict]:
+                protocol: str = PROTOCOL, twins: Optional[dict] = None, twin_only: bool = False,
+                skip_error_keys: Collection[tuple[str, str]] = ()) -> list[dict]:
+    """S1 目录格；``twins``（MX-4 WP6）时每条目录配一格孪生（CLS 扩展字段 + options 同步），
+    legacy 格在前、孪生在后；``twin_only`` 只出孪生；``skip_error_keys`` 跳过 WP3 里 error 的
+    (dataset, cls_key)（如 PhonemeSpectra × 20be4f74 的 eval 超时格）。不传 twins 时输出逐位不变。"""
+    from autocls.space.cls_space import twin as _twin
     p = protos[protocol]
-    out = []
+    skip = set(skip_error_keys)
+    out, tw = [], []
     for d, c in cands.items():
         entries = ([("shared", e) for e in c["shared"]] + [("ggs", c["ggs"])]
                    + [("nominated", e) for e in c.get("nominated", [])])
@@ -361,13 +395,22 @@ def s1_worklist(protos: dict, sizes: dict, cands: Mapping[str, dict], *, seed: i
                               cls_key_=e["cls_key"], cls=CLS(**e["cls"]), seed=seed)
             cell["checkpoints"] = list(checkpoints_for(cell["iters"]))
             out.append(cell)
-    return out
+            if twins and (d, e["cls_key"]) not in skip:
+                t = _twin(CLS(**e["cls"]), **twins)
+                tcell = _g35._cell("s1_catalog", d, protocol, p, sizes, arm_names=[arm],
+                                   cls_key_=cls_key(t), cls=t, seed=seed,
+                                   overrides=_space().encoder_overrides(t) or None)
+                tcell["checkpoints"] = list(checkpoints_for(tcell["iters"]))
+                tcell["twin_of"] = e["cls_key"]
+                tw.append(tcell)
+    return tw if twin_only else out + tw
 
 
 def finals_worklist(protos: dict, sizes: dict, picks: Mapping[str, Mapping[str, str]],
                     key2cls: Mapping[str, dict], *, seeds: Sequence[int] = FINAL_SEEDS,
                     protocol: str = PROTOCOL) -> list[dict]:
-    """S2：每靶各臂冠军 × seeds；同一 CLS 被多个臂选中时合并成一格（arm_names 多个）。"""
+    """S2：每靶各臂冠军 × seeds；同一 CLS 被多个臂选中时合并成一格（arm_names 多个）。
+    孪生冠军（CLS 扩展字段非默认）自动带 overrides（options 与 CLS 一致）；legacy → None，逐位不变。"""
     p = protos[protocol]
     out = []
     for d, arms in picks.items():
@@ -375,12 +418,22 @@ def finals_worklist(protos: dict, sizes: dict, picks: Mapping[str, Mapping[str, 
         for arm, k in arms.items():
             by_key.setdefault(k, []).append("final_" + arm)
         for k, names in by_key.items():
+            cls = CLS(**key2cls[k])
+            ov = _space().encoder_overrides(cls) or None
             for s in seeds:
                 cell = _g35._cell("s2_finals", d, protocol, p, sizes, arm_names=names,
-                                  cls_key_=k, cls=CLS(**key2cls[k]), seed=int(s))
+                                  cls_key_=k, cls=cls, seed=int(s), overrides=ov)
                 cell["checkpoints"] = list(checkpoints_for(cell["iters"]))
                 out.append(cell)
     return out
+
+
+def error_keys_from_runs(path: Path) -> set[tuple[str, str]]:
+    """WP3 runs.jsonl 里 error 非空的 s1_catalog 格 → {(dataset, cls_key)}（孪生跳过它们）。"""
+    if not Path(path).exists():
+        return set()
+    return {(r["dataset"], r["cls_key"]) for r in read_jsonl(path)
+            if r.get("stage") == "s1_catalog" and r.get("error")}
 
 
 def run_gates(per: Mapping[str, dict], *, margin: float = PARITY_MARGIN, hw_line: float = HW_LINE) -> dict:
@@ -424,7 +477,7 @@ def cmd_nominate(outdir: Path, *, datasets: Sequence[str] = TARGETS, all_source:
         if isinstance(catalog.get("ggs"), dict) and "cls_key" in catalog["ggs"] else None
     if ggs_entry is None:
         g = _g35._m1.GGS
-        ggs_entry = {"cls_key": cls_key(g), "cls": asdict(g)}
+        ggs_entry = {"cls_key": cls_key(g), "cls": g.to_dict()}
     out = {}
     for i, d in enumerate(datasets):
         exclude_ds = None if (all_source or d not in pool_datasets) else d
@@ -451,6 +504,7 @@ def cmd_nominate(outdir: Path, *, datasets: Sequence[str] = TARGETS, all_source:
 # ---------------------------------------------------------------- GPU
 def run_trajectory_cell(cell: dict, arrays: dict, device: str) -> dict:
     """一格：SWA 轨迹 + 各截点评估（scaler / SVM 网格按协议自身口径）。OOM 抛 RprimeOOM。"""
+    check_extension_consistency(cell)     # 扩展字段两处真源不一致 → 训练前就断（不进 except）
     opts, seed, iters = cell["options"], int(cell["seed"]), int(cell["iters"])
     Xtr, ytr, yte = arrays["Xtr"], arrays["ytr"], arrays["yte"]
     Xte = arrays["Xte_" + opts["scaler"]]
@@ -760,10 +814,13 @@ def markdown_tables(a: dict) -> str:
 
 
 # ---------------------------------------------------------------- CLI
-def cmd_dry_run(protos: dict, outdir: Path, datasets: Sequence[str], *, protocol: str = PROTOCOL) -> None:
+def cmd_dry_run(protos: dict, outdir: Path, datasets: Sequence[str], *, protocol: str = PROTOCOL,
+                twins: Optional[dict] = None, twin_only: bool = False,
+                skip_error_keys: Collection[tuple[str, str]] = ()) -> None:
     cands = load_candidates(outdir)
     sizes = sizes_for(datasets, load=False)
-    cells = s1_worklist(protos, sizes, {d: cands[d] for d in datasets if d in cands}, protocol=protocol)
+    cells = s1_worklist(protos, sizes, {d: cands[d] for d in datasets if d in cands}, protocol=protocol,
+                        twins=twins, twin_only=twin_only, skip_error_keys=skip_error_keys)
     pa = _pa_targets_rows()
     est = 0.0
     for d in datasets:
@@ -820,21 +877,39 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
                     help="训练/评估协议（configs/train.yaml: protocols）；HAR 外部锚用 legacy_full")
     ap.add_argument("--har-npz", default=str(HAR_NPZ_DEFAULT), help="UCI-HAR 缓存（data/HAR/har.npz）")
     ap.add_argument("--all-source", action="store_true", help="先验 / 提名用全部源数据集拟合（目标不在源池时自动如此）")
+    # ---- 孪生（MX-4 WP6）----
+    ap.add_argument("--twins", nargs="+", default=None, metavar="FIELD=VALUE",
+                    help="目录每条配一格只改扩展字段的孪生（如 input_mask=binomial）；新产物目录须另开 --outdir")
+    ap.add_argument("--twin-only", action="store_true", help="只跑孪生格（legacy 格在 --legacy-runs 里）")
+    ap.add_argument("--legacy-runs", default=str(OUT / "runs.jsonl"),
+                    help="WP3 的 runs.jsonl：error 格不出孪生（默认 results/mx4_deploy/runs.jsonl）")
     args = ap.parse_args(argv)
     datasets = tuple(args.datasets) if args.datasets else TARGETS
     protos = _g35.load_protocols()
     outdir = Path(args.outdir)
+    twins, skip = None, set()
+    if args.twins:
+        _g32 = importlib.import_module("scripts.32_pq_generate_rprime")
+        try:
+            twins = _g32.parse_twins(args.twins, _space())
+        except ValueError as e:
+            ap.error(f"--twins：{e}")
+        if outdir.resolve() == OUT.resolve():
+            ap.error(f"--twins 的产物不得写进协议锁定的 {OUT}——请另开 --outdir（如 results/mx4_mask）")
+        skip = error_keys_from_runs(Path(args.legacy_runs))
     if args.nominate:
         cmd_nominate(outdir, datasets=datasets, all_source=args.all_source)
     if args.dry_run:
-        cmd_dry_run(protos, outdir, datasets, protocol=args.protocol)
+        cmd_dry_run(protos, outdir, datasets, protocol=args.protocol,
+                    twins=twins, twin_only=bool(args.twin_only), skip_error_keys=skip)
     if args.smoke:
         cmd_smoke(protos, args)
         return
     if args.catalog:
         cands = load_candidates(outdir)
         sizes = sizes_for(datasets, load=True, har_npz=args.har_npz)
-        execute(s1_worklist(protos, sizes, {d: cands[d] for d in datasets if d in cands}, protocol=args.protocol),
+        execute(s1_worklist(protos, sizes, {d: cands[d] for d in datasets if d in cands}, protocol=args.protocol,
+                            twins=twins, twin_only=bool(args.twin_only), skip_error_keys=skip),
                 args, "S1")
     if args.finals:
         picks_path = outdir / "picks.json"
@@ -846,6 +921,12 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
         for c in cands.values():
             for e in list(c["shared"]) + [c["ggs"]] + list(c.get("nominated", [])):
                 key2cls[e["cls_key"]] = e["cls"]
+        # 孪生冠军的 CLS 只在本目录 runs.jsonl 里（MX-4 WP6）
+        runs_path = outdir / "runs.jsonl"
+        if runs_path.exists():
+            for r in read_jsonl(runs_path):
+                if r.get("cls"):
+                    key2cls.setdefault(r["cls_key"], r["cls"])
         seeds = tuple(int(s) for s in args.seeds) if args.seeds else FINAL_SEEDS
         sizes = sizes_for(datasets, load=True, har_npz=args.har_npz)
         execute(finals_worklist(protos, sizes, {d: v for d, v in picks.items() if d in datasets and all(v.values())},

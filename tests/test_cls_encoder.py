@@ -213,3 +213,63 @@ def test_binned_roundtrip_exact(space):
 def test_unknown_mode_rejected(space):
     with pytest.raises(ValueError):
         CLSEncoder(space, mode="onehot")
+
+
+# ---------------------------------------------------------------- 扩展字段（MX-4 WP6：fields="legacy"|"all"）
+# 默认 fields="legacy" 只编码 19 个旧字段（32 / 116 维逐位不变，T-CLSC 检查点的 cls_dim=32 不受影响）；
+# fields="all" 在末尾追加扩展字段的 one-hot（scalar 34 / binned 118），前缀逐位等于 legacy 编码。
+
+from autocls.space.cls_space import twin  # noqa: E402
+
+
+def test_fields_all_dims(space):
+    assert CLSEncoder(space).dim == 32
+    assert CLSEncoder(space, mode="binned").dim == 116
+    assert CLSEncoder(space, fields="all").dim == 34
+    assert CLSEncoder(space, mode="binned", fields="all").dim == 118
+
+
+def test_fields_all_prefix_equals_legacy_and_tail_is_extension_onehot(space):
+    rng = np.random.default_rng(4)
+    for mode in ("scalar", "binned"):
+        leg = CLSEncoder(space, mode=mode)
+        al = CLSEncoder(space, mode=mode, fields="all")
+        for _ in range(200):
+            c = space.sample_random(rng)
+            va = al.encode(c)
+            assert np.array_equal(va[:leg.dim], leg.encode(c))
+            assert np.array_equal(va[leg.dim:], np.array([1.0, 0.0], dtype=np.float32))   # none
+            vt = al.encode(twin(c, input_mask="binomial"))
+            assert np.array_equal(vt[:leg.dim], leg.encode(c))
+            assert np.array_equal(vt[leg.dim:], np.array([0.0, 1.0], dtype=np.float32))   # binomial
+
+
+def test_fields_all_slices_end_with_extension(space):
+    al = CLSEncoder(space, fields="all")
+    sl = al.field_slices
+    assert list(sl)[-1] == "input_mask"
+    assert sl["input_mask"] == slice(32, 34)
+    assert "input_mask" not in CLSEncoder(space).field_slices
+
+
+def test_fields_all_roundtrip_twin(space):
+    rng = np.random.default_rng(5)
+    for mode in ("scalar", "binned"):
+        al = CLSEncoder(space, mode=mode, fields="all")
+        for _ in range(200):
+            c = space.sample_random(rng)
+            t = twin(c, input_mask="binomial")
+            assert al.decode(al.encode(t)) == t
+            assert al.decode(al.encode(c)) == c
+
+
+def test_legacy_encoder_ignores_twin_field(space, encoder):
+    c = _active_cls()
+    t = twin(c, input_mask="binomial")
+    assert np.array_equal(encoder.encode(t), encoder.encode(c))
+    assert encoder.decode(encoder.encode(t)) == c   # legacy 解码回默认值
+
+
+def test_unknown_fields_option_rejected(space):
+    with pytest.raises(ValueError):
+        CLSEncoder(space, fields="some")

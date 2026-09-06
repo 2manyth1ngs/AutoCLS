@@ -1,0 +1,459 @@
+{
+ "note": "非预注册描述性探针；n=6 数据集，只报相关与 LODO 符号准确率，不作显著性宣称",
+ "descriptors": {
+  "Handwriting": {
+   "T": 152,
+   "C": 3,
+   "n_train": 150,
+   "n_classes": 26,
+   "lag1_ac": 0.8217858672142029,
+   "interp_r2": 0.8317278027534485,
+   "mask_1nn_retention": 0.7551020408163266,
+   "nn1_base": 0.32666666666666666,
+   "nn1_masked": 0.24666666666666667,
+   "headroom": 0.749,
+   "passes": 10.666666666666666
+  },
+  "UWaveGestureLibrary": {
+   "T": 315,
+   "C": 3,
+   "n_train": 120,
+   "n_classes": 8,
+   "lag1_ac": 0.9987907409667969,
+   "interp_r2": 0.9998617768287659,
+   "mask_1nn_retention": 0.9469026548672567,
+   "nn1_base": 0.9416666666666667,
+   "nn1_masked": 0.8916666666666667,
+   "headroom": 0.33199999999999996,
+   "passes": 40.0
+  },
+  "PhonemeSpectra": {
+   "T": 217,
+   "C": 11,
+   "n_train": 3315,
+   "n_classes": 39,
+   "lag1_ac": 0.7737650275230408,
+   "interp_r2": 0.7419493794441223,
+   "mask_1nn_retention": 0.6586826347305389,
+   "nn1_base": 0.10075414781297135,
+   "nn1_masked": 0.06636500754147813,
+   "headroom": 0.798,
+   "passes": 1.4479638009049773
+  },
+  "EthanolConcentration": {
+   "T": 1751,
+   "C": 3,
+   "n_train": 261,
+   "n_classes": 4,
+   "lag1_ac": 1.0000287294387817,
+   "interp_r2": 0.9999937415122986,
+   "mask_1nn_retention": 1.2941176470588236,
+   "nn1_base": 0.19540229885057472,
+   "nn1_masked": 0.25287356321839083,
+   "headroom": 0.7070000000000001,
+   "passes": 18.39080459770115
+  },
+  "Cricket": {
+   "T": 1197,
+   "C": 6,
+   "n_train": 108,
+   "n_classes": 12,
+   "lag1_ac": 0.9787584543228149,
+   "interp_r2": 0.9685329794883728,
+   "mask_1nn_retention": 0.9595959595959597,
+   "nn1_base": 0.9166666666666666,
+   "nn1_masked": 0.8796296296296297,
+   "headroom": 0.03200000000000003,
+   "passes": 44.44444444444444
+  },
+  "HandMovementDirection": {
+   "T": 400,
+   "C": 10,
+   "n_train": 160,
+   "n_classes": 4,
+   "lag1_ac": 0.9003612399101257,
+   "interp_r2": 0.950772762298584,
+   "mask_1nn_retention": 1.1842105263157896,
+   "nn1_base": 0.2375,
+   "nn1_masked": 0.28125,
+   "headroom": 0.766,
+   "passes": 30.0
+  }
+ },
+ "response": {
+  "Handwriting": {
+   "mean_delta": -0.017478991596638654,
+   "median_delta": -0.009411764705882342,
+   "frac_positive": 0.3333333333333333,
+   "n_pairs": 21,
+   "delta_clean_3seed": 0.07686274509803914,
+   "delta_top1_3seed": -0.024313725490196114,
+   "mean_delta_light": NaN,
+   "mean_delta_heavy": -0.01737024221453287
+  },
+  "UWaveGestureLibrary": {
+   "mean_delta": 0.015773809523809527,
+   "median_delta": 0.02187500000000009,
+   "frac_positive": 0.7619047619047619,
+   "n_pairs": 21,
+   "delta_clean_3seed": 0.11354166666666654,
+   "delta_top1_3seed": -0.011458333333333237,
+   "mean_delta_light": 0.021875000000000016,
+   "mean_delta_heavy": 0.00781250000000001
+  },
+  "PhonemeSpectra": {
+   "mean_delta": -0.004935878317924249,
+   "median_delta": -0.004175365344467635,
+   "frac_positive": 0.4,
+   "n_pairs": 20,
+   "delta_clean_3seed": -0.012128442191072647,
+   "delta_top1_3seed": 0.00029824038174772194,
+   "mean_delta_light": 0.00835073068893527,
+   "mean_delta_heavy": -0.0016900288299035665
+  },
+  "EthanolConcentration": {
+   "mean_delta": 0.013398515299655982,
+   "median_delta": 0.011406844106463865,
+   "frac_positive": 0.6190476190476191,
+   "n_pairs": 21,
+   "delta_clean_3seed": -0.0076045627376425395,
+   "delta_top1_3seed": 0.0291508238276299,
+   "mean_delta_light": 0.009125475285171098,
+   "mean_delta_heavy": 0.017110266159695818
+  },
+  "Cricket": {
+   "mean_delta": -0.0066137566137566065,
+   "median_delta": 0.0,
+   "frac_positive": 0.42857142857142855,
+   "n_pairs": 21,
+   "delta_clean_3seed": 0.004629629629629539,
+   "delta_top1_3seed": -1.1102230246251565e-16,
+   "mean_delta_light": -0.02777777777777779,
+   "mean_delta_heavy": -0.01388888888888888
+  },
+  "HandMovementDirection": {
+   "mean_delta": 0.0006435006435006462,
+   "median_delta": 0.013513513513513487,
+   "frac_positive": 0.5238095238095238,
+   "n_pairs": 21,
+   "delta_clean_3seed": 0.09909909909909914,
+   "delta_top1_3seed": 0.0495495495495496,
+   "mean_delta_light": NaN,
+   "mean_delta_heavy": -0.007154213036565976
+  }
+ },
+ "spearman_n6": {
+  "T": {
+   "mean_delta": 0.4285714285714286,
+   "frac_positive": 0.6,
+   "delta_clean_3seed": -0.14285714285714288,
+   "mean_delta_light": NaN
+  },
+  "C": {
+   "mean_delta": -0.21251185925162072,
+   "frac_positive": -0.33394720739540396,
+   "delta_clean_3seed": -0.3946648814672956,
+   "mean_delta_light": NaN
+  },
+  "n_train": {
+   "mean_delta": 0.14285714285714288,
+   "frac_positive": -0.14285714285714288,
+   "delta_clean_3seed": -0.6,
+   "mean_delta_light": NaN
+  },
+  "n_classes": {
+   "mean_delta": -0.6377481392176932,
+   "frac_positive": -0.753702346348183,
+   "delta_clean_3seed": -0.4058397249567139,
+   "mean_delta_light": NaN
+  },
+  "lag1_ac": {
+   "mean_delta": 0.6571428571428573,
+   "frac_positive": 0.8285714285714287,
+   "delta_clean_3seed": 0.2571428571428572,
+   "mean_delta_light": NaN
+  },
+  "interp_r2": {
+   "mean_delta": 0.6571428571428573,
+   "frac_positive": 0.8285714285714287,
+   "delta_clean_3seed": 0.2571428571428572,
+   "mean_delta_light": NaN
+  },
+  "mask_1nn_retention": {
+   "mean_delta": 0.4285714285714286,
+   "frac_positive": 0.6,
+   "delta_clean_3seed": 0.14285714285714288,
+   "mean_delta_light": NaN
+  },
+  "headroom": {
+   "mean_delta": -0.14285714285714288,
+   "frac_positive": -0.4285714285714286,
+   "delta_clean_3seed": -0.3142857142857143,
+   "mean_delta_light": NaN
+  },
+  "passes": {
+   "mean_delta": 0.2571428571428572,
+   "frac_positive": 0.5428571428571429,
+   "delta_clean_3seed": 0.5428571428571429,
+   "mean_delta_light": NaN
+  }
+ },
+ "pooled_pairs": {
+  "n_pairs": 125,
+  "spearman_mask_strength": -0.135721410234498,
+  "spearman_aug_strength": 0.15505930266037085,
+  "mean_delta": 0.00017173644823603062,
+  "frac_positive": 0.512,
+  "n_eligible": 61
+ },
+ "lodo_sign": {
+  "config_only": {
+   "sign_acc": 0.7049180327868853,
+   "n": 61,
+   "per_dataset": {
+    "Handwriting": [
+     2,
+     5
+    ],
+    "UWaveGestureLibrary": [
+     10,
+     13
+    ],
+    "PhonemeSpectra": [
+     1,
+     3
+    ],
+    "EthanolConcentration": [
+     6,
+     9
+    ],
+    "Cricket": [
+     10,
+     13
+    ],
+    "HandMovementDirection": [
+     14,
+     18
+    ]
+   }
+  },
+  "config+lag1": {
+   "sign_acc": 0.7049180327868853,
+   "n": 61,
+   "per_dataset": {
+    "Handwriting": [
+     2,
+     5
+    ],
+    "UWaveGestureLibrary": [
+     10,
+     13
+    ],
+    "PhonemeSpectra": [
+     3,
+     3
+    ],
+    "EthanolConcentration": [
+     6,
+     9
+    ],
+    "Cricket": [
+     8,
+     13
+    ],
+    "HandMovementDirection": [
+     14,
+     18
+    ]
+   }
+  },
+  "config+interp": {
+   "sign_acc": 0.6721311475409836,
+   "n": 61,
+   "per_dataset": {
+    "Handwriting": [
+     2,
+     5
+    ],
+    "UWaveGestureLibrary": [
+     10,
+     13
+    ],
+    "PhonemeSpectra": [
+     3,
+     3
+    ],
+    "EthanolConcentration": [
+     6,
+     9
+    ],
+    "Cricket": [
+     8,
+     13
+    ],
+    "HandMovementDirection": [
+     12,
+     18
+    ]
+   }
+  },
+  "config+retention": {
+   "sign_acc": 0.7049180327868853,
+   "n": 61,
+   "per_dataset": {
+    "Handwriting": [
+     2,
+     5
+    ],
+    "UWaveGestureLibrary": [
+     11,
+     13
+    ],
+    "PhonemeSpectra": [
+     3,
+     3
+    ],
+    "EthanolConcentration": [
+     7,
+     9
+    ],
+    "Cricket": [
+     10,
+     13
+    ],
+    "HandMovementDirection": [
+     10,
+     18
+    ]
+   }
+  },
+  "config+headroom": {
+   "sign_acc": 0.6229508196721312,
+   "n": 61,
+   "per_dataset": {
+    "Handwriting": [
+     2,
+     5
+    ],
+    "UWaveGestureLibrary": [
+     11,
+     13
+    ],
+    "PhonemeSpectra": [
+     1,
+     3
+    ],
+    "EthanolConcentration": [
+     6,
+     9
+    ],
+    "Cricket": [
+     6,
+     13
+    ],
+    "HandMovementDirection": [
+     12,
+     18
+    ]
+   }
+  },
+  "config+passes": {
+   "sign_acc": 0.6557377049180327,
+   "n": 61,
+   "per_dataset": {
+    "Handwriting": [
+     2,
+     5
+    ],
+    "UWaveGestureLibrary": [
+     10,
+     13
+    ],
+    "PhonemeSpectra": [
+     3,
+     3
+    ],
+    "EthanolConcentration": [
+     6,
+     9
+    ],
+    "Cricket": [
+     6,
+     13
+    ],
+    "HandMovementDirection": [
+     13,
+     18
+    ]
+   }
+  },
+  "config+logT": {
+   "sign_acc": 0.6721311475409836,
+   "n": 61,
+   "per_dataset": {
+    "Handwriting": [
+     2,
+     5
+    ],
+    "UWaveGestureLibrary": [
+     10,
+     13
+    ],
+    "PhonemeSpectra": [
+     3,
+     3
+    ],
+    "EthanolConcentration": [
+     6,
+     9
+    ],
+    "Cricket": [
+     6,
+     13
+    ],
+    "HandMovementDirection": [
+     14,
+     18
+    ]
+   }
+  },
+  "config+all": {
+   "sign_acc": 0.39344262295081966,
+   "n": 61,
+   "per_dataset": {
+    "Handwriting": [
+     2,
+     5
+    ],
+    "UWaveGestureLibrary": [
+     3,
+     13
+    ],
+    "PhonemeSpectra": [
+     3,
+     3
+    ],
+    "EthanolConcentration": [
+     1,
+     9
+    ],
+    "Cricket": [
+     6,
+     13
+    ],
+    "HandMovementDirection": [
+     9,
+     18
+    ]
+   }
+  },
+  "always_on": {
+   "sign_acc": 0.5573770491803278,
+   "n": 61
+  },
+  "always_off": {
+   "sign_acc": 0.4426229508196722,
+   "n": 61
+  }
+ }
+}

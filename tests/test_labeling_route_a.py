@@ -76,6 +76,38 @@ def test_probe_cls_keys_reproducible_from_fields():
         assert cls_key(c) == k
 
 
+# ---- 扩展字段（MX-4 WP6）：旧键逐字节不变，孪生得新键 ----
+
+def test_cls_key_legacy_formula_ignores_default_extension():
+    # 旧键 = md5(json.dumps(19 字段 asdict, sort_keys=True))[:12]；扩展字段取默认值时不进哈希
+    import dataclasses
+    import hashlib
+    cls_list, _ = load_probe_cls(PROBE_CATALOG, 10)
+    c, k = cls_list[0]
+    legacy = {kk: v for kk, v in dataclasses.asdict(c).items() if kk != "input_mask"}
+    assert hashlib.md5(json.dumps(legacy, sort_keys=True).encode()).hexdigest()[:12] == k
+    assert cls_key(c) == k
+
+
+def test_twin_key_differs_and_hashes_extension_value():
+    import dataclasses
+    import hashlib
+    from autocls.space.cls_space import twin
+    cls_list, _ = load_probe_cls(PROBE_CATALOG, 10)
+    c, k = cls_list[0]
+    t = twin(c, input_mask="binomial")
+    tk = cls_key(t)
+    assert tk != k
+    expected = hashlib.md5(json.dumps(dataclasses.asdict(t), sort_keys=True).encode()).hexdigest()[:12]
+    assert tk == expected
+
+
+def test_sample_random_cls_prefix_golden(space):
+    # 改代码前用旧代码采集（scratchpad/golden_before.json，2026-09-04）：Handwriting_00 前 3 个随机 CLS 键
+    keys = [cls_key(c) for c in sample_random_cls(space, "Handwriting_00", n=3, seed=42, exclude_keys=())]
+    assert keys == ["bf14dc1af576", "af865c4e1779", "168d778d1f95"]
+
+
 def test_load_probe_cls_tolerates_missing_har_rank(tmp_path):
     # 解耦实验的随机目录刻意不带 har_rank（带排名字段 = 给"按好坏取子集"开口子，
     # 预注册 §2）。loader 必须能读：har_rank 只收录有该字段的条目。

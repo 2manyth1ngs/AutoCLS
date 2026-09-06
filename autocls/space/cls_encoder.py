@@ -14,6 +14,12 @@ decode 为近似逆（仅用于调试与可解释性分析）：全部字段均�
 - ``mode="binned"``：numeric / log_numeric 也按档位 one-hot（len(choices) 维），
   categorical / bool / None 规则同上。给字段结构化代理用——ratio 字段的效应非单调
   （如 crop 0.2 与 0.5 差一个 z），1 维标量逼模型从一维里学非单调。
+
+字段集（MX-4 WP6 新增，opt-in）：
+- ``fields="legacy"``（默认，逐位不变）：只编码 19 个旧字段（32 / 116 维）；T-CLSC 检查点的
+  cls_dim=32、旧缓存向量全部走这里，扩展字段被忽略、decode 回默认值。
+- ``fields="all"``：末尾追加扩展字段（如 input_mask）的 one-hot（34 / 118 维），前缀逐位等于
+  legacy 编码——给要学交互的代理（MX-4 WP6 gbdt20）用。
 """
 from __future__ import annotations
 
@@ -24,17 +30,22 @@ import numpy as np
 from .cls_space import CLS, CLSSpace
 
 MODES = ("scalar", "binned")
+FIELDS = ("legacy", "all")
 
 
 class CLSEncoder:
-    def __init__(self, space: CLSSpace, mode: str = "scalar"):
+    def __init__(self, space: CLSSpace, mode: str = "scalar", fields: str = "legacy"):
         if mode not in MODES:
             raise ValueError(f"未知编码模式 {mode!r}（合法：{MODES}）")
+        if fields not in FIELDS:
+            raise ValueError(f"未知字段集 {fields!r}（合法：{FIELDS}）")
         self._space = space
         self._mode = mode
+        self._fields = fields
+        self._names: list[str] = list(space.field_names if fields == "legacy" else space.all_field_names)
         self._slices: dict[str, slice] = {}
         start = 0
-        for name in space.field_names:
+        for name in self._names:
             spec = space.field_spec(name)
             width = self._width(spec)
             self._slices[name] = slice(start, start + width)
@@ -54,6 +65,10 @@ class CLSEncoder:
         return self._mode
 
     @property
+    def fields(self) -> str:
+        return self._fields
+
+    @property
     def dim(self) -> int:
         return self._dim
 
@@ -64,7 +79,7 @@ class CLSEncoder:
     def encode(self, cls_cfg: CLS) -> np.ndarray:
         vec = np.zeros(self._dim, dtype=np.float32)
         binned = self._mode == "binned"
-        for name in self._space.field_names:
+        for name in self._names:
             v = getattr(cls_cfg, name)
             if v is None:  # 无效档 → 全零
                 continue
@@ -96,7 +111,7 @@ class CLSEncoder:
             raise ValueError(f"期望形状 ({self._dim},)，得到 {vec.shape}")
         binned = self._mode == "binned"
         values: dict = {}
-        for name in self._space.field_names:
+        for name in self._names:   # legacy 字段集不含扩展字段 → CLS(**values) 取其默认值
             spec = self._space.field_spec(name)
             seg, kind, ch = vec[self._slices[name]], spec["type"], spec["choices"]
             if kind == "numeric":
