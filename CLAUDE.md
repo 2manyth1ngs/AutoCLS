@@ -32,7 +32,7 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 8. **学习曲线外推 / 早截点外推淘汰已判死（WP5，2026-09-04，用户拍板关闭）**：任何形式的"从早截点预测终点分来做淘汰"（GBDT / ridge / 斜率 / 往先验收缩 / 分位回归 / 排序损失）都不再提、不再立项、不再作为"学习在哪"的答案；SH 一律按当前截点分淘汰、最后一级留 3 条。证据 `results/mx4_lc_extrapolator/REPORT.md`，代码保留不删。
 
 ## 铁律
-1. `configs/space.yaml` 是策略空间**唯一真源**，代码不得硬编码取值集合。
+1. `configs/space.yaml` 是策略空间**唯一真源**，代码不得硬编码取值集合。**增补（WP6）**：`extension: true` 的字段是 opt-in 扩展字段（现有 `input_mask`），`field_names` / 随机采样 / `cls_key` / 默认 `CLSEncoder`（32 维）/ 落盘序列化 `CLS.to_dict()` 对旧配置逐位不变；只有 `all_field_names`、`twin()`、`CLSEncoder(fields="all")`、`encoder_overrides()` 看得到它。新扩展字段照此模式加，不得改旧路径。
 2. `cl_trainer` 的 `max_iters`（参数更新次数）必须显式传参，early-val 与最终评估禁止混用；跨任务训练量必须用 iters 而非 epoch 保证一致（early=290, full=2320，STD_BATCH_SIZE=128，固化在 `configs/train.yaml`；多保真截点 `budgets=[60,120,290]` 是同一轨迹的 checkpoint，非三次独立训练）。**增补**：任何 regret / 增益 / 净空数字必须带 @b_final 与实例数 n；多保真成本按 iters 逐级累加（k0·b0 + k1·(b1−b0) + …）并用缓存 `seconds` 增量换算 GPU 秒，三处（真值 / 裁判 / 外部锚）同口径。
 3. 所有 `(task, cls, iters) → R'` 结果必须落盘缓存，脚本支持 `--resume`。这是最贵的一步。
 4. `task_embed/` 相关代码必须先读 AutoCTS++ 真实源码再适配，注释标注对应原文件+公式号（现仅消融用）。
@@ -77,7 +77,8 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 - ✅ **MX-4 WP2**：字段结构化代理，SUR-WIN，S3（开放空间）不过（`results/mx4_surrogate/REPORT.md`）
 - ✅ **MX-4 WP3 全量部署**（2026-09-04，`results/mx4_deploy/REPORT.md`）：官方口径 SH6-3-3 冠军追平 TS2Vec **4/6**（UWave 0.918 / PS 0.256 / Cricket 0.986 / HMD 0.450 均超论文），**DEPLOY-DEAD**（预注册 W1 要 ≥5/6 且 HW 达标：HW 0.431 ✗、Ethanol 0.241 ✗）；W2 过（SH ≥ prior3 5/6）。HW 是**名单失败**：同目录 GGS 0.546 / e490b88e 0.542 被先验排到第 8/9，前 6 起跑没试；事后 SH10-4-3 选中 GGS（+33% 成本）。截点 25%→100% Spearman 中位 0.71（短轨迹早截点可用）；GGS seed 0 跨 torch 2.4/2.8 五靶逐位相同
 - ✅ **MX-4 WP3b UCI-HAR 外部锚**（2026-09-04，本地 4060，`results/mx4_deploy_har/REPORT.md`）：先验/代理用全 8 源池拟合，`legacy_full` 口径截点 580/1160/2320；**HAR-WIN**——SH6-3-3 冠军 4f7d4135（先验第 4）3 种子 acc 0.935 / F1 0.936，追平 GGS 锚 0.935、超 TS2Vec 0.930；先验@3 0.918、先验@1 0.913；GGS 本轮 0.938（锚 0.935，P2 ✓）；目录 oracle 0.940 与 AutoCL 0.963 差 0.028 在目录内无解；25%→100% Spearman 0.86
-- **WP3 之后的名单侧待办（用户 2026-09-04 记录，未开工）**：① 起跑名单按先验置信度自适应（先验前 6 的 z 平坦时扩到 10；HW 上 SH10-4-3 事后选中 GGS 0.546）；② 提名配置与 shared 混排进起跑名单（现行 hybrid 的 +10 偏置让提名从未起跑，HMD 上提名是目录最高 0.486）；③ 噪声带靶（Ethanol 类，候选全在 0.06 带内）3 种子复核后再宣布冠军。淘汰赛规则本身不动（关键决策 8）。
+- ✅ **MX-4 WP6 第 20 字段 `input_mask`**（2026-09-04–06，分支 `wp6-mask` 已合入，`results/mx4_mask/{PROTOCOL,REPORT,paper_table,FULL_TABLES}.md`）：TS2Vec encoder 侧二项时间步掩码作 opt-in 扩展字段；官方口径六靶目录 21 条各配孪生（S1 125 格 4090 + finals 46 格）。**字段成立**：目录天花板 6/6 由掩码开孪生给出（Ethanol 0.300→0.331）；淘汰赛"两版都量"按数据集自动选开关（UWave/PS/HMD 开、HW/Ethanol/Cricket 关）。**学习规则不成立**（S0/S1：顶部配置掩码符号随数据集反转；描述性探针只用配置字段 LODO 符号 0.70，加数据集描述量无增益，n=6 识别墙）。预注册读数码占位 **MASK-DEAD**（正式主臂 gbdt20 需 S2，挂起）；事后扫臂 **SH20-3**（名单 10 各带孪生，两级从 50% 起）3 种子六靶全超 TS2Vec 论文数（Ethanol 0.314±0.020），平均 0.577；掩码关的 **SH10-4-3 六靶追平 6/6（HW 0.531 / Ethanol 0.303）= 名单待办①坐实**。源侧标签（mx3_pq）不含掩码，先验/GBDT 不认识该字段；`--twins` 默认关、头条臂不变；S1b（K1，$1）/ S2（K2，$9）挂起
+- **WP3 之后的名单侧待办（用户 2026-09-04 记录）**：① 起跑名单按先验置信度自适应（先验前 6 的 z 平坦时扩到 10；HW 上 SH10-4-3 事后选中 GGS 0.546）——**WP6 已在官方口径 3 种子坐实 SH10-4-3 六靶追平**；② 提名配置与 shared 混排进起跑名单（现行 hybrid 的 +10 偏置让提名从未起跑，HMD 上提名是目录最高 0.486）；③ 噪声带靶（Ethanol 类，候选全在 0.06 带内）3 种子复核后再宣布冠军。淘汰赛规则本身不动（关键决策 8）。
 - MX-4 WP4（增强不变性画像作数据集级任务特征）默认不做，除非用户明确要保留"E 有用"的可能性
 - ✅ **MX-4 WP5 学习曲线外推器**（2026-09-04，分支 `wp5-lc`）：**LC-DEAD**——SH 淘汰规则换成外推器预测，头条臂 0.0184→0.0183（4 胜/4 负/34 平），省档位 SH4-2-2/6-3-1 追不平（0.035）；增益 LODO R² 0.02 = 测量地板（`results/mx4_lc_extrapolator/REPORT.md`）——负翼
 - 论文：正翼 = 零样本排名 + SH 验证 + 字段主效应 + 成本表；负翼 = task-aware 五轮判负 + 开放空间外推判死 + 学习曲线外推判死（analysis/limitations）
@@ -91,6 +92,7 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 留给后续立项的两个硬事实：**SH6-3-3 的 0.0184 里 0.0118 是先验 top-6 不含 oracle 的不可约部分**（淘汰规则最多改 0.0067），**最后一级留 3 条是硬要求**（任何规则只留 1 条都翻倍）。
 
 **次选：WP4 增强不变性画像**（机制性任务特征，与 CLS 字段同坐标，n=7–8 也可辨识；风险更高，先验 ~30%），设计见 memory `mx4-diagnosis-prior-beats-tclsc` 与计划文件 §5。
+**WP6 之后的读法（2026-09-06）**：掩码字段把 task-aware 的目标缩成"每个数据集一个比特"（效应 0.03–0.1），但 `results/mx4_mask/mech_probe.md` 显示 n=6 下任何数据集描述量都不比"只用配置字段"更好——任务特征线仍不立项，除非数据集数量上去。
 
 ## 目录
-`autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}`（`search/surrogate.py` 代理、`search/rank.py` 聚合、`search/learning_curve.py` 外推器（判死，保留）、`search/evolution.py` 仅保留）+ `scripts/`（MX-3-PQ：`32–34_pq_*`、`pq_common.py`；MX-4：`36_prior_sh_sim.py`、`37_surrogate_loo.py`、`38_lc_sh_sim.py`、`39_sh_deploy.py`）+ `configs/*.yaml` + `tests/`。分支：`mx4`（MX-4 代码与结果，WP3 在 worktree `.claude/worktrees/mx4`）、`protocol-alignment`（全量协议对齐）、`wp5-lc`（WP5，自 63d26fd，待合回 mx4）。
+`autocls/{space,contrastive,encoders,task_embed,comparator,downstream,search,data}`（`search/surrogate.py` 代理、`search/rank.py` 聚合、`search/learning_curve.py` 外推器（判死，保留）、`search/evolution.py` 仅保留）+ `scripts/`（MX-3-PQ：`32–34_pq_*`、`pq_common.py`；MX-4：`36_prior_sh_sim.py`、`37_surrogate_loo.py`、`38_lc_sh_sim.py`、`39_sh_deploy.py`（`--twins` 孪生目录）、`40_mask_field_sim.py`（WP6：s0/k1/c0/source/deploy）；`32_pq_generate_rprime.py --twins` 源侧孪生补标；pod 脚本 `pa_pod/wp6_*.sh`、`pq_pod/twins_*.sh`）+ `configs/*.yaml` + `tests/`。分支：`mx4`（MX-4 代码与结果，WP3 在 worktree `.claude/worktrees/mx4`）、`protocol-alignment`（全量协议对齐）、`wp5-lc`（WP5，已合入）、`wp6-mask`（WP6，已合入 d029eb7）。注意另有分支 `wp6-tf`（任务特征线，另一会话）也用了"脚本 40"编号，合入前须改名。
