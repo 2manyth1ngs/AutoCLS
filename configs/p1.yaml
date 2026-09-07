@@ -1,0 +1,83 @@
+# =====================================================================
+# WP9-P1 路径一：官方口径 6 靶候选池扩到 100 条 + 同成本 HPO 对照的唯一真源（scripts/46_p1_pool.py 读）
+# 协议 results/mx4_p1/PROTOCOL.md。用户 2026-09-07 拍板：4090 pod、池 100、头条 5.0 档（SH10-4-3_prior）、S3 做、
+# HAR 不进主跑、BOHB 只写说明、TPE 4/5/8、N_DRAWS 200。
+# - targets：order = 执行顺序 = 随机采样 seed 偏移；nominee_idx = 35:TARGETS 序（WP3 代理 seed = NOMINEE_SEED + idx，
+#   用于逐位复现 candidates.json 的 pred_z）；n_train/L/C/n_test 与 35:SIZES_SURVEY / configs/uea30.yaml 逐值相同
+#   （单测断言）；iters 由 N·L·C 规则预填；anchor_4090 = WP3 目录 21 条单格（预训练 + 三截点评估）均值 / 最大秒
+#   （results/mx4_deploy/analysis.json cost_seconds，RTX 4090）。
+# - pool：三源合并（WP3 目录 21 + WP8 提名 30 + 本包空间均匀随机）；随机 rng = default_rng(seed_base + order)，
+#   taken = 该靶三源已见全部键（含 error）；新格 arm = random_space（35:cache_key 含 arm，与旧键零碰撞）。
+# - sim：成本 = 0.25·k0 + 0.25·k1 + 0.5·k2 全跑当量；随机臂 N_DRAWS 次固定种子抽样。
+# - gates / predictions：先于数据写死（PROTOCOL §4/§5）。
+# =====================================================================
+protocol: ts2vec_official
+targets:
+  Handwriting:           {order: 0, nominee_idx: 0, n_train: 150,  L: 152,  C: 3,  n_test: 850,  n_classes: 26, iters: 200, chance: 0.0506, anchor_4090: {cell_s: 7.1,  cell_max_s: 17.9}}
+  HandMovementDirection: {order: 1, nominee_idx: 5, n_train: 160,  L: 400,  C: 10, n_test: 74,   n_classes: 4,  iters: 600, chance: 0.4054, anchor_4090: {cell_s: 28.1, cell_max_s: 52.8}}
+  UWaveGestureLibrary:   {order: 2, nominee_idx: 1, n_train: 120,  L: 315,  C: 3,  n_test: 320,  n_classes: 8,  iters: 600, chance: 0.125,  anchor_4090: {cell_s: 22.9, cell_max_s: 43.4}}
+  Cricket:               {order: 3, nominee_idx: 4, n_train: 108,  L: 1197, C: 6,  n_test: 72,   n_classes: 12, iters: 600, chance: 0.0833, anchor_4090: {cell_s: 48.2, cell_max_s: 92.5}}
+  EthanolConcentration:  {order: 4, nominee_idx: 3, n_train: 261,  L: 1751, C: 3,  n_test: 263,  n_classes: 4,  iters: 600, chance: 0.251,  anchor_4090: {cell_s: 62.7, cell_max_s: 157.2}}
+  PhonemeSpectra:        {order: 5, nominee_idx: 2, n_train: 3315, L: 217,  C: 11, n_test: 3353, n_classes: 39, iters: 600, chance: 0.0256, anchor_4090: {cell_s: 94.7, cell_max_s: 123.3, eval_s: 45.1}}
+pool:
+  n_target: 100
+  seed_base: 4500
+  arm: random_space
+  stage: s1_pool
+  wp3_runs: results/mx4_deploy/runs.jsonl
+  wp8_runs: results/mx4_bo/runs.jsonl
+  candidates: results/mx4_deploy/candidates.json
+  mx3_cache: results/mx3_pq/rprime_cache.jsonl
+  surrogate: {kind: hgb, nominee_seed: 0, max_budget: 290}
+  hybrid_prior_top: 11
+sim:
+  n_draws: 200
+  seed_base: {rand_sh: 4600, hb: 4700, tpe: 4800}
+  cost_fractions: [0.25, 0.25, 0.5]
+arms:
+  ours: [prior1, prior3, SH6-3-3_prior, SH10-4-3_prior, hybrid16-8-3, prior6+sur10-8-3, SH16-8-3_surrogate]
+  main: SH10-4-3_prior
+  rs: [1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14]
+  rand_sh: [[6, 3, 3], [8, 4, 2], [10, 4, 3], [12, 6, 3], [16, 8, 3]]
+  hb:
+    eta: 2
+    variants: {HB-7: [2, 1, 0], HB-5: [2, 0], HB-lite: [2, 1], HBx2: [2, 1, 0, 2, 1, 0]}
+  tpe: {n: [4, 5, 8], n_startup: 2, gamma: "min(ceil(0.1n), 25)", smoothing: laplace_add_one}
+gates:
+  E1: {arm: SH10-4-3_prior, vs: rand-SH10-4-3, min_targets: 4, min_mean_diff: 0.01, also_report: [[SH6-3-3_prior, rand-SH6-3-3]]}
+  E2: {arm: SH10-4-3_prior, vs: [RS-5, rand-SH10-4-3, rand-SH12-6-3, HB-5, TPE-5]}
+  E3: {arm: hybrid16-8-3, vs: [RS-8, HB-7, rand-SH16-8-3, TPE-8], hb_arm: HB-7, hb_min_targets: 4}
+predictions:
+  P1: {claim: "E1 过", prior: 0.60}
+  P2: {claim: "E2 过", prior: 0.50}
+  P3: {claim: "E3 过", prior: 0.45}
+  P4: {claim: "随机 49 条把池 oracle 抬到 51 条池 oracle 之上（≥ +0.01）的靶 ≤ 1/6", prior: 0.75}
+  P5: {claim: "每靶随机 49 条 ≥ 50% 落在池后半区", prior: 0.70}
+  P6: {claim: "TPE-8 与 RS-8 六靶均值 regret 差 < 0.01", prior: 0.65}
+  P7: {claim: "HB-7 均值 regret < rand-SH10-4-3；HB-7 < SH10-4-3_prior", prior: [0.70, 0.40]}
+  P8: {claim: "3 种子核过的池 oracle 比 seed-0 池 oracle 低 ≥ 0.02 于 ≥ 3/6 靶", prior: 0.70}
+  P9: {claim: "UCR 84：UEA 先验 SH6-3-3 regret@290 均值比 rand-SH6-3-3 低 ≥ 0.01；与 UCR 域内先验差 < 0.005", prior: [0.60, 0.50]}
+  P10: {claim: "hybrid16-8-3 在 HW 选中 GGS（0.546）", prior: 0.70}
+finals:
+  seeds: [1, 2]
+  pool_top: 3
+  champion_arms: [SH10-4-3_prior, hybrid16-8-3]
+  reuse: [results/mx4_deploy/runs.jsonl, results/mx4_mask/runs.jsonl, results/mx4_bo/runs.jsonl]
+ucr:
+  cache: results/ucr_rprime/rprime_cache.jsonl
+  budgets: [60, 120, 290]
+  ceiling: 0.98
+  arms: {sh6: [6, 3, 3], sh10: [10, 4, 3], rs: 4, tpe: 4, hb: [2, 1, 0]}
+cost:
+  autocl: {total_h: 10.516, full_pretrain_variant_h: 85.193, controller_iters: 500, source: "AutoCL Table 6 (HAR)"}
+  prior_offline: {trajectories: 945, gpu_h: 8.3, device: "RTX 5090", source: results/mx3_pq}
+ablation_sources:
+  - {block: A, name: 零样本排序器（切片 7 折 @290）, path: results/mx4_prior_sh/analysis.json}
+  - {block: B, name: 淘汰规则（切片 7 折 @290）, path: results/mx4_prior_sh/analysis.json}
+  - {block: C, name: 源数 k=1..7, path: results/mx4_source_size/analysis.json}
+  - {block: D, name: 学习曲线外推替换淘汰规则, path: results/mx4_lc_extrapolator/analysis.json}
+  - {block: E, name: 任务特征 A/B 型, path: results/mx4_task_feature/analysis.json}
+  - {block: F, name: UCR 84 任务感知模块, path: results/ucr_module/analysis.json}
+  - {block: G, name: T-CLSC 的 E / 预算消融, path: results/mx3_pq/analysis.json}
+  - {block: H, name: 官方口径 6 靶（WP3 / WP8 / 本包）, path: results/mx4_deploy/analysis.json}
+  - {block: H', name: UEA30 靶外 23 靶, path: results/uea30/analysis.json}

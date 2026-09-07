@@ -170,7 +170,7 @@ def test_round_cells_full_trajectory_and_arm_in_key(space):
         assert c["stage"] == "bo_round" and c["arm"] == "bo_ucb_r1" and c["seed"] == 0
         assert c["dataset"] == "Handwriting" and c["protocol"] == "ts2vec_official"
         assert len(c["checkpoints"]) == 3 and c["checkpoints"][-1] == c["iters"]
-        assert c["cls"] in [asdict(x) for x in cfgs]
+        assert c["cls"] in [x.to_dict() for x in cfgs]          # 35._cell 落盘 to_dict()：默认扩展字段不写（铁律 1 增补）
     other = g43.round_cells("Handwriting", entries, arm="rand_nbr", rnd=1, protos=protos, sizes=sizes,
                             protocol="ts2vec_official")
     assert not ({c["key"] for c in cells} & {c["key"] for c in other})
@@ -303,7 +303,19 @@ def test_gate_b1_needs_three_of_six():
 
 
 # ---------------------------------------------------------------- Windows 截点评估超时（39 号 EVAL_TIMEOUT_S 在无 SIGALRM 平台的等价物）
-def test_eval_with_timeout_win_returns_value_and_kills_on_timeout():
+@pytest.fixture
+def fresh_loky_after():
+    """本测试杀过 loky 复用池：结束后整池关掉，让后续模块（test_labeling 的 GridSearchCV n_jobs=-1）拿到全新执行器；
+    否则同一 pytest 进程里后续 R' 评估得 NaN（memory loky-orphans-after-sigkill 同一机制，只在合跑时出现）。"""
+    yield
+    from joblib.externals.loky import get_reusable_executor
+    try:
+        get_reusable_executor().shutdown(kill_workers=True)
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def test_eval_with_timeout_win_returns_value_and_kills_on_timeout(fresh_loky_after):
     import time
     assert g43.eval_with_timeout_win(lambda: 42, 30) == 42
     t0 = time.perf_counter()
