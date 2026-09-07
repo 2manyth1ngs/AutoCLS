@@ -127,12 +127,18 @@ class TaskMeta(NamedTuple):
 
 
 class Cell(NamedTuple):
-    """网格的一格：(切片, 来源, CLS, cls_key)。一格 = 一条轨迹 = len(budgets) 行。"""
+    """网格的一格：(切片, 来源, CLS, cls_key)。一格 = 一条轨迹 = len(budgets) 行。
+
+    ``twin_of``（MX-4 WP6）：孪生格（只把扩展字段改成非默认值的同一条 CLS）记其
+    legacy 格的 cls_key；legacy 格为 None。缓存键仍是 (task_id, cls_key, iters)——
+    孪生的 cls_key 含扩展字段，与 legacy 永不撞键。
+    """
 
     slice_id: str
     origin: str
     cls: CLS
     cls_key: str
+    twin_of: Optional[str] = None
 
 
 class NoiseCell(NamedTuple):
@@ -158,6 +164,7 @@ class Job(NamedTuple):
     weight_seed: int
     split_seed: int
     seed: int          # 缓存行的 seed 字段：canonical=0，噪声探针=rep
+    twin_of: Optional[str] = None   # 孪生格 → legacy cls_key（写进行里，供 40 号配对）
 
 
 # ---------------------------------------------------------------- 小工具
@@ -213,8 +220,12 @@ def build_rows(traj: dict[int, dict], *, dataset: str, task, cls_key: str,
 
 
 def make_row_for(iters: int, rec: dict, *, dataset: str, task, cls_key: str,
-                 origin: str, cls_cfg: CLS, weight_seed: int, seed: int = 0) -> dict:
-    """单截点行（guarded_run_multi 的 make_row 回调体；2c make_row 同风格）。"""
+                 origin: str, cls_cfg: CLS, weight_seed: int, seed: int = 0,
+                 twin_of: Optional[str] = None) -> dict:
+    """单截点行（guarded_run_multi 的 make_row 回调体；2c make_row 同风格）。
+
+    ``twin_of``（MX-4 WP6）只在孪生行出现（legacy 行不多一个键，旧行/旧读法逐字段不变）。
+    """
     rp = rec.get("r_prime", float("nan"))
     finite = rp is not None and np.isfinite(rp)
     return {"dataset": dataset, "task_id": task.task_id, "tag": task.tag,
@@ -224,15 +235,17 @@ def make_row_for(iters: int, rec: dict, *, dataset: str, task, cls_key: str,
             "trajectory_id": f"{task.task_id}:{cls_key}:{int(weight_seed)}",
             **rec,
             "r_prime": float(rp) if finite else None,
-            "cls": dataclasses.asdict(cls_cfg)}
+            **({"twin_of": twin_of} if twin_of is not None else {}),
+            "cls": cls_cfg.to_dict()}      # legacy 行与历史行逐键相同；孪生行多 input_mask
 
 
 def row_builder(*, dataset: str, task, cls_key: str, origin: str, cls_cfg: CLS,
-                weight_seed: int, seed: int = 0) -> Callable[[int, dict], dict]:
+                weight_seed: int, seed: int = 0,
+                twin_of: Optional[str] = None) -> Callable[[int, dict], dict]:
     def _make(iters: int, rec: dict) -> dict:
         return make_row_for(iters, rec, dataset=dataset, task=task, cls_key=cls_key,
                             origin=origin, cls_cfg=cls_cfg, weight_seed=weight_seed,
-                            seed=seed)
+                            seed=seed, twin_of=twin_of)
 
     return _make
 
@@ -290,10 +303,23 @@ def cell_states(cells: Sequence, index, budgets: Sequence[int]) -> dict[str, lis
 
 
 # ---------------------------------------------------------------- 网格计划
+TWIN_ORIGINS_DEFAULT = (pq.ORIGIN_SHARED, pq.ORIGIN_RANDOM, ORIGIN_GGS)
+
+
 def build_plan(names: Sequence[str] = pq.PQ_DATASETS, *, space: CLSSpace | None = None,
                n_slices: int | None = None, n_cls: int | dict[str, int] | None = None,
-               include_ggs: bool = True) -> list[Cell]:
+               include_ggs: bool = True,
+               twins: dict | None = None, twin_only: bool = False,
+               twin_random_slices: int = 2,
+               twin_origins: Sequence[str] = TWIN_ORIGINS_DEFAULT,
+               twin_slices: int | None = None) -> list[Cell]:
     """全网格计划（**零数据加载**：只读注册表 + CLSSpace，verify/计数可离线用）。
+
+    孪生（MX-4 WP6，`twins={"input_mask": "binomial"}`）：对 legacy 计划里每格按 origin
+    规则再出一格 ``Cell(sid, origin, twin(cls, **twins), cls_key(twin), twin_of=legacy_key)``——
+    shared / GGS 全部切片，random 只取每数据集前 ``twin_random_slices`` 个切片（默认 2）；
+    ``twin_slices`` 再把所有 origin 限到每数据集前 N 个切片（S1b 探针 = 全量孪生计划的
+    前缀，`--resume` 直接续）；``twin_only`` 只返回孪生格。不传 ``twins`` 时输出逐位不变。
 
     每切片 = pq.catalog_for_slice 的 20 个（10 shared 在前、10 random 在后）+ 1 个
     GGS 锚（origin="ggs"）。`n_slices`/`n_cls` 只给 smoke 用：取每数据集前 n 个切片、
@@ -338,6 +364,23 @@ def build_plan(names: Sequence[str] = pq.PQ_DATASETS, *, space: CLSSpace | None 
             plan += [Cell(sid, org, c, k) for org, c, k in entries]
             if include_ggs:
                 plan.append(Cell(sid, ORIGIN_GGS, ggs, ggs_key))
+    if twins:
+        from autocls.space.cls_space import twin as _twin
+        pos_of: dict[str, int] = {}
+        for name in names:
+            pos_of.update({sid: i for i, sid in enumerate(pq.pq_slice_ids(name))})
+        tw: list[Cell] = []
+        for c in plan:
+            pos = pos_of[c.slice_id]
+            if c.origin not in twin_origins:
+                continue
+            if twin_slices is not None and pos >= int(twin_slices):
+                continue
+            if c.origin == pq.ORIGIN_RANDOM and pos >= int(twin_random_slices):
+                continue
+            t = _twin(c.cls, **twins)
+            tw.append(Cell(c.slice_id, c.origin, t, pq.cls_key(t), twin_of=c.cls_key))
+        plan = tw if twin_only else plan + tw
     # 缓存键是 (task_id, cls_key, iters)——同切片撞键（例如 GGS 恰好被 random 抽中）
     # 会让两个 origin 写同一条键，--verify 的"零重复键"随即变成假红。实测全网格零撞。
     seen_cells = [(c.slice_id, c.cls_key) for c in plan]
@@ -497,23 +540,28 @@ def stage_tasks(outdir: Path, datasets: dict, plan: Sequence[Cell]) -> None:
     print(f"→ {path}（本次 {sum(len(d.slices) for d in datasets.values())} 切片，"
           f"累计 {len(merged.get('tasks', {}))}）", flush=True)
 
-    shared, per_slice, ggs = [], {}, None
+    shared, per_slice, ggs, twins_cat = [], {}, None, []
     seen = set()
     for c in plan:
-        if c.origin == pq.ORIGIN_SHARED and c.cls_key not in seen:
+        if c.twin_of is not None:      # 孪生格单列（MX-4 WP6），不混进 shared/random/ggs
+            twins_cat.append({"cls_key": c.cls_key, "cls": c.cls.to_dict(),
+                              "twin_of": c.twin_of, "origin": c.origin, "slice_id": c.slice_id})
+        elif c.origin == pq.ORIGIN_SHARED and c.cls_key not in seen:
             seen.add(c.cls_key)
-            shared.append({"cls_key": c.cls_key, "cls": dataclasses.asdict(c.cls)})
+            shared.append({"cls_key": c.cls_key, "cls": c.cls.to_dict()})
         elif c.origin == pq.ORIGIN_RANDOM:
             per_slice.setdefault(c.slice_id, []).append(
-                {"cls_key": c.cls_key, "cls": dataclasses.asdict(c.cls)})
+                {"cls_key": c.cls_key, "cls": c.cls.to_dict()})
         elif c.origin == ORIGIN_GGS and ggs is None:
-            ggs = {"cls_key": c.cls_key, "cls": dataclasses.asdict(c.cls)}
+            ggs = {"cls_key": c.cls_key, "cls": c.cls.to_dict()}
     cat_path = outdir / "cls_catalog.json"
-    cat = _write_merged(cat_path, read_json(cat_path),
-                        {"shared": shared, "random": per_slice, "ggs": ggs})
+    payload = {"shared": shared, "random": per_slice, "ggs": ggs}
+    if twins_cat:
+        payload["twins"] = twins_cat
+    cat = _write_merged(cat_path, read_json(cat_path), payload)
     print(f"→ {cat_path}（shared {len(cat['shared'])} / random "
           f"{sum(len(v) for v in cat['random'].values())} 切片累计 / "
-          f"ggs {'1' if cat.get('ggs') else '0'}）", flush=True)
+          f"ggs {'1' if cat.get('ggs') else '0'} / twins {len(cat.get('twins') or [])}）", flush=True)
 
 
 # ---------------------------------------------------------------- 阶段：跑轨迹
@@ -532,7 +580,7 @@ def make_jobs(cells: Sequence, sidx: dict) -> list[Job]:
         if rep:
             w_seed = pq.noise_seed(c.slice_id, c.cls_key, rep)
         jobs.append(Job(name, task, X, y, c.origin, c.cls, c.cls_key,
-                        w_seed, sp_seed, rep))
+                        w_seed, sp_seed, rep, getattr(c, "twin_of", None)))
     return jobs
 
 
@@ -559,7 +607,8 @@ def _run_loop(jobs, *, budgets, cache_path, inflight, on_oom, oom_log, eval_rati
     for i, jb in enumerate(jobs):
         make_row = row_builder(dataset=jb.dataset, task=jb.task, cls_key=jb.cls_key,
                                origin=jb.origin, cls_cfg=jb.cls,
-                               weight_seed=jb.weight_seed, seed=jb.seed)
+                               weight_seed=jb.weight_seed, seed=jb.seed,
+                               twin_of=jb.twin_of)
         rows = guarded_run_multi(
             evaluate_rprime_trajectory, make_row,
             cache_path=cache_path, inflight_path=inflight, task_id=jb.task.task_id,
@@ -1195,7 +1244,35 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--smoke", action="store_true",
                     help="2 数据集 × 切片 00 × 5 CLS（2 shared/2 random/GGS）"
                          " × checkpoints(4,8,12) 全流程")
+    # ---- 孪生格（MX-4 WP6）----
+    ap.add_argument("--twins", nargs="+", default=None, metavar="FIELD=VALUE",
+                    help="对每格再出一格只改扩展字段的同 CLS（如 input_mask=binomial）；"
+                         "只允许非生产 --outdir，不与 --calibrate/--noise-probe/--smoke 同跑")
+    ap.add_argument("--twin-only", action="store_true",
+                    help="只跑孪生格（legacy 格已在真值网格 results/mx3_pq 里）")
+    ap.add_argument("--twin-random-slices", type=int, default=2,
+                    help="random 孪生只取每数据集前 N 个切片（默认 2）")
+    ap.add_argument("--twin-origins", nargs="+", default=list(TWIN_ORIGINS_DEFAULT),
+                    help="出孪生的 origin（默认 shared random ggs）")
+    ap.add_argument("--twin-slices", type=int, default=None,
+                    help="所有 origin 的孪生限到每数据集前 N 个切片（S1b 探针 = 全量孪生计划前缀）")
     return ap
+
+
+def parse_twins(items: Sequence[str], space: CLSSpace) -> dict:
+    """`FIELD=VALUE` 列表 → {扩展字段: yaml 档位值}；字段不是扩展字段 / 取值不在档位内 → ValueError。"""
+    out: dict = {}
+    for item in items:
+        if "=" not in item:
+            raise ValueError(f"--twins 项 {item!r} 须为 FIELD=VALUE")
+        name, raw = item.split("=", 1)
+        if name not in space.extension_field_names:
+            raise ValueError(f"{name!r} 不是扩展字段（合法：{space.extension_field_names}）")
+        matches = [ch for ch in space.choices(name) if str(ch) == raw]
+        if not matches:
+            raise ValueError(f"扩展字段 {name} 的取值 {raw!r} 不在 choices {space.choices(name)} 内")
+        out[name] = matches[0]
+    return out
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -1221,6 +1298,24 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(f"❌ --checkpoints 会改 iters 口径，不得作用在真值网格目录 "
                   f"{DEFAULT_OUTDIR}——请加 --smoke 或换一个 --outdir", flush=True)
             sys.exit(2)     # 与定义漂移/smoke 误写同码：配置层硬错，开跑前就断
+
+    # --twins（MX-4 WP6）：孪生行有自己的 cls_key，但 36/37/38 读 results/mx3_pq 全表做
+    # within-(task, iters) z 标准化——孪生行混进去会让 WP1/WP2 的数字静默漂移。只允许另开 --outdir。
+    twins = None
+    if args.twins:
+        try:
+            twins = parse_twins(args.twins, CLSSpace.from_yaml())
+        except ValueError as e:
+            ap.error(f"--twins：{e}")
+        if args.calibrate:
+            ap.error("--twins 不与 --calibrate 同跑（孪生沿用 labels.yaml 已标定的 δ 表）")
+        if args.noise_probe or args.smoke:
+            ap.error("--twins 不与 --noise-probe/--smoke 同跑")
+        prod = (args.outdir is None or Path(args.outdir).resolve() == DEFAULT_OUTDIR)
+        if prod:
+            print(f"❌ --twins 的孪生行不得写进真值网格目录 {DEFAULT_OUTDIR}"
+                  f"（36/37/38 按全表做 z 标准化，混入即漂移）——请另开 --outdir", flush=True)
+            sys.exit(2)
 
     cfg = pq.load_pq_config()
     labels_cfg = yaml.safe_load(
@@ -1276,9 +1371,17 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     print(f"[32] outdir={outdir} 数据集={list(names)} budgets={list(budgets)} "
           f"device={args.device} resume={resume}", flush=True)
-    plan = build_plan(names, n_slices=n_slices, n_cls=n_cls)
-    ncells = noise_plan(plan, n_slices=noise_slices, reps=noise_reps,
-                        origins=noise_origins)
+    plan = build_plan(names, n_slices=n_slices, n_cls=n_cls,
+                      twins=twins, twin_only=bool(args.twin_only),
+                      twin_random_slices=int(args.twin_random_slices),
+                      twin_origins=tuple(args.twin_origins), twin_slices=args.twin_slices)
+    # 孪生跑没有噪声探针（δ 沿用 labels.yaml），噪声计划为空
+    ncells = ([] if twins else
+              noise_plan(plan, n_slices=noise_slices, reps=noise_reps, origins=noise_origins))
+    if twins:
+        print(f"[32] 孪生 {twins}（twin_only={bool(args.twin_only)}，random 前 "
+              f"{args.twin_random_slices} 切片，origins={list(args.twin_origins)}，"
+              f"twin_slices={args.twin_slices}）→ 计划 {len(plan)} 格", flush=True)
 
     datasets = None
     if do["tasks"] or do["fill"] or do["ggs"] or do["noise"]:

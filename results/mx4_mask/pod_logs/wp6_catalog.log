@@ -1,0 +1,418 @@
+[data] Handwriting: train=(150, 152, 3) test=(850, 152, 3) classes=26 size=68400
+[data] UWaveGestureLibrary: train=(120, 315, 3) test=(320, 315, 3) classes=8 size=113400
+[data] PhonemeSpectra: train=(3315, 217, 11) test=(3353, 217, 11) classes=39 size=7912905
+[data] EthanolConcentration: train=(261, 1751, 3) test=(263, 1751, 3) classes=4 size=1371033
+[data] Cricket: train=(108, 1197, 6) test=(72, 1197, 6) classes=12 size=775656
+[data] HandMovementDirection: train=(160, 400, 10) test=(74, 400, 10) classes=4 size=640000
+[S1] 计划 125 格，已有 0，待跑 125
+[S1 1/125] Handwriting/shared/a59dc617 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.338 0.348 0.376] (13.5s+4.1s)
+[S1 2/125] Handwriting/shared/720e170d s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.281 0.286 0.304] (8.7s+0.3s)
+[S1 3/125] Handwriting/shared/c6fc34c5 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.268 0.265 0.322] (11.2s+0.3s)
+[S1 4/125] Handwriting/shared/b509cbb8 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.351 0.369 0.346] (6.2s+0.3s)
+[S1 5/125] Handwriting/shared/54f8fde3 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.353 0.354 0.384] (7.5s+0.3s)
+[S1 6/125] Handwriting/shared/15bc984d s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.391 0.409 0.460] (3.5s+0.5s)
+[S1 7/125] Handwriting/shared/382ca622 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.335 0.368 0.408] (8.1s+0.3s)
+[S1 8/125] Handwriting/shared/f11892ce s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.318 0.366 0.379] (5.7s+0.3s)
+[S1 9/125] Handwriting/shared/151b8ae9 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.258 0.222 0.261] (4.7s+0.3s)
+[S1 10/125] Handwriting/shared/39a53b9f s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.266 0.296 0.315] (11.5s+0.3s)
+[S1 11/125] Handwriting/ggs/a51affe6 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.320 0.302 0.549] (3.7s+0.3s)
+[S1 12/125] Handwriting/nominated/e1b87f1a s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.244 0.245 0.265] (3.4s+0.3s)
+[S1 13/125] Handwriting/nominated/04a9b4cc s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.252 0.248 0.244] (3.3s+0.3s)
+[S1 14/125] Handwriting/nominated/bfcfc8a2 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.262 0.260 0.256] (3.1s+0.3s)
+[S1 15/125] Handwriting/nominated/f684ed94 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.276 0.288 0.292] (4.7s+0.3s)
+[S1 16/125] Handwriting/nominated/eb453049 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.327 0.367 0.380] (5.0s+0.3s)
+[S1 17/125] Handwriting/nominated/0bf0cc26 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.267 0.267 0.287] (3.4s+0.3s)
+[S1 18/125] Handwriting/nominated/6117b6ff s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.267 0.273 0.289] (3.8s+0.3s)
+[S1 19/125] Handwriting/nominated/0f0d330f s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.235 0.233 0.280] (5.1s+0.3s)
+[S1 20/125] Handwriting/nominated/eb9e6d92 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.309 0.346 0.392] (5.2s+0.3s)
+[S1 21/125] Handwriting/nominated/ea7ff842 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.299 0.309 0.345] (5.2s+0.3s)
+[S1 22/125] UWaveGestureLibrary/shared/a59dc617 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.847 0.872 0.934] (21.5s+0.3s)
+[S1 23/125] UWaveGestureLibrary/shared/720e170d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.778 0.850 0.875] (27.7s+0.3s)
+[S1 24/125] UWaveGestureLibrary/shared/c6fc34c5 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.912 0.912 0.934] (36.8s+0.3s)
+[S1 25/125] UWaveGestureLibrary/shared/b509cbb8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.831 0.831 0.828] (22.1s+0.3s)
+[S1 26/125] UWaveGestureLibrary/shared/54f8fde3 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.878 0.894 0.897] (28.2s+0.3s)
+[S1 27/125] UWaveGestureLibrary/shared/15bc984d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.831 0.872 0.897] (11.6s+0.3s)
+[S1 28/125] UWaveGestureLibrary/shared/382ca622 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.897 0.897 0.912] (32.9s+0.3s)
+[S1 29/125] UWaveGestureLibrary/shared/f11892ce s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.766 0.775 0.800] (21.5s+0.3s)
+[S1 30/125] UWaveGestureLibrary/shared/151b8ae9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.581 0.600 0.581] (16.4s+0.3s)
+[S1 31/125] UWaveGestureLibrary/shared/39a53b9f s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.738 0.725 0.722] (44.0s+0.3s)
+[S1 32/125] UWaveGestureLibrary/ggs/a51affe6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.881 0.891 0.906] (10.5s+0.3s)
+[S1 33/125] UWaveGestureLibrary/nominated/3c526c37 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.844 0.794 0.787] (20.4s+0.3s)
+[S1 34/125] UWaveGestureLibrary/nominated/bb493023 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.866 0.809 0.822] (18.9s+0.3s)
+[S1 35/125] UWaveGestureLibrary/nominated/6dc9459e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.897 0.887 0.866] (19.2s+0.3s)
+[S1 36/125] UWaveGestureLibrary/nominated/abf2a552 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.850 0.834 0.794] (19.1s+0.3s)
+[S1 37/125] UWaveGestureLibrary/nominated/fe36d54d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.772 0.772 0.772] (17.5s+0.3s)
+[S1 38/125] UWaveGestureLibrary/nominated/371ea0be s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.847 0.838 0.872] (26.7s+0.3s)
+[S1 39/125] UWaveGestureLibrary/nominated/ba0b0344 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.822 0.803 0.778] (12.6s+0.3s)
+[S1 40/125] UWaveGestureLibrary/nominated/7d5e3af5 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.759 0.766 0.738] (18.9s+0.3s)
+[S1 41/125] UWaveGestureLibrary/nominated/769fead6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.875 0.900 0.916] (20.9s+0.3s)
+[S1 42/125] UWaveGestureLibrary/nominated/8e90a3cb s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.863 0.850 0.853] (20.3s+0.4s)
+[S1 43/125] PhonemeSpectra/shared/a59dc617 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.240 0.242 0.253] (39.6s+34.6s)
+[S1 44/125] PhonemeSpectra/shared/720e170d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.224 0.223 0.233] (50.3s+36.7s)
+[S1 45/125] PhonemeSpectra/shared/c6fc34c5 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.203 0.200 0.204] (60.8s+44.6s)
+[S1 46/125] PhonemeSpectra/shared/b509cbb8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.240 0.232 0.222] (42.5s+28.4s)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+1 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+1 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+[S1 47/125] PhonemeSpectra/shared/54f8fde3 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.241 0.234 0.228] (50.5s+41.7s)
+[S1 48/125] PhonemeSpectra/shared/15bc984d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.223 0.212 0.198] (32.0s+34.4s)
+[S1 49/125] PhonemeSpectra/shared/382ca622 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.224 0.206 0.189] (52.1s+40.3s)
+[S1 50/125] PhonemeSpectra/shared/f11892ce s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.184 0.174 0.165] (50.4s+50.4s)
+[S1 51/125] PhonemeSpectra/shared/39a53b9f s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.222 0.222 0.217] (71.1s+47.5s)
+[S1 52/125] PhonemeSpectra/ggs/a51affe6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.205 0.186 0.183] (40.1s+43.2s)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+1 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+1 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+2 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+2 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+[S1 53/125] PhonemeSpectra/nominated/bb4a1108 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.195 0.166 0.163] (51.1s+52.7s)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+1 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+1 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+3 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+3 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+[S1 54/125] PhonemeSpectra/nominated/501c3f6a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.169 0.149 0.156] (57.7s+64.9s)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+1 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+1 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+3 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+3 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+2 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+2 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+[S1 55/125] PhonemeSpectra/nominated/8280be08 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.181 0.171 0.171] (49.9s+51.9s)
+[S1 56/125] PhonemeSpectra/nominated/bf68706f s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.218 0.222 0.230] (40.5s+44.6s)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+2 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+2 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+1 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+1 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+[S1 57/125] PhonemeSpectra/nominated/0db24709 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.220 0.222 0.211] (53.8s+53.9s)
+[S1 58/125] PhonemeSpectra/nominated/1bbcb0b2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.236 0.216 0.199] (36.3s+28.7s)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+2 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+2 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+2 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+2 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+[S1 59/125] PhonemeSpectra/nominated/21ad0b6c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.147 0.154 0.145] (53.3s+59.0s)
+[S1 60/125] PhonemeSpectra/nominated/0528d9c4 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.217 0.212 0.225] (44.5s+47.6s)
+[S1 61/125] PhonemeSpectra/nominated/0a135f42 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.185 0.186 0.188] (48.8s+50.5s)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+2 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+2 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+2 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+2 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py:516: FitFailedWarning: 
+1 fits failed out of a total of 50.
+The score on these train-test partitions for these parameters will be set to nan.
+If these failures are not expected, you can try to debug them by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+1 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/svm/_base.py", line 276, in fit
+    raise ValueError(
+ValueError: The dual coefficients or intercepts are not finite. The input data may contain large values and need to be preprocessed.
+
+  warnings.warn(some_fits_failed_message, FitFailedWarning)
+[S1 62/125] PhonemeSpectra/nominated/354c9e85 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.150 0.147 0.153] (62.7s+88.3s)
+[S1 63/125] EthanolConcentration/shared/a59dc617 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.243 0.251 0.259] (55.8s+0.6s)
+[S1 64/125] EthanolConcentration/shared/720e170d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.293 0.331 0.278] (73.8s+0.6s)
+[S1 65/125] EthanolConcentration/shared/c6fc34c5 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.266 0.236 0.266] (91.2s+0.6s)
+[S1 66/125] EthanolConcentration/shared/b509cbb8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.281 0.262 0.331] (50.5s+0.6s)
+[S1 67/125] EthanolConcentration/shared/54f8fde3 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.281 0.266 0.247] (66.4s+0.6s)
+[S1 68/125] EthanolConcentration/shared/15bc984d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.266 0.255 0.266] (27.2s+0.6s)
+[S1 69/125] EthanolConcentration/shared/382ca622 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.266 0.338 0.300] (138.3s+0.6s)
+[S1 70/125] EthanolConcentration/shared/f11892ce s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.251 0.274 0.327] (55.9s+0.6s)
+[S1 71/125] EthanolConcentration/shared/151b8ae9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.304 0.274 0.289] (50.7s+6.6s)
+[S1 72/125] EthanolConcentration/shared/39a53b9f s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.274 0.281] (87.7s+0.6s)
+[S1 73/125] EthanolConcentration/ggs/a51affe6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.293 0.270 0.262] (30.8s+0.6s)
+[S1 74/125] EthanolConcentration/nominated/9c591bd4 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.251 0.270 0.266] (38.3s+0.6s)
+[S1 75/125] EthanolConcentration/nominated/c574f5a6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.274 0.281 0.281] (45.3s+0.8s)
+[S1 76/125] EthanolConcentration/nominated/59e85deb s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.274 0.262 0.289] (73.3s+0.7s)
+[S1 77/125] EthanolConcentration/nominated/d7750f70 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.274 0.274 0.217] (58.9s+0.7s)
+[S1 78/125] EthanolConcentration/nominated/cb286a0e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.262 0.278 0.266] (55.3s+0.7s)
+[S1 79/125] EthanolConcentration/nominated/a2f15203 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.289 0.270 0.240] (71.1s+0.7s)
+[S1 80/125] EthanolConcentration/nominated/38ee65ae s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.327 0.312] (48.2s+0.6s)
+[S1 81/125] EthanolConcentration/nominated/9b187653 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.266 0.266 0.270] (46.9s+0.9s)
+[S1 82/125] EthanolConcentration/nominated/769fead6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.262 0.297 0.304] (46.9s+0.7s)
+[S1 83/125] EthanolConcentration/nominated/d7e6c26b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.285 0.262 0.312] (45.4s+0.7s)
+[S1 84/125] Cricket/shared/a59dc617 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 0.944 0.958] (46.7s+0.3s)
+[S1 85/125] Cricket/shared/720e170d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.931 0.931 0.958] (58.6s+0.3s)
+[S1 86/125] Cricket/shared/c6fc34c5 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.944 0.931] (74.0s+0.3s)
+[S1 87/125] Cricket/shared/b509cbb8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.972 0.903] (42.4s+0.3s)
+[S1 88/125] Cricket/shared/54f8fde3 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 1.000 0.972] (58.1s+0.3s)
+[S1 89/125] Cricket/shared/15bc984d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.972 0.958] (25.2s+0.3s)
+[S1 90/125] Cricket/shared/382ca622 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.972] (89.2s+0.3s)
+[S1 91/125] Cricket/shared/f11892ce s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.972 0.931] (44.6s+0.3s)
+[S1 92/125] Cricket/shared/151b8ae9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.625 0.556 0.597] (34.5s+0.3s)
+[S1 93/125] Cricket/shared/39a53b9f s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 0.972 0.986] (72.7s+0.3s)
+[S1 94/125] Cricket/ggs/a51affe6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 0.972 1.000] (23.4s+0.3s)
+[S1 95/125] Cricket/nominated/0569547c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.917 0.931 0.903] (39.6s+0.3s)
+[S1 96/125] Cricket/nominated/99645080 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.847 0.875 0.889] (44.3s+0.3s)
+[S1 97/125] Cricket/nominated/57ef56be s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.972 0.958] (53.0s+0.3s)
+[S1 98/125] Cricket/nominated/9ae227bc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.903 0.861 0.861] (54.2s+0.3s)
+[S1 99/125] Cricket/nominated/55410632 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 0.958 0.931] (42.5s+0.3s)
+[S1 100/125] Cricket/nominated/7ba2f80e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 0.958 0.972] (43.1s+0.3s)
+[S1 101/125] Cricket/nominated/04a9b4cc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 1.000 0.972] (31.3s+0.3s)
+[S1 102/125] Cricket/nominated/e1b87f1a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 0.986 1.000] (23.9s+0.3s)
+[S1 103/125] Cricket/nominated/0e62bd81 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.875 0.903 0.903] (42.1s+0.3s)
+[S1 104/125] Cricket/nominated/258caa35 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.917 0.917 0.944] (43.9s+0.3s)
+[S1 105/125] HandMovementDirection/shared/a59dc617 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.203 0.311 0.378] (30.8s+0.3s)
+[S1 106/125] HandMovementDirection/shared/720e170d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.243 0.338 0.311] (36.0s+0.3s)
+[S1 107/125] HandMovementDirection/shared/c6fc34c5 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.392 0.324 0.351] (50.6s+0.3s)
+[S1 108/125] HandMovementDirection/shared/b509cbb8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.216 0.270 0.189] (27.5s+0.3s)
+[S1 109/125] HandMovementDirection/shared/54f8fde3 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.338 0.378 0.311] (39.5s+0.3s)
+[S1 110/125] HandMovementDirection/shared/15bc984d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.297 0.270] (14.0s+0.3s)
+[S1 111/125] HandMovementDirection/shared/382ca622 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.432 0.459 0.486] (39.9s+0.3s)
+[S1 112/125] HandMovementDirection/shared/f11892ce s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.338 0.365 0.257] (27.0s+0.3s)
+[S1 113/125] HandMovementDirection/shared/151b8ae9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.297 0.311 0.351] (20.6s+0.3s)
+[S1 114/125] HandMovementDirection/shared/39a53b9f s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.284 0.297 0.338] (48.8s+0.3s)
+[S1 115/125] HandMovementDirection/ggs/a51affe6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.284 0.324 0.284] (12.9s+0.3s)
+[S1 116/125] HandMovementDirection/nominated/30ab75a9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.311 0.351 0.230] (13.7s+0.3s)
+[S1 117/125] HandMovementDirection/nominated/bb392f59 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.230 0.284] (14.0s+0.3s)
+[S1 118/125] HandMovementDirection/nominated/e4a7dbfb s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.338 0.284 0.311] (25.4s+0.3s)
+[S1 119/125] HandMovementDirection/nominated/b6e735e4 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.419 0.365 0.351] (22.5s+0.3s)
+[S1 120/125] HandMovementDirection/nominated/eb1d46b9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.311 0.243 0.284] (22.3s+0.3s)
+[S1 121/125] HandMovementDirection/nominated/130676b9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.311 0.284 0.446] (32.3s+0.3s)
+[S1 122/125] HandMovementDirection/nominated/7f7aed4a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.257 0.284 0.243] (15.7s+0.3s)
+[S1 123/125] HandMovementDirection/nominated/3bb19f3d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.230 0.243 0.284] (17.8s+0.3s)
+[S1 124/125] HandMovementDirection/nominated/e1b87f1a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.270 0.243 0.243] (14.5s+0.3s)
+[S1 125/125] HandMovementDirection/nominated/bc2b0a39 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.297 0.324 0.297] (46.9s+0.3s)
+[S1] 收官

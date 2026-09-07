@@ -361,6 +361,123 @@ class TestPlan:
         assert len({c.cls_key for c in cells}) == 2
 
 
+# --------------------------------------------------------------- 孪生格（MX-4 WP6）
+# 孪生 = 同一条 CLS 只把扩展字段 input_mask 改成 binomial；键不同（cls_key 含扩展字段），
+# 与 legacy 格永不撞键；不带 --twins 时计划逐位不变（金标于 scratchpad/golden_before.json）。
+class TestTwinPlan:
+    TW = {"input_mask": "binomial"}
+
+    def test_legacy_plan_bitwise_unchanged_without_twins(self):
+        plan = g32.build_plan(pq.PQ_DATASETS)
+        assert len(plan) == 945
+        assert [(c.slice_id, c.origin, c.cls_key) for c in plan[:5]] == [
+            ("Handwriting_00", "shared", "4f7d413581f6"),
+            ("Handwriting_00", "shared", "cffb55035c3a"),
+            ("Handwriting_00", "shared", "8c4aa28336d6"),
+            ("Handwriting_00", "shared", "f48e5da1d899"),
+            ("Handwriting_00", "shared", "a1f67db45e64"),
+        ]
+        assert all(c.twin_of is None for c in plan)
+
+    def test_twin_plan_655_cells_and_twin_of(self):
+        from collections import Counter
+        from autocls.labeling import cls_key
+        from autocls.space.cls_space import twin
+
+        plan = g32.build_plan(pq.PQ_DATASETS, twins=self.TW, twin_only=True, twin_random_slices=2)
+        assert Counter(c.origin for c in plan) == {"shared": 450, "random": 160, "ggs": 45}
+        legacy = {(c.slice_id, c.cls_key): c for c in g32.build_plan(pq.PQ_DATASETS)}
+        for c in plan:
+            assert c.twin_of is not None and (c.slice_id, c.twin_of) in legacy
+            src = legacy[(c.slice_id, c.twin_of)]
+            assert c.cls == twin(src.cls, input_mask="binomial")
+            assert c.origin == src.origin
+            assert c.cls_key == cls_key(c.cls) and c.cls_key != src.cls_key
+
+    def test_twin_keys_never_collide_with_legacy(self):
+        both = g32.build_plan(pq.PQ_DATASETS, twins=self.TW, twin_random_slices=2)
+        keys = [(c.slice_id, c.cls_key) for c in both]
+        assert len(keys) == len(set(keys))
+        assert len(both) == 945 + 655
+        assert [c for c in both if c.twin_of is None] == g32.build_plan(pq.PQ_DATASETS)
+
+    def test_twin_slices_prefix_for_s1b(self):
+        names = ("Handwriting", "UWaveGestureLibrary", "HandMovementDirection")
+        plan = g32.build_plan(names, twins=self.TW, twin_only=True,
+                              twin_origins=("shared", "ggs"), twin_slices=2)
+        assert len(plan) == 3 * 2 * 11
+        assert {c.slice_id for c in plan} == {f"{d}_0{i}" for d in names for i in (0, 1)}
+        full = {(c.slice_id, c.cls_key)
+                for c in g32.build_plan(pq.PQ_DATASETS, twins=self.TW, twin_only=True)}
+        assert {(c.slice_id, c.cls_key) for c in plan} <= full   # 全量孪生计划的子集 → --resume 直接续
+
+    def test_twin_random_slices_and_origins_filter(self):
+        plan = g32.build_plan(("Handwriting",), twins=self.TW, twin_only=True,
+                              twin_origins=("random",))
+        assert {c.slice_id for c in plan} == {"Handwriting_00", "Handwriting_01"}
+        assert len(plan) == 20
+
+    def test_rows_carry_twin_of_only_for_twins(self, cls_a):
+        from autocls.space.cls_space import twin
+
+        task = g32.TaskMeta("Cricket_00", "", "classification", (0, 1))
+        rec = make_rec(0.5, iters_list=B2)
+        r = g32.make_row_for(60, rec, dataset="Cricket", task=task, cls_key="k",
+                             origin="shared", cls_cfg=cls_a, weight_seed=7)
+        assert "twin_of" not in r
+        assert "input_mask" not in r["cls"]          # legacy 行的 cls 与历史行逐键相同（to_dict）
+        r2 = g32.make_row_for(60, rec, dataset="Cricket", task=task, cls_key="k2",
+                              origin="shared", cls_cfg=twin(cls_a, input_mask="binomial"),
+                              weight_seed=7, twin_of="k")
+        assert r2["twin_of"] == "k"
+        assert r2["cls"]["input_mask"] == "binomial"
+
+    def test_make_jobs_propagates_twin_of_and_derives_seed_from_twin_key(self, cls_a):
+        from autocls.labeling import cls_key
+        from autocls.space.cls_space import twin
+
+        task = g32.TaskMeta("Handwriting_00", "", "classification", (0, 1))
+        sidx = {"Handwriting_00": ("Handwriting", task,
+                                   np.zeros((4, 8, 2), np.float32), np.array([0, 1, 0, 1]))}
+        t = twin(cls_a, input_mask="binomial")
+        cells = [g32.Cell("Handwriting_00", "shared", cls_a, cls_key(cls_a)),
+                 g32.Cell("Handwriting_00", "shared", t, cls_key(t), twin_of=cls_key(cls_a))]
+        jobs = g32.make_jobs(cells, sidx)
+        assert jobs[0].twin_of is None
+        assert jobs[1].twin_of == cls_key(cls_a)
+        assert jobs[1].weight_seed == pq.canonical_seeds("Handwriting_00", cls_key(t))[0]
+        assert jobs[1].weight_seed != jobs[0].weight_seed
+
+
+class TestTwinCli:
+    """--twins 的三道配置闸：生产目录禁写（孪生行绝不进 results/mx3_pq）、不与 --calibrate 同跑、取值须在 space.yaml 档位内。"""
+
+    # 都断言闸的提示语：argparse 对未知参数也退 2，只看退出码会在实现前假绿。
+    def test_twins_rejected_on_production_outdir(self, capsys):
+        with pytest.raises(SystemExit) as e:
+            g32.main(["--verify", "--twins", "input_mask=binomial"])      # 默认 outdir = 真值网格目录
+        assert e.value.code == 2
+        assert "孪生" in capsys.readouterr().out
+
+    def test_twins_rejects_calibrate(self, tmp_path, capsys):
+        with pytest.raises(SystemExit) as e:
+            g32.main(["--calibrate", "--twins", "input_mask=binomial", "--outdir", str(tmp_path)])
+        assert e.value.code == 2
+        assert "同跑" in capsys.readouterr().err
+
+    def test_twins_value_validated_against_space(self, tmp_path, capsys):
+        with pytest.raises(SystemExit) as e:
+            g32.main(["--verify", "--twins", "input_mask=gaussian", "--outdir", str(tmp_path)])
+        assert e.value.code == 2
+        assert "扩展字段" in capsys.readouterr().err
+
+    def test_twins_unknown_field_rejected(self, tmp_path, capsys):
+        with pytest.raises(SystemExit) as e:
+            g32.main(["--verify", "--twins", "jitter=0.5", "--outdir", str(tmp_path)])
+        assert e.value.code == 2
+        assert "扩展字段" in capsys.readouterr().err
+
+
 # --------------------------------------------------------------- verify
 class TestVerify:
     def _plan(self, cls_a):

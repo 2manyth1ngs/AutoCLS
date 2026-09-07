@@ -200,7 +200,7 @@ def evolutionary_search(
 
     return [
         {
-            "cls": dataclasses.asdict(population[i]),
+            "cls": population[i].to_dict(),
             "cls_key": pop_keys[i],
             "wins": int(final_wins[i]),
             "generation_found": generation_found[pop_keys[i]],

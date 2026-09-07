@@ -199,6 +199,98 @@ def test_finals_worklist_dedups_same_champion():
     assert len(cells) == 2 and cells[0]["arm_names"] == ["final_SH6-3-3_prior", "final_prior3"]
 
 
+# ---------------------------------------------------------------- 孪生格（MX-4 WP6）
+# 目录每条配一格"只把 input_mask 改成 binomial"的孪生：CLS 字段与 options.input_mask 必须一致
+# （两处真源，run_trajectory_cell 首行 fail-fast），cache_key 因 cls_key 与 options 双重不同。
+_PROTOS = {"ts2vec_official": {"iters_rule": "ts2vec_size", "batch_size": 8, "lr": 1e-3,
+                               "drop_last": True, "swa": True, "crop_mode": "fixed",
+                               "scaler": "train", "svm_grid": "ts2vec"}}
+_SIZES = {"Handwriting": (150, 152, 3), "PhonemeSpectra": (3315, 217, 11)}
+
+
+def _cands():
+    from dataclasses import asdict
+    from autocls.labeling import cls_key
+    space = CLSSpace.from_yaml()
+    rng = np.random.default_rng(0)
+    shared = [space.sample_random(rng) for _ in range(3)]
+    ggs = space.sample_random(rng)
+    nom = [space.sample_random(rng) for _ in range(2)]
+    return {d: {"shared": [{"cls_key": cls_key(c), "cls": asdict(c)} for c in shared],
+                "ggs": {"cls_key": cls_key(ggs), "cls": asdict(ggs)},
+                "nominated": [{"cls_key": cls_key(c), "cls": asdict(c)} for c in nom]}
+            for d in _SIZES}
+
+
+def test_s1_worklist_default_bitwise_unchanged():
+    base = g39.s1_worklist(_PROTOS, _SIZES, _cands())
+    again = g39.s1_worklist(_PROTOS, _SIZES, _cands(), twins=None)
+    assert base == again
+    assert all("twin_of" not in c and c["options"]["input_mask"] == "none"
+               and "input_mask" not in c["cls"] for c in base)      # legacy 序列化不带扩展字段（与 WP3 行同键）
+
+
+def test_s1_worklist_twins_count_options_and_cls_agree():
+    from autocls.labeling import cls_key
+    from autocls.space.cls_space import CLS, twin
+    base = g39.s1_worklist(_PROTOS, _SIZES, _cands())
+    only = g39.s1_worklist(_PROTOS, _SIZES, _cands(), twins={"input_mask": "binomial"}, twin_only=True)
+    both = g39.s1_worklist(_PROTOS, _SIZES, _cands(), twins={"input_mask": "binomial"})
+    assert len(only) == len(base) == 2 * (3 + 1 + 2)
+    assert len(both) == 2 * len(base)
+    assert both[:len(base)] == base                       # legacy 前缀逐位不变
+    legacy = {(c["dataset"], c["cls_key"]): c for c in base}
+    for c in only:
+        assert c["options"]["input_mask"] == "binomial"
+        assert c["cls"]["input_mask"] == "binomial"
+        src = legacy[(c["dataset"], c["twin_of"])]
+        assert CLS(**c["cls"]) == twin(CLS(**src["cls"]), input_mask="binomial")
+        assert c["cls_key"] == cls_key(CLS(**c["cls"])) != src["cls_key"]
+        assert c["arm"] == src["arm"] and c["checkpoints"] == src["checkpoints"] and c["iters"] == src["iters"]
+    keys = [c["key"] for c in both]
+    assert len(keys) == len(set(keys))
+
+
+def test_s1_worklist_twins_skip_error_keys():
+    cands = _cands()
+    bad = ("PhonemeSpectra", cands["PhonemeSpectra"]["shared"][0]["cls_key"])
+    only = g39.s1_worklist(_PROTOS, _SIZES, cands, twins={"input_mask": "binomial"}, twin_only=True,
+                           skip_error_keys={bad})
+    assert len(only) == 2 * (3 + 1 + 2) - 1
+    assert not any(c["dataset"] == bad[0] and c["twin_of"] == bad[1] for c in only)
+
+
+def test_check_extension_consistency_fails_on_mismatch():
+    only = g39.s1_worklist(_PROTOS, _SIZES, _cands(), twins={"input_mask": "binomial"}, twin_only=True)
+    base = g39.s1_worklist(_PROTOS, _SIZES, _cands())
+    g39.check_extension_consistency(only[0])            # 一致：不抛
+    g39.check_extension_consistency(base[0])
+    bad = {**only[0], "options": {**only[0]["options"], "input_mask": "none"}}
+    with pytest.raises(ValueError):
+        g39.check_extension_consistency(bad)
+    bad2 = {**base[0], "options": {**base[0]["options"], "input_mask": "binomial"}}
+    with pytest.raises(ValueError):
+        g39.check_extension_consistency(bad2)
+
+
+def test_finals_worklist_twin_champion_carries_override():
+    from dataclasses import asdict
+    from autocls.labeling import cls_key
+    from autocls.space.cls_space import twin
+    space = CLSSpace.from_yaml()
+    c1 = space.sample_random(np.random.default_rng(1))
+    t1 = twin(c1, input_mask="binomial")
+    key2cls = {cls_key(c1): asdict(c1), cls_key(t1): asdict(t1)}
+    picks = {"Handwriting": {"SH6-3-3_prior_off": cls_key(c1), "SH6-3-3_gbdt20": cls_key(t1)}}
+    cells = g39.finals_worklist(_PROTOS, {"Handwriting": _SIZES["Handwriting"]}, picks, key2cls, seeds=(1,))
+    by_key = {c["cls_key"]: c for c in cells}
+    assert by_key[cls_key(c1)]["options"]["input_mask"] == "none"
+    assert by_key[cls_key(t1)]["options"]["input_mask"] == "binomial"
+    assert by_key[cls_key(t1)]["cls"]["input_mask"] == "binomial"
+    for c in cells:
+        g39.check_extension_consistency(c)
+
+
 # ---------------------------------------------------------------- 门
 def _per_target(sh, p3, paper, hw_max=0.6):
     return {"champion_mean": sh, "prior3_mean": p3, "sh_seed0": sh, "prior3_seed0": p3,
@@ -280,3 +372,72 @@ def test_har_gates_and_verdict():
     assert g39.verdict_code_har(g39.run_gates_har(per, ggs_anchor=0.935)) == "HAR-PARITY"
     per["HAR"]["champion_mean"] = 0.90
     assert g39.verdict_code_har(g39.run_gates_har(per, ggs_anchor=0.935)) == "HAR-DEAD"
+
+
+# ---------------------------------------------------------------- WP10-UEA30：39 号两处最小通用化（默认 = 旧行为）
+def test_s1_worklist_without_nominated_prefix_bitwise():
+    """目录无 nominated 键（UEA30 的 shared-10 + GGS）→ 与有提名时去掉 nominated 格后逐位相同；孪生同理。"""
+    full = _cands()
+    slim = {d: {k: v for k, v in c.items() if k != "nominated"} for d, c in full.items()}
+    with_nom = g39.s1_worklist(_PROTOS, _SIZES, full)
+    without = g39.s1_worklist(_PROTOS, _SIZES, slim)
+    assert without == [c for c in with_nom if c["arm"] != "nominated"]
+    both = g39.s1_worklist(_PROTOS, _SIZES, slim, twins={"input_mask": "binomial"})
+    assert len(both) == 2 * len(without) and both[:len(without)] == without
+    tw = both[len(without):]
+    assert all(c["twin_of"] in {x["cls_key"] for x in without} for c in tw)
+    assert len({c["key"] for c in both}) == len(both)
+
+
+def test_execute_custom_loader_and_default(monkeypatch, tmp_path):
+    import types
+    seen_default, seen_custom = [], []
+    monkeypatch.setattr(g39, "load_arrays_any", lambda d, npz=None: (seen_default.append(d) or {"Xtr": None}))
+    monkeypatch.setattr(g39, "run_trajectory_cell",
+                        lambda cell, arrays, device: {**cell, "acc": 0.5, "error": None, "checkpoint_results": [{"acc": 0.5}],
+                                                      "pretrain_seconds": 1, "eval_seconds": 0.1})
+    cells = [{"key": "a", "dataset": "D1", "arm": "shared", "cls_key": "k1234567", "seed": 0, "iters": 8, "checkpoints": [8]},
+             {"key": "b", "dataset": "D2", "arm": "shared", "cls_key": "k2345678", "seed": 0, "iters": 8, "checkpoints": [8]}]
+    args = types.SimpleNamespace(outdir=str(tmp_path / "a"), resume=False, joblib_backend="threading", device="cpu")
+    g39.execute(cells, args, "t")
+    assert seen_default == ["D1", "D2"]
+    args2 = types.SimpleNamespace(outdir=str(tmp_path / "b"), resume=False, joblib_backend="threading", device="cpu")
+    g39.execute(cells, args2, "t", loader=lambda d, npz=None: (seen_custom.append(d) or {"Xtr": None}))
+    assert seen_custom == ["D1", "D2"] and seen_default == ["D1", "D2"]
+    assert len((tmp_path / "b" / "runs.jsonl").read_text(encoding="utf-8").strip().splitlines()) == 2
+
+
+def test_run_trajectory_cell_xtr_fit_pretrain_only(monkeypatch):
+    """有 Xtr_fit 时预训练吃分段数组、截点编码吃全长 Xtr，行多一键 n_train_fit；无 Xtr_fit 时行键集与旧路径同。"""
+    import torch
+    got = {"pretrain": [], "encode": []}
+
+    def fake_pretrain(enc, cls, X, *, max_iters, checkpoints, on_checkpoint, **kw):
+        got["pretrain"].append(tuple(X.shape))
+        for step in checkpoints:
+            on_checkpoint(step, enc)
+        return [1.0, 0.5]
+
+    def fake_encode(module, X, device=None):
+        got["encode"].append(tuple(X.shape))
+        return np.zeros((X.shape[0], 4), dtype=np.float32)
+
+    monkeypatch.setattr(g39, "pretrain_encoder", fake_pretrain)
+    monkeypatch.setattr(g39, "encode_features", fake_encode)
+    monkeypatch.setattr(g39, "build_encoder", lambda input_dims, overrides=None: torch.nn.Identity())
+    monkeypatch.setattr(g39._g35, "_svm_variants",
+                        lambda ftr, ytr, fte, yte, grids, seed: {"train/ts2vec": {"acc": 0.5, "f1": 0.5, "svm_c": 1.0,
+                                                                                  "svm_cv_score": 0.5}})
+    cell = g39.s1_worklist(_PROTOS, {"Handwriting": _SIZES["Handwriting"]}, {"Handwriting": _cands()["Handwriting"]})[0]
+    Xtr = np.zeros((4, 12, 3), dtype=np.float32)
+    arrays = {"Xtr": Xtr, "ytr": np.array([0, 1, 0, 1]), "Xte_train": np.zeros((2, 12, 3), dtype=np.float32),
+              "yte": np.array([0, 1])}
+    row = g39.run_trajectory_cell(cell, arrays, "cpu")
+    assert row["error"] is None and "n_train_fit" not in row and row["n_train"] == 4
+    assert got["pretrain"] == [(4, 12, 3)] and all(s in ((4, 12, 3), (2, 12, 3)) for s in got["encode"])
+    got["pretrain"].clear()
+    got["encode"].clear()
+    row2 = g39.run_trajectory_cell(cell, {**arrays, "Xtr_fit": np.zeros((8, 6, 3), dtype=np.float32)}, "cpu")
+    assert got["pretrain"] == [(8, 6, 3)] and (4, 12, 3) in got["encode"] and (8, 6, 3) not in got["encode"]
+    assert row2["n_train_fit"] == 8 and row2["n_train"] == 4
+    assert set(row2) - set(row) == {"n_train_fit"}
