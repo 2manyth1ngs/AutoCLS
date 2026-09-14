@@ -130,4 +130,8 @@ ctx 按 (切片, 预算) 构造；**消融 = 排名时把 ctx 的数据集 one-h
 
 ## §9 执行台账（跑后填写）
 
-（空）
+- 2026-09-14 协议锁 1f88493（32 例先红）→ 实现 head / zdiff_labels / 33 L3_ARMS / 34 / 56 ctx_rows / 57 → 33 例绿 + 邻近 320 绿。
+- `--c0` 首跑 FAIL（0.7853 vs 0.7932）：head 改动挪了 `set_fc` 构造顺序 → 同 seed 初始化变；恢复顺序 + 金标单测后 PASS（0.7922）。
+- `--train` 24 跑本地 4060：hard 10–16 s、zdiff 280–370 s（全对 45k 对/epoch），`train.log`；`--rank --analyze` → **L3-HEAD-ONLY**
+  （G0 ✓ / G-A ✓ diff +0.205 p 9e-4 / G-B ✓ / G-C ✓），预测 5/8。详见 REPORT.md。
+- 阶段 1（真 E + LODO）未开：折特征需 `33 --fit-folds`（GPU 请示）。

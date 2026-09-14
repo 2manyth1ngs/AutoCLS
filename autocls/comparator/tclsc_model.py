@@ -35,6 +35,12 @@ from torch import nn
 from ..task_embed.set_transformer import TaskSetEncoder
 
 TASK_BRANCHES = ("E+ctx", "ctx", "none")
+# WP16-TCLSC-L3 融合头（协议 results/tclsc_l3/PROTOCOL.md §2）：
+#   concat：式 17–21 原样（默认，逐位不变）；
+#   diff：logit = s(l_a, t) − s(l_b, t)，s = MLP([l, t])——反对称由构造保证，任务向量 t 的任何加性项相减抵消，
+#         任务信息只能经与 CLS 嵌入的交互起作用（堵死实验 1 F2 测到的"E′ 当偏置"退化解）；
+#   film：t → (γ, β) 调制 CLS 嵌入 l̃ = (1+γ)⊙l + β（式 15 的位置），再 s(l̃) 打分相减。
+HEADS = ("concat", "diff", "film")
 
 
 class TCLSC(nn.Module):
@@ -53,6 +59,8 @@ class TCLSC(nn.Module):
     ctx 当且仅当 ctx_dim>0 时必传，形状 (B, ctx_dim)（铁律 7：只是浮点向量）。
     """
 
+    HEADS = HEADS   # 融合头取值（类属性，调用方/脚本据此校验）
+
     def __init__(
         self,
         cls_dim: int,
@@ -62,10 +70,13 @@ class TCLSC(nn.Module):
         *,
         ctx_dim: int = 0,
         task_branch: str = "E+ctx",
+        head: str = "concat",
     ):
         super().__init__()
         if task_branch not in TASK_BRANCHES:
             raise ValueError(f"未知 task_branch={task_branch!r}（可选 {TASK_BRANCHES}）")
+        if head not in HEADS:
+            raise ValueError(f"未知 head={head!r}（可选 {HEADS}）")
         if ctx_dim < 0:
             raise ValueError(f"ctx_dim 须 >=0，得到 {ctx_dim}")
         if task_branch == "ctx" and ctx_dim == 0:
@@ -74,25 +85,46 @@ class TCLSC(nn.Module):
             raise ValueError("task_branch='E+ctx' 需要 set_encoder")
         self.ctx_dim = int(ctx_dim)
         self.task_branch = task_branch
+        self.head = head
         self.set_encoder = set_encoder  # 联合训练（← 原码 setpool 内嵌于 AHC）
         # CLS 支路：共享 MLP（Eq.15；替换原码 embedding+GCN，唯一实质改动）
         self.cls_mlp = nn.Sequential(
             nn.Linear(cls_dim, embedding_dim), nn.ReLU(),
             nn.Linear(embedding_dim, embedding_dim),
         )
-        # ← ahc_engine.py L122-123 graph_fc：Linear(embedding_dim*ratio, fz)+ReLU
-        self.cls_fc = nn.Sequential(nn.Linear(embedding_dim * 2, fz), nn.ReLU())
+        has_task = task_branch != "none"
+        # 构造顺序 = RNG 消耗顺序：concat 头必须保持 cls_mlp → cls_fc → set_fc → pred_fc（与改头前逐位相同，
+        # 否则同 seed 的初始化会变、旧存档/旧读数不可复现——WP16-L3 C0 曾因此失守 0.008）。
+        if head == "concat":
+            # ← ahc_engine.py L122-123 graph_fc：Linear(embedding_dim*ratio, fz)+ReLU
+            self.cls_fc = nn.Sequential(nn.Linear(embedding_dim * 2, fz), nn.ReLU())
         # ← ahc_engine.py L119-120 set_fc：Linear(nz, fz)+ReLU（Eq.18）；
         #   ctx 拼在 E 后一起进（原码 P/Q 设定的类比，论文未给全，按 X 语义补全）
         if task_branch == "E+ctx":
             self.set_fc = nn.Sequential(nn.Linear(set_encoder.nz + self.ctx_dim, fz), nn.ReLU())
         elif task_branch == "ctx":
             self.set_fc = nn.Sequential(nn.Linear(self.ctx_dim, fz), nn.ReLU())
-        # ← ahc_engine.py L125-126 pred_fc：两层 FC（Eq.19-21）
-        self.pred_fc = nn.Sequential(
-            nn.Linear(fz * (1 if task_branch == "none" else 2), fz), nn.ReLU(),
-            nn.Linear(fz, 1),
-        )
+        if head == "concat":
+            # ← ahc_engine.py L125-126 pred_fc：两层 FC（Eq.19-21）
+            self.pred_fc = nn.Sequential(
+                nn.Linear(fz * (2 if has_task else 1), fz), nn.ReLU(),
+                nn.Linear(fz, 1),
+            )
+        elif head == "diff":
+            # s(l, t)：与 pred_fc 同深同宽（Linear+ReLU+Linear），只是逐侧打分
+            self.score_mlp = nn.Sequential(
+                nn.Linear(embedding_dim + (fz if has_task else 0), fz), nn.ReLU(),
+                nn.Linear(fz, 1),
+            )
+        else:   # film
+            if has_task:
+                self.film = nn.Linear(fz, 2 * embedding_dim)
+            self.score_mlp = nn.Sequential(nn.Linear(embedding_dim, fz), nn.ReLU(), nn.Linear(fz, 1))
+
+    @property
+    def antisymmetric(self) -> bool:
+        """diff / film 头按构造满足 P(a,b) + P(b,a) = 1；concat 头只靠数据侧反向出样近似。"""
+        return self.head in ("diff", "film")
 
     @property
     def uses_E(self) -> bool:
@@ -129,14 +161,39 @@ class TCLSC(nn.Module):
         self._check_ctx(ctx, cls_a.shape[0])
         l_a = self.cls_mlp(cls_a)                       # Eq.15
         l_b = self.cls_mlp(cls_b)                       # Eq.15（共享同一 MLP）
-        L = torch.cat([l_a, l_b], dim=1)                # Eq.16 ← L163
-        h = self.cls_fc(L)                              # Eq.17
+        t = self._task_vector(E, ctx)                   # Eq.18：Ẽ′（无任务支路时 None）
+        if self.head == "concat":
+            L = torch.cat([l_a, l_b], dim=1)            # Eq.16 ← L163
+            h = self.cls_fc(L)                          # Eq.17
+            if t is not None:
+                h = torch.cat([h, t], dim=1)            # Eq.19
+            logits = self.pred_fc(h).squeeze(1)         # Eq.20-21 ← L168
+        elif self.head == "diff":
+            logits = self._score_diff(l_a, l_b, t)
+        else:
+            if t is not None:
+                gamma, beta = self.film(t).chunk(2, dim=1)
+                l_a = (1.0 + gamma) * l_a + beta
+                l_b = (1.0 + gamma) * l_b + beta
+            logits = self._score_diff(l_a, l_b, None)
+        return torch.sigmoid(logits)                    # ← L169
+
+    def _task_vector(self, E: Optional[torch.Tensor], ctx: Optional[torch.Tensor]) -> Optional[torch.Tensor]:
         if self.task_branch == "E+ctx":
             if E is None:
                 raise ValueError("task_branch='E+ctx' 必须传 E")
             task_in = E if self.ctx_dim == 0 else torch.cat([E, ctx], dim=1)
-            h = torch.cat([h, self.set_fc(task_in)], dim=1)   # Eq.18
-        elif self.task_branch == "ctx":
-            h = torch.cat([h, self.set_fc(ctx)], dim=1)
-        logits = self.pred_fc(h).squeeze(1)             # Eq.19-21 ← L168
-        return torch.sigmoid(logits)                    # ← L169
+            return self.set_fc(task_in)
+        if self.task_branch == "ctx":
+            return self.set_fc(ctx)
+        return None
+
+    def _score_diff(self, l_a: torch.Tensor, l_b: torch.Tensor,
+                    t: Optional[torch.Tensor]) -> torch.Tensor:
+        """反对称打分差：s(l_a, t) − s(l_b, t)。"""
+        if t is None:
+            s_a, s_b = self.score_mlp(l_a), self.score_mlp(l_b)
+        else:
+            s_a = self.score_mlp(torch.cat([l_a, t], dim=1))
+            s_b = self.score_mlp(torch.cat([l_b, t], dim=1))
+        return (s_a - s_b).squeeze(1)

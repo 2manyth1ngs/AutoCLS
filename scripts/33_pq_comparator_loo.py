@@ -68,6 +68,7 @@ from autocls.comparator.soft_labels import (  # noqa: E402
     SoftTCLSCEngine, soft_dynamic_pairs,
 )
 from autocls.comparator.tclsc_engine import Pair, with_reversed  # noqa: E402
+from autocls.comparator.zdiff_labels import zdiff_pairs  # noqa: E402
 from autocls.labeling import load_rprime_cache, make_pairs  # noqa: E402
 from autocls.space.cls_encoder import CLSEncoder  # noqa: E402
 from autocls.space.cls_encoder import MODES as CLSEncoder_MODES  # noqa: E402
@@ -111,7 +112,8 @@ class ArmSpec:
     encoder: Optional[str]      # "settf" / "meanpool" / None
     e_source: Optional[str]     # "fold" / "per_dataset" / "unfit" / None（绑定枚举）
     ctx_kind: str               # "budget" / "dataset_budget" / "none"
-    label_mode: str = "hard"    # "hard" / "soft"
+    label_mode: str = "hard"    # "hard" / "soft" / "zdiff"（WP16-L3：z 差分软标签）
+    head: str = "concat"        # TCLSC.HEADS（WP16-L3：concat / diff / film）
     random_only: bool = False   # A4：只用 random-10 训练（且关 curriculum）
     seeds: tuple = (0,)
     folds: tuple = ()           # 空 = S1 全部折靶 / S2 单折
@@ -165,6 +167,42 @@ ARMS: dict[str, ArmSpec] = {
 ALL_ARMS = tuple(ARMS)
 assert all(s.e_source in E_SOURCES for s in ARMS.values()), \
     f"e_source 必须落在 interfaces 绑定枚举 {E_SOURCES} 内"
+
+# ---- WP16-TCLSC-L3（results/tclsc_l3/PROTOCOL.md §3）：融合头 × 标签 2×2 + 两条任务盲对照。
+# 独立表：MX-3-PQ 的 ARMS 是冻结的协议臂表（单测钉死键集合），L3 臂不混进去。
+# 全部 S2 划分、ctx = 数据集 one-hot ⊕ 预算 one-hot（oracle 身份 token，机制上界，非 zero-shot）。
+ZDIFF_K = 2.0               # zdiff 软标签温度：|Δz| = 1 → p 0.88（协议写死，不调）
+L3_ARMS: dict[str, ArmSpec] = {
+    s.name: s for s in (
+        ArmSpec("l3_none_hard", "S2", "none", None, None, "none",
+                seeds=(0, 1, 2), iron_law_6_compliant="s2_oracle"),
+        ArmSpec("l3_none_zdiff", "S2", "none", None, None, "none", label_mode="zdiff",
+                seeds=(0, 1, 2), iron_law_6_compliant="s2_oracle"),
+        ArmSpec("l3_concat_hard", "S2", "ctx", None, None, "dataset_budget", head="concat",
+                seeds=(0, 1, 2), iron_law_6_compliant="s2_oracle"),
+        ArmSpec("l3_concat_zdiff", "S2", "ctx", None, None, "dataset_budget", head="concat",
+                label_mode="zdiff", seeds=(0, 1, 2), iron_law_6_compliant="s2_oracle"),
+        ArmSpec("l3_diff_hard", "S2", "ctx", None, None, "dataset_budget", head="diff",
+                seeds=(0, 1, 2), iron_law_6_compliant="s2_oracle"),
+        ArmSpec("l3_diff_zdiff", "S2", "ctx", None, None, "dataset_budget", head="diff",
+                label_mode="zdiff", seeds=(0, 1, 2), iron_law_6_compliant="s2_oracle"),
+        ArmSpec("l3_film_hard", "S2", "ctx", None, None, "dataset_budget", head="film",
+                seeds=(0, 1, 2), iron_law_6_compliant="s2_oracle"),
+        ArmSpec("l3_film_zdiff", "S2", "ctx", None, None, "dataset_budget", head="film",
+                label_mode="zdiff", seeds=(0, 1, 2), iron_law_6_compliant="s2_oracle"),
+    )
+}
+assert not (set(L3_ARMS) & set(ARMS)), "L3 臂名不得与 MX-3-PQ 臂表冲突"
+CLI_ARMS = ALL_ARMS + tuple(L3_ARMS)
+
+
+def arm_spec(name: str) -> ArmSpec:
+    """臂名 → ArmSpec（先查 MX-3-PQ 冻结表，再查 WP16-L3 表；都没有即 KeyError）。"""
+    if name in ARMS:
+        return ARMS[name]
+    if name in L3_ARMS:
+        return L3_ARMS[name]
+    raise KeyError(f"未知臂 {name!r}（可选 {CLI_ARMS}）")
 
 
 def feature_fold_of(spec: ArmSpec, fold: str) -> Optional[str]:
@@ -246,7 +284,8 @@ def build_model(spec: ArmSpec, *, cls_dim: int, ctx_dim: int, nz: int, dim_input
     else:
         enc = None
     return TCLSC(cls_dim=cls_dim, set_encoder=enc, embedding_dim=cfg["embedding_dim"],
-                 fz=cfg["fz"], ctx_dim=ctx_dim, task_branch=spec.task_branch)
+                 fz=cfg["fz"], ctx_dim=ctx_dim, task_branch=spec.task_branch,
+                 head=spec.head)
 
 
 def load_pq_model(path, *, device: str = "cpu") -> tuple[TCLSC, dict]:
@@ -1058,7 +1097,7 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
                         nz=ctx.nz, dim_input=dim_input, cfg=ctx.cfg, seed=seed,
                         init_path=(ctx.init_path if spec.encoder == "settf" else None),
                         standardizer=standardizer)
-    engine_cls = SoftTCLSCEngine if spec.label_mode == "soft" else TCLSCEngine
+    engine_cls = SoftTCLSCEngine if spec.label_mode in ("soft", "zdiff") else TCLSCEngine
     engine = engine_cls(model, windows, device=ctx.device, lr=ctx.cfg["lr"],
                         batch_size=ctx.cfg["batch_size"], seed=seed,
                         windows_key_of=wk, context_of=ctx_map)
@@ -1076,6 +1115,14 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
             return [dataclasses.replace(p, w=1.0) for p in pairs]   # 软目标，全权
 
         history = engine.train_soft(sampler, epochs=ctx.cfg["epochs"])
+    elif spec.label_mode == "zdiff":
+        # WP16-L3：任务内全对 z 差分软标签（不过 δ）；curriculum 同 hard（前 cur 个 epoch 只用 shared 对）
+        def sampler(epoch: int, rng: np.random.Generator):
+            origins = ("shared",) if epoch < cur else None
+            return zdiff_pairs(train_records, lambda a, b: is_better(a, b, ctx.task_type),
+                               k=ZDIFF_K, rng=rng, origins=origins)
+
+        history = engine.train_soft(sampler, epochs=ctx.cfg["epochs"])
     else:
         history = engine.train(train_records, epochs=ctx.cfg["epochs"],
                                curriculum_epochs=cur,
@@ -1089,7 +1136,7 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
                    cfg=ctx.cfg, nz=ctx.nz, settf_windows=ctx.settf_windows,
                    settf_t_max=ctx.settf_t_max, budgets=ctx.budgets,
                    ctx_encoding=ctx.pq_cfg["ctx_encoding"],
-                   encoder_mode=ctx.encoder_mode)
+                   encoder_mode=ctx.encoder_mode, head=spec.head)
 
     cross_channel = "ctx" if spec.ctx_kind == "dataset_budget" else None
     train_tids = [pq.engine_task_id(s, b) for s in train_slices for b in ctx.budgets
@@ -1128,6 +1175,7 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
             "encoder": spec.encoder, "e_source": spec.e_source,
             "feature_fold": feature_fold_of(spec, fold),
             "label_mode": spec.label_mode, "random_only": spec.random_only,
+            "head": spec.head, "zdiff_k": (ZDIFF_K if spec.label_mode == "zdiff" else None),
             "settf_windows": ctx.settf_windows,
             "settf_windows_actual": (int(next(iter(windows.values())).shape[0])
                                      if windows else None),
@@ -1168,7 +1216,7 @@ def _delta_by_dataset_budget(delta_map: dict[str, float]) -> dict[str, float]:
 def save_model(path: Path, model: TCLSC, spec: ArmSpec, *, fold: str, seed: int,
                cls_dim: int, ctx_dim: int, cfg: dict, nz: int, settf_windows: int,
                settf_t_max: int, budgets: Sequence[int], ctx_encoding: str,
-               encoder_mode: str = "scalar") -> None:
+               encoder_mode: str = "scalar", head: str = "concat") -> None:
     """interfaces「Task 6 → Task 7 saved-model format」——meta 键集是绑定契约。
 
     `e_source` 只取绑定枚举 ("fold"|"per_dataset"|"unfit"|null)；`feature_fold`
@@ -1186,6 +1234,8 @@ def save_model(path: Path, model: TCLSC, spec: ArmSpec, *, fold: str, seed: int,
         "budgets": [int(b) for b in budgets], "ctx_encoding": ctx_encoding,
         # WP16：打分侧按此键选 CLSEncoder 模式（老存档无此键 = scalar；34/56 号据 cls_dim 互校）
         "encoder_mode": encoder_mode,
+        # WP16-L3：融合头（老存档无此键 = concat）
+        "head": head,
     }}, path)
 
 
@@ -1230,7 +1280,7 @@ def cmd_train(outdir: Path, *, arms: Sequence[str], folds: Optional[Sequence[str
     skips: list[dict] = []          # 本轮跳过的 (臂, 折, 种子)，逐条即时落盘
     attempted: set = set()          # 本轮试过的组合：成功的要把历史 skip 记录清掉
     for name in arms:
-        spec = ARMS[name]
+        spec = arm_spec(name)
         arm_folds = ((folds if spec.split == "S1" else (S2_FOLD,)) if folds
                      else default_folds(spec))
         arm_seeds = seeds if seeds is not None else spec.seeds
@@ -1714,7 +1764,7 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--calibrate-windows", action="store_true",
                     help="折 HW 的 A0 s0 单 epoch 计时 → 外推整跑（预注册旋钮标定）")
-    ap.add_argument("--arms", nargs="+", default=None, choices=list(ALL_ARMS))
+    ap.add_argument("--arms", nargs="+", default=None, choices=list(CLI_ARMS))
     ap.add_argument("--folds", nargs="+", default=None)
     ap.add_argument("--seeds", nargs="+", type=int, default=None)
     ap.add_argument("--epochs", type=int, default=None, help="覆盖 pretrain_tclsc.yaml")

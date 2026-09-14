@@ -253,12 +253,15 @@ def fold_eval_mlpz(target: str, cat_z: Sequence[dict], delta: Mapping, enc: Mapp
 
 # ---------------------------------------------------------------- 本地模型 → 排名
 def rank_local_models(models_by_arm: Mapping[str, Sequence[tuple]], catalog: Mapping[str, Sequence[tuple]],
-                      *, budgets: Sequence[int] = BUDGETS, device: str = "cpu") -> dict:
+                      *, budgets: Sequence[int] = BUDGETS, device: str = "cpu",
+                      ctx_rows: Optional[Mapping[tuple[str, int], np.ndarray]] = None) -> dict:
     """{臂: [(TCLSC, meta)]} × {切片: [(origin, CLS, key)]} → {预算: {切片: {臂: [key…]}}}。
 
     与 34 号 cmd_rank 同一聚合（rank_candidates：多种子对称化 → 多数票）；差别只有一条——
     候选向量按**每个模型自己的 meta.encoder_mode** 编码（先全部互校，再打分）。只支持不吃 E 的臂
-    （cls_only / cls_b）；吃 E 的臂走 34 号（需折特征）。
+    （cls_only / cls_b / WP16-L3 的 ctx 臂）；吃 E 的臂走 34 号（需折特征）。
+    ctx：缺省为预算 one-hot（cls_b 形状）；`ctx_rows[(切片, 预算)]` 给出时按表取（L3 的数据集⊕预算 token，
+    消融时调用方直接传错位后的表），维度与每个模型的 ctx_dim 互校。
     """
     encs: dict[str, list[CLSEncoder]] = {}
     for arm, mm in models_by_arm.items():
@@ -270,6 +273,14 @@ def rank_local_models(models_by_arm: Mapping[str, Sequence[tuple]], catalog: Map
                 raise ValueError(f"[{arm}] 模型第一层 in_features={in_features} ≠ {enc.mode} 编码 {enc.dim} 维")
             if _g34.uses_E(model):
                 raise NotImplementedError(f"[{arm}] 吃 E 的臂请走 scripts/34_pq_search.py --rank")
+            cd = int(getattr(model, "ctx_dim", 0))
+            if cd > 0:
+                if ctx_rows is None and cd != len(budgets):
+                    raise ValueError(f"[{arm}] 模型 ctx_dim={cd} 不是预算 one-hot 形状，须传 ctx_rows")
+                if ctx_rows is not None:
+                    bad = [k for k, v in ctx_rows.items() if int(np.asarray(v).shape[0]) != cd]
+                    if bad:
+                        raise ValueError(f"[{arm}] ctx_rows 维度与模型 ctx_dim={cd} 不符：{bad[:3]}")
             model.eval()
             encs[arm].append(enc)
     vec_cache: dict[tuple[str, str], torch.Tensor] = {}
@@ -283,10 +294,16 @@ def rank_local_models(models_by_arm: Mapping[str, Sequence[tuple]], catalog: Map
 
     out: dict[str, dict] = {}
     for b in budgets:
-        ctx_row = torch.as_tensor(np.asarray(pq.ctx_vector(int(b), budgets)), dtype=torch.float32, device=device)
+        ctx_budget = torch.as_tensor(np.asarray(pq.ctx_vector(int(b), budgets)), dtype=torch.float32, device=device)
         per_b: dict[str, dict] = {}
         for s in sorted(catalog):
             keys = [k for _o, _c, k in catalog[s]]
+            if ctx_rows is not None:
+                if (s, int(b)) not in ctx_rows:
+                    raise KeyError(f"ctx_rows 缺 ({s}, {int(b)})")
+                ctx_row = torch.as_tensor(np.asarray(ctx_rows[(s, int(b))], np.float32), device=device)
+            else:
+                ctx_row = ctx_budget
             per_arm: dict[str, list[str]] = {}
             for arm, mm in models_by_arm.items():
                 modes = {e.mode for e in encs[arm]}

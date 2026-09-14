@@ -73,6 +73,20 @@ class TestHeads:
         names = {n.rsplit(".", 1)[0] for n, _ in m.named_parameters()}
         assert names == {"cls_mlp.0", "cls_mlp.2", "cls_fc.0", "set_fc.0", "pred_fc.0", "pred_fc.2"}
 
+    def test_default_concat_init_order_unchanged(self):
+        """同 seed 下 concat 头的初始化必须与改头前逐位相同：RNG 消耗顺序 cls_mlp → cls_fc → set_fc → pred_fc。
+
+        C0 曾因构造顺序变成 set_fc 先于 cls_fc 而失守（bce_first 0.69324 vs 0.69363 → normal acc 差 0.008）。
+        """
+        torch.manual_seed(0)
+        m = TCLSC(cls_dim=10, set_encoder=None, embedding_dim=8, fz=8, ctx_dim=CTX_DIM, task_branch="ctx")
+        torch.manual_seed(0)
+        ref = [torch.nn.Linear(10, 8), torch.nn.Linear(8, 8), torch.nn.Linear(16, 8),
+               torch.nn.Linear(CTX_DIM, 8), torch.nn.Linear(16, 8), torch.nn.Linear(8, 1)]
+        got = [m.cls_mlp[0], m.cls_mlp[2], m.cls_fc[0], m.set_fc[0], m.pred_fc[0], m.pred_fc[2]]
+        for r, g in zip(ref, got):
+            assert torch.equal(r.weight, g.weight) and torch.equal(r.bias, g.bias)
+
     @pytest.mark.parametrize("head", ["diff", "film"])
     def test_antisymmetric_with_ctx(self, head):
         m = _model(head)
