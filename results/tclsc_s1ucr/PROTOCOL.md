@@ -96,4 +96,6 @@ H-N：在 72 个训练数据集上，diff 头能学到可外推的 φ→偏好 /
 
 ## §9 执行台账（跑后填写）
 
-（空）
+- 2026-09-14 协议锁 ee9cdf5（9 例先红）→ 实现 60 号（修闭包晚绑定 bug）→ 9 例绿，commit 591aad7。
+- `--train` 84 跑脱离启动（pid 6812），25–33 s/跑，零事故；`--rank --analyze` → **UCR-PHI-DEAD / UCR-FP-DEAD**（G-U2 ✓ regret@3 p 0.045；
+  指纹 nonprobe Δ_M1 由 −0.042 转 +0.018；probe6_top3 0.0125 vs fp 0.0165 vs blind 0.0216），预测 4/8。详见 REPORT.md。
