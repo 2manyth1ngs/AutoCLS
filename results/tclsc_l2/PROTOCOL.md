@@ -91,4 +91,7 @@ H-G：给定流水线拓扑 A，GIN 在 7 折 LODO 上的任务盲配对 acc 高
 
 ## §9 执行台账（跑后填写）
 
-（空）
+- 2026-09-14 协议锁 ce996cf（17 例先红）→ 实现 cls_graph / TCLSC graph / 33 / 34 / 56 / 61 → 17 例绿 + 邻近 352 绿（commit 5ac42ab）。
+- `--train` 105 跑本地 4060 脱离启动（41–75 s/跑，与其它测试并行时变慢），零事故；`--rank --analyze` → **L2-FLAT**
+  （G-L2a +0.003 4/7 ✗；G-L2b +0.005 4/7 ✗；none_mean 0.769 最高但好半区更差），预测 1/6。详见 REPORT.md。
+- 结论：CLS 支路定为 binned MLP；真 E 臂用 binned。

@@ -1,0 +1,146 @@
+{
+  "fold": "PhonemeSpectra",
+  "split": "S1",
+  "arm": "cls_only",
+  "seed": 1,
+  "train_datasets": [
+    "Handwriting",
+    "UniMiB-SHAR",
+    "UWaveGestureLibrary",
+    "EthanolConcentration",
+    "Cricket",
+    "HandMovementDirection",
+    "SelfRegulationSCP2"
+  ],
+  "test_dataset": "PhonemeSpectra",
+  "budgets": [
+    60,
+    120,
+    290
+  ],
+  "partial_cache": false,
+  "delta_source": "configs/labels.yaml: pq.delta_per_dataset_budget（与 delta_calibration.json 对账一致）",
+  "settings": {
+    "task_branch": "none",
+    "ctx_dim": 0,
+    "encoder_mode": "graph",
+    "cls_dim": 438,
+    "graph_opts": {
+      "topology": "pipe",
+      "readout": "hub",
+      "scalar": false,
+      "gin_layers": 2
+    },
+    "ctx_encoding": "onehot",
+    "ctx_kind": "none",
+    "encoder": null,
+    "e_source": null,
+    "feature_fold": null,
+    "label_mode": "hard",
+    "random_only": false,
+    "head": "concat",
+    "zdiff_k": null,
+    "fp_probes": null,
+    "fp_budget": null,
+    "settf_windows": 100,
+    "settf_windows_actual": null,
+    "settf_t_max": 152,
+    "nz": 256,
+    "dim_input": 256,
+    "epochs": 200,
+    "curriculum_epochs": 40,
+    "lr": 0.0001,
+    "batch_size": 64,
+    "iron_law_6_compliant": true,
+    "delta_train": {
+      "Cricket@120": 0.175,
+      "Cricket@290": 0.18,
+      "Cricket@60": 0.105,
+      "EthanolConcentration@120": 0.09,
+      "EthanolConcentration@290": 0.06,
+      "EthanolConcentration@60": 0.065,
+      "HandMovementDirection@120": 0.19,
+      "HandMovementDirection@290": 0.135,
+      "HandMovementDirection@60": 0.19,
+      "Handwriting@120": 0.195,
+      "Handwriting@290": 0.16,
+      "Handwriting@60": 0.11,
+      "SelfRegulationSCP2@120": 0.09,
+      "SelfRegulationSCP2@290": 0.1,
+      "SelfRegulationSCP2@60": 0.065,
+      "UWaveGestureLibrary@120": 0.12,
+      "UWaveGestureLibrary@290": 0.075,
+      "UWaveGestureLibrary@60": 0.055,
+      "UniMiB-SHAR@120": 0.085,
+      "UniMiB-SHAR@290": 0.07,
+      "UniMiB-SHAR@60": 0.06
+    },
+    "delta_test": {
+      "PhonemeSpectra@120": 0.07,
+      "PhonemeSpectra@290": 0.07,
+      "PhonemeSpectra@60": 0.055
+    },
+    "cross_channel": null
+  },
+  "n_train_records": 2340,
+  "n_test_records": 360,
+  "n_test_pairs_forward": 2176,
+  "n_test_pairs_directed": 4352,
+  "train_seconds": 42.9,
+  "device": "cuda",
+  "bce_first": 0.6908281326293946,
+  "bce_last": 0.11493581859394908,
+  "train_pairs_last": 722,
+  "robust_pooled_delta": {
+    "delta_by_budget": {
+      "60": 0.065,
+      "120": 0.12,
+      "290": 0.1
+    },
+    "n_forward": 1787,
+    "acc": 0.7523782876329043,
+    "loss": 0.6726937890052795,
+    "acc_forward": 0.7588136541689984
+  },
+  "normal": {
+    "acc": 0.7219669117647058,
+    "loss": 0.7573838829994202,
+    "n": 4352,
+    "n_forward": 2176,
+    "acc_forward": 0.7293198529411765,
+    "binom_p_forward": 1.8890631069132308e-105,
+    "by_budget": {
+      "60": {
+        "n": 803,
+        "acc": 0.7036114570361146
+      },
+      "120": {
+        "n": 702,
+        "acc": 0.7492877492877493
+      },
+      "290": {
+        "n": 671,
+        "acc": 0.7391952309985097
+      }
+    },
+    "by_kind": {
+      "random-random": {
+        "n": 571,
+        "acc": 0.6725043782837128
+      },
+      "random-shared": {
+        "n": 1183,
+        "acc": 0.7497886728655959
+      },
+      "shared-shared": {
+        "n": 422,
+        "acc": 0.7488151658767772
+      }
+    }
+  },
+  "within": null,
+  "cross": null,
+  "budget": null,
+  "zero_E": null,
+  "zero_ctx": null
+}
