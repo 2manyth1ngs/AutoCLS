@@ -91,4 +91,8 @@ H-E2（迁移）：LODO 下 E 的 cross 消融正向（M1 ≥ 0.03，p < 0.05）
 
 ## §9 执行台账（跑后填写）
 
-（空）
+- 2026-09-14 协议锁 a10dc52（6 例先红）→ 实现 33 E_ARMS / 62 号 / pod 三件套 → 绿（5a1192c）；本地合成冒烟 33 --smoke → 62 --rank → --analyze 通。
+- pod `nibk1kf2rjw4y9`（4090 $0.74/h，EU-RO-1，卷 hgj73ti51t；5 台旧 pod resume 全无 GPU 故新开）：setup 全过（数据集已在卷上 md5 全对、57 单测绿）；
+  fit-folds 7 折 ≈ 8 min；MODE=binned（L2 FLAT）两进程并行 42 跑 × 720–740 s ≈ 4.4 h；62 --rank；out_s1e.tar.gz 279 MB 拉回校验；
+  **2026-09-15 01:38 stop + confirm-stopped 3/3**，uptime 4.81 h ≈ $3.56。
+- 本地 `62 --analyze` → **E-INERT**（G-E0 ✓ 不塌缩 cross 0.58 / within 0.9999；G-E1 ✗ +0.003 p 0.88；G-E2 ✗ 0.032 vs 0.029；zero 消融 M0 −0.028 p 7e-11），预测 2/6。详见 REPORT.md。
