@@ -33,7 +33,9 @@ find results/mx3_pq results/route_a_probe results/tclsc_s1e results/tclsc_s1phi 
 
 df -h /workspace
 AVAIL_GB=$(df -BG --output=avail /workspace | tail -1 | tr -dc '0-9')
-[ "${AVAIL_GB:-0}" -ge 6 ] || { echo "FREE ${AVAIL_GB:-?} GB < 6 GB on /workspace（折特征 ≈ 4 GB）"; exit 4; }
+[ "${AVAIL_GB:-0}" -ge 1 ] || { echo "FREE ${AVAIL_GB:-?} GB < 1 GB on /workspace"; exit 4; }
+AVAIL_ROOT=$(df -BG --output=avail / | tail -1 | tr -dc '0-9')
+[ "${AVAIL_ROOT:-0}" -ge 6 ] || { echo "FREE ${AVAIL_ROOT:-?} GB < 6 GB on /（折特征 ≈ 2.5 GB 放容器盘）"; exit 4; }
 
 # 8 源数据集：卷上已有且 md5 对得上 → 跳过；否则解上传包
 missing=0
@@ -63,14 +65,17 @@ for list in md5_text_local.txt md5_data_local.txt; do
 done
 echo "== code/data md5: $( [ $fail = 0 ] && echo ALL MATCH || echo FAILED )"; [ $fail = 0 ] || exit 3
 
-# 变体目录：只复制 mx3_pq 输入（56 号 prepare_variant_dir）
-python - <<'PY'
-import importlib, sys
+# 变体目录放容器盘（30 GB，折特征 ≈ 2.5 GB；网络卷只 10 GB）：只复制 mx3_pq 输入（56 号 prepare_variant_dir）
+OUT="${OUT:-/root/s1e/binned}"
+mkdir -p "$OUT"
+OUT="$OUT" python - <<'PY'
+import importlib, os, sys
 sys.path.insert(0, ".")
 from pathlib import Path
 g56 = importlib.import_module("scripts.56_tclsc_l1")
-print("prepare:", g56.prepare_variant_dir(Path("results/mx3_pq"), Path("results/tclsc_s1e/binned")))
+print("prepare:", g56.prepare_variant_dir(Path("results/mx3_pq"), Path(os.environ["OUT"])))
 PY
+df -h / | tail -1
 # 旧折特征（MX-3-PQ 留在卷上的 /workspace/wp/CLS/results/mx3_pq/folds）若在，报告但不复用——协议要求折内 TS2Vec 现算（20 s/折）
 ls results/mx3_pq/folds 2>/dev/null | head -3 || true
 

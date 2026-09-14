@@ -8,7 +8,7 @@
 set -uo pipefail
 REPO="${REPO:-/workspace/wp/CLS}"
 LOG="${LOG:-/workspace/logs}"
-OUT="${OUT:-results/tclsc_s1e/binned}"
+OUT="${OUT:-/root/s1e/binned}"
 MODE="${MODE:-binned}"
 GRAPH_ARGS="${GRAPH_ARGS:-}"
 cd "$REPO"; mkdir -p "$LOG" "$OUT"
@@ -49,8 +49,9 @@ tail -9 "$LOG/s1e_rank.log"
 
 stamp "pack"
 mkdir -p /workspace/upload_s1e
-tar -czf /workspace/upload_s1e/out_s1e.tar.gz "$OUT/runs" "$OUT/models" "$OUT/rankings_s1e.json" "$OUT"/folds/*/shared_ts2vec.meta.json \
-    "$OUT/set_encoder_init.pt" "$LOG"/s1e_*.log 2>/dev/null
+cp "$LOG"/s1e_*.log "$OUT/" 2>/dev/null || true
+tar -C "$(dirname "$OUT")" -czf /workspace/upload_s1e/out_s1e.tar.gz binned/runs binned/models binned/rankings_s1e.json \
+    binned/folds/*/shared_ts2vec.meta.json binned/set_encoder_init.pt binned/s1e_*.log 2>/dev/null
 ls -la /workspace/upload_s1e/out_s1e.tar.gz
 nvidia-smi --query-gpu=name,memory.used,utilization.gpu --format=csv || true
 stamp "s1e done：拉回 out_s1e.tar.gz → 本地 62 --analyze → pod_ctl.py stop + confirm-stopped 3"
