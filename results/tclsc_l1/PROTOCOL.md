@@ -121,4 +121,10 @@ H-OBJ：δ 存活配对 BCE 丢掉了大部分行（每折训练对 ≈ 800 vs �
 
 ## §9 执行台账（跑后填写）
 
-（空）
+- 2026-09-14 协议锁 3e80e1b（27 例先红）→ 实现 `33 --encoder-mode` + `56` → 27 绿 + 邻近套件 220 + 60 绿。
+- `--c0` PASS：main 0.7349 / 0.0745，ref 五臂与 WP2 逐位；cls_only_pod（rank→score 口径首次算出）0.7405。
+- `--analyze`（L1c，零 GPU，< 1 min）先跑：mlp_z_scalar 0.727 / mlp_z_binned 0.764。
+- `--prepare` 两目录各复制 4 个输入文件；单折计时 Handwriting/scalar/s0 8.8 s（4060），normal acc 与 pod 逐位相同。
+- `--train` 42 跑（2 编码 × 7 折 × 3 种子）8.4–10.8 s/跑，`train.log`；`--rank --analyze` → 读数码 **L1-FLAT**
+  （G1 Δ +0.012 ✗ / G3 0.7644 ✗ 差 0.0006 / G3′ +0.037 ✓）。详见 REPORT.md。
+- 阶段 2（main_binned）未跑（折特征不在本地）。

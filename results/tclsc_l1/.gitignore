@@ -1,0 +1,6 @@
+# 变体目录里的输入是 results/mx3_pq 的只读副本；模型权重 5.8 MB/目录可由 --train 逐位重建
+*/rprime_cache.jsonl
+*/delta_calibration.json
+*/cls_catalog.json
+*/tasks.json
+*/models/

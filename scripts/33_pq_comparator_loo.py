@@ -70,6 +70,7 @@ from autocls.comparator.soft_labels import (  # noqa: E402
 from autocls.comparator.tclsc_engine import Pair, with_reversed  # noqa: E402
 from autocls.labeling import load_rprime_cache, make_pairs  # noqa: E402
 from autocls.space.cls_encoder import CLSEncoder  # noqa: E402
+from autocls.space.cls_encoder import MODES as CLSEncoder_MODES  # noqa: E402
 from autocls.space.cls_space import CLSSpace  # noqa: E402
 from autocls.task_embed import (  # noqa: E402
     TS2VecWrapper, TaskSetEncoder, encode_task_windows, pool_time_axis, task_windows,
@@ -774,10 +775,17 @@ class PQContext:
     def __init__(self, outdir: Path, *, device: str, epochs: Optional[int] = None,
                  settf_windows: Optional[int] = None,
                  budgets: Optional[Sequence[int]] = None,
-                 smoke: bool = False, allow_partial_cache: bool = False):
+                 smoke: bool = False, allow_partial_cache: bool = False,
+                 encoder_mode: str = "scalar"):
         self.outdir = Path(outdir)
         self.device = device
         self.smoke = bool(smoke)
+        # WP16-TCLSC-L1：CLS 向量编码模式（铁律 1：两种模式的档位都只来自 space.yaml）。
+        # scalar = 旧口径 32 维逐位不变；binned = 按档 one-hot 116 维（one-hot 进
+        # cls_mlp 第一层 Linear ≡ AutoCTS++ 每 op 一张 nn.Embedding 表求和）。
+        if encoder_mode not in CLSEncoder_MODES:
+            raise ValueError(f"encoder_mode 须在 {CLSEncoder_MODES} 内，得到 {encoder_mode!r}")
+        self.encoder_mode = str(encoder_mode)
         labels_cfg = yaml.safe_load(
             (ROOT / "configs" / "labels.yaml").read_text(encoding="utf-8"))
         self.task_type = labels_cfg["task_type"]
@@ -798,7 +806,7 @@ class PQContext:
         self.settf_windows = int(settf_windows or self.pq_cfg["settf_windows"])
         self.settf_t_max = int(self.pq_cfg["settf_t_max"])
         self.space = CLSSpace.from_yaml()
-        self.encoder = CLSEncoder(self.space)
+        self.encoder = CLSEncoder(self.space, mode=self.encoder_mode)
         cache_path = self.outdir / "rprime_cache.jsonl"
         if not cache_path.exists():
             sys.exit(f"缺 {cache_path}：先跑 scripts/32_pq_generate_rprime.py")
@@ -1080,7 +1088,8 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
                    spec, fold=fold, seed=seed, cls_dim=cls_dim, ctx_dim=cdim,
                    cfg=ctx.cfg, nz=ctx.nz, settf_windows=ctx.settf_windows,
                    settf_t_max=ctx.settf_t_max, budgets=ctx.budgets,
-                   ctx_encoding=ctx.pq_cfg["ctx_encoding"])
+                   ctx_encoding=ctx.pq_cfg["ctx_encoding"],
+                   encoder_mode=ctx.encoder_mode)
 
     cross_channel = "ctx" if spec.ctx_kind == "dataset_budget" else None
     train_tids = [pq.engine_task_id(s, b) for s in train_slices for b in ctx.budgets
@@ -1114,6 +1123,7 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
         "delta_source": ctx.delta_source,
         "settings": {
             "task_branch": spec.task_branch, "ctx_dim": cdim,
+            "encoder_mode": ctx.encoder_mode, "cls_dim": cls_dim,
             "ctx_encoding": ctx.pq_cfg["ctx_encoding"], "ctx_kind": spec.ctx_kind,
             "encoder": spec.encoder, "e_source": spec.e_source,
             "feature_fold": feature_fold_of(spec, fold),
@@ -1157,7 +1167,8 @@ def _delta_by_dataset_budget(delta_map: dict[str, float]) -> dict[str, float]:
 
 def save_model(path: Path, model: TCLSC, spec: ArmSpec, *, fold: str, seed: int,
                cls_dim: int, ctx_dim: int, cfg: dict, nz: int, settf_windows: int,
-               settf_t_max: int, budgets: Sequence[int], ctx_encoding: str) -> None:
+               settf_t_max: int, budgets: Sequence[int], ctx_encoding: str,
+               encoder_mode: str = "scalar") -> None:
     """interfaces「Task 6 → Task 7 saved-model format」——meta 键集是绑定契约。
 
     `e_source` 只取绑定枚举 ("fold"|"per_dataset"|"unfit"|null)；`feature_fold`
@@ -1173,6 +1184,8 @@ def save_model(path: Path, model: TCLSC, spec: ArmSpec, *, fold: str, seed: int,
         "feature_fold": feature_fold_of(spec, fold),
         "settf_windows": settf_windows, "settf_t_max": settf_t_max,
         "budgets": [int(b) for b in budgets], "ctx_encoding": ctx_encoding,
+        # WP16：打分侧按此键选 CLSEncoder 模式（老存档无此键 = scalar；34/56 号据 cls_dim 互校）
+        "encoder_mode": encoder_mode,
     }}, path)
 
 
@@ -1205,11 +1218,14 @@ def _write_skipped(outdir: Path, skips: list[dict], attempted: set) -> None:
 def cmd_train(outdir: Path, *, arms: Sequence[str], folds: Optional[Sequence[str]],
               seeds: Optional[Sequence[int]], resume: bool, device: str,
               epochs: Optional[int], settf_windows: Optional[int],
-              smoke: bool = False, allow_partial_cache: bool = False) -> None:
+              smoke: bool = False, allow_partial_cache: bool = False,
+              encoder_mode: str = "scalar") -> None:
     ctx = PQContext(outdir, device=device, epochs=epochs, settf_windows=settf_windows,
-                    smoke=smoke, allow_partial_cache=allow_partial_cache)
+                    smoke=smoke, allow_partial_cache=allow_partial_cache,
+                    encoder_mode=encoder_mode)
     print(f"缓存 {len(ctx.cache)} 行 | 预算 {ctx.budgets} | 数据集 "
-          f"{sorted(ctx.slices_by_ds)} | δ 源 {ctx.delta_source} | device={device}",
+          f"{sorted(ctx.slices_by_ds)} | δ 源 {ctx.delta_source} | device={device} "
+          f"| CLS 编码 {ctx.encoder_mode}（{ctx.encoder.dim} 维）",
           flush=True)
     skips: list[dict] = []          # 本轮跳过的 (臂, 折, 种子)，逐条即时落盘
     attempted: set = set()          # 本轮试过的组合：成功的要把历史 skip 记录清掉
@@ -1651,7 +1667,8 @@ def run_smoke(outdir, *, epochs: int = 2, arms: Optional[Sequence[str]] = None,
               seeds: Optional[Sequence[int]] = (0,),
               datasets: Sequence[str] = SMOKE_DATASETS, n_slices: int = 6,
               n_cls: int = 8, budgets: Optional[Sequence[int]] = None,
-              device: str = "cpu", settf_windows: int = 4, t_max: int = 8) -> dict:
+              device: str = "cpu", settf_windows: int = 4, t_max: int = 8,
+              encoder_mode: str = "scalar") -> dict:
     """端到端冒烟：（缺则合成）缓存 + 合成窗口 → --train → --analyze。
 
     优先复用 Task 5 的 `--smoke` 产物（`<outdir>/rprime_cache.jsonl` 存在即直接用，
@@ -1682,12 +1699,13 @@ def run_smoke(outdir, *, epochs: int = 2, arms: Optional[Sequence[str]] = None,
     # smoke=True：冒烟缓存本就是薄网格（满格闸不适用），δ 也只能读产物目录那份
     # 玩具口径（32 号拒绝把它回填 labels.yaml）——两个例外都由这一位统一开。
     cmd_train(outdir, arms=arm_list, folds=fold_list, seeds=seeds, resume=False,
-              device=device, epochs=epochs, settf_windows=settf_windows, smoke=True)
+              device=device, epochs=epochs, settf_windows=settf_windows, smoke=True,
+              encoder_mode=encoder_mode)
     return cmd_analyze(outdir)
 
 
 # ================================================================ 入口
-def main() -> None:
+def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--fit-folds", action="store_true")
     ap.add_argument("--fit-per-dataset", action="store_true")
@@ -1708,7 +1726,14 @@ def main() -> None:
                          "true；默认 exit 2）")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     ap.add_argument("--outdir", type=Path, default=OUT)
-    args = ap.parse_args()
+    ap.add_argument("--encoder-mode", default="scalar", choices=list(CLSEncoder_MODES),
+                    help="CLS 向量编码：scalar（32 维，默认逐位不变）/ binned（按档 one-hot 116 维；"
+                         "WP16-TCLSC-L1）。产物路径不带模式，两种模式请用不同 --outdir")
+    return ap
+
+
+def main() -> None:
+    args = build_parser().parse_args()
     if not any((args.fit_folds, args.fit_per_dataset, args.train, args.analyze,
                 args.smoke, args.calibrate_windows)):
         ap.error("至少指定 --fit-folds / --fit-per-dataset / --train / --analyze / "
@@ -1725,12 +1750,14 @@ def main() -> None:
         run_smoke(args.outdir, epochs=args.epochs or 2, arms=args.arms,
                   folds=args.folds,
                   seeds=tuple(args.seeds) if args.seeds else (0,),
-                  device=args.device, settf_windows=args.settf_windows or 4)
+                  device=args.device, settf_windows=args.settf_windows or 4,
+                  encoder_mode=args.encoder_mode)
     if args.train:
         cmd_train(args.outdir, arms=args.arms or list(ALL_ARMS), folds=args.folds,
                   seeds=args.seeds, resume=args.resume, device=args.device,
                   epochs=args.epochs, settf_windows=args.settf_windows,
-                  allow_partial_cache=args.allow_partial_cache)
+                  allow_partial_cache=args.allow_partial_cache,
+                  encoder_mode=args.encoder_mode)
     if args.analyze:
         cmd_analyze(args.outdir)
 

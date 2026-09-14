@@ -1,0 +1,46 @@
+===== [scalar] 33 --train --arms cls_only --encoder-mode scalar seeds=[0, 1, 2] =====
+缓存 2835 行 | 预算 (60, 120, 290) | 数据集 ['Cricket', 'EthanolConcentration', 'HandMovementDirection', 'Handwriting', 'PhonemeSpectra', 'SelfRegulationSCP2', 'UWaveGestureLibrary', 'UniMiB-SHAR'] | δ 源 configs/labels.yaml: pq.delta_per_dataset_budget（与 delta_calibration.json 对账一致） | device=cuda | CLS 编码 scalar（32 维）
+[Handwriting/cls_only_s0] 已有结果，跳过
+[Handwriting/cls_only_s1] 8.7s | normal 0.7273 | within — | cross — | budget —
+[Handwriting/cls_only_s2] 9.2s | normal 0.7005 | within — | cross — | budget —
+[UniMiB-SHAR/cls_only_s0] 9.0s | normal 0.8042 | within — | cross — | budget —
+[UniMiB-SHAR/cls_only_s1] 8.7s | normal 0.7853 | within — | cross — | budget —
+[UniMiB-SHAR/cls_only_s2] 9.3s | normal 0.7859 | within — | cross — | budget —
+[PhonemeSpectra/cls_only_s0] 8.4s | normal 0.7371 | within — | cross — | budget —
+[PhonemeSpectra/cls_only_s1] 8.4s | normal 0.7463 | within — | cross — | budget —
+[PhonemeSpectra/cls_only_s2] 8.4s | normal 0.7406 | within — | cross — | budget —
+[UWaveGestureLibrary/cls_only_s0] 9.4s | normal 0.8538 | within — | cross — | budget —
+[UWaveGestureLibrary/cls_only_s1] 8.9s | normal 0.8246 | within — | cross — | budget —
+[UWaveGestureLibrary/cls_only_s2] 9.2s | normal 0.8528 | within — | cross — | budget —
+[EthanolConcentration/cls_only_s0] 9.6s | normal 0.4369 | within — | cross — | budget —
+[EthanolConcentration/cls_only_s1] 9.6s | normal 0.4579 | within — | cross — | budget —
+[EthanolConcentration/cls_only_s2] 9.6s | normal 0.4974 | within — | cross — | budget —
+[Cricket/cls_only_s0] 9.2s | normal 0.8500 | within — | cross — | budget —
+[Cricket/cls_only_s1] 9.3s | normal 0.8043 | within — | cross — | budget —
+[Cricket/cls_only_s2] 9.3s | normal 0.8297 | within — | cross — | budget —
+[HandMovementDirection/cls_only_s0] 10.1s | normal 0.5977 | within — | cross — | budget —
+[HandMovementDirection/cls_only_s1] 10.8s | normal 0.6455 | within — | cross — | budget —
+[HandMovementDirection/cls_only_s2] 10.1s | normal 0.6227 | within — | cross — | budget —
+===== [binned] 33 --train --arms cls_only --encoder-mode binned seeds=[0, 1, 2] =====
+缓存 2835 行 | 预算 (60, 120, 290) | 数据集 ['Cricket', 'EthanolConcentration', 'HandMovementDirection', 'Handwriting', 'PhonemeSpectra', 'SelfRegulationSCP2', 'UWaveGestureLibrary', 'UniMiB-SHAR'] | δ 源 configs/labels.yaml: pq.delta_per_dataset_budget（与 delta_calibration.json 对账一致） | device=cuda | CLS 编码 binned（116 维）
+[Handwriting/cls_only_s0] 9.0s | normal 0.7878 | within — | cross — | budget —
+[Handwriting/cls_only_s1] 9.4s | normal 0.7414 | within — | cross — | budget —
+[Handwriting/cls_only_s2] 8.7s | normal 0.7737 | within — | cross — | budget —
+[UniMiB-SHAR/cls_only_s0] 9.2s | normal 0.8407 | within — | cross — | budget —
+[UniMiB-SHAR/cls_only_s1] 9.0s | normal 0.8321 | within — | cross — | budget —
+[UniMiB-SHAR/cls_only_s2] 9.4s | normal 0.8341 | within — | cross — | budget —
+[PhonemeSpectra/cls_only_s0] 9.0s | normal 0.7659 | within — | cross — | budget —
+[PhonemeSpectra/cls_only_s1] 8.3s | normal 0.7812 | within — | cross — | budget —
+[PhonemeSpectra/cls_only_s2] 8.9s | normal 0.7966 | within — | cross — | budget —
+[UWaveGestureLibrary/cls_only_s0] 9.4s | normal 0.8069 | within — | cross — | budget —
+[UWaveGestureLibrary/cls_only_s1] 9.3s | normal 0.7285 | within — | cross — | budget —
+[UWaveGestureLibrary/cls_only_s2] 9.3s | normal 0.7823 | within — | cross — | budget —
+[EthanolConcentration/cls_only_s0] 9.8s | normal 0.4811 | within — | cross — | budget —
+[EthanolConcentration/cls_only_s1] 9.7s | normal 0.5499 | within — | cross — | budget —
+[EthanolConcentration/cls_only_s2] 10.0s | normal 0.5347 | within — | cross — | budget —
+[Cricket/cls_only_s0] 9.3s | normal 0.8095 | within — | cross — | budget —
+[Cricket/cls_only_s1] 9.4s | normal 0.7666 | within — | cross — | budget —
+[Cricket/cls_only_s2] 9.4s | normal 0.8276 | within — | cross — | budget —
+[HandMovementDirection/cls_only_s0] 10.4s | normal 0.7386 | within — | cross — | budget —
+[HandMovementDirection/cls_only_s1] 10.6s | normal 0.6886 | within — | cross — | budget —
+[HandMovementDirection/cls_only_s2] 10.6s | normal 0.7273 | within — | cross — | budget —
