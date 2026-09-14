@@ -1,12 +1,32 @@
 # CLAUDE.md — AutoCLS
 
-Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比学习策略空间（CLS）** 作为搜索对象，先做**零样本排名**给出候选名单，再在目标数据集上用**逐次减半**的少量真实试跑定冠军，encoder 固定。
+Zero-Shot NAS for Contrastive Learning Strategy Search。把 **对比学习策略空间（CLS；当前基线 = AutoCL 空间 + opt-in 扩展字段，空间本身仍在探索中）** 作为搜索对象，先做**零样本排名**给出候选名单，再在目标数据集上用**逐次减半**的少量真实试跑定冠军，encoder 固定。
 
-**主张定稿（MX-4，用户 2026-09-03 拍板，取代出路 X，勿回退）**：
+## 本会话（2026-09-14 起）：重启 T-CLSC 的尝试会话（用户指令，最高优先级）
+
+本会话的目的是**重新尝试最初的设想：T-CLSC 比较器 + 数据集特征 E → AutoCTS++ 式 task-aware 比较器**，作为论文主臂（承接下一节"用户正式主张 2026-09-13"）。本会话内的行为规则：
+1. **立场是"怎么让它成立"，不是"它为什么失败过"。** 历史判负（M3 / C2 / 实验 1-2 / MX-3-PQ / WP6-TF / WP7-UCR / WP12）只作为**设计约束**引用，每条至多一句，不展开复述，不把结论推回"任务盲先验 + SH"，不重复论证不可行。
+2. 用户提问先答问题本身；引用历史证据只挑与当前设计直接相关的那一条，并落到"所以重启时要怎么改"。
+3. 本文件下方"T-CLSC 只作消融对照、不再投入""E / SetTF / 可行性预测器全部关闭"等表述**在本会话失效**；`autocls/comparator/`、`autocls/task_embed/`、`scripts/33_pq_comparator_loo.py` 是本会话的主要工作对象。
+4. 重启的设计自由度全开：标签形式（δ 硬配对 / 连续 within-dataset z / 开关目标 / 基型偏好）、E 的来源（SetTF / 均值池化 / 目标上一次短训的表示 / 原始空间机制特征）、融合头（晚期 concat / FiLM / 双线性）、训练口径（切片 / 官方）、数据集数（UEA 8 / UCR 84 / 合池）都可改；改动照旧走 PROTOCOL + 单测 + 协议锁。
+5. 重启必须绕开的三条硬约束（一句话版，细节在各 memory）：(a) 标签里要有数据集级信号——δ 硬配对在 ≤8 集上把它滤掉（存活对任务盲天花板 0.95，one-hot 数据集 ID oracle 也零）；(b) 预测目标要在数据集维上低秩——AutoCL 全目录"a 比 b 好"不是（8 字段 ICC≈0、残差 90% 需 22/86 维），ICC 过门的删除型开关（highpass05 0.91 / inst_norm 0.87）与基型偏好（B_I vs B_T ICC +0.72，尚无预测器）是；(c) 筛选口径 = 部署口径（增强偏好与温度方向随 batch 128 / 8 翻转）。
+6. 结构事实（本会话已核）：T-AHC 的 GIN 只产架构支路 l_a / l′_a，E′ 走 `set_fc` 在 `pred_fc`（Linear+ReLU+Linear）处晚期 concat；我们的 `tclsc_model.py` 自 `cat([l_a,l_b])` 起与原码逐层对应，GIN→MLP 不触及 E′ 路径。融合头是弱交互归纳偏置（E′ 近似加性偏移），可作为重启的改动点之一，但须与带数据集级信号的标签一起改。
+7. 重启路线图（用户 2026-09-14 拍板）：**L1** CLS 支路编码（scalar 32 → binned 116 = 每字段 embedding 表）× 目标函数（δ 配对 BCE → within-task z 回归）分解，协议 `results/tclsc_l1/PROTOCOL.md`、单测 `tests/test_tclsc_l1.py`（先红）、实现 = `33 --encoder-mode` + `scripts/56_tclsc_l1.py`（47–55 号已被各 worktree 占用）；**L3** 融合头改 `s(l_a,E′) − s(l_b,E′)`（反对称、E′ 只能经交互起作用）；**L2** CLS 作流水线 DAG（`order` 字段 = 增强节点间的边）+ 共享 GIN。顺序 L1 → L3 → L2，每级零 GPU 先在 `results/mx3_pq` 缓存上判。注意：mx3_pq 的折特征 npz 与模型 .pt 不在本地（留在 pod 卷），凡吃 E 的臂都要先重跑 `33 --fit-folds`（GPU，须请示）。
+
+## 用户正式主张（2026-09-13，覆盖本文件所有与之冲突的"主臂 / 放弃 / 判死"表述）
+
+**论文主臂 = 从数据集特征得到 CLS 偏好（dataset-aware 预测式）。形式不限**：T-CLSC 式比较器、原始空间机制特征的规则、转导式（目标上一次短训的表示空间特征）、任何"输入数据集、输出该数据集的 CLS 偏好"的模型都算。
+**默认排序器（源池先验 + SH）不是主臂**：能提供帮助最好（作辅助 / 兜底 / 对照），但不作为论文的主张；"追平 SH"不是目标函数，"预测式能否给出偏好"才是。
+1. 此前所有"task-aware 判负 / 全线放弃 / 预测式关闭"的措辞只表示"某种形式在某口径下未成立"，**不改变主臂目标**；后续工作的任务是把预测式主臂做成立——找对的对象（哪个 CLS 维度的偏好是数据集级的）、对的口径（筛字段的训练口径必须等于部署口径）、对的特征（原始 / 转导 / 表示空间）。
+2. 实验设计与读数码围绕"预测式主臂"设：门要问"预测器给出的偏好在留出集上是否成立、值多少"，不要问"是否追平先验 + SH"。
+3. 已成立的正例（主臂证据链起点）：WP13c inst_norm ← level_scale_info（UCR 53 集，ρ −0.43，p 7e-4）；WP14 阶段 2 R1 highpass05 ← ret_highpass（20 集拟合、33 新集留出命中 73% vs 58%，ρ +0.62）；WP15 官方口径复现 ρ +0.67；事后待预注册：inst_norm ← ret_instnorm、rescale ← rep_ret_highpass05@60、polarity ← rep_ret_polarity@290。已知边界：增强偏好在 UEA 官方口径未兑现（H2-UEA），根因是筛字段口径 ≠ 部署口径，不是"预测式不成立"。
+4. 汇报时不得把"预测式在某口径判负"说成"预测式路线关闭"；不得再提议把主臂换成任务盲默认。
+
+**主张定稿（MX-4，用户 2026-09-03 拍板，取代出路 X；2026-09-13 起其中"头条 / 主臂"字样按上两节改读：零样本排名与 SH 是辅助与对照）**：
 ① **零样本排名**（头条）：任务无关的 CLS 质量排序器 = **源池先验**（shared 探针在源池全部切片×预算上 within-task z 分数的均值）+ **字段结构化代理**（GBDT 在 CLS 字段编码上拟合 within-task z，`autocls/search/surrogate.py`，目录外候选由它打分）。7 折 leave-one-dataset-out：先验@1 regret 0.046、代理配对准确率 0.78 / regret@1 0.056，均显著优于 T-CLSC（0.074 / 0.735）与手工强默认 GGS（0.068）（`results/mx4_prior_sh`、`results/mx4_surrogate`）。
 ② **目标侧逐次减半验证**：零样本名单前 6 条各训到 @60 → 留 3 条到 @120 → 3 条到 b_final 取最好（SH6-3-3）。@290 regret 0.018、中位 0、垫底 0/42，成本 ≈3.6 次全跑（与 AutoCTS++ 式 top-3 真评估同档，后者 0.041）。**最后一级必须留 3 条**（只留 1 条 regret 翻倍）。
-③ **任务感知靠测量不靠预测**：数据集级 CLS×数据集交互真实存在（R' 方差分解 @290：任务 73% / CLS 13% / 交互 14%，交互均方 = 噪声 140×，几乎全在数据集级），由目标侧 @60/@120 截点直接读出；E / SetTF / 可行性预测器全部关闭，T-CLSC 降为消融对照。
-**两条判死**：(a) **细粒度 task-aware 排序**在配对 δ 标签 + ≤8 数据集口径下不可辨识（M3/C2/MX-1 系列/实验 1-2/MX-3-PQ 五轮判负；δ 存活对里好-好对只 1.6–4.3%，任务盲天花板按 shared–shared 对诚实算是 0.86–0.92 而非 0.97）；(b) **开放空间零样本外推**：任何代理对目录外候选系统性高估（进化 CLS 预测 z +0.52 vs 真 +0.05，到训练集字段汉明距离 8 vs 目录 3），bag-10 LCB 只砍 44%，信任域一刀切全砍——搜索只在源池已评估配置邻域提名，且必须过目标侧真评估（BO 式回灌才可立项）。
+③ **任务感知靠测量不靠预测**：数据集级 CLS×数据集交互真实存在（R' 方差分解 @290：任务 73% / CLS 13% / 交互 14%，交互均方 = 噪声 140×，几乎全在数据集级），由目标侧 @60/@120 截点直接读出；E / SetTF / 可行性预测器在"配对 δ 标签 + ≤8 数据集"口径下判负，T-CLSC 曾降为消融对照——**本会话起重启 T-CLSC（见顶部）**。
+**两条已判负的具体形式**（判负的是口径，不是路线）：(a) **细粒度 task-aware 排序**在配对 δ 标签 + ≤8 数据集口径下不可辨识（M3/C2/MX-1 系列/实验 1-2/MX-3-PQ 五轮判负；δ 存活对里好-好对只 1.6–4.3%，任务盲天花板按 shared–shared 对诚实算是 0.86–0.92 而非 0.97）；(b) **开放空间零样本外推**：任何代理对目录外候选系统性高估（进化 CLS 预测 z +0.52 vs 真 +0.05，到训练集字段汉明距离 8 vs 目录 3），bag-10 LCB 只砍 44%，信任域一刀切全砍——搜索只在源池已评估配置邻域提名，且必须过目标侧真评估（BO 式回灌才可立项）。
 
 完整设计见 `TECHNICAL_DESIGN.md`（已过期，待按 MX-4 重写）；MX-4 计划与诊断见 memory `mx4-diagnosis-prior-beats-tclsc`。
 
@@ -16,7 +36,7 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 - **CLS**：一个对比学习策略 = 19 个离散字段的配置向量（AutoCL Table 1）。这是"要搜的架构"。
 - **零样本排序器**（MX-4）：先验 + 字段代理，输入 CLS 向量（不看任务），输出质量分；`surrogate.pairwise_matrix` 把分数变成 `autocls/search/rank.py` 可消费的 P 矩阵，胜场/Borda/进化一行不改。
 - **逐次减半（SH）**：同一条预训练轨迹的截点 {60,120,290} 各评一次 R'，逐级淘汰；部署选中的就是那条轨迹（继续训练即可），缓存模拟与部署零近似。
-- **T-CLSC**：AutoCTS++ 式比较器 `(E, cls_a, cls_b)→y`，**只作消融对照**（MX-3-PQ 判 B-DEAD；本质是常数排序器，偏离常数时 regret 翻倍）。代码与铁律 7 保留，不再投入。
+- **T-CLSC**：AutoCTS++ 式比较器 `(E, cls_a, cls_b)→y`，**本会话的重启对象**（见顶部）。旧口径读数：MX-3-PQ 判 B-DEAD、在 δ 配对标签下退化为常数排序器（配对 acc 0.735 LODO / 0.866 同分布），偏离常数时 regret 翻倍——这些是重启要绕开的约束，不是不投入的理由。代码 `autocls/comparator/{tclsc_model,tclsc_engine,soft_labels,mean_pool_encoder,e_diagnostics}.py` + `autocls/task_embed/` 齐全，铁律 7 照旧。
 - **early-validation / 截点评估**：造 R' 时一条轨迹到 290 iters，@60/@120/@290 各评一次（`evaluate_rprime_trajectory`），逐位等于分开训。**只有 SH 幸存者跑到 b_final。**
 - **固定 encoder**：架构固定、每个 CLS 各自重新预训练一份权重（不是权重冻结）。
 - **字段主效应**（论文分析章）：分组置换重要性 temperature 0.28 ≫ sim_func 0.17 > norm 0.09 > freq_mask 0.08；temporal / cross_scale / pool / adj_neighbor / loss_type 平均惰性；ratio 字段档位效应非单调，只报字段级排名不报逐档。
@@ -92,7 +112,7 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **AutoCL 的对比�
 
 **路径一 = 把证据做实**：官方口径 6 靶（+HAR 可选）每靶候选池扩到 80–100 条（shared-10 + GGS + 现有一次性提名 10 + 空间均匀随机补足，seed 0 完整 25/50/100% 轨迹），在缓存上零 GPU 模拟同成本对照：先验前 6 + SH6-3-3（3.75 全跑当量）vs Hyperband（η=2，三 rung = 三截点）/ 随机搜索 / 随机起点 SH / BOHB-TPE 式；冠军 3 种子；UCR 84 语料先验 + SH regret 表（零 GPU）；消融主表；AutoCL 搜索预算换算进成本表。估时 4090 ≈ 5.4 h / 5090 ≈ 3.5 h；PS 评估须 480 s 上限。交接细节见 memory `paper-positioning-and-path-one-handoff`。
 
-**论文定位（2026-09-06）**：task-aware 全线放弃。"首次"只能写成 "first to *learn* a task-agnostic CL strategy default from cross-dataset real evaluations, validated by target-side SH"，AutoML 前人必引（Pfisterer *Learning Multiple Defaults*、Winkelmolen *zero-shot HPO*、Feurer *Auto-sklearn 2.0* portfolio+SH、Probst *Tunability*）；"快"须等路径一的同成本基线；最硬的贡献是负翼（七轮预注册 task-aware 判负 + 噪声地板 + 开放空间早截点机制）。投稿：现证据 → CIKM/ECML-PKDD/ICDM（CCF-B）、AutoML Conf、TMLR；路径一后 → AAAI/IJCAI；R' 语料打包 → NeurIPS D&B。
+**论文定位（2026-09-06；其中"task-aware 全线放弃"已被 2026-09-13 用户正式主张与本会话 T-CLSC 重启覆盖，下文只作当时口径存档）**：task-aware 全线放弃。"首次"只能写成 "first to *learn* a task-agnostic CL strategy default from cross-dataset real evaluations, validated by target-side SH"，AutoML 前人必引（Pfisterer *Learning Multiple Defaults*、Winkelmolen *zero-shot HPO*、Feurer *Auto-sklearn 2.0* portfolio+SH、Probst *Tunability*）；"快"须等路径一的同成本基线；最硬的贡献是负翼（七轮预注册 task-aware 判负 + 噪声地板 + 开放空间早截点机制）。投稿：现证据 → CIKM/ECML-PKDD/ICDM（CCF-B）、AutoML Conf、TMLR；路径一后 → AAAI/IJCAI；R' 语料打包 → NeurIPS D&B。
 
 ### 路径二存档（用户 2026-09-03 记录；WP5/WP6-TF/WP7-UCR/WP8-BO 全部判负关闭）
 
