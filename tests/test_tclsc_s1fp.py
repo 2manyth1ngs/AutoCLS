@@ -79,7 +79,7 @@ class TestFpArms:
         assert f.shape == (FP_DIM,)
         assert np.allclose(f[:K], (m - m.mean()) / m.std()) and f[K] == pytest.approx(m.mean()) and f[K + 1] == pytest.approx(m.std())
         flat = m33.fingerprint(np.full(K, 0.7))
-        assert np.all(flat[:K] == 0.0) and flat[K + 1] == 0.0
+        assert np.all(flat[:K] == 0.0) and flat[K + 1] == pytest.approx(0.0, abs=1e-9)   # 六个 0.7 的 std 是 1e-16 级
 
     def test_context_for_fp_budget_vector(self):
         keys = [f"k{j}" for j in range(12)]
@@ -98,7 +98,8 @@ class TestFpArms:
             m33.context_for(m33.FP_ARMS["fp_diff_hard"], [tid], pq.BUDGETS, pq.PQ_DATASETS)
 
     def test_train_fp_diff_hard_on_smoke_dir(self, tmp_path):
-        m33.synth_smoke_inputs(tmp_path, datasets=("Handwriting", "Cricket"), n_slices=3, n_cls=8,
+        # 冒烟合成把 n_cls // 2 标成 shared：要凑齐 K=6 条探针需 n_cls ≥ 12
+        m33.synth_smoke_inputs(tmp_path, datasets=("Handwriting", "Cricket"), n_slices=3, n_cls=16,
                                budgets=pq.BUDGETS)
         m33.cmd_train(tmp_path, arms=["fp_diff_hard"], folds=["Handwriting"], seeds=[0], resume=False,
                       device="cpu", epochs=2, settf_windows=2, smoke=True, encoder_mode="binned")

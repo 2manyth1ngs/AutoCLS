@@ -1,0 +1,340 @@
+{
+  "fold": "PhonemeSpectra",
+  "split": "S1",
+  "arm": "fp_diff_hard",
+  "seed": 2,
+  "train_datasets": [
+    "Handwriting",
+    "UniMiB-SHAR",
+    "UWaveGestureLibrary",
+    "EthanolConcentration",
+    "Cricket",
+    "HandMovementDirection",
+    "SelfRegulationSCP2"
+  ],
+  "test_dataset": "PhonemeSpectra",
+  "budgets": [
+    60,
+    120,
+    290
+  ],
+  "partial_cache": false,
+  "delta_source": "configs/labels.yaml: pq.delta_per_dataset_budget（与 delta_calibration.json 对账一致）",
+  "settings": {
+    "task_branch": "ctx",
+    "ctx_dim": 11,
+    "encoder_mode": "binned",
+    "cls_dim": 116,
+    "ctx_encoding": "onehot",
+    "ctx_kind": "fp_budget",
+    "encoder": null,
+    "e_source": null,
+    "feature_fold": null,
+    "label_mode": "hard",
+    "random_only": false,
+    "head": "diff",
+    "zdiff_k": null,
+    "fp_probes": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785",
+      "4f7d413581f6"
+    ],
+    "fp_budget": 60,
+    "settf_windows": 100,
+    "settf_windows_actual": null,
+    "settf_t_max": 152,
+    "nz": 256,
+    "dim_input": 256,
+    "epochs": 200,
+    "curriculum_epochs": 40,
+    "lr": 0.0001,
+    "batch_size": 64,
+    "iron_law_6_compliant": true,
+    "delta_train": {
+      "Cricket@120": 0.175,
+      "Cricket@290": 0.18,
+      "Cricket@60": 0.105,
+      "EthanolConcentration@120": 0.09,
+      "EthanolConcentration@290": 0.06,
+      "EthanolConcentration@60": 0.065,
+      "HandMovementDirection@120": 0.19,
+      "HandMovementDirection@290": 0.135,
+      "HandMovementDirection@60": 0.19,
+      "Handwriting@120": 0.195,
+      "Handwriting@290": 0.16,
+      "Handwriting@60": 0.11,
+      "SelfRegulationSCP2@120": 0.09,
+      "SelfRegulationSCP2@290": 0.1,
+      "SelfRegulationSCP2@60": 0.065,
+      "UWaveGestureLibrary@120": 0.12,
+      "UWaveGestureLibrary@290": 0.075,
+      "UWaveGestureLibrary@60": 0.055,
+      "UniMiB-SHAR@120": 0.085,
+      "UniMiB-SHAR@290": 0.07,
+      "UniMiB-SHAR@60": 0.06
+    },
+    "delta_test": {
+      "PhonemeSpectra@120": 0.07,
+      "PhonemeSpectra@290": 0.07,
+      "PhonemeSpectra@60": 0.055
+    },
+    "cross_channel": "ctx"
+  },
+  "n_train_records": 2340,
+  "n_test_records": 360,
+  "n_test_pairs_forward": 2176,
+  "n_test_pairs_directed": 4352,
+  "train_seconds": 12.3,
+  "device": "cuda",
+  "bce_first": 0.691741693019867,
+  "bce_last": 0.06852739490568638,
+  "train_pairs_last": 748,
+  "robust_pooled_delta": {
+    "delta_by_budget": {
+      "60": 0.065,
+      "120": 0.12,
+      "290": 0.1
+    },
+    "n_forward": 1787,
+    "acc": 0.7604924454392837,
+    "loss": 0.5164982080459595,
+    "acc_forward": 0.7604924454392837
+  },
+  "normal": {
+    "acc": 0.7362132352941176,
+    "loss": 0.5982890129089355,
+    "n": 4352,
+    "n_forward": 2176,
+    "acc_forward": 0.7362132352941176,
+    "binom_p_forward": 5.009447148147523e-112,
+    "by_budget": {
+      "60": {
+        "n": 803,
+        "acc": 0.7085927770859277
+      },
+      "120": {
+        "n": 702,
+        "acc": 0.7606837606837606
+      },
+      "290": {
+        "n": 671,
+        "acc": 0.7436661698956781
+      }
+    },
+    "by_kind": {
+      "random-random": {
+        "n": 571,
+        "acc": 0.7478108581436077
+      },
+      "random-shared": {
+        "n": 1183,
+        "acc": 0.7540152155536771
+      },
+      "shared-shared": {
+        "n": 422,
+        "acc": 0.6706161137440758
+      }
+    }
+  },
+  "within": null,
+  "cross": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.7987132352941176,
+        "loss": 0.5732932686805725,
+        "base_acc": 0.7362132352941176,
+        "delta_acc": -0.0625,
+        "n_directed": 4352,
+        "n_forward": 2176,
+        "mcnemar": {
+          "b": 114,
+          "c": 250,
+          "p": 0.9999999999998181
+        }
+      },
+      {
+        "seed": 1,
+        "acc": 0.7867647058823529,
+        "loss": 0.6035411953926086,
+        "base_acc": 0.7362132352941176,
+        "delta_acc": -0.05055147058823528,
+        "n_directed": 4352,
+        "n_forward": 2176,
+        "mcnemar": {
+          "b": 89,
+          "c": 199,
+          "p": 0.9999999999825673
+        }
+      },
+      {
+        "seed": 2,
+        "acc": 0.7518382352941176,
+        "loss": 0.666933536529541,
+        "base_acc": 0.7362132352941176,
+        "delta_acc": -0.015625,
+        "n_directed": 4352,
+        "n_forward": 2176,
+        "mcnemar": {
+          "b": 195,
+          "c": 229,
+          "p": 0.9554704589516354
+        }
+      },
+      {
+        "seed": 3,
+        "acc": 0.7596507352941176,
+        "loss": 0.6565423607826233,
+        "base_acc": 0.7362132352941176,
+        "delta_acc": -0.0234375,
+        "n_directed": 4352,
+        "n_forward": 2176,
+        "mcnemar": {
+          "b": 166,
+          "c": 217,
+          "p": 0.9960999437288428
+        }
+      },
+      {
+        "seed": 4,
+        "acc": 0.7715992647058824,
+        "loss": 0.5980992913246155,
+        "base_acc": 0.7362132352941176,
+        "delta_acc": -0.03538602941176472,
+        "n_directed": 4352,
+        "n_forward": 2176,
+        "mcnemar": {
+          "b": 188,
+          "c": 265,
+          "p": 0.9998802484350033
+        }
+      }
+    ],
+    "n_rows": 5,
+    "mean_delta": -0.0375,
+    "min_delta": -0.0625,
+    "max_delta": -0.015625,
+    "n_sig": 0,
+    "pass": false,
+    "tier": "zero",
+    "channel": "ctx"
+  },
+  "budget": {
+    "rows": [
+      {
+        "seed": 0,
+        "acc": 0.7352941176470589,
+        "loss": 0.6018489003181458,
+        "base_acc": 0.7362132352941176,
+        "delta_acc": 0.0009191176470587648,
+        "n_directed": 4352,
+        "n_forward": 2176,
+        "mcnemar": {
+          "b": 42,
+          "c": 40,
+          "p": 0.4560783037763011
+        },
+        "is_derangement": true
+      },
+      {
+        "seed": 1,
+        "acc": 0.7357536764705882,
+        "loss": 0.6027923226356506,
+        "base_acc": 0.7362132352941176,
+        "delta_acc": 0.0004595588235294379,
+        "n_directed": 4352,
+        "n_forward": 2176,
+        "mcnemar": {
+          "b": 42,
+          "c": 41,
+          "p": 0.49999999999999994
+        },
+        "is_derangement": true
+      },
+      {
+        "seed": 2,
+        "acc": 0.7357536764705882,
+        "loss": 0.5994885563850403,
+        "base_acc": 0.7362132352941176,
+        "delta_acc": 0.0004595588235294379,
+        "n_directed": 4352,
+        "n_forward": 2176,
+        "mcnemar": {
+          "b": 17,
+          "c": 16,
+          "p": 0.5
+        },
+        "is_derangement": false
+      },
+      {
+        "seed": 3,
+        "acc": 0.734375,
+        "loss": 0.6028330326080322,
+        "base_acc": 0.7362132352941176,
+        "delta_acc": 0.0018382352941176405,
+        "n_directed": 4352,
+        "n_forward": 2176,
+        "mcnemar": {
+          "b": 45,
+          "c": 41,
+          "p": 0.3732671911445287
+        },
+        "is_derangement": false
+      },
+      {
+        "seed": 4,
+        "acc": 0.7357536764705882,
+        "loss": 0.5994885563850403,
+        "base_acc": 0.7362132352941176,
+        "delta_acc": 0.0004595588235294379,
+        "n_directed": 4352,
+        "n_forward": 2176,
+        "mcnemar": {
+          "b": 17,
+          "c": 16,
+          "p": 0.5
+        },
+        "is_derangement": false
+      }
+    ],
+    "n_rows": 5,
+    "mean_delta": 0.0008272058823529438,
+    "min_delta": 0.0004595588235294379,
+    "max_delta": 0.0018382352941176405,
+    "n_sig": 0,
+    "pass": false,
+    "tier": "zero",
+    "channel": "ctx"
+  },
+  "zero_E": null,
+  "zero_ctx": {
+    "rows": [
+      {
+        "seed": null,
+        "acc": 0.8005514705882353,
+        "loss": 0.49471887946128845,
+        "base_acc": 0.7362132352941176,
+        "delta_acc": -0.06433823529411764,
+        "n_directed": 4352,
+        "n_forward": 2176,
+        "mcnemar": {
+          "b": 42,
+          "c": 182,
+          "p": 1.0
+        }
+      }
+    ],
+    "n_rows": 1,
+    "mean_delta": -0.06433823529411764,
+    "min_delta": -0.06433823529411764,
+    "max_delta": -0.06433823529411764,
+    "n_sig": 0,
+    "pass": false,
+    "tier": "zero",
+    "deterministic": true,
+    "channel": "ctx"
+  }
+}

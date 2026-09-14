@@ -1,0 +1,39 @@
+D:\Anaconda\envs\pytorch\lib\site-packages\torch\nn\modules\linear.py:134: UserWarning: gemm_and_bias error: CUBLAS_STATUS_EXECUTION_FAILED when calling cublasLtMatmul with transpose_mat1 1 transpose_mat2 0 m 128 n 64 k 128 mat1_ld 128 mat2_ld 128 result_ld 128 abType 0 cType 0 computeType 68 scaleType 0. Will attempt to recover by calling unfused cublas path. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\aten\src\ATen\cuda\CUDABlas.cpp:1792.)
+  return F.linear(input, self.weight, self.bias)
+Traceback (most recent call last):
+  File "D:\DevelopDoc\CLS\scripts\59_tclsc_s1fp.py", line 368, in <module>
+    main()
+  File "D:\DevelopDoc\CLS\scripts\59_tclsc_s1fp.py", line 360, in main
+    cmd_train(args.source, args.outdir, arms=args.arms, seeds=args.seeds, device=args.device, epochs=args.epochs, resume=args.resume)
+  File "D:\DevelopDoc\CLS\scripts\59_tclsc_s1fp.py", line 118, in cmd_train
+    _m33.cmd_train(d, arms=list(arms), folds=None, seeds=list(seeds), resume=resume, device=device,
+  File "D:\DevelopDoc\CLS\scripts\33_pq_comparator_loo.py", line 1441, in cmd_train
+    res, correct = run_arm(ctx, spec, fold, seed)
+  File "D:\DevelopDoc\CLS\scripts\33_pq_comparator_loo.py", line 1263, in run_arm
+    history = engine.train(train_records, epochs=ctx.cfg["epochs"],
+  File "D:\DevelopDoc\CLS\autocls\comparator\tclsc_engine.py", line 232, in train
+    out = self.model(a, b, E, ctx)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "D:\DevelopDoc\CLS\autocls\comparator\tclsc_model.py", line 163, in forward
+    l_b = self.cls_mlp(cls_b)                       # Eq.15（共享同一 MLP）
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\torch\nn\modules\container.py", line 253, in forward
+    input = module(input)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "D:\Anaconda\envs\pytorch\lib\site-packages\torch\nn\modules\linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+torch.AcceleratorError: CUDA error: an illegal memory access was encountered
+Search for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

@@ -94,4 +94,8 @@ LODO 下 cross 消融掉分（用了），且**非探针候选**的 regret@3 低
 
 ## §9 执行台账（跑后填写）
 
-（空）
+- 2026-09-14 协议锁 b36fc08（13 例先红）→ 实现 33 FP_ARMS / fp_budget / 指纹函数 + 59 号 → 13 例绿 + 邻近 60 绿。修两处自身 bug：
+  同分探针的形状项浮点残差（改显式 0）、shared 不足 K 时静默维度错（改 fail-fast）。
+- `--train` 三段：后台首启 5/63 被系统按内存杀；脱离重启（LZTray/LeAppOM 占满 CPU，每跑 90–104 s）16/63 处 CUDA illegal memory access；
+  用户清理内存后 `--resume` 每跑 13–20 s 跑完 63。模型键唯一，无重复。
+- `--rank --analyze` → **FP-DEAD**（G-F1 Δ_M1 −0.042 ✗ / G-F2 ✗ / G-F3 probe6_top3 0.015 vs fp 0.030 ✗ / G-F4 ✓），预测 4/7。详见 REPORT.md。

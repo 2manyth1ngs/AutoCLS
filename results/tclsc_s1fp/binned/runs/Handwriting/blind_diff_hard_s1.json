@@ -1,0 +1,140 @@
+{
+  "fold": "Handwriting",
+  "split": "S1",
+  "arm": "blind_diff_hard",
+  "seed": 1,
+  "train_datasets": [
+    "UniMiB-SHAR",
+    "PhonemeSpectra",
+    "UWaveGestureLibrary",
+    "EthanolConcentration",
+    "Cricket",
+    "HandMovementDirection",
+    "SelfRegulationSCP2"
+  ],
+  "test_dataset": "Handwriting",
+  "budgets": [
+    60,
+    120,
+    290
+  ],
+  "partial_cache": false,
+  "delta_source": "configs/labels.yaml: pq.delta_per_dataset_budget（与 delta_calibration.json 对账一致）",
+  "settings": {
+    "task_branch": "none",
+    "ctx_dim": 0,
+    "encoder_mode": "binned",
+    "cls_dim": 116,
+    "ctx_encoding": "onehot",
+    "ctx_kind": "none",
+    "encoder": null,
+    "e_source": null,
+    "feature_fold": null,
+    "label_mode": "hard",
+    "random_only": false,
+    "head": "diff",
+    "zdiff_k": null,
+    "fp_probes": null,
+    "fp_budget": null,
+    "settf_windows": 100,
+    "settf_windows_actual": null,
+    "settf_t_max": 152,
+    "nz": 256,
+    "dim_input": 256,
+    "epochs": 200,
+    "curriculum_epochs": 40,
+    "lr": 0.0001,
+    "batch_size": 64,
+    "iron_law_6_compliant": true,
+    "delta_train": {
+      "Cricket@120": 0.175,
+      "Cricket@290": 0.18,
+      "Cricket@60": 0.105,
+      "EthanolConcentration@120": 0.09,
+      "EthanolConcentration@290": 0.06,
+      "EthanolConcentration@60": 0.065,
+      "HandMovementDirection@120": 0.19,
+      "HandMovementDirection@290": 0.135,
+      "HandMovementDirection@60": 0.19,
+      "PhonemeSpectra@120": 0.07,
+      "PhonemeSpectra@290": 0.07,
+      "PhonemeSpectra@60": 0.055,
+      "SelfRegulationSCP2@120": 0.09,
+      "SelfRegulationSCP2@290": 0.1,
+      "SelfRegulationSCP2@60": 0.065,
+      "UWaveGestureLibrary@120": 0.12,
+      "UWaveGestureLibrary@290": 0.075,
+      "UWaveGestureLibrary@60": 0.055,
+      "UniMiB-SHAR@120": 0.085,
+      "UniMiB-SHAR@290": 0.07,
+      "UniMiB-SHAR@60": 0.06
+    },
+    "delta_test": {
+      "Handwriting@120": 0.195,
+      "Handwriting@290": 0.16,
+      "Handwriting@60": 0.11
+    },
+    "cross_channel": null
+  },
+  "n_train_records": 2340,
+  "n_test_records": 360,
+  "n_test_pairs_forward": 1489,
+  "n_test_pairs_directed": 2978,
+  "train_seconds": 97.6,
+  "device": "cuda",
+  "bce_first": 0.6937665820121766,
+  "bce_last": 0.1550603096301739,
+  "train_pairs_last": 829,
+  "robust_pooled_delta": {
+    "delta_by_budget": {
+      "60": 0.065,
+      "120": 0.09,
+      "290": 0.075
+    },
+    "n_forward": 2238,
+    "acc": 0.709562109025916,
+    "loss": 0.7659028768539429,
+    "acc_forward": 0.709562109025916
+  },
+  "normal": {
+    "acc": 0.7508394895903291,
+    "loss": 0.6413207650184631,
+    "n": 2978,
+    "n_forward": 1489,
+    "acc_forward": 0.7508394895903291,
+    "binom_p_forward": 2.310874761226024e-87,
+    "by_budget": {
+      "60": {
+        "n": 507,
+        "acc": 0.7041420118343196
+      },
+      "120": {
+        "n": 366,
+        "acc": 0.8306010928961749
+      },
+      "290": {
+        "n": 616,
+        "acc": 0.7418831168831169
+      }
+    },
+    "by_kind": {
+      "random-random": {
+        "n": 396,
+        "acc": 0.7095959595959596
+      },
+      "random-shared": {
+        "n": 807,
+        "acc": 0.7967781908302355
+      },
+      "shared-shared": {
+        "n": 286,
+        "acc": 0.6783216783216783
+      }
+    }
+  },
+  "within": null,
+  "cross": null,
+  "budget": null,
+  "zero_E": null,
+  "zero_ctx": null
+}

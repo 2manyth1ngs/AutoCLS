@@ -1,0 +1,17 @@
+缓存 2835 行 | 预算 (60, 120, 290) | 数据集 ['Cricket', 'EthanolConcentration', 'HandMovementDirection', 'Handwriting', 'PhonemeSpectra', 'SelfRegulationSCP2', 'UWaveGestureLibrary', 'UniMiB-SHAR'] | δ 源 configs/labels.yaml: pq.delta_per_dataset_budget（与 delta_calibration.json 对账一致） | device=cuda | CLS 编码 binned（116 维）
+[Handwriting/blind_diff_hard_s0] 已有结果，跳过
+[Handwriting/blind_diff_hard_s1] 已有结果，跳过
+[Handwriting/blind_diff_hard_s2] 已有结果，跳过
+[UniMiB-SHAR/blind_diff_hard_s0] 已有结果，跳过
+[UniMiB-SHAR/blind_diff_hard_s1] 已有结果，跳过
+[UniMiB-SHAR/blind_diff_hard_s2] 96.6s | normal 0.8444 | within — | cross — | budget —
+[PhonemeSpectra/blind_diff_hard_s0] 90.4s | normal 0.7532 | within — | cross — | budget —
+[PhonemeSpectra/blind_diff_hard_s1] 91.5s | normal 0.7881 | within — | cross — | budget —
+[PhonemeSpectra/blind_diff_hard_s2] 91.3s | normal 0.7744 | within — | cross — | budget —
+[UWaveGestureLibrary/blind_diff_hard_s0] 97.4s | normal 0.7875 | within — | cross — | budget —
+[UWaveGestureLibrary/blind_diff_hard_s1] 180.4s | normal 0.7489 | within — | cross — | budget —
+[UWaveGestureLibrary/blind_diff_hard_s2] 97.4s | normal 0.7882 | within — | cross — | budget —
+[EthanolConcentration/blind_diff_hard_s0] 104.0s | normal 0.5026 | within — | cross — | budget —
+[EthanolConcentration/blind_diff_hard_s1] 103.7s | normal 0.5489 | within — | cross — | budget —
+[EthanolConcentration/blind_diff_hard_s2] 103.7s | normal 0.5457 | within — | cross — | budget —
+[Cricket/blind_diff_hard_s0] 99.3s | normal 0.8032 | within — | cross — | budget —

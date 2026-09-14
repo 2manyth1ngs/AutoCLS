@@ -211,15 +211,78 @@ PHI_ARMS: dict[str, ArmSpec] = {
     )
 }
 assert not (set(PHI_ARMS) & (set(ARMS) | set(L3_ARMS))), "φ 臂名不得与既有臂表冲突"
-CLI_ARMS = ALL_ARMS + tuple(L3_ARMS) + tuple(PHI_ARMS)
+
+# ---- WP16-TCLSC 阶段 1 转导指纹臂（results/tclsc_s1fp/PROTOCOL.md）：ctx = 指纹(8) ⊕ 预算 one-hot(3)。
+# 指纹 = 训练折先验前 FP_K 条 shared（= SH6 起跑名单）在该切片 @FP_BUDGET 的实测 R'：形状 (m−mean)/sd ⊕ 水平 [mean, sd]；
+# 探针选择与逐维标准化只用训练折（铁律 6）；目标切片只贡献自己的实测（缓存里已有的格，零新 R'）。
+FP_K, FP_BUDGET = 6, 60
+FP_DIM = FP_K + 2
+FP_ARMS: dict[str, ArmSpec] = {
+    s.name: s for s in (
+        ArmSpec("fp_concat_hard", "S1", "ctx", None, None, "fp_budget", head="concat", seeds=(0, 1, 2)),
+        ArmSpec("fp_diff_hard", "S1", "ctx", None, None, "fp_budget", head="diff", seeds=(0, 1, 2)),
+        ArmSpec("fp_diff_zdiff", "S1", "ctx", None, None, "fp_budget", head="diff",
+                label_mode="zdiff", seeds=(0, 1, 2)),
+    )
+}
+assert not (set(FP_ARMS) & (set(ARMS) | set(L3_ARMS) | set(PHI_ARMS))), "指纹臂名不得与既有臂表冲突"
+CLI_ARMS = ALL_ARMS + tuple(L3_ARMS) + tuple(PHI_ARMS) + tuple(FP_ARMS)
 
 
 def arm_spec(name: str) -> ArmSpec:
-    """臂名 → ArmSpec（先查 MX-3-PQ 冻结表，再查 WP16 的 L3 / φ 表；都没有即 KeyError）。"""
-    for table in (ARMS, L3_ARMS, PHI_ARMS):
+    """臂名 → ArmSpec（先查 MX-3-PQ 冻结表，再查 WP16 的 L3 / φ / 指纹表；都没有即 KeyError）。"""
+    for table in (ARMS, L3_ARMS, PHI_ARMS, FP_ARMS):
         if name in table:
             return table[name]
     raise KeyError(f"未知臂 {name!r}（可选 {CLI_ARMS}）")
+
+
+def fp_probes(cache: Mapping[tuple, Mapping], train_slices: Sequence[str], *, k: int = FP_K) -> list[str]:
+    """探针 = 训练切片全部行的 within-(切片, 预算) z 均值（36 号 prior_scores 同式）在 shared 里的前 k（同分 key 升序）。"""
+    keep = set(train_slices)
+    rows = [{"task_id": tid, "iters": int(it), "cls_key": key, "r_prime": float(rec["r_prime"]), "origin": rec["origin"]}
+            for (tid, key, it), rec in cache.items()
+            if tid in keep and rec.get("r_prime") is not None and np.isfinite(rec["r_prime"]) and rec["origin"] != "ggs"]
+    groups: dict[tuple[str, int], list[dict]] = {}
+    for r in rows:
+        groups.setdefault((r["task_id"], r["iters"]), []).append(r)
+    zsum: dict[str, list[float]] = {}
+    shared: set[str] = set()
+    for g in groups.values():
+        v = np.array([r["r_prime"] for r in g])
+        mu, sd = float(v.mean()), float(v.std())
+        for r in g:
+            zsum.setdefault(r["cls_key"], []).append((r["r_prime"] - mu) / sd if sd > 0 else 0.0)
+            if r["origin"] == "shared":
+                shared.add(r["cls_key"])
+    prior = {key: float(np.mean(v)) for key, v in zsum.items() if key in shared}
+    if len(prior) < int(k):
+        raise ValueError(f"shared 探针只有 {len(prior)} 条，凑不齐 K={k}（指纹维度会与 FP_DIM 不符）")
+    return sorted(prior, key=lambda key: (-prior[key], key))[: int(k)]
+
+
+def fingerprint(m: np.ndarray) -> np.ndarray:
+    """探针实测 m (K,) → 形状 (m−mean)/sd（sd 下限 1e-6）⊕ 水平 [mean, sd]，共 K+2 维。"""
+    m = np.asarray(m, dtype=np.float64)
+    mu, sd = float(m.mean()), float(m.std())
+    shape = (m - mu) / sd if sd > 1e-12 else np.zeros_like(m)   # 六条探针同分：形状无定义 → 0
+    return np.concatenate([shape, [mu, sd]])
+
+
+def fp_raw(cache: Mapping[tuple, Mapping], slices: Sequence[str], probes: Sequence[str], *,
+           budget: int = FP_BUDGET) -> dict[str, np.ndarray]:
+    """{切片: 指纹(K+2)}——从缓存取该切片各探针 @budget 的 R'（缺格即 KeyError，不补）。"""
+    out = {}
+    for s in slices:
+        m = np.array([float(cache[(s, p, int(budget))]["r_prime"]) for p in probes])
+        out[s] = fingerprint(m)
+    return out
+
+
+def fp_standardizer(raw: Mapping[str, np.ndarray], slices: Sequence[str]) -> tuple[np.ndarray, np.ndarray]:
+    """逐维 (μ, σ)，只用给定切片（训练折）；σ 下限 PHI_SD_FLOOR。"""
+    X = np.stack([np.asarray(raw[s], np.float64) for s in slices])
+    return X.mean(axis=0), np.maximum(X.std(axis=0), PHI_SD_FLOOR)
 
 
 def phi_standardizer(phi: Mapping[str, Mapping], slices: Sequence[str],
@@ -255,12 +318,16 @@ def ctx_dim_for(spec: ArmSpec, budgets: Sequence[int], datasets: Sequence[str]) 
         return len(tuple(datasets)) + len(tuple(budgets))
     if spec.ctx_kind == "phi_budget":
         return len(PHI_COLS) + len(tuple(budgets))
+    if spec.ctx_kind == "fp_budget":
+        return FP_DIM + len(tuple(budgets))
     return 0
 
 
 def context_for(spec: ArmSpec, tids: Sequence[str], budgets: Sequence[int],
                 datasets: Sequence[str], *, phi: Optional[Mapping[str, Mapping]] = None,
-                phi_mu: Optional[np.ndarray] = None, phi_sd: Optional[np.ndarray] = None
+                phi_mu: Optional[np.ndarray] = None, phi_sd: Optional[np.ndarray] = None,
+                fp: Optional[Mapping[str, np.ndarray]] = None,
+                fp_mu: Optional[np.ndarray] = None, fp_sd: Optional[np.ndarray] = None
                 ) -> Optional[dict[str, np.ndarray]]:
     """{engine_tid: ctx}——A8 的数据集 one-hot / 阶段 1 的 φ **只在本脚本构造**（铁律 7：
     autocls/** 不得出现数据集概念，引擎眼里 ctx 只是一段浮点向量）。"""
@@ -269,6 +336,17 @@ def context_for(spec: ArmSpec, tids: Sequence[str], budgets: Sequence[int],
     bs = tuple(budgets)
     if spec.ctx_kind == "budget":
         return {t: pq.ctx_vector(pq.split_engine_task_id(t)[1], bs) for t in tids}
+    if spec.ctx_kind == "fp_budget":
+        if fp is None or fp_mu is None or fp_sd is None:
+            raise ValueError("ctx_kind='fp_budget' 需要指纹表 fp 与折内标准化 (fp_mu, fp_sd)")
+        out_fp: dict[str, np.ndarray] = {}
+        for t in tids:
+            slc, b = pq.split_engine_task_id(t)
+            if slc not in fp:
+                raise KeyError(f"指纹表缺切片 {slc}")
+            x = (np.asarray(fp[slc], np.float64) - fp_mu) / fp_sd
+            out_fp[t] = np.concatenate([x, pq.ctx_vector(int(b), bs)]).astype(np.float32)
+        return out_fp
     if spec.ctx_kind == "phi_budget":
         if phi is None or phi_mu is None or phi_sd is None:
             raise ValueError("ctx_kind='phi_budget' 需要 phi 表与折内标准化 (phi_mu, phi_sd)")
@@ -1128,11 +1206,18 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
     wk = pq.windows_key_of(all_records)
     tids = sorted(wk)
     phi_mu = phi_sd = None
+    fp_tbl = fp_mu = fp_sd = None
+    probes: Optional[list[str]] = None
     if spec.ctx_kind == "phi_budget":
         if ctx.phi is None:
             raise ValueError(f"[{spec.name}] ctx_kind='phi_budget' 需要 --phi-file（PQContext(phi_file=)）")
         phi_mu, phi_sd = phi_standardizer(ctx.phi, train_slices, PHI_COLS)   # 只用该折训练切片（铁律 6）
-    ctx_map = context_for(spec, tids, ctx.budgets, pq.PQ_DATASETS, phi=ctx.phi, phi_mu=phi_mu, phi_sd=phi_sd)
+    elif spec.ctx_kind == "fp_budget":
+        probes = fp_probes(ctx.cache, train_slices, k=FP_K)                   # 探针只由训练折的先验定
+        fp_tbl = fp_raw(ctx.cache, sorted(set(train_slices) | set(test_slices)), probes, budget=FP_BUDGET)
+        fp_mu, fp_sd = fp_standardizer(fp_tbl, train_slices)
+    ctx_map = context_for(spec, tids, ctx.budgets, pq.PQ_DATASETS, phi=ctx.phi, phi_mu=phi_mu, phi_sd=phi_sd,
+                          fp=fp_tbl, fp_mu=fp_mu, fp_sd=fp_sd)
     cdim = ctx_dim_for(spec, ctx.budgets, pq.PQ_DATASETS)
 
     windows = ctx.windows(spec, fold, sorted({pq.slice_of(t) for t in tids}))
@@ -1189,11 +1274,13 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
                    ctx_encoding=ctx.pq_cfg["ctx_encoding"],
                    encoder_mode=ctx.encoder_mode, head=spec.head,
                    ctx_kind=spec.ctx_kind,
-                   phi_stats=(None if phi_mu is None else
-                              {"phi_cols": list(PHI_COLS), "phi_mu": [float(v) for v in phi_mu],
-                               "phi_sd": [float(v) for v in phi_sd]}))
+                   phi_stats=({"phi_cols": list(PHI_COLS), "phi_mu": [float(v) for v in phi_mu],
+                               "phi_sd": [float(v) for v in phi_sd]} if phi_mu is not None else
+                              {"fp_probes": list(probes), "fp_budget": FP_BUDGET,
+                               "fp_mu": [float(v) for v in fp_mu], "fp_sd": [float(v) for v in fp_sd]}
+                              if fp_mu is not None else None))
 
-    cross_channel = "ctx" if spec.ctx_kind in ("dataset_budget", "phi_budget") else None
+    cross_channel = "ctx" if spec.ctx_kind in ("dataset_budget", "phi_budget", "fp_budget") else None
     train_tids = [pq.engine_task_id(s, b) for s in train_slices for b in ctx.budgets
                   if pq.engine_task_id(s, b) in wk]
     blocks, correct = ablation_block(engine, directed, len(fwd), tids_of(test_records),
@@ -1231,6 +1318,7 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
             "feature_fold": feature_fold_of(spec, fold),
             "label_mode": spec.label_mode, "random_only": spec.random_only,
             "head": spec.head, "zdiff_k": (ZDIFF_K if spec.label_mode == "zdiff" else None),
+            "fp_probes": probes, "fp_budget": (FP_BUDGET if probes is not None else None),
             "settf_windows": ctx.settf_windows,
             "settf_windows_actual": (int(next(iter(windows.values())).shape[0])
                                      if windows else None),

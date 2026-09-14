@@ -1,0 +1,7 @@
+[prepare] ['rprime_cache.jsonl', 'delta_calibration.json', 'cls_catalog.json', 'tasks.json']
+缓存 2835 行 | 预算 (60, 120, 290) | 数据集 ['Cricket', 'EthanolConcentration', 'HandMovementDirection', 'Handwriting', 'PhonemeSpectra', 'SelfRegulationSCP2', 'UWaveGestureLibrary', 'UniMiB-SHAR'] | δ 源 configs/labels.yaml: pq.delta_per_dataset_budget（与 delta_calibration.json 对账一致） | device=cuda | CLS 编码 binned（116 维）
+[Handwriting/blind_diff_hard_s0] 99.1s | normal 0.7985 | within — | cross — | budget —
+[Handwriting/blind_diff_hard_s1] 97.6s | normal 0.7508 | within — | cross — | budget —
+[Handwriting/blind_diff_hard_s2] 97.0s | normal 0.7743 | within — | cross — | budget —
+[UniMiB-SHAR/blind_diff_hard_s0] 94.9s | normal 0.8152 | within — | cross — | budget —
+[UniMiB-SHAR/blind_diff_hard_s1] 96.8s | normal 0.8284 | within — | cross — | budget —
