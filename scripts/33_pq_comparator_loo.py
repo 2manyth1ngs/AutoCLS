@@ -238,12 +238,22 @@ FP_ARMS: dict[str, ArmSpec] = {
     )
 }
 assert not (set(FP_ARMS) & (set(ARMS) | set(L3_ARMS) | set(PHI_ARMS))), "指纹臂名不得与既有臂表冲突"
-CLI_ARMS = ALL_ARMS + tuple(L3_ARMS) + tuple(PHI_ARMS) + tuple(FP_ARMS)
+
+# ---- WP16-TCLSC 阶段 1 真 E 臂（results/tclsc_s1e/PROTOCOL.md §3）：与 MX-3-PQ `main` 同构（E+ctx / settf / fold / budget），
+# 只换头（diff）与 CLS 编码（--encoder-mode）；折内共享 TS2Vec 只 fit 源池（铁律 6），SetTF 与比较器联合训练。
+E_ARMS: dict[str, ArmSpec] = {
+    s.name: s for s in (
+        ArmSpec("e_concat_hard", "S1", "E+ctx", "settf", "fold", "budget", head="concat", seeds=(0, 1, 2)),
+        ArmSpec("e_diff_hard", "S1", "E+ctx", "settf", "fold", "budget", head="diff", seeds=(0, 1, 2)),
+    )
+}
+assert not (set(E_ARMS) & (set(ARMS) | set(L3_ARMS) | set(PHI_ARMS) | set(FP_ARMS))), "真 E 臂名不得与既有臂表冲突"
+CLI_ARMS = ALL_ARMS + tuple(L3_ARMS) + tuple(PHI_ARMS) + tuple(FP_ARMS) + tuple(E_ARMS)
 
 
 def arm_spec(name: str) -> ArmSpec:
-    """臂名 → ArmSpec（先查 MX-3-PQ 冻结表，再查 WP16 的 L3 / φ / 指纹表；都没有即 KeyError）。"""
-    for table in (ARMS, L3_ARMS, PHI_ARMS, FP_ARMS):
+    """臂名 → ArmSpec（先查 MX-3-PQ 冻结表，再查 WP16 的 L3 / φ / 指纹 / 真 E 表；都没有即 KeyError）。"""
+    for table in (ARMS, L3_ARMS, PHI_ARMS, FP_ARMS, E_ARMS):
         if name in table:
             return table[name]
     raise KeyError(f"未知臂 {name!r}（可选 {CLI_ARMS}）")
