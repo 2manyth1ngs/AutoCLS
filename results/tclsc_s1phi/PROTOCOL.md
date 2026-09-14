@@ -91,4 +91,7 @@ H-φ：diff 头 + φ 在 LODO 下 cross 消融掉分（用了 φ），且 regret
 
 ## §9 执行台账（跑后填写）
 
-（空）
+- 2026-09-14 协议锁 371dc0d（15 例先红）→ 实现 33 PHI_ARMS / phi_budget / phi_file / meta φ 统计 + 58 号 → 166 例绿（含邻近）。
+- `--train` 63 跑本地 4060（12–17 s/跑，`train.log`）；58 号 `--rank` 首跑因 `load_source` 取 57 号版本（2 元组）修一行。
+- `--rank --analyze` → **PHI-DEAD**（G-P1 Δ_M1 +0.011 p 0.12 ✗；G-P2 regret@3 0.031 vs 0.029 ✗；G-P3 ✓）；但 M0/M2 cross 消融 p<1e-10（92:23）——
+  φ 被用于粗排序、对好半区无增益。详见 REPORT.md。zdiff 副臂未跑。

@@ -1,0 +1,65 @@
+[prepare] ['rprime_cache.jsonl', 'delta_calibration.json', 'cls_catalog.json', 'tasks.json']
+缓存 2835 行 | 预算 (60, 120, 290) | 数据集 ['Cricket', 'EthanolConcentration', 'HandMovementDirection', 'Handwriting', 'PhonemeSpectra', 'SelfRegulationSCP2', 'UWaveGestureLibrary', 'UniMiB-SHAR'] | δ 源 configs/labels.yaml: pq.delta_per_dataset_budget（与 delta_calibration.json 对账一致） | device=cuda | CLS 编码 binned（116 维）
+[Handwriting/blind_diff_hard_s0] 12.0s | normal 0.7985 | within — | cross — | budget —
+[Handwriting/blind_diff_hard_s1] 12.0s | normal 0.7508 | within — | cross — | budget —
+[Handwriting/blind_diff_hard_s2] 12.1s | normal 0.7743 | within — | cross — | budget —
+[UniMiB-SHAR/blind_diff_hard_s0] 11.7s | normal 0.8152 | within — | cross — | budget —
+[UniMiB-SHAR/blind_diff_hard_s1] 12.0s | normal 0.8284 | within — | cross — | budget —
+[UniMiB-SHAR/blind_diff_hard_s2] 11.9s | normal 0.8444 | within — | cross — | budget —
+[PhonemeSpectra/blind_diff_hard_s0] 11.5s | normal 0.7532 | within — | cross — | budget —
+[PhonemeSpectra/blind_diff_hard_s1] 11.4s | normal 0.7881 | within — | cross — | budget —
+[PhonemeSpectra/blind_diff_hard_s2] 11.4s | normal 0.7744 | within — | cross — | budget —
+[UWaveGestureLibrary/blind_diff_hard_s0] 12.1s | normal 0.7875 | within — | cross — | budget —
+[UWaveGestureLibrary/blind_diff_hard_s1] 12.3s | normal 0.7489 | within — | cross — | budget —
+[UWaveGestureLibrary/blind_diff_hard_s2] 12.1s | normal 0.7882 | within — | cross — | budget —
+[EthanolConcentration/blind_diff_hard_s0] 13.2s | normal 0.5026 | within — | cross — | budget —
+[EthanolConcentration/blind_diff_hard_s1] 13.0s | normal 0.5489 | within — | cross — | budget —
+[EthanolConcentration/blind_diff_hard_s2] 13.1s | normal 0.5457 | within — | cross — | budget —
+[Cricket/blind_diff_hard_s0] 12.5s | normal 0.8032 | within — | cross — | budget —
+[Cricket/blind_diff_hard_s1] 12.6s | normal 0.7669 | within — | cross — | budget —
+[Cricket/blind_diff_hard_s2] 12.5s | normal 0.7941 | within — | cross — | budget —
+[HandMovementDirection/blind_diff_hard_s0] 14.3s | normal 0.7318 | within — | cross — | budget —
+[HandMovementDirection/blind_diff_hard_s1] 14.3s | normal 0.6909 | within — | cross — | budget —
+[HandMovementDirection/blind_diff_hard_s2] 14.2s | normal 0.6864 | within — | cross — | budget —
+[Handwriting/phi_concat_hard_s0] 13.9s | normal 0.8059 | within — | cross Δ̄=+0.0270 sig 4/5 pass | budget Δ̄=-0.0004 sig 0/5 zero
+[Handwriting/phi_concat_hard_s1] 14.6s | normal 0.7465 | within — | cross Δ̄=+0.0088 sig 5/5 detectable | budget Δ̄=+0.0005 sig 0/5 zero
+[Handwriting/phi_concat_hard_s2] 13.9s | normal 0.8036 | within — | cross Δ̄=+0.0032 sig 0/5 zero | budget Δ̄=+0.0001 sig 0/5 zero
+[UniMiB-SHAR/phi_concat_hard_s0] 13.7s | normal 0.8137 | within — | cross Δ̄=+0.0223 sig 5/5 pass | budget Δ̄=+0.0001 sig 0/5 zero
+[UniMiB-SHAR/phi_concat_hard_s1] 13.7s | normal 0.7971 | within — | cross Δ̄=+0.0006 sig 0/5 zero | budget Δ̄=+0.0001 sig 0/5 zero
+[UniMiB-SHAR/phi_concat_hard_s2] 13.5s | normal 0.8330 | within — | cross Δ̄=+0.0107 sig 5/5 detectable | budget Δ̄=-0.0001 sig 0/5 zero
+[PhonemeSpectra/phi_concat_hard_s0] 12.8s | normal 0.7597 | within — | cross Δ̄=+0.0096 sig 5/5 detectable | budget Δ̄=+0.0002 sig 0/5 zero
+[PhonemeSpectra/phi_concat_hard_s1] 12.7s | normal 0.8051 | within — | cross Δ̄=+0.0091 sig 5/5 detectable | budget Δ̄=-0.0003 sig 0/5 zero
+[PhonemeSpectra/phi_concat_hard_s2] 12.8s | normal 0.7969 | within — | cross Δ̄=-0.0003 sig 0/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[UWaveGestureLibrary/phi_concat_hard_s0] 13.8s | normal 0.8243 | within — | cross Δ̄=+0.0125 sig 2/5 ambiguous | budget Δ̄=-0.0006 sig 0/5 zero
+[UWaveGestureLibrary/phi_concat_hard_s1] 13.8s | normal 0.7570 | within — | cross Δ̄=-0.0014 sig 0/5 zero | budget Δ̄=+0.0002 sig 0/5 zero
+[UWaveGestureLibrary/phi_concat_hard_s2] 13.6s | normal 0.8059 | within — | cross Δ̄=-0.0007 sig 0/5 zero | budget Δ̄=-0.0001 sig 0/5 zero
+[EthanolConcentration/phi_concat_hard_s0] 14.5s | normal 0.5063 | within — | cross Δ̄=-0.0008 sig 0/5 zero | budget Δ̄=+0.0003 sig 0/5 zero
+[EthanolConcentration/phi_concat_hard_s1] 14.5s | normal 0.5457 | within — | cross Δ̄=-0.0025 sig 0/5 zero | budget Δ̄=+0.0003 sig 0/5 zero
+[EthanolConcentration/phi_concat_hard_s2] 14.4s | normal 0.5452 | within — | cross Δ̄=-0.0013 sig 0/5 zero | budget Δ̄=-0.0009 sig 0/5 zero
+[Cricket/phi_concat_hard_s0] 13.9s | normal 0.7652 | within — | cross Δ̄=+0.0077 sig 3/5 detectable | budget Δ̄=+0.0003 sig 0/5 zero
+[Cricket/phi_concat_hard_s1] 13.8s | normal 0.7701 | within — | cross Δ̄=-0.0050 sig 0/5 zero | budget Δ̄=+0.0001 sig 0/5 zero
+[Cricket/phi_concat_hard_s2] 13.7s | normal 0.7903 | within — | cross Δ̄=+0.0028 sig 4/5 ambiguous | budget Δ̄=-0.0003 sig 0/5 zero
+[HandMovementDirection/phi_concat_hard_s0] 15.7s | normal 0.7295 | within — | cross Δ̄=-0.0177 sig 0/5 zero | budget Δ̄=-0.0000 sig 0/5 zero
+[HandMovementDirection/phi_concat_hard_s1] 15.9s | normal 0.7364 | within — | cross Δ̄=-0.0050 sig 0/5 zero | budget Δ̄=-0.0014 sig 0/5 zero
+[HandMovementDirection/phi_concat_hard_s2] 15.6s | normal 0.7159 | within — | cross Δ̄=-0.0045 sig 0/5 zero | budget Δ̄=+0.0000 sig 0/5 zero
+[Handwriting/phi_diff_hard_s0] 14.5s | normal 0.7999 | within — | cross Δ̄=+0.0391 sig 5/5 pass | budget Δ̄=+0.0000 sig 0/5 zero
+[Handwriting/phi_diff_hard_s1] 14.2s | normal 0.7569 | within — | cross Δ̄=+0.0402 sig 5/5 pass | budget Δ̄=+0.0000 sig 0/5 zero
+[Handwriting/phi_diff_hard_s2] 14.4s | normal 0.8261 | within — | cross Δ̄=+0.0531 sig 5/5 pass | budget Δ̄=+0.0000 sig 0/5 zero
+[UniMiB-SHAR/phi_diff_hard_s0] 14.0s | normal 0.8542 | within — | cross Δ̄=+0.0552 sig 5/5 pass | budget Δ̄=-0.0005 sig 0/5 zero
+[UniMiB-SHAR/phi_diff_hard_s1] 14.1s | normal 0.8393 | within — | cross Δ̄=+0.0473 sig 5/5 pass | budget Δ̄=+0.0017 sig 0/5 zero
+[UniMiB-SHAR/phi_diff_hard_s2] 14.0s | normal 0.8697 | within — | cross Δ̄=+0.0625 sig 5/5 pass | budget Δ̄=+0.0013 sig 0/5 zero
+[PhonemeSpectra/phi_diff_hard_s0] 13.3s | normal 0.7790 | within — | cross Δ̄=+0.0418 sig 5/5 pass | budget Δ̄=-0.0005 sig 0/5 zero
+[PhonemeSpectra/phi_diff_hard_s1] 13.1s | normal 0.8511 | within — | cross Δ̄=+0.0558 sig 5/5 pass | budget Δ̄=+0.0006 sig 0/5 zero
+[PhonemeSpectra/phi_diff_hard_s2] 13.4s | normal 0.8433 | within — | cross Δ̄=+0.0569 sig 5/5 pass | budget Δ̄=-0.0012 sig 0/5 zero
+[UWaveGestureLibrary/phi_diff_hard_s0] 14.1s | normal 0.8269 | within — | cross Δ̄=+0.0168 sig 3/5 detectable | budget Δ̄=-0.0008 sig 0/5 zero
+[UWaveGestureLibrary/phi_diff_hard_s1] 14.4s | normal 0.7757 | within — | cross Δ̄=+0.0226 sig 4/5 pass | budget Δ̄=-0.0004 sig 0/5 zero
+[UWaveGestureLibrary/phi_diff_hard_s2] 14.3s | normal 0.8243 | within — | cross Δ̄=+0.0190 sig 4/5 detectable | budget Δ̄=+0.0001 sig 0/5 zero
+[EthanolConcentration/phi_diff_hard_s0] 15.0s | normal 0.5216 | within — | cross Δ̄=+0.0181 sig 3/5 detectable | budget Δ̄=-0.0015 sig 0/5 zero
+[EthanolConcentration/phi_diff_hard_s1] 15.1s | normal 0.5626 | within — | cross Δ̄=+0.0055 sig 2/5 ambiguous | budget Δ̄=-0.0025 sig 0/5 zero
+[EthanolConcentration/phi_diff_hard_s2] 14.9s | normal 0.5605 | within — | cross Δ̄=+0.0101 sig 2/5 ambiguous | budget Δ̄=-0.0017 sig 0/5 zero
+[Cricket/phi_diff_hard_s0] 14.2s | normal 0.7830 | within — | cross Δ̄=+0.0163 sig 4/5 detectable | budget Δ̄=-0.0011 sig 0/5 zero
+[Cricket/phi_diff_hard_s1] 14.1s | normal 0.7809 | within — | cross Δ̄=+0.0102 sig 3/5 detectable | budget Δ̄=+0.0000 sig 0/5 zero
+[Cricket/phi_diff_hard_s2] 16.6s | normal 0.8193 | within — | cross Δ̄=+0.0095 sig 2/5 ambiguous | budget Δ̄=+0.0010 sig 0/5 zero
+[HandMovementDirection/phi_diff_hard_s0] 14.0s | normal 0.7045 | within — | cross Δ̄=+0.0155 sig 0/5 ambiguous | budget Δ̄=+0.0018 sig 0/5 zero
+[HandMovementDirection/phi_diff_hard_s1] 48.5s | normal 0.6591 | within — | cross Δ̄=-0.0018 sig 0/5 zero | budget Δ̄=-0.0100 sig 0/5 zero
+[HandMovementDirection/phi_diff_hard_s2] 22.6s | normal 0.6955 | within — | cross Δ̄=+0.0209 sig 1/5 ambiguous | budget Δ̄=+0.0027 sig 0/5 zero

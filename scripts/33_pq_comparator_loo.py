@@ -193,16 +193,40 @@ L3_ARMS: dict[str, ArmSpec] = {
     )
 }
 assert not (set(L3_ARMS) & set(ARMS)), "L3 臂名不得与 MX-3-PQ 臂表冲突"
-CLI_ARMS = ALL_ARMS + tuple(L3_ARMS)
+
+# ---- WP16-TCLSC 阶段 1 φ 臂（results/tclsc_s1phi/PROTOCOL.md §3）：ctx = 折内标准化 φ(12) ⊕ 预算 one-hot(3)。
+# φ = WP6-TF 的 12 维切片特征（只用目标训练划分，铁律 6）；列名与 scripts/40 的 PHI_COLS 逐位相同（单测钉死）。
+# 本脚本只把 φ 装配成浮点向量，模型 / 引擎不见其语义（铁律 7）。
+PHI_COLS = ("log10_T", "log10_C", "k", "log10_N", "base_mean", "base_band",
+            "spec_conc", "hf_ratio", "acf_tau", "ex_kurt", "chan_cv", "samp_cv")
+PHI_FILE = ROOT / "results" / "mx4_task_feature" / "task_features.jsonl"
+PHI_SD_FLOOR = 1e-6
+PHI_ARMS: dict[str, ArmSpec] = {
+    s.name: s for s in (
+        ArmSpec("blind_diff_hard", "S1", "none", None, None, "none", head="diff", seeds=(0, 1, 2)),
+        ArmSpec("phi_concat_hard", "S1", "ctx", None, None, "phi_budget", head="concat", seeds=(0, 1, 2)),
+        ArmSpec("phi_diff_hard", "S1", "ctx", None, None, "phi_budget", head="diff", seeds=(0, 1, 2)),
+        ArmSpec("phi_diff_zdiff", "S1", "ctx", None, None, "phi_budget", head="diff",
+                label_mode="zdiff", seeds=(0, 1, 2)),
+    )
+}
+assert not (set(PHI_ARMS) & (set(ARMS) | set(L3_ARMS))), "φ 臂名不得与既有臂表冲突"
+CLI_ARMS = ALL_ARMS + tuple(L3_ARMS) + tuple(PHI_ARMS)
 
 
 def arm_spec(name: str) -> ArmSpec:
-    """臂名 → ArmSpec（先查 MX-3-PQ 冻结表，再查 WP16-L3 表；都没有即 KeyError）。"""
-    if name in ARMS:
-        return ARMS[name]
-    if name in L3_ARMS:
-        return L3_ARMS[name]
+    """臂名 → ArmSpec（先查 MX-3-PQ 冻结表，再查 WP16 的 L3 / φ 表；都没有即 KeyError）。"""
+    for table in (ARMS, L3_ARMS, PHI_ARMS):
+        if name in table:
+            return table[name]
     raise KeyError(f"未知臂 {name!r}（可选 {CLI_ARMS}）")
+
+
+def phi_standardizer(phi: Mapping[str, Mapping], slices: Sequence[str],
+                     cols: Sequence[str] = PHI_COLS) -> tuple[np.ndarray, np.ndarray]:
+    """(μ, σ)——只用给定切片（调用方传该折的训练切片，铁律 6）；σ 下限 PHI_SD_FLOOR。"""
+    X = np.stack([[float(phi[s][c]) for c in cols] for s in slices]).astype(np.float64)
+    return X.mean(axis=0), np.maximum(X.std(axis=0), PHI_SD_FLOOR)
 
 
 def feature_fold_of(spec: ArmSpec, fold: str) -> Optional[str]:
@@ -229,18 +253,33 @@ def ctx_dim_for(spec: ArmSpec, budgets: Sequence[int], datasets: Sequence[str]) 
         return len(tuple(budgets))
     if spec.ctx_kind == "dataset_budget":
         return len(tuple(datasets)) + len(tuple(budgets))
+    if spec.ctx_kind == "phi_budget":
+        return len(PHI_COLS) + len(tuple(budgets))
     return 0
 
 
 def context_for(spec: ArmSpec, tids: Sequence[str], budgets: Sequence[int],
-                datasets: Sequence[str]) -> Optional[dict[str, np.ndarray]]:
-    """{engine_tid: ctx}——A8 的数据集 one-hot **只在本脚本构造**（铁律 7：
+                datasets: Sequence[str], *, phi: Optional[Mapping[str, Mapping]] = None,
+                phi_mu: Optional[np.ndarray] = None, phi_sd: Optional[np.ndarray] = None
+                ) -> Optional[dict[str, np.ndarray]]:
+    """{engine_tid: ctx}——A8 的数据集 one-hot / 阶段 1 的 φ **只在本脚本构造**（铁律 7：
     autocls/** 不得出现数据集概念，引擎眼里 ctx 只是一段浮点向量）。"""
     if spec.ctx_kind == "none":
         return None
     bs = tuple(budgets)
     if spec.ctx_kind == "budget":
         return {t: pq.ctx_vector(pq.split_engine_task_id(t)[1], bs) for t in tids}
+    if spec.ctx_kind == "phi_budget":
+        if phi is None or phi_mu is None or phi_sd is None:
+            raise ValueError("ctx_kind='phi_budget' 需要 phi 表与折内标准化 (phi_mu, phi_sd)")
+        out: dict[str, np.ndarray] = {}
+        for t in tids:
+            slc, b = pq.split_engine_task_id(t)
+            if slc not in phi:
+                raise KeyError(f"φ 表缺切片 {slc}")
+            x = (np.array([float(phi[slc][c]) for c in PHI_COLS], dtype=np.float64) - phi_mu) / phi_sd
+            out[t] = np.concatenate([x, pq.ctx_vector(int(b), bs)]).astype(np.float32)
+        return out
     order = list(datasets)
     out: dict[str, np.ndarray] = {}
     for t in tids:
@@ -815,10 +854,17 @@ class PQContext:
                  settf_windows: Optional[int] = None,
                  budgets: Optional[Sequence[int]] = None,
                  smoke: bool = False, allow_partial_cache: bool = False,
-                 encoder_mode: str = "scalar"):
+                 encoder_mode: str = "scalar", phi_file: Optional[Path] = None):
         self.outdir = Path(outdir)
         self.device = device
         self.smoke = bool(smoke)
+        # 阶段 1 φ 臂的特征表（只在 ctx_kind='phi_budget' 的臂上用；缺席时这些臂 fail-fast）
+        self.phi_file = Path(phi_file) if phi_file is not None else None
+        self.phi: Optional[dict[str, dict]] = None
+        if self.phi_file is not None:
+            if not self.phi_file.exists():
+                raise FileNotFoundError(f"φ 表不存在：{self.phi_file}")
+            self.phi = {r["task_id"]: r for r in read_jsonl(self.phi_file)}
         # WP16-TCLSC-L1：CLS 向量编码模式（铁律 1：两种模式的档位都只来自 space.yaml）。
         # scalar = 旧口径 32 维逐位不变；binned = 按档 one-hot 116 维（one-hot 进
         # cls_mlp 第一层 Linear ≡ AutoCTS++ 每 op 一张 nn.Embedding 表求和）。
@@ -1081,7 +1127,12 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
     all_records = list(train_records) + list(test_records)
     wk = pq.windows_key_of(all_records)
     tids = sorted(wk)
-    ctx_map = context_for(spec, tids, ctx.budgets, pq.PQ_DATASETS)
+    phi_mu = phi_sd = None
+    if spec.ctx_kind == "phi_budget":
+        if ctx.phi is None:
+            raise ValueError(f"[{spec.name}] ctx_kind='phi_budget' 需要 --phi-file（PQContext(phi_file=)）")
+        phi_mu, phi_sd = phi_standardizer(ctx.phi, train_slices, PHI_COLS)   # 只用该折训练切片（铁律 6）
+    ctx_map = context_for(spec, tids, ctx.budgets, pq.PQ_DATASETS, phi=ctx.phi, phi_mu=phi_mu, phi_sd=phi_sd)
     cdim = ctx_dim_for(spec, ctx.budgets, pq.PQ_DATASETS)
 
     windows = ctx.windows(spec, fold, sorted({pq.slice_of(t) for t in tids}))
@@ -1136,9 +1187,13 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
                    cfg=ctx.cfg, nz=ctx.nz, settf_windows=ctx.settf_windows,
                    settf_t_max=ctx.settf_t_max, budgets=ctx.budgets,
                    ctx_encoding=ctx.pq_cfg["ctx_encoding"],
-                   encoder_mode=ctx.encoder_mode, head=spec.head)
+                   encoder_mode=ctx.encoder_mode, head=spec.head,
+                   ctx_kind=spec.ctx_kind,
+                   phi_stats=(None if phi_mu is None else
+                              {"phi_cols": list(PHI_COLS), "phi_mu": [float(v) for v in phi_mu],
+                               "phi_sd": [float(v) for v in phi_sd]}))
 
-    cross_channel = "ctx" if spec.ctx_kind == "dataset_budget" else None
+    cross_channel = "ctx" if spec.ctx_kind in ("dataset_budget", "phi_budget") else None
     train_tids = [pq.engine_task_id(s, b) for s in train_slices for b in ctx.budgets
                   if pq.engine_task_id(s, b) in wk]
     blocks, correct = ablation_block(engine, directed, len(fwd), tids_of(test_records),
@@ -1216,7 +1271,8 @@ def _delta_by_dataset_budget(delta_map: dict[str, float]) -> dict[str, float]:
 def save_model(path: Path, model: TCLSC, spec: ArmSpec, *, fold: str, seed: int,
                cls_dim: int, ctx_dim: int, cfg: dict, nz: int, settf_windows: int,
                settf_t_max: int, budgets: Sequence[int], ctx_encoding: str,
-               encoder_mode: str = "scalar", head: str = "concat") -> None:
+               encoder_mode: str = "scalar", head: str = "concat",
+               ctx_kind: str = "budget", phi_stats: Optional[dict] = None) -> None:
     """interfaces「Task 6 → Task 7 saved-model format」——meta 键集是绑定契约。
 
     `e_source` 只取绑定枚举 ("fold"|"per_dataset"|"unfit"|null)；`feature_fold`
@@ -1236,6 +1292,8 @@ def save_model(path: Path, model: TCLSC, spec: ArmSpec, *, fold: str, seed: int,
         "encoder_mode": encoder_mode,
         # WP16-L3：融合头（老存档无此键 = concat）
         "head": head,
+        # WP16 阶段 1：ctx 语义标签 + φ 折内标准化统计（排名侧按此重建 ctx，逐位一致）
+        "ctx_kind": ctx_kind, **(phi_stats or {}),
     }}, path)
 
 
@@ -1269,10 +1327,10 @@ def cmd_train(outdir: Path, *, arms: Sequence[str], folds: Optional[Sequence[str
               seeds: Optional[Sequence[int]], resume: bool, device: str,
               epochs: Optional[int], settf_windows: Optional[int],
               smoke: bool = False, allow_partial_cache: bool = False,
-              encoder_mode: str = "scalar") -> None:
+              encoder_mode: str = "scalar", phi_file: Optional[Path] = None) -> None:
     ctx = PQContext(outdir, device=device, epochs=epochs, settf_windows=settf_windows,
                     smoke=smoke, allow_partial_cache=allow_partial_cache,
-                    encoder_mode=encoder_mode)
+                    encoder_mode=encoder_mode, phi_file=phi_file)
     print(f"缓存 {len(ctx.cache)} 行 | 预算 {ctx.budgets} | 数据集 "
           f"{sorted(ctx.slices_by_ds)} | δ 源 {ctx.delta_source} | device={device} "
           f"| CLS 编码 {ctx.encoder_mode}（{ctx.encoder.dim} 维）",
@@ -1776,6 +1834,9 @@ def build_parser() -> argparse.ArgumentParser:
                          "true；默认 exit 2）")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     ap.add_argument("--outdir", type=Path, default=OUT)
+    ap.add_argument("--phi-file", type=Path, default=None,
+                    help="阶段 1 φ 臂的切片特征表（默认 results/mx4_task_feature/task_features.jsonl；"
+                         "只有 ctx_kind='phi_budget' 的臂读它）")
     ap.add_argument("--encoder-mode", default="scalar", choices=list(CLSEncoder_MODES),
                     help="CLS 向量编码：scalar（32 维，默认逐位不变）/ binned（按档 one-hot 116 维；"
                          "WP16-TCLSC-L1）。产物路径不带模式，两种模式请用不同 --outdir")
@@ -1807,7 +1868,9 @@ def main() -> None:
                   seeds=args.seeds, resume=args.resume, device=args.device,
                   epochs=args.epochs, settf_windows=args.settf_windows,
                   allow_partial_cache=args.allow_partial_cache,
-                  encoder_mode=args.encoder_mode)
+                  encoder_mode=args.encoder_mode,
+                  phi_file=(args.phi_file or (PHI_FILE if any(
+                      arm_spec(a).ctx_kind == "phi_budget" for a in (args.arms or [])) else None)))
     if args.analyze:
         cmd_analyze(args.outdir)
 
