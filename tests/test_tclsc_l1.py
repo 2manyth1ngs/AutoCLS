@@ -57,7 +57,7 @@ class TestEncoderModeFlag:
         assert ap.parse_args(["--train"]).encoder_mode == "scalar"
         assert ap.parse_args(["--train", "--encoder-mode", "binned"]).encoder_mode == "binned"
         with pytest.raises(SystemExit):
-            ap.parse_args(["--train", "--encoder-mode", "graph"])
+            ap.parse_args(["--train", "--encoder-mode", "hyper"])      # graph 自 L2 起合法，改用真未知值
 
     def test_context_binned_records_are_116_dim(self, tmp_path):
         slices = _smoke_dir(tmp_path)

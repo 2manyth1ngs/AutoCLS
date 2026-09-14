@@ -33,6 +33,9 @@ import torch
 from torch import nn
 
 from ..task_embed.set_transformer import TaskSetEncoder
+from .cls_graph import GraphCLSEncoder, GraphSpec
+
+CLS_ENCODERS = ("mlp", "graph")
 
 TASK_BRANCHES = ("E+ctx", "ctx", "none")
 # WP16-TCLSC-L3 融合头（协议 results/tclsc_l3/PROTOCOL.md §2）：
@@ -71,12 +74,16 @@ class TCLSC(nn.Module):
         ctx_dim: int = 0,
         task_branch: str = "E+ctx",
         head: str = "concat",
+        cls_encoder: str = "mlp",
+        graph_opts: Optional[dict] = None,
     ):
         super().__init__()
         if task_branch not in TASK_BRANCHES:
             raise ValueError(f"未知 task_branch={task_branch!r}（可选 {TASK_BRANCHES}）")
         if head not in HEADS:
             raise ValueError(f"未知 head={head!r}（可选 {HEADS}）")
+        if cls_encoder not in CLS_ENCODERS:
+            raise ValueError(f"未知 cls_encoder={cls_encoder!r}（可选 {CLS_ENCODERS}）")
         if ctx_dim < 0:
             raise ValueError(f"ctx_dim 须 >=0，得到 {ctx_dim}")
         if task_branch == "ctx" and ctx_dim == 0:
@@ -86,12 +93,26 @@ class TCLSC(nn.Module):
         self.ctx_dim = int(ctx_dim)
         self.task_branch = task_branch
         self.head = head
+        self.cls_encoder = cls_encoder
+        self.graph_opts = dict(graph_opts) if graph_opts else None
         self.set_encoder = set_encoder  # 联合训练（← 原码 setpool 内嵌于 AHC）
-        # CLS 支路：共享 MLP（Eq.15；替换原码 embedding+GCN，唯一实质改动）
-        self.cls_mlp = nn.Sequential(
-            nn.Linear(cls_dim, embedding_dim), nn.ReLU(),
-            nn.Linear(embedding_dim, embedding_dim),
-        )
+        if cls_encoder == "graph":
+            # WP16-L2：CLS 支路 = 流水线图 + 共享 GIN（式 13–15），吃 GraphPacker 的打包向量；变量名沿用 cls_mlp（前向同一位置）
+            if not self.graph_opts:
+                raise ValueError("cls_encoder='graph' 需要 graph_opts（topology / readout / scalar / gin_layers）")
+            from ..space.cls_space import CLSSpace
+            spec = GraphSpec.from_space(CLSSpace.from_yaml())
+            if int(cls_dim) != spec.pack_dim:
+                raise ValueError(f"graph 编码的 cls_dim 应为 {spec.pack_dim}，得到 {cls_dim}")
+            self.cls_mlp = GraphCLSEncoder(spec, embedding_dim, n_layers=int(self.graph_opts.get("gin_layers", 2)),
+                                           readout=str(self.graph_opts.get("readout", "hub")),
+                                           use_scalar=bool(self.graph_opts.get("scalar", True)))
+        else:
+            # CLS 支路：共享 MLP（Eq.15；替换原码 embedding+GCN，唯一实质改动）
+            self.cls_mlp = nn.Sequential(
+                nn.Linear(cls_dim, embedding_dim), nn.ReLU(),
+                nn.Linear(embedding_dim, embedding_dim),
+            )
         has_task = task_branch != "none"
         # 构造顺序 = RNG 消耗顺序：concat 头必须保持 cls_mlp → cls_fc → set_fc → pred_fc（与改头前逐位相同，
         # 否则同 seed 的初始化会变、旧存档/旧读数不可复现——WP16-L3 C0 曾因此失守 0.008）。
@@ -120,6 +141,11 @@ class TCLSC(nn.Module):
             if has_task:
                 self.film = nn.Linear(fz, 2 * embedding_dim)
             self.score_mlp = nn.Sequential(nn.Linear(embedding_dim, fz), nn.ReLU(), nn.Linear(fz, 1))
+
+    @property
+    def cls_in_dim(self) -> int:
+        """CLS 支路吃的向量维度（mlp：cls_mlp[0].in_features；graph：打包维度）。"""
+        return int(self.cls_mlp.in_features if self.cls_encoder == "graph" else self.cls_mlp[0].in_features)
 
     @property
     def antisymmetric(self) -> bool:

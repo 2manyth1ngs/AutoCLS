@@ -72,6 +72,18 @@ from autocls.comparator.zdiff_labels import zdiff_pairs  # noqa: E402
 from autocls.labeling import load_rprime_cache, make_pairs  # noqa: E402
 from autocls.space.cls_encoder import CLSEncoder  # noqa: E402
 from autocls.space.cls_encoder import MODES as CLSEncoder_MODES  # noqa: E402
+from autocls.comparator.cls_graph import GraphPacker, TOPOLOGIES as GRAPH_TOPOLOGIES, READOUTS as GRAPH_READOUTS  # noqa: E402
+
+ENCODER_MODES = tuple(CLSEncoder_MODES) + ("graph",)
+DEFAULT_GRAPH_OPTS = {"topology": "pipe", "readout": "hub", "scalar": True, "gin_layers": 2}
+
+
+def make_cls_encoder(space: CLSSpace, mode: str, *, graph_opts: Optional[dict] = None):
+    """编码模式 → CLSEncoder（scalar / binned）或 GraphPacker（graph，WP16-L2；拓扑取 graph_opts["topology"]）。"""
+    if mode == "graph":
+        opts = {**DEFAULT_GRAPH_OPTS, **(graph_opts or {})}
+        return GraphPacker(space, topology=str(opts["topology"]))
+    return CLSEncoder(space, mode=mode)
 from autocls.space.cls_space import CLSSpace  # noqa: E402
 from autocls.task_embed import (  # noqa: E402
     TS2VecWrapper, TaskSetEncoder, encode_task_windows, pool_time_axis, task_windows,
@@ -383,7 +395,8 @@ def curriculum_for(spec: ArmSpec, curriculum_epochs: int) -> int:
 
 def build_model(spec: ArmSpec, *, cls_dim: int, ctx_dim: int, nz: int, dim_input: int,
                 cfg: dict, seed: int, init_path: Optional[Path] = None,
-                standardizer: Optional[tuple] = None) -> TCLSC:
+                standardizer: Optional[tuple] = None, cls_encoder: str = "mlp",
+                graph_opts: Optional[dict] = None) -> TCLSC:
     """臂 → TCLSC（构造顺序与 4b run_one 一致：manual_seed → SetTF(init) → TCLSC）。
 
     torch.manual_seed(seed) 必须在建 SetTF 之前：`set_encoder_init.pt` 全臂共用
@@ -402,7 +415,7 @@ def build_model(spec: ArmSpec, *, cls_dim: int, ctx_dim: int, nz: int, dim_input
         enc = None
     return TCLSC(cls_dim=cls_dim, set_encoder=enc, embedding_dim=cfg["embedding_dim"],
                  fz=cfg["fz"], ctx_dim=ctx_dim, task_branch=spec.task_branch,
-                 head=spec.head)
+                 head=spec.head, cls_encoder=cls_encoder, graph_opts=graph_opts)
 
 
 def load_pq_model(path, *, device: str = "cpu") -> tuple[TCLSC, dict]:
@@ -932,7 +945,8 @@ class PQContext:
                  settf_windows: Optional[int] = None,
                  budgets: Optional[Sequence[int]] = None,
                  smoke: bool = False, allow_partial_cache: bool = False,
-                 encoder_mode: str = "scalar", phi_file: Optional[Path] = None):
+                 encoder_mode: str = "scalar", phi_file: Optional[Path] = None,
+                 graph_opts: Optional[dict] = None):
         self.outdir = Path(outdir)
         self.device = device
         self.smoke = bool(smoke)
@@ -946,9 +960,10 @@ class PQContext:
         # WP16-TCLSC-L1：CLS 向量编码模式（铁律 1：两种模式的档位都只来自 space.yaml）。
         # scalar = 旧口径 32 维逐位不变；binned = 按档 one-hot 116 维（one-hot 进
         # cls_mlp 第一层 Linear ≡ AutoCTS++ 每 op 一张 nn.Embedding 表求和）。
-        if encoder_mode not in CLSEncoder_MODES:
-            raise ValueError(f"encoder_mode 须在 {CLSEncoder_MODES} 内，得到 {encoder_mode!r}")
+        if encoder_mode not in ENCODER_MODES:
+            raise ValueError(f"encoder_mode 须在 {ENCODER_MODES} 内，得到 {encoder_mode!r}")
         self.encoder_mode = str(encoder_mode)
+        self.graph_opts = ({**DEFAULT_GRAPH_OPTS, **(graph_opts or {})} if encoder_mode == "graph" else None)
         labels_cfg = yaml.safe_load(
             (ROOT / "configs" / "labels.yaml").read_text(encoding="utf-8"))
         self.task_type = labels_cfg["task_type"]
@@ -969,7 +984,7 @@ class PQContext:
         self.settf_windows = int(settf_windows or self.pq_cfg["settf_windows"])
         self.settf_t_max = int(self.pq_cfg["settf_t_max"])
         self.space = CLSSpace.from_yaml()
-        self.encoder = CLSEncoder(self.space, mode=self.encoder_mode)
+        self.encoder = make_cls_encoder(self.space, self.encoder_mode, graph_opts=self.graph_opts)
         cache_path = self.outdir / "rprime_cache.jsonl"
         if not cache_path.exists():
             sys.exit(f"缺 {cache_path}：先跑 scripts/32_pq_generate_rprime.py")
@@ -1232,7 +1247,9 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
     model = build_model(spec, cls_dim=cls_dim, ctx_dim=cdim,
                         nz=ctx.nz, dim_input=dim_input, cfg=ctx.cfg, seed=seed,
                         init_path=(ctx.init_path if spec.encoder == "settf" else None),
-                        standardizer=standardizer)
+                        standardizer=standardizer,
+                        cls_encoder=("graph" if ctx.encoder_mode == "graph" else "mlp"),
+                        graph_opts=ctx.graph_opts)
     engine_cls = SoftTCLSCEngine if spec.label_mode in ("soft", "zdiff") else TCLSCEngine
     engine = engine_cls(model, windows, device=ctx.device, lr=ctx.cfg["lr"],
                         batch_size=ctx.cfg["batch_size"], seed=seed,
@@ -1273,6 +1290,7 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
                    settf_t_max=ctx.settf_t_max, budgets=ctx.budgets,
                    ctx_encoding=ctx.pq_cfg["ctx_encoding"],
                    encoder_mode=ctx.encoder_mode, head=spec.head,
+                   graph_opts=ctx.graph_opts,
                    ctx_kind=spec.ctx_kind,
                    phi_stats=({"phi_cols": list(PHI_COLS), "phi_mu": [float(v) for v in phi_mu],
                                "phi_sd": [float(v) for v in phi_sd]} if phi_mu is not None else
@@ -1312,7 +1330,7 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
         "delta_source": ctx.delta_source,
         "settings": {
             "task_branch": spec.task_branch, "ctx_dim": cdim,
-            "encoder_mode": ctx.encoder_mode, "cls_dim": cls_dim,
+            "encoder_mode": ctx.encoder_mode, "cls_dim": cls_dim, "graph_opts": ctx.graph_opts,
             "ctx_encoding": ctx.pq_cfg["ctx_encoding"], "ctx_kind": spec.ctx_kind,
             "encoder": spec.encoder, "e_source": spec.e_source,
             "feature_fold": feature_fold_of(spec, fold),
@@ -1360,7 +1378,8 @@ def save_model(path: Path, model: TCLSC, spec: ArmSpec, *, fold: str, seed: int,
                cls_dim: int, ctx_dim: int, cfg: dict, nz: int, settf_windows: int,
                settf_t_max: int, budgets: Sequence[int], ctx_encoding: str,
                encoder_mode: str = "scalar", head: str = "concat",
-               ctx_kind: str = "budget", phi_stats: Optional[dict] = None) -> None:
+               ctx_kind: str = "budget", phi_stats: Optional[dict] = None,
+               graph_opts: Optional[dict] = None) -> None:
     """interfaces「Task 6 → Task 7 saved-model format」——meta 键集是绑定契约。
 
     `e_source` 只取绑定枚举 ("fold"|"per_dataset"|"unfit"|null)；`feature_fold`
@@ -1382,6 +1401,8 @@ def save_model(path: Path, model: TCLSC, spec: ArmSpec, *, fold: str, seed: int,
         "head": head,
         # WP16 阶段 1：ctx 语义标签 + φ 折内标准化统计（排名侧按此重建 ctx，逐位一致）
         "ctx_kind": ctx_kind, **(phi_stats or {}),
+        # WP16-L2：graph 编码的打包拓扑 / 读出 / 标量 / 层数（排名侧按此重建打包器与模型）
+        **({"graph_opts": dict(graph_opts)} if graph_opts else {}),
     }}, path)
 
 
@@ -1415,10 +1436,11 @@ def cmd_train(outdir: Path, *, arms: Sequence[str], folds: Optional[Sequence[str
               seeds: Optional[Sequence[int]], resume: bool, device: str,
               epochs: Optional[int], settf_windows: Optional[int],
               smoke: bool = False, allow_partial_cache: bool = False,
-              encoder_mode: str = "scalar", phi_file: Optional[Path] = None) -> None:
+              encoder_mode: str = "scalar", phi_file: Optional[Path] = None,
+              graph_opts: Optional[dict] = None) -> None:
     ctx = PQContext(outdir, device=device, epochs=epochs, settf_windows=settf_windows,
                     smoke=smoke, allow_partial_cache=allow_partial_cache,
-                    encoder_mode=encoder_mode, phi_file=phi_file)
+                    encoder_mode=encoder_mode, phi_file=phi_file, graph_opts=graph_opts)
     print(f"缓存 {len(ctx.cache)} 行 | 预算 {ctx.budgets} | 数据集 "
           f"{sorted(ctx.slices_by_ds)} | δ 源 {ctx.delta_source} | device={device} "
           f"| CLS 编码 {ctx.encoder_mode}（{ctx.encoder.dim} 维）",
@@ -1925,9 +1947,14 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--phi-file", type=Path, default=None,
                     help="阶段 1 φ 臂的切片特征表（默认 results/mx4_task_feature/task_features.jsonl；"
                          "只有 ctx_kind='phi_budget' 的臂读它）")
-    ap.add_argument("--encoder-mode", default="scalar", choices=list(CLSEncoder_MODES),
+    ap.add_argument("--encoder-mode", default="scalar", choices=list(ENCODER_MODES),
                     help="CLS 向量编码：scalar（32 维，默认逐位不变）/ binned（按档 one-hot 116 维；"
-                         "WP16-TCLSC-L1）。产物路径不带模式，两种模式请用不同 --outdir")
+                         "WP16-TCLSC-L1）/ graph（流水线图 + GIN 打包 438 维；WP16-L2）。产物路径不带模式，不同模式请用不同 --outdir")
+    ap.add_argument("--graph-topology", default="pipe", choices=list(GRAPH_TOPOLOGIES))
+    ap.add_argument("--graph-readout", default="hub", choices=list(GRAPH_READOUTS))
+    ap.add_argument("--graph-layers", type=int, default=2)
+    ap.add_argument("--graph-scalar", dest="graph_scalar", action="store_true", default=True)
+    ap.add_argument("--no-graph-scalar", dest="graph_scalar", action="store_false")
     return ap
 
 
@@ -1958,7 +1985,9 @@ def main() -> None:
                   allow_partial_cache=args.allow_partial_cache,
                   encoder_mode=args.encoder_mode,
                   phi_file=(args.phi_file or (PHI_FILE if any(
-                      arm_spec(a).ctx_kind == "phi_budget" for a in (args.arms or [])) else None)))
+                      arm_spec(a).ctx_kind == "phi_budget" for a in (args.arms or [])) else None)),
+                  graph_opts={"topology": args.graph_topology, "readout": args.graph_readout,
+                              "scalar": bool(args.graph_scalar), "gin_layers": int(args.graph_layers)})
     if args.analyze:
         cmd_analyze(args.outdir)
 

@@ -91,6 +91,10 @@ def encoder(mode: str) -> CLSEncoder:
     return _ENC[mode]
 
 
+def _vec_of(enc, c) -> np.ndarray:
+    return enc.encode(c)
+
+
 # ---------------------------------------------------------------- meta → 编码器
 def encoder_for_meta(meta: Mapping, spc: Optional[CLSSpace] = None) -> CLSEncoder:
     """打分用的 CLS 编码器：按 meta["encoder_mode"] 选，与 meta["cls_dim"] 互校。
@@ -101,6 +105,15 @@ def encoder_for_meta(meta: Mapping, spc: Optional[CLSSpace] = None) -> CLSEncode
     spc = spc or space()
     dim = int(meta["cls_dim"])
     mode = meta.get("encoder_mode")
+    if mode == "graph":                                   # WP16-L2：打包器按 meta.graph_opts 的拓扑重建
+        opts = meta.get("graph_opts")
+        if not opts:
+            raise ValueError("encoder_mode='graph' 的存档缺 graph_opts")
+        from autocls.comparator.cls_graph import GraphPacker
+        packer = GraphPacker(spc, topology=str(opts["topology"]))
+        if packer.dim != dim:
+            raise ValueError(f"graph 打包维度 {packer.dim} ≠ meta cls_dim={dim}")
+        return packer
     if mode is None:
         if dim != CLSEncoder(spc).dim:
             raise ValueError(f"meta 无 encoder_mode 且 cls_dim={dim} ≠ scalar 维数 {CLSEncoder(spc).dim}，不猜")
@@ -268,7 +281,7 @@ def rank_local_models(models_by_arm: Mapping[str, Sequence[tuple]], catalog: Map
         encs[arm] = []
         for model, meta in mm:
             enc = encoder_for_meta(meta)
-            in_features = int(model.cls_mlp[0].in_features)
+            in_features = int(getattr(model, "cls_in_dim", None) or model.cls_mlp[0].in_features)
             if in_features != enc.dim:
                 raise ValueError(f"[{arm}] 模型第一层 in_features={in_features} ≠ {enc.mode} 编码 {enc.dim} 维")
             if _g34.uses_E(model):
@@ -285,12 +298,13 @@ def rank_local_models(models_by_arm: Mapping[str, Sequence[tuple]], catalog: Map
             encs[arm].append(enc)
     vec_cache: dict[tuple[str, str], torch.Tensor] = {}
 
-    def vecs(mode: str, s: str) -> torch.Tensor:
-        if (mode, s) not in vec_cache:
-            vec_cache[(mode, s)] = torch.as_tensor(
-                np.stack([encoder(mode).encode(c) for _o, c, _k in catalog[s]]),
-                dtype=torch.float32, device=device)
-        return vec_cache[(mode, s)]
+    def vecs(enc_obj, s: str) -> torch.Tensor:
+        # 缓存键含拓扑：graph 打包随拓扑变（pipe/full/none），scalar/binned 拓扑为空串
+        key = (f"{enc_obj.mode}:{getattr(enc_obj, 'topology', '')}", s)
+        if key not in vec_cache:
+            vec_cache[key] = torch.as_tensor(np.stack([enc_obj.encode(c) for _o, c, _k in catalog[s]]),
+                                             dtype=torch.float32, device=device)
+        return vec_cache[key]
 
     out: dict[str, dict] = {}
     for b in budgets:
@@ -306,12 +320,11 @@ def rank_local_models(models_by_arm: Mapping[str, Sequence[tuple]], catalog: Map
                 ctx_row = ctx_budget
             per_arm: dict[str, list[str]] = {}
             for arm, mm in models_by_arm.items():
-                modes = {e.mode for e in encs[arm]}
+                modes = {f"{e.mode}:{getattr(e, 'topology', '')}" for e in encs[arm]}
                 if len(modes) != 1:
                     raise ValueError(f"[{arm}] 同一臂的种子编码模式不一致 {sorted(modes)}")
-                mode = next(iter(modes))
                 ranked, _S = _g34.rank_candidates([m for m, _ in mm], [None] * len(mm),
-                                                  vecs(mode, s), keys, ctx_row=ctx_row)
+                                                  vecs(encs[arm][0], s), keys, ctx_row=ctx_row)
                 per_arm[arm] = ranked
             per_b[s] = per_arm
         out[str(int(b))] = per_b
