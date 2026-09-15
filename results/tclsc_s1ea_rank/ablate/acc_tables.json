@@ -1,0 +1,282 @@
+{
+ "uea_@290_top-3": {
+  "Handwriting": {
+   "oracle": 0.8658361290592308,
+   "blind_diff_hard": 0.8290383590765789,
+   "fwb_hard": 0.8404875286978859,
+   "fw_eaphi_hard": 0.8188468588205625,
+   "fw_eaphi_hard@zero_all": 0.8277050257432456,
+   "fw_eaphi_hard@noise": 0.8214016992984537
+  },
+  "UniMiB-SHAR": {
+   "oracle": 0.8338808987879691,
+   "blind_diff_hard": 0.8083827812703076,
+   "fwb_hard": 0.8181423492306804,
+   "fw_eaphi_hard": 0.8132563557453384,
+   "fw_eaphi_hard@zero_all": 0.8121705794152624,
+   "fw_eaphi_hard@noise": 0.8094573213529591
+  },
+  "PhonemeSpectra": {
+   "oracle": 0.5814621179633633,
+   "blind_diff_hard": 0.5391465407273033,
+   "fwb_hard": 0.5407805276554078,
+   "fw_eaphi_hard": 0.5581460597268224,
+   "fw_eaphi_hard@zero_all": 0.5304885320692947,
+   "fw_eaphi_hard@noise": 0.5348210731665416
+  },
+  "UWaveGestureLibrary": {
+   "oracle": 0.9553943452380952,
+   "blind_diff_hard": 0.940327380952381,
+   "fwb_hard": 0.9358630952380952,
+   "fw_eaphi_hard": 0.9470238095238095,
+   "fw_eaphi_hard@zero_all": 0.9457217261904761,
+   "fw_eaphi_hard@noise": 0.9478918650793652
+  },
+  "EthanolConcentration": {
+   "oracle": 0.5174976232678921,
+   "blind_diff_hard": 0.46432641212949965,
+   "fwb_hard": 0.45609404569784573,
+   "fw_eaphi_hard": 0.4862944601150366,
+   "fw_eaphi_hard@zero_all": 0.4710995988389921,
+   "fw_eaphi_hard@noise": 0.46789973773672355
+  },
+  "Cricket": {
+   "oracle": 0.9161044973544974,
+   "blind_diff_hard": 0.897470238095238,
+   "fwb_hard": 0.8776289682539682,
+   "fw_eaphi_hard": 0.9119378306878306,
+   "fw_eaphi_hard@zero_all": 0.8956845238095239,
+   "fw_eaphi_hard@noise": 0.9004684744268077
+  },
+  "HandMovementDirection": {
+   "oracle": 0.5986299953563079,
+   "blind_diff_hard": 0.5485598780692095,
+   "fwb_hard": 0.549340344754106,
+   "fw_eaphi_hard": 0.5454152239811592,
+   "fw_eaphi_hard@zero_all": 0.5499197284856637,
+   "fw_eaphi_hard@noise": 0.542582202280213
+  },
+  "均值": {
+   "oracle": 0.7526865152896222,
+   "blind_diff_hard": 0.7181787986172168,
+   "fwb_hard": 0.7169052656468555,
+   "fw_eaphi_hard": 0.7258457998000799,
+   "fw_eaphi_hard@zero_all": 0.7189699592217798,
+   "fw_eaphi_hard@noise": 0.7177889104772949
+  }
+ },
+ "uea_@290_top-1": {
+  "Handwriting": {
+   "oracle": 0.8658361290592308,
+   "blind_diff_hard": 0.7306172181920433,
+   "fwb_hard": 0.7907946977860315,
+   "fw_eaphi_hard": 0.6629510183787847,
+   "fw_eaphi_hard@zero_all": 0.7572511147614236,
+   "fw_eaphi_hard@noise": 0.7614899046977696
+  },
+  "UniMiB-SHAR": {
+   "oracle": 0.8338808987879691,
+   "blind_diff_hard": 0.8013128161145023,
+   "fwb_hard": 0.8061988095998442,
+   "fw_eaphi_hard": 0.7931605077131042,
+   "fw_eaphi_hard@zero_all": 0.8121705794152624,
+   "fw_eaphi_hard@noise": 0.7886205875763262
+  },
+  "PhonemeSpectra": {
+   "oracle": 0.5814621179633633,
+   "blind_diff_hard": 0.483890043695562,
+   "fwb_hard": 0.5131108229163411,
+   "fw_eaphi_hard": 0.5018355135954292,
+   "fw_eaphi_hard@zero_all": 0.483890043695562,
+   "fw_eaphi_hard@noise": 0.4844252439018358
+  },
+  "UWaveGestureLibrary": {
+   "oracle": 0.9553943452380952,
+   "blind_diff_hard": 0.9127232142857143,
+   "fwb_hard": 0.8944940476190477,
+   "fw_eaphi_hard": 0.9083333333333332,
+   "fw_eaphi_hard@zero_all": 0.9024553571428572,
+   "fw_eaphi_hard@noise": 0.920982142857143
+  },
+  "EthanolConcentration": {
+   "oracle": 0.5174976232678921,
+   "blind_diff_hard": 0.43875781876429615,
+   "fwb_hard": 0.41784980406377364,
+   "fw_eaphi_hard": 0.4152807650324654,
+   "fw_eaphi_hard@zero_all": 0.4061180821409689,
+   "fw_eaphi_hard@noise": 0.4257361820696233
+  },
+  "Cricket": {
+   "oracle": 0.9161044973544974,
+   "blind_diff_hard": 0.8500992063492063,
+   "fwb_hard": 0.8460482804232804,
+   "fw_eaphi_hard": 0.8553075396825397,
+   "fw_eaphi_hard@zero_all": 0.860515873015873,
+   "fw_eaphi_hard@noise": 0.8674603174603176
+  },
+  "HandMovementDirection": {
+   "oracle": 0.5986299953563079,
+   "blind_diff_hard": 0.5328366076289579,
+   "fwb_hard": 0.45909674799902445,
+   "fw_eaphi_hard": 0.5296919535409076,
+   "fw_eaphi_hard@zero_all": 0.5328366076289579,
+   "fw_eaphi_hard@noise": 0.5241244500242654
+  },
+  "均值": {
+   "oracle": 0.7526865152896222,
+   "blind_diff_hard": 0.6786052750043261,
+   "fwb_hard": 0.6753704586296204,
+   "fw_eaphi_hard": 0.6666515187537948,
+   "fw_eaphi_hard@zero_all": 0.6793196654001292,
+   "fw_eaphi_hard@noise": 0.6818341183696116
+  }
+ },
+ "uea_三预算均值_top-3": {
+  "Handwriting": {
+   "oracle": 0.8511093037118554,
+   "blind_diff_hard": 0.7994845673892518,
+   "fwb_hard": 0.8010608138938452,
+   "fw_eaphi_hard": 0.7906995508736849,
+   "fw_eaphi_hard@zero_all": 0.7990401229448074,
+   "fw_eaphi_hard@noise": 0.7968349588912761
+  },
+  "UniMiB-SHAR": {
+   "oracle": 0.8232070282351307,
+   "blind_diff_hard": 0.8054720440474417,
+   "fwb_hard": 0.8032898465213085,
+   "fw_eaphi_hard": 0.8050994737381019,
+   "fw_eaphi_hard@zero_all": 0.805822149542211,
+   "fw_eaphi_hard@noise": 0.8064915856558573
+  },
+  "PhonemeSpectra": {
+   "oracle": 0.5832558585241091,
+   "blind_diff_hard": 0.5530702174375931,
+   "fwb_hard": 0.5492858754179569,
+   "fw_eaphi_hard": 0.5601272490044286,
+   "fw_eaphi_hard@zero_all": 0.5417065810739567,
+   "fw_eaphi_hard@noise": 0.5429703862593306
+  },
+  "UWaveGestureLibrary": {
+   "oracle": 0.9543898809523809,
+   "blind_diff_hard": 0.9362475198412699,
+   "fwb_hard": 0.93984375,
+   "fw_eaphi_hard": 0.9445064484126985,
+   "fw_eaphi_hard@zero_all": 0.9472470238095237,
+   "fw_eaphi_hard@noise": 0.9466476521164022
+  },
+  "EthanolConcentration": {
+   "oracle": 0.5149278153164584,
+   "blind_diff_hard": 0.47151604597896296,
+   "fwb_hard": 0.4690214127851322,
+   "fw_eaphi_hard": 0.4828667679795824,
+   "fw_eaphi_hard@zero_all": 0.47497849330408975,
+   "fw_eaphi_hard@noise": 0.4743046885981141
+  },
+  "Cricket": {
+   "oracle": 0.9196704144620812,
+   "blind_diff_hard": 0.9050154320987653,
+   "fwb_hard": 0.9013337742504409,
+   "fw_eaphi_hard": 0.9116291887125221,
+   "fw_eaphi_hard@zero_all": 0.9017581569664904,
+   "fw_eaphi_hard@noise": 0.9093106995884774
+  },
+  "HandMovementDirection": {
+   "oracle": 0.57272573280828,
+   "blind_diff_hard": 0.5424903985199309,
+   "fwb_hard": 0.5427505540815631,
+   "fw_eaphi_hard": 0.5357149602432622,
+   "fw_eaphi_hard@zero_all": 0.5382646797741137,
+   "fw_eaphi_hard@noise": 0.5324868209746526
+  },
+  "均值": {
+   "oracle": 0.7456122905728995,
+   "blind_diff_hard": 0.7161851750447451,
+   "fwb_hard": 0.7152265752786066,
+   "fw_eaphi_hard": 0.7186633769948974,
+   "fw_eaphi_hard@zero_all": 0.7155453153450276,
+   "fw_eaphi_hard@noise": 0.7155781131548729
+  }
+ },
+ "uea_三预算均值_top-1": {
+  "Handwriting": {
+   "oracle": 0.8511093037118554,
+   "blind_diff_hard": 0.7277846193417719,
+   "fwb_hard": 0.7524922038253058,
+   "fw_eaphi_hard": 0.6697512335164633,
+   "fw_eaphi_hard@zero_all": 0.7467007275600551,
+   "fw_eaphi_hard@noise": 0.7383255793410287
+  },
+  "UniMiB-SHAR": {
+   "oracle": 0.8232070282351307,
+   "blind_diff_hard": 0.7944226731590213,
+   "fwb_hard": 0.794422673159021,
+   "fw_eaphi_hard": 0.7877398900423747,
+   "fw_eaphi_hard@zero_all": 0.7962323003758146,
+   "fw_eaphi_hard@noise": 0.7880755732541941
+  },
+  "PhonemeSpectra": {
+   "oracle": 0.5832558585241091,
+   "blind_diff_hard": 0.5063277814443428,
+   "fwb_hard": 0.5137155258027711,
+   "fw_eaphi_hard": 0.5068795403310317,
+   "fw_eaphi_hard@zero_all": 0.5063277814443428,
+   "fw_eaphi_hard@noise": 0.5057799651006097
+  },
+  "UWaveGestureLibrary": {
+   "oracle": 0.9543898809523809,
+   "blind_diff_hard": 0.9149429563492063,
+   "fwb_hard": 0.9063864087301589,
+   "fw_eaphi_hard": 0.9080977182539681,
+   "fw_eaphi_hard@zero_all": 0.9104786706349207,
+   "fw_eaphi_hard@noise": 0.9295097552910052
+  },
+  "EthanolConcentration": {
+   "oracle": 0.5149278153164584,
+   "blind_diff_hard": 0.4450661932579238,
+   "fwb_hard": 0.4411571571239066,
+   "fw_eaphi_hard": 0.4356629152591584,
+   "fw_eaphi_hard@zero_all": 0.42885428133188036,
+   "fw_eaphi_hard@noise": 0.43722751393052595
+  },
+  "Cricket": {
+   "oracle": 0.9196704144620812,
+   "blind_diff_hard": 0.8537588183421517,
+   "fwb_hard": 0.8477788800705467,
+   "fw_eaphi_hard": 0.8653328924162257,
+   "fw_eaphi_hard@zero_all": 0.8547233245149912,
+   "fw_eaphi_hard@noise": 0.8722773368606701
+  },
+  "HandMovementDirection": {
+   "oracle": 0.57272573280828,
+   "blind_diff_hard": 0.5170055976813565,
+   "fwb_hard": 0.49468918775214915,
+   "fw_eaphi_hard": 0.5152694865702454,
+   "fw_eaphi_hard@zero_all": 0.5170055976813565,
+   "fw_eaphi_hard@noise": 0.5112471731370419
+  },
+  "均值": {
+   "oracle": 0.7456122905728995,
+   "blind_diff_hard": 0.6799012342251106,
+   "fwb_hard": 0.6786631480662657,
+   "fw_eaphi_hard": 0.6698190966270667,
+   "fw_eaphi_hard@zero_all": 0.6800460976490517,
+   "fw_eaphi_hard@noise": 0.6832061281307251
+  }
+ },
+ "ucr_top-3": {
+  "oracle": 0.8669589519598795,
+  "u_blind_diff_hard": 0.8449303728948584,
+  "u_fwb_hard": 0.8473564798467633,
+  "u_fw_eaphi_hard": 0.8486794510816816,
+  "u_fw_eaphi_hard@zero_all": 0.8470125986489427,
+  "u_fw_eaphi_hard@noise": 0.845367653216199
+ },
+ "ucr_top-1": {
+  "oracle": 0.8669589519598795,
+  "u_blind_diff_hard": 0.8058462493471742,
+  "u_fwb_hard": 0.8161617293494077,
+  "u_fw_eaphi_hard": 0.8284727465871763,
+  "u_fw_eaphi_hard@zero_all": 0.8263050490370532,
+  "u_fw_eaphi_hard@noise": 0.8221617344132904
+ }
+}
