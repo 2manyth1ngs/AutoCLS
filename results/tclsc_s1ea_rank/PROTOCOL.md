@@ -87,3 +87,15 @@ H-R3：n=72 下 field 头仍优于任务盲（不因低秩失去 diff 头在 UCR
   训练 UEA 42 × 12 s + UCR 42 × 21 s ≈ 23 min（4060）；`--rank --analyze` CPU ≈ 8 min。
 - 读数 **E-OR-N**（预注册主臂 fw4：G-R1 ✗ 0.0325 vs 0.0294、G-R2 ✗、G-R3 ✓ 0.0189 vs 0.0220 p 4e-4；C0 六臂逐位），预测 3/7（P6 反向）。
   **阶梯外**：对照臂 fw（不限秩）UEA regret@3 0.0269 < 任务盲 0.0294 p 0.035、cross → 0.0321 p 3e-4、zero → 0.0333 p 5e-4；UCR 0.0183 全项目最好。须 R′ 确认。详见 REPORT.md。
+
+## §9 消融补充（用户 2026-09-15 要求，先于数据）：数据集特征对 field 头的贡献有多少
+
+问题：fw 相对任务盲的增益里，多少来自**数据集特征**（E_A ⊕ φ12 的内容），多少来自 **field 头的结构本身**（逐字段加性项作为更强的任务盲模型）。
+两层消融，两考场（UEA n=7 / UCR n=72），fw 模型不重训：
+
+- **训练侧对照臂 `fwb_hard` / `u_fwb_hard`**：field 头 + ctx = 只有预算 one-hot（3 维，无任何数据集信息），3 种子——"没有数据集特征的 field 头"。
+  fw − fwb = 数据集特征的贡献；fwb − 任务盲 diff = 头结构的贡献。
+- **推理侧消融（已训 fw）**：`zero_all` = E_A 与 φ 全置 0（预算不动）；`noise` = 每切片换成 N(0,1) 随机向量（3 种子均值）；已有的 cross / zero(E_A) 一并列出。
+
+读数：regret@3 / regret@1 / M0，配对 Wilcoxon（H1 fw 更低）。预期（先验）：UEA fw − fwb ≤ 0.003 的概率 40%（即"增益主要来自头结构"）；UCR fw < fwb p < 0.05 的概率 70%。
+产物 `results/tclsc_s1ea_rank/ablate/`，脚本 `scripts/67_tclsc_s1ea_ablate.py`。

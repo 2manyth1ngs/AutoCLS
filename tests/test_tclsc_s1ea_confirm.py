@@ -57,7 +57,7 @@ class TestTableCtx33:
         assert not (set(a) & (set(m33.ARMS) | set(m33.L3_ARMS) | set(m33.PHI_ARMS) | set(m33.FP_ARMS) | set(m33.E_ARMS)))
         for s in a.values():
             assert s.split == "S1" and s.seeds == (0, 1, 2) and s.head in ("diff", "field") and s.label_mode == "hard"
-            assert s.ctx_kind == "table_budget" and s.task_branch == "ctx" and s.encoder is None
+            assert s.ctx_kind in ("table_budget", "budget") and s.task_branch == "ctx" and s.encoder is None   # §9 消融 fwb_hard 只吃预算
         assert a["ea_diff_hard"].head == "diff" and a["eaphi_diff_hard"].head == "diff"
         assert a["ea_diff_hard"].ctx_cols == EA_COLS and a["eaphi_diff_hard"].ctx_cols == ALL_COLS
         assert m33.arm_spec("eaphi_diff_hard") is a["eaphi_diff_hard"] and "eaphi_diff_hard" in m33.CLI_ARMS

@@ -53,6 +53,8 @@ ARMS: dict[str, ArmSpec] = {
         ArmSpec("u_phi_concat_hard", "S1", "ctx", None, None, "phi_budget", head="concat", seeds=(0, 1, 2)),
         ArmSpec("u_phi_diff_hard", "S1", "ctx", None, None, "phi_budget", head="diff", seeds=(0, 1, 2)),
         ArmSpec("u_fp_diff_hard", "S1", "ctx", None, None, "fp_budget", head="diff", seeds=(0, 1, 2)),
+        # R 检验 §9 消融：field 头 + 只有预算 one-hot（无数据集信息）
+        ArmSpec("u_fwb_hard", "S1", "ctx", None, None, "budget", head="field", seeds=(0, 1, 2)),
     )
 }
 PHI_ARMS = ("u_phi_concat_hard", "u_phi_diff_hard")
@@ -157,6 +159,8 @@ def train_fold(rows: Sequence[dict], phi: Mapping, folds: Sequence[Sequence[str]
     ctx_map, meta_extra = None, None
     if spec.ctx_kind == "phi_budget":
         ctx_map, meta_extra = phi_context(phi, train, test)
+    elif spec.ctx_kind == "budget":
+        ctx_map = {t: pq.ctx_vector(pq.split_engine_task_id(t)[1], BUDGETS) for t in _tids(list(train) + list(test))}
     elif spec.ctx_kind == "fp_budget":
         ctx_map, meta_extra = fp_context(rows_to_cache(rows), train, test)
     cdim = 0 if ctx_map is None else int(next(iter(ctx_map.values())).shape[0])
@@ -207,7 +211,7 @@ def rank_fold(rows: Sequence[dict], phi: Mapping, folds: Sequence[Sequence[str]]
             for s, pa in pb.items():
                 dst.setdefault(b, {}).setdefault(s, {}).update(pa)
 
-    blind = {a: m for a, m in models.items() if ARMS[a].ctx_kind == "none"}
+    blind = {a: m for a, m in models.items() if ARMS[a].ctx_kind in ("none", "budget")}   # budget 臂用 rank_local_models 的默认预算 one-hot
     if blind:
         merge(per["normal"], _g56.rank_local_models(blind, cat, budgets=BUDGETS, device=device))
     phi_models = {a: m for a, m in models.items() if ARMS[a].ctx_kind == "phi_budget"}

@@ -268,6 +268,8 @@ EA_ARMS: dict[str, ArmSpec] = {
                 ctx_cols=tuple(EA_COLS) + tuple(PHI_COLS), head_rank=4),
         ArmSpec("fw_eaphi_hard", "S1", "ctx", None, None, "table_budget", head="field", seeds=(0, 1, 2),
                 ctx_cols=tuple(EA_COLS) + tuple(PHI_COLS)),
+        # §9 消融：field 头 + 只有预算 one-hot（无任何数据集信息）——头结构本身的贡献
+        ArmSpec("fwb_hard", "S1", "ctx", None, None, "budget", head="field", seeds=(0, 1, 2)),
     )
 }
 assert not (set(EA_ARMS) & (set(ARMS) | set(L3_ARMS) | set(PHI_ARMS) | set(FP_ARMS) | set(E_ARMS))), "响应画像臂名不得与既有臂表冲突"
