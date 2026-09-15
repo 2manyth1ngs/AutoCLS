@@ -66,7 +66,7 @@ class TestCtxGuard:
         z = g.xfer_ctx_rows(table, cols, ["T_00"], mu, sd, zero_cols=("a",))
         assert z[("T_00", 60)][0] == 0.0
         x = g.xfer_ctx_rows(table, cols, ["T_00"], mu, sd, cross_map={"T_00": "U_00"})
-        assert x[("T_00", 120)][0] == 1.0 and x[("T_00", 120)][3] == 2.0
+        assert x[("T_00", 120)][0] == 1.0 and x[("T_00", 120)][3] == 4.0        # d: 2.0/0.5
         assert g.CLIP == 4.0
 
 
