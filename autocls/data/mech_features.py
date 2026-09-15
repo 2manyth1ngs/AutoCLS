@@ -418,3 +418,66 @@ def response_profile(X: np.ndarray, y: np.ndarray, *, task_type: str, seeds: Seq
     out["trend_info"] = trend_info(X, y)
     out["trend_strength"] = trend_strength(X)
     return out
+
+
+# ---------------------------------------------------------------- 转导型响应画像（WP16 T 检验，results/tclsc_s1et/PROTOCOL.md §2）
+REP_PROFILE_COLS: tuple[str, ...] = (
+    tuple(f"rep_{op}" for op in RESPONSE_OPS)
+    + tuple(f"rcos_{op}" for op, spec in RESPONSE_OPS.items() if spec["sim"])
+    + ("rinfo",)
+)
+
+
+def rep_cols_at(budget: int) -> tuple[str, ...]:
+    """某截点的列名：`rep_<op>@b` / `rcos_<op>@b` / `rinfo@b`。"""
+    return tuple(f"{c}@{int(budget)}" for c in REP_PROFILE_COLS)
+
+
+def torch_encode_fn(encoder, device: Optional[str] = None, batch_size: int = 128) -> Callable[[np.ndarray], np.ndarray]:
+    """nn.Module (B, T, C)→(B, T, d) → 编码函数 (N, T, C)→(N, d)（时间维 max-pool，与 R' 评估同：downstream.linear_eval.encode_features）。"""
+    from ..downstream.linear_eval import encode_features
+    return lambda X: encode_features(encoder, np.asarray(X, np.float32), device=device, batch_size=batch_size)
+
+
+def info_cross_rep(R0: np.ndarray, Rp: np.ndarray, y: np.ndarray, *, chunk: int = 512) -> float:
+    """扰动样本 Rp[i] 在未扰动库 R0（排除 i）里的 1-NN 类别命中，逐维标准化用 R0 的 μ/σ，chance 归一。"""
+    R0 = np.asarray(R0, float); Rp = np.asarray(Rp, float)
+    mu, sd = R0.mean(0), R0.std(0)
+    sd = np.where(sd > 1e-12, sd, 1.0)
+    y = np.asarray(y)
+    return info_norm(nn1_cross_acc((Rp - mu) / sd, (R0 - mu) / sd, y, exclude_self=True, chunk=chunk), majority_chance(y))
+
+
+def rep_profile(encode_fn: Callable[[np.ndarray], np.ndarray], X: np.ndarray, y: np.ndarray, *, task_type: str,
+                seeds: Sequence[int] = RESPONSE_SEEDS, chunk: int = 512) -> dict[str, Any]:
+    """转导型响应画像：同一套 RESPONSE_OPS 在**表示空间**里的响应（22 维 REP_PROFILE_COLS）。
+
+    R0 = encode(X)，Rp = encode(op(X))（op 施加在原始空间）；within 形式 op → rep = info(Rp) − info(R0)（变换后集合内 LOO），
+    cross 形式 op → rep = info_cross(Rp → R0) − info(R0)；rcos = mean cos(R0[i], Rp[i])（polarity 除外）；rinfo = info(R0)。
+    encode = 恒等展平时逐位等于 response_profile 的 ret_ / sim_ / info_raw。按 task_type 显式分发（铁律 7），现只实现分类。
+    """
+    validate_task_type(task_type)
+    if task_type != TASK_CLASSIFICATION:
+        raise NotImplementedError(f"task_type={task_type!r} 的转导型响应画像未定义（以标签一致率定义）")
+    X = np.asarray(X, dtype=np.float32)
+    y = np.asarray(y)
+    R0 = np.asarray(encode_fn(X), float)
+    base = info_loo(R0, y, chunk=chunk)
+    out: dict[str, Any] = {"rinfo": float(base), "n": int(X.shape[0]), "rep_dim": int(R0.shape[1]), "seeds": [int(s) for s in seeds]}
+    for op, spec in RESPONSE_OPS.items():
+        use_seeds = tuple(seeds) if spec["p"] > 0 else (int(seeds[0]),)
+        vals, coss = [], []
+        for s in use_seeds:
+            Rp = np.asarray(encode_fn(_apply_op(op, X, spec["p"], s)), float)
+            if spec["form"] == "within":
+                vals.append(info_loo(Rp, y, chunk=chunk) - base)
+            else:
+                vals.append(info_cross_rep(R0, Rp, y, chunk=chunk) - base)
+            if spec["sim"] and s == use_seeds[0]:          # 余弦只取首种子（与 response_profile 的 sim_ 同口径）
+                n0 = np.linalg.norm(R0, axis=1); n1 = np.linalg.norm(Rp, axis=1)
+                den = n0 * n1
+                coss.append(float(np.mean(np.where(den > 1e-12, (R0 * Rp).sum(1) / np.where(den > 1e-12, den, 1.0), 0.0))))
+        out[f"rep_{op}"] = float(np.clip(np.mean(vals), -1.0, 1.0))
+        if spec["sim"]:
+            out[f"rcos_{op}"] = float(np.clip(np.mean(coss), -1.0, 1.0))
+    return out

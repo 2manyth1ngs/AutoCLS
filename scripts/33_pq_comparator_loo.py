@@ -257,6 +257,7 @@ assert not (set(E_ARMS) & (set(ARMS) | set(L3_ARMS) | set(PHI_ARMS) | set(FP_ARM
 # 表由 --ctx-file 给（每切片一行，含 E_A 25 列与 φ12 列）；本脚本只按 ctx_cols 取列装配成浮点向量（铁律 7），
 # nan 感知标准化只用该折训练切片（铁律 6）。
 from autocls.data.mech_features import RESPONSE_PROFILE_COLS as EA_COLS  # noqa: E402
+from autocls.data.mech_features import rep_cols_at as _rep_cols_at  # noqa: E402
 EA_ARMS: dict[str, ArmSpec] = {
     s.name: s for s in (
         ArmSpec("ea_diff_hard", "S1", "ctx", None, None, "table_budget", head="diff", seeds=(0, 1, 2),
@@ -270,6 +271,13 @@ EA_ARMS: dict[str, ArmSpec] = {
                 ctx_cols=tuple(EA_COLS) + tuple(PHI_COLS)),
         # §9 消融：field 头 + 只有预算 one-hot（无任何数据集信息）——头结构本身的贡献
         ArmSpec("fwb_hard", "S1", "ctx", None, None, "budget", head="field", seeds=(0, 1, 2)),
+        # T 检验（results/tclsc_s1et/PROTOCOL.md §3）：转导型响应画像 E_T（GGS 探针 @60 / @290 表示空间）
+        ArmSpec("ft60_hard", "S1", "ctx", None, None, "table_budget", head="field", seeds=(0, 1, 2),
+                ctx_cols=_rep_cols_at(60) + tuple(PHI_COLS)),
+        ArmSpec("ft290_hard", "S1", "ctx", None, None, "table_budget", head="field", seeds=(0, 1, 2),
+                ctx_cols=_rep_cols_at(290) + tuple(PHI_COLS)),
+        ArmSpec("ftea_hard", "S1", "ctx", None, None, "table_budget", head="field", seeds=(0, 1, 2),
+                ctx_cols=_rep_cols_at(60) + tuple(EA_COLS) + tuple(PHI_COLS)),
     )
 }
 assert not (set(EA_ARMS) & (set(ARMS) | set(L3_ARMS) | set(PHI_ARMS) | set(FP_ARMS) | set(E_ARMS))), "响应画像臂名不得与既有臂表冲突"

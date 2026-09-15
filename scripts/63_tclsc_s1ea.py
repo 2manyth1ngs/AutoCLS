@@ -25,7 +25,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from autocls.comparator.tclsc_engine import TCLSCEngine  # noqa: E402
-from autocls.data.mech_features import RESPONSE_PROFILE_COLS, RESPONSE_SEEDS, response_profile  # noqa: E402
+from autocls.data.mech_features import RESPONSE_PROFILE_COLS, RESPONSE_SEEDS, rep_cols_at, response_profile  # noqa: E402
 from autocls.task_types import TASK_CLASSIFICATION, is_better  # noqa: E402
 from scripts import pq_common as pq  # noqa: E402
 from scripts.e_ablation_common import read_jsonl  # noqa: E402
@@ -45,6 +45,7 @@ EA_COLS: tuple[str, ...] = tuple(RESPONSE_PROFILE_COLS)
 OUT = ROOT / "results" / "tclsc_s1ea"
 S1UCR = ROOT / "results" / "tclsc_s1ucr"
 EA_FILE = OUT / "ea_ucr.jsonl"
+ET_FILE = ROOT / "results" / "tclsc_s1et" / "et_ucr.jsonl"        # T 检验：转导型 E_T（69 号 --features 产出）
 REF_ARMS = ("u_blind_diff_hard", "u_phi_diff_hard")
 SEEDS = (0, 1, 2)
 CROSS_SEEDS = (0, 1, 2)
@@ -56,9 +57,15 @@ ARMS: dict[str, ArmSpec] = {
         # R 检验（results/tclsc_s1ea_rank/PROTOCOL.md §3）：低秩字段加性头
         ArmSpec("u_fw4_eaphi_hard", "S1", "ctx", None, None, "eaphi_budget", head="field", seeds=(0, 1, 2), head_rank=4),
         ArmSpec("u_fw_eaphi_hard", "S1", "ctx", None, None, "eaphi_budget", head="field", seeds=(0, 1, 2)),
+        # T 检验（results/tclsc_s1et/PROTOCOL.md §3）：转导型 E_T
+        ArmSpec("u_ft60_hard", "S1", "ctx", None, None, "et60_budget", head="field", seeds=(0, 1, 2)),
+        ArmSpec("u_ft290_hard", "S1", "ctx", None, None, "et290_budget", head="field", seeds=(0, 1, 2)),
+        ArmSpec("u_ftea_hard", "S1", "ctx", None, None, "etea_budget", head="field", seeds=(0, 1, 2)),
     )
 }
-CTX_KINDS: dict[str, tuple[str, ...]] = {"ea_budget": EA_COLS, "eaphi_budget": EA_COLS + PHI_COLS}
+CTX_KINDS: dict[str, tuple[str, ...]] = {"ea_budget": EA_COLS, "eaphi_budget": EA_COLS + PHI_COLS,
+                                        "et60_budget": rep_cols_at(60) + PHI_COLS, "et290_budget": rep_cols_at(290) + PHI_COLS,
+                                        "etea_budget": rep_cols_at(60) + EA_COLS + PHI_COLS}
 # G-A4：AutoCL 随机增强字段 ↔ 响应画像列
 FIELD_OPS = {"jitter": "ret_jitter", "rescale": "ret_rescale", "point_mask": "ret_point_mask", "freq_mask": "ret_freq_mask"}
 FIELD_HI, FIELD_LO, FIELD_MIN_SIDE, ALIGN_BUDGET = 0.5, 0.2, 2, 290
@@ -138,9 +145,25 @@ def table_ctx_rows(table: Mapping[str, Mapping], cols: Sequence[str], slices: Se
     return out
 
 
-def _ctx_table(spec: ArmSpec, ea: Mapping, phi: Mapping) -> tuple[Mapping[str, Mapping], tuple[str, ...]]:
-    cols = ctx_cols(spec.ctx_kind)
-    return (merge_tables(ea, phi) if spec.ctx_kind == "eaphi_budget" else ea), cols
+def table_for_kind(kind: str, ea: Mapping, phi: Mapping, et: Optional[Mapping] = None) -> Mapping[str, Mapping]:
+    """按 ctx_kind 合成数据集表：ea / ea ⊕ φ / E_T ⊕ φ (⊕ E_A)。et 缺席时 et* 种类 fail-fast。"""
+    if kind == "ea_budget":
+        return ea
+    if kind == "eaphi_budget":
+        return merge_tables(ea, phi)
+    if kind in ("et60_budget", "et290_budget", "etea_budget"):
+        if et is None:
+            raise ValueError(f"ctx_kind={kind!r} 需要转导型 E_T 表（{ET_FILE}，先跑 69 --features）")
+        return {d: {**dict(row), **dict(et.get(d, {})), **dict(phi.get(d, {}))} for d, row in ea.items()}
+    raise KeyError(f"未知 ctx_kind {kind!r}")
+
+
+def load_et(path: Path = ET_FILE) -> Optional[dict[str, dict]]:
+    return {r["dataset"]: r for r in read_jsonl(path)} if path.exists() else None
+
+
+def _ctx_table(spec: ArmSpec, ea: Mapping, phi: Mapping, et: Optional[Mapping] = None) -> tuple[Mapping[str, Mapping], tuple[str, ...]]:
+    return table_for_kind(spec.ctx_kind, ea, phi, et), ctx_cols(spec.ctx_kind)
 
 
 # ---------------------------------------------------------------- 特征计算（--features）
@@ -186,7 +209,7 @@ def train_fold(rows: Sequence[dict], ea: Mapping, phi: Mapping, folds: Sequence[
     if epochs:
         c["epochs"], c["curriculum_epochs"] = int(epochs), min(int(c["curriculum_epochs"]), max(1, int(epochs) // 2))
     recs = _g60.build_records(rows, train)
-    table, cols = _ctx_table(spec, ea, phi)
+    table, cols = _ctx_table(spec, ea, phi, load_et() if spec.ctx_kind.startswith("et") else None)
     ctx_map, meta_extra = table_context(table, cols, train, test, ctx_kind=spec.ctx_kind)
     cdim = int(next(iter(ctx_map.values())).shape[0])
     cls_dim = int(recs[0].vec.shape[0])
@@ -236,6 +259,7 @@ def rank_fold(rows: Sequence[dict], ea: Mapping, phi: Mapping, folds: Sequence[S
             for s, pa in pb.items():
                 dst.setdefault(b, {}).setdefault(s, {}).update(pa)
 
+    et = None
     for kind in CTX_KINDS:
         mm = {a: m for a, m in models.items() if ARMS[a].ctx_kind == kind}
         if not mm:
@@ -244,7 +268,9 @@ def rank_fold(rows: Sequence[dict], ea: Mapping, phi: Mapping, folds: Sequence[S
         cols = tuple(meta0["ctx_cols"])
         if cols != ctx_cols(kind):
             raise ValueError(f"[{fold}/{kind}] 存档列表 {len(cols)} 列 ≠ 当前 {len(ctx_cols(kind))} 列")
-        table = merge_tables(ea, phi) if kind == "eaphi_budget" else ea
+        if kind.startswith("et") and et is None:
+            et = load_et()
+        table = table_for_kind(kind, ea, phi, et)
         mu, sd = np.array(meta0["ctx_mu"]), np.array(meta0["ctx_sd"])
         rows_fn = lambda cm=None, zero=False, table=table, cols=cols, mu=mu, sd=sd: table_ctx_rows(table, cols, test_t, mu, sd, cross_map=cm, zero=zero)
         merge(per["normal"], _g56.rank_local_models(mm, cat, budgets=BUDGETS, device=device, ctx_rows=rows_fn()))
