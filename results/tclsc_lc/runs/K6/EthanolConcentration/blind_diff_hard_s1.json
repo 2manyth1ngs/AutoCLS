@@ -1,0 +1,12 @@
+{
+ "tag": "K6",
+ "test": "EthanolConcentration",
+ "arm": "blind_diff_hard",
+ "seed": 1,
+ "n_train_slices": 39,
+ "n_train_records": 702,
+ "train_seconds": 3.2,
+ "bce_first": 0.6970961689949036,
+ "bce_last": 0.04902526317164302,
+ "train_pairs_last": 239
+}

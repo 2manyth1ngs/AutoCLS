@@ -1,0 +1,12 @@
+{
+ "tag": "S4",
+ "test": "HandMovementDirection",
+ "arm": "blind_diff_hard",
+ "seed": 0,
+ "n_train_slices": 27,
+ "n_train_records": 1620,
+ "train_seconds": 6.6,
+ "bce_first": 0.6966921091079712,
+ "bce_last": 0.09925310669297521,
+ "train_pairs_last": 644
+}

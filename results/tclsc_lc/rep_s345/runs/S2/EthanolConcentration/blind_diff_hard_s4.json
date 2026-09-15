@@ -1,0 +1,12 @@
+{
+ "tag": "S2",
+ "test": "EthanolConcentration",
+ "arm": "blind_diff_hard",
+ "seed": 4,
+ "n_train_slices": 14,
+ "n_train_records": 840,
+ "train_seconds": 3.2,
+ "bce_first": 0.6878745257854462,
+ "bce_last": 0.055640469491481784,
+ "train_pairs_last": 289
+}

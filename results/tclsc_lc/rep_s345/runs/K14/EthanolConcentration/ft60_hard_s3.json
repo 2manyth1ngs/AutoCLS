@@ -1,0 +1,12 @@
+{
+ "tag": "K14",
+ "test": "EthanolConcentration",
+ "arm": "ft60_hard",
+ "seed": 3,
+ "n_train_slices": 39,
+ "n_train_records": 1638,
+ "train_seconds": 6.9,
+ "bce_first": 0.623772402604421,
+ "bce_last": 0.0204436172110339,
+ "train_pairs_last": 552
+}

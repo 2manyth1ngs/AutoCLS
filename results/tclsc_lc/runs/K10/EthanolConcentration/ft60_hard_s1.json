@@ -1,0 +1,12 @@
+{
+ "tag": "K10",
+ "test": "EthanolConcentration",
+ "arm": "ft60_hard",
+ "seed": 1,
+ "n_train_slices": 39,
+ "n_train_records": 1170,
+ "train_seconds": 5.5,
+ "bce_first": 0.6690584421157837,
+ "bce_last": 0.013450107692430416,
+ "train_pairs_last": 382
+}

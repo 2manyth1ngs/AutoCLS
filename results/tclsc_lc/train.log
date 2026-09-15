@@ -1,0 +1,378 @@
+[K6/Handwriting/ft60_hard_s0] 4.2s n_slices 39 recs 702 pairs 225
+[K6/Handwriting/ft60_hard_s1] 3.2s n_slices 39 recs 702 pairs 222
+[K6/Handwriting/ft60_hard_s2] 3.4s n_slices 39 recs 702 pairs 232
+[K6/Handwriting/blind_diff_hard_s0] 3.2s n_slices 39 recs 702 pairs 225
+[K6/Handwriting/blind_diff_hard_s1] 2.6s n_slices 39 recs 702 pairs 222
+[K6/Handwriting/blind_diff_hard_s2] 2.8s n_slices 39 recs 702 pairs 232
+[K6/UniMiB-SHAR/ft60_hard_s0] 3.9s n_slices 39 recs 702 pairs 229
+[K6/UniMiB-SHAR/ft60_hard_s1] 3.4s n_slices 39 recs 702 pairs 228
+[K6/UniMiB-SHAR/ft60_hard_s2] 4.3s n_slices 39 recs 702 pairs 226
+[K6/UniMiB-SHAR/blind_diff_hard_s0] 3.2s n_slices 39 recs 702 pairs 229
+[K6/UniMiB-SHAR/blind_diff_hard_s1] 2.8s n_slices 39 recs 702 pairs 228
+[K6/UniMiB-SHAR/blind_diff_hard_s2] 2.5s n_slices 39 recs 702 pairs 226
+[K6/PhonemeSpectra/ft60_hard_s0] 3.8s n_slices 39 recs 702 pairs 212
+[K6/PhonemeSpectra/ft60_hard_s1] 3.1s n_slices 39 recs 702 pairs 214
+[K6/PhonemeSpectra/ft60_hard_s2] 2.9s n_slices 39 recs 702 pairs 216
+[K6/PhonemeSpectra/blind_diff_hard_s0] 2.9s n_slices 39 recs 702 pairs 212
+[K6/PhonemeSpectra/blind_diff_hard_s1] 2.6s n_slices 39 recs 702 pairs 214
+[K6/PhonemeSpectra/blind_diff_hard_s2] 2.5s n_slices 39 recs 702 pairs 216
+[K6/UWaveGestureLibrary/ft60_hard_s0] 3.5s n_slices 39 recs 702 pairs 227
+[K6/UWaveGestureLibrary/ft60_hard_s1] 3.9s n_slices 39 recs 702 pairs 199
+[K6/UWaveGestureLibrary/ft60_hard_s2] 3.5s n_slices 39 recs 702 pairs 221
+[K6/UWaveGestureLibrary/blind_diff_hard_s0] 2.6s n_slices 39 recs 702 pairs 227
+[K6/UWaveGestureLibrary/blind_diff_hard_s1] 3.1s n_slices 39 recs 702 pairs 199
+[K6/UWaveGestureLibrary/blind_diff_hard_s2] 2.6s n_slices 39 recs 702 pairs 221
+[K6/EthanolConcentration/ft60_hard_s0] 3.3s n_slices 39 recs 702 pairs 263
+[K6/EthanolConcentration/ft60_hard_s1] 3.8s n_slices 39 recs 702 pairs 239
+[K6/EthanolConcentration/ft60_hard_s2] 3.6s n_slices 39 recs 702 pairs 249
+[K6/EthanolConcentration/blind_diff_hard_s0] 2.9s n_slices 39 recs 702 pairs 263
+[K6/EthanolConcentration/blind_diff_hard_s1] 3.2s n_slices 39 recs 702 pairs 239
+[K6/EthanolConcentration/blind_diff_hard_s2] 3.0s n_slices 39 recs 702 pairs 249
+[K6/Cricket/ft60_hard_s0] 3.2s n_slices 39 recs 702 pairs 237
+[K6/Cricket/ft60_hard_s1] 3.4s n_slices 39 recs 702 pairs 233
+[K6/Cricket/ft60_hard_s2] 3.3s n_slices 39 recs 702 pairs 232
+[K6/Cricket/blind_diff_hard_s0] 2.6s n_slices 39 recs 702 pairs 237
+[K6/Cricket/blind_diff_hard_s1] 2.7s n_slices 39 recs 702 pairs 233
+[K6/Cricket/blind_diff_hard_s2] 2.9s n_slices 39 recs 702 pairs 232
+[K6/HandMovementDirection/ft60_hard_s0] 3.9s n_slices 39 recs 702 pairs 263
+[K6/HandMovementDirection/ft60_hard_s1] 4.1s n_slices 39 recs 702 pairs 278
+[K6/HandMovementDirection/ft60_hard_s2] 4.4s n_slices 39 recs 702 pairs 254
+[K6/HandMovementDirection/blind_diff_hard_s0] 3.2s n_slices 39 recs 702 pairs 263
+[K6/HandMovementDirection/blind_diff_hard_s1] 3.3s n_slices 39 recs 702 pairs 278
+[K6/HandMovementDirection/blind_diff_hard_s2] 3.2s n_slices 39 recs 702 pairs 254
+[K10/Handwriting/ft60_hard_s0] 4.8s n_slices 39 recs 1170 pairs 349
+[K10/Handwriting/ft60_hard_s1] 5.1s n_slices 39 recs 1170 pairs 367
+[K10/Handwriting/ft60_hard_s2] 5.4s n_slices 39 recs 1170 pairs 385
+[K10/Handwriting/blind_diff_hard_s0] 4.1s n_slices 39 recs 1170 pairs 349
+[K10/Handwriting/blind_diff_hard_s1] 4.1s n_slices 39 recs 1170 pairs 367
+[K10/Handwriting/blind_diff_hard_s2] 4.0s n_slices 39 recs 1170 pairs 385
+[K10/UniMiB-SHAR/ft60_hard_s0] 4.8s n_slices 39 recs 1170 pairs 346
+[K10/UniMiB-SHAR/ft60_hard_s1] 4.9s n_slices 39 recs 1170 pairs 361
+[K10/UniMiB-SHAR/ft60_hard_s2] 4.9s n_slices 39 recs 1170 pairs 371
+[K10/UniMiB-SHAR/blind_diff_hard_s0] 4.3s n_slices 39 recs 1170 pairs 346
+[K10/UniMiB-SHAR/blind_diff_hard_s1] 3.7s n_slices 39 recs 1170 pairs 361
+[K10/UniMiB-SHAR/blind_diff_hard_s2] 3.8s n_slices 39 recs 1170 pairs 371
+[K10/PhonemeSpectra/ft60_hard_s0] 4.9s n_slices 39 recs 1170 pairs 321
+[K10/PhonemeSpectra/ft60_hard_s1] 4.8s n_slices 39 recs 1170 pairs 346
+[K10/PhonemeSpectra/ft60_hard_s2] 4.7s n_slices 39 recs 1170 pairs 350
+[K10/PhonemeSpectra/blind_diff_hard_s0] 3.9s n_slices 39 recs 1170 pairs 321
+[K10/PhonemeSpectra/blind_diff_hard_s1] 3.8s n_slices 39 recs 1170 pairs 346
+[K10/PhonemeSpectra/blind_diff_hard_s2] 4.0s n_slices 39 recs 1170 pairs 350
+[K10/UWaveGestureLibrary/ft60_hard_s0] 5.0s n_slices 39 recs 1170 pairs 380
+[K10/UWaveGestureLibrary/ft60_hard_s1] 4.8s n_slices 39 recs 1170 pairs 381
+[K10/UWaveGestureLibrary/ft60_hard_s2] 4.9s n_slices 39 recs 1170 pairs 371
+[K10/UWaveGestureLibrary/blind_diff_hard_s0] 3.9s n_slices 39 recs 1170 pairs 380
+[K10/UWaveGestureLibrary/blind_diff_hard_s1] 4.1s n_slices 39 recs 1170 pairs 381
+[K10/UWaveGestureLibrary/blind_diff_hard_s2] 4.0s n_slices 39 recs 1170 pairs 371
+[K10/EthanolConcentration/ft60_hard_s0] 5.5s n_slices 39 recs 1170 pairs 399
+[K10/EthanolConcentration/ft60_hard_s1] 5.5s n_slices 39 recs 1170 pairs 382
+[K10/EthanolConcentration/ft60_hard_s2] 5.1s n_slices 39 recs 1170 pairs 387
+[K10/EthanolConcentration/blind_diff_hard_s0] 4.2s n_slices 39 recs 1170 pairs 399
+[K10/EthanolConcentration/blind_diff_hard_s1] 4.5s n_slices 39 recs 1170 pairs 382
+[K10/EthanolConcentration/blind_diff_hard_s2] 4.3s n_slices 39 recs 1170 pairs 387
+[K10/Cricket/ft60_hard_s0] 5.1s n_slices 39 recs 1170 pairs 362
+[K10/Cricket/ft60_hard_s1] 5.1s n_slices 39 recs 1170 pairs 389
+[K10/Cricket/ft60_hard_s2] 5.2s n_slices 39 recs 1170 pairs 389
+[K10/Cricket/blind_diff_hard_s0] 3.8s n_slices 39 recs 1170 pairs 362
+[K10/Cricket/blind_diff_hard_s1] 4.3s n_slices 39 recs 1170 pairs 389
+[K10/Cricket/blind_diff_hard_s2] 4.2s n_slices 39 recs 1170 pairs 389
+[K10/HandMovementDirection/ft60_hard_s0] 5.6s n_slices 39 recs 1170 pairs 442
+[K10/HandMovementDirection/ft60_hard_s1] 5.6s n_slices 39 recs 1170 pairs 430
+[K10/HandMovementDirection/ft60_hard_s2] 5.7s n_slices 39 recs 1170 pairs 427
+[K10/HandMovementDirection/blind_diff_hard_s0] 4.6s n_slices 39 recs 1170 pairs 442
+[K10/HandMovementDirection/blind_diff_hard_s1] 4.6s n_slices 39 recs 1170 pairs 430
+[K10/HandMovementDirection/blind_diff_hard_s2] 4.6s n_slices 39 recs 1170 pairs 427
+[K14/Handwriting/ft60_hard_s0] 7.7s n_slices 39 recs 1638 pairs 512
+[K14/Handwriting/ft60_hard_s1] 7.2s n_slices 39 recs 1638 pairs 545
+[K14/Handwriting/ft60_hard_s2] 7.6s n_slices 39 recs 1638 pairs 529
+[K14/Handwriting/blind_diff_hard_s0] 5.8s n_slices 39 recs 1638 pairs 512
+[K14/Handwriting/blind_diff_hard_s1] 5.8s n_slices 39 recs 1638 pairs 545
+[K14/Handwriting/blind_diff_hard_s2] 5.6s n_slices 39 recs 1638 pairs 529
+[K14/UniMiB-SHAR/ft60_hard_s0] 6.7s n_slices 39 recs 1638 pairs 509
+[K14/UniMiB-SHAR/ft60_hard_s1] 6.7s n_slices 39 recs 1638 pairs 518
+[K14/UniMiB-SHAR/ft60_hard_s2] 6.7s n_slices 39 recs 1638 pairs 535
+[K14/UniMiB-SHAR/blind_diff_hard_s0] 5.2s n_slices 39 recs 1638 pairs 509
+[K14/UniMiB-SHAR/blind_diff_hard_s1] 5.5s n_slices 39 recs 1638 pairs 518
+[K14/UniMiB-SHAR/blind_diff_hard_s2] 5.7s n_slices 39 recs 1638 pairs 535
+[K14/PhonemeSpectra/ft60_hard_s0] 6.2s n_slices 39 recs 1638 pairs 499
+[K14/PhonemeSpectra/ft60_hard_s1] 6.5s n_slices 39 recs 1638 pairs 461
+[K14/PhonemeSpectra/ft60_hard_s2] 6.5s n_slices 39 recs 1638 pairs 496
+[K14/PhonemeSpectra/blind_diff_hard_s0] 5.1s n_slices 39 recs 1638 pairs 499
+[K14/PhonemeSpectra/blind_diff_hard_s1] 5.1s n_slices 39 recs 1638 pairs 461
+[K14/PhonemeSpectra/blind_diff_hard_s2] 5.2s n_slices 39 recs 1638 pairs 496
+[K14/UWaveGestureLibrary/ft60_hard_s0] 7.1s n_slices 39 recs 1638 pairs 524
+[K14/UWaveGestureLibrary/ft60_hard_s1] 7.0s n_slices 39 recs 1638 pairs 525
+[K14/UWaveGestureLibrary/ft60_hard_s2] 7.2s n_slices 39 recs 1638 pairs 540
+[K14/UWaveGestureLibrary/blind_diff_hard_s0] 5.8s n_slices 39 recs 1638 pairs 524
+[K14/UWaveGestureLibrary/blind_diff_hard_s1] 5.6s n_slices 39 recs 1638 pairs 525
+[K14/UWaveGestureLibrary/blind_diff_hard_s2] 5.5s n_slices 39 recs 1638 pairs 540
+[K14/EthanolConcentration/ft60_hard_s0] 7.3s n_slices 39 recs 1638 pairs 568
+[K14/EthanolConcentration/ft60_hard_s1] 7.6s n_slices 39 recs 1638 pairs 536
+[K14/EthanolConcentration/ft60_hard_s2] 7.1s n_slices 39 recs 1638 pairs 556
+[K14/EthanolConcentration/blind_diff_hard_s0] 6.0s n_slices 39 recs 1638 pairs 568
+[K14/EthanolConcentration/blind_diff_hard_s1] 6.0s n_slices 39 recs 1638 pairs 536
+[K14/EthanolConcentration/blind_diff_hard_s2] 6.0s n_slices 39 recs 1638 pairs 556
+[K14/Cricket/ft60_hard_s0] 7.1s n_slices 39 recs 1638 pairs 536
+[K14/Cricket/ft60_hard_s1] 7.0s n_slices 39 recs 1638 pairs 524
+[K14/Cricket/ft60_hard_s2] 7.1s n_slices 39 recs 1638 pairs 539
+[K14/Cricket/blind_diff_hard_s0] 5.8s n_slices 39 recs 1638 pairs 536
+[K14/Cricket/blind_diff_hard_s1] 5.7s n_slices 39 recs 1638 pairs 524
+[K14/Cricket/blind_diff_hard_s2] 6.1s n_slices 39 recs 1638 pairs 539
+[K14/HandMovementDirection/ft60_hard_s0] 7.9s n_slices 39 recs 1638 pairs 598
+[K14/HandMovementDirection/ft60_hard_s1] 7.8s n_slices 39 recs 1638 pairs 612
+[K14/HandMovementDirection/ft60_hard_s2] 7.9s n_slices 39 recs 1638 pairs 615
+[K14/HandMovementDirection/blind_diff_hard_s0] 6.4s n_slices 39 recs 1638 pairs 598
+[K14/HandMovementDirection/blind_diff_hard_s1] 6.2s n_slices 39 recs 1638 pairs 612
+[K14/HandMovementDirection/blind_diff_hard_s2] 6.4s n_slices 39 recs 1638 pairs 615
+[S2/Handwriting/ft60_hard_s0] 4.1s n_slices 14 recs 840 pairs 271
+[S2/Handwriting/ft60_hard_s1] 4.1s n_slices 14 recs 840 pairs 266
+[S2/Handwriting/ft60_hard_s2] 4.3s n_slices 14 recs 840 pairs 272
+[S2/Handwriting/blind_diff_hard_s0] 3.1s n_slices 14 recs 840 pairs 271
+[S2/Handwriting/blind_diff_hard_s1] 3.3s n_slices 14 recs 840 pairs 266
+[S2/Handwriting/blind_diff_hard_s2] 3.0s n_slices 14 recs 840 pairs 272
+[S2/UniMiB-SHAR/ft60_hard_s0] 3.8s n_slices 14 recs 840 pairs 253
+[S2/UniMiB-SHAR/ft60_hard_s1] 3.7s n_slices 14 recs 840 pairs 261
+[S2/UniMiB-SHAR/ft60_hard_s2] 3.8s n_slices 14 recs 840 pairs 270
+[S2/UniMiB-SHAR/blind_diff_hard_s0] 3.0s n_slices 14 recs 840 pairs 253
+[S2/UniMiB-SHAR/blind_diff_hard_s1] 2.9s n_slices 14 recs 840 pairs 261
+[S2/UniMiB-SHAR/blind_diff_hard_s2] 3.1s n_slices 14 recs 840 pairs 270
+[S2/PhonemeSpectra/ft60_hard_s0] 3.2s n_slices 14 recs 840 pairs 244
+[S2/PhonemeSpectra/ft60_hard_s1] 3.3s n_slices 14 recs 840 pairs 247
+[S2/PhonemeSpectra/ft60_hard_s2] 3.5s n_slices 14 recs 840 pairs 250
+[S2/PhonemeSpectra/blind_diff_hard_s0] 2.7s n_slices 14 recs 840 pairs 244
+[S2/PhonemeSpectra/blind_diff_hard_s1] 2.8s n_slices 14 recs 840 pairs 247
+[S2/PhonemeSpectra/blind_diff_hard_s2] 2.6s n_slices 14 recs 840 pairs 250
+[S2/UWaveGestureLibrary/ft60_hard_s0] 3.9s n_slices 14 recs 840 pairs 272
+[S2/UWaveGestureLibrary/ft60_hard_s1] 3.8s n_slices 14 recs 840 pairs 258
+[S2/UWaveGestureLibrary/ft60_hard_s2] 3.9s n_slices 14 recs 840 pairs 269
+[S2/UWaveGestureLibrary/blind_diff_hard_s0] 3.2s n_slices 14 recs 840 pairs 272
+[S2/UWaveGestureLibrary/blind_diff_hard_s1] 3.1s n_slices 14 recs 840 pairs 258
+[S2/UWaveGestureLibrary/blind_diff_hard_s2] 3.3s n_slices 14 recs 840 pairs 269
+[S2/EthanolConcentration/ft60_hard_s0] 4.0s n_slices 14 recs 840 pairs 293
+[S2/EthanolConcentration/ft60_hard_s1] 4.0s n_slices 14 recs 840 pairs 294
+[S2/EthanolConcentration/ft60_hard_s2] 4.2s n_slices 14 recs 840 pairs 298
+[S2/EthanolConcentration/blind_diff_hard_s0] 3.5s n_slices 14 recs 840 pairs 293
+[S2/EthanolConcentration/blind_diff_hard_s1] 3.2s n_slices 14 recs 840 pairs 294
+[S2/EthanolConcentration/blind_diff_hard_s2] 3.2s n_slices 14 recs 840 pairs 298
+[S2/Cricket/ft60_hard_s0] 3.7s n_slices 14 recs 840 pairs 257
+[S2/Cricket/ft60_hard_s1] 3.8s n_slices 14 recs 840 pairs 270
+[S2/Cricket/ft60_hard_s2] 4.1s n_slices 14 recs 840 pairs 277
+[S2/Cricket/blind_diff_hard_s0] 3.0s n_slices 14 recs 840 pairs 257
+[S2/Cricket/blind_diff_hard_s1] 3.1s n_slices 14 recs 840 pairs 270
+[S2/Cricket/blind_diff_hard_s2] 3.6s n_slices 14 recs 840 pairs 277
+[S2/HandMovementDirection/ft60_hard_s0] 4.3s n_slices 14 recs 840 pairs 324
+[S2/HandMovementDirection/ft60_hard_s1] 4.2s n_slices 14 recs 840 pairs 314
+[S2/HandMovementDirection/ft60_hard_s2] 4.3s n_slices 14 recs 840 pairs 332
+[S2/HandMovementDirection/blind_diff_hard_s0] 3.6s n_slices 14 recs 840 pairs 324
+[S2/HandMovementDirection/blind_diff_hard_s1] 3.4s n_slices 14 recs 840 pairs 314
+[S2/HandMovementDirection/blind_diff_hard_s2] 3.5s n_slices 14 recs 840 pairs 332
+[S4/Handwriting/ft60_hard_s0] 7.1s n_slices 27 recs 1620 pairs 568
+[S4/Handwriting/ft60_hard_s1] 7.7s n_slices 27 recs 1620 pairs 582
+[S4/Handwriting/ft60_hard_s2] 7.3s n_slices 27 recs 1620 pairs 552
+[S4/Handwriting/blind_diff_hard_s0] 5.9s n_slices 27 recs 1620 pairs 568
+[S4/Handwriting/blind_diff_hard_s1] 5.9s n_slices 27 recs 1620 pairs 582
+[S4/Handwriting/blind_diff_hard_s2] 6.0s n_slices 27 recs 1620 pairs 552
+[S4/UniMiB-SHAR/ft60_hard_s0] 7.2s n_slices 27 recs 1620 pairs 526
+[S4/UniMiB-SHAR/ft60_hard_s1] 7.4s n_slices 27 recs 1620 pairs 560
+[S4/UniMiB-SHAR/ft60_hard_s2] 7.2s n_slices 27 recs 1620 pairs 525
+[S4/UniMiB-SHAR/blind_diff_hard_s0] 5.7s n_slices 27 recs 1620 pairs 526
+[S4/UniMiB-SHAR/blind_diff_hard_s1] 5.8s n_slices 27 recs 1620 pairs 560
+[S4/UniMiB-SHAR/blind_diff_hard_s2] 5.9s n_slices 27 recs 1620 pairs 525
+[S4/PhonemeSpectra/ft60_hard_s0] 6.4s n_slices 27 recs 1620 pairs 493
+[S4/PhonemeSpectra/ft60_hard_s1] 6.9s n_slices 27 recs 1620 pairs 502
+[S4/PhonemeSpectra/ft60_hard_s2] 7.0s n_slices 27 recs 1620 pairs 499
+[S4/PhonemeSpectra/blind_diff_hard_s0] 5.2s n_slices 27 recs 1620 pairs 493
+[S4/PhonemeSpectra/blind_diff_hard_s1] 5.2s n_slices 27 recs 1620 pairs 502
+[S4/PhonemeSpectra/blind_diff_hard_s2] 5.4s n_slices 27 recs 1620 pairs 499
+[S4/UWaveGestureLibrary/ft60_hard_s0] 7.3s n_slices 27 recs 1620 pairs 551
+[S4/UWaveGestureLibrary/ft60_hard_s1] 7.5s n_slices 27 recs 1620 pairs 530
+[S4/UWaveGestureLibrary/ft60_hard_s2] 7.3s n_slices 27 recs 1620 pairs 561
+[S4/UWaveGestureLibrary/blind_diff_hard_s0] 5.8s n_slices 27 recs 1620 pairs 551
+[S4/UWaveGestureLibrary/blind_diff_hard_s1] 6.1s n_slices 27 recs 1620 pairs 530
+[S4/UWaveGestureLibrary/blind_diff_hard_s2] 6.1s n_slices 27 recs 1620 pairs 561
+[S4/EthanolConcentration/ft60_hard_s0] 8.0s n_slices 27 recs 1620 pairs 583
+[S4/EthanolConcentration/ft60_hard_s1] 8.0s n_slices 27 recs 1620 pairs 601
+[S4/EthanolConcentration/ft60_hard_s2] 7.9s n_slices 27 recs 1620 pairs 602
+[S4/EthanolConcentration/blind_diff_hard_s0] 6.3s n_slices 27 recs 1620 pairs 583
+[S4/EthanolConcentration/blind_diff_hard_s1] 6.4s n_slices 27 recs 1620 pairs 601
+[S4/EthanolConcentration/blind_diff_hard_s2] 6.4s n_slices 27 recs 1620 pairs 602
+[S4/Cricket/ft60_hard_s0] 7.7s n_slices 27 recs 1620 pairs 557
+[S4/Cricket/ft60_hard_s1] 7.4s n_slices 27 recs 1620 pairs 547
+[S4/Cricket/ft60_hard_s2] 7.6s n_slices 27 recs 1620 pairs 562
+[S4/Cricket/blind_diff_hard_s0] 5.8s n_slices 27 recs 1620 pairs 557
+[S4/Cricket/blind_diff_hard_s1] 5.8s n_slices 27 recs 1620 pairs 547
+[S4/Cricket/blind_diff_hard_s2] 6.0s n_slices 27 recs 1620 pairs 562
+[S4/HandMovementDirection/ft60_hard_s0] 8.5s n_slices 27 recs 1620 pairs 644
+[S4/HandMovementDirection/ft60_hard_s1] 8.2s n_slices 27 recs 1620 pairs 641
+[S4/HandMovementDirection/ft60_hard_s2] 8.2s n_slices 27 recs 1620 pairs 622
+[S4/HandMovementDirection/blind_diff_hard_s0] 6.6s n_slices 27 recs 1620 pairs 644
+[S4/HandMovementDirection/blind_diff_hard_s1] 6.5s n_slices 27 recs 1620 pairs 641
+[S4/HandMovementDirection/blind_diff_hard_s2] 6.9s n_slices 27 recs 1620 pairs 622
+[n7/fold0/u_ft60_hard_s0] 3.3s n_train 7 pairs 212
+[n7/fold0/u_ft60_hard_s1] 3.3s n_train 7 pairs 220
+[n7/fold0/u_ft60_hard_s2] 3.1s n_train 7 pairs 228
+[n7/fold0/u_blind_diff_hard_s0] 2.6s n_train 7 pairs 212
+[n7/fold0/u_blind_diff_hard_s1] 2.5s n_train 7 pairs 220
+[n7/fold0/u_blind_diff_hard_s2] 2.7s n_train 7 pairs 228
+[n7/fold1/u_ft60_hard_s0] 3.2s n_train 7 pairs 212
+[n7/fold1/u_ft60_hard_s1] 3.3s n_train 7 pairs 220
+[n7/fold1/u_ft60_hard_s2] 3.2s n_train 7 pairs 228
+[n7/fold1/u_blind_diff_hard_s0] 2.6s n_train 7 pairs 212
+[n7/fold1/u_blind_diff_hard_s1] 2.5s n_train 7 pairs 220
+[n7/fold1/u_blind_diff_hard_s2] 2.6s n_train 7 pairs 228
+[n7/fold2/u_ft60_hard_s0] 3.5s n_train 7 pairs 212
+[n7/fold2/u_ft60_hard_s1] 3.2s n_train 7 pairs 220
+[n7/fold2/u_ft60_hard_s2] 3.4s n_train 7 pairs 228
+[n7/fold2/u_blind_diff_hard_s0] 2.7s n_train 7 pairs 212
+[n7/fold2/u_blind_diff_hard_s1] 2.7s n_train 7 pairs 220
+[n7/fold2/u_blind_diff_hard_s2] 2.5s n_train 7 pairs 228
+[n7/fold3/u_ft60_hard_s0] 3.2s n_train 7 pairs 220
+[n7/fold3/u_ft60_hard_s1] 3.2s n_train 7 pairs 218
+[n7/fold3/u_ft60_hard_s2] 3.2s n_train 7 pairs 225
+[n7/fold3/u_blind_diff_hard_s0] 2.6s n_train 7 pairs 220
+[n7/fold3/u_blind_diff_hard_s1] 2.6s n_train 7 pairs 218
+[n7/fold3/u_blind_diff_hard_s2] 2.6s n_train 7 pairs 225
+[n7/fold4/u_ft60_hard_s0] 3.1s n_train 7 pairs 212
+[n7/fold4/u_ft60_hard_s1] 3.1s n_train 7 pairs 215
+[n7/fold4/u_ft60_hard_s2] 3.2s n_train 7 pairs 210
+[n7/fold4/u_blind_diff_hard_s0] 2.6s n_train 7 pairs 212
+[n7/fold4/u_blind_diff_hard_s1] 2.6s n_train 7 pairs 215
+[n7/fold4/u_blind_diff_hard_s2] 3.0s n_train 7 pairs 210
+[n7/fold5/u_ft60_hard_s0] 2.8s n_train 7 pairs 213
+[n7/fold5/u_ft60_hard_s1] 2.8s n_train 7 pairs 207
+[n7/fold5/u_ft60_hard_s2] 3.0s n_train 7 pairs 201
+[n7/fold5/u_blind_diff_hard_s0] 2.3s n_train 7 pairs 213
+[n7/fold5/u_blind_diff_hard_s1] 2.2s n_train 7 pairs 207
+[n7/fold5/u_blind_diff_hard_s2] 2.3s n_train 7 pairs 201
+[n7/fold6/u_ft60_hard_s0] 2.3s n_train 7 pairs 149
+[n7/fold6/u_ft60_hard_s1] 2.6s n_train 7 pairs 159
+[n7/fold6/u_ft60_hard_s2] 2.5s n_train 7 pairs 154
+[n7/fold6/u_blind_diff_hard_s0] 1.9s n_train 7 pairs 149
+[n7/fold6/u_blind_diff_hard_s1] 2.0s n_train 7 pairs 159
+[n7/fold6/u_blind_diff_hard_s2] 2.0s n_train 7 pairs 154
+[n14/fold0/u_ft60_hard_s0] 4.6s n_train 14 pairs 344
+[n14/fold0/u_ft60_hard_s1] 4.8s n_train 14 pairs 345
+[n14/fold0/u_ft60_hard_s2] 4.8s n_train 14 pairs 348
+[n14/fold0/u_blind_diff_hard_s0] 4.1s n_train 14 pairs 344
+[n14/fold0/u_blind_diff_hard_s1] 4.3s n_train 14 pairs 345
+[n14/fold0/u_blind_diff_hard_s2] 3.7s n_train 14 pairs 348
+[n14/fold1/u_ft60_hard_s0] 5.6s n_train 14 pairs 370
+[n14/fold1/u_ft60_hard_s1] 5.5s n_train 14 pairs 389
+[n14/fold1/u_ft60_hard_s2] 5.6s n_train 14 pairs 363
+[n14/fold1/u_blind_diff_hard_s0] 4.1s n_train 14 pairs 370
+[n14/fold1/u_blind_diff_hard_s1] 4.2s n_train 14 pairs 389
+[n14/fold1/u_blind_diff_hard_s2] 4.3s n_train 14 pairs 363
+[n14/fold2/u_ft60_hard_s0] 5.6s n_train 14 pairs 425
+[n14/fold2/u_ft60_hard_s1] 5.6s n_train 14 pairs 441
+[n14/fold2/u_ft60_hard_s2] 5.7s n_train 14 pairs 460
+[n14/fold2/u_blind_diff_hard_s0] 4.8s n_train 14 pairs 425
+[n14/fold2/u_blind_diff_hard_s1] 4.7s n_train 14 pairs 441
+[n14/fold2/u_blind_diff_hard_s2] 4.7s n_train 14 pairs 460
+[n14/fold3/u_ft60_hard_s0] 5.6s n_train 14 pairs 431
+[n14/fold3/u_ft60_hard_s1] 5.5s n_train 14 pairs 417
+[n14/fold3/u_ft60_hard_s2] 5.4s n_train 14 pairs 431
+[n14/fold3/u_blind_diff_hard_s0] 4.5s n_train 14 pairs 431
+[n14/fold3/u_blind_diff_hard_s1] 4.3s n_train 14 pairs 417
+[n14/fold3/u_blind_diff_hard_s2] 4.7s n_train 14 pairs 431
+[n14/fold4/u_ft60_hard_s0] 5.0s n_train 14 pairs 373
+[n14/fold4/u_ft60_hard_s1] 5.1s n_train 14 pairs 371
+[n14/fold4/u_ft60_hard_s2] 5.1s n_train 14 pairs 375
+[n14/fold4/u_blind_diff_hard_s0] 4.4s n_train 14 pairs 373
+[n14/fold4/u_blind_diff_hard_s1] 4.0s n_train 14 pairs 371
+[n14/fold4/u_blind_diff_hard_s2] 3.9s n_train 14 pairs 375
+[n14/fold5/u_ft60_hard_s0] 4.8s n_train 14 pairs 351
+[n14/fold5/u_ft60_hard_s1] 4.8s n_train 14 pairs 365
+[n14/fold5/u_ft60_hard_s2] 4.9s n_train 14 pairs 350
+[n14/fold5/u_blind_diff_hard_s0] 3.8s n_train 14 pairs 351
+[n14/fold5/u_blind_diff_hard_s1] 4.3s n_train 14 pairs 365
+[n14/fold5/u_blind_diff_hard_s2] 3.9s n_train 14 pairs 350
+[n14/fold6/u_ft60_hard_s0] 4.4s n_train 14 pairs 333
+[n14/fold6/u_ft60_hard_s1] 4.6s n_train 14 pairs 331
+[n14/fold6/u_ft60_hard_s2] 5.1s n_train 14 pairs 324
+[n14/fold6/u_blind_diff_hard_s0] 3.8s n_train 14 pairs 333
+[n14/fold6/u_blind_diff_hard_s1] 3.7s n_train 14 pairs 331
+[n14/fold6/u_blind_diff_hard_s2] 3.5s n_train 14 pairs 324
+[n28/fold0/u_ft60_hard_s0] 9.3s n_train 28 pairs 663
+[n28/fold0/u_ft60_hard_s1] 9.3s n_train 28 pairs 713
+[n28/fold0/u_ft60_hard_s2] 9.0s n_train 28 pairs 672
+[n28/fold0/u_blind_diff_hard_s0] 7.2s n_train 28 pairs 663
+[n28/fold0/u_blind_diff_hard_s1] 7.7s n_train 28 pairs 713
+[n28/fold0/u_blind_diff_hard_s2] 7.4s n_train 28 pairs 672
+[n28/fold1/u_ft60_hard_s0] 9.3s n_train 28 pairs 689
+[n28/fold1/u_ft60_hard_s1] 9.3s n_train 28 pairs 734
+[n28/fold1/u_ft60_hard_s2] 9.7s n_train 28 pairs 713
+[n28/fold1/u_blind_diff_hard_s0] 7.7s n_train 28 pairs 689
+[n28/fold1/u_blind_diff_hard_s1] 8.2s n_train 28 pairs 734
+[n28/fold1/u_blind_diff_hard_s2] 7.8s n_train 28 pairs 713
+[n28/fold2/u_ft60_hard_s0] 11.3s n_train 28 pairs 826
+[n28/fold2/u_ft60_hard_s1] 10.4s n_train 28 pairs 818
+[n28/fold2/u_ft60_hard_s2] 10.5s n_train 28 pairs 795
+[n28/fold2/u_blind_diff_hard_s0] 8.8s n_train 28 pairs 826
+[n28/fold2/u_blind_diff_hard_s1] 8.6s n_train 28 pairs 818
+[n28/fold2/u_blind_diff_hard_s2] 8.5s n_train 28 pairs 795
+[n28/fold3/u_ft60_hard_s0] 10.0s n_train 28 pairs 728
+[n28/fold3/u_ft60_hard_s1] 10.4s n_train 28 pairs 743
+[n28/fold3/u_ft60_hard_s2] 9.7s n_train 28 pairs 752
+[n28/fold3/u_blind_diff_hard_s0] 8.3s n_train 28 pairs 728
+[n28/fold3/u_blind_diff_hard_s1] 8.2s n_train 28 pairs 743
+[n28/fold3/u_blind_diff_hard_s2] 7.7s n_train 28 pairs 752
+[n28/fold4/u_ft60_hard_s0] 8.8s n_train 28 pairs 695
+[n28/fold4/u_ft60_hard_s1] 9.1s n_train 28 pairs 653
+[n28/fold4/u_ft60_hard_s2] 8.7s n_train 28 pairs 645
+[n28/fold4/u_blind_diff_hard_s0] 7.5s n_train 28 pairs 695
+[n28/fold4/u_blind_diff_hard_s1] 7.0s n_train 28 pairs 653
+[n28/fold4/u_blind_diff_hard_s2] 7.5s n_train 28 pairs 645
+[n28/fold5/u_ft60_hard_s0] 9.1s n_train 28 pairs 651
+[n28/fold5/u_ft60_hard_s1] 8.3s n_train 28 pairs 622
+[n28/fold5/u_ft60_hard_s2] 8.9s n_train 28 pairs 668
+[n28/fold5/u_blind_diff_hard_s0] 7.2s n_train 28 pairs 651
+[n28/fold5/u_blind_diff_hard_s1] 7.1s n_train 28 pairs 622
+[n28/fold5/u_blind_diff_hard_s2] 7.3s n_train 28 pairs 668
+[n28/fold6/u_ft60_hard_s0] 8.9s n_train 28 pairs 643
+[n28/fold6/u_ft60_hard_s1] 8.5s n_train 28 pairs 638
+[n28/fold6/u_ft60_hard_s2] 8.6s n_train 28 pairs 637
+[n28/fold6/u_blind_diff_hard_s0] 6.7s n_train 28 pairs 643
+[n28/fold6/u_blind_diff_hard_s1] 6.9s n_train 28 pairs 638
+[n28/fold6/u_blind_diff_hard_s2] 7.3s n_train 28 pairs 637
+[n56/fold0/u_ft60_hard_s0] 16.7s n_train 56 pairs 1235
+[n56/fold0/u_ft60_hard_s1] 17.1s n_train 56 pairs 1259
+[n56/fold0/u_ft60_hard_s2] 16.0s n_train 56 pairs 1277
+[n56/fold0/u_blind_diff_hard_s0] 13.6s n_train 56 pairs 1235
+[n56/fold0/u_blind_diff_hard_s1] 13.1s n_train 56 pairs 1259
+[n56/fold0/u_blind_diff_hard_s2] 14.0s n_train 56 pairs 1277
+[n56/fold1/u_ft60_hard_s0] 16.4s n_train 56 pairs 1233
+[n56/fold1/u_ft60_hard_s1] 16.4s n_train 56 pairs 1228
+[n56/fold1/u_ft60_hard_s2] 16.4s n_train 56 pairs 1233
+[n56/fold1/u_blind_diff_hard_s0] 14.2s n_train 56 pairs 1233
+[n56/fold1/u_blind_diff_hard_s1] 13.6s n_train 56 pairs 1228
+[n56/fold1/u_blind_diff_hard_s2] 13.9s n_train 56 pairs 1233
+[n56/fold2/u_ft60_hard_s0] 18.6s n_train 56 pairs 1394
+[n56/fold2/u_ft60_hard_s1] 18.4s n_train 56 pairs 1354
+[n56/fold2/u_ft60_hard_s2] 18.6s n_train 56 pairs 1386
+[n56/fold2/u_blind_diff_hard_s0] 15.0s n_train 56 pairs 1394
+[n56/fold2/u_blind_diff_hard_s1] 14.9s n_train 56 pairs 1354
+[n56/fold2/u_blind_diff_hard_s2] 14.4s n_train 56 pairs 1386
+[n56/fold3/u_ft60_hard_s0] 18.4s n_train 56 pairs 1381
+[n56/fold3/u_ft60_hard_s1] 17.9s n_train 56 pairs 1390
+[n56/fold3/u_ft60_hard_s2] 18.2s n_train 56 pairs 1369
+[n56/fold3/u_blind_diff_hard_s0] 14.2s n_train 56 pairs 1381
+[n56/fold3/u_blind_diff_hard_s1] 14.6s n_train 56 pairs 1390
+[n56/fold3/u_blind_diff_hard_s2] 14.5s n_train 56 pairs 1369
+[n56/fold4/u_ft60_hard_s0] 17.6s n_train 56 pairs 1298
+[n56/fold4/u_ft60_hard_s1] 17.6s n_train 56 pairs 1318
+[n56/fold4/u_ft60_hard_s2] 17.5s n_train 56 pairs 1320
+[n56/fold4/u_blind_diff_hard_s0] 14.0s n_train 56 pairs 1298
+[n56/fold4/u_blind_diff_hard_s1] 14.6s n_train 56 pairs 1318
+[n56/fold4/u_blind_diff_hard_s2] 14.0s n_train 56 pairs 1320
+[n56/fold5/u_ft60_hard_s0] 17.6s n_train 56 pairs 1356
+[n56/fold5/u_ft60_hard_s1] 18.0s n_train 56 pairs 1333
+[n56/fold5/u_ft60_hard_s2] 17.3s n_train 56 pairs 1318
+[n56/fold5/u_blind_diff_hard_s0] 14.3s n_train 56 pairs 1356
+[n56/fold5/u_blind_diff_hard_s1] 14.5s n_train 56 pairs 1333
+[n56/fold5/u_blind_diff_hard_s2] 14.5s n_train 56 pairs 1318
+[n56/fold6/u_ft60_hard_s0] 18.5s n_train 56 pairs 1382
+[n56/fold6/u_ft60_hard_s1] 17.5s n_train 56 pairs 1377
+[n56/fold6/u_ft60_hard_s2] 17.7s n_train 56 pairs 1388
+[n56/fold6/u_blind_diff_hard_s0] 15.0s n_train 56 pairs 1382
+[n56/fold6/u_blind_diff_hard_s1] 15.0s n_train 56 pairs 1377
+[n56/fold6/u_blind_diff_hard_s2] 14.6s n_train 56 pairs 1388

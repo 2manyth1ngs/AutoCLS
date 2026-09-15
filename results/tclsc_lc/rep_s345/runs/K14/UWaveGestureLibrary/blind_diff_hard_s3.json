@@ -1,0 +1,12 @@
+{
+ "tag": "K14",
+ "test": "UWaveGestureLibrary",
+ "arm": "blind_diff_hard",
+ "seed": 3,
+ "n_train_slices": 39,
+ "n_train_records": 1638,
+ "train_seconds": 5.7,
+ "bce_first": 0.6880350311597189,
+ "bce_last": 0.1401769481599331,
+ "train_pairs_last": 516
+}

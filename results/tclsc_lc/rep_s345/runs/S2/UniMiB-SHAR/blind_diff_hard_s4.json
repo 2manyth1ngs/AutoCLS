@@ -1,0 +1,12 @@
+{
+ "tag": "S2",
+ "test": "UniMiB-SHAR",
+ "arm": "blind_diff_hard",
+ "seed": 4,
+ "n_train_slices": 14,
+ "n_train_records": 840,
+ "train_seconds": 3.0,
+ "bce_first": 0.6896827816963196,
+ "bce_last": 0.18019573763012886,
+ "train_pairs_last": 247
+}

@@ -1,0 +1,12 @@
+{
+ "tag": "K10",
+ "test": "UWaveGestureLibrary",
+ "arm": "ft60_hard",
+ "seed": 2,
+ "n_train_slices": 39,
+ "n_train_records": 1170,
+ "train_seconds": 4.9,
+ "bce_first": 0.6737203001976013,
+ "bce_last": 0.03190252153823773,
+ "train_pairs_last": 371
+}

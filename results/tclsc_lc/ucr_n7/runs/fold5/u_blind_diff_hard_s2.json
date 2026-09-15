@@ -1,0 +1,42 @@
+{
+ "fold": "fold5",
+ "arm": "u_blind_diff_hard",
+ "seed": 2,
+ "train_datasets": [
+  "CinCECGTorso",
+  "ElectricDevices",
+  "FordA",
+  "MedicalImages",
+  "SemgHandMovementCh2",
+  "SonyAIBORobotSurface1",
+  "Worms"
+ ],
+ "test_datasets": [
+  "ChlorineConcentration",
+  "ECG200",
+  "FaceAll",
+  "FreezerSmallTrain",
+  "HandOutlines",
+  "Mallat",
+  "MoteStrain",
+  "PigCVP",
+  "ScreenType",
+  "StarLightCurves",
+  "Trace",
+  "WormsTwoClass"
+ ],
+ "n_train_records": 420,
+ "delta": 0.06,
+ "train_seconds": 2.3,
+ "bce_first": 0.6924140453338623,
+ "bce_last": 0.07960486086085439,
+ "train_pairs_last": 201,
+ "settings": {
+  "head": "diff",
+  "ctx_kind": "none",
+  "ctx_dim": 0,
+  "epochs": 200,
+  "encoder_mode": "binned"
+ },
+ "ctx_meta": null
+}

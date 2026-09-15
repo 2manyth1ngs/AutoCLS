@@ -1,0 +1,12 @@
+{
+ "tag": "S2",
+ "test": "EthanolConcentration",
+ "arm": "ft60_hard",
+ "seed": 3,
+ "n_train_slices": 14,
+ "n_train_records": 840,
+ "train_seconds": 4.6,
+ "bce_first": 0.8842606842517853,
+ "bce_last": 0.01387572307139635,
+ "train_pairs_last": 296
+}

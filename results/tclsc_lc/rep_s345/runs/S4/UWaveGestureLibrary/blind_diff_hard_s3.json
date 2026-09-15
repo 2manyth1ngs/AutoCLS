@@ -1,0 +1,12 @@
+{
+ "tag": "S4",
+ "test": "UWaveGestureLibrary",
+ "arm": "blind_diff_hard",
+ "seed": 3,
+ "n_train_slices": 27,
+ "n_train_records": 1620,
+ "train_seconds": 5.7,
+ "bce_first": 0.691004733244578,
+ "bce_last": 0.16369908965296215,
+ "train_pairs_last": 519
+}

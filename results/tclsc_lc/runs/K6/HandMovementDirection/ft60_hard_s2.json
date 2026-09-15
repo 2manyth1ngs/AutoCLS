@@ -1,0 +1,12 @@
+{
+ "tag": "K6",
+ "test": "HandMovementDirection",
+ "arm": "ft60_hard",
+ "seed": 2,
+ "n_train_slices": 39,
+ "n_train_records": 702,
+ "train_seconds": 4.4,
+ "bce_first": 0.8203945159912109,
+ "bce_last": 0.01358525943942368,
+ "train_pairs_last": 254
+}

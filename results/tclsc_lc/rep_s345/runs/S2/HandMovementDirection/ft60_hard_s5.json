@@ -1,0 +1,12 @@
+{
+ "tag": "S2",
+ "test": "HandMovementDirection",
+ "arm": "ft60_hard",
+ "seed": 5,
+ "n_train_slices": 14,
+ "n_train_records": 840,
+ "train_seconds": 3.9,
+ "bce_first": 0.743015706539154,
+ "bce_last": 0.03697579987347126,
+ "train_pairs_last": 319
+}

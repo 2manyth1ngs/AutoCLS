@@ -1,0 +1,12 @@
+{
+ "tag": "K6",
+ "test": "UniMiB-SHAR",
+ "arm": "ft60_hard",
+ "seed": 1,
+ "n_train_slices": 39,
+ "n_train_records": 702,
+ "train_seconds": 3.4,
+ "bce_first": 0.5682899951934814,
+ "bce_last": 0.013554427772760391,
+ "train_pairs_last": 228
+}

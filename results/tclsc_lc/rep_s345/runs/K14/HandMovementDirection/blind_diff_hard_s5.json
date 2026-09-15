@@ -1,0 +1,12 @@
+{
+ "tag": "K14",
+ "test": "HandMovementDirection",
+ "arm": "blind_diff_hard",
+ "seed": 5,
+ "n_train_slices": 39,
+ "n_train_records": 1638,
+ "train_seconds": 6.1,
+ "bce_first": 0.6959458986918131,
+ "bce_last": 0.11711153872311116,
+ "train_pairs_last": 603
+}

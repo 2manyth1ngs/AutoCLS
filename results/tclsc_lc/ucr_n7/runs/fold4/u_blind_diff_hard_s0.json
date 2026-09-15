@@ -1,0 +1,42 @@
+{
+ "fold": "fold4",
+ "arm": "u_blind_diff_hard",
+ "seed": 0,
+ "train_datasets": [
+  "CinCECGTorso",
+  "FaceAll",
+  "FordA",
+  "MedicalImages",
+  "SemgHandMovementCh2",
+  "SonyAIBORobotSurface1",
+  "WormsTwoClass"
+ ],
+ "test_datasets": [
+  "CBF",
+  "DistalPhalanxTW",
+  "ElectricDevices",
+  "FreezerRegularTrain",
+  "Ham",
+  "LargeKitchenAppliances",
+  "MixedShapesSmallTrain",
+  "PigArtPressure",
+  "RefrigerationDevices",
+  "SonyAIBORobotSurface2",
+  "ToeSegmentation2",
+  "Worms"
+ ],
+ "n_train_records": 420,
+ "delta": 0.06,
+ "train_seconds": 2.6,
+ "bce_first": 0.6987574994564056,
+ "bce_last": 0.06233139429241419,
+ "train_pairs_last": 212,
+ "settings": {
+  "head": "diff",
+  "ctx_kind": "none",
+  "ctx_dim": 0,
+  "epochs": 200,
+  "encoder_mode": "binned"
+ },
+ "ctx_meta": null
+}

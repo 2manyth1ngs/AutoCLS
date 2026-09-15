@@ -1,0 +1,12 @@
+{
+ "tag": "S4",
+ "test": "Handwriting",
+ "arm": "ft60_hard",
+ "seed": 2,
+ "n_train_slices": 27,
+ "n_train_records": 1620,
+ "train_seconds": 7.3,
+ "bce_first": 0.7665257006883621,
+ "bce_last": 0.021906389751368098,
+ "train_pairs_last": 552
+}

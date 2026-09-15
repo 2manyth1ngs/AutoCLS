@@ -318,6 +318,48 @@ def cmd_analyze(outdir: Path) -> dict:
     return a
 
 
+# ---------------------------------------------------------------- 事后：换种子复验（协议外，REPORT 单列）
+REP_TAGS = ("S2", "S4", "S6", "K14")            # S6 = K20 = 满量
+
+
+def cmd_replicate(outdir: Path, *, seeds: Sequence[int], device: str, resume: bool) -> dict:
+    """切片轴三点 + 配置轴 K14（满量点即 S6）用新种子重训 → 排名 → 同口径读数，写 replicate_s<seeds>.json / .md。"""
+    tagdir = outdir / ("rep_s" + "".join(str(x) for x in seeds))
+    tagdir.mkdir(parents=True, exist_ok=True)
+    rows, delta = _g57.load_source(SOURCE)
+    table = _uea_table()
+    subs = {"S2": subsample_slices(rows, s=2), "S4": subsample_slices(rows, s=4), "S6": list(rows), "K14": subsample_configs(rows, k=14)}
+    for tag in REP_TAGS:
+        for target in FOLDS:
+            for arm in UEA_ARMS:
+                for seed in seeds:
+                    if resume and (tagdir / "models" / tag / target / f"{arm}_s{seed}.pt").exists():
+                        continue
+                    run = train_fold_uea(subs[tag], delta, table, target=target, arm=arm, seed=seed, outdir=tagdir, device=device, epochs=None, tag=tag)
+                    _log(tagdir, f"[{tag}/{target}/{arm}_s{seed}] {run['train_seconds']}s n_slices {run['n_train_slices']} recs {run['n_train_records']} pairs {run['train_pairs_last']}")
+    cat_z = _g56.zscore_within(rows)
+    out = {"seeds": list(seeds), "points": {}}
+    for tag in REP_TAGS:
+        rk = rank_uea_tag(tagdir, tag, seeds=seeds)
+        ev = _g58._eval_all({t: {"normal": per["normal"], "cross": {}, "zero": {}} for t, per in rk.items()}, cat_z, delta, list(UEA_ARMS), "normal")
+        out["points"][tag] = {a: _pooled(ev, a) for a in UEA_ARMS}
+    e, b = UEA_ARMS
+    pts_s = [(int(t[1:]), out["points"][t][e]["regret3"], out["points"][t][b]["regret3"]) for t in ("S2", "S4", "S6")]
+    pts_k = [(14, out["points"]["K14"][e]["regret3"], out["points"]["K14"][b]["regret3"]), (20, out["points"]["S6"][e]["regret3"], out["points"]["S6"][b]["regret3"])]
+    out["axis_verdict"] = {"slice": axis_verdict(pts_s), "config_14_20": axis_verdict(pts_k)}
+    (tagdir / "replicate.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    L = [f"# 事后换种子复验（seeds {list(seeds)}）：切片轴 S2/S4/S6 + 配置轴 K14（S6 = K20 满量）", "",
+         f"判读 {out['axis_verdict']}", "", "| 点 | n | E_T regret@3 | blind regret@3 | E 增益 | E_T regret@1 | blind regret@1 | E_T M1 | blind M1 | E_T M0 | blind M0 |",
+         "|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
+    for t in REP_TAGS:
+        pe, pb = out["points"][t][e], out["points"][t][b]
+        L.append(f"| {t} | {pe['n']} | {pe['regret3']:.4f} | {pb['regret3']:.4f} | {pb['regret3'] - pe['regret3']:+.4f} | {pe['regret1']:.4f} | {pb['regret1']:.4f} | "
+                 f"{pe['M1']:.3f} | {pb['M1']:.3f} | {pe['M0']:.3f} | {pb['M0']:.3f} |")
+    (tagdir / "replicate.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+    print(out["axis_verdict"], flush=True)
+    return out
+
+
 def markdown_tables(a: dict) -> str:
     L = ["# LC 检验 tables：比较器标签学习曲线", "", f"读数码 **{a['verdict']}**（{a['axis_verdict']}）", ""]
     for axis, title, (e_arm, b_arm) in (("config", "配置轴（UEA，每任务 K 条）", UEA_ARMS), ("slice", "切片轴（UEA，每集 S 个切片）", UEA_ARMS), ("dataset", "数据集轴（UCR，训练侧 n 集）", UCR_ARMS)):
@@ -342,6 +384,7 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--train", action="store_true")
     ap.add_argument("--rank", action="store_true")
     ap.add_argument("--analyze", action="store_true")
+    ap.add_argument("--replicate", action="store_true", help="事后：切片轴 + K14 换种子复验（--seeds 给新种子）")
     ap.add_argument("--axes", nargs="+", default=["config", "slice", "dataset"], choices=["config", "slice", "dataset"])
     ap.add_argument("--seeds", nargs="+", type=int, default=list(SEEDS))
     ap.add_argument("--epochs", type=int, default=None)
@@ -355,7 +398,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: Optional[Sequence[str]] = None) -> None:
     args = build_parser().parse_args(argv)
-    if not any((args.train, args.rank, args.analyze)):
+    if not any((args.train, args.rank, args.analyze, args.replicate)):
         build_parser().error("至少指定 --train / --rank / --analyze 之一")
     args.outdir.mkdir(parents=True, exist_ok=True)
     if args.train:
@@ -365,6 +408,8 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
         cmd_rank(args.outdir, seeds=args.seeds)
     if args.analyze:
         cmd_analyze(args.outdir)
+    if args.replicate:
+        cmd_replicate(args.outdir, seeds=args.seeds, device=args.device, resume=args.resume)
 
 
 if __name__ == "__main__":

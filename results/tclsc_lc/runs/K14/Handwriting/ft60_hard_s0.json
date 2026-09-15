@@ -1,0 +1,12 @@
+{
+ "tag": "K14",
+ "test": "Handwriting",
+ "arm": "ft60_hard",
+ "seed": 0,
+ "n_train_slices": 39,
+ "n_train_records": 1638,
+ "train_seconds": 7.7,
+ "bce_first": 0.7567676504453024,
+ "bce_last": 0.037206076201982796,
+ "train_pairs_last": 512
+}

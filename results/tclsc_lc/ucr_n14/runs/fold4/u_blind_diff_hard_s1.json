@@ -1,0 +1,49 @@
+{
+ "fold": "fold4",
+ "arm": "u_blind_diff_hard",
+ "seed": 1,
+ "train_datasets": [
+  "ChlorineConcentration",
+  "CinCECGTorso",
+  "DistalPhalanxOutlineAgeGroup",
+  "FaceAll",
+  "FordA",
+  "InlineSkate",
+  "MedicalImages",
+  "OSULeaf",
+  "PhalangesOutlinesCorrect",
+  "PigAirwayPressure",
+  "SemgHandMovementCh2",
+  "SonyAIBORobotSurface1",
+  "UMD",
+  "WormsTwoClass"
+ ],
+ "test_datasets": [
+  "CBF",
+  "DistalPhalanxTW",
+  "ElectricDevices",
+  "FreezerRegularTrain",
+  "Ham",
+  "LargeKitchenAppliances",
+  "MixedShapesSmallTrain",
+  "PigArtPressure",
+  "RefrigerationDevices",
+  "SonyAIBORobotSurface2",
+  "ToeSegmentation2",
+  "Worms"
+ ],
+ "n_train_records": 840,
+ "delta": 0.06,
+ "train_seconds": 4.0,
+ "bce_first": 0.6960341930389404,
+ "bce_last": 0.12881107131640115,
+ "train_pairs_last": 371,
+ "settings": {
+  "head": "diff",
+  "ctx_kind": "none",
+  "ctx_dim": 0,
+  "epochs": 200,
+  "encoder_mode": "binned"
+ },
+ "ctx_meta": null
+}

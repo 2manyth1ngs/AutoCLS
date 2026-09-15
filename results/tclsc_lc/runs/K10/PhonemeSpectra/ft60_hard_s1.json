@@ -1,0 +1,12 @@
+{
+ "tag": "K10",
+ "test": "PhonemeSpectra",
+ "arm": "ft60_hard",
+ "seed": 1,
+ "n_train_slices": 39,
+ "n_train_records": 1170,
+ "train_seconds": 4.8,
+ "bce_first": 0.6725418269634247,
+ "bce_last": 0.021080382207098108,
+ "train_pairs_last": 346
+}

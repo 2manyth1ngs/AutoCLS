@@ -1,0 +1,12 @@
+{
+ "tag": "K10",
+ "test": "UniMiB-SHAR",
+ "arm": "blind_diff_hard",
+ "seed": 2,
+ "n_train_slices": 39,
+ "n_train_records": 1170,
+ "train_seconds": 3.8,
+ "bce_first": 0.6953539252281189,
+ "bce_last": 0.1534467525780201,
+ "train_pairs_last": 371
+}
