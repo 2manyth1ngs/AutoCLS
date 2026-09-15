@@ -1,0 +1,42 @@
+[S2] 计划 28 格，已有 0，待跑 28
+[data] AtrialFibrillation: train=(15, 640, 2) test=(15, 640, 2) classes=3 size=19200
+[S2 1/28] AtrialFibrillation/final_SH6-3-3_prior/9092e36e s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.133 0.200 0.200] (20.1s+0.0s)
+[S2 2/28] AtrialFibrillation/final_SH6-3-3_prior/9092e36e s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.133 0.133 0.067] (16.9s+0.0s)
+[data] DuckDuckGeese: train=(50, 270, 1345) test=(50, 270, 1345) classes=5 size=18157500
+[S2 3/28] DuckDuckGeese/final_SH6-3-3_blind_tclsc/cffb5503 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.520 0.520 0.480] (103.5s+3.8s)
+[S2 4/28] DuckDuckGeese/final_SH6-3-3_blind_tclsc/cffb5503 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.500 0.520 0.480] (97.9s+0.3s)
+[data] EigenWorms: train=(128, 17984, 6) test=(131, 17984, 6) classes=5 size=13811712 fit=(640, 3597, 6)
+[S2 5/28] EigenWorms/final_SH6-3-3_prior/c92058f2 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.817 0.794 0.771] (34.1s+1.3s)
+[S2 6/28] EigenWorms/final_SH6-3-3_prior/c92058f2 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.885 0.863 0.832] (34.3s+1.2s)
+[data] FingerMovements: train=(316, 50, 28) test=(100, 50, 28) classes=2 size=442400
+[S2 7/28] FingerMovements/final_SH6-3-3_prior/4f7d4135 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.520 0.520 0.510] (14.2s+0.4s)
+[S2 8/28] FingerMovements/final_SH6-3-3_prior/4f7d4135 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.500 0.500 0.520] (13.2s+0.3s)
+[data] Heartbeat: train=(204, 405, 61) test=(205, 405, 61) classes=2 size=5039820
+[S2 9/28] Heartbeat/final_SH6-3-3_prior/cffb5503 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.737 0.727 0.746] (39.8s+0.3s)
+[S2 10/28] Heartbeat/final_SH6-3-3_prior/cffb5503 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.756 0.756 0.673] (34.6s+0.3s)
+[data] JapaneseVowels: train=(270, 29, 12) test=(370, 29, 12) classes=9 size=93960
+[S2 11/28] JapaneseVowels/final_SH6-3-3_prior/a1f67db4 s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.981 0.984 0.978] (6.5s+0.4s)
+[S2 12/28] JapaneseVowels/final_SH6-3-3_prior/a1f67db4 s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.978 0.981 0.973] (6.1s+0.3s)
+[data] LSST: train=(2459, 36, 6) test=(2466, 36, 6) classes=14 size=531144
+[S2 13/28] LSST/final_SH6-3-3_prior/8c4aa283 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.568 0.563 0.548] (139.9s+189.7s)
+[S2 14/28] LSST/final_SH6-3-3_prior/8c4aa283 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.566 0.553 0.542] (157.6s+208.4s)
+[data] MotorImagery: train=(278, 3000, 64) test=(100, 3000, 64) classes=2 size=53376000
+[S2 15/28] MotorImagery/final_SH6-3-3_prior/c92058f2 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.570 0.520 0.540] (38.6s+0.6s)
+[S2 16/28] MotorImagery/final_SH6-3-3_prior/c92058f2 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.570 0.590 0.490] (36.8s+0.6s)
+[S2 17/28] MotorImagery/final_SH6-3-3_blind_tclsc/8c4aa283 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.510 0.510 0.500] (195.3s+0.7s)
+[S2 18/28] MotorImagery/final_SH6-3-3_blind_tclsc/8c4aa283 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.480 0.490 0.490] (194.2s+0.9s)
+[S2 19/28] MotorImagery/final_SH6-3-3_et_tclsc/4f7d4135 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.500 0.500 0.500] (116.9s+0.7s)
+[S2 20/28] MotorImagery/final_SH6-3-3_et_tclsc/4f7d4135 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.500 0.500 0.500] (112.0s+0.6s)
+[data] PEMS-SF: train=(267, 144, 963) test=(173, 144, 963) classes=7 size=37025424
+[S2 21/28] PEMS-SF/final_SH6-3-3_prior/8c4aa283 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.717 0.769 0.792] (58.5s+0.3s)
+[S2 22/28] PEMS-SF/final_SH6-3-3_prior/8c4aa283 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.763 0.775 0.751] (55.5s+0.4s)
+[data] PenDigits: train=(7494, 8, 2) test=(3498, 8, 2) classes=10 size=119904
+[S2 23/28] PenDigits/final_SH6-3-3_prior/4f7d4135 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.989 0.990 0.988] (35.3s+36.6s)
+[S2 24/28] PenDigits/final_SH6-3-3_prior/4f7d4135 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.989 0.990 0.989] (34.7s+36.5s)
+[data] SelfRegulationSCP2: train=(200, 1152, 7) test=(180, 1152, 7) classes=2 size=1612800
+[S2 25/28] SelfRegulationSCP2/final_SH6-3-3_et_tclsc/65627517 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.556 0.533 0.550] (39.9s+0.3s)
+[S2 26/28] SelfRegulationSCP2/final_SH6-3-3_et_tclsc/65627517 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.550 0.561 0.556] (37.7s+0.3s)
+[data] StandWalkJump: train=(12, 2500, 4) test=(15, 2500, 4) classes=3 size=120000
+[S2 27/28] StandWalkJump/final_SH6-3-3_et_tclsc/c92058f2 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.467 0.467 0.533] (30.1s+0.0s)
+[S2 28/28] StandWalkJump/final_SH6-3-3_et_tclsc/c92058f2 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.400 0.533 0.467] (29.8s+0.0s)
+[S2] 收官

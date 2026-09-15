@@ -63,4 +63,7 @@ H-U2：E_T 名单不低于先验名单（SH6-3-3）均值，hit@6（前 6 含目
 
 ## §7 执行台账（跑后填写）
 
-（空）
+- 2026-09-15 协议锁 8c40ef8（4 例先红）→ 实现 → 绿 d419a93；本地 --train-all8 6 跑（10–12 s）。本地 4060 --features 在 EigenWorms 显存溢出（19/23 作废），改全流程上云。
+- pod `iaake2zulxlwsu`（u23-uea30，RTX 5090 $0.99/h，EUR-NO-1 卷 tudo4ntlot，4090 两卷无货）：setup 全过（23 靶 .ts 在卷上 md5 全对）；主流程 15:58–16:47 UTC
+  （features 23 靶 ≈ 15 min → simulate → finals 28 行 25 格 ≈ 33 min）；out_u23.tar.gz 24 KB 拉回；18:52 本地 stop + confirm-stopped 3/3，uptime 3370 s ≈ **$0.93**。
+- 读数 **UEA30-ET-FLAT−PRIOR**（C0 ✓；G-U1 ✗ 0.774 vs 0.777；G-U2 ✗ vs 先验 0.785、hit@6 13 vs 19；G-U3 ✗ p 0.5），预测 3/6。详见 REPORT.md。

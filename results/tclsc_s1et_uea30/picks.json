@@ -1,0 +1,51 @@
+{
+ "AtrialFibrillation": {
+  "SH6-3-3_prior": "9092e36eefe1",
+  "SH6-3-3_blind_tclsc": "9092e36eefe1",
+  "SH6-3-3_et_tclsc": "9092e36eefe1"
+ },
+ "DuckDuckGeese": {
+  "SH6-3-3_blind_tclsc": "cffb55035c3a",
+  "SH6-3-3_et_tclsc": "cffb55035c3a"
+ },
+ "EigenWorms": {
+  "SH6-3-3_prior": "c92058f26c1d"
+ },
+ "FingerMovements": {
+  "SH6-3-3_prior": "4f7d413581f6",
+  "SH6-3-3_blind_tclsc": "4f7d413581f6",
+  "SH6-3-3_et_tclsc": "4f7d413581f6"
+ },
+ "Heartbeat": {
+  "SH6-3-3_prior": "cffb55035c3a",
+  "SH6-3-3_blind_tclsc": "cffb55035c3a",
+  "SH6-3-3_et_tclsc": "cffb55035c3a"
+ },
+ "JapaneseVowels": {
+  "SH6-3-3_prior": "a1f67db45e64"
+ },
+ "LSST": {
+  "SH6-3-3_prior": "8c4aa28336d6"
+ },
+ "MotorImagery": {
+  "SH6-3-3_prior": "c92058f26c1d",
+  "SH6-3-3_blind_tclsc": "8c4aa28336d6",
+  "SH6-3-3_et_tclsc": "4f7d413581f6"
+ },
+ "PEMS-SF": {
+  "SH6-3-3_prior": "8c4aa28336d6",
+  "SH6-3-3_blind_tclsc": "8c4aa28336d6",
+  "SH6-3-3_et_tclsc": "8c4aa28336d6"
+ },
+ "PenDigits": {
+  "SH6-3-3_prior": "4f7d413581f6",
+  "SH6-3-3_blind_tclsc": "4f7d413581f6",
+  "SH6-3-3_et_tclsc": "4f7d413581f6"
+ },
+ "SelfRegulationSCP2": {
+  "SH6-3-3_et_tclsc": "65627517fa32"
+ },
+ "StandWalkJump": {
+  "SH6-3-3_et_tclsc": "c92058f26c1d"
+ }
+}

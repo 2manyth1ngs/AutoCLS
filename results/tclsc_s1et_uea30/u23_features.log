@@ -1,0 +1,46 @@
+[data] RacketSports: train=(151, 30, 6) test=(152, 30, 6) classes=4 size=27180
+[et uea30] RacketSports: n=151 T=30 C=6 7.7s rinfo@60 +0.74
+[data] Libras: train=(180, 45, 2) test=(180, 45, 2) classes=15 size=16200
+[et uea30] Libras: n=180 T=45 C=2 5.9s rinfo@60 +0.76
+[data] ERing: train=(30, 65, 4) test=(270, 65, 4) classes=6 size=7800
+[et uea30] ERing: n=30 T=65 C=4 5.4s rinfo@60 +0.52
+[data] JapaneseVowels: train=(270, 29, 12) test=(370, 29, 12) classes=9 size=93960
+[et uea30] JapaneseVowels: n=270 T=29 C=12 5.2s rinfo@60 +0.85
+[data] BasicMotions: train=(40, 100, 6) test=(40, 100, 6) classes=4 size=24000
+[et uea30] BasicMotions: n=40 T=100 C=6 6.4s rinfo@60 +1.00
+[data] Epilepsy: train=(137, 206, 3) test=(138, 206, 3) classes=4 size=84666
+[et uea30] Epilepsy: n=137 T=206 C=3 10.3s rinfo@60 +0.88
+[data] AtrialFibrillation: train=(15, 640, 2) test=(15, 640, 2) classes=3 size=19200
+[et uea30] AtrialFibrillation: n=15 T=640 C=2 11.0s rinfo@60 +0.20
+[data] NATOPS: train=(180, 51, 24) test=(180, 51, 24) classes=6 size=220320
+[et uea30] NATOPS: n=180 T=51 C=24 6.4s rinfo@60 +0.54
+[data] FingerMovements: train=(316, 50, 28) test=(100, 50, 28) classes=2 size=442400
+[et uea30] FingerMovements: n=316 T=50 C=28 6.4s rinfo@60 -0.11
+[data] ArticularyWordRecognition: train=(275, 144, 9) test=(300, 144, 9) classes=25 size=356400
+[et uea30] ArticularyWordRecognition: n=275 T=144 C=9 8.6s rinfo@60 +0.92
+[data] Heartbeat: train=(204, 405, 61) test=(205, 405, 61) classes=2 size=5039820
+[et uea30] Heartbeat: n=204 T=405 C=61 23.2s rinfo@60 -0.42
+[data] DuckDuckGeese: train=(50, 270, 1345) test=(50, 270, 1345) classes=5 size=18157500
+[et uea30] DuckDuckGeese: n=50 T=270 C=1345 89.6s rinfo@60 +0.42
+[data] PEMS-SF: train=(267, 144, 963) test=(173, 144, 963) classes=7 size=37025424
+[et uea30] PEMS-SF: n=267 T=144 C=963 77.0s rinfo@60 +0.71
+[data] CharacterTrajectories: train=(1422, 182, 3) test=(1436, 182, 3) classes=20 size=776412
+[et uea30] CharacterTrajectories: n=1422 T=182 C=3 10.7s rinfo@60 +0.98
+[data] SelfRegulationSCP1: train=(268, 896, 6) test=(293, 896, 6) classes=2 size=1440768
+[et uea30] SelfRegulationSCP1: n=268 T=896 C=6 24.9s rinfo@60 +0.29
+[data] SelfRegulationSCP2: train=(200, 1152, 7) test=(180, 1152, 7) classes=2 size=1612800
+[et uea30] SelfRegulationSCP2: n=200 T=1152 C=7 33.6s rinfo@60 +0.01
+[data] LSST: train=(2459, 36, 6) test=(2466, 36, 6) classes=14 size=531144
+[et uea30] LSST: n=2459 T=36 C=6 10.6s rinfo@60 +0.24
+[data] StandWalkJump: train=(12, 2500, 4) test=(15, 2500, 4) classes=3 size=120000
+[et uea30] StandWalkJump: n=12 T=2500 C=4 18.5s rinfo@60 -0.37
+[data] EigenWorms: train=(128, 17984, 6) test=(131, 17984, 6) classes=5 size=13811712 fit=(640, 3597, 6)
+[et uea30] EigenWorms: n=128 T=3000 C=6 120.9s rinfo@60 +0.41
+[data] MotorImagery: train=(278, 3000, 64) test=(100, 3000, 64) classes=2 size=53376000
+[et uea30] MotorImagery: n=278 T=3000 C=64 177.1s rinfo@60 -0.02
+[data] FaceDetection: train=(5890, 62, 144) test=(3524, 62, 144) classes=2 size=52585920
+[et uea30] FaceDetection: n=5890 T=62 C=144 48.5s rinfo@60 +0.03
+[data] SpokenArabicDigits: train=(6599, 93, 13) test=(2199, 93, 13) classes=10 size=7978191
+[et uea30] SpokenArabicDigits: n=6599 T=93 C=13 31.6s rinfo@60 +0.98
+[data] PenDigits: train=(7494, 8, 2) test=(3498, 8, 2) classes=10 size=119904
+[et uea30] PenDigits: n=7494 T=8 C=2 34.8s rinfo@60 +0.98

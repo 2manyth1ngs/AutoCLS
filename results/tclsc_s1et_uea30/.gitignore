@@ -2,3 +2,5 @@ models/
 run_*.log
 candidates.json
 et_uea30_local_abandoned.jsonl
+out_u23.tar.gz
+run_features*.log

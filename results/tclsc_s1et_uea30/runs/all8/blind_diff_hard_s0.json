@@ -1,0 +1,11 @@
+{
+ "fold": "all8",
+ "arm": "blind_diff_hard",
+ "seed": 0,
+ "n_train_records": 2700,
+ "train_seconds": 9.6,
+ "bce_first": 0.6954266031583151,
+ "bce_last": 0.11979723442345858,
+ "train_pairs_last": 982,
+ "ctx_dim": 0
+}

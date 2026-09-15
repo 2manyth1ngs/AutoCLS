@@ -1,0 +1,11 @@
+{
+ "fold": "all8",
+ "arm": "ft60_hard",
+ "seed": 0,
+ "n_train_records": 2700,
+ "train_seconds": 12.3,
+ "bce_first": 0.74342613418897,
+ "bce_last": 0.022912213928066194,
+ "train_pairs_last": 982,
+ "ctx_dim": 37
+}

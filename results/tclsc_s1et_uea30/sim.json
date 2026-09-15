@@ -1,0 +1,1731 @@
+{
+ "targets": {
+  "ArticularyWordRecognition": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "8c4aa28336d6",
+    "acc": 0.9766666666666667
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 4.977645943884093,
+   "lists": {
+    "prior": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.9766666666666667,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 5,
+     "hit6": true,
+     "finals_seed0": [
+      0.9766666666666667,
+      0.9766666666666667,
+      0.98
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.9766666666666667,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 5,
+     "hit6": true,
+     "finals_seed0": [
+      0.9766666666666667,
+      0.9766666666666667,
+      0.98
+     ]
+    },
+    "et_tclsc": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.9766666666666667,
+     "cost_iters": 2250,
+     "list": [
+      "8c4aa28336d6",
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "e490b88ee785",
+      "4f7d413581f6",
+      "f48e5da1d899"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9766666666666667,
+      0.9766666666666667,
+      0.98
+     ]
+    }
+   }
+  },
+  "AtrialFibrillation": {
+   "budgets": [
+    50,
+    100,
+    200
+   ],
+   "oracle": {
+    "key": "c92058f26c1d",
+    "acc": 0.3333333333333333
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 4.354603937130155,
+   "lists": {
+    "prior": {
+     "champion": "9092e36eefe1",
+     "acc": 0.2,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 6,
+     "hit6": true,
+     "finals_seed0": [
+      0.2
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.2,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.2
+     ]
+    },
+    "et_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.2,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "e490b88ee785",
+      "8c4aa28336d6",
+      "65627517fa32"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.2
+     ]
+    }
+   }
+  },
+  "BasicMotions": {
+   "budgets": [
+    50,
+    100,
+    200
+   ],
+   "oracle": {
+    "key": "c92058f26c1d",
+    "acc": 1.0
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 5.738675919127247,
+   "lists": {
+    "prior": {
+     "champion": "4f7d413581f6",
+     "acc": 0.975,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 6,
+     "hit6": true,
+     "finals_seed0": [
+      0.975,
+      0.975,
+      1.0
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.975,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.975,
+      0.975,
+      1.0
+     ]
+    },
+    "et_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.975,
+     "cost_iters": 750,
+     "list": [
+      "e490b88ee785",
+      "8c4aa28336d6",
+      "a1f67db45e64",
+      "9092e36eefe1",
+      "4f7d413581f6",
+      "cffb55035c3a"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.975,
+      0.975,
+      1.0
+     ]
+    }
+   }
+  },
+  "CharacterTrajectories": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "9092e36eefe1",
+    "acc": 0.9930362116991643
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 3.6051332755336998,
+   "lists": {
+    "prior": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9930362116991643,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9930362116991643,
+      0.9958217270194986,
+      0.9916434540389972
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9930362116991643,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9930362116991643,
+      0.9958217270194986,
+      0.9916434540389972
+     ]
+    },
+    "et_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9930362116991643,
+     "cost_iters": 2250,
+     "list": [
+      "8c4aa28336d6",
+      "e490b88ee785",
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6"
+     ],
+     "oracle_rank": 3,
+     "hit6": true,
+     "finals_seed0": [
+      0.9930362116991643,
+      0.9958217270194986,
+      0.9916434540389972
+     ]
+    }
+   }
+  },
+  "DuckDuckGeese": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "c92058f26c1d",
+    "acc": 0.66
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 17.273406887052005,
+   "lists": {
+    "prior": {
+     "champion": "c92058f26c1d",
+     "acc": 0.66,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 6,
+     "hit6": true,
+     "finals_seed0": [
+      0.66,
+      0.64,
+      0.62
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "cffb55035c3a",
+     "acc": 0.5,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.5
+     ]
+    },
+    "et_tclsc": {
+     "champion": "cffb55035c3a",
+     "acc": 0.5,
+     "cost_iters": 2250,
+     "list": [
+      "cffb55035c3a",
+      "e490b88ee785",
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "8c4aa28336d6"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.5
+     ]
+    }
+   }
+  },
+  "ERing": {
+   "budgets": [
+    50,
+    100,
+    200
+   ],
+   "oracle": {
+    "key": "9092e36eefe1",
+    "acc": 0.9518518518518518
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 2.9360489635196405,
+   "lists": {
+    "prior": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9518518518518518,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9518518518518518,
+      0.9481481481481482,
+      0.9407407407407408
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9518518518518518,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9518518518518518,
+      0.9481481481481482,
+      0.9407407407407408
+     ]
+    },
+    "et_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9518518518518518,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "8c4aa28336d6",
+      "e490b88ee785",
+      "4f7d413581f6",
+      "cffb55035c3a"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9518518518518518,
+      0.9481481481481482,
+      0.9407407407407408
+     ]
+    }
+   }
+  },
+  "EigenWorms": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "c92058f26c1d",
+    "acc": 0.8625954198473282
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 27.459948550886995,
+   "lists": {
+    "prior": {
+     "champion": "c92058f26c1d",
+     "acc": 0.8625954198473282,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 6,
+     "hit6": true,
+     "finals_seed0": [
+      0.8625954198473282
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "a1f67db45e64",
+     "acc": 0.8396946564885496,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.8396946564885496,
+      0.7557251908396947,
+      0.8702290076335878
+     ]
+    },
+    "et_tclsc": {
+     "champion": "a1f67db45e64",
+     "acc": 0.8396946564885496,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "cffb55035c3a",
+      "65627517fa32",
+      "a1f67db45e64",
+      "8b87d66faad3",
+      "f48e5da1d899"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.8396946564885496,
+      0.7557251908396947,
+      0.8702290076335878
+     ]
+    }
+   }
+  },
+  "Epilepsy": {
+   "budgets": [
+    50,
+    100,
+    200
+   ],
+   "oracle": {
+    "key": "4f7d413581f6",
+    "acc": 0.9710144927536232
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 19.420090066491245,
+   "lists": {
+    "prior": {
+     "champion": "4f7d413581f6",
+     "acc": 0.9710144927536232,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 4,
+     "hit6": true,
+     "finals_seed0": [
+      0.9710144927536232,
+      0.9637681159420289,
+      0.9710144927536232
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.9710144927536232,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 3,
+     "hit6": true,
+     "finals_seed0": [
+      0.9710144927536232,
+      0.9637681159420289,
+      0.9710144927536232
+     ]
+    },
+    "et_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.9710144927536232,
+     "cost_iters": 750,
+     "list": [
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "e490b88ee785",
+      "8c4aa28336d6"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9710144927536232,
+      0.9637681159420289,
+      0.9710144927536232
+     ]
+    }
+   }
+  },
+  "FaceDetection": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "9092e36eefe1",
+    "acc": 0.5888195232690124
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 8.696629676834357,
+   "lists": {
+    "prior": {
+     "champion": "9092e36eefe1",
+     "acc": 0.5888195232690124,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.5888195232690124,
+      0.6126560726447219,
+      0.590522133938706
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.5888195232690124,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.5888195232690124,
+      0.6126560726447219,
+      0.590522133938706
+     ]
+    },
+    "et_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.5888195232690124,
+     "cost_iters": 2250,
+     "list": [
+      "4f7d413581f6",
+      "a1f67db45e64",
+      "8b87d66faad3",
+      "9092e36eefe1",
+      "f48e5da1d899",
+      "cffb55035c3a"
+     ],
+     "oracle_rank": 4,
+     "hit6": true,
+     "finals_seed0": [
+      0.5888195232690124,
+      0.6126560726447219,
+      0.590522133938706
+     ]
+    }
+   }
+  },
+  "FingerMovements": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "9092e36eefe1",
+    "acc": 0.55
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 7.563726472459117,
+   "lists": {
+    "prior": {
+     "champion": "4f7d413581f6",
+     "acc": 0.53,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.53
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.53,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.53
+     ]
+    },
+    "et_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.53,
+     "cost_iters": 2250,
+     "list": [
+      "4f7d413581f6",
+      "9092e36eefe1",
+      "cffb55035c3a",
+      "a1f67db45e64",
+      "c92058f26c1d",
+      "f48e5da1d899"
+     ],
+     "oracle_rank": 2,
+     "hit6": true,
+     "finals_seed0": [
+      0.53
+     ]
+    }
+   }
+  },
+  "Heartbeat": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "cffb55035c3a",
+    "acc": 0.7463414634146341
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 13.735103104431902,
+   "lists": {
+    "prior": {
+     "champion": "cffb55035c3a",
+     "acc": 0.7463414634146341,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 3,
+     "hit6": true,
+     "finals_seed0": [
+      0.7463414634146341
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "cffb55035c3a",
+     "acc": 0.7463414634146341,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 4,
+     "hit6": true,
+     "finals_seed0": [
+      0.7463414634146341
+     ]
+    },
+    "et_tclsc": {
+     "champion": "cffb55035c3a",
+     "acc": 0.7463414634146341,
+     "cost_iters": 2250,
+     "list": [
+      "4f7d413581f6",
+      "9092e36eefe1",
+      "f48e5da1d899",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "8b87d66faad3"
+     ],
+     "oracle_rank": 5,
+     "hit6": true,
+     "finals_seed0": [
+      0.7463414634146341
+     ]
+    }
+   }
+  },
+  "JapaneseVowels": {
+   "budgets": [
+    50,
+    100,
+    200
+   ],
+   "oracle": {
+    "key": "a1f67db45e64",
+    "acc": 0.9837837837837838
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 3.6149560811010026,
+   "lists": {
+    "prior": {
+     "champion": "a1f67db45e64",
+     "acc": 0.9837837837837838,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 2,
+     "hit6": true,
+     "finals_seed0": [
+      0.9837837837837838
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "cffb55035c3a",
+     "acc": 0.9837837837837838,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 2,
+     "hit6": true,
+     "finals_seed0": [
+      0.9837837837837838,
+      0.981081081081081,
+      0.981081081081081
+     ]
+    },
+    "et_tclsc": {
+     "champion": "cffb55035c3a",
+     "acc": 0.9837837837837838,
+     "cost_iters": 750,
+     "list": [
+      "4f7d413581f6",
+      "e490b88ee785",
+      "8c4aa28336d6",
+      "a1f67db45e64",
+      "9092e36eefe1",
+      "cffb55035c3a"
+     ],
+     "oracle_rank": 4,
+     "hit6": true,
+     "finals_seed0": [
+      0.9837837837837838,
+      0.981081081081081,
+      0.981081081081081
+     ]
+    }
+   }
+  },
+  "LSST": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "8b87d66faad3",
+    "acc": 0.5798864557988646
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 27.598438856601728,
+   "lists": {
+    "prior": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.5746147607461476,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.5746147607461476
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "e490b88ee785",
+     "acc": 0.5798864557988646,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.5798864557988646,
+      0.5681265206812652,
+      0.5762368207623683
+     ]
+    },
+    "et_tclsc": {
+     "champion": "e490b88ee785",
+     "acc": 0.5798864557988646,
+     "cost_iters": 2250,
+     "list": [
+      "e490b88ee785",
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "4f7d413581f6"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.5798864557988646,
+      0.5681265206812652,
+      0.5762368207623683
+     ]
+    }
+   }
+  },
+  "Libras": {
+   "budgets": [
+    50,
+    100,
+    200
+   ],
+   "oracle": {
+    "key": "9092e36eefe1",
+    "acc": 0.9
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 2.8362467360390196,
+   "lists": {
+    "prior": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9,
+      0.8555555555555555,
+      0.8888888888888888
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9,
+      0.8555555555555555,
+      0.8888888888888888
+     ]
+    },
+    "et_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9,
+     "cost_iters": 750,
+     "list": [
+      "4f7d413581f6",
+      "e490b88ee785",
+      "9092e36eefe1",
+      "8c4aa28336d6",
+      "cffb55035c3a",
+      "a1f67db45e64"
+     ],
+     "oracle_rank": 3,
+     "hit6": true,
+     "finals_seed0": [
+      0.9,
+      0.8555555555555555,
+      0.8888888888888888
+     ]
+    }
+   }
+  },
+  "MotorImagery": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "65627517fa32",
+    "acc": 0.59
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 5.2117249711711855,
+   "lists": {
+    "prior": {
+     "champion": "c92058f26c1d",
+     "acc": 0.54,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.54
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.53,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.53
+     ]
+    },
+    "et_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.5,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "8b87d66faad3",
+      "a1f67db45e64",
+      "f48e5da1d899",
+      "cffb55035c3a",
+      "4f7d413581f6"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.5
+     ]
+    }
+   }
+  },
+  "NATOPS": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "a1f67db45e64",
+    "acc": 0.9555555555555556
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 4.057948795321394,
+   "lists": {
+    "prior": {
+     "champion": "a1f67db45e64",
+     "acc": 0.9555555555555556,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 2,
+     "hit6": true,
+     "finals_seed0": [
+      0.9555555555555556,
+      0.9277777777777778,
+      0.9666666666666667
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "a1f67db45e64",
+     "acc": 0.9555555555555556,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 2,
+     "hit6": true,
+     "finals_seed0": [
+      0.9555555555555556,
+      0.9277777777777778,
+      0.9666666666666667
+     ]
+    },
+    "et_tclsc": {
+     "champion": "a1f67db45e64",
+     "acc": 0.9555555555555556,
+     "cost_iters": 2250,
+     "list": [
+      "4f7d413581f6",
+      "9092e36eefe1",
+      "cffb55035c3a",
+      "a1f67db45e64",
+      "e490b88ee785",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 4,
+     "hit6": true,
+     "finals_seed0": [
+      0.9555555555555556,
+      0.9277777777777778,
+      0.9666666666666667
+     ]
+    }
+   }
+  },
+  "PEMS-SF": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "20be4f7443e8",
+    "acc": 0.7976878612716763
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 10.215051812405466,
+   "lists": {
+    "prior": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.7803468208092486,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.7803468208092486
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.7803468208092486,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.7803468208092486
+     ]
+    },
+    "et_tclsc": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.7803468208092486,
+     "cost_iters": 2250,
+     "list": [
+      "e490b88ee785",
+      "cffb55035c3a",
+      "9092e36eefe1",
+      "8c4aa28336d6",
+      "4f7d413581f6",
+      "a1f67db45e64"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.7803468208092486
+     ]
+    }
+   }
+  },
+  "PenDigits": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "8b87d66faad3",
+    "acc": 0.9899942824471126
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 28.301106085085827,
+   "lists": {
+    "prior": {
+     "champion": "4f7d413581f6",
+     "acc": 0.9882790165809033,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.9882790165809033
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.9882790165809033,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.9882790165809033
+     ]
+    },
+    "et_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.9882790165809033,
+     "cost_iters": 2250,
+     "list": [
+      "e490b88ee785",
+      "8c4aa28336d6",
+      "4f7d413581f6",
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.9882790165809033
+     ]
+    }
+   }
+  },
+  "RacketSports": {
+   "budgets": [
+    50,
+    100,
+    200
+   ],
+   "oracle": {
+    "key": "9092e36eefe1",
+    "acc": 0.868421052631579
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 32.0993372263566,
+   "lists": {
+    "prior": {
+     "champion": "9092e36eefe1",
+     "acc": 0.868421052631579,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.868421052631579,
+      0.8421052631578947,
+      0.8552631578947368
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.868421052631579,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.868421052631579,
+      0.8421052631578947,
+      0.8552631578947368
+     ]
+    },
+    "et_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.868421052631579,
+     "cost_iters": 750,
+     "list": [
+      "e490b88ee785",
+      "8c4aa28336d6",
+      "4f7d413581f6",
+      "a1f67db45e64",
+      "9092e36eefe1",
+      "cffb55035c3a"
+     ],
+     "oracle_rank": 5,
+     "hit6": true,
+     "finals_seed0": [
+      0.868421052631579,
+      0.8421052631578947,
+      0.8552631578947368
+     ]
+    }
+   }
+  },
+  "SelfRegulationSCP1": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "9092e36eefe1",
+    "acc": 0.9010238907849829
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 1.5902673565276746,
+   "lists": {
+    "prior": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9010238907849829,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9010238907849829,
+      0.8873720136518771,
+      0.8532423208191127
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9010238907849829,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9010238907849829,
+      0.8873720136518771,
+      0.8532423208191127
+     ]
+    },
+    "et_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9010238907849829,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "8b87d66faad3",
+      "cffb55035c3a",
+      "f48e5da1d899",
+      "65627517fa32"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9010238907849829,
+      0.8873720136518771,
+      0.8532423208191127
+     ]
+    }
+   }
+  },
+  "SelfRegulationSCP2": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "4f7d413581f6",
+    "acc": 0.6055555555555555
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 1.8828308849461932,
+   "lists": {
+    "prior": {
+     "champion": "4f7d413581f6",
+     "acc": 0.6055555555555555,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 4,
+     "hit6": true,
+     "finals_seed0": [
+      0.6055555555555555,
+      0.6277777777777778,
+      0.5444444444444444
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.6055555555555555,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 3,
+     "hit6": true,
+     "finals_seed0": [
+      0.6055555555555555,
+      0.6277777777777778,
+      0.5444444444444444
+     ]
+    },
+    "et_tclsc": {
+     "champion": "65627517fa32",
+     "acc": 0.5722222222222222,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "f48e5da1d899",
+      "8b87d66faad3",
+      "cffb55035c3a",
+      "65627517fa32"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.5722222222222222
+     ]
+    }
+   }
+  },
+  "SpokenArabicDigits": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "9092e36eefe1",
+    "acc": 0.9781718963165075
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 5.452434562689179,
+   "lists": {
+    "prior": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9781718963165075,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9781718963165075,
+      0.9840836743974534,
+      0.9809004092769441
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9781718963165075,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 1,
+     "hit6": true,
+     "finals_seed0": [
+      0.9781718963165075,
+      0.9840836743974534,
+      0.9809004092769441
+     ]
+    },
+    "et_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.9781718963165075,
+     "cost_iters": 2250,
+     "list": [
+      "e490b88ee785",
+      "8c4aa28336d6",
+      "cffb55035c3a",
+      "9092e36eefe1",
+      "4f7d413581f6",
+      "a1f67db45e64"
+     ],
+     "oracle_rank": 4,
+     "hit6": true,
+     "finals_seed0": [
+      0.9781718963165075,
+      0.9840836743974534,
+      0.9809004092769441
+     ]
+    }
+   }
+  },
+  "StandWalkJump": {
+   "budgets": [
+    150,
+    300,
+    600
+   ],
+   "oracle": {
+    "key": "8c4aa28336d6",
+    "acc": 0.5333333333333333
+   },
+   "n_nan": 2,
+   "ctx_abs_max_raw": 6.114342643098675,
+   "lists": {
+    "prior": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.5333333333333333,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "oracle_rank": 5,
+     "hit6": true,
+     "finals_seed0": [
+      0.5333333333333333,
+      0.4666666666666667,
+      0.3333333333333333
+     ]
+    },
+    "blind_tclsc": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.5333333333333333,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "oracle_rank": 5,
+     "hit6": true,
+     "finals_seed0": [
+      0.5333333333333333,
+      0.4666666666666667,
+      0.3333333333333333
+     ]
+    },
+    "et_tclsc": {
+     "champion": "c92058f26c1d",
+     "acc": 0.5333333333333333,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "f48e5da1d899",
+      "65627517fa32",
+      "a1f67db45e64",
+      "c92058f26c1d",
+      "4f7d413581f6"
+     ],
+     "oracle_rank": null,
+     "hit6": false,
+     "finals_seed0": [
+      0.5333333333333333
+     ]
+    }
+   }
+  }
+ },
+ "picks_pending": {
+  "AtrialFibrillation": {
+   "SH6-3-3_prior": "9092e36eefe1",
+   "SH6-3-3_blind_tclsc": "9092e36eefe1",
+   "SH6-3-3_et_tclsc": "9092e36eefe1"
+  },
+  "DuckDuckGeese": {
+   "SH6-3-3_blind_tclsc": "cffb55035c3a",
+   "SH6-3-3_et_tclsc": "cffb55035c3a"
+  },
+  "EigenWorms": {
+   "SH6-3-3_prior": "c92058f26c1d"
+  },
+  "FingerMovements": {
+   "SH6-3-3_prior": "4f7d413581f6",
+   "SH6-3-3_blind_tclsc": "4f7d413581f6",
+   "SH6-3-3_et_tclsc": "4f7d413581f6"
+  },
+  "Heartbeat": {
+   "SH6-3-3_prior": "cffb55035c3a",
+   "SH6-3-3_blind_tclsc": "cffb55035c3a",
+   "SH6-3-3_et_tclsc": "cffb55035c3a"
+  },
+  "JapaneseVowels": {
+   "SH6-3-3_prior": "a1f67db45e64"
+  },
+  "LSST": {
+   "SH6-3-3_prior": "8c4aa28336d6"
+  },
+  "MotorImagery": {
+   "SH6-3-3_prior": "c92058f26c1d",
+   "SH6-3-3_blind_tclsc": "8c4aa28336d6",
+   "SH6-3-3_et_tclsc": "4f7d413581f6"
+  },
+  "PEMS-SF": {
+   "SH6-3-3_prior": "8c4aa28336d6",
+   "SH6-3-3_blind_tclsc": "8c4aa28336d6",
+   "SH6-3-3_et_tclsc": "8c4aa28336d6"
+  },
+  "PenDigits": {
+   "SH6-3-3_prior": "4f7d413581f6",
+   "SH6-3-3_blind_tclsc": "4f7d413581f6",
+   "SH6-3-3_et_tclsc": "4f7d413581f6"
+  },
+  "SelfRegulationSCP2": {
+   "SH6-3-3_et_tclsc": "65627517fa32"
+  },
+  "StandWalkJump": {
+   "SH6-3-3_et_tclsc": "c92058f26c1d"
+  }
+ },
+ "clip": 4.0
+}
