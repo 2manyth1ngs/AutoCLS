@@ -6,3 +6,4 @@ uea/tasks.json
 uea/ea_uea.jsonl
 ucr/models/
 train_*.log
+ablate/rankings_*.json

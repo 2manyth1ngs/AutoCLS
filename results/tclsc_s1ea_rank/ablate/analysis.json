@@ -1,0 +1,305 @@
+{
+ "protocol": "results/tclsc_s1ea_rank/PROTOCOL.md §9",
+ "uea": {
+  "n_instances": 126,
+  "pooled": {
+   "blind_diff_hard": {
+    "regret1": 0.0657110563477888,
+    "regret3": 0.029427115528154295,
+    "pair_acc": 0.7557259601443286,
+    "acc_top10": 0.4993667848976536
+   },
+   "phi_diff_hard": {
+    "regret1": 0.07711909006788457,
+    "regret3": 0.03108100375369745,
+    "pair_acc": 0.7804929708961402,
+    "acc_top10": 0.49889855839136477
+   },
+   "fw_eaphi_hard": {
+    "regret1": 0.07579319394583263,
+    "regret3": 0.026948913578002193,
+    "pair_acc": 0.7884188476796468,
+    "acc_top10": 0.4923854836052068
+   },
+   "fwb_hard": {
+    "regret1": 0.06694914250663377,
+    "regret3": 0.0303857152942927,
+    "pair_acc": 0.7542100591261579,
+    "acc_top10": 0.5155166968748283
+   },
+   "fw_eaphi_hard@zero_all": {
+    "regret1": 0.0655661929238478,
+    "regret3": 0.030066975227871884,
+    "pair_acc": 0.7748828829890406,
+    "acc_top10": 0.5224951074340984
+   },
+   "fw_eaphi_hard@noise0": {
+    "regret1": 0.0622551468685903,
+    "regret3": 0.028941540005558385,
+    "pair_acc": 0.7749137341068368,
+    "acc_top10": 0.5457073335009959
+   },
+   "fw_eaphi_hard@noise1": {
+    "regret1": 0.059177393658602605,
+    "regret3": 0.03175957185294424,
+    "pair_acc": 0.7682408897005778,
+    "acc_top10": 0.4866065466434252
+   },
+   "fw_eaphi_hard@noise2": {
+    "regret1": 0.06578594679932989,
+    "regret3": 0.029401420395577037,
+    "pair_acc": 0.7624125967284778,
+    "acc_top10": 0.4931077332893942
+   },
+   "fw_eaphi_hard@noise": {
+    "regret3": 0.03003417741802656,
+    "regret1": 0.062406162442174264
+   }
+  },
+  "tests": {
+   "structure: blind→fwb": {
+    "a": "blind_diff_hard",
+    "b": "fwb_hard",
+    "metric": "regret3",
+    "n": 126,
+    "mean_a": 0.029427115528154295,
+    "mean_b": 0.0303857152942927,
+    "p": 0.6099175801381327,
+    "wins_b": 19,
+    "losses_b": 18,
+    "ties": 89
+   },
+   "features: fwb→fw": {
+    "a": "fwb_hard",
+    "b": "fw_eaphi_hard",
+    "metric": "regret3",
+    "n": 126,
+    "mean_a": 0.0303857152942927,
+    "mean_b": 0.026948913578002193,
+    "p": 0.0369686886452323,
+    "wins_b": 40,
+    "losses_b": 23,
+    "ties": 63
+   },
+   "blind→fw": {
+    "a": "blind_diff_hard",
+    "b": "fw_eaphi_hard",
+    "metric": "regret3",
+    "n": 126,
+    "mean_a": 0.029427115528154295,
+    "mean_b": 0.026948913578002193,
+    "p": 0.03501735254931182,
+    "wins_b": 36,
+    "losses_b": 21,
+    "ties": 69
+   },
+   "fw vs zero_all regret@3": {
+    "normal": 0.026948913578002193,
+    "ablated": 0.030066975227871884,
+    "p_worse": 0.06440681123800335,
+    "worse": 26,
+    "better": 20,
+    "ties": 80
+   },
+   "fw vs noise regret@3": {
+    "normal": 0.026948913578002193,
+    "ablated": 0.03003417741802656,
+    "p_worse": 0.035731929612014705,
+    "worse": 43,
+    "better": 27,
+    "ties": 56
+   },
+   "fw vs zero_all regret@1": {
+    "normal": 0.07579319394583263,
+    "ablated": 0.0655661929238478,
+    "p_worse": 0.9641190442154715,
+    "worse": 26,
+    "better": 37,
+    "ties": 63
+   },
+   "fw vs noise regret@1": {
+    "normal": 0.07579319394583263,
+    "ablated": 0.062406162442174264,
+    "p_worse": 0.9926634902924066,
+    "worse": 33,
+    "better": 50,
+    "ties": 43
+   },
+   "features: fwb→fw regret@1": {
+    "a": "fwb_hard",
+    "b": "fw_eaphi_hard",
+    "metric": "regret1",
+    "n": 126,
+    "mean_a": 0.06694914250663377,
+    "mean_b": 0.07579319394583263,
+    "p": 0.9005370579859554,
+    "wins_b": 35,
+    "losses_b": 42,
+    "ties": 49
+   },
+   "structure: blind→fwb regret@1": {
+    "a": "blind_diff_hard",
+    "b": "fwb_hard",
+    "metric": "regret1",
+    "n": 126,
+    "mean_a": 0.0657110563477888,
+    "mean_b": 0.06694914250663377,
+    "p": 0.6915226569799021,
+    "wins_b": 19,
+    "losses_b": 23,
+    "ties": 84
+   }
+  }
+ },
+ "ucr": {
+  "n_instances": 252,
+  "pooled": {
+   "u_blind_diff_hard": {
+    "regret1": 0.06111270261270509,
+    "regret3": 0.02202857906502077,
+    "pair_acc": 0.7722080531433542,
+    "acc_top10": 0.6016166612312134
+   },
+   "u_phi_diff_hard": {
+    "regret1": 0.06089455704979913,
+    "regret3": 0.020926898926290304,
+    "pair_acc": 0.7820906335497033,
+    "acc_top10": 0.611414281066148
+   },
+   "u_fw_eaphi_hard": {
+    "regret1": 0.03848620537270294,
+    "regret3": 0.01827950087819767,
+    "pair_acc": 0.7935433669217422,
+    "acc_top10": 0.64631969902612
+   },
+   "u_fwb_hard": {
+    "regret1": 0.05079722261047175,
+    "regret3": 0.019602472113116186,
+    "pair_acc": 0.7751601451685023,
+    "acc_top10": 0.6168882169143484
+   },
+   "u_fw_eaphi_hard@zero_all": {
+    "regret1": 0.04065390292282652,
+    "regret3": 0.01994635331093645,
+    "pair_acc": 0.7833580823723034,
+    "acc_top10": 0.6371023446310135
+   },
+   "u_fw_eaphi_hard@noise0": {
+    "regret1": 0.03975128222372178,
+    "regret3": 0.02128724402472836,
+    "pair_acc": 0.7707487833499004,
+    "acc_top10": 0.5867391755538044
+   },
+   "u_fw_eaphi_hard@noise1": {
+    "regret1": 0.05103609795452587,
+    "regret3": 0.02215157576550846,
+    "pair_acc": 0.7673889740972837,
+    "acc_top10": 0.5721701110349795
+   },
+   "u_fw_eaphi_hard@noise2": {
+    "regret1": 0.04360427246151909,
+    "regret3": 0.021335076440803877,
+    "pair_acc": 0.7717473349141333,
+    "acc_top10": 0.5561453196862374
+   },
+   "u_fw_eaphi_hard@noise": {
+    "regret3": 0.021591298743680234,
+    "regret1": 0.04479721754658891
+   }
+  },
+  "tests": {
+   "structure: blind→fwb": {
+    "a": "u_blind_diff_hard",
+    "b": "u_fwb_hard",
+    "metric": "regret3",
+    "n": 252,
+    "mean_a": 0.02202857906502077,
+    "mean_b": 0.019602472113116186,
+    "p": 0.003903462444039931,
+    "wins_b": 36,
+    "losses_b": 17,
+    "ties": 199
+   },
+   "features: fwb→fw": {
+    "a": "u_fwb_hard",
+    "b": "u_fw_eaphi_hard",
+    "metric": "regret3",
+    "n": 252,
+    "mean_a": 0.019602472113116186,
+    "mean_b": 0.01827950087819767,
+    "p": 0.008092081636925427,
+    "wins_b": 75,
+    "losses_b": 39,
+    "ties": 138
+   },
+   "blind→fw": {
+    "a": "u_blind_diff_hard",
+    "b": "u_fw_eaphi_hard",
+    "metric": "regret3",
+    "n": 252,
+    "mean_a": 0.02202857906502077,
+    "mean_b": 0.01827950087819767,
+    "p": 5.715090111114179e-05,
+    "wins_b": 85,
+    "losses_b": 38,
+    "ties": 129
+   },
+   "fw vs zero_all regret@3": {
+    "normal": 0.01827950087819767,
+    "ablated": 0.01994635331093645,
+    "p_worse": 0.06184863957266075,
+    "worse": 51,
+    "better": 35,
+    "ties": 166
+   },
+   "fw vs noise regret@3": {
+    "normal": 0.01827950087819767,
+    "ablated": 0.021591298743680234,
+    "p_worse": 1.002445851192652e-05,
+    "worse": 110,
+    "better": 41,
+    "ties": 101
+   },
+   "fw vs zero_all regret@1": {
+    "normal": 0.03848620537270294,
+    "ablated": 0.04065390292282652,
+    "p_worse": 0.1081126675483558,
+    "worse": 76,
+    "better": 64,
+    "ties": 112
+   },
+   "fw vs noise regret@1": {
+    "normal": 0.03848620537270294,
+    "ablated": 0.04479721754658891,
+    "p_worse": 0.0003806616833177292,
+    "worse": 127,
+    "better": 77,
+    "ties": 48
+   },
+   "features: fwb→fw regret@1": {
+    "a": "u_fwb_hard",
+    "b": "u_fw_eaphi_hard",
+    "metric": "regret1",
+    "n": 252,
+    "mean_a": 0.05079722261047175,
+    "mean_b": 0.03848620537270294,
+    "p": 0.0036751948547046023,
+    "wins_b": 89,
+    "losses_b": 65,
+    "ties": 98
+   },
+   "structure: blind→fwb regret@1": {
+    "a": "u_blind_diff_hard",
+    "b": "u_fwb_hard",
+    "metric": "regret1",
+    "n": 252,
+    "mean_a": 0.06111270261270509,
+    "mean_b": 0.05079722261047175,
+    "p": 0.04070743138512573,
+    "wins_b": 54,
+    "losses_b": 38,
+    "ties": 160
+   }
+  }
+ }
+}
