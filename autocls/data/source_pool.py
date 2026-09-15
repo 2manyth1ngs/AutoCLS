@@ -269,6 +269,44 @@ def slice_source_tasks(
     return eff, tasks
 
 
+EXT_SEED_OFFSET = 1000        # 扩展切片流的 RNG 偏移（与注册表流 slice_seed 分离）
+EXT_N_POOL = 6                # 扩展流一次切满的个数（前缀稳定的基准；协议 S12 = 原 6 + 全部 6）
+EXT_ID_PREFIX = "x"           # task_id = f"{name}_x{i:02d}"（dataset_of 仍剥到数据集名，不与注册表流 _06… 撞 id）
+
+
+def slice_extension_tasks(
+    entry: DatasetEntry,
+    registry: SourcePoolRegistry,
+    y: np.ndarray,
+    *,
+    n_new: int,
+    n_pool: int = EXT_N_POOL,
+    exclude_first: int | None = None,
+    seed_offset: int = EXT_SEED_OFFSET,
+    id_prefix: str = EXT_ID_PREFIX,
+) -> list[SlicedTask]:
+    """每集加切片（WP16 SX，results/tclsc_slices/PROTOCOL.md §1.4）：在注册表流之外再切 n_new 个。
+
+    与注册表流**同参**（类别档 / 通道档 / n_samples / min_samples），独立 RNG 流 ``slice_seed + seed_offset``；
+    类别子集避开注册表流前 ``exclude_first`` 个切片的组合（None = 全部 planned_tasks；PQ 传 n_slices_for = 缓存里实际存在的 6 个，
+    Ethanol 8 planned 里没跑的 06/07 不占组合），ExcludingClassSubsetSlicer 组合耗尽才重复。
+    注册表 planned_tasks **不改**、注册表流的切片逐字段不变（改 n_tasks 会改 RNG 前缀、既有 R' 缓存全失效，铁律 3）。
+    前缀稳定：一律先切 ``n_pool``（默认 6）个再取前 n_new 个——策略是先抽满全部类别子集再逐任务抽通道 / 样本，
+    直接改 n_tasks 会改 RNG 前缀；固定 n_pool 才有 n_new=3 的结果 = n_new=6 的前 3 个（S9 = x00–x02 嵌套于 S12）。
+    """
+    if not 0 < int(n_new) <= int(n_pool):
+        raise ValueError(f"n_new={n_new} 须在 (0, n_pool={n_pool}]（前缀稳定只对固定 n_pool 成立）")
+    from .slice_strategies import ExcludingClassSubsetSlicer
+    _eff, planned = slice_source_tasks(entry, registry, y)
+    used = planned if exclude_first is None else planned[: int(exclude_first)]
+    kw = build_slice_kwargs(entry, registry)
+    strategy = ExcludingClassSubsetSlicer(
+        n_classes_range=entry.n_classes_range, exclude=tuple(tuple(t.classes) for t in used))
+    kw.update(strategy=strategy, seed=int(kw["seed"]) + int(seed_offset))
+    tasks = slice_pool_tasks(y, np.arange(len(y)), pool_name=entry.name, n_tasks=int(n_pool), id_prefix=id_prefix, **kw)
+    return tasks[: int(n_new)]
+
+
 def remaining_task_count(
     registry: SourcePoolRegistry, passed_untested: set[str]
 ) -> int:

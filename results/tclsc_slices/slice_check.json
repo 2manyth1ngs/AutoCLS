@@ -1,0 +1,516 @@
+{
+ "datasets": {
+  "Handwriting": {
+   "slices": [
+    {
+     "task_id": "Handwriting_x00",
+     "k": 9,
+     "n_channels": 2,
+     "n_samples": 337,
+     "n_train": 236,
+     "class_jaccard_max": 0.312,
+     "sample_jaccard_max": 0.334,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "Handwriting_x01",
+     "k": 8,
+     "n_channels": 3,
+     "n_samples": 310,
+     "n_train": 217,
+     "class_jaccard_max": 0.333,
+     "sample_jaccard_max": 0.335,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "Handwriting_x02",
+     "k": 14,
+     "n_channels": 3,
+     "n_samples": 528,
+     "n_train": 369,
+     "class_jaccard_max": 0.353,
+     "sample_jaccard_max": 0.344,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "Handwriting_x03",
+     "k": 9,
+     "n_channels": 3,
+     "n_samples": 351,
+     "n_train": 246,
+     "class_jaccard_max": 0.375,
+     "sample_jaccard_max": 0.37,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "Handwriting_x04",
+     "k": 11,
+     "n_channels": 3,
+     "n_samples": 428,
+     "n_train": 300,
+     "class_jaccard_max": 0.353,
+     "sample_jaccard_max": 0.348,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "Handwriting_x05",
+     "k": 14,
+     "n_channels": 3,
+     "n_samples": 562,
+     "n_train": 393,
+     "class_jaccard_max": 0.444,
+     "sample_jaccard_max": 0.454,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    }
+   ],
+   "ext_vs_ext_class_jaccard_mean": 0.286,
+   "ext_vs_ext_sample_jaccard_mean": 0.29,
+   "n_dup_class_subset": 0
+  },
+  "UniMiB-SHAR": {
+   "slices": [
+    {
+     "task_id": "UniMiB-SHAR_x00",
+     "k": 8,
+     "n_channels": 2,
+     "n_samples": 1024,
+     "n_train": 717,
+     "class_jaccard_max": 0.4,
+     "sample_jaccard_max": 0.052,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "UniMiB-SHAR_x01",
+     "k": 8,
+     "n_channels": 3,
+     "n_samples": 1024,
+     "n_train": 716,
+     "class_jaccard_max": 0.615,
+     "sample_jaccard_max": 0.065,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "UniMiB-SHAR_x02",
+     "k": 10,
+     "n_channels": 3,
+     "n_samples": 1024,
+     "n_train": 717,
+     "class_jaccard_max": 0.615,
+     "sample_jaccard_max": 0.074,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "UniMiB-SHAR_x03",
+     "k": 14,
+     "n_channels": 2,
+     "n_samples": 1024,
+     "n_train": 717,
+     "class_jaccard_max": 0.75,
+     "sample_jaccard_max": 0.059,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "UniMiB-SHAR_x04",
+     "k": 11,
+     "n_channels": 2,
+     "n_samples": 1024,
+     "n_train": 716,
+     "class_jaccard_max": 0.714,
+     "sample_jaccard_max": 0.056,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "UniMiB-SHAR_x05",
+     "k": 14,
+     "n_channels": 2,
+     "n_samples": 1024,
+     "n_train": 715,
+     "class_jaccard_max": 0.688,
+     "sample_jaccard_max": 0.063,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    }
+   ],
+   "ext_vs_ext_class_jaccard_mean": 0.431,
+   "ext_vs_ext_sample_jaccard_mean": 0.043,
+   "n_dup_class_subset": 0
+  },
+  "PhonemeSpectra": {
+   "slices": [
+    {
+     "task_id": "PhonemeSpectra_x00",
+     "k": 5,
+     "n_channels": 7,
+     "n_samples": 854,
+     "n_train": 599,
+     "class_jaccard_max": 0.1,
+     "sample_jaccard_max": 0.1,
+     "channel_jaccard_max": 0.6,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "PhonemeSpectra_x01",
+     "k": 5,
+     "n_channels": 7,
+     "n_samples": 855,
+     "n_train": 600,
+     "class_jaccard_max": 0.3,
+     "sample_jaccard_max": 0.26,
+     "channel_jaccard_max": 0.556,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "PhonemeSpectra_x02",
+     "k": 8,
+     "n_channels": 8,
+     "n_samples": 1024,
+     "n_train": 716,
+     "class_jaccard_max": 0.333,
+     "sample_jaccard_max": 0.226,
+     "channel_jaccard_max": 0.778,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "PhonemeSpectra_x03",
+     "k": 8,
+     "n_channels": 7,
+     "n_samples": 1024,
+     "n_train": 718,
+     "class_jaccard_max": 0.231,
+     "sample_jaccard_max": 0.162,
+     "channel_jaccard_max": 0.545,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "PhonemeSpectra_x04",
+     "k": 8,
+     "n_channels": 10,
+     "n_samples": 1024,
+     "n_train": 717,
+     "class_jaccard_max": 0.143,
+     "sample_jaccard_max": 0.1,
+     "channel_jaccard_max": 0.818,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "PhonemeSpectra_x05",
+     "k": 8,
+     "n_channels": 11,
+     "n_samples": 1024,
+     "n_train": 717,
+     "class_jaccard_max": 0.231,
+     "sample_jaccard_max": 0.167,
+     "channel_jaccard_max": 0.909,
+     "class_subset_repeats_original": false
+    }
+   ],
+   "ext_vs_ext_class_jaccard_mean": 0.107,
+   "ext_vs_ext_sample_jaccard_mean": 0.085,
+   "n_dup_class_subset": 0
+  },
+  "UWaveGestureLibrary": {
+   "slices": [
+    {
+     "task_id": "UWaveGestureLibrary_x00",
+     "k": 5,
+     "n_channels": 2,
+     "n_samples": 275,
+     "n_train": 195,
+     "class_jaccard_max": 0.714,
+     "sample_jaccard_max": 0.714,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "UWaveGestureLibrary_x01",
+     "k": 5,
+     "n_channels": 2,
+     "n_samples": 275,
+     "n_train": 195,
+     "class_jaccard_max": 0.714,
+     "sample_jaccard_max": 0.714,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "UWaveGestureLibrary_x02",
+     "k": 4,
+     "n_channels": 2,
+     "n_samples": 220,
+     "n_train": 156,
+     "class_jaccard_max": 0.8,
+     "sample_jaccard_max": 0.8,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "UWaveGestureLibrary_x03",
+     "k": 6,
+     "n_channels": 2,
+     "n_samples": 330,
+     "n_train": 234,
+     "class_jaccard_max": 0.75,
+     "sample_jaccard_max": 0.75,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "UWaveGestureLibrary_x04",
+     "k": 5,
+     "n_channels": 2,
+     "n_samples": 275,
+     "n_train": 195,
+     "class_jaccard_max": 0.714,
+     "sample_jaccard_max": 0.714,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "UWaveGestureLibrary_x05",
+     "k": 6,
+     "n_channels": 2,
+     "n_samples": 330,
+     "n_train": 234,
+     "class_jaccard_max": 0.75,
+     "sample_jaccard_max": 0.75,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    }
+   ],
+   "ext_vs_ext_class_jaccard_mean": 0.469,
+   "ext_vs_ext_sample_jaccard_mean": 0.469,
+   "n_dup_class_subset": 0
+  },
+  "EthanolConcentration": {
+   "slices": [
+    {
+     "task_id": "EthanolConcentration_x00",
+     "k": 2,
+     "n_channels": 2,
+     "n_samples": 262,
+     "n_train": 183,
+     "class_jaccard_max": 0.667,
+     "sample_jaccard_max": 0.667,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "EthanolConcentration_x01",
+     "k": 3,
+     "n_channels": 2,
+     "n_samples": 393,
+     "n_train": 275,
+     "class_jaccard_max": 0.75,
+     "sample_jaccard_max": 0.75,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "EthanolConcentration_x02",
+     "k": 2,
+     "n_channels": 2,
+     "n_samples": 262,
+     "n_train": 184,
+     "class_jaccard_max": 0.667,
+     "sample_jaccard_max": 0.668,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "EthanolConcentration_x03",
+     "k": 2,
+     "n_channels": 2,
+     "n_samples": 263,
+     "n_train": 184,
+     "class_jaccard_max": 0.667,
+     "sample_jaccard_max": 0.668,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "EthanolConcentration_x04",
+     "k": 2,
+     "n_channels": 2,
+     "n_samples": 263,
+     "n_train": 184,
+     "class_jaccard_max": 0.667,
+     "sample_jaccard_max": 0.669,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "EthanolConcentration_x05",
+     "k": 4,
+     "n_channels": 3,
+     "n_samples": 524,
+     "n_train": 367,
+     "class_jaccard_max": 1.0,
+     "sample_jaccard_max": 1.0,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": true
+    }
+   ],
+   "ext_vs_ext_class_jaccard_mean": 0.417,
+   "ext_vs_ext_sample_jaccard_mean": 0.418,
+   "n_dup_class_subset": 1
+  },
+  "Cricket": {
+   "slices": [
+    {
+     "task_id": "Cricket_x00",
+     "k": 7,
+     "n_channels": 5,
+     "n_samples": 105,
+     "n_train": 77,
+     "class_jaccard_max": 0.545,
+     "sample_jaccard_max": 0.545,
+     "channel_jaccard_max": 0.833,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "Cricket_x01",
+     "k": 7,
+     "n_channels": 4,
+     "n_samples": 105,
+     "n_train": 77,
+     "class_jaccard_max": 0.7,
+     "sample_jaccard_max": 0.7,
+     "channel_jaccard_max": 0.667,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "Cricket_x02",
+     "k": 6,
+     "n_channels": 6,
+     "n_samples": 90,
+     "n_train": 66,
+     "class_jaccard_max": 0.714,
+     "sample_jaccard_max": 0.714,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "Cricket_x03",
+     "k": 8,
+     "n_channels": 6,
+     "n_samples": 120,
+     "n_train": 88,
+     "class_jaccard_max": 0.7,
+     "sample_jaccard_max": 0.7,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "Cricket_x04",
+     "k": 6,
+     "n_channels": 6,
+     "n_samples": 90,
+     "n_train": 66,
+     "class_jaccard_max": 0.5,
+     "sample_jaccard_max": 0.5,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "Cricket_x05",
+     "k": 10,
+     "n_channels": 6,
+     "n_samples": 150,
+     "n_train": 110,
+     "class_jaccard_max": 0.727,
+     "sample_jaccard_max": 0.727,
+     "channel_jaccard_max": 1.0,
+     "class_subset_repeats_original": false
+    }
+   ],
+   "ext_vs_ext_class_jaccard_mean": 0.394,
+   "ext_vs_ext_sample_jaccard_mean": 0.394,
+   "n_dup_class_subset": 0
+  },
+  "HandMovementDirection": {
+   "slices": [
+    {
+     "task_id": "HandMovementDirection_x00",
+     "k": 2,
+     "n_channels": 7,
+     "n_samples": 109,
+     "n_train": 77,
+     "class_jaccard_max": 0.667,
+     "sample_jaccard_max": 0.609,
+     "channel_jaccard_max": 0.7,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "HandMovementDirection_x01",
+     "k": 3,
+     "n_channels": 9,
+     "n_samples": 164,
+     "n_train": 116,
+     "class_jaccard_max": 0.75,
+     "sample_jaccard_max": 0.701,
+     "channel_jaccard_max": 0.9,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "HandMovementDirection_x02",
+     "k": 2,
+     "n_channels": 5,
+     "n_samples": 125,
+     "n_train": 88,
+     "class_jaccard_max": 0.667,
+     "sample_jaccard_max": 0.698,
+     "channel_jaccard_max": 0.667,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "HandMovementDirection_x03",
+     "k": 2,
+     "n_channels": 8,
+     "n_samples": 110,
+     "n_train": 78,
+     "class_jaccard_max": 0.667,
+     "sample_jaccard_max": 0.611,
+     "channel_jaccard_max": 0.8,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "HandMovementDirection_x04",
+     "k": 2,
+     "n_channels": 8,
+     "n_samples": 125,
+     "n_train": 88,
+     "class_jaccard_max": 0.667,
+     "sample_jaccard_max": 0.698,
+     "channel_jaccard_max": 0.8,
+     "class_subset_repeats_original": false
+    },
+    {
+     "task_id": "HandMovementDirection_x05",
+     "k": 4,
+     "n_channels": 6,
+     "n_samples": 234,
+     "n_train": 165,
+     "class_jaccard_max": 1.0,
+     "sample_jaccard_max": 1.0,
+     "channel_jaccard_max": 0.6,
+     "class_subset_repeats_original": true
+    }
+   ],
+   "ext_vs_ext_class_jaccard_mean": 0.417,
+   "ext_vs_ext_sample_jaccard_mean": 0.41,
+   "n_dup_class_subset": 1
+  }
+ },
+ "originals_unchanged": true
+}

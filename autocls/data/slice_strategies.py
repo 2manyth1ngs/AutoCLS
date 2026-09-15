@@ -101,6 +101,36 @@ class RandomClassSubsetSlicer:
 
 
 @dataclass(frozen=True)
+class ExcludingClassSubsetSlicer(RandomClassSubsetSlicer):
+    """扩展切片用（WP16 SX，results/tclsc_slices/PROTOCOL.md §1.4）：与 RandomClassSubsetSlicer 同一抽样式，
+    但把 ``exclude``（既有切片的类别子集）视作"已用过"——同一 RNG 流内先出未用过的组合，**全部组合耗尽后才允许重复**
+    （Ethanol / HMD 4 类 11 个组合、原 6 切片用掉 6，第 6 个扩展切片只能重复类别子集，多样性转由通道 / 样本子集承担；
+    AutoCTS++ dataset_slice.py 本来就不去重）。产出 tag="ext"。allow_repeat 字段在此无意义（耗尽即重复）。
+    """
+
+    exclude: tuple[tuple[int, ...], ...] = ()
+
+    def propose(
+        self, y: np.ndarray, pool_indices: np.ndarray, n_tasks: int,
+        rng: np.random.Generator,
+    ) -> list[TaskSpec]:
+        classes = np.unique(y[pool_indices])
+        lo, hi = self.n_classes_range
+        n_subsets = sum(comb(len(classes), k) for k in range(lo, hi + 1))
+        seen: set[frozenset] = {frozenset(c) for c in self.exclude}
+        specs: list[TaskSpec] = []
+        while len(specs) < n_tasks:
+            k = int(rng.integers(lo, hi + 1))
+            subset = tuple(sorted(rng.choice(classes, size=k, replace=False).tolist()))
+            fs = frozenset(subset)
+            if fs in seen and len(seen) < n_subsets:
+                continue                        # 还有没用过的组合 → 不接受重复
+            seen.add(fs)
+            specs.append(TaskSpec(classes=subset, eligible=_eligible(y, pool_indices, subset), tag="ext"))
+        return specs
+
+
+@dataclass(frozen=True)
 class DynamicStaticStratifiedSlicer:
     """按动/静类别构成三档分层的策略（**仅适用于 HAR 分类**）。
 

@@ -155,6 +155,7 @@ def slice_pool_tasks(
     n_samples: int = 1024,
     min_samples: int = 128,   # STD_BATCH_SIZE：保证 cl_trainer 至少一个满 batch
     seed: int = 0,
+    id_prefix: str = "",      # 扩展切片流（WP16 SX）：task_id = f"{pool}_{id_prefix}{i:02d}"，缺省逐位不变
 ) -> list[SlicedTask]:
     """在一个池内切 n_tasks 个任务（"选哪些数据"由策略决定，采样/防护在核心）。
 
@@ -195,7 +196,7 @@ def slice_pool_tasks(
         sample_idx = tuple(np.sort(rng.choice(spec.eligible, size=m, replace=False)).tolist())
 
         tasks.append(SlicedTask(
-            task_id=f"{pool_name}_{i:02d}",
+            task_id=f"{pool_name}_{id_prefix}{i:02d}",
             pool=pool_name,
             classes=spec.classes,
             channels=channels,
