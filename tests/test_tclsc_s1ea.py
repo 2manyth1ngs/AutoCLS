@@ -160,7 +160,7 @@ class TestResponseProfile:
         assert np.all(np.isfinite(vals))
         assert all(-1.0 <= prof[c] <= 1.0 for c in mf.RESPONSE_PROFILE_COLS if c.startswith(("ret_", "sim_")))
         assert prof["n"] == 36 and prof["K"] == 3 and prof["info_raw"] == pytest.approx(1.0)
-        assert prof["sim_polarity"] is None or "sim_polarity" not in prof
+        assert "sim_polarity" not in prof
 
 
 # ================================================================ scripts/63
@@ -265,10 +265,11 @@ class TestAlignment:
         al = g.field_alignment(tab, cat_z, fields=("jitter",), budget=290)
         assert al["jitter"]["n"] == len(u) and al["jitter"]["rho"] == pytest.approx(1.0)
         assert g.FIELD_OPS == {"jitter": "ret_jitter", "rescale": "ret_rescale", "point_mask": "ret_point_mask", "freq_mask": "ret_freq_mask"}
+        assert (g.FIELD_HI, g.FIELD_LO, g.FIELD_MIN_SIDE) == (0.5, 0.2, 2)
 
     def test_field_preference_needs_both_sides(self):
         g = _g63()
-        rows = [r for r in _ucr_rows(n_datasets=1) if float(r["cls"]["jitter"]) == 0.0]
+        rows = [r for r in _ucr_rows(n_datasets=1) if float(r["cls"]["jitter"]) <= 0.2]
         cat_z = _g60()._g56.zscore_within(rows)
         assert g.field_preference(cat_z, "jitter", budget=290) == {}
 
@@ -276,7 +277,7 @@ class TestAlignment:
 class TestGatesEa:
     def _inp(self, d, p, blind, ea, p2, phi, eaphi, p3, dc=0.0):
         deltas = {"u_ea_diff_hard": {"acc_top10": {"mean_delta": d, "p": p}},
-                  "u_ea_concat_hard": {"acc_top10": {"mean_delta": dc, "p": 0.9}}}
+                  "u_ea_concat_hard": {"acc_top10": {"mean_delta": dc, "p": 0.01 if dc else 0.9}}}
         return deltas, {"mean_a": blind, "mean_b": ea, "p": p2}, {"mean_a": phi, "mean_b": eaphi, "p": p3}
 
     def test_codes(self):

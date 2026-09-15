@@ -56,7 +56,7 @@ E_A = 25 维；nan → 折内训练集列均值填补并记 `n_nan`。ctx = 折�
 - **G-A2（有价值）**：`u_ea_diff_hard` regret@3 < `u_blind_diff_hard`，配对 Wilcoxon p < 0.05。
 - **G-A3（超出 φ）**：`u_eaphi_diff_hard` regret@3 < `u_phi_diff_hard`，配对 p < 0.05。
 - G-A4（机制对齐，只报）：对 AutoCL 的 4 个随机增强字段 f ∈ {jitter, rescale, point_mask, freq_mask}，`ret_f` 与该集的**字段偏好** u_f
-  （@290 目录 20 条里 f ≥ 0.5 档候选的 within-task z 均值 − f = 0 档候选的 z 均值，两侧各 ≥ 2 条才定义）在 84 集上的 Spearman；
+  （@290 目录 20 条里 f ≥ 0.5 档候选的 within-task z 均值 − f ≤ 0.2 档候选的 z 均值，两侧各 ≥ 2 条才定义；实现前改自 "f = 0"——20 条目录里 0 档期望不到 2 条，多数数据集会无定义）在 84 集上的 Spearman；
   报 |ρ| ≥ 0.3 且 p < 0.05 的字段数（预期符号 +：保持率高 → 开该增强更好）。
 - G-A5（头对照，只报）：`u_ea_concat_hard` Δ_M1 零。
 
