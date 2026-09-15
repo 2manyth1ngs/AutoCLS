@@ -187,8 +187,9 @@ def rank_uea(outdir: Path, *, seeds: Sequence[int], device: str = "cpu", arms: O
             cols, mu, sd = tuple(meta0["ctx_cols"]), np.array(meta0["ctx_mu"]), np.array(meta0["ctx_sd"])
             if cols != tuple(_m33.arm_spec(a).ctx_cols):
                 raise ValueError(f"[{target}/{a}] 存档列表与臂表不符")
-            rows_fn = lambda cm=None, zero=False, cols=cols, mu=mu, sd=sd: slice_ctx_rows(
-                table, cols, test_slices, mu, sd, cross_map=cm, zero_cols=(EA_COLS if zero else ()))
+            zcols = tuple(c for c in cols if c not in PHI_COLS)          # zero = 置零非 φ 的特征列（E_A 或 E_T），φ 不动
+            rows_fn = lambda cm=None, zero=False, cols=cols, mu=mu, sd=sd, zcols=zcols: slice_ctx_rows(
+                table, cols, test_slices, mu, sd, cross_map=cm, zero_cols=(zcols if zero else ()))
             one = {a: mm}
             merge(per["normal"], _g56.rank_local_models(one, cat, budgets=BUDGETS, device=device, ctx_rows=rows_fn()))
             merge(per["zero"], _g56.rank_local_models(one, cat, budgets=BUDGETS, device=device, ctx_rows=rows_fn(zero=True)))
