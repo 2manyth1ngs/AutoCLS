@@ -84,4 +84,6 @@ H-X3：内容依赖——把目标切片的 E_A ⊕ φ 换成其他 UEA 数据�
 
 ## §8 执行台账（跑后填写）
 
-（空）
+- 2026-09-15 协议锁 24c69bb（5 例先红）→ 实现 65 号 → 绿 834f7af；`--train` 9 跑 × 19–22 s ≈ 3.5 min（4060）；`--rank --analyze` CPU ≈ 3 min。
+- 读数 **XFER-DEAD−CONTENT**（C0 逐位；G-X1 ✗ 0.0352 vs 0.0294 p 0.75；G-X2 ✗ 0.0352 vs 0.0374 p 0.093；G-X3 ✗），预测 3/7。
+  u_blind(UCR) regret@1 0.107 vs blind(UEA) 0.066 = 任务盲先验本身不跨语料；u_eaphi vs u_blind regret@1 p 0.002、5/7 靶 regret@3 更好、HMD 崩 0.10。详见 REPORT.md。
