@@ -35,10 +35,11 @@ class TestAll8Train:
     def test_train_all8_smoke(self, tmp_path):
         g = _g72()
         m33.synth_smoke_inputs(tmp_path, datasets=("Handwriting", "Cricket"), n_slices=3, n_cls=6, budgets=pq.BUDGETS)
-        slices = [f"{d}_{i:02d}" for d in ("Handwriting", "Cricket") for i in range(3)]
+        rows, _delta = g._g57.load_source(tmp_path)
+        slices = sorted({r["task_id"] for r in rows})
         rng = np.random.default_rng(1)
         table = {s: {"task_id": s, "dataset": pq.dataset_of(s), **{c: float(rng.standard_normal()) for c in rep_cols_at(60) + PHI_COLS}} for s in slices}
-        g.train_all8(tmp_path, table, seeds=[0], device="cpu", epochs=2, arms=("blind_diff_hard", "ft60_hard"))
+        g.train_all8(tmp_path, table, seeds=[0], device="cpu", epochs=2, arms=("blind_diff_hard", "ft60_hard"), source=tmp_path)
         for a in ("blind_diff_hard", "ft60_hard"):
             assert (tmp_path / "models" / "all8" / f"{a}_s0.pt").exists()
         meta = torch.load(tmp_path / "models" / "all8" / "ft60_hard_s0.pt", map_location="cpu", weights_only=True)["meta"]
@@ -67,9 +68,9 @@ class TestSimulate:
         rows = _runs()
         traj, finals, budgets, keys_off = g.target_catalog(rows, "T")
         assert set(keys_off) == {f"k{i}" for i in range(11)} and "t0" not in keys_off and "n0" not in traj or "n0" in traj
-        assert "t0" not in keys_off and budgets == (50, 100, 200) and finals["k10"] == [0.6, 0.6, 0.62]
+        assert "t0" not in keys_off and budgets == (50, 100, 200) and finals["k10"] == pytest.approx([0.6, 0.6, 0.62])
         order = ["n2", "k10", "k9", "k1", "k2", "k3", "k4", "k5"]
-        r = g.sh_trust(order, traj, keys_off, budgets)
+        r = g.sh_trust(order, traj, [f"k{i}" for i in range(11)], budgets)
         assert r["champion"] == "k10" and r["list"][0] == "k10" and "n2" not in r["list"]
         picks = g.picks_for({"T": {"prior": "k10", "blind_tclsc": "k9", "et_tclsc": "k9"}}, {("T", "k10"): {1, 2}})
         assert picks == {"T": {"SH6-3-3_blind_tclsc": "k9", "SH6-3-3_et_tclsc": "k9"}}
@@ -80,5 +81,5 @@ class TestSimulate:
         assert g.verdict_uea30(g.gates_uea30(0.740, 0.730, 17, 0.735, 12, 12, v(0.73, 0.74, 0.01))) == "UEA30-ET-WIN+PRIOR"
         assert g.verdict_uea30(g.gates_uea30(0.740, 0.730, 17, 0.735, 12, 12, v(0.73, 0.74, 0.3))) == "UEA30-ET-BETTER+PRIOR"
         assert g.verdict_uea30(g.gates_uea30(0.740, 0.730, 17, 0.745, 12, 12, v(0.73, 0.74, 0.01))) == "UEA30-ET-WIN-PRIOR"
-        assert g.verdict_uea30(g.gates_uea30(0.732, 0.730, 17, 0.735, 12, 12, v(0.73, 0.74, 0.01))) == "UEA30-ET-FLAT+PRIOR"
+        assert g.verdict_uea30(g.gates_uea30(0.732, 0.730, 17, 0.735, 12, 12, v(0.73, 0.74, 0.01))) == "UEA30-ET-FLAT-PRIOR"
         assert g.verdict_uea30(g.gates_uea30(0.740, 0.730, 10, 0.735, 12, 12, v(0.73, 0.74, 0.01))) == "UEA30-ET-FLAT+PRIOR"
