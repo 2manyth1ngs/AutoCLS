@@ -43,7 +43,10 @@ TASK_BRANCHES = ("E+ctx", "ctx", "none")
 #   diff：logit = s(l_a, t) − s(l_b, t)，s = MLP([l, t])——反对称由构造保证，任务向量 t 的任何加性项相减抵消，
 #         任务信息只能经与 CLS 嵌入的交互起作用（堵死实验 1 F2 测到的"E′ 当偏置"退化解）；
 #   film：t → (γ, β) 调制 CLS 嵌入 l̃ = (1+γ)⊙l + β（式 15 的位置），再 s(l̃) 打分相减。
-HEADS = ("concat", "diff", "film")
+#   field（WP16 阶段 1 R 检验，results/tclsc_s1ea_rank/PROTOCOL.md §1）：logit = s₀(l_a) − s₀(l_b) + ⟨A·B·t, x_a − x_b⟩——
+#         任务向量只进"字段级加性项"（x = binned 向量，逐字段逐档一个权重，无偏置），数据集维秩 ≤ field_rank；
+#         组合 / 交互效应只留给任务盲主项 s₀。只支持 cls_encoder="mlp"（加性项吃的是原 binned 向量）。
+HEADS = ("concat", "diff", "film", "field")
 
 
 class TCLSC(nn.Module):
@@ -76,6 +79,7 @@ class TCLSC(nn.Module):
         head: str = "concat",
         cls_encoder: str = "mlp",
         graph_opts: Optional[dict] = None,
+        field_rank: Optional[int] = None,
     ):
         super().__init__()
         if task_branch not in TASK_BRANCHES:
@@ -90,6 +94,11 @@ class TCLSC(nn.Module):
             raise ValueError("task_branch='ctx' 需 ctx_dim>0（任务支路否则没有输入）")
         if task_branch == "E+ctx" and set_encoder is None:
             raise ValueError("task_branch='E+ctx' 需要 set_encoder")
+        if head == "field" and cls_encoder != "mlp":
+            raise ValueError("head='field' 的加性项吃 binned 向量，只支持 cls_encoder='mlp'")
+        if field_rank is not None and int(field_rank) <= 0:
+            raise ValueError(f"field_rank 须 >0 或 None，得到 {field_rank}")
+        self.field_rank = None if field_rank is None else int(field_rank)
         self.ctx_dim = int(ctx_dim)
         self.task_branch = task_branch
         self.head = head
@@ -137,10 +146,15 @@ class TCLSC(nn.Module):
                 nn.Linear(embedding_dim + (fz if has_task else 0), fz), nn.ReLU(),
                 nn.Linear(fz, 1),
             )
-        else:   # film
+        elif head == "film":
             if has_task:
                 self.film = nn.Linear(fz, 2 * embedding_dim)
             self.score_mlp = nn.Sequential(nn.Linear(embedding_dim, fz), nn.ReLU(), nn.Linear(fz, 1))
+        else:   # field：任务盲主项 s₀ + 低秩字段加性项 w(t) = A·B·t（新头的模块都在其他头之后构造，不动它们的 RNG 顺序）
+            self.score_mlp = nn.Sequential(nn.Linear(embedding_dim, fz), nn.ReLU(), nn.Linear(fz, 1))
+            if has_task:
+                r = self.field_rank or fz
+                self.field_w = nn.Sequential(nn.Linear(fz, r, bias=False), nn.Linear(r, cls_dim, bias=False))
 
     @property
     def cls_in_dim(self) -> int:
@@ -150,7 +164,7 @@ class TCLSC(nn.Module):
     @property
     def antisymmetric(self) -> bool:
         """diff / film 头按构造满足 P(a,b) + P(b,a) = 1；concat 头只靠数据侧反向出样近似。"""
-        return self.head in ("diff", "film")
+        return self.head in ("diff", "film", "field")
 
     @property
     def uses_E(self) -> bool:
@@ -196,6 +210,10 @@ class TCLSC(nn.Module):
             logits = self.pred_fc(h).squeeze(1)         # Eq.20-21 ← L168
         elif self.head == "diff":
             logits = self._score_diff(l_a, l_b, t)
+        elif self.head == "field":
+            logits = self._score_diff(l_a, l_b, None)
+            if t is not None:
+                logits = logits + ((cls_a - cls_b) * self.field_w(t)).sum(dim=1)
         else:
             if t is not None:
                 gamma, beta = self.film(t).chunk(2, dim=1)

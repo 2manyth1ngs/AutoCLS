@@ -160,7 +160,8 @@ def _load_arm_models(d: Path, target: str, arm: str, seeds: Sequence[int], devic
     return [_g34.load_pq_model(p, map_location=device, expect_fold=target, expect_budgets=BUDGETS) for p in paths]
 
 
-def rank_uea(outdir: Path, *, seeds: Sequence[int], device: str = "cpu") -> dict:
+def rank_uea(outdir: Path, *, seeds: Sequence[int], device: str = "cpu", arms: Optional[Sequence[str]] = None) -> dict:
+    arms = tuple(arms) if arms is not None else UEA_ARMS
     d = outdir / "uea"
     table = {r["task_id"]: r for r in read_jsonl(d / "ea_uea.jsonl")}
     rows, _delta = _g57.load_source(SOURCE)
@@ -171,7 +172,7 @@ def rank_uea(outdir: Path, *, seeds: Sequence[int], device: str = "cpu") -> dict
         train_slices = [s for s in all_slices if pq.dataset_of(s) != target]
         catalog, _g, _k = _g34.load_catalog(SOURCE, _g56.space(), slices=test_slices)
         cat = {s: catalog[s] for s in test_slices}
-        models = {a: m for a in UEA_ARMS if (m := _load_arm_models(d, target, a, seeds, device)) is not None}
+        models = {a: m for a in arms if (m := _load_arm_models(d, target, a, seeds, device)) is not None}
         if not models:
             continue
         per: dict = {"normal": {}, "cross": {}, "zero": {}}

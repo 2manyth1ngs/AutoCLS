@@ -62,7 +62,7 @@ def _xy(seed=1, n=16, d=10):
 # ================================================================ A. 头
 class TestHeads:
     def test_heads_constant_and_invalid_rejected(self):
-        assert TCLSC.HEADS == ("concat", "diff", "film")
+        assert TCLSC.HEADS[:3] == ("concat", "diff", "film") and "field" in TCLSC.HEADS      # R 检验加了 field 头
         with pytest.raises(ValueError):
             _model("bilinear")
 

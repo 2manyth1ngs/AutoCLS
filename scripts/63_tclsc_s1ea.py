@@ -53,6 +53,9 @@ ARMS: dict[str, ArmSpec] = {
         ArmSpec("u_ea_diff_hard", "S1", "ctx", None, None, "ea_budget", head="diff", seeds=(0, 1, 2)),
         ArmSpec("u_ea_concat_hard", "S1", "ctx", None, None, "ea_budget", head="concat", seeds=(0, 1, 2)),
         ArmSpec("u_eaphi_diff_hard", "S1", "ctx", None, None, "eaphi_budget", head="diff", seeds=(0, 1, 2)),
+        # R 检验（results/tclsc_s1ea_rank/PROTOCOL.md §3）：低秩字段加性头
+        ArmSpec("u_fw4_eaphi_hard", "S1", "ctx", None, None, "eaphi_budget", head="field", seeds=(0, 1, 2), head_rank=4),
+        ArmSpec("u_fw_eaphi_hard", "S1", "ctx", None, None, "eaphi_budget", head="field", seeds=(0, 1, 2)),
     )
 }
 CTX_KINDS: dict[str, tuple[str, ...]] = {"ea_budget": EA_COLS, "eaphi_budget": EA_COLS + PHI_COLS}

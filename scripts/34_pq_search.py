@@ -212,7 +212,8 @@ def load_pq_model(path: str | Path, *, map_location: str = "cpu",
                   task_branch=str(meta["task_branch"]),
                   head=str(meta.get("head", "concat")),      # WP16-L3：老存档无 head 键 = concat
                   cls_encoder=("graph" if meta.get("encoder_mode") == "graph" else "mlp"),   # WP16-L2
-                  graph_opts=meta.get("graph_opts"))
+                  graph_opts=meta.get("graph_opts"),
+                  field_rank=meta.get("field_rank"))                                          # WP16 R 检验：field 头的秩
     if expect_fold is not None and str(meta.get("fold")) != str(expect_fold):
         allowed = (f"（非 LOO 折存档 {NON_FOLD_MODELS} 只在显式请求该折时放行）"
                    if str(meta.get("fold")) in NON_FOLD_MODELS else "")

@@ -53,11 +53,12 @@ def _write(path, table):
 class TestTableCtx33:
     def test_ea_arms_table(self):
         a = m33.EA_ARMS
-        assert set(a) == {"ea_diff_hard", "eaphi_diff_hard"}
+        assert {"ea_diff_hard", "eaphi_diff_hard"} <= set(a)                    # R 检验又加了 fw4_ / fw_ 臂（test_tclsc_s1ea_rank）
         assert not (set(a) & (set(m33.ARMS) | set(m33.L3_ARMS) | set(m33.PHI_ARMS) | set(m33.FP_ARMS) | set(m33.E_ARMS)))
         for s in a.values():
-            assert s.split == "S1" and s.seeds == (0, 1, 2) and s.head == "diff" and s.label_mode == "hard"
+            assert s.split == "S1" and s.seeds == (0, 1, 2) and s.head in ("diff", "field") and s.label_mode == "hard"
             assert s.ctx_kind == "table_budget" and s.task_branch == "ctx" and s.encoder is None
+        assert a["ea_diff_hard"].head == "diff" and a["eaphi_diff_hard"].head == "diff"
         assert a["ea_diff_hard"].ctx_cols == EA_COLS and a["eaphi_diff_hard"].ctx_cols == ALL_COLS
         assert m33.arm_spec("eaphi_diff_hard") is a["eaphi_diff_hard"] and "eaphi_diff_hard" in m33.CLI_ARMS
         assert m33.ArmSpec("x", "S1", "ctx", None, None, "budget").ctx_cols is None

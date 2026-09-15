@@ -199,7 +199,7 @@ class TestArms:
         g = _g63()
         assert g.EA_COLS == tuple(_mf().RESPONSE_PROFILE_COLS) and len(g.EA_COLS) == 25
         a = g.ARMS
-        assert set(a) == {"u_ea_diff_hard", "u_ea_concat_hard", "u_eaphi_diff_hard"}
+        assert {"u_ea_diff_hard", "u_ea_concat_hard", "u_eaphi_diff_hard"} <= set(a)   # R 检验又加了 u_fw4_ / u_fw_ 臂
         assert a["u_ea_diff_hard"].ctx_kind == "ea_budget" and a["u_ea_diff_hard"].head == "diff"
         assert a["u_ea_concat_hard"].ctx_kind == "ea_budget" and a["u_ea_concat_hard"].head == "concat"
         assert a["u_eaphi_diff_hard"].ctx_kind == "eaphi_budget" and a["u_eaphi_diff_hard"].head == "diff"

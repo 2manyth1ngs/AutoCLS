@@ -138,6 +138,8 @@ class ArmSpec:
     # WP16 阶段 1 A′：ctx_kind="table_budget" 时从 PQContext(ctx_file=) 的切片表里取这些列（折内标准化）⊕ 预算 one-hot；
     # 其余 ctx_kind 为 None。列名只在脚本层有语义（铁律 7）。
     ctx_cols: Optional[tuple] = None
+    # WP16 阶段 1 R 检验：head="field" 的字段加性项秩（None = 不限，= fz）；其他头忽略
+    head_rank: Optional[int] = None
 
 
 E_SOURCES = ("fold", "per_dataset", "unfit", None)   # interfaces 绑定枚举
@@ -260,6 +262,11 @@ EA_ARMS: dict[str, ArmSpec] = {
         ArmSpec("ea_diff_hard", "S1", "ctx", None, None, "table_budget", head="diff", seeds=(0, 1, 2),
                 ctx_cols=tuple(EA_COLS)),
         ArmSpec("eaphi_diff_hard", "S1", "ctx", None, None, "table_budget", head="diff", seeds=(0, 1, 2),
+                ctx_cols=tuple(EA_COLS) + tuple(PHI_COLS)),
+        # R 检验（results/tclsc_s1ea_rank/PROTOCOL.md §3）：低秩字段加性头，r=4 / 不限秩
+        ArmSpec("fw4_eaphi_hard", "S1", "ctx", None, None, "table_budget", head="field", seeds=(0, 1, 2),
+                ctx_cols=tuple(EA_COLS) + tuple(PHI_COLS), head_rank=4),
+        ArmSpec("fw_eaphi_hard", "S1", "ctx", None, None, "table_budget", head="field", seeds=(0, 1, 2),
                 ctx_cols=tuple(EA_COLS) + tuple(PHI_COLS)),
     )
 }
@@ -480,7 +487,8 @@ def build_model(spec: ArmSpec, *, cls_dim: int, ctx_dim: int, nz: int, dim_input
         enc = None
     return TCLSC(cls_dim=cls_dim, set_encoder=enc, embedding_dim=cfg["embedding_dim"],
                  fz=cfg["fz"], ctx_dim=ctx_dim, task_branch=spec.task_branch,
-                 head=spec.head, cls_encoder=cls_encoder, graph_opts=graph_opts)
+                 head=spec.head, cls_encoder=cls_encoder, graph_opts=graph_opts,
+                 field_rank=spec.head_rank)
 
 
 def load_pq_model(path, *, device: str = "cpu") -> tuple[TCLSC, dict]:
@@ -1486,8 +1494,8 @@ def save_model(path: Path, model: TCLSC, spec: ArmSpec, *, fold: str, seed: int,
         "budgets": [int(b) for b in budgets], "ctx_encoding": ctx_encoding,
         # WP16：打分侧按此键选 CLSEncoder 模式（老存档无此键 = scalar；34/56 号据 cls_dim 互校）
         "encoder_mode": encoder_mode,
-        # WP16-L3：融合头（老存档无此键 = concat）
-        "head": head,
+        # WP16-L3：融合头（老存档无此键 = concat）；R 检验：field 头的秩（其他头 None）
+        "head": head, "field_rank": (spec.head_rank if head == "field" else None),
         # WP16 阶段 1：ctx 语义标签 + φ 折内标准化统计（排名侧按此重建 ctx，逐位一致）
         "ctx_kind": ctx_kind, **(phi_stats or {}),
         # WP16-L2：graph 编码的打包拓扑 / 读出 / 标量 / 层数（排名侧按此重建打包器与模型）
