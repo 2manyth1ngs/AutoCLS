@@ -34,7 +34,7 @@ class TestTrajAndSH:
         traj, finals, budgets = g.catalog_traj(_runs(), "T")
         assert budgets == (50, 100, 200) and set(traj) == set("abcdef") and traj["f"][200] == pytest.approx(0.65)
         assert finals["f"] == [0.65, 0.64]                                  # seed 0 在前 + s2_finals 种子
-        assert "a" not in finals or finals["a"] == [0.30]
+        assert finals["a"] == [0.40]                                          # 只有 seed 0
 
     def test_sh_on_list(self):
         g = _g71()
