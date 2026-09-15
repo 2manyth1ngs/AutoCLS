@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# WP16 U 检验上云（4090）：pod 侧一次性准备——依赖按 pin、解包代码（--no-same-owner + LF）、解包 picks / candidates、
-# 磁盘闸、picks 涉及靶的 UEA .ts 就位（已在卷上且 md5 一致则跳过，否则 uea30_fetch.py 从 Zenodo 直下）、CUDA 闸、导入自检。
+# WP16 U 检验上云（4090）：pod 侧一次性准备——依赖按 pin、解包代码（--no-same-owner + LF）、解包输入（all8 模型 / uea30 目录 / mx3_pq）、
+# 磁盘闸、23 靶 UEA .ts 就位（已在卷上且 md5 一致则跳过，否则 uea30_fetch.py 从 Zenodo 直下）、CUDA 闸、导入自检。
 #   bash /workspace/wp/CLS/scripts/pa_pod/u23_setup.sh /workspace/upload_u23
 # 退出码：3 = UEA 缓存缺 / md5 不对；4 = /workspace 空闲 < 4 GB；5 = CUDA 不可用；其它 = set -e 处的命令失败。
 set -euo pipefail
@@ -24,7 +24,8 @@ fi
 tar --no-same-owner -xf "$UP/code_head.tar" -C "$REPO" autocls scripts configs tests
 find autocls scripts configs tests -type f \( -name '*.py' -o -name '*.yaml' -o -name '*.sh' \) -print0 | xargs -0 sed -i 's/\r$//'
 tar --no-same-owner -xzf "$UP/u23_inputs.tar.gz" -C "$REPO"
-sed -i 's/\r$//' results/tclsc_s1et_uea30/picks.json results/tclsc_s1et_uea30/candidates.json
+find results/uea30 results/tclsc_s1et_uea30 results/mx3_pq -maxdepth 1 -type f \( -name '*.json' -o -name '*.jsonl' -o -name '*.md' \) -print0 | xargs -0 sed -i 's/\r$//'
+echo "== all8 models: $(ls results/tclsc_s1et_uea30/models/all8 | wc -l)"
 echo "== HEAD $(cat "$UP/HEAD.txt")"
 
 df -h /workspace | tail -1
@@ -32,12 +33,12 @@ AVAIL_GB=$(df -BG --output=avail /workspace | tail -1 | tr -dc '0-9')
 [ "${AVAIL_GB:-0}" -ge 4 ] || { echo "FREE ${AVAIL_GB:-?} GB < 4 GB on /workspace"; exit 4; }
 
 TARGETS=$(python - <<'PY'
-import json
-p = json.load(open("results/tclsc_s1et_uea30/picks.json", encoding="utf-8"))
-print(" ".join(sorted(d for d, v in p.items() if v)))
+import yaml
+cfg = yaml.safe_load(open("configs/uea30.yaml", encoding="utf-8"))
+print(" ".join(d for _, d in sorted((int(c["order"]), d) for d, c in cfg["datasets"].items() if c.get("run"))))
 PY
 )
-echo "== finals targets ($(echo $TARGETS | wc -w)): $TARGETS"
+echo "== targets ($(echo $TARGETS | wc -w)): $TARGETS"
 mkdir -p data/uea_cache
 FETCH_FAIL=""
 for d in $TARGETS; do
@@ -60,5 +61,5 @@ import torch, sys
 assert torch.cuda.is_available(), "CUDA 不可用（NVML 掉线？）"
 x = torch.randn(64, 64, device="cuda") @ torch.randn(64, 64, device="cuda"); torch.cuda.synchronize(); print("CUDA gate OK")
 PY
-OMP_NUM_THREADS=1 python -c "import importlib; importlib.import_module('scripts.45_uea30_deploy'); print('import 45 OK')"
+OMP_NUM_THREADS=1 python -c "import importlib; importlib.import_module('scripts.45_uea30_deploy'); importlib.import_module('scripts.72_tclsc_s1et_uea30'); print('import 45 / 72 OK')"
 echo "== setup done"

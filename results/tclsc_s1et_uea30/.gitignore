@@ -1,3 +1,4 @@
 models/
 run_*.log
 candidates.json
+et_uea30_local_abandoned.jsonl

@@ -54,7 +54,8 @@ H-U2：E_T 名单不低于先验名单（SH6-3-3）均值，hit@6（前 6 含目
 
 1. 本文件 + `tests/test_tclsc_s1et_uea30.py`（先红）→ commit。
 2. `scripts/72_tclsc_s1et_uea30.py`（--train-all8 / --features / --simulate / --analyze；finals 走 45 号）→ 绿 → commit。
-3. 本地：--train-all8 → --features（4060，≈ 1 h）→ --simulate（写 picks.json）；上云：finals（4090）→ 拉回 → --analyze → REPORT → stop + confirm ×3 → memory。
+3. 本地：--train-all8（6 跑）；上云（4090）：--features → --simulate（写 picks.json）→ 45 --finals → 打包拉回；本地 --analyze → REPORT → stop + confirm ×3 → memory。
+   （执行中：曾在本地 4060 跑 --features，EigenWorms 3000 步把显存溢到系统内存、整机换页，19/23 后中止并作废，全部改在 pod 上从零重算——协议口径不变。）
 
 ## §6 铁律对照
 
