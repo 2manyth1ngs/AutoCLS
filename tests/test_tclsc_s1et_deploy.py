@@ -67,3 +67,18 @@ class TestGates:
         assert g.verdict_deploy(g.gates_deploy(0.735, 0.719, 5, 4)) == "DEPLOY-ET-BETTER"
         assert g.verdict_deploy(g.gates_deploy(0.722, 0.719, 5, 6)) == "DEPLOY-ET-FLAT"        # 均值差 < 0.005
         assert g.verdict_deploy(g.gates_deploy(0.735, 0.719, 3, 6)) == "DEPLOY-ET-FLAT"        # 不低于先验的靶数 < 4
+
+
+class TestTrustRegion:
+    def test_restrict_and_clip(self):
+        g = _g71()
+        order = ["n1", "s1", "n2", "g", "s2"]
+        assert g.restrict_list(order, {"s1", "s2", "g"}) == ["s1", "g", "s2"]
+        cols = rep_cols_at(60) + PHI_COLS
+        mu, sd = np.zeros(len(cols)), np.full(len(cols), 0.1)
+        et = {c: 5.0 for c in REP_PROFILE_COLS}
+        phi = {c: -5.0 for c in PHI_COLS}
+        rows = g.official_ctx_rows("T", et, phi, cols, mu, sd, clip=4.0)
+        v = rows[("T_official", 290)]
+        assert v[:22].max() == 4.0 and v[22:34].min() == -4.0 and v[-3:].tolist() == pq.ctx_vector(290, pq.BUDGETS).tolist()
+        assert g.CLIP == 4.0
