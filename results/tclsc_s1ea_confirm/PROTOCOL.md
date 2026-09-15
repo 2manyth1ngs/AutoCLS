@@ -84,4 +84,7 @@ H-C2：该价值依赖 E_A 的内容——把目标切片的 E_A 换成他数据
 
 ## §8 执行台账（跑后填写）
 
-（空）
+- 2026-09-15 协议锁 364c4ef（11 例先红）→ 实现 33 table_budget / EA_ARMS + 64 号 → 绿 a6b299d；`--features` 45 切片 < 1 min（集内余弦 0.83 / 跨集 −0.12）。
+- `--train --train-ucr` 脱离启动：UEA 42 跑 ≈ 12 s + UCR 63 跑 ≈ 19 s ≈ 30 min（本地 4060）；`--rank --analyze` CPU ≈ 8 min。
+- 读数 **EA-NOT-CONFIRMED+UCR-REP**（C0 逐位；G-C1 ✗ 0.0354 vs φ 0.0311 p 0.98；G-C2 ✗ cross 0.0351 p 0.43；G-C3 ✓ 0.0188 vs 0.0223 p 0.001），预测 3/7。
+  UEA 上 eaphi M0 0.793（cross Δ −0.040 p 5e-14）= 内容只用于粗排序；UCR 新种子 cross regret@3 → 0.0221 p 1e-4、M1 Δ +0.061 p 0.002。详见 REPORT.md。
