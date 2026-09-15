@@ -60,6 +60,7 @@ def cmd_train(outdir: Path, *, seeds: Sequence[int], device: str, epochs: Option
         _m33.cmd_train(d, arms=list(UEA_ARMS), folds=None, seeds=list(seeds), resume=resume, device=device, epochs=epochs,
                        settf_windows=None, encoder_mode="binned", ctx_file=d / "ea_uea.jsonl")
     if "ucr" in which:
+        (outdir / "ucr").mkdir(parents=True, exist_ok=True)          # 63 号 cmd_train 假定目录已存在（其 main 里才 mkdir）
         _g63.cmd_train(outdir / "ucr", arms=list(UCR_ARMS), seeds=list(seeds), folds_sel=None, device=device, epochs=epochs, resume=resume)
 
 
