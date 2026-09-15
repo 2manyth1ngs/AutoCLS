@@ -135,6 +135,9 @@ class ArmSpec:
     feature_fold: Optional[str] = None
     # True / False（A1 每数据集自 fit，非合规）/ "s2_oracle"（S2 上界，本就不是 zero-shot）
     iron_law_6_compliant: bool | str = True
+    # WP16 阶段 1 A′：ctx_kind="table_budget" 时从 PQContext(ctx_file=) 的切片表里取这些列（折内标准化）⊕ 预算 one-hot；
+    # 其余 ctx_kind 为 None。列名只在脚本层有语义（铁律 7）。
+    ctx_cols: Optional[tuple] = None
 
 
 E_SOURCES = ("fold", "per_dataset", "unfit", None)   # interfaces 绑定枚举
@@ -248,12 +251,25 @@ E_ARMS: dict[str, ArmSpec] = {
     )
 }
 assert not (set(E_ARMS) & (set(ARMS) | set(L3_ARMS) | set(PHI_ARMS) | set(FP_ARMS))), "真 E 臂名不得与既有臂表冲突"
-CLI_ARMS = ALL_ARMS + tuple(L3_ARMS) + tuple(PHI_ARMS) + tuple(FP_ARMS) + tuple(E_ARMS)
+# ---- WP16 阶段 1 A′ 响应画像臂（results/tclsc_s1ea_confirm/PROTOCOL.md §3）：ctx = 折内标准化的切片表列 ⊕ 预算 one-hot。
+# 表由 --ctx-file 给（每切片一行，含 E_A 25 列与 φ12 列）；本脚本只按 ctx_cols 取列装配成浮点向量（铁律 7），
+# nan 感知标准化只用该折训练切片（铁律 6）。
+from autocls.data.mech_features import RESPONSE_PROFILE_COLS as EA_COLS  # noqa: E402
+EA_ARMS: dict[str, ArmSpec] = {
+    s.name: s for s in (
+        ArmSpec("ea_diff_hard", "S1", "ctx", None, None, "table_budget", head="diff", seeds=(0, 1, 2),
+                ctx_cols=tuple(EA_COLS)),
+        ArmSpec("eaphi_diff_hard", "S1", "ctx", None, None, "table_budget", head="diff", seeds=(0, 1, 2),
+                ctx_cols=tuple(EA_COLS) + tuple(PHI_COLS)),
+    )
+}
+assert not (set(EA_ARMS) & (set(ARMS) | set(L3_ARMS) | set(PHI_ARMS) | set(FP_ARMS) | set(E_ARMS))), "响应画像臂名不得与既有臂表冲突"
+CLI_ARMS = ALL_ARMS + tuple(L3_ARMS) + tuple(PHI_ARMS) + tuple(FP_ARMS) + tuple(E_ARMS) + tuple(EA_ARMS)
 
 
 def arm_spec(name: str) -> ArmSpec:
-    """臂名 → ArmSpec（先查 MX-3-PQ 冻结表，再查 WP16 的 L3 / φ / 指纹 / 真 E 表；都没有即 KeyError）。"""
-    for table in (ARMS, L3_ARMS, PHI_ARMS, FP_ARMS, E_ARMS):
+    """臂名 → ArmSpec（先查 MX-3-PQ 冻结表，再查 WP16 的 L3 / φ / 指纹 / 真 E / 响应画像表；都没有即 KeyError）。"""
+    for table in (ARMS, L3_ARMS, PHI_ARMS, FP_ARMS, E_ARMS, EA_ARMS):
         if name in table:
             return table[name]
     raise KeyError(f"未知臂 {name!r}（可选 {CLI_ARMS}）")
@@ -314,6 +330,27 @@ def phi_standardizer(phi: Mapping[str, Mapping], slices: Sequence[str],
     return X.mean(axis=0), np.maximum(X.std(axis=0), PHI_SD_FLOOR)
 
 
+def table_standardizer(table: Mapping[str, Mapping], slices: Sequence[str],
+                       cols: Sequence[str]) -> tuple[np.ndarray, np.ndarray]:
+    """切片表逐列 nan 感知 (μ, σ)，只用给定切片（训练折，铁律 6）；None / nan 不进统计；σ 下限 PHI_SD_FLOOR。"""
+    def val(row, c):
+        v = row.get(c)
+        return float("nan") if v is None else float(v)
+    X = np.array([[val(table[s], c) for c in cols] for s in slices], dtype=np.float64)
+    with np.errstate(invalid="ignore"):
+        mu, sd = np.nanmean(X, axis=0), np.nanstd(X, axis=0)
+    mu = np.where(np.isfinite(mu), mu, 0.0)
+    sd = np.where(np.isfinite(sd), sd, 0.0)
+    return mu, np.maximum(sd, PHI_SD_FLOOR)
+
+
+def table_row_vector(row: Mapping, cols: Sequence[str], mu: np.ndarray, sd: np.ndarray) -> tuple[np.ndarray, int]:
+    """一行 → 标准化向量（nan → 训练均值 → 0），并返回 nan 数。"""
+    x = np.array([float("nan") if row.get(c) is None else float(row[c]) for c in cols], dtype=np.float64)
+    nan = ~np.isfinite(x)
+    return (np.where(nan, mu, x) - mu) / sd, int(nan.sum())
+
+
 def feature_fold_of(spec: ArmSpec, fold: str) -> Optional[str]:
     """该 (臂, 折) 实际用的**特征折目录名**（Task 7 据此定位 npz）。
 
@@ -342,6 +379,10 @@ def ctx_dim_for(spec: ArmSpec, budgets: Sequence[int], datasets: Sequence[str]) 
         return len(PHI_COLS) + len(tuple(budgets))
     if spec.ctx_kind == "fp_budget":
         return FP_DIM + len(tuple(budgets))
+    if spec.ctx_kind == "table_budget":
+        if not spec.ctx_cols:
+            raise ValueError(f"[{spec.name}] ctx_kind='table_budget' 需要 ArmSpec.ctx_cols")
+        return len(tuple(spec.ctx_cols)) + len(tuple(budgets))
     return 0
 
 
@@ -349,7 +390,9 @@ def context_for(spec: ArmSpec, tids: Sequence[str], budgets: Sequence[int],
                 datasets: Sequence[str], *, phi: Optional[Mapping[str, Mapping]] = None,
                 phi_mu: Optional[np.ndarray] = None, phi_sd: Optional[np.ndarray] = None,
                 fp: Optional[Mapping[str, np.ndarray]] = None,
-                fp_mu: Optional[np.ndarray] = None, fp_sd: Optional[np.ndarray] = None
+                fp_mu: Optional[np.ndarray] = None, fp_sd: Optional[np.ndarray] = None,
+                table: Optional[Mapping[str, Mapping]] = None,
+                table_mu: Optional[np.ndarray] = None, table_sd: Optional[np.ndarray] = None
                 ) -> Optional[dict[str, np.ndarray]]:
     """{engine_tid: ctx}——A8 的数据集 one-hot / 阶段 1 的 φ **只在本脚本构造**（铁律 7：
     autocls/** 不得出现数据集概念，引擎眼里 ctx 只是一段浮点向量）。"""
@@ -369,6 +412,18 @@ def context_for(spec: ArmSpec, tids: Sequence[str], budgets: Sequence[int],
             x = (np.asarray(fp[slc], np.float64) - fp_mu) / fp_sd
             out_fp[t] = np.concatenate([x, pq.ctx_vector(int(b), bs)]).astype(np.float32)
         return out_fp
+    if spec.ctx_kind == "table_budget":
+        if table is None or table_mu is None or table_sd is None:
+            raise ValueError("ctx_kind='table_budget' 需要切片表 table 与折内标准化 (table_mu, table_sd)")
+        cols = tuple(spec.ctx_cols or ())
+        out_t: dict[str, np.ndarray] = {}
+        for t in tids:
+            slc, b = pq.split_engine_task_id(t)
+            if slc not in table:
+                raise KeyError(f"切片表缺切片 {slc}")
+            x, _n = table_row_vector(table[slc], cols, np.asarray(table_mu, np.float64), np.asarray(table_sd, np.float64))
+            out_t[t] = np.concatenate([x, pq.ctx_vector(int(b), bs)]).astype(np.float32)
+        return out_t
     if spec.ctx_kind == "phi_budget":
         if phi is None or phi_mu is None or phi_sd is None:
             raise ValueError("ctx_kind='phi_budget' 需要 phi 表与折内标准化 (phi_mu, phi_sd)")
@@ -956,10 +1011,17 @@ class PQContext:
                  budgets: Optional[Sequence[int]] = None,
                  smoke: bool = False, allow_partial_cache: bool = False,
                  encoder_mode: str = "scalar", phi_file: Optional[Path] = None,
-                 graph_opts: Optional[dict] = None):
+                 graph_opts: Optional[dict] = None, ctx_file: Optional[Path] = None):
         self.outdir = Path(outdir)
         self.device = device
         self.smoke = bool(smoke)
+        # WP16 阶段 1 A′：切片表（只在 ctx_kind='table_budget' 的臂上用；缺席时这些臂 fail-fast）
+        self.ctx_file = Path(ctx_file) if ctx_file is not None else None
+        self.ctx_table: Optional[dict[str, dict]] = None
+        if self.ctx_file is not None:
+            if not self.ctx_file.exists():
+                raise FileNotFoundError(f"切片表不存在：{self.ctx_file}")
+            self.ctx_table = {r["task_id"]: r for r in read_jsonl(self.ctx_file)}
         # 阶段 1 φ 臂的特征表（只在 ctx_kind='phi_budget' 的臂上用；缺席时这些臂 fail-fast）
         self.phi_file = Path(phi_file) if phi_file is not None else None
         self.phi: Optional[dict[str, dict]] = None
@@ -1232,8 +1294,21 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
     tids = sorted(wk)
     phi_mu = phi_sd = None
     fp_tbl = fp_mu = fp_sd = None
+    tab_mu = tab_sd = None
+    tab_nan: dict[str, int] = {}
     probes: Optional[list[str]] = None
-    if spec.ctx_kind == "phi_budget":
+    if spec.ctx_kind == "table_budget":
+        if ctx.ctx_table is None:
+            raise ValueError(f"[{spec.name}] ctx_kind='table_budget' 需要 --ctx-file（PQContext(ctx_file=)）")
+        cols_t = tuple(spec.ctx_cols or ())
+        tab_mu, tab_sd = table_standardizer(ctx.ctx_table, train_slices, cols_t)     # 只用该折训练切片（铁律 6）
+        for slc in sorted(set(train_slices) | set(test_slices)):
+            if slc not in ctx.ctx_table:
+                raise KeyError(f"[{spec.name}] 切片表缺切片 {slc}")
+            _v, n_nan = table_row_vector(ctx.ctx_table[slc], cols_t, tab_mu, tab_sd)
+            if n_nan:
+                tab_nan[slc] = n_nan
+    elif spec.ctx_kind == "phi_budget":
         if ctx.phi is None:
             raise ValueError(f"[{spec.name}] ctx_kind='phi_budget' 需要 --phi-file（PQContext(phi_file=)）")
         phi_mu, phi_sd = phi_standardizer(ctx.phi, train_slices, PHI_COLS)   # 只用该折训练切片（铁律 6）
@@ -1242,7 +1317,8 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
         fp_tbl = fp_raw(ctx.cache, sorted(set(train_slices) | set(test_slices)), probes, budget=FP_BUDGET)
         fp_mu, fp_sd = fp_standardizer(fp_tbl, train_slices)
     ctx_map = context_for(spec, tids, ctx.budgets, pq.PQ_DATASETS, phi=ctx.phi, phi_mu=phi_mu, phi_sd=phi_sd,
-                          fp=fp_tbl, fp_mu=fp_mu, fp_sd=fp_sd)
+                          fp=fp_tbl, fp_mu=fp_mu, fp_sd=fp_sd,
+                          table=ctx.ctx_table, table_mu=tab_mu, table_sd=tab_sd)
     cdim = ctx_dim_for(spec, ctx.budgets, pq.PQ_DATASETS)
 
     windows = ctx.windows(spec, fold, sorted({pq.slice_of(t) for t in tids}))
@@ -1306,9 +1382,12 @@ def run_arm(ctx: PQContext, spec: ArmSpec, fold: str, seed: int, *,
                                "phi_sd": [float(v) for v in phi_sd]} if phi_mu is not None else
                               {"fp_probes": list(probes), "fp_budget": FP_BUDGET,
                                "fp_mu": [float(v) for v in fp_mu], "fp_sd": [float(v) for v in fp_sd]}
-                              if fp_mu is not None else None))
+                              if fp_mu is not None else
+                              {"ctx_cols": list(spec.ctx_cols or ()), "ctx_mu": [float(v) for v in tab_mu],
+                               "ctx_sd": [float(v) for v in tab_sd], "n_nan": tab_nan}
+                              if tab_mu is not None else None))
 
-    cross_channel = "ctx" if spec.ctx_kind in ("dataset_budget", "phi_budget", "fp_budget") else None
+    cross_channel = "ctx" if spec.ctx_kind in ("dataset_budget", "phi_budget", "fp_budget", "table_budget") else None
     train_tids = [pq.engine_task_id(s, b) for s in train_slices for b in ctx.budgets
                   if pq.engine_task_id(s, b) in wk]
     blocks, correct = ablation_block(engine, directed, len(fwd), tids_of(test_records),
@@ -1447,10 +1526,10 @@ def cmd_train(outdir: Path, *, arms: Sequence[str], folds: Optional[Sequence[str
               epochs: Optional[int], settf_windows: Optional[int],
               smoke: bool = False, allow_partial_cache: bool = False,
               encoder_mode: str = "scalar", phi_file: Optional[Path] = None,
-              graph_opts: Optional[dict] = None) -> None:
+              graph_opts: Optional[dict] = None, ctx_file: Optional[Path] = None) -> None:
     ctx = PQContext(outdir, device=device, epochs=epochs, settf_windows=settf_windows,
                     smoke=smoke, allow_partial_cache=allow_partial_cache,
-                    encoder_mode=encoder_mode, phi_file=phi_file, graph_opts=graph_opts)
+                    encoder_mode=encoder_mode, phi_file=phi_file, graph_opts=graph_opts, ctx_file=ctx_file)
     print(f"缓存 {len(ctx.cache)} 行 | 预算 {ctx.budgets} | 数据集 "
           f"{sorted(ctx.slices_by_ds)} | δ 源 {ctx.delta_source} | device={device} "
           f"| CLS 编码 {ctx.encoder_mode}（{ctx.encoder.dim} 维）",
@@ -1957,6 +2036,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--phi-file", type=Path, default=None,
                     help="阶段 1 φ 臂的切片特征表（默认 results/mx4_task_feature/task_features.jsonl；"
                          "只有 ctx_kind='phi_budget' 的臂读它）")
+    ap.add_argument("--ctx-file", type=Path, default=None,
+                    help="阶段 1 A′ 响应画像臂的切片表（每切片一行，含 E_A 与 φ 列；只有 ctx_kind='table_budget' 的臂读它）")
     ap.add_argument("--encoder-mode", default="scalar", choices=list(ENCODER_MODES),
                     help="CLS 向量编码：scalar（32 维，默认逐位不变）/ binned（按档 one-hot 116 维；"
                          "WP16-TCLSC-L1）/ graph（流水线图 + GIN 打包 438 维；WP16-L2）。产物路径不带模式，不同模式请用不同 --outdir")
@@ -1997,7 +2078,8 @@ def main() -> None:
                   phi_file=(args.phi_file or (PHI_FILE if any(
                       arm_spec(a).ctx_kind == "phi_budget" for a in (args.arms or [])) else None)),
                   graph_opts={"topology": args.graph_topology, "readout": args.graph_readout,
-                              "scalar": bool(args.graph_scalar), "gin_layers": int(args.graph_layers)})
+                              "scalar": bool(args.graph_scalar), "gin_layers": int(args.graph_layers)},
+                  ctx_file=args.ctx_file)
     if args.analyze:
         cmd_analyze(args.outdir)
 

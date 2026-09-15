@@ -1,0 +1,7 @@
+uea/models/
+uea/rprime_cache.jsonl
+uea/delta_calibration.json
+uea/cls_catalog.json
+uea/tasks.json
+ucr_s345/models/
+train_*.log
