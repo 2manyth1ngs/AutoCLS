@@ -45,6 +45,14 @@ SH_ARMS = {"SH6-3-3": (6, 3, 3), "SH10-4-3": (10, 4, 3)}
 DEPLOY_BUDGET = 290
 SEEDS = (0, 1, 2)
 LISTS = ("prior", "blind_tclsc", "et_tclsc")
+CLIP = 4.0                       # D′：ctx 裁剪（A″ 护栏）
+WP3_FINALS_DIR = ROOT / "results" / "mx4_mask"      # WP3 + WP6 的 s2_finals（3 种子）也在这里
+
+
+def restrict_list(order: Sequence[str], allowed) -> list[str]:
+    """D′ 信任域：只保留 allowed（shared-10 + GGS）里的键，顺序不变。"""
+    allowed = set(allowed)
+    return [k for k in order if k in allowed]
 
 
 # ---------------------------------------------------------------- 官方目录轨迹
@@ -90,10 +98,12 @@ def cmd_features(*, device: str, resume: bool) -> None:
 
 
 def official_ctx_rows(target: str, et: Mapping[str, float], phi: Mapping[str, float], cols: Sequence[str], mu: np.ndarray, sd: np.ndarray,
-                      *, budgets: Sequence[int] = pq.BUDGETS) -> dict[tuple[str, int], np.ndarray]:
-    """{(靶_official, 预算): 标准化 (E_T ⊕ φ) ⊕ 预算 one-hot}——列名按 cols（`rep_<op>@60` 取 et 的 `rep_<op>`）。"""
+                      *, budgets: Sequence[int] = pq.BUDGETS, clip: Optional[float] = None) -> dict[tuple[str, int], np.ndarray]:
+    """{(靶_official, 预算): 标准化 (E_T ⊕ φ) ⊕ 预算 one-hot}——列名按 cols（`rep_<op>@60` 取 et 的 `rep_<op>`）；clip 给定时裁到 ±clip（D′）。"""
     table = {**{f"{c}@60": v for c, v in et.items()}, **{f"{c}@290": v for c, v in et.items()}, **phi}
     x, _n = _m33.table_row_vector(table, cols, np.asarray(mu, np.float64), np.asarray(sd, np.float64))
+    if clip is not None:
+        x = np.clip(x, -float(clip), float(clip))
     return {(f"{target}_official", int(b)): np.concatenate([x, pq.ctx_vector(int(b), budgets)]).astype(np.float32) for b in budgets}
 
 
@@ -105,7 +115,7 @@ def _load(models_dir: Path, target: str, arm: str, device: str = "cpu"):
     return [_g34.load_pq_model(p, map_location=device, expect_fold=target, expect_budgets=pq.BUDGETS) for p in paths]
 
 
-def rank_official(target: str, cands: Mapping, et_row: Mapping, phi_row: Mapping, *, device: str = "cpu") -> dict:
+def rank_official(target: str, cands: Mapping, et_row: Mapping, phi_row: Mapping, *, device: str = "cpu", clip: Optional[float] = None) -> dict:
     """三份名单：prior（candidates.prior_order）/ blind_tclsc / et_tclsc（预算档 DEPLOY_BUDGET，三种子多数票）。"""
     keys_cls = {c["cls_key"]: CLS(**c["cls"]) for c in cands["shared"]} | {c["cls_key"]: CLS(**c["cls"]) for c in cands["nominated"]}
     keys_cls[cands["ggs"]["cls_key"]] = CLS(**cands["ggs"]["cls"])
@@ -120,7 +130,7 @@ def rank_official(target: str, cands: Mapping, et_row: Mapping, phi_row: Mapping
     cols, mu, sd = tuple(meta0["ctx_cols"]), np.array(meta0["ctx_mu"]), np.array(meta0["ctx_sd"])
     et = {c: float(et_row[f"{c}@60"]) for c in REP_PROFILE_COLS}
     phi = {c: float(phi_row[c]) for c in PHI_COLS}
-    rows_ctx = official_ctx_rows(target, et, phi, cols, mu, sd)
+    rows_ctx = official_ctx_rows(target, et, phi, cols, mu, sd, clip=clip)
     z = rows_ctx[(slice_id, DEPLOY_BUDGET)][: len(cols)]
     rk = _g56.rank_local_models({"ft60_hard": ft}, cat, budgets=pq.BUDGETS, device=device, ctx_rows=rows_ctx)
     out["et_tclsc"] = rk[str(DEPLOY_BUDGET)][slice_id]["ft60_hard"]
@@ -186,6 +196,82 @@ def cmd_simulate(*, device: str = "cpu") -> dict:
     return a
 
 
+
+def cmd_simulate_trust(*, device: str = "cpu") -> dict:
+    """D′：信任域（prior_order 11 条）+ ctx 裁 ±CLIP + SH6-3-3；冠军缺 3 种子的写 finals/picks.json 供 39 --finals。"""
+    rows = list(read_jsonl(DEPLOY / "runs.jsonl"))
+    rows_fin = rows + [r for r in read_jsonl(WP3_FINALS_DIR / "runs.jsonl") if r.get("stage") == "s2_finals"]
+    fin_dir = OUT / "finals"
+    if (fin_dir / "runs.jsonl").exists():
+        rows_fin += [r for r in read_jsonl(fin_dir / "runs.jsonl") if r.get("stage") == "s2_finals"]
+    cands_all = json.loads((DEPLOY / "candidates.json").read_text(encoding="utf-8"))
+    et_rows = {r["dataset"]: r for r in read_jsonl(OUT / "et_official.jsonl")}
+    phi_all = json.loads(PHI_OFFICIAL.read_text(encoding="utf-8"))
+    per, picks = {}, {}
+    for d in TARGETS:
+        traj, _f, budgets = catalog_traj(rows, d)
+        _t, finals, _b = catalog_traj(rows_fin, d)
+        allowed = set(cands_all[d]["prior_order"])
+        lists = rank_official(d, cands_all[d], et_rows[d], phi_all[d], device=device, clip=CLIP)
+        lists_raw = rank_official(d, cands_all[d], et_rows[d], phi_all[d], device=device, clip=None)
+        oracle_key = max(traj, key=lambda k: traj[k][budgets[-1]])
+        res = {"lists": {}, "oracle": {"key": oracle_key, "acc": float(traj[oracle_key][budgets[-1]])},
+               "clip_changed_top6": restrict_list(lists["et_tclsc"], allowed)[:6] != restrict_list(lists_raw["et_tclsc"], allowed)[:6]}
+        for name in LISTS:
+            ranked = restrict_list(lists[name], allowed)
+            r = sh_on_list(ranked, traj, ks=SH_ARMS["SH6-3-3"], budgets=budgets)
+            fs = finals.get(r["champion"], [])
+            r["finals"] = fs
+            r["finals_mean"] = float(np.mean(fs)) if len(fs) >= 3 else None
+            r["match_seed0"] = bool(r["acc"] >= TS2VEC_PAPER[d] - MATCH_MARGIN)
+            r["match_3seed"] = (bool(r["finals_mean"] >= TS2VEC_PAPER[d] - MATCH_MARGIN) if r["finals_mean"] is not None else None)
+            r["oracle_rank"] = (ranked.index(oracle_key) + 1) if oracle_key in ranked else None
+            res["lists"][name] = r
+            if name == "et_tclsc" and len(fs) < 3:
+                picks.setdefault(d, {})["SH6-3-3_et_tr"] = r["champion"]
+        per[d] = res
+    summary = {n: {"mean_seed0": float(np.mean([per[d]["lists"][n]["acc"] for d in TARGETS])),
+                   "n_match_seed0": int(sum(per[d]["lists"][n]["match_seed0"] for d in TARGETS)),
+                   "mean_3seed": (float(np.mean([per[d]["lists"][n]["finals_mean"] for d in TARGETS])) if all(per[d]["lists"][n]["finals_mean"] is not None for d in TARGETS) else None),
+                   "n_match_3seed": (int(sum(per[d]["lists"][n]["match_3seed"] for d in TARGETS)) if all(per[d]["lists"][n]["match_3seed"] is not None for d in TARGETS) else None)}
+               for n in LISTS}
+    et, pr = summary["et_tclsc"], summary["prior"]
+    g1 = bool(et["mean_seed0"] >= pr["mean_seed0"] + 0.01)
+    hw3 = per["Handwriting"]["lists"]["et_tclsc"]["finals_mean"]
+    g2 = None if (et["n_match_3seed"] is None or hw3 is None) else bool(et["n_match_3seed"] >= 5 and hw3 >= 0.485)
+    verdict = "DEPLOY-ET-TR-WIN" if (g1 and g2) else ("DEPLOY-ET-TR-BETTER" if g1 else "DEPLOY-ET-TR-FLAT")
+    if g1 and g2 is None:
+        verdict += "?finals"
+    a = {"protocol": "results/tclsc_s1et_deploy/PROTOCOL.md §8", "clip": CLIP, "targets": per, "summary": summary,
+         "gates": {"GD1p": {"et": et["mean_seed0"], "prior": pr["mean_seed0"], "pass": g1}, "GD2p": {"n_match_3seed": et["n_match_3seed"], "hw_3seed": hw3, "pass": g2}},
+         "verdict": verdict, "picks_pending": picks}
+    a["predictions"] = {"P6": {"desc": "G-D′1", "hit": g1}, "P7": {"desc": "G-D′2", "hit": g2},
+                        "P8": {"desc": "裁剪不改任何靶的前 6", "hit": not any(per[d]["clip_changed_top6"] for d in TARGETS)},
+                        "P9": {"desc": "HW 冠军 3 种子 ≥ 0.50", "value": hw3, "hit": None if hw3 is None else bool(hw3 >= 0.50)}}
+    (OUT / "analysis_trust.json").write_text(json.dumps(a, ensure_ascii=False, indent=1), encoding="utf-8")
+    if picks:
+        fin_dir.mkdir(parents=True, exist_ok=True)
+        (fin_dir / "picks.json").write_text(json.dumps(picks, ensure_ascii=False, indent=1), encoding="utf-8")
+        if not (fin_dir / "candidates.json").exists():
+            (fin_dir / "candidates.json").write_text((DEPLOY / "candidates.json").read_text(encoding="utf-8"), encoding="utf-8")
+    names = {"prior": "先验名单", "blind_tclsc": "任务盲 T-CLSC 限域", "et_tclsc": "E_T T-CLSC 限域"}
+    L = [f"# D′：限信任域（shared-10 + GGS）+ ctx 裁 ±{CLIP:g} + SH6-3-3（官方口径，零新 R'）", "", f"读数码 **{verdict}**", "",
+         "| 靶 | TS2Vec 论文 | 目录 oracle | " + " | ".join(names[n] for n in LISTS) + " |", "|---|---:|---:|" + "---:|" * len(LISTS)]
+    for d in TARGETS:
+        cells = []
+        for n in LISTS:
+            r = per[d]["lists"][n]
+            cells.append(f"{r['acc']:.3f}" + (f" ({r['finals_mean']:.3f})" if r["finals_mean"] is not None else " (—)") + (" ✓" if r["match_seed0"] else " ✗"))
+        L.append(f"| {d} | {TS2VEC_PAPER[d]:.3f} | {per[d]['oracle']['acc']:.3f} | " + " | ".join(cells) + " |")
+    L.append("| **均值 (3 种子) / 追平 seed0** | | | " + " | ".join(
+        f"{summary[n]['mean_seed0']:.3f}" + (f" ({summary[n]['mean_3seed']:.3f})" if summary[n]["mean_3seed"] is not None else " (—)") + f" / {summary[n]['n_match_seed0']}/6" for n in LISTS) + " |")
+    L += ["", f"裁剪改变前 6 名单的靶：{[d for d in TARGETS if per[d]['clip_changed_top6']]}", f"待补 finals：{picks}",
+          f"门：G-D′1 {g1}（{et['mean_seed0']:.3f} vs {pr['mean_seed0']:.3f} + 0.01）；G-D′2 {g2}（3 种子追平 {et['n_match_3seed']}/6，HW {hw3}）", ""]
+    (OUT / "tables_trust.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+    print("\n".join(L))
+    return a
+
+
 def markdown_tables(a: dict) -> str:
     per, s = a["targets"], a["summary"]
     names = {"prior": "先验名单", "blind_tclsc": "任务盲 T-CLSC 名单", "et_tclsc": "E_T T-CLSC 名单"}
@@ -219,6 +305,7 @@ def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--features", action="store_true")
     ap.add_argument("--simulate", action="store_true")
+    ap.add_argument("--trust", action="store_true", help="D′：限信任域 + 裁剪 + SH6-3-3（写 finals/picks.json）")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     return ap
@@ -226,13 +313,15 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: Optional[Sequence[str]] = None) -> None:
     args = build_parser().parse_args(argv)
-    if not (args.features or args.simulate):
+    if not (args.features or args.simulate or args.trust):
         build_parser().error("至少指定 --features / --simulate 之一")
     OUT.mkdir(parents=True, exist_ok=True)
     if args.features:
         cmd_features(device=args.device, resume=args.resume)
     if args.simulate:
         cmd_simulate(device="cpu")
+    if args.trust:
+        cmd_simulate_trust(device="cpu")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,599 @@
+{
+ "protocol": "results/tclsc_s1et_deploy/PROTOCOL.md §8",
+ "clip": 4.0,
+ "targets": {
+  "Handwriting": {
+   "lists": {
+    "prior": {
+     "champion": "9092e36eefe1",
+     "acc": 0.4188235294117647,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "f48e5da1d899",
+      "8c4aa28336d6"
+     ],
+     "final": [
+      "9092e36eefe1",
+      "4f7d413581f6",
+      "f48e5da1d899"
+     ],
+     "finals": [
+      0.4188235294117647,
+      0.42,
+      0.45529411764705885
+     ],
+     "finals_mean": 0.43137254901960786,
+     "match_seed0": false,
+     "match_3seed": false,
+     "oracle_rank": 8
+    },
+    "blind_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.4188235294117647,
+     "cost_iters": 750,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8b87d66faad3",
+      "8c4aa28336d6"
+     ],
+     "final": [
+      "9092e36eefe1",
+      "4f7d413581f6",
+      "a1f67db45e64"
+     ],
+     "finals": [
+      0.4188235294117647,
+      0.42,
+      0.45529411764705885
+     ],
+     "finals_mean": 0.43137254901960786,
+     "match_seed0": false,
+     "match_3seed": false,
+     "oracle_rank": 9
+    },
+    "et_tclsc": {
+     "champion": "e490b88ee785",
+     "acc": 0.5423529411764706,
+     "cost_iters": 750,
+     "list": [
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "a1f67db45e64",
+      "e490b88ee785",
+      "cffb55035c3a",
+      "9092e36eefe1"
+     ],
+     "final": [
+      "e490b88ee785",
+      "9092e36eefe1",
+      "4f7d413581f6"
+     ],
+     "finals": [
+      0.5423529411764706,
+      0.54,
+      0.5305882352941177
+     ],
+     "finals_mean": 0.5376470588235295,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": 8
+    }
+   },
+   "oracle": {
+    "key": "c92058f26c1d",
+    "acc": 0.5458823529411765
+   },
+   "clip_changed_top6": false
+  },
+  "UWaveGestureLibrary": {
+   "lists": {
+    "prior": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.93125,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "c92058f26c1d",
+      "8c4aa28336d6"
+     ],
+     "final": [
+      "8c4aa28336d6",
+      "9092e36eefe1",
+      "c92058f26c1d"
+     ],
+     "finals": [
+      0.93125,
+      0.9125,
+      0.909375
+     ],
+     "finals_mean": 0.9177083333333332,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": 6
+    },
+    "blind_tclsc": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.93125,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "final": [
+      "8c4aa28336d6",
+      "e490b88ee785",
+      "9092e36eefe1"
+     ],
+     "finals": [
+      0.93125,
+      0.9125,
+      0.909375
+     ],
+     "finals_mean": 0.9177083333333332,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": 5
+    },
+    "et_tclsc": {
+     "champion": "8c4aa28336d6",
+     "acc": 0.93125,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "8c4aa28336d6",
+      "a1f67db45e64",
+      "e490b88ee785",
+      "f48e5da1d899",
+      "4f7d413581f6"
+     ],
+     "final": [
+      "8c4aa28336d6",
+      "e490b88ee785",
+      "9092e36eefe1"
+     ],
+     "finals": [
+      0.93125,
+      0.9125,
+      0.909375
+     ],
+     "finals_mean": 0.9177083333333332,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": 2
+    }
+   },
+   "oracle": {
+    "key": "8c4aa28336d6",
+    "acc": 0.93125
+   },
+   "clip_changed_top6": false
+  },
+  "PhonemeSpectra": {
+   "lists": {
+    "prior": {
+     "champion": "4f7d413581f6",
+     "acc": 0.25082016104980615,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785",
+      "4f7d413581f6"
+     ],
+     "final": [
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "a1f67db45e64"
+     ],
+     "finals": [
+      0.25082016104980615,
+      0.2546972860125261,
+      0.262451535937966
+     ],
+     "finals_mean": 0.2559896610000994,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": 6
+    },
+    "blind_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.25082016104980615,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "e490b88ee785",
+      "4f7d413581f6"
+     ],
+     "final": [
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "a1f67db45e64"
+     ],
+     "finals": [
+      0.25082016104980615,
+      0.2546972860125261,
+      0.262451535937966
+     ],
+     "finals_mean": 0.2559896610000994,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": 6
+    },
+    "et_tclsc": {
+     "champion": "4f7d413581f6",
+     "acc": 0.25082016104980615,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "e490b88ee785",
+      "cffb55035c3a",
+      "4f7d413581f6",
+      "a1f67db45e64",
+      "8c4aa28336d6"
+     ],
+     "final": [
+      "4f7d413581f6",
+      "cffb55035c3a",
+      "a1f67db45e64"
+     ],
+     "finals": [
+      0.25082016104980615,
+      0.2546972860125261,
+      0.262451535937966
+     ],
+     "finals_mean": 0.2559896610000994,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": 4
+    }
+   },
+   "oracle": {
+    "key": "4f7d413581f6",
+    "acc": 0.25082016104980615
+   },
+   "clip_changed_top6": true
+  },
+  "EthanolConcentration": {
+   "lists": {
+    "prior": {
+     "champion": "e490b88ee785",
+     "acc": 0.2737642585551331,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "c92058f26c1d",
+      "8c4aa28336d6",
+      "4f7d413581f6",
+      "e490b88ee785"
+     ],
+     "final": [
+      "a1f67db45e64",
+      "e490b88ee785",
+      "4f7d413581f6"
+     ],
+     "finals": [
+      0.2737642585551331,
+      0.22813688212927757,
+      0.22053231939163498
+     ],
+     "finals_mean": 0.2408111533586819,
+     "match_seed0": false,
+     "match_3seed": false,
+     "oracle_rank": 8
+    },
+    "blind_tclsc": {
+     "champion": "e490b88ee785",
+     "acc": 0.2737642585551331,
+     "cost_iters": 2250,
+     "list": [
+      "a1f67db45e64",
+      "9092e36eefe1",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d",
+      "e490b88ee785"
+     ],
+     "final": [
+      "a1f67db45e64",
+      "e490b88ee785",
+      "4f7d413581f6"
+     ],
+     "finals": [
+      0.2737642585551331,
+      0.22813688212927757,
+      0.22053231939163498
+     ],
+     "finals_mean": 0.2408111533586819,
+     "match_seed0": false,
+     "match_3seed": false,
+     "oracle_rank": 8
+    },
+    "et_tclsc": {
+     "champion": "cffb55035c3a",
+     "acc": 0.2965779467680608,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "4f7d413581f6",
+      "a1f67db45e64",
+      "cffb55035c3a",
+      "8b87d66faad3",
+      "c92058f26c1d"
+     ],
+     "final": [
+      "cffb55035c3a",
+      "a1f67db45e64",
+      "4f7d413581f6"
+     ],
+     "finals": [
+      0.2965779467680608,
+      0.2889733840304182,
+      0.3231939163498099
+     ],
+     "finals_mean": 0.30291508238276293,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": 7
+    }
+   },
+   "oracle": {
+    "key": "f48e5da1d899",
+    "acc": 0.30038022813688214
+   },
+   "clip_changed_top6": true
+  },
+  "Cricket": {
+   "lists": {
+    "prior": {
+     "champion": "c92058f26c1d",
+     "acc": 1.0,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "cffb55035c3a",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "c92058f26c1d"
+     ],
+     "final": [
+      "a1f67db45e64",
+      "c92058f26c1d",
+      "9092e36eefe1"
+     ],
+     "finals": [
+      1.0,
+      0.9722222222222222,
+      0.9861111111111112
+     ],
+     "finals_mean": 0.9861111111111112,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": 6
+    },
+    "blind_tclsc": {
+     "champion": "a1f67db45e64",
+     "acc": 0.9861111111111112,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "cffb55035c3a",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "final": [
+      "a1f67db45e64",
+      "e490b88ee785",
+      "9092e36eefe1"
+     ],
+     "finals": [
+      0.9861111111111112,
+      0.9861111111111112,
+      0.9861111111111112
+     ],
+     "finals_mean": 0.9861111111111112,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": 10
+    },
+    "et_tclsc": {
+     "champion": "a1f67db45e64",
+     "acc": 0.9861111111111112,
+     "cost_iters": 2250,
+     "list": [
+      "a1f67db45e64",
+      "9092e36eefe1",
+      "cffb55035c3a",
+      "8c4aa28336d6",
+      "4f7d413581f6",
+      "f48e5da1d899"
+     ],
+     "final": [
+      "a1f67db45e64",
+      "9092e36eefe1",
+      "8c4aa28336d6"
+     ],
+     "finals": [
+      0.9861111111111112,
+      0.9861111111111112,
+      0.9861111111111112
+     ],
+     "finals_mean": 0.9861111111111112,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": 10
+    }
+   },
+   "oracle": {
+    "key": "c92058f26c1d",
+    "acc": 1.0
+   },
+   "clip_changed_top6": false
+  },
+  "HandMovementDirection": {
+   "lists": {
+    "prior": {
+     "champion": "9092e36eefe1",
+     "acc": 0.3783783783783784,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "cffb55035c3a",
+      "a1f67db45e64",
+      "8c4aa28336d6",
+      "4f7d413581f6",
+      "c92058f26c1d"
+     ],
+     "final": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "c92058f26c1d"
+     ],
+     "finals": [
+      0.3783783783783784,
+      0.5135135135135135,
+      0.4594594594594595
+     ],
+     "finals_mean": 0.45045045045045046,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": null
+    },
+    "blind_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.3783783783783784,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "cffb55035c3a",
+      "a1f67db45e64",
+      "4f7d413581f6",
+      "8c4aa28336d6",
+      "e490b88ee785"
+     ],
+     "final": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "e490b88ee785"
+     ],
+     "finals": [
+      0.3783783783783784,
+      0.5135135135135135,
+      0.4594594594594595
+     ],
+     "finals_mean": 0.45045045045045046,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": null
+    },
+    "et_tclsc": {
+     "champion": "9092e36eefe1",
+     "acc": 0.3783783783783784,
+     "cost_iters": 2250,
+     "list": [
+      "9092e36eefe1",
+      "4f7d413581f6",
+      "8b87d66faad3",
+      "f48e5da1d899",
+      "a1f67db45e64",
+      "cffb55035c3a"
+     ],
+     "final": [
+      "9092e36eefe1",
+      "a1f67db45e64",
+      "8b87d66faad3"
+     ],
+     "finals": [
+      0.3783783783783784,
+      0.5135135135135135,
+      0.4594594594594595
+     ],
+     "finals_mean": 0.45045045045045046,
+     "match_seed0": true,
+     "match_3seed": true,
+     "oracle_rank": null
+    }
+   },
+   "oracle": {
+    "key": "51b6f52899fe",
+    "acc": 0.4864864864864865
+   },
+   "clip_changed_top6": false
+  }
+ },
+ "summary": {
+  "prior": {
+   "mean_seed0": 0.5421727212325137,
+   "n_match_seed0": 4,
+   "mean_3seed": 0.5470738763788806,
+   "n_match_3seed": 4
+  },
+  "blind_tclsc": {
+   "mean_seed0": 0.5398579064176989,
+   "n_match_seed0": 4,
+   "mean_3seed": 0.5470738763788806,
+   "n_match_3seed": 4
+  },
+  "et_tclsc": {
+   "mean_seed0": 0.5642484230806378,
+   "n_match_seed0": 6,
+   "mean_3seed": 0.5751369495168811,
+   "n_match_3seed": 6
+  }
+ },
+ "gates": {
+  "GD1p": {
+   "et": 0.5642484230806378,
+   "prior": 0.5421727212325137,
+   "pass": true
+  },
+  "GD2p": {
+   "n_match_3seed": 6,
+   "hw_3seed": 0.5376470588235295,
+   "pass": true
+  }
+ },
+ "verdict": "DEPLOY-ET-TR-WIN",
+ "picks_pending": {},
+ "predictions": {
+  "P6": {
+   "desc": "G-D′1",
+   "hit": true
+  },
+  "P7": {
+   "desc": "G-D′2",
+   "hit": true
+  },
+  "P8": {
+   "desc": "裁剪不改任何靶的前 6",
+   "hit": false
+  },
+  "P9": {
+   "desc": "HW 冠军 3 种子 ≥ 0.50",
+   "value": 0.5376470588235295,
+   "hit": true
+  }
+ }
+}
