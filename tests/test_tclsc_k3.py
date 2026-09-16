@@ -96,12 +96,13 @@ class TestExamAndVerdict:
     def test_prior_ranking_uses_training_slices_only(self):
         g = _g75()
         rows = []
-        for s, ds, boost in (("A_00", "A", 0.0), ("B_00", "B", 0.2), ("C_00", "C", 0.0)):
+        # A / D：S2 > S1 > S0；B / C：S0 被 +0.2 抬到第一（先验 = within-slice z 均值，z 有界，故用两个数据集抬）
+        for s, ds, boost in (("A_00", "A", 0.0), ("D_00", "D", 0.0), ("B_00", "B", 0.2), ("C_00", "C", 0.2)):
             for j in range(3):
                 for b in pq.BUDGETS:
                     rows.append({"task_id": s, "dataset": ds, "cls_key": f"S{j}", "origin": ORIGIN_SHARED, "iters": int(b),
                                  "r_prime": 0.5 + 0.01 * j + (boost if j == 0 else 0.0)})
-        order = g.prior_order(rows, exclude_dataset="B")          # 不看 B：S2 > S1 > S0
+        order = g.prior_order(rows, exclude_dataset="B")          # A + C + D：S2 > S1 > S0
         assert order == ["S2", "S1", "S0"]
-        order_b = g.prior_order(rows, exclude_dataset="C")        # 看 B：S0 被 B 的 +0.2 抬到第一
-        assert order_b[0] == "S0"
+        order_a = g.prior_order(rows, exclude_dataset="A")        # B + C + D：S0 第一
+        assert order_a[0] == "S0"
