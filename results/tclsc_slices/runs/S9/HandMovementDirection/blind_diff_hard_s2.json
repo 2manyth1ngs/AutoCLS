@@ -1,0 +1,12 @@
+{
+ "tag": "S9",
+ "test": "HandMovementDirection",
+ "arm": "blind_diff_hard",
+ "seed": 2,
+ "n_train_slices": 57,
+ "n_train_records": 3420,
+ "train_seconds": 8.9,
+ "bce_first": 0.6871491223573685,
+ "bce_last": 0.11286697658183782,
+ "train_pairs_last": 1423
+}

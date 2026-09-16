@@ -1,0 +1,12 @@
+{
+ "tag": "S12h",
+ "test": "HandMovementDirection",
+ "arm": "blind_diff_hard",
+ "seed": 1,
+ "n_train_slices": 75,
+ "n_train_records": 4500,
+ "train_seconds": 8.3,
+ "bce_first": 0.6899532784115184,
+ "bce_last": 0.14607505012175132,
+ "train_pairs_last": 1799
+}

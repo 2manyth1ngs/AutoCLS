@@ -1,0 +1,12 @@
+{
+ "tag": "S9",
+ "test": "UWaveGestureLibrary",
+ "arm": "ft60_hard",
+ "seed": 1,
+ "n_train_slices": 57,
+ "n_train_records": 3420,
+ "train_seconds": 10.0,
+ "bce_first": 0.620208129286766,
+ "bce_last": 0.02911351461845793,
+ "train_pairs_last": 1183
+}

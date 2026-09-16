@@ -1,0 +1,12 @@
+{
+ "tag": "S6x",
+ "test": "Handwriting",
+ "arm": "ft60_hard",
+ "seed": 1,
+ "n_train_slices": 39,
+ "n_train_records": 2340,
+ "train_seconds": 9.5,
+ "bce_first": 0.6705298781394958,
+ "bce_last": 0.03612452989909798,
+ "train_pairs_last": 716
+}

@@ -1,0 +1,142 @@
+{
+ "S6x": {
+  "orig_test": {
+   "ft60_hard": {
+    "regret3": 0.03820401562141792,
+    "regret1": 0.08500541029948497,
+    "M1": 0.5227788870966343,
+    "M0": 0.7426778120510396,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0122,
+     "EthanolConcentration": 0.0442,
+     "HandMovementDirection": 0.0488,
+     "Handwriting": 0.0968,
+     "PhonemeSpectra": 0.0276,
+     "UWaveGestureLibrary": 0.0151,
+     "UniMiB-SHAR": 0.0227
+    }
+   },
+   "blind_diff_hard": {
+    "regret3": 0.04451688335482525,
+    "regret1": 0.11240672751211529,
+    "M1": 0.5004724000023126,
+    "M0": 0.7279661886461559,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0139,
+     "EthanolConcentration": 0.0458,
+     "HandMovementDirection": 0.0705,
+     "Handwriting": 0.1053,
+     "PhonemeSpectra": 0.0339,
+     "UWaveGestureLibrary": 0.0157,
+     "UniMiB-SHAR": 0.0265
+    }
+   }
+  },
+  "ext_test": {
+   "ft60_hard": {
+    "regret3": 0.03941656590776676,
+    "regret1": 0.09105124205020675,
+    "M1": 0.45640165652574793,
+    "M0": 0.7275380284791717,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0226,
+     "EthanolConcentration": 0.0589,
+     "HandMovementDirection": 0.0865,
+     "Handwriting": 0.0298,
+     "PhonemeSpectra": 0.047,
+     "UWaveGestureLibrary": 0.0157,
+     "UniMiB-SHAR": 0.0155
+    }
+   },
+   "blind_diff_hard": {
+    "regret3": 0.05380581767786825,
+    "regret1": 0.10475853695184317,
+    "M1": 0.3789819418403347,
+    "M0": 0.7067916749538427,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0301,
+     "EthanolConcentration": 0.0612,
+     "HandMovementDirection": 0.1107,
+     "Handwriting": 0.0841,
+     "PhonemeSpectra": 0.0556,
+     "UWaveGestureLibrary": 0.0168,
+     "UniMiB-SHAR": 0.0181
+    }
+   }
+  }
+ },
+ "S12h": {
+  "orig_test": {
+   "ft60_hard": {
+    "regret3": 0.030064777555553226,
+    "regret1": 0.06850162465810464,
+    "M1": 0.5284965405150709,
+    "M0": 0.7898277077397712,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0092,
+     "EthanolConcentration": 0.0336,
+     "HandMovementDirection": 0.0458,
+     "Handwriting": 0.043,
+     "PhonemeSpectra": 0.0435,
+     "UWaveGestureLibrary": 0.0126,
+     "UniMiB-SHAR": 0.0227
+    }
+   },
+   "blind_diff_hard": {
+    "regret3": 0.03006632938207819,
+    "regret1": 0.09670834925240997,
+    "M1": 0.5148359292117259,
+    "M0": 0.7707160042555623,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0105,
+     "EthanolConcentration": 0.0427,
+     "HandMovementDirection": 0.0379,
+     "Handwriting": 0.0476,
+     "PhonemeSpectra": 0.0365,
+     "UWaveGestureLibrary": 0.0121,
+     "UniMiB-SHAR": 0.0232
+    }
+   }
+  },
+  "ext_test": {
+   "ft60_hard": {
+    "regret3": 0.03515449484544727,
+    "regret1": 0.08631826003149883,
+    "M1": 0.4778759412597244,
+    "M0": 0.7550922653708478,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0203,
+     "EthanolConcentration": 0.0567,
+     "HandMovementDirection": 0.0658,
+     "Handwriting": 0.0345,
+     "PhonemeSpectra": 0.037,
+     "UWaveGestureLibrary": 0.0181,
+     "UniMiB-SHAR": 0.0136
+    }
+   },
+   "blind_diff_hard": {
+    "regret3": 0.040765430086590525,
+    "regret1": 0.09254954143010787,
+    "M1": 0.4501837702537662,
+    "M0": 0.7530789182011302,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0285,
+     "EthanolConcentration": 0.0602,
+     "HandMovementDirection": 0.0442,
+     "Handwriting": 0.0644,
+     "PhonemeSpectra": 0.05,
+     "UWaveGestureLibrary": 0.0146,
+     "UniMiB-SHAR": 0.0235
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "tag": "S12",
+ "test": "UWaveGestureLibrary",
+ "arm": "ft60_hard",
+ "seed": 2,
+ "n_train_slices": 75,
+ "n_train_records": 4500,
+ "train_seconds": 13.1,
+ "bce_first": 0.6878145337104797,
+ "bce_last": 0.02196309769239563,
+ "train_pairs_last": 1613
+}

@@ -1,0 +1,12 @@
+{
+ "tag": "S12",
+ "test": "PhonemeSpectra",
+ "arm": "ft60_hard",
+ "seed": 1,
+ "n_train_slices": 75,
+ "n_train_records": 4500,
+ "train_seconds": 12.1,
+ "bce_first": 0.623894128534529,
+ "bce_last": 0.027235228554930116,
+ "train_pairs_last": 1409
+}

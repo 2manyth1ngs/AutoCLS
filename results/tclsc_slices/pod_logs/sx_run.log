@@ -1,0 +1,19 @@
+== [10:18:12] both rprime processes exited
+[sx 366/366] UWaveGestureLibrary/UWaveGestureLibrary_x05 ggs:c92058f2 seed=0 R'=0.9583/0.9062/0.9062 (11.8s) ETA 0.0min
+[sx] 完成 366 条轨迹，墙钟 252.6 min
+[sx 378/378] UniMiB-SHAR/UniMiB-SHAR_x05 ggs:c92058f2 seed=0 R'=0.7152/0.4822/0.4854 (11.0s) ETA 0.0min
+[sx] 完成 378 条轨迹，墙钟 143.8 min
+== merged: main 2646 rows (p2 1134)
+CUDA NVIDIA GeForce RTX 5090
+== [10:18:15] rprime start
+[verify] rows 2646/2646 dup 0 errors 0 incomplete 0 → OK
+== [10:18:30] baseline
+[baseline] HandMovementDirection_x05 s4 R'=0.3188405797101449 (0.1s)
+== [10:19:09] features
+[features] HandMovementDirection_x05: n=165 14.7s rep_highpass05@60 +0.02 ret_highpass05 -0.09 base 0.284
+== ctx_ext rows: 42 / 42
+== [10:28:20] train S9 / S12
+[S12/HandMovementDirection/blind_diff_hard_s4] 11.4s n_slices 75 (ext 42) recs 4500 pairs 1810
+[S12/HandMovementDirection/blind_diff_hard_s5] 11.5s n_slices 75 (ext 42) recs 4500 pairs 1780
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from hard link targets

@@ -1,0 +1,12 @@
+{
+ "tag": "S9",
+ "test": "PhonemeSpectra",
+ "arm": "ft60_hard",
+ "seed": 4,
+ "n_train_slices": 57,
+ "n_train_records": 3420,
+ "train_seconds": 10.2,
+ "bce_first": 0.7589498360951742,
+ "bce_last": 0.0314083324952258,
+ "train_pairs_last": 1114
+}

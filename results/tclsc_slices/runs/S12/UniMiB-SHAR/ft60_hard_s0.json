@@ -1,0 +1,12 @@
+{
+ "tag": "S12",
+ "test": "UniMiB-SHAR",
+ "arm": "ft60_hard",
+ "seed": 0,
+ "n_train_slices": 75,
+ "n_train_records": 4500,
+ "train_seconds": 12.4,
+ "bce_first": 0.682319700717926,
+ "bce_last": 0.027793279819888994,
+ "train_pairs_last": 1477
+}

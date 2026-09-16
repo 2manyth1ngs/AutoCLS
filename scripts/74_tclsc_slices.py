@@ -47,6 +47,8 @@ _g57 = importlib.import_module("scripts.57_tclsc_l3")
 _g58 = importlib.import_module("scripts.58_tclsc_s1phi")
 _g69 = importlib.import_module("scripts.69_tclsc_s1et")
 _g73 = importlib.import_module("scripts.73_tclsc_lc")
+_g34 = importlib.import_module("scripts.34_pq_search")
+_g64 = importlib.import_module("scripts.64_tclsc_s1ea_confirm")
 PHI_COLS = tuple(_m33.PHI_COLS)
 OUT = ROOT / "results" / "tclsc_slices"
 SOURCE = pq.OUT
@@ -526,11 +528,129 @@ def cmd_simulate_official(outdir: Path, *, tag: str = "S12") -> dict:
     return o
 
 
+# ---------------------------------------------------------------- 事后：考侧换成扩展切片（协议外，REPORT 单列）
+def rank_point_ext(outdir: Path, tag: str, *, seeds: Sequence[int], device: str = "cpu") -> dict:
+    """同一批折模型，考侧 = 目标数据集的 6 个扩展切片（目录 = 本实验 cls_catalog.json，ctx = ctx_ext）。"""
+    table = ctx_table(outdir)
+    out = {}
+    for target in FOLDS:
+        if not (outdir / "models" / tag / target).exists():
+            continue
+        test_slices = ext_slice_ids(target)
+        catalog, _g, _k = _g34.load_catalog(outdir, _g56.space(), slices=test_slices)
+        cat = {sl: catalog[sl] for sl in test_slices}
+        per: dict = {"normal": {}}
+        for arm in ARMS:
+            paths = [outdir / "models" / tag / target / f"{arm}_s{sd}.pt" for sd in seeds]
+            if not all(pp.exists() for pp in paths):
+                continue
+            mm = [_g34.load_pq_model(pp, map_location=device, expect_fold=target, expect_budgets=pq.BUDGETS) for pp in paths]
+            if _m33.arm_spec(arm).ctx_kind == "table_budget":
+                meta0 = mm[0][1]
+                rows_ctx = _g64.slice_ctx_rows(table, tuple(meta0["ctx_cols"]), test_slices, np.array(meta0["ctx_mu"]), np.array(meta0["ctx_sd"]))
+                rk = _g56.rank_local_models({arm: mm}, cat, budgets=pq.BUDGETS, device=device, ctx_rows=rows_ctx)
+            else:
+                rk = _g56.rank_local_models({arm: mm}, cat, budgets=pq.BUDGETS, device=device)
+            for b, pb in rk.items():
+                for sl, pa in pb.items():
+                    per["normal"].setdefault(b, {}).setdefault(sl, {}).update(pa)
+        out[target] = per
+    return out
+
+
+def cmd_analyze_ext(outdir: Path) -> dict:
+    """事后：三点 × 两组在扩展切片考侧（126 × 2 实例）与全部 12 切片考侧上的读数；写 analysis_ext.json / tables_ext.md。"""
+    orig, delta = _g57.load_source(SOURCE)
+    ext = load_ext_rows(outdir)
+    cat_z = _g56.zscore_within(orig + ext)
+    rk_orig = json.loads((outdir / "rankings.json").read_text(encoding="utf-8"))
+    res = {"ext": {}, "all12": {}}
+    for s_pt in S_POINTS:
+        tag = f"S{s_pt}"
+        if tag not in rk_orig:
+            continue
+        ev_ext, ev_orig = [], []
+        for g in SEED_GROUPS:
+            gs = "".join(map(str, g))
+            ev_ext += _eval_group(rank_point_ext(outdir, tag, seeds=g), cat_z, delta, gs)
+            ev_orig += _eval_group(rk_orig[tag][gs], cat_z, delta, gs)
+        for key, ev in (("ext", ev_ext), ("all12", ev_ext + ev_orig)):
+            c = {"size": s_pt, **{a: _g73._pooled(ev, a) for a in ARMS}}
+            c["gain"] = c[B_ARM]["regret3"] - c[E_ARM]["regret3"]
+            res[key][tag] = {"curve": c, "rows": ev}
+    a = {"protocol_note": "协议外事后：考侧换成扩展切片 / 全部 12 切片", "curves": {k: [v[t]["curve"] for t in sorted(v, key=lambda t: int(t[1:]))] for k, v in res.items()}, "paired": {}}
+    for key in ("ext", "all12"):
+        for a_s, b_s in ((6, 12), (6, 9), (9, 12)):
+            ta, tb = f"S{a_s}", f"S{b_s}"
+            if ta in res[key] and tb in res[key]:
+                a["paired"][f"{key}:{ta}->{tb}"] = {arm: _paired_same_arm(res[key][ta]["rows"], res[key][tb]["rows"], arm) for arm in ARMS}
+    (outdir / "analysis_ext.json").write_text(json.dumps(a, ensure_ascii=False, indent=1), encoding="utf-8")
+    L = ["# 事后：考侧换成扩展切片（126 × 2 组）/ 全部 12 切片（252 × 2 组）", ""]
+    for key, title in (("ext", "考侧 = 扩展切片 x00–x05"), ("all12", "考侧 = 原 6 + 扩展 6")):
+        L += [f"## {title}", "", "| S | n | E_T regret@3 | blind regret@3 | E 增益 | E_T regret@1 | blind regret@1 | E_T M1 | blind M1 | E_T M0 | blind M0 |",
+              "|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
+        for c in a["curves"][key]:
+            e, b = c[E_ARM], c[B_ARM]
+            L.append(f"| {c['size']} | {e['n']} | {e['regret3']:.4f} | {b['regret3']:.4f} | {c['gain']:+.4f} | {e['regret1']:.4f} | {b['regret1']:.4f} | "
+                     f"{e['M1']:.3f} | {b['M1']:.3f} | {e['M0']:.3f} | {b['M0']:.3f} |")
+        L += ["", "| 对 | 臂 | n | 前 | 后 | p | 胜:负:平 |", "|---|---|---:|---:|---:|---:|---|"]
+        for k, per in a["paired"].items():
+            if k.startswith(key + ":"):
+                for arm, pr in per.items():
+                    L.append(f"| {k.split(':')[1]} | {arm} | {pr['n']} | {pr['mean_a']:.4f} | {pr['mean_b']:.4f} | {pr['p']:.2g} | {pr['wins_b']}:{pr['losses_b']}:{pr['ties']} |")
+        L.append("")
+    (outdir / "tables_ext.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+    print("\n".join(L), flush=True)
+    return a
+
+
+# ---------------------------------------------------------------- 事后对照（协议外）：S6x = 只用扩展切片训（数据可交换性）；S12h = S12 但 epochs 按配对数折算（训练制度）
+CONTROL_TAGS = {"S6x": ("ext_only", None), "S12h": ("all", 105)}     # 105 ≈ 200 × 834 / 1582（与 S6 同总更新步数）
+
+
+def cmd_control(outdir: Path, *, seeds: Sequence[int], device: str, resume: bool, tags: Sequence[str] = tuple(CONTROL_TAGS)) -> dict:
+    orig, delta = _g57.load_source(SOURCE)
+    ext = load_ext_rows(outdir)
+    table = ctx_table(outdir)
+    cat_z = _g56.zscore_within(orig + ext)
+    for tag in tags:
+        kind, epochs = CONTROL_TAGS[tag]
+        rows = ([r for r in orig if r["dataset"] == "SelfRegulationSCP2"] + ext) if kind == "ext_only" else rows_for_point(orig, ext, 12)
+        for target in FOLDS:
+            for arm in ARMS:
+                for seed in seeds:
+                    if resume and (outdir / "models" / tag / target / f"{arm}_s{seed}.pt").exists():
+                        continue
+                    run = _g73.train_fold_uea(rows, delta, table, target=target, arm=arm, seed=seed, outdir=outdir, device=device, epochs=epochs, tag=tag)
+                    _g73._log(outdir, f"[{tag}/{target}/{arm}_s{seed}] {run['train_seconds']}s n_slices {run['n_train_slices']} recs {run['n_train_records']} pairs {run['train_pairs_last']}")
+    groups = [g for g in SEED_GROUPS if all(sd in seeds for sd in g)]
+    res = {}
+    for tag in tags:
+        ev_o, ev_e = [], []
+        for g in groups:
+            gs = "".join(map(str, g))
+            ev_o += _eval_group(_g73.rank_uea_tag(outdir, tag, seeds=g), cat_z, delta, gs)
+            ev_e += _eval_group(rank_point_ext(outdir, tag, seeds=g), cat_z, delta, gs)
+        res[tag] = {"orig_test": {a: _g73._pooled(ev_o, a) for a in ARMS}, "ext_test": {a: _g73._pooled(ev_e, a) for a in ARMS}}
+    (outdir / "controls.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+    L = ["# 事后对照（协议外）：S6x（只用扩展 6 切片训）/ S12h（S12、epochs 105 ≈ 与 S6 同总更新步数）", "",
+         "| 对照 | 考侧 | n | E_T regret@3 | blind regret@3 | E 增益 | E_T regret@1 | blind regret@1 | E_T M1 | blind M1 | E_T M0 | blind M0 |", "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
+    for tag, per in res.items():
+        for side, c in per.items():
+            e, b = c[E_ARM], c[B_ARM]
+            L.append(f"| {tag} | {side} | {e['n']} | {e['regret3']:.4f} | {b['regret3']:.4f} | {b['regret3'] - e['regret3']:+.4f} | {e['regret1']:.4f} | {b['regret1']:.4f} | {e['M1']:.3f} | {b['M1']:.3f} | {e['M0']:.3f} | {b['M0']:.3f} |")
+    (outdir / "controls.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+    print("\n".join(L), flush=True)
+    return res
+
+
 # ---------------------------------------------------------------- CLI
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     for f in ("slice", "rprime", "verify", "baseline", "features", "train", "rank", "analyze", "simulate-official", "smoke", "resume"):
         ap.add_argument(f"--{f}", action="store_true")
+    ap.add_argument("--analyze-ext", action="store_true", help="事后：考侧换成扩展切片 / 全部 12 切片")
+    ap.add_argument("--control", action="store_true", help="事后对照：S6x（只用扩展切片）/ S12h（同步数）训练 + 两侧考评")
     ap.add_argument("--datasets", nargs="+", default=list(EXT_DATASETS))
     ap.add_argument("--points", nargs="+", type=int, default=list(S_POINTS))
     ap.add_argument("--folds", nargs="+", default=None)
@@ -562,6 +682,10 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
         cmd_simulate_official(args.outdir)
     if args.analyze:
         cmd_analyze(args.outdir)
+    if args.analyze_ext:
+        cmd_analyze_ext(args.outdir)
+    if args.control:
+        cmd_control(args.outdir, seeds=args.seeds, device=args.device, resume=args.resume)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,12 @@
+{
+ "tag": "S12h",
+ "test": "Handwriting",
+ "arm": "ft60_hard",
+ "seed": 4,
+ "n_train_slices": 75,
+ "n_train_records": 4500,
+ "train_seconds": 9.1,
+ "bce_first": 0.7163664102554321,
+ "bce_last": 0.05601079280798634,
+ "train_pairs_last": 1486
+}

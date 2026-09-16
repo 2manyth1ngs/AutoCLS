@@ -1,0 +1,210 @@
+{
+ "tag": "S12",
+ "targets": {
+  "Handwriting": {
+   "ref": {
+    "prior": {
+     "acc": 0.4188235294117647,
+     "champion": "9092e36eefe1"
+    },
+    "blind_tclsc": {
+     "acc": 0.4188235294117647,
+     "champion": "9092e36eefe1"
+    },
+    "et_tclsc": {
+     "acc": 0.5423529411764706,
+     "champion": "e490b88ee785"
+    }
+   },
+   "prior": {
+    "acc": 0.4188235294117647,
+    "champion": "9092e36eefe1",
+    "match_seed0": false
+   },
+   "blind_tclsc": {
+    "acc": 0.5458823529411765,
+    "champion": "c92058f26c1d",
+    "match_seed0": true
+   },
+   "et_tclsc": {
+    "acc": 0.4188235294117647,
+    "champion": "9092e36eefe1",
+    "match_seed0": false
+   }
+  },
+  "UWaveGestureLibrary": {
+   "ref": {
+    "prior": {
+     "acc": 0.93125,
+     "champion": "8c4aa28336d6"
+    },
+    "blind_tclsc": {
+     "acc": 0.93125,
+     "champion": "8c4aa28336d6"
+    },
+    "et_tclsc": {
+     "acc": 0.93125,
+     "champion": "8c4aa28336d6"
+    }
+   },
+   "prior": {
+    "acc": 0.93125,
+    "champion": "8c4aa28336d6",
+    "match_seed0": true
+   },
+   "blind_tclsc": {
+    "acc": 0.93125,
+    "champion": "8c4aa28336d6",
+    "match_seed0": true
+   },
+   "et_tclsc": {
+    "acc": 0.93125,
+    "champion": "8c4aa28336d6",
+    "match_seed0": true
+   }
+  },
+  "PhonemeSpectra": {
+   "ref": {
+    "prior": {
+     "acc": 0.25082016104980615,
+     "champion": "4f7d413581f6"
+    },
+    "blind_tclsc": {
+     "acc": 0.25082016104980615,
+     "champion": "4f7d413581f6"
+    },
+    "et_tclsc": {
+     "acc": 0.25082016104980615,
+     "champion": "4f7d413581f6"
+    }
+   },
+   "prior": {
+    "acc": 0.25082016104980615,
+    "champion": "4f7d413581f6",
+    "match_seed0": true
+   },
+   "blind_tclsc": {
+    "acc": 0.25082016104980615,
+    "champion": "4f7d413581f6",
+    "match_seed0": true
+   },
+   "et_tclsc": {
+    "acc": 0.25082016104980615,
+    "champion": "4f7d413581f6",
+    "match_seed0": true
+   }
+  },
+  "EthanolConcentration": {
+   "ref": {
+    "prior": {
+     "acc": 0.2737642585551331,
+     "champion": "e490b88ee785"
+    },
+    "blind_tclsc": {
+     "acc": 0.2737642585551331,
+     "champion": "e490b88ee785"
+    },
+    "et_tclsc": {
+     "acc": 0.2965779467680608,
+     "champion": "cffb55035c3a"
+    }
+   },
+   "prior": {
+    "acc": 0.2737642585551331,
+    "champion": "e490b88ee785",
+    "match_seed0": false
+   },
+   "blind_tclsc": {
+    "acc": 0.2965779467680608,
+    "champion": "cffb55035c3a",
+    "match_seed0": true
+   },
+   "et_tclsc": {
+    "acc": 0.2965779467680608,
+    "champion": "cffb55035c3a",
+    "match_seed0": true
+   }
+  },
+  "Cricket": {
+   "ref": {
+    "prior": {
+     "acc": 1.0,
+     "champion": "c92058f26c1d"
+    },
+    "blind_tclsc": {
+     "acc": 0.9861111111111112,
+     "champion": "a1f67db45e64"
+    },
+    "et_tclsc": {
+     "acc": 0.9861111111111112,
+     "champion": "a1f67db45e64"
+    }
+   },
+   "prior": {
+    "acc": 1.0,
+    "champion": "c92058f26c1d",
+    "match_seed0": true
+   },
+   "blind_tclsc": {
+    "acc": 0.9861111111111112,
+    "champion": "a1f67db45e64",
+    "match_seed0": true
+   },
+   "et_tclsc": {
+    "acc": 0.9861111111111112,
+    "champion": "a1f67db45e64",
+    "match_seed0": true
+   }
+  },
+  "HandMovementDirection": {
+   "ref": {
+    "prior": {
+     "acc": 0.3783783783783784,
+     "champion": "9092e36eefe1"
+    },
+    "blind_tclsc": {
+     "acc": 0.3783783783783784,
+     "champion": "9092e36eefe1"
+    },
+    "et_tclsc": {
+     "acc": 0.3783783783783784,
+     "champion": "9092e36eefe1"
+    }
+   },
+   "prior": {
+    "acc": 0.3783783783783784,
+    "champion": "9092e36eefe1",
+    "match_seed0": true
+   },
+   "blind_tclsc": {
+    "acc": 0.3783783783783784,
+    "champion": "9092e36eefe1",
+    "match_seed0": true
+   },
+   "et_tclsc": {
+    "acc": 0.3783783783783784,
+    "champion": "9092e36eefe1",
+    "match_seed0": true
+   }
+  }
+ },
+ "summary": {
+  "prior": {
+   "mean_seed0": 0.5421727212325137,
+   "n_match_seed0": 4,
+   "n_champion_changed": 0
+  },
+  "blind_tclsc": {
+   "mean_seed0": 0.5648366583747555,
+   "n_match_seed0": 6,
+   "n_champion_changed": 2
+  },
+  "et_tclsc": {
+   "mean_seed0": 0.5436601877865203,
+   "n_match_seed0": 5,
+   "n_champion_changed": 1
+  },
+  "ref_et_mean": 0.5642484230806378,
+  "ref_blind_mean": 0.5398579064176989
+ }
+}

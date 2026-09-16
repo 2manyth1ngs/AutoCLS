@@ -163,4 +163,6 @@ G-S1 ✗ ∧ 曲线 RISING → **SLICE-RISING**（量级不足 6 种子分辨、
 
 ## §7 执行台账（跑后填写）
 
-（空）
+- 2026-09-15 21:45 pod x7fxuap7n763f6（5090）NVML 坏、cuda=False，≈ 1.2 h 白烧，已停 3/3；直连 scp 2 KB/s → bundle 改走 RunPod HTTP 代理 + 临时 PUT 接收器。
+- 2026-09-16 03:51 UTC pod g73hay5bhf5tqb（5090，同卷）setup 全绿（md5 / CUDA / 42 切片逐字段对账）→ sx_run.sh；单进程 Ethanol 段 100–130 s/条（CPU 单线程慢 1.7×）→ 06:07 改 P1 + P2 分数据集并行（各自缓存、事后合并）；10:18 verify 2646/2646 零重复零错误 → baseline → features 42/42 → train S9/S12 → 10:58 打包；产物经 HTTP 代理拉回（md5 对）；stop + confirm 3/3，uptime 50052 s ≈ $13.8。
+- 本地 --rank / --simulate-official / --analyze → **SLICE-FLAT**（预测 1/7）；协议外事后：--analyze-ext（考侧换扩展 / 全部 12）、--control（S6x / S12h）、诊断脚本；REPORT.md。

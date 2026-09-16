@@ -1,0 +1,12 @@
+{
+ "tag": "S6x",
+ "test": "PhonemeSpectra",
+ "arm": "blind_diff_hard",
+ "seed": 5,
+ "n_train_slices": 39,
+ "n_train_records": 2340,
+ "train_seconds": 7.4,
+ "bce_first": 0.6893322169780731,
+ "bce_last": 0.11255038444968787,
+ "train_pairs_last": 702
+}

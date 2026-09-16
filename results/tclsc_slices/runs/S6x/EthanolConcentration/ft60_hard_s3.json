@@ -1,0 +1,12 @@
+{
+ "tag": "S6x",
+ "test": "EthanolConcentration",
+ "arm": "ft60_hard",
+ "seed": 3,
+ "n_train_slices": 39,
+ "n_train_records": 2340,
+ "train_seconds": 10.8,
+ "bce_first": 0.7549551129341125,
+ "bce_last": 0.0318832504906043,
+ "train_pairs_last": 833
+}

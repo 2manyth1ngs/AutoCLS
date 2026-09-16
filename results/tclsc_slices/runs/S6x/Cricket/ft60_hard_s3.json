@@ -1,0 +1,12 @@
+{
+ "tag": "S6x",
+ "test": "Cricket",
+ "arm": "ft60_hard",
+ "seed": 3,
+ "n_train_slices": 39,
+ "n_train_records": 2340,
+ "train_seconds": 10.6,
+ "bce_first": 0.7530502557754517,
+ "bce_last": 0.02646616566926241,
+ "train_pairs_last": 797
+}

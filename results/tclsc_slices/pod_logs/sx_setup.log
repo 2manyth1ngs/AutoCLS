@@ -1,0 +1,21 @@
+torch 2.8.0+cu128 cuda 12.8 dev NVIDIA GeForce RTX 5090
+deps present
+== HEAD b1a9c1d75260efcc2ee7c1fa32090483a3a0b6ec
+mfs#eur-no-1.runpod.net:9421 1006T  228T  778T  23% /workspace
+[skip] Handwriting: 两文件已在且 md5 与清单一致
+all ok: Handwriting
+[skip] PhonemeSpectra: 两文件已在且 md5 与清单一致
+all ok: PhonemeSpectra
+[skip] UWaveGestureLibrary: 两文件已在且 md5 与清单一致
+all ok: UWaveGestureLibrary
+[skip] EthanolConcentration: 两文件已在且 md5 与清单一致
+all ok: EthanolConcentration
+[skip] Cricket: 两文件已在且 md5 与清单一致
+all ok: Cricket
+[skip] HandMovementDirection: 两文件已在且 md5 与清单一致
+all ok: HandMovementDirection
+== uea .ts md5 check: ALL MATCH
+CUDA gate OK
+import 74 OK
+== slice check: 42 切片逐字段一致
+== setup done

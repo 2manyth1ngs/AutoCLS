@@ -1,0 +1,347 @@
+{
+ "protocol_note": "协议外事后：考侧换成扩展切片 / 全部 12 切片",
+ "curves": {
+  "ext": [
+   {
+    "size": 6,
+    "ft60_hard": {
+     "regret3": 0.03231198846378272,
+     "regret1": 0.08542733280143504,
+     "M1": 0.4910228878747522,
+     "M0": 0.7520867376911978,
+     "n": 252,
+     "regret3_by_fold": {
+      "Cricket": 0.0146,
+      "EthanolConcentration": 0.0627,
+      "HandMovementDirection": 0.0363,
+      "Handwriting": 0.048,
+      "PhonemeSpectra": 0.0382,
+      "UWaveGestureLibrary": 0.0088,
+      "UniMiB-SHAR": 0.0175
+     }
+    },
+    "blind_diff_hard": {
+     "regret3": 0.03297604623090363,
+     "regret1": 0.08362754671548334,
+     "M1": 0.454214455434337,
+     "M0": 0.7270121094285977,
+     "n": 252,
+     "regret3_by_fold": {
+      "Cricket": 0.0144,
+      "EthanolConcentration": 0.0574,
+      "HandMovementDirection": 0.025,
+      "Handwriting": 0.0528,
+      "PhonemeSpectra": 0.0452,
+      "UWaveGestureLibrary": 0.0164,
+      "UniMiB-SHAR": 0.0197
+     }
+    },
+    "gain": 0.0006640577671209111
+   },
+   {
+    "size": 9,
+    "ft60_hard": {
+     "regret3": 0.03208896162003584,
+     "regret1": 0.09298513258150091,
+     "M1": 0.4802413843578536,
+     "M0": 0.7558931878739418,
+     "n": 252,
+     "regret3_by_fold": {
+      "Cricket": 0.0183,
+      "EthanolConcentration": 0.0568,
+      "HandMovementDirection": 0.0606,
+      "Handwriting": 0.022,
+      "PhonemeSpectra": 0.0398,
+      "UWaveGestureLibrary": 0.0095,
+      "UniMiB-SHAR": 0.0177
+     }
+    },
+    "blind_diff_hard": {
+     "regret3": 0.032234242474349376,
+     "regret1": 0.08653720723168254,
+     "M1": 0.4619529740293806,
+     "M0": 0.7500360432217886,
+     "n": 252,
+     "regret3_by_fold": {
+      "Cricket": 0.0158,
+      "EthanolConcentration": 0.0572,
+      "HandMovementDirection": 0.0124,
+      "Handwriting": 0.056,
+      "PhonemeSpectra": 0.0416,
+      "UWaveGestureLibrary": 0.02,
+      "UniMiB-SHAR": 0.0228
+     }
+    },
+    "gain": 0.0001452808543135342
+   },
+   {
+    "size": 12,
+    "ft60_hard": {
+     "regret3": 0.03614582631208523,
+     "regret1": 0.08595736980967202,
+     "M1": 0.46420601041806786,
+     "M0": 0.7436887128282356,
+     "n": 252,
+     "regret3_by_fold": {
+      "Cricket": 0.0175,
+      "EthanolConcentration": 0.0578,
+      "HandMovementDirection": 0.0863,
+      "Handwriting": 0.0287,
+      "PhonemeSpectra": 0.0325,
+      "UWaveGestureLibrary": 0.0155,
+      "UniMiB-SHAR": 0.0147
+     }
+    },
+    "blind_diff_hard": {
+     "regret3": 0.04930369976148244,
+     "regret1": 0.0927533867958899,
+     "M1": 0.4229470348585472,
+     "M0": 0.7453537185701423,
+     "n": 252,
+     "regret3_by_fold": {
+      "Cricket": 0.0311,
+      "EthanolConcentration": 0.0594,
+      "HandMovementDirection": 0.0882,
+      "Handwriting": 0.0736,
+      "PhonemeSpectra": 0.0552,
+      "UWaveGestureLibrary": 0.0133,
+      "UniMiB-SHAR": 0.0244
+     }
+    },
+    "gain": 0.013157873449397207
+   }
+  ],
+  "all12": [
+   {
+    "size": 6,
+    "ft60_hard": {
+     "regret3": 0.028241701964443856,
+     "regret1": 0.07721038770112339,
+     "M1": 0.5125488051505565,
+     "M0": 0.7662916016622658,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0113,
+      "EthanolConcentration": 0.0454,
+      "HandMovementDirection": 0.0409,
+      "Handwriting": 0.0375,
+      "PhonemeSpectra": 0.036,
+      "UWaveGestureLibrary": 0.0092,
+      "UniMiB-SHAR": 0.0174
+     }
+    },
+    "blind_diff_hard": {
+     "regret3": 0.03203370942533112,
+     "regret1": 0.07714664210031012,
+     "M1": 0.47988028446756176,
+     "M0": 0.742906885516848,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0133,
+      "EthanolConcentration": 0.0479,
+      "HandMovementDirection": 0.0332,
+      "Handwriting": 0.0511,
+      "PhonemeSpectra": 0.0434,
+      "UWaveGestureLibrary": 0.0164,
+      "UniMiB-SHAR": 0.0189
+     }
+    },
+    "gain": 0.0037920074608872624
+   },
+   {
+    "size": 9,
+    "ft60_hard": {
+     "regret3": 0.03180808410558539,
+     "regret1": 0.0827084451229664,
+     "M1": 0.5054926116335452,
+     "M0": 0.7696472288209757,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0153,
+      "EthanolConcentration": 0.0501,
+      "HandMovementDirection": 0.0554,
+      "Handwriting": 0.0294,
+      "PhonemeSpectra": 0.0422,
+      "UWaveGestureLibrary": 0.0096,
+      "UniMiB-SHAR": 0.0206
+     }
+    },
+    "blind_diff_hard": {
+     "regret3": 0.031530068173620265,
+     "regret1": 0.08392703894324213,
+     "M1": 0.46898737626153764,
+     "M0": 0.759560179393181,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0155,
+      "EthanolConcentration": 0.0496,
+      "HandMovementDirection": 0.0232,
+      "Handwriting": 0.0511,
+      "PhonemeSpectra": 0.039,
+      "UWaveGestureLibrary": 0.0178,
+      "UniMiB-SHAR": 0.0246
+     }
+    },
+    "gain": -0.00027801593196512264
+   },
+   {
+    "size": 12,
+    "ft60_hard": {
+     "regret3": 0.033713274247509806,
+     "regret1": 0.07777136439492226,
+     "M1": 0.5033449552931718,
+     "M0": 0.7642069658064762,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0152,
+      "EthanolConcentration": 0.0485,
+      "HandMovementDirection": 0.0695,
+      "Handwriting": 0.0359,
+      "PhonemeSpectra": 0.0354,
+      "UWaveGestureLibrary": 0.0131,
+      "UniMiB-SHAR": 0.0183
+     }
+    },
+    "blind_diff_hard": {
+     "regret3": 0.04245336845964747,
+     "regret1": 0.0964581734181257,
+     "M1": 0.4666632566527216,
+     "M0": 0.7506612756098121,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0226,
+      "EthanolConcentration": 0.0514,
+      "HandMovementDirection": 0.074,
+      "Handwriting": 0.0642,
+      "PhonemeSpectra": 0.0463,
+      "UWaveGestureLibrary": 0.0144,
+      "UniMiB-SHAR": 0.0243
+     }
+    },
+    "gain": 0.008740094212137665
+   }
+  ]
+ },
+ "paired": {
+  "ext:S6->S12": {
+   "ft60_hard": {
+    "n": 252,
+    "mean_a": 0.03231198846378272,
+    "mean_b": 0.03614582631208523,
+    "p": 0.7979076487994851,
+    "wins_b": 54,
+    "losses_b": 57,
+    "ties": 141
+   },
+   "blind_diff_hard": {
+    "n": 252,
+    "mean_a": 0.032976046230903625,
+    "mean_b": 0.04930369976148244,
+    "p": 0.999999745750906,
+    "wins_b": 42,
+    "losses_b": 85,
+    "ties": 125
+   }
+  },
+  "ext:S6->S9": {
+   "ft60_hard": {
+    "n": 252,
+    "mean_a": 0.03231198846378272,
+    "mean_b": 0.03208896162003584,
+    "p": 0.2996103407115013,
+    "wins_b": 40,
+    "losses_b": 36,
+    "ties": 176
+   },
+   "blind_diff_hard": {
+    "n": 252,
+    "mean_a": 0.032976046230903625,
+    "mean_b": 0.032234242474349376,
+    "p": 0.45874716002824223,
+    "wins_b": 42,
+    "losses_b": 39,
+    "ties": 171
+   }
+  },
+  "ext:S9->S12": {
+   "ft60_hard": {
+    "n": 252,
+    "mean_a": 0.03208896162003584,
+    "mean_b": 0.03614582631208523,
+    "p": 0.9095834724140361,
+    "wins_b": 46,
+    "losses_b": 49,
+    "ties": 157
+   },
+   "blind_diff_hard": {
+    "n": 252,
+    "mean_a": 0.032234242474349376,
+    "mean_b": 0.04930369976148244,
+    "p": 0.9999999642857815,
+    "wins_b": 31,
+    "losses_b": 80,
+    "ties": 141
+   }
+  },
+  "all12:S6->S12": {
+   "ft60_hard": {
+    "n": 504,
+    "mean_a": 0.028241701964443852,
+    "mean_b": 0.033713274247509806,
+    "p": 0.9981709906995013,
+    "wins_b": 91,
+    "losses_b": 124,
+    "ties": 289
+   },
+   "blind_diff_hard": {
+    "n": 504,
+    "mean_a": 0.03203370942533112,
+    "mean_b": 0.04245336845964747,
+    "p": 0.9999998253218042,
+    "wins_b": 96,
+    "losses_b": 165,
+    "ties": 243
+   }
+  },
+  "all12:S6->S9": {
+   "ft60_hard": {
+    "n": 504,
+    "mean_a": 0.028241701964443852,
+    "mean_b": 0.03180808410558538,
+    "p": 0.9960572021340192,
+    "wins_b": 60,
+    "losses_b": 97,
+    "ties": 347
+   },
+   "blind_diff_hard": {
+    "n": 504,
+    "mean_a": 0.03203370942533112,
+    "mean_b": 0.031530068173620265,
+    "p": 0.6031456787311069,
+    "wins_b": 85,
+    "losses_b": 90,
+    "ties": 329
+   }
+  },
+  "all12:S9->S12": {
+   "ft60_hard": {
+    "n": 504,
+    "mean_a": 0.03180808410558538,
+    "mean_b": 0.033713274247509806,
+    "p": 0.756264797956065,
+    "wins_b": 85,
+    "losses_b": 82,
+    "ties": 337
+   },
+   "blind_diff_hard": {
+    "n": 504,
+    "mean_a": 0.031530068173620265,
+    "mean_b": 0.04245336845964747,
+    "p": 0.9999999578004102,
+    "wins_b": 73,
+    "losses_b": 140,
+    "ties": 291
+   }
+  }
+ }
+}

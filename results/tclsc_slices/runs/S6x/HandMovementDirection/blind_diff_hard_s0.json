@@ -1,0 +1,12 @@
+{
+ "tag": "S6x",
+ "test": "HandMovementDirection",
+ "arm": "blind_diff_hard",
+ "seed": 0,
+ "n_train_slices": 39,
+ "n_train_records": 2340,
+ "train_seconds": 8.9,
+ "bce_first": 0.6927646636962891,
+ "bce_last": 0.1246999938573156,
+ "train_pairs_last": 851
+}

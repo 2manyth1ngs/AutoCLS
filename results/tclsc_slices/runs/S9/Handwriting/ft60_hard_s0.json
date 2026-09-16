@@ -1,0 +1,12 @@
+{
+ "tag": "S9",
+ "test": "Handwriting",
+ "arm": "ft60_hard",
+ "seed": 0,
+ "n_train_slices": 57,
+ "n_train_records": 3420,
+ "train_seconds": 10.2,
+ "bce_first": 0.7408879314150129,
+ "bce_last": 0.029632523900976305,
+ "train_pairs_last": 1167
+}

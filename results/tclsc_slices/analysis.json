@@ -1,0 +1,436 @@
+{
+ "protocol": "results/tclsc_slices/PROTOCOL.md",
+ "curves": [
+  {
+   "size": 6,
+   "ft60_hard": {
+    "regret3": 0.024171415465104987,
+    "regret1": 0.06899344260081175,
+    "M1": 0.5344967992356902,
+    "M0": 0.7807312567733518,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.008,
+     "EthanolConcentration": 0.028,
+     "HandMovementDirection": 0.0455,
+     "Handwriting": 0.027,
+     "PhonemeSpectra": 0.0339,
+     "UWaveGestureLibrary": 0.0095,
+     "UniMiB-SHAR": 0.0173
+    }
+   },
+   "blind_diff_hard": {
+    "regret3": 0.031091372619758608,
+    "regret1": 0.07066573748513692,
+    "M1": 0.5060493650504577,
+    "M0": 0.759064385176805,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0123,
+     "EthanolConcentration": 0.0383,
+     "HandMovementDirection": 0.0414,
+     "Handwriting": 0.0495,
+     "PhonemeSpectra": 0.0416,
+     "UWaveGestureLibrary": 0.0164,
+     "UniMiB-SHAR": 0.0181
+    }
+   },
+   "gain": 0.006919957154653621
+  },
+  {
+   "size": 9,
+   "ft60_hard": {
+    "regret3": 0.03152720659113492,
+    "regret1": 0.0724317576644319,
+    "M1": 0.5312389610126816,
+    "M0": 0.7836286092877949,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0124,
+     "EthanolConcentration": 0.0434,
+     "HandMovementDirection": 0.0502,
+     "Handwriting": 0.0369,
+     "PhonemeSpectra": 0.0447,
+     "UWaveGestureLibrary": 0.0097,
+     "UniMiB-SHAR": 0.0234
+    }
+   },
+   "blind_diff_hard": {
+    "regret3": 0.030825893872891152,
+    "regret1": 0.08131687065480173,
+    "M1": 0.47615970794922713,
+    "M0": 0.7692417393029435,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0152,
+     "EthanolConcentration": 0.042,
+     "HandMovementDirection": 0.0339,
+     "Handwriting": 0.0463,
+     "PhonemeSpectra": 0.0364,
+     "UWaveGestureLibrary": 0.0157,
+     "UniMiB-SHAR": 0.0263
+    }
+   },
+   "gain": -0.0007013127182437691
+  },
+  {
+   "size": 12,
+   "ft60_hard": {
+    "regret3": 0.03128072218293439,
+    "regret1": 0.0695853589801725,
+    "M1": 0.5432513304599446,
+    "M0": 0.7850643634620433,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0129,
+     "EthanolConcentration": 0.0392,
+     "HandMovementDirection": 0.0527,
+     "Handwriting": 0.0431,
+     "PhonemeSpectra": 0.0384,
+     "UWaveGestureLibrary": 0.0107,
+     "UniMiB-SHAR": 0.0219
+    }
+   },
+   "blind_diff_hard": {
+    "regret3": 0.03560303715781251,
+    "regret1": 0.10016296004036149,
+    "M1": 0.5112366592663898,
+    "M0": 0.7560565608650136,
+    "n": 252,
+    "regret3_by_fold": {
+     "Cricket": 0.0142,
+     "EthanolConcentration": 0.0434,
+     "HandMovementDirection": 0.0598,
+     "Handwriting": 0.0547,
+     "PhonemeSpectra": 0.0375,
+     "UWaveGestureLibrary": 0.0155,
+     "UniMiB-SHAR": 0.0242
+    }
+   },
+   "gain": 0.004322314974878123
+  }
+ ],
+ "c0": {
+  "ft60_hard": {
+   "value": 0.0242,
+   "ref": 0.0242,
+   "pass": true
+  },
+  "blind_diff_hard": {
+   "value": 0.0311,
+   "ref": 0.0311,
+   "pass": true
+  }
+ },
+ "paired": {
+  "S6->S12": {
+   "ft60_hard": {
+    "n": 252,
+    "mean_a": 0.024171415465104987,
+    "mean_b": 0.031280722182934394,
+    "p": 0.999790948618067,
+    "wins_b": 37,
+    "losses_b": 67,
+    "ties": 148
+   },
+   "blind_diff_hard": {
+    "n": 252,
+    "mean_a": 0.031091372619758605,
+    "mean_b": 0.0356030371578125,
+    "p": 0.9832246996670163,
+    "wins_b": 54,
+    "losses_b": 80,
+    "ties": 118
+   }
+  },
+  "S6->S9": {
+   "ft60_hard": {
+    "n": 252,
+    "mean_a": 0.024171415465104987,
+    "mean_b": 0.03152720659113492,
+    "p": 0.9999972673481093,
+    "wins_b": 20,
+    "losses_b": 61,
+    "ties": 171
+   },
+   "blind_diff_hard": {
+    "n": 252,
+    "mean_a": 0.031091372619758605,
+    "mean_b": 0.030825893872891152,
+    "p": 0.6356852212378552,
+    "wins_b": 43,
+    "losses_b": 51,
+    "ties": 158
+   }
+  },
+  "S9->S12": {
+   "ft60_hard": {
+    "n": 252,
+    "mean_a": 0.03152720659113492,
+    "mean_b": 0.031280722182934394,
+    "p": 0.268511337737356,
+    "wins_b": 39,
+    "losses_b": 33,
+    "ties": 180
+   },
+   "blind_diff_hard": {
+    "n": 252,
+    "mean_a": 0.030825893872891152,
+    "mean_b": 0.0356030371578125,
+    "p": 0.9772320351652741,
+    "wins_b": 42,
+    "losses_b": 60,
+    "ties": 150
+   }
+  }
+ },
+ "gates": {
+  "G-S1": false,
+  "G-S2": false
+ },
+ "curve": "FLAT",
+ "verdict": "SLICE-FLAT",
+ "official": {
+  "tag": "S12",
+  "targets": {
+   "Handwriting": {
+    "ref": {
+     "prior": {
+      "acc": 0.4188235294117647,
+      "champion": "9092e36eefe1"
+     },
+     "blind_tclsc": {
+      "acc": 0.4188235294117647,
+      "champion": "9092e36eefe1"
+     },
+     "et_tclsc": {
+      "acc": 0.5423529411764706,
+      "champion": "e490b88ee785"
+     }
+    },
+    "prior": {
+     "acc": 0.4188235294117647,
+     "champion": "9092e36eefe1",
+     "match_seed0": false
+    },
+    "blind_tclsc": {
+     "acc": 0.5458823529411765,
+     "champion": "c92058f26c1d",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.4188235294117647,
+     "champion": "9092e36eefe1",
+     "match_seed0": false
+    }
+   },
+   "UWaveGestureLibrary": {
+    "ref": {
+     "prior": {
+      "acc": 0.93125,
+      "champion": "8c4aa28336d6"
+     },
+     "blind_tclsc": {
+      "acc": 0.93125,
+      "champion": "8c4aa28336d6"
+     },
+     "et_tclsc": {
+      "acc": 0.93125,
+      "champion": "8c4aa28336d6"
+     }
+    },
+    "prior": {
+     "acc": 0.93125,
+     "champion": "8c4aa28336d6",
+     "match_seed0": true
+    },
+    "blind_tclsc": {
+     "acc": 0.93125,
+     "champion": "8c4aa28336d6",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.93125,
+     "champion": "8c4aa28336d6",
+     "match_seed0": true
+    }
+   },
+   "PhonemeSpectra": {
+    "ref": {
+     "prior": {
+      "acc": 0.25082016104980615,
+      "champion": "4f7d413581f6"
+     },
+     "blind_tclsc": {
+      "acc": 0.25082016104980615,
+      "champion": "4f7d413581f6"
+     },
+     "et_tclsc": {
+      "acc": 0.25082016104980615,
+      "champion": "4f7d413581f6"
+     }
+    },
+    "prior": {
+     "acc": 0.25082016104980615,
+     "champion": "4f7d413581f6",
+     "match_seed0": true
+    },
+    "blind_tclsc": {
+     "acc": 0.25082016104980615,
+     "champion": "4f7d413581f6",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.25082016104980615,
+     "champion": "4f7d413581f6",
+     "match_seed0": true
+    }
+   },
+   "EthanolConcentration": {
+    "ref": {
+     "prior": {
+      "acc": 0.2737642585551331,
+      "champion": "e490b88ee785"
+     },
+     "blind_tclsc": {
+      "acc": 0.2737642585551331,
+      "champion": "e490b88ee785"
+     },
+     "et_tclsc": {
+      "acc": 0.2965779467680608,
+      "champion": "cffb55035c3a"
+     }
+    },
+    "prior": {
+     "acc": 0.2737642585551331,
+     "champion": "e490b88ee785",
+     "match_seed0": false
+    },
+    "blind_tclsc": {
+     "acc": 0.2965779467680608,
+     "champion": "cffb55035c3a",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.2965779467680608,
+     "champion": "cffb55035c3a",
+     "match_seed0": true
+    }
+   },
+   "Cricket": {
+    "ref": {
+     "prior": {
+      "acc": 1.0,
+      "champion": "c92058f26c1d"
+     },
+     "blind_tclsc": {
+      "acc": 0.9861111111111112,
+      "champion": "a1f67db45e64"
+     },
+     "et_tclsc": {
+      "acc": 0.9861111111111112,
+      "champion": "a1f67db45e64"
+     }
+    },
+    "prior": {
+     "acc": 1.0,
+     "champion": "c92058f26c1d",
+     "match_seed0": true
+    },
+    "blind_tclsc": {
+     "acc": 0.9861111111111112,
+     "champion": "a1f67db45e64",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.9861111111111112,
+     "champion": "a1f67db45e64",
+     "match_seed0": true
+    }
+   },
+   "HandMovementDirection": {
+    "ref": {
+     "prior": {
+      "acc": 0.3783783783783784,
+      "champion": "9092e36eefe1"
+     },
+     "blind_tclsc": {
+      "acc": 0.3783783783783784,
+      "champion": "9092e36eefe1"
+     },
+     "et_tclsc": {
+      "acc": 0.3783783783783784,
+      "champion": "9092e36eefe1"
+     }
+    },
+    "prior": {
+     "acc": 0.3783783783783784,
+     "champion": "9092e36eefe1",
+     "match_seed0": true
+    },
+    "blind_tclsc": {
+     "acc": 0.3783783783783784,
+     "champion": "9092e36eefe1",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.3783783783783784,
+     "champion": "9092e36eefe1",
+     "match_seed0": true
+    }
+   }
+  },
+  "summary": {
+   "prior": {
+    "mean_seed0": 0.5421727212325137,
+    "n_match_seed0": 4,
+    "n_champion_changed": 0
+   },
+   "blind_tclsc": {
+    "mean_seed0": 0.5648366583747555,
+    "n_match_seed0": 6,
+    "n_champion_changed": 2
+   },
+   "et_tclsc": {
+    "mean_seed0": 0.5436601877865203,
+    "n_match_seed0": 5,
+    "n_champion_changed": 1
+   },
+   "ref_et_mean": 0.5642484230806378,
+   "ref_blind_mean": 0.5398579064176989
+  }
+ },
+ "predictions": {
+  "P1": {
+   "desc": "C0 过",
+   "hit": true
+  },
+  "P2": {
+   "desc": "S12 E_T 比 S6 低 ≥ 0.002",
+   "value": 0.0071,
+   "hit": false
+  },
+  "P3": {
+   "desc": "G-S1 显著",
+   "hit": false
+  },
+  "P4": {
+   "desc": "E 增益(S12) > 0.0069",
+   "value": 0.0043,
+   "hit": false
+  },
+  "P5": {
+   "desc": "任务盲 S12 < S6",
+   "hit": false
+  },
+  "P6": {
+   "desc": "副读数 S12 官方六靶 seed-0 均值 ≥ 0.564",
+   "value": 0.5436601877865203,
+   "hit": false
+  },
+  "P7": {
+   "desc": "S9 在 S6 与 S12 之间",
+   "hit": false
+  }
+ }
+}

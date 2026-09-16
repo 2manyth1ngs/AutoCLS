@@ -1,0 +1,12 @@
+{
+ "tag": "S6x",
+ "test": "UWaveGestureLibrary",
+ "arm": "blind_diff_hard",
+ "seed": 3,
+ "n_train_slices": 39,
+ "n_train_records": 2340,
+ "train_seconds": 8.6,
+ "bce_first": 0.6893831610679626,
+ "bce_last": 0.11848704488231586,
+ "train_pairs_last": 792
+}

@@ -1,0 +1,12 @@
+{
+ "tag": "S9",
+ "test": "Cricket",
+ "arm": "ft60_hard",
+ "seed": 2,
+ "n_train_slices": 57,
+ "n_train_records": 3420,
+ "train_seconds": 10.2,
+ "bce_first": 0.6945611983537674,
+ "bce_last": 0.03915746328420937,
+ "train_pairs_last": 1237
+}
