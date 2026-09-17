@@ -1,0 +1,12 @@
+{
+ "tag": "K3",
+ "test": "UWaveGestureLibrary",
+ "arm": "ft60_hard",
+ "seed": 0,
+ "n_train_slices": 75,
+ "n_train_records": 2250,
+ "train_seconds": 12.9,
+ "bce_first": 0.6725059279373714,
+ "bce_last": 0.029745463776635006,
+ "train_pairs_last": 900
+}

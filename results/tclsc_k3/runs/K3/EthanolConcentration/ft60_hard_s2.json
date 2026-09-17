@@ -1,0 +1,12 @@
+{
+ "tag": "K3",
+ "test": "EthanolConcentration",
+ "arm": "ft60_hard",
+ "seed": 2,
+ "n_train_slices": 75,
+ "n_train_records": 2250,
+ "train_seconds": 13.1,
+ "bce_first": 0.6776022400174823,
+ "bce_last": 0.012624777786965882,
+ "train_pairs_last": 890
+}

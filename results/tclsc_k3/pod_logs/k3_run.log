@@ -1,0 +1,14 @@
+CUDA NVIDIA GeForce RTX 5090
+== [23:28:16] rprime start (3 procs)
+pids 2162 2163 2164
+== [08:00:18] all rprime processes exited
+merged p2: 1200 rows
+merged p3: 2454 rows
+== main rows: 4254
+[verify] cells 1740 rows 5214 missing 2 dup 0 errors 0 → NOT OK
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from hard link targets
+-rw-rw-rw- 1 root root 190712 Sep 17 08:00 /workspace/upload_k3/out_k3.tar.gz
+name, memory.used [MiB], utilization.gpu [%]
+NVIDIA GeForce RTX 5090, 1 MiB, 0 %
+== [08:00:24] k3 done

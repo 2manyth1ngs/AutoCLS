@@ -1,0 +1,12 @@
+{
+ "tag": "K3",
+ "test": "Handwriting",
+ "arm": "ft60_hard",
+ "seed": 4,
+ "n_train_slices": 75,
+ "n_train_records": 2250,
+ "train_seconds": 12.3,
+ "bce_first": 0.678648618551401,
+ "bce_last": 0.029490861038749035,
+ "train_pairs_last": 811
+}

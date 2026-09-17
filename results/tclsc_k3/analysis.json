@@ -1,0 +1,792 @@
+{
+ "protocol": "results/tclsc_k3/PROTOCOL.md",
+ "tables": {
+  "k3": {
+   "K1": {
+    "ft60_hard": {
+     "regret3": 0.016133600647398882,
+     "regret1": 0.054854654855956544,
+     "M1": 0.6063531353135314,
+     "M0": 0.7993841804483205,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0036,
+      "EthanolConcentration": 0.023,
+      "HandMovementDirection": 0.0204,
+      "Handwriting": 0.0238,
+      "PhonemeSpectra": 0.0272,
+      "UWaveGestureLibrary": 0.0049,
+      "UniMiB-SHAR": 0.01
+     },
+     "hit3": 0.5436507936507936
+    },
+    "blind_diff_hard": {
+     "regret3": 0.01951499326853921,
+     "regret1": 0.05032394286539623,
+     "M1": 0.45445544554455436,
+     "M0": 0.8212439021555685,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0029,
+      "EthanolConcentration": 0.0229,
+      "HandMovementDirection": 0.0014,
+      "Handwriting": 0.0516,
+      "PhonemeSpectra": 0.0397,
+      "UWaveGestureLibrary": 0.0064,
+      "UniMiB-SHAR": 0.0116
+     },
+     "hit3": 0.44841269841269843
+    },
+    "prior": {
+     "regret3": 0.02193577561949998,
+     "regret1": 0.03337982605809049,
+     "M1": 0.4433993399339934,
+     "M0": 0.815996444241904,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.002,
+      "EthanolConcentration": 0.0279,
+      "HandMovementDirection": 0.0035,
+      "Handwriting": 0.0516,
+      "PhonemeSpectra": 0.0438,
+      "UWaveGestureLibrary": 0.0064,
+      "UniMiB-SHAR": 0.0183
+     },
+     "hit3": 0.4087301587301587
+    }
+   },
+   "K3": {
+    "ft60_hard": {
+     "regret3": 0.015126845604847334,
+     "regret1": 0.06116249922679759,
+     "M1": 0.5683993399339934,
+     "M0": 0.8074469707550851,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.004,
+      "EthanolConcentration": 0.0175,
+      "HandMovementDirection": 0.0435,
+      "Handwriting": 0.0083,
+      "PhonemeSpectra": 0.0176,
+      "UWaveGestureLibrary": 0.0065,
+      "UniMiB-SHAR": 0.0085
+     },
+     "hit3": 0.5595238095238095
+    },
+    "blind_diff_hard": {
+     "regret3": 0.0191270779704348,
+     "regret1": 0.05152550846067746,
+     "M1": 0.46765676567656767,
+     "M0": 0.8163235954840081,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0029,
+      "EthanolConcentration": 0.0279,
+      "HandMovementDirection": 0.0014,
+      "Handwriting": 0.0452,
+      "PhonemeSpectra": 0.0397,
+      "UWaveGestureLibrary": 0.0086,
+      "UniMiB-SHAR": 0.0081
+     },
+     "hit3": 0.44841269841269843
+    },
+    "prior": {
+     "regret3": 0.019638512224729895,
+     "regret1": 0.05152550846067746,
+     "M1": 0.4293729372937294,
+     "M0": 0.8079549959955244,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0029,
+      "EthanolConcentration": 0.0294,
+      "HandMovementDirection": 0.0035,
+      "Handwriting": 0.0452,
+      "PhonemeSpectra": 0.0397,
+      "UWaveGestureLibrary": 0.0086,
+      "UniMiB-SHAR": 0.0081
+     },
+     "hit3": 0.42857142857142855
+    }
+   }
+  },
+  "k1": {
+   "K1": {
+    "ft60_hard": {
+     "regret3": 0.01962918358976628,
+     "regret1": 0.06268334093294418,
+     "M1": 0.5572916666666667,
+     "M0": 0.8377136036942923,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0081,
+      "EthanolConcentration": 0.0276,
+      "HandMovementDirection": 0.0354,
+      "Handwriting": 0.0227,
+      "PhonemeSpectra": 0.0264,
+      "UWaveGestureLibrary": 0.0051,
+      "UniMiB-SHAR": 0.0122
+     },
+     "hit3": 0.5694444444444444
+    },
+    "blind_diff_hard": {
+     "regret3": 0.0233428125633899,
+     "regret1": 0.05588425383863099,
+     "M1": 0.40625,
+     "M0": 0.8411084940171114,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0081,
+      "EthanolConcentration": 0.0278,
+      "HandMovementDirection": 0.0141,
+      "Handwriting": 0.0545,
+      "PhonemeSpectra": 0.0384,
+      "UWaveGestureLibrary": 0.0073,
+      "UniMiB-SHAR": 0.0132
+     },
+     "hit3": 0.44841269841269843
+    },
+    "prior": {
+     "regret3": 0.025113637349077057,
+     "regret1": 0.040278756206528925,
+     "M1": 0.4104166666666666,
+     "M0": 0.8427157722920186,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0062,
+      "EthanolConcentration": 0.0311,
+      "HandMovementDirection": 0.0173,
+      "Handwriting": 0.0545,
+      "PhonemeSpectra": 0.0416,
+      "UWaveGestureLibrary": 0.0073,
+      "UniMiB-SHAR": 0.0179
+     },
+     "hit3": 0.42063492063492064
+    }
+   },
+   "K3": {
+    "ft60_hard": {
+     "regret3": 0.01889582513088775,
+     "regret1": 0.06984476729778301,
+     "M1": 0.5041666666666667,
+     "M0": 0.8338466652047252,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0102,
+      "EthanolConcentration": 0.0208,
+      "HandMovementDirection": 0.0577,
+      "Handwriting": 0.0078,
+      "PhonemeSpectra": 0.0176,
+      "UWaveGestureLibrary": 0.0082,
+      "UniMiB-SHAR": 0.01
+     },
+     "hit3": 0.5694444444444444
+    },
+    "blind_diff_hard": {
+     "regret3": 0.022263120282764132,
+     "regret1": 0.059856405276846165,
+     "M1": 0.3979166666666666,
+     "M0": 0.8418837140590316,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0081,
+      "EthanolConcentration": 0.0311,
+      "HandMovementDirection": 0.0141,
+      "Handwriting": 0.0455,
+      "PhonemeSpectra": 0.0384,
+      "UWaveGestureLibrary": 0.0092,
+      "UniMiB-SHAR": 0.0094
+     },
+     "hit3": 0.4642857142857143
+    },
+    "prior": {
+     "regret3": 0.02264028713571965,
+     "regret1": 0.059856405276846165,
+     "M1": 0.41875,
+     "M0": 0.8346445085807404,
+     "n": 504,
+     "regret3_by_fold": {
+      "Cricket": 0.0081,
+      "EthanolConcentration": 0.0306,
+      "HandMovementDirection": 0.0173,
+      "Handwriting": 0.0455,
+      "PhonemeSpectra": 0.0384,
+      "UWaveGestureLibrary": 0.0092,
+      "UniMiB-SHAR": 0.0094
+     },
+     "hit3": 0.44841269841269843
+    }
+   }
+  }
+ },
+ "ablation": {
+  "k3:K1": {
+   "cross": {
+    "n": 504,
+    "normal": 0.016133600647398882,
+    "cross": 0.021790187768982845,
+    "mean_delta": 0.005656587121583964,
+    "p": 1.2407794973681784e-11,
+    "wins": 296,
+    "losses": 131
+   },
+   "zero": {
+    "n": 504,
+    "normal": 0.016133600647398882,
+    "cross": 0.02061155782221537,
+    "mean_delta": 0.004477957174816489,
+    "p": 0.0002757653166638874,
+    "wins": 139,
+    "losses": 104
+   },
+   "e_vs_blind": {
+    "a": "blind_diff_hard",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.01951499326853921,
+    "mean_b": 0.016133600647398882,
+    "p": 1.434841732555403e-05,
+    "wins_b": 131,
+    "losses_b": 81,
+    "ties": 292
+   },
+   "e_vs_prior": {
+    "a": "prior",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.02193577561949998,
+    "mean_b": 0.016133600647398882,
+    "p": 3.01695137843917e-10,
+    "wins_b": 184,
+    "losses_b": 90,
+    "ties": 230
+   },
+   "blind_vs_prior": {
+    "a": "prior",
+    "b": "blind_diff_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.02193577561949998,
+    "mean_b": 0.01951499326853921,
+    "p": 1.2608876438025355e-07,
+    "wins_b": 88,
+    "losses_b": 40,
+    "ties": 376
+   }
+  },
+  "k3:K3": {
+   "cross": {
+    "n": 504,
+    "normal": 0.015126845604847334,
+    "cross": 0.022582514988389313,
+    "mean_delta": 0.007455669383541978,
+    "p": 7.385949805821518e-15,
+    "wins": 301,
+    "losses": 126
+   },
+   "zero": {
+    "n": 504,
+    "normal": 0.015126845604847334,
+    "cross": 0.020774031237821223,
+    "mean_delta": 0.00564718563297389,
+    "p": 5.588154230568148e-08,
+    "wins": 161,
+    "losses": 86
+   },
+   "e_vs_blind": {
+    "a": "blind_diff_hard",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.0191270779704348,
+    "mean_b": 0.015126845604847334,
+    "p": 8.730415476573059e-06,
+    "wins_b": 191,
+    "losses_b": 110,
+    "ties": 203
+   },
+   "e_vs_prior": {
+    "a": "prior",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.019638512224729895,
+    "mean_b": 0.015126845604847334,
+    "p": 3.486892579344371e-07,
+    "wins_b": 191,
+    "losses_b": 102,
+    "ties": 211
+   },
+   "blind_vs_prior": {
+    "a": "prior",
+    "b": "blind_diff_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.019638512224729895,
+    "mean_b": 0.0191270779704348,
+    "p": 0.11287681192932081,
+    "wins_b": 20,
+    "losses_b": 18,
+    "ties": 466
+   }
+  },
+  "k1:K1": {
+   "cross": {
+    "n": 504,
+    "normal": 0.01962918358976628,
+    "cross": 0.023751625633539414,
+    "mean_delta": 0.004122442043773132,
+    "p": 1.0969016262081359e-07,
+    "wins": 271,
+    "losses": 126
+   },
+   "zero": {
+    "n": 504,
+    "normal": 0.01962918358976628,
+    "cross": 0.02355477417827874,
+    "mean_delta": 0.003925590588512461,
+    "p": 0.0007264290574761498,
+    "wins": 135,
+    "losses": 88
+   },
+   "e_vs_blind": {
+    "a": "blind_diff_hard",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.0233428125633899,
+    "mean_b": 0.01962918358976628,
+    "p": 2.576779699431898e-05,
+    "wins_b": 127,
+    "losses_b": 64,
+    "ties": 313
+   },
+   "e_vs_prior": {
+    "a": "prior",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.025113637349077057,
+    "mean_b": 0.01962918358976628,
+    "p": 5.044906515185553e-08,
+    "wins_b": 166,
+    "losses_b": 88,
+    "ties": 250
+   },
+   "blind_vs_prior": {
+    "a": "prior",
+    "b": "blind_diff_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.025113637349077057,
+    "mean_b": 0.0233428125633899,
+    "p": 0.0025587559262397644,
+    "wins_b": 74,
+    "losses_b": 48,
+    "ties": 382
+   }
+  },
+  "k1:K3": {
+   "cross": {
+    "n": 504,
+    "normal": 0.018895825130887747,
+    "cross": 0.02396092704717035,
+    "mean_delta": 0.0050651019162826025,
+    "p": 2.501551766388893e-09,
+    "wins": 274,
+    "losses": 114
+   },
+   "zero": {
+    "n": 504,
+    "normal": 0.018895825130887747,
+    "cross": 0.02388134954931319,
+    "mean_delta": 0.00498552441842544,
+    "p": 2.65519851531268e-06,
+    "wins": 150,
+    "losses": 85
+   },
+   "e_vs_blind": {
+    "a": "blind_diff_hard",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.022263120282764132,
+    "mean_b": 0.01889582513088775,
+    "p": 0.0002156362044676116,
+    "wins_b": 181,
+    "losses_b": 112,
+    "ties": 211
+   },
+   "e_vs_prior": {
+    "a": "prior",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.02264028713571965,
+    "mean_b": 0.01889582513088775,
+    "p": 6.102945512312257e-05,
+    "wins_b": 181,
+    "losses_b": 102,
+    "ties": 221
+   },
+   "blind_vs_prior": {
+    "a": "prior",
+    "b": "blind_diff_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.02264028713571965,
+    "mean_b": 0.022263120282764132,
+    "p": 0.2636941131279469,
+    "wins_b": 22,
+    "losses_b": 18,
+    "ties": 464
+   }
+  }
+ },
+ "paired": {
+  "k3:ft60_hard:K1->K3": {
+   "n": 504,
+   "mean_a": 0.016133600647398882,
+   "mean_b": 0.015126845604847334,
+   "p": 0.08821333772832646,
+   "wins_b": 88,
+   "losses_b": 62,
+   "ties": 354
+  },
+  "k3:blind_diff_hard:K1->K3": {
+   "n": 504,
+   "mean_a": 0.01951499326853921,
+   "mean_b": 0.0191270779704348,
+   "p": 0.39084941560068664,
+   "wins_b": 62,
+   "losses_b": 70,
+   "ties": 372
+  },
+  "k1:ft60_hard:K1->K3": {
+   "n": 504,
+   "mean_a": 0.01962918358976628,
+   "mean_b": 0.018895825130887747,
+   "p": 0.19341685401755965,
+   "wins_b": 70,
+   "losses_b": 62,
+   "ties": 372
+  },
+  "k1:blind_diff_hard:K1->K3": {
+   "n": 504,
+   "mean_a": 0.0233428125633899,
+   "mean_b": 0.022263120282764132,
+   "p": 0.11440650924676726,
+   "wins_b": 68,
+   "losses_b": 60,
+   "ties": 376
+  }
+ },
+ "gates": {
+  "G-K1": true,
+  "G-K2": true,
+  "G-K3": false
+ },
+ "top3_agreement": {
+  "K1": {
+   "ft60_hard": 0.8253968253968254,
+   "blind_diff_hard": 1.0
+  },
+  "K3": {
+   "ft60_hard": 0.7976190476190477,
+   "blind_diff_hard": 1.0
+  }
+ },
+ "verdict": "K3-E-WIN",
+ "noise": {
+  "probe16@60": {
+   "r1_mean": 0.7773945249750968,
+   "sd_median": 0.019175085817420626,
+   "sd_mean": 0.0264842863968874,
+   "sb_k3": 0.9128673754769525,
+   "n_cells": 160
+  },
+  "probe16@120": {
+   "r1_mean": 0.6775426378839984,
+   "sd_median": 0.024337121482463135,
+   "sd_mean": 0.03388530338450791,
+   "sb_k3": 0.8630803880293261,
+   "n_cells": 160
+  },
+  "probe16@290": {
+   "r1_mean": 0.7403881601360763,
+   "sd_median": 0.020619652471058052,
+   "sd_mean": 0.027314631657049792,
+   "sb_k3": 0.8953505651668576,
+   "n_cells": 160
+  },
+  "new71@60": {
+   "r1_mean": 0.7242517100998948,
+   "sd_median": 0.022701847921699214,
+   "sd_mean": 0.029537906267577102,
+   "sb_k3": 0.8873808843290875,
+   "n_cells": 710
+  },
+  "new71@120": {
+   "r1_mean": 0.7351674618195748,
+   "sd_median": 0.021924693766694668,
+   "sd_mean": 0.030266442443937867,
+   "sb_k3": 0.8927948855654401,
+   "n_cells": 710
+  },
+  "new71@290": {
+   "r1_mean": 0.7476525443898044,
+   "sd_median": 0.022878726933447856,
+   "sd_mean": 0.03104211339951641,
+   "sb_k3": 0.8988711012753907,
+   "n_cells": 710
+  }
+ },
+ "official": {
+  "tag": "K3",
+  "targets": {
+   "Handwriting": {
+    "ref": {
+     "prior": {
+      "acc": 0.4188235294117647,
+      "champion": "9092e36eefe1"
+     },
+     "blind_tclsc": {
+      "acc": 0.4188235294117647,
+      "champion": "9092e36eefe1"
+     },
+     "et_tclsc": {
+      "acc": 0.5423529411764706,
+      "champion": "e490b88ee785"
+     }
+    },
+    "prior": {
+     "acc": 0.4188235294117647,
+     "champion": "9092e36eefe1",
+     "match_seed0": false
+    },
+    "blind_tclsc": {
+     "acc": 0.5423529411764706,
+     "champion": "e490b88ee785",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.5423529411764706,
+     "champion": "e490b88ee785",
+     "match_seed0": true
+    }
+   },
+   "UWaveGestureLibrary": {
+    "ref": {
+     "prior": {
+      "acc": 0.93125,
+      "champion": "8c4aa28336d6"
+     },
+     "blind_tclsc": {
+      "acc": 0.93125,
+      "champion": "8c4aa28336d6"
+     },
+     "et_tclsc": {
+      "acc": 0.93125,
+      "champion": "8c4aa28336d6"
+     }
+    },
+    "prior": {
+     "acc": 0.93125,
+     "champion": "8c4aa28336d6",
+     "match_seed0": true
+    },
+    "blind_tclsc": {
+     "acc": 0.93125,
+     "champion": "8c4aa28336d6",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.93125,
+     "champion": "8c4aa28336d6",
+     "match_seed0": true
+    }
+   },
+   "PhonemeSpectra": {
+    "ref": {
+     "prior": {
+      "acc": 0.25082016104980615,
+      "champion": "4f7d413581f6"
+     },
+     "blind_tclsc": {
+      "acc": 0.25082016104980615,
+      "champion": "4f7d413581f6"
+     },
+     "et_tclsc": {
+      "acc": 0.25082016104980615,
+      "champion": "4f7d413581f6"
+     }
+    },
+    "prior": {
+     "acc": 0.25082016104980615,
+     "champion": "4f7d413581f6",
+     "match_seed0": true
+    },
+    "blind_tclsc": {
+     "acc": 0.25082016104980615,
+     "champion": "4f7d413581f6",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.25082016104980615,
+     "champion": "4f7d413581f6",
+     "match_seed0": true
+    }
+   },
+   "EthanolConcentration": {
+    "ref": {
+     "prior": {
+      "acc": 0.2737642585551331,
+      "champion": "e490b88ee785"
+     },
+     "blind_tclsc": {
+      "acc": 0.2737642585551331,
+      "champion": "e490b88ee785"
+     },
+     "et_tclsc": {
+      "acc": 0.2965779467680608,
+      "champion": "cffb55035c3a"
+     }
+    },
+    "prior": {
+     "acc": 0.2737642585551331,
+     "champion": "e490b88ee785",
+     "match_seed0": false
+    },
+    "blind_tclsc": {
+     "acc": 0.2965779467680608,
+     "champion": "cffb55035c3a",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.2965779467680608,
+     "champion": "cffb55035c3a",
+     "match_seed0": true
+    }
+   },
+   "Cricket": {
+    "ref": {
+     "prior": {
+      "acc": 1.0,
+      "champion": "c92058f26c1d"
+     },
+     "blind_tclsc": {
+      "acc": 0.9861111111111112,
+      "champion": "a1f67db45e64"
+     },
+     "et_tclsc": {
+      "acc": 0.9861111111111112,
+      "champion": "a1f67db45e64"
+     }
+    },
+    "prior": {
+     "acc": 1.0,
+     "champion": "c92058f26c1d",
+     "match_seed0": true
+    },
+    "blind_tclsc": {
+     "acc": 0.9861111111111112,
+     "champion": "a1f67db45e64",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.9861111111111112,
+     "champion": "a1f67db45e64",
+     "match_seed0": true
+    }
+   },
+   "HandMovementDirection": {
+    "ref": {
+     "prior": {
+      "acc": 0.3783783783783784,
+      "champion": "9092e36eefe1"
+     },
+     "blind_tclsc": {
+      "acc": 0.3783783783783784,
+      "champion": "9092e36eefe1"
+     },
+     "et_tclsc": {
+      "acc": 0.3783783783783784,
+      "champion": "9092e36eefe1"
+     }
+    },
+    "prior": {
+     "acc": 0.3783783783783784,
+     "champion": "9092e36eefe1",
+     "match_seed0": true
+    },
+    "blind_tclsc": {
+     "acc": 0.3783783783783784,
+     "champion": "9092e36eefe1",
+     "match_seed0": true
+    },
+    "et_tclsc": {
+     "acc": 0.3108108108108108,
+     "champion": "8c4aa28336d6",
+     "match_seed0": true
+    }
+   }
+  },
+  "summary": {
+   "prior": {
+    "mean_seed0": 0.5421727212325137,
+    "n_match_seed0": 4,
+    "n_champion_changed": 0
+   },
+   "blind_tclsc": {
+    "mean_seed0": 0.5642484230806378,
+    "n_match_seed0": 6,
+    "n_champion_changed": 2
+   },
+   "et_tclsc": {
+    "mean_seed0": 0.5529871618193766,
+    "n_match_seed0": 6,
+    "n_champion_changed": 1
+   },
+   "ref_et_mean": 0.5642484230806378,
+   "ref_blind_mean": 0.5398579064176989
+  }
+ },
+ "predictions": {
+  "P1": {
+   "desc": "新切片 r₁@290 ∈ 0.74 ± 0.10",
+   "value": 0.748,
+   "hit": true
+  },
+  "P2": {
+   "desc": "K3 臂两组种子 top-3 一致率 > K1 臂",
+   "value": [
+    0.798,
+    0.825
+   ],
+   "hit": false
+  },
+  "P3": {
+   "desc": "G-K3",
+   "hit": false
+  },
+  "P4": {
+   "desc": "G-K1",
+   "hit": true
+  },
+  "P5": {
+   "desc": "G-K2",
+   "hit": true
+  },
+  "P6": {
+   "desc": "任务盲 K3 vs K1 Δ ≤ −0.002",
+   "value": -0.0004,
+   "hit": false
+  },
+  "P7": {
+   "desc": "副读数 K3 E_T 官方六靶 seed-0 均值 ≥ 0.564",
+   "value": 0.553,
+   "hit": false
+  }
+ }
+}

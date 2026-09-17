@@ -72,4 +72,5 @@
 
 ## §8 执行台账（跑后填写）
 
-（空）
+- 2026-09-17 01:02 pod c0salbhfodtrju（5090，host 64411f42）：开机 nvidia-smi / cuda 正常；bundle 经 HTTP 代理上传（PUT 接收器路径未改 → 落旧目录后移位，md5 全对）；setup 全绿（数据 md5、CUDA、1740 格、87 切片逐字段一致）；23:28 UTC 三进程开跑、3 分钟内首条轨迹落盘；08:00 UTC 完成（GPU 三进程 93% 饱和；SCP2_02 一格 OOM 两次 → 空闲后 --resume 补 6 min）；verify 1740/1740；拉回；10:06 stop + confirm 3/3，≈ 9.3 h ≈ $9.2。
+- 本地：--labels（2610 × 2）→ --train 168 跑 → --rank → --simulate-official → --analyze：**K3-E-WIN**（G-K1 ✓ G-K2 ✓ G-K3 ✗，预测 3/7）；REPORT.md。

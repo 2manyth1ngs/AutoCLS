@@ -1,0 +1,27 @@
+torch 2.8.0+cu128 cuda 12.8 dev NVIDIA GeForce RTX 5090
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ModuleNotFoundError: No module named 'scipy'
+Successfully installed aeon-1.3.0 deprecated-1.3.1 iniconfig-2.3.0 joblib-1.5.3 llvmlite-0.44.0 numba-0.61.2 pandas-2.3.3 pluggy-1.6.0 pytest-9.1.1 pytz-2026.3.post1 scikit-learn-1.7.2 scipy-1.15.3 threadpoolctl-3.6.0 tzdata-2026.4 wrapt-2.4.1
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+deps present after install
+== HEAD 93658ad0d450ffd623573adf4dd23d51bcbc25ab
+mfs#eur-no-1.runpod.net:9421 1006T  225T  782T  23% /workspace
+[skip] Handwriting: 两文件已在且 md5 与清单一致
+all ok: Handwriting
+[skip] PhonemeSpectra: 两文件已在且 md5 与清单一致
+all ok: PhonemeSpectra
+[skip] UWaveGestureLibrary: 两文件已在且 md5 与清单一致
+all ok: UWaveGestureLibrary
+[skip] EthanolConcentration: 两文件已在且 md5 与清单一致
+all ok: EthanolConcentration
+[skip] Cricket: 两文件已在且 md5 与清单一致
+all ok: Cricket
+[skip] HandMovementDirection: 两文件已在且 md5 与清单一致
+all ok: HandMovementDirection
+[skip] SelfRegulationSCP2: 两文件已在且 md5 与清单一致
+all ok: SelfRegulationSCP2
+== uea .ts md5 check: ALL MATCH
+CUDA gate OK
+== grid 1740 cells, 87 slices 逐字段一致
+== setup done

@@ -1,0 +1,12 @@
+{
+ "tag": "K1",
+ "test": "Cricket",
+ "arm": "ft60_hard",
+ "seed": 3,
+ "n_train_slices": 75,
+ "n_train_records": 2250,
+ "train_seconds": 9.8,
+ "bce_first": 0.7300237119197845,
+ "bce_last": 0.026970567554235457,
+ "train_pairs_last": 590
+}

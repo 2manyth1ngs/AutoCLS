@@ -1,0 +1,12 @@
+{
+ "tag": "K3",
+ "test": "PhonemeSpectra",
+ "arm": "ft60_hard",
+ "seed": 3,
+ "n_train_slices": 75,
+ "n_train_records": 2250,
+ "train_seconds": 11.9,
+ "bce_first": 0.7349337522800152,
+ "bce_last": 0.02593575256805007,
+ "train_pairs_last": 796
+}

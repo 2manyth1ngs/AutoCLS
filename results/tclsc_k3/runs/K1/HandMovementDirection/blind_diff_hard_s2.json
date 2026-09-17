@@ -1,0 +1,12 @@
+{
+ "tag": "K1",
+ "test": "HandMovementDirection",
+ "arm": "blind_diff_hard",
+ "seed": 2,
+ "n_train_slices": 75,
+ "n_train_records": 2250,
+ "train_seconds": 7.9,
+ "bce_first": 0.6854092895984649,
+ "bce_last": 0.28272891451012006,
+ "train_pairs_last": 645
+}

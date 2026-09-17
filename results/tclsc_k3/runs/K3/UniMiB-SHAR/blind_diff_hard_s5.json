@@ -1,0 +1,12 @@
+{
+ "tag": "K3",
+ "test": "UniMiB-SHAR",
+ "arm": "blind_diff_hard",
+ "seed": 5,
+ "n_train_slices": 75,
+ "n_train_records": 2250,
+ "train_seconds": 10.0,
+ "bce_first": 0.685076138802937,
+ "bce_last": 0.40581813028880526,
+ "train_pairs_last": 862
+}
