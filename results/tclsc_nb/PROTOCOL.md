@@ -63,4 +63,5 @@ G-N1 ✓ ∧ G-N2 ✓ ∧ G-N3 ✗ → **NB-OPEN-OVER**（排得比任务盲好�
 
 ## §7 执行台账（跑后填写）
 
-（空）
+- 2026-09-17 14:40 pod wfj9vkpayns3hg（5090）：nvidia-smi / cuda 正常；bundle 经 HTTP 代理上传（md5 全对）；setup 全绿（数据 md5、CUDA、870 格 / 87 切片对账）；14:08 UTC 三进程开跑、3 分钟内首条轨迹落盘；21:18 UTC 完成（Ethanol 争抢下 ~5 min/条为长杆，无 OOM）；verify 870/870；拉回；23:20 stop + confirm 3/3，≈ 7.2 h ≈ $7.1。
+- 本地：--labels → --train 84 跑 → --rank → --analyze：**NB-NO-HEADROOM**（G-N1 ✗ 超 δ 3%、G-N2 ✗、G-N3 ✓ 擦线，预测 3/6）；统计代码修一处键类型 bug 后重算（不涉模型 / 标签）；REPORT.md；按协议不做 NB2。
