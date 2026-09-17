@@ -1,0 +1,12 @@
+{
+ "tag": "NB",
+ "test": "Cricket",
+ "arm": "ft60_hard",
+ "seed": 2,
+ "n_train_slices": 75,
+ "n_train_records": 4500,
+ "train_seconds": 18.4,
+ "bce_first": 0.619635786328997,
+ "bce_last": 0.023811150896584705,
+ "train_pairs_last": 1312
+}

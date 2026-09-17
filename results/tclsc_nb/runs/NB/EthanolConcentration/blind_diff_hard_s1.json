@@ -1,0 +1,12 @@
+{
+ "tag": "NB",
+ "test": "EthanolConcentration",
+ "arm": "blind_diff_hard",
+ "seed": 1,
+ "n_train_slices": 75,
+ "n_train_records": 4500,
+ "train_seconds": 16.6,
+ "bce_first": 0.6874308268229167,
+ "bce_last": 0.09991425004872409,
+ "train_pairs_last": 1366
+}

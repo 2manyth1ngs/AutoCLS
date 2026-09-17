@@ -1,0 +1,12 @@
+{
+ "tag": "NB",
+ "test": "Handwriting",
+ "arm": "ft60_hard",
+ "seed": 2,
+ "n_train_slices": 75,
+ "n_train_records": 4500,
+ "train_seconds": 18.5,
+ "bce_first": 0.629393472121312,
+ "bce_last": 0.024658445023784514,
+ "train_pairs_last": 1194
+}

@@ -445,7 +445,7 @@ def neighbor_metrics(rk_by_target: Mapping, truth_rows: Sequence[dict], arms: Se
                         continue
                     order = [k for k in pa[a] if k in truth]
                     pos = {k: i for i, k in enumerate(order)}
-                    res[a]["pred_top3_nb"].append(np.mean([k in nb_of and (s, k) in nb_of for k in order[:3]]))
+                    res[a]["pred_top3_nb"].append(np.mean([(s, k) in nb_of for k in order[:3]]))
                     res[a]["true_top3_nb"].append(np.mean([(s, k) in nb_of for k in true_top3]))
                     pairs = [(x, y) for i, x in enumerate(nbs) for y in nbs[i + 1:] if truth[x] != truth[y]]
                     if pairs:

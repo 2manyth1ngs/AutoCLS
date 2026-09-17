@@ -1,0 +1,10 @@
+CUDA NVIDIA GeForce RTX 5090
+== [14:08:46] rprime start (3 procs)
+pids 1989 1990 1991
+== [21:18:47] all rprime processes exited
+merged p2: 1080 rows
+merged p3: 1080 rows
+== main rows: 2610
+[verify] cells 870 rows 2610 missing 0 dup 0 errors 0 → OK
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from hard link targets

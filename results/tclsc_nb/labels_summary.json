@@ -1,0 +1,168 @@
+{
+ "train_rows": 5220,
+ "truth_rows": 5220,
+ "nb_rows": 2610,
+ "headroom": {
+  "60": {
+   "budget": 60,
+   "n": 87,
+   "frac_positive": 0.6091954022988506,
+   "frac_over_delta": 0.0,
+   "median_gap": 0.01176470588235301,
+   "by_dataset": {
+    "Handwriting": {
+     "median_gap": 0.0031446540880503138,
+     "frac_positive": 0.5,
+     "n": 12
+    },
+    "UniMiB-SHAR": {
+     "median_gap": 0.013029315960912058,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "Cricket": {
+     "median_gap": 0.0,
+     "frac_positive": 0.4166666666666667,
+     "n": 12
+    },
+    "UWaveGestureLibrary": {
+     "median_gap": 0.014062500000000033,
+     "frac_positive": 0.75,
+     "n": 12
+    },
+    "PhonemeSpectra": {
+     "median_gap": 0.004258976317799812,
+     "frac_positive": 0.5,
+     "n": 12
+    },
+    "HandMovementDirection": {
+     "median_gap": 0.029138513513513487,
+     "frac_positive": 0.75,
+     "n": 12
+    },
+    "EthanolConcentration": {
+     "median_gap": 0.010683760683760701,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "SelfRegulationSCP2": {
+     "median_gap": 0.00877192982456143,
+     "frac_positive": 0.6666666666666666,
+     "n": 3
+    }
+   }
+  },
+  "120": {
+   "budget": 120,
+   "n": 87,
+   "frac_positive": 0.6551724137931034,
+   "frac_over_delta": 0.0,
+   "median_gap": 0.016000000000000014,
+   "by_dataset": {
+    "Handwriting": {
+     "median_gap": 0.017523809523809553,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "UniMiB-SHAR": {
+     "median_gap": 0.012971252048921966,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "Cricket": {
+     "median_gap": 0.012500000000000011,
+     "frac_positive": 0.5,
+     "n": 12
+    },
+    "UWaveGestureLibrary": {
+     "median_gap": 0.0,
+     "frac_positive": 0.3333333333333333,
+     "n": 12
+    },
+    "PhonemeSpectra": {
+     "median_gap": 0.014652830829301411,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "HandMovementDirection": {
+     "median_gap": 0.05532891381947985,
+     "frac_positive": 0.8333333333333334,
+     "n": 12
+    },
+    "EthanolConcentration": {
+     "median_gap": 0.01802871639857498,
+     "frac_positive": 0.9166666666666666,
+     "n": 12
+    },
+    "SelfRegulationSCP2": {
+     "median_gap": 0.00877192982456132,
+     "frac_positive": 0.6666666666666666,
+     "n": 3
+    }
+   }
+  },
+  "290": {
+   "budget": 290,
+   "n": 87,
+   "frac_positive": 0.5632183908045977,
+   "frac_over_delta": 0.034482758620689655,
+   "median_gap": 0.008064516129032362,
+   "by_dataset": {
+    "Handwriting": {
+     "median_gap": 0.006990837946173001,
+     "frac_positive": 0.5833333333333334,
+     "n": 12
+    },
+    "UniMiB-SHAR": {
+     "median_gap": 0.006514657980456029,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "Cricket": {
+     "median_gap": 0.0,
+     "frac_positive": 0.4166666666666667,
+     "n": 12
+    },
+    "UWaveGestureLibrary": {
+     "median_gap": 0.0,
+     "frac_positive": 0.3333333333333333,
+     "n": 12
+    },
+    "PhonemeSpectra": {
+     "median_gap": -0.0019607843137254832,
+     "frac_positive": 0.3333333333333333,
+     "n": 12
+    },
+    "HandMovementDirection": {
+     "median_gap": 0.037735849056603765,
+     "frac_positive": 0.8333333333333334,
+     "n": 12
+    },
+    "EthanolConcentration": {
+     "median_gap": 0.02564102564102566,
+     "frac_positive": 0.75,
+     "n": 12
+    },
+    "SelfRegulationSCP2": {
+     "median_gap": 0.00877192982456143,
+     "frac_positive": 0.6666666666666666,
+     "n": 3
+    }
+   }
+  }
+ },
+ "beat_center_by_h": {
+  "1": {
+   "frac_better": 0.39080459770114945,
+   "n": 348
+  },
+  "2": {
+   "frac_better": 0.2672413793103448,
+   "n": 348
+  },
+  "3": {
+   "frac_better": 0.3103448275862069,
+   "n": 174
+  }
+ }
+}

@@ -1,0 +1,513 @@
+{
+ "protocol": "results/tclsc_nb/PROTOCOL.md",
+ "tables": {
+  "k1": {
+   "ft60_hard": {
+    "regret3": 0.03189912801963597,
+    "regret1": 0.06448791321266044,
+    "M1": 0.4904339130364726,
+    "M0": 0.8191666999401715,
+    "n": 504,
+    "regret3_by_fold": {
+     "Cricket": 0.0272,
+     "EthanolConcentration": 0.0279,
+     "HandMovementDirection": 0.0813,
+     "Handwriting": 0.0247,
+     "PhonemeSpectra": 0.033,
+     "UWaveGestureLibrary": 0.0134,
+     "UniMiB-SHAR": 0.0158
+    },
+    "hit3": 0.32341269841269843
+   },
+   "blind_diff_hard": {
+    "regret3": 0.029430645520360944,
+    "regret1": 0.0643119395877262,
+    "M1": 0.5352662750409946,
+    "M0": 0.808885056587542,
+    "n": 504,
+    "regret3_by_fold": {
+     "Cricket": 0.0255,
+     "EthanolConcentration": 0.0389,
+     "HandMovementDirection": 0.053,
+     "Handwriting": 0.0214,
+     "PhonemeSpectra": 0.0432,
+     "UWaveGestureLibrary": 0.0146,
+     "UniMiB-SHAR": 0.0095
+    },
+    "hit3": 0.35714285714285715
+   },
+   "prior": {
+    "regret3": 0.050379436412774196,
+    "regret1": 0.07442358603558329,
+    "M1": 0.38939561490403,
+    "M0": 0.590161889530994,
+    "n": 504,
+    "regret3_by_fold": {
+     "Cricket": 0.0223,
+     "EthanolConcentration": 0.0485,
+     "HandMovementDirection": 0.1417,
+     "Handwriting": 0.0445,
+     "PhonemeSpectra": 0.0598,
+     "UWaveGestureLibrary": 0.0139,
+     "UniMiB-SHAR": 0.022
+    },
+    "hit3": 0.19444444444444445
+   }
+  },
+  "k3shared": {
+   "ft60_hard": {
+    "regret3": 0.030178234641682487,
+    "regret1": 0.061376734386077665,
+    "M1": 0.49309511437994413,
+    "M0": 0.8158879800000538,
+    "n": 504,
+    "regret3_by_fold": {
+     "Cricket": 0.0238,
+     "EthanolConcentration": 0.0273,
+     "HandMovementDirection": 0.0785,
+     "Handwriting": 0.0243,
+     "PhonemeSpectra": 0.0308,
+     "UWaveGestureLibrary": 0.0124,
+     "UniMiB-SHAR": 0.0143
+    },
+    "hit3": 0.3333333333333333
+   },
+   "blind_diff_hard": {
+    "regret3": 0.027226725704636894,
+    "regret1": 0.06224355494240995,
+    "M1": 0.5558646537259866,
+    "M0": 0.8102959742499961,
+    "n": 504,
+    "regret3_by_fold": {
+     "Cricket": 0.0217,
+     "EthanolConcentration": 0.0394,
+     "HandMovementDirection": 0.0509,
+     "Handwriting": 0.0176,
+     "PhonemeSpectra": 0.0395,
+     "UWaveGestureLibrary": 0.0128,
+     "UniMiB-SHAR": 0.0087
+    },
+    "hit3": 0.3888888888888889
+   },
+   "prior": {
+    "regret3": 0.04902197957647661,
+    "regret1": 0.0718450118483514,
+    "M1": 0.325057275448346,
+    "M0": 0.5856636644387971,
+    "n": 504,
+    "regret3_by_fold": {
+     "Cricket": 0.0203,
+     "EthanolConcentration": 0.0485,
+     "HandMovementDirection": 0.1376,
+     "Handwriting": 0.0439,
+     "PhonemeSpectra": 0.0568,
+     "UWaveGestureLibrary": 0.0154,
+     "UniMiB-SHAR": 0.0206
+    },
+    "hit3": 0.1746031746031746
+   }
+  }
+ },
+ "paired": {
+  "k1": {
+   "e_vs_blind": {
+    "a": "blind_diff_hard",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.029430645520360944,
+    "mean_b": 0.03189912801963597,
+    "p": 0.8260124302410086,
+    "wins_b": 133,
+    "losses_b": 156,
+    "ties": 215
+   },
+   "e_vs_prior": {
+    "a": "prior",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.050379436412774196,
+    "mean_b": 0.03189912801963597,
+    "p": 1.5482824411630556e-23,
+    "wins_b": 261,
+    "losses_b": 88,
+    "ties": 155
+   },
+   "blind_vs_prior": {
+    "a": "prior",
+    "b": "blind_diff_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.050379436412774196,
+    "mean_b": 0.029430645520360944,
+    "p": 8.926178515472451e-24,
+    "wins_b": 279,
+    "losses_b": 95,
+    "ties": 130
+   }
+  },
+  "k3shared": {
+   "e_vs_blind": {
+    "a": "blind_diff_hard",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.027226725704636894,
+    "mean_b": 0.030178234641682487,
+    "p": 0.8815237812002126,
+    "wins_b": 143,
+    "losses_b": 161,
+    "ties": 200
+   },
+   "e_vs_prior": {
+    "a": "prior",
+    "b": "ft60_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.04902197957647661,
+    "mean_b": 0.030178234641682487,
+    "p": 2.202156853537522e-25,
+    "wins_b": 269,
+    "losses_b": 94,
+    "ties": 141
+   },
+   "blind_vs_prior": {
+    "a": "prior",
+    "b": "blind_diff_hard",
+    "metric": "regret3",
+    "n": 504,
+    "mean_a": 0.04902197957647661,
+    "mean_b": 0.027226725704636894,
+    "p": 1.6562869856244395e-26,
+    "wins_b": 294,
+    "losses_b": 108,
+    "ties": 102
+   }
+  }
+ },
+ "ablation": {
+  "k1": {
+   "cross": {
+    "n": 504,
+    "normal": 0.03189912801963597,
+    "cross": 0.03820013085446215,
+    "mean_delta": 0.006301002834826179,
+    "p": 1.5750743466180646e-10,
+    "wins": 269,
+    "losses": 140
+   },
+   "zero": {
+    "n": 504,
+    "normal": 0.03189912801963597,
+    "cross": 0.0353891340960929,
+    "mean_delta": 0.003490006076456929,
+    "p": 0.0006184998244192703,
+    "wins": 155,
+    "losses": 105
+   }
+  },
+  "k3shared": {
+   "cross": {
+    "n": 504,
+    "normal": 0.030178234641682487,
+    "cross": 0.03813229032324043,
+    "mean_delta": 0.007954055681557938,
+    "p": 1.7516288614558065e-15,
+    "wins": 292,
+    "losses": 135
+   },
+   "zero": {
+    "n": 504,
+    "normal": 0.030178234641682487,
+    "cross": 0.03417887680360996,
+    "mean_delta": 0.004000642161927474,
+    "p": 6.327685205654473e-05,
+    "wins": 169,
+    "losses": 108
+   }
+  }
+ },
+ "neighbor": {
+  "k1": {
+   "ft60_hard": {
+    "pred_top3_nb_share": 0.7195767195767195,
+    "true_top3_nb_share": 0.5701058201058201,
+    "nb_pair_acc": 0.6583547949278802,
+    "vs_center_acc_by_h": {
+     "1": 0.5404328018223234,
+     "2": 0.6567245119305857,
+     "3": 0.5862831858407079
+    },
+    "vs_center_acc": 0.597246891651865,
+    "over": 0.14947089947089937
+   },
+   "blind_diff_hard": {
+    "pred_top3_nb_share": 0.9226190476190477,
+    "true_top3_nb_share": 0.5701058201058201,
+    "nb_pair_acc": 0.642098130419672,
+    "vs_center_acc_by_h": {
+     "1": 0.5148063781321185,
+     "2": 0.5992407809110629,
+     "3": 0.452433628318584
+    },
+    "vs_center_acc": 0.5368561278863233,
+    "over": 0.3525132275132275
+   },
+   "prior": {
+    "pred_top3_nb_share": 0.6190476190476191,
+    "true_top3_nb_share": 0.5701058201058201,
+    "nb_pair_acc": 0.48205403210256587,
+    "vs_center_acc_by_h": {
+     "1": 0.5876993166287016,
+     "2": 0.6767895878524945,
+     "3": 0.6991150442477876
+    },
+    "vs_center_acc": 0.6465364120781527,
+    "over": 0.04894179894179895
+   }
+  },
+  "k3shared": {
+   "ft60_hard": {
+    "pred_top3_nb_share": 0.7195767195767195,
+    "true_top3_nb_share": 0.6746031746031746,
+    "nb_pair_acc": 0.6583547949278802,
+    "vs_center_acc_by_h": {
+     "1": 0.5304752066115702,
+     "2": 0.6570247933884298,
+     "3": 0.5881742738589212
+    },
+    "vs_center_acc": 0.5926385442514475,
+    "over": 0.04497354497354483
+   },
+   "blind_diff_hard": {
+    "pred_top3_nb_share": 0.9226190476190477,
+    "true_top3_nb_share": 0.6746031746031746,
+    "nb_pair_acc": 0.642098130419672,
+    "vs_center_acc_by_h": {
+     "1": 0.509297520661157,
+     "2": 0.5929752066115702,
+     "3": 0.4585062240663901
+    },
+    "vs_center_acc": 0.532671629445823,
+    "over": 0.24801587301587297
+   },
+   "prior": {
+    "pred_top3_nb_share": 0.6190476190476191,
+    "true_top3_nb_share": 0.6746031746031746,
+    "nb_pair_acc": 0.48205403210256587,
+    "vs_center_acc_by_h": {
+     "1": 0.5785123966942148,
+     "2": 0.6900826446280992,
+     "3": 0.6929460580912863
+    },
+    "vs_center_acc": 0.6459884201819686,
+    "over": -0.05555555555555558
+   }
+  }
+ },
+ "headroom": {
+  "60": {
+   "budget": 60,
+   "n": 87,
+   "frac_positive": 0.6091954022988506,
+   "frac_over_delta": 0.0,
+   "median_gap": 0.01176470588235301,
+   "by_dataset": {
+    "Handwriting": {
+     "median_gap": 0.0031446540880503138,
+     "frac_positive": 0.5,
+     "n": 12
+    },
+    "UniMiB-SHAR": {
+     "median_gap": 0.013029315960912058,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "Cricket": {
+     "median_gap": 0.0,
+     "frac_positive": 0.4166666666666667,
+     "n": 12
+    },
+    "UWaveGestureLibrary": {
+     "median_gap": 0.014062500000000033,
+     "frac_positive": 0.75,
+     "n": 12
+    },
+    "PhonemeSpectra": {
+     "median_gap": 0.004258976317799812,
+     "frac_positive": 0.5,
+     "n": 12
+    },
+    "HandMovementDirection": {
+     "median_gap": 0.029138513513513487,
+     "frac_positive": 0.75,
+     "n": 12
+    },
+    "EthanolConcentration": {
+     "median_gap": 0.010683760683760701,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "SelfRegulationSCP2": {
+     "median_gap": 0.00877192982456143,
+     "frac_positive": 0.6666666666666666,
+     "n": 3
+    }
+   }
+  },
+  "120": {
+   "budget": 120,
+   "n": 87,
+   "frac_positive": 0.6551724137931034,
+   "frac_over_delta": 0.0,
+   "median_gap": 0.016000000000000014,
+   "by_dataset": {
+    "Handwriting": {
+     "median_gap": 0.017523809523809553,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "UniMiB-SHAR": {
+     "median_gap": 0.012971252048921966,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "Cricket": {
+     "median_gap": 0.012500000000000011,
+     "frac_positive": 0.5,
+     "n": 12
+    },
+    "UWaveGestureLibrary": {
+     "median_gap": 0.0,
+     "frac_positive": 0.3333333333333333,
+     "n": 12
+    },
+    "PhonemeSpectra": {
+     "median_gap": 0.014652830829301411,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "HandMovementDirection": {
+     "median_gap": 0.05532891381947985,
+     "frac_positive": 0.8333333333333334,
+     "n": 12
+    },
+    "EthanolConcentration": {
+     "median_gap": 0.01802871639857498,
+     "frac_positive": 0.9166666666666666,
+     "n": 12
+    },
+    "SelfRegulationSCP2": {
+     "median_gap": 0.00877192982456132,
+     "frac_positive": 0.6666666666666666,
+     "n": 3
+    }
+   }
+  },
+  "290": {
+   "budget": 290,
+   "n": 87,
+   "frac_positive": 0.5632183908045977,
+   "frac_over_delta": 0.034482758620689655,
+   "median_gap": 0.008064516129032362,
+   "by_dataset": {
+    "Handwriting": {
+     "median_gap": 0.006990837946173001,
+     "frac_positive": 0.5833333333333334,
+     "n": 12
+    },
+    "UniMiB-SHAR": {
+     "median_gap": 0.006514657980456029,
+     "frac_positive": 0.6666666666666666,
+     "n": 12
+    },
+    "Cricket": {
+     "median_gap": 0.0,
+     "frac_positive": 0.4166666666666667,
+     "n": 12
+    },
+    "UWaveGestureLibrary": {
+     "median_gap": 0.0,
+     "frac_positive": 0.3333333333333333,
+     "n": 12
+    },
+    "PhonemeSpectra": {
+     "median_gap": -0.0019607843137254832,
+     "frac_positive": 0.3333333333333333,
+     "n": 12
+    },
+    "HandMovementDirection": {
+     "median_gap": 0.037735849056603765,
+     "frac_positive": 0.8333333333333334,
+     "n": 12
+    },
+    "EthanolConcentration": {
+     "median_gap": 0.02564102564102566,
+     "frac_positive": 0.75,
+     "n": 12
+    },
+    "SelfRegulationSCP2": {
+     "median_gap": 0.00877192982456143,
+     "frac_positive": 0.6666666666666666,
+     "n": 3
+    }
+   }
+  }
+ },
+ "beat_center_by_h": {
+  "1": {
+   "frac_better": 0.39080459770114945,
+   "n": 348
+  },
+  "2": {
+   "frac_better": 0.2672413793103448,
+   "n": 348
+  },
+  "3": {
+   "frac_better": 0.3103448275862069,
+   "n": 174
+  }
+ },
+ "gates": {
+  "G-N1": false,
+  "G-N2": false,
+  "G-N3": true
+ },
+ "verdict": "NB-NO-HEADROOM",
+ "predictions": {
+  "P1": {
+   "desc": "G-N1",
+   "hit": false
+  },
+  "P2": {
+   "desc": "邻居优于中心的比例随 h 单调降",
+   "value": {
+    "1": 0.391,
+    "2": 0.267,
+    "3": 0.31
+   },
+   "hit": false
+  },
+  "P3": {
+   "desc": "G-N2",
+   "hit": false
+  },
+  "P4": {
+   "desc": "G-N3",
+   "hit": true
+  },
+  "P5": {
+   "desc": "邻居 vs 中心判对率 E_T − 盲 ≥ 0.05",
+   "value": [
+    0.597246891651865,
+    0.5368561278863233
+   ],
+   "hit": true
+  },
+  "P6": {
+   "desc": "净空 Ethanol/HW 最大、Cricket/UWave 最小",
+   "hit": true
+  }
+ }
+}

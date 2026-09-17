@@ -1,0 +1,12 @@
+{
+ "tag": "NB",
+ "test": "PhonemeSpectra",
+ "arm": "ft60_hard",
+ "seed": 2,
+ "n_train_slices": 75,
+ "n_train_records": 4500,
+ "train_seconds": 16.6,
+ "bce_first": 0.6358537398851835,
+ "bce_last": 0.02843606678975953,
+ "train_pairs_last": 1111
+}
