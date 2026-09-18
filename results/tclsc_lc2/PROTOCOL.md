@@ -1,0 +1,53 @@
+# WP16 LC2 检验 PROTOCOL：未见配置学习曲线——"好区域标签越多，比较器对没见过的配置排得越准吗？"（AutoCTS++ 式四步计划步骤 2 的零新 R' 判死门）
+
+**会话定位**：SP1 判 SP-DEAD 后的修正：剪枝只去 35% 空间、random-10 只 25% 在坏区，步骤 2（S⁺ 每切片 20 条新标签 ≈ $12）唯一的杠杆是"好区域标签数 ×3"。花钱前用现有标签做学习曲线：训练侧每切片只用 0 / 3 / 6 / 全部 S⁺ 随机配置（+ NB1 邻居）训比较器，考侧在 held-out 数据集上排**从未在训练里出现过的配置**。曲线涨 → 步骤 2 立项；平 → 全空间路线在标签侧关闭。
+产物 `results/tclsc_lc2/`；脚本 `scripts/79_tclsc_lc2.py`；单测 `tests/test_tclsc_lc2.py`；训练用本地 4060（比较器训练 ≈ 12 s/跑，零新 R'）。
+
+## §0 已看过的读数
+
+- LC 检验（`results/tclsc_lc`）：配置轴 K6 0.0389 → K14 0.0213 → K20 0.0207（考卷 = shared 目录，不是未见配置）；切片轴 RISING。
+- SP1：random-10 z-bad 25%；S⁺ 过滤器 `results/tclsc_sp/sp_model.joblib` + τ −0.384，held-out 随机配置 AUC 0.71（五个非 chance 集 0.75–0.84）。
+- NB1 / EV1：比较器对未见配置高估（预测前 3 邻居占比 +0.35 / +0.15；进化下预测赢 100% vs 真 19%）；邻居内配对 acc 0.61–0.66。
+- **没看过**：任何"训练侧随机配置数 → 未见配置排序质量"的曲线。
+
+## §1 设计
+
+- **标签池**（全部已有，零新 R'，三截点）：shared-10 k3 均值（K3 `labels_k3.jsonl`）；random-10 k1（mx3_pq + SX 缓存，87 切片）；NB1 邻居 10/切片 k1（`rprime_nb.jsonl`，固定 4 origin shared + 切片 6 origin random）。
+- **曲线点**（训练侧每切片非 shared 配置数；SP1 过滤 ẑ ≥ τ 的随机配置 = "S⁺ 标签"）：R0 = 只 shared；R3 / R6 = 从该切片 S⁺ 随机配置里按固定种子取 3 / 6 条；RA = 该切片全部 S⁺ 随机配置（均值 ≈ 7.5）；RN = RA + NB1 邻居 10 条（≈ 17.5）。同一配置三截点同进同出。
+- **臂**：`ft60_hard`（E_T field 头）/ `blind_diff_hard`，73 号 `train_fold_uea` 原样（δ_k1、ctx 表折内标准化），LODO 7 折 × seeds 0/1/2（多数票）。
+- **考卷（固定，不随曲线点变）**：每 held-out 数据集 12 切片 × 3 截点：候选 = shared-10（k1 seed-0）+ 该切片 random-10（k1，全部，含坏区）+ NB1 邻居 10（k1）= 30 条；后 20 条对每个模型都是**未见配置**（随机配置按切片派生、held-out 数据集从未参训）。
+- **指标（未见配置专项）**：(i) `unseen_pair_acc`：20 条未见配置间 |Δ| ≥ δ_k1 的配对判对率；(ii) `unseen_good_pair_acc`：只看真值 z ≥ −1（非坏区）的未见配置间配对；(iii) `unseen_regret3`：未见配置里预测前 3 的最好 vs 未见配置 oracle（@b_final 与 n 一并报）；(iv) `over`：预测前 3（30 条）里未见占比 − 真前 3 未见占比（高估签名）；(v) `above_trust`：预测排在 shared 最好之前的未见配置数 vs 真值。实例 = 7 × 12 × 3 = 252 / 臂 / 点。
+
+## §2 判读（先于数据）
+
+| 门 | 定义 |
+|---|---|
+| C0 | 各点训练行数逐位可复现；考卷 30 条在所有点相同；未见配置与训练行零交集（按 (切片, key) 与全局 key 两重核对） |
+| **G-L1 曲线涨** | E_T 的 `unseen_good_pair_acc` 从 R3 → RA 提升 ≥ +0.02（pooled，逐实例配对 Wilcoxon p < 0.05），且 RA → RN 再提升 ≥ +0.01 |
+| **G-L2 E 受益于覆盖** | (E_T − 任务盲) 的 `unseen_good_pair_acc` 差在 RN ≥ 在 R3 + 0.01 |
+| **G-L3 高估收敛** | E_T 的 `over` 从 R3 → RN 下降 ≥ 0.10 |
+
+**读数码**：G-L1 ✓ → **LC2-RISING**（步骤 2 立项：写 S⁺ 补标协议，请示 pod）；G-L1 ✗ 且 G-L3 ✓ → **LC2-CALIBRATE-ONLY**（标签只压高估、不提排序：步骤 2 不做，避坏过滤器保留）；其余 → **LC2-FLAT**（全空间路线在标签侧关闭）。
+只报：任务盲同曲线；`unseen_regret3` / `above_trust` 曲线；逐折；R0 点（只 shared 训）作下限。
+
+## §3 预测（先验）
+
+| # | 预测 | 先验 |
+|---|---|---|
+| P1 | G-L1 | 40% |
+| P2 | RN 点 E_T unseen_good_pair_acc > 任务盲（p < 0.05） | 55% |
+| P3 | G-L3（over 下降 ≥ 0.10） | 60% |
+| P4 | RN 是 E_T 的最好点 | 65% |
+| P5 | R0（只 shared）的 unseen_good_pair_acc ≤ 0.55 | 70% |
+
+## §4 执行
+
+1. 本文件 + `tests/test_tclsc_lc2.py`（先红）→ 协议锁 commit；2. `scripts/79_tclsc_lc2.py`（--labels / --train / --rank / --analyze）→ 绿 → 训练 5 点 × 2 臂 × 7 折 × 3 种子 = 210 跑（4060 ≈ 45 min，脱离进程）→ REPORT → commit → memory。
+
+## §5 铁律对照
+
+铁律 3（只读缓存）；5（先红）；6（LODO；ctx 标准化只用训练切片；S⁺ 过滤器是任务盲模型，用于训练侧选标签，不看目标）；7；8。
+
+## §6 执行台账（跑后填写）
+
+（空）
