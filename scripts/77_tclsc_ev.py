@@ -211,12 +211,16 @@ def nb_labeled_keys(cat: Mapping, slice_id: str) -> set[str]:
     return {e["cls_key"] for e in cat["fixed"]} | {e["cls_key"] for e in cat["random"].get(slice_id, [])}
 
 
-def cmd_evolve(outdir: Path, *, guides: Sequence[str], with_random: bool, device: str, smoke: bool = False, cfg: Optional[Mapping] = None) -> dict:
+def cmd_evolve(outdir: Path, *, guides: Sequence[str], with_random: bool, device: str, smoke: bool = False, cfg: Optional[Mapping] = None,
+               datasets: Optional[Sequence[str]] = None) -> dict:
+    """`datasets` 限定只进化这些数据集的切片（如 SetTF 折模型只训完一部分时先看部分折）；结果按切片合并进已有 proposals 文件。"""
     outdir.mkdir(parents=True, exist_ok=True)
     space = _g56.space()
     trust = trust_entries(space)
     tcls, tkeys = [c for c, _k in trust], {k for _c, k in trust}
     slices = ev_slices()[:1] if smoke else ev_slices()
+    if datasets is not None:
+        slices = [s for s in slices if pq.dataset_of(s) in set(datasets)]
     table = _g74.ctx_table(_g74.OUT) if any(g != "ev_es" for g in guides) else None
     cat = _g76.load_catalog(NB)
     summary: dict = {}
@@ -690,7 +694,8 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
     guides = list(args.guides) if args.guides else ["ev_et", "ev_blind"]
     if args.evolve:
         cmd_evolve(args.outdir, guides=guides, with_random=args.random, device=args.device, smoke=args.smoke,
-                   cfg=(dict(ks=20, kp=6, generations=2) if args.smoke else None))
+                   cfg=(dict(ks=20, kp=6, generations=2) if args.smoke else None),
+                   datasets=(None if set(args.datasets) == set(pq.PQ_DATASETS) else list(args.datasets)))
     if args.rprime:
         cmd_rprime(args.outdir, device=args.device, names=guides, with_random=args.random, datasets=args.datasets, smoke=args.smoke)
     if args.verify:
