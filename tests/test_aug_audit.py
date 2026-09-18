@@ -20,9 +20,9 @@ class TestICC:
         M = np.repeat(base, 6, axis=1)                        # 20 组 × 6 评分者，组内完全一致
         r = g.icc1(M)
         assert r["icc"] == pytest.approx(1.0, abs=1e-9)
-        N = rng.normal(0, 1, size=(20, 6))
+        N = np.random.default_rng(1).normal(0, 1, size=(120, 8))            # 纯噪声：ICC(1) 期望 ≈ −1/(k−1)，sd ≈ 0.04
         r2 = g.icc1(N, n_perm=300, seed=0)
-        assert abs(r2["icc"]) < 0.3 and r2["p"] > 0.05
+        assert abs(r2["icc"]) < 0.15 and r2["p"] > 0.05
         r3 = g.icc1(M + rng.normal(0, 0.1, M.shape), n_perm=300, seed=0)
         assert r3["icc"] > 0.9 and r3["p"] <= 0.01
 
