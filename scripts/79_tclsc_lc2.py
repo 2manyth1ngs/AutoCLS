@@ -41,6 +41,7 @@ OUT = ROOT / "results" / "tclsc_lc2"
 NB, K3, SP, SOURCE, SX = _g76.OUT, _g75.OUT, _g78.OUT, pq.OUT, _g74.OUT
 POINTS = ("R0", "R3", "R6", "RA", "RN")
 POINT_K = {"R0": 0, "R3": 3, "R6": 6}          # RA = 全部 S⁺ 随机；RN = RA + NB 邻居
+R0K1 = "R0k1"                                  # 协议 §7 补充点：只 shared、但换成 k1（seed-0 单值）标签——判断 R3 的下跌是不是噪声
 ARMS = ("ft60_hard", "blind_diff_hard")
 E_ARM, B_ARM = ARMS
 SEEDS = (0, 1, 2)
@@ -154,8 +155,9 @@ def load_pool_from(outdir: Path) -> tuple[list[dict], list[dict], set[str]]:
 # ---------------------------------------------------------------- 训练 / 排名
 def cmd_train(outdir: Path, *, seeds: Sequence[int], device: str, epochs: Optional[int], resume: bool, points: Sequence[str] = POINTS,
               folds_sel: Optional[Sequence[str]] = None) -> None:
-    pool, _truth, splus = load_pool_from(outdir)
+    pool, truth, splus = load_pool_from(outdir)
     pts = curve_rows(pool, splus_keys=splus)
+    pts[R0K1] = [r for r in truth if _src(r) == "shared"]          # k1 shared（NB1 labels_truth_k1 的 shared 行）
     dk = pq.load_delta_calibration(SOURCE / "delta_calibration.json")
     table = _g74.ctx_table(_g74.OUT)
     for name in points:
@@ -290,7 +292,7 @@ def cmd_analyze(outdir: Path) -> dict:
     keys = ("unseen_pair_acc", "unseen_good_pair_acc", "unseen_regret3", "over", "above_trust_pred", "above_trust_true")
     curve = {name: {arm: {k: _pool(rs, arm, k) for k in keys} | {"n": len(rs)} for arm in ARMS} for name, rs in rows.items()}
     steps = {}
-    for a, b in (("R0", "R3"), ("R3", "R6"), ("R6", "RA"), ("R3", "RA"), ("RA", "RN"), ("R3", "RN")):
+    for a, b in (("R0", "R3"), ("R3", "R6"), ("R6", "RA"), ("R3", "RA"), ("RA", "RN"), ("R3", "RN"), (R0K1, "R0"), (R0K1, "R3")):
         if a in rows and b in rows:
             steps[f"{a}_{b}"] = {arm: _paired(rows[a], rows[b], arm, "unseen_good_pair_acc") for arm in ARMS}
     gap = {name: (curve[name][E_ARM]["unseen_good_pair_acc"] or 0) - (curve[name][B_ARM]["unseen_good_pair_acc"] or 0) for name in curve}
@@ -338,7 +340,7 @@ def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     for fl in ("labels", "train", "rank", "analyze", "resume"):
         ap.add_argument(f"--{fl}", action="store_true")
-    ap.add_argument("--points", nargs="+", default=list(POINTS), choices=list(POINTS))
+    ap.add_argument("--points", nargs="+", default=list(POINTS), choices=list(POINTS) + [R0K1])
     ap.add_argument("--folds", nargs="+", default=None)
     ap.add_argument("--seeds", nargs="+", type=int, default=list(SEEDS))
     ap.add_argument("--epochs", type=int, default=None)
