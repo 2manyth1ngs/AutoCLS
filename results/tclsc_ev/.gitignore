@@ -1,0 +1,6 @@
+models/
+folds/
+*.tar.gz
+run.err
+run.log
+inflight.txt
