@@ -85,4 +85,6 @@
 
 ## §7 执行台账（跑后填写）
 
-（空）
+- 2026-09-18 本地：进化（CPU，12 s）→ R' 4060 脱离进程（Ethanol 单条 1369 s、HMD 62–717 s，显存顶满 = pod 的 5–10×）→ 中途改由 pod 接手全部 E_T / 盲 / rand_u 的 R'（bundle 带本地快照、pod 逐数据集反序）；本地跑到 UWave 段手动停，pod 行按键并集（`merged_from`）。
+- 2026-09-18 09:16 pod wpdhnb1o8k3q8a（5090，用户"允许开pod"）：nvidia-smi / CUDA 正常；bundle（HEAD b3d8568）经 HTTP 代理上传 md5 全对；setup 全绿（折特征软链容器盘）；07:20 UTC 后台 R' ‖ fit-folds；train-es 两进程 OOM（单进程 16–19.5 GB）→ ev_run2.sh 等 Ethanol 段结束后再起、仍 OOM 一进程 → 串行 1222–1517 s/跑；9/21 时用户看过 SetTF 三折部分读数（考卷 regret@3 0.0497 输 E_T 0.0424 / 盲 0.0383、E 为身份向量、cross/zero 反而更好）后"立刻停pod"：杀训练 → 打包 9 模型 / runs / 日志 / 三折 rankings（64.5 MB，md5 对）→ 13:37 stop + confirm 3/3，4.34 h ≈ $4.3。
+- 本地：SetTF 提名 Cricket / HMD 11 格打标（10.6 min）；`--verify` 126 格 OK（SetTF Ethanol 6 格未跑）；`--analyze`：**EV-DEAD**（G-V1 ✗ 全部、G-V2 ✓ 只 E_T、G-V3 ✗；预测 3/7）；`--analyze` 改为各臂各自统计以容纳部分臂；REPORT.md；不做 NB2。

@@ -1,0 +1,63 @@
+Traceback (most recent call last):
+  File "/workspace/wp/CLS/scripts/77_tclsc_ev.py", line 706, in <module>
+    main()
+  File "/workspace/wp/CLS/scripts/77_tclsc_ev.py", line 689, in main
+    cmd_train_es(args.outdir, seeds=args.seeds, device=args.device, epochs=args.epochs, resume=args.resume, folds_sel=args.folds)
+  File "/workspace/wp/CLS/scripts/77_tclsc_ev.py", line 399, in cmd_train_es
+    run = train_fold_es(rows, dk, target=target, seed=seed, outdir=outdir, device=device, epochs=epochs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/wp/CLS/scripts/77_tclsc_ev.py", line 377, in train_fold_es
+    hist = engine.train(recs, epochs=c["epochs"], curriculum_epochs=c["curriculum_epochs"],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/wp/CLS/autocls/comparator/tclsc_engine.py", line 231, in train
+    a, b, E, ctx, y = self._encode_batch(batch, grad=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/wp/CLS/autocls/comparator/tclsc_engine.py", line 439, in _encode_batch
+    e_map = self._build_e_map(tids, e_mode=e_mode, seed=seed,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/wp/CLS/autocls/comparator/tclsc_engine.py", line 299, in _build_e_map
+    rows = self.model.encode_tasks([self.task_windows[k] for k in keys])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/wp/CLS/autocls/comparator/tclsc_model.py", line 178, in encode_tasks
+    return self.set_encoder.set_encode(windows_list)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/wp/CLS/autocls/task_embed/set_transformer.py", line 176, in set_encode
+    cls_protos = self.intra_setpool(x).squeeze(1)      # (n_i, nz)  Eq.10
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/wp/CLS/autocls/task_embed/set_transformer.py", line 126, in forward
+    x1 = self.enc(X)
+         ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/container.py", line 244, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/wp/CLS/autocls/task_embed/set_transformer.py", line 68, in forward
+    return self.mab(X, X)
+           ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/wp/CLS/autocls/task_embed/set_transformer.py", line 49, in forward
+    K_ = torch.cat(K.split(dim_split, -1), -3)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 16.00 MiB. GPU 0 has a total capacity of 31.37 GiB of which 11.62 MiB is free. Process 3213 has 2.65 GiB memory in use. Including non-PyTorch memory, this process has 14.33 GiB memory in use. Process 3223 has 14.35 GiB memory in use. Of the allocated memory 13.70 GiB is allocated by PyTorch, and 36.80 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

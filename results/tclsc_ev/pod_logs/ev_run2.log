@@ -1,0 +1,12 @@
+== [07:36:29] run2 start; waiting Ethanol R' segment (18 cells) to finish
+== [07:47:59] Ethanol segment done (rprime lines 17, plans 2); train-es start (2 procs)
+pids 3222 3223
+== [11:15:00] train-es exited: 9 models
+== [11:15:00] waiting background rprime loop (pid 1569)
+[ev] 完成 18 条轨迹，墙钟 16.4 min
+EV 网格: 计划 18 格 → 复用 0 → 待跑 18
+[ev] 完成 18 条轨迹，墙钟 11.0 min
+EV 网格: 计划 18 格 → 复用 0 → 待跑 18
+[ev] 完成 18 条轨迹，墙钟 11.8 min
+EV 网格: 计划 18 格 → 复用 0 → 待跑 10
+== models < 21 → 单进程 --resume 补训

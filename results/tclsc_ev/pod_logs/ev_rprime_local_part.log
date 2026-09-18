@@ -1,0 +1,103 @@
+EV 网格: 计划 18 格 → 复用 0 → 待跑 17
+[ev 1/17] EthanolConcentration/EthanolConcentration_00 random:1a7a82f5 seed=0 R'=0.2548/0.2548/0.2548 (152.9s) ETA 40.8min
+[ev 2/17] EthanolConcentration/EthanolConcentration_00 random:4274a9c5 seed=0 R'=0.2866/0.2229/0.2293 (40.8s) ETA 24.2min
+[ev 3/17] EthanolConcentration/EthanolConcentration_00 random:6eb829fb seed=0 R'=0.2166/0.2866/0.2484 (116.7s) ETA 24.2min
+[ev 4/17] EthanolConcentration/EthanolConcentration_00 random:73c009db seed=0 R'=0.2866/0.3439/0.3057 (140.3s) ETA 24.4min
+[ev 5/17] EthanolConcentration/EthanolConcentration_00 random:82ecdb86 seed=0 R'=0.2994/0.2739/0.3121 (144.5s) ETA 23.8min
+[ev 6/17] EthanolConcentration/EthanolConcentration_00 random:da549553 seed=0 R'=0.3503/0.3057/0.2548 (206.9s) ETA 24.5min
+[ev 7/17] EthanolConcentration/EthanolConcentration_00 random:ecc3627e seed=0 R'=0.3185/0.3631/0.3248 (124.5s) ETA 22.1min
+[ev 8/17] EthanolConcentration/EthanolConcentration_00 random:fad85862 seed=0 R'=0.2994/0.2675/0.2229 (152.3s) ETA 20.2min
+[ev 9/17] EthanolConcentration/EthanolConcentration_x00 random:1021cb14 seed=0 R'=0.5949/0.5949/0.6582 (86.7s) ETA 17.3min
+[ev 10/17] EthanolConcentration/EthanolConcentration_x00 random:1b90e377 seed=0 R'=0.5949/0.6962/0.5823 (85.9s) ETA 14.6min
+[ev 11/17] EthanolConcentration/EthanolConcentration_x00 random:5aab6b0e seed=0 R'=0.5949/0.5823/0.6076 (60.5s) ETA 11.9min
+[ev 12/17] EthanolConcentration/EthanolConcentration_x00 random:86487718 seed=0 R'=0.6329/0.6582/0.5949 (28.7s) ETA 9.3min
+[ev 13/17] EthanolConcentration/EthanolConcentration_x00 random:8f7d7aa9 seed=0 R'=0.6203/0.5949/0.6076 (59.8s) ETA 7.2min
+[ev 14/17] EthanolConcentration/EthanolConcentration_x00 random:a650bb79 seed=0 R'=0.6076/0.5823/0.5696 (61.3s) ETA 5.2min
+[ev 15/17] EthanolConcentration/EthanolConcentration_x00 random:d0a405c5 seed=0 R'=0.5570/0.5570/0.5570 (57.9s) ETA 3.4min
+[ev 16/17] EthanolConcentration/EthanolConcentration_x00 random:dfa65a6a seed=0 R'=0.5949/0.5949/0.6962 (75.4s) ETA 1.7min
+[ev 17/17] EthanolConcentration/EthanolConcentration_x00 random:e694ba76 seed=0 R'=0.6709/0.5949/0.6456 (74.4s) ETA 0.0min
+[ev] 完成 17 条轨迹，墙钟 27.8 min
+EV 网格: 计划 18 格 → 复用 0 → 待跑 18
+[ev 1/18] UniMiB-SHAR/UniMiB-SHAR_00 random:0a01c290 seed=0 R'=0.7980/0.7883/0.8143 (58.7s) ETA 16.6min
+[ev 2/18] UniMiB-SHAR/UniMiB-SHAR_00 random:44ca1850 seed=0 R'=0.8176/0.8111/0.8046 (53.2s) ETA 14.9min
+[ev 3/18] UniMiB-SHAR/UniMiB-SHAR_00 random:66c1c2ea seed=0 R'=0.8013/0.8306/0.8176 (51.0s) ETA 13.6min
+[ev 4/18] UniMiB-SHAR/UniMiB-SHAR_00 random:68ce5388 seed=0 R'=0.6547/0.5081/0.3746 (27.3s) ETA 11.1min
+[ev 5/18] UniMiB-SHAR/UniMiB-SHAR_00 random:6fcee68b seed=0 R'=0.7687/0.7720/0.8078 (36.8s) ETA 9.8min
+[ev 6/18] UniMiB-SHAR/UniMiB-SHAR_00 random:77f573b4 seed=0 R'=0.7850/0.7883/0.7720 (47.4s) ETA 9.2min
+[ev 7/18] UniMiB-SHAR/UniMiB-SHAR_00 random:9dc9119e seed=0 R'=0.4528/0.4267/0.4756 (34.7s) ETA 8.1min
+[ev 8/18] UniMiB-SHAR/UniMiB-SHAR_00 random:cdc55dfd seed=0 R'=0.7720/0.8176/0.8046 (45.9s) ETA 7.4min
+[ev 9/18] UniMiB-SHAR/UniMiB-SHAR_00 random:f83d7460 seed=0 R'=0.8013/0.7850/0.7818 (48.1s) ETA 6.7min
+[ev 10/18] UniMiB-SHAR/UniMiB-SHAR_x00 random:1c780ed4 seed=0 R'=0.8827/0.8990/0.9023 (34.8s) ETA 5.8min
+[ev 11/18] UniMiB-SHAR/UniMiB-SHAR_x00 random:29a29f4d seed=0 R'=0.8762/0.8664/0.8925 (7.8s) ETA 4.7min
+[ev 12/18] UniMiB-SHAR/UniMiB-SHAR_x00 random:654f0340 seed=0 R'=0.8567/0.8730/0.8730 (52.4s) ETA 4.2min
+[ev 13/18] UniMiB-SHAR/UniMiB-SHAR_x00 random:660a29ca seed=0 R'=0.8143/0.8371/0.8111 (30.9s) ETA 3.4min
+[ev 14/18] UniMiB-SHAR/UniMiB-SHAR_x00 random:a01b9539 seed=0 R'=0.8730/0.8893/0.8795 (44.7s) ETA 2.7min
+[ev 15/18] UniMiB-SHAR/UniMiB-SHAR_x00 random:bf0fc54c seed=0 R'=0.8567/0.8762/0.8697 (42.5s) ETA 2.1min
+[ev 16/18] UniMiB-SHAR/UniMiB-SHAR_x00 random:e272b61f seed=0 R'=0.8306/0.8046/0.7557 (16.4s) ETA 1.3min
+[ev 17/18] UniMiB-SHAR/UniMiB-SHAR_x00 random:e47b5985 seed=0 R'=0.8860/0.8893/0.8632 (45.5s) ETA 0.7min
+[ev 18/18] UniMiB-SHAR/UniMiB-SHAR_x00 random:fb1dc033 seed=0 R'=0.3844/0.3779/0.4039 (34.2s) ETA 0.0min
+[ev] 完成 18 条轨迹，墙钟 11.9 min
+EV 网格: 计划 18 格 → 复用 0 → 待跑 18
+[ev 1/18] UWaveGestureLibrary/UWaveGestureLibrary_00 random:0b37fc22 seed=0 R'=0.9453/0.8984/0.9766 (14.5s) ETA 4.1min
+[ev 2/18] UWaveGestureLibrary/UWaveGestureLibrary_00 random:4d6e500f seed=0 R'=0.9609/0.9297/0.9609 (10.2s) ETA 3.3min
+[ev 3/18] UWaveGestureLibrary/UWaveGestureLibrary_00 random:55df9e6d seed=0 R'=0.9609/0.9766/0.9688 (85.5s) ETA 9.2min
+[ev 4/18] UWaveGestureLibrary/UWaveGestureLibrary_00 random:6a7795ec seed=0 R'=0.4844/0.5234/0.5234 (39.5s) ETA 8.7min
+[ev 5/18] UWaveGestureLibrary/UWaveGestureLibrary_00 random:912f9d87 seed=0 R'=0.9453/0.9375/0.9609 (75.7s) ETA 9.8min
+[ev 6/18] UWaveGestureLibrary/UWaveGestureLibrary_00 random:b1356fb1 seed=0 R'=0.9688/0.9688/0.9688 (83.1s) ETA 10.3min
+[ev 7/18] UWaveGestureLibrary/UWaveGestureLibrary_00 random:bb89e022 seed=0 R'=0.9688/0.9609/0.9766 (102.6s) ETA 10.8min
+[ev 8/18] UWaveGestureLibrary/UWaveGestureLibrary_00 random:e826ef1a seed=0 R'=0.9297/0.9609/0.9297 (10.9s) ETA 8.8min
+[ev 9/18] UWaveGestureLibrary/UWaveGestureLibrary_00 random:fd41a5cc seed=0 R'=0.9531/0.9141/0.9062 (44.7s) ETA 7.8min
+[ev 10/18] UWaveGestureLibrary/UWaveGestureLibrary_x00 random:46085c4c seed=0 R'=0.9125/0.8750/0.9125 (80.5s) ETA 7.3min
+[ev 11/18] UWaveGestureLibrary/UWaveGestureLibrary_x00 random:5375b5dd seed=0 R'=0.8375/0.8750/0.8625 (14.2s) ETA 6.0min
+[ev 12/18] UWaveGestureLibrary/UWaveGestureLibrary_x00 random:545a389b seed=0 R'=0.8375/0.8250/0.8250 (82.6s) ETA 5.4min
+[ev 13/18] UWaveGestureLibrary/UWaveGestureLibrary_x00 random:5e3b4aea seed=0 R'=0.8750/0.9000/0.8625 (52.6s) ETA 4.5min
+[ev 14/18] UWaveGestureLibrary/UWaveGestureLibrary_x00 random:781554f0 seed=0 R'=0.8000/0.8000/0.7625 (32.0s) ETA 3.5min
+[ev 15/18] UWaveGestureLibrary/UWaveGestureLibrary_x00 random:7b6c36de seed=0 R'=0.8875/0.8125/0.9000 (82.5s) ETA 2.7min
+[ev 16/18] UWaveGestureLibrary/UWaveGestureLibrary_x00 random:9c9a50f6 seed=0 R'=0.8750/0.8375/0.8875 (48.6s) ETA 1.8min
+[ev 17/18] UWaveGestureLibrary/UWaveGestureLibrary_x00 random:b1c85156 seed=0 R'=0.8625/0.9000/0.8625 (82.7s) ETA 0.9min
+[ev 18/18] UWaveGestureLibrary/UWaveGestureLibrary_x00 random:e4c4e183 seed=0 R'=0.5625/0.8250/0.8500 (39.2s) ETA 0.0min
+[ev] 完成 18 条轨迹，墙钟 16.4 min
+EV 网格: 计划 18 格 → 复用 0 → 待跑 18
+[ev 1/18] PhonemeSpectra/PhonemeSpectra_00 random:14271793 seed=0 R'=0.4773/0.4610/0.4805 (17.1s) ETA 4.9min
+[ev 2/18] PhonemeSpectra/PhonemeSpectra_00 random:2d0f2af1 seed=0 R'=0.4188/0.3799/0.3766 (39.6s) ETA 7.6min
+[ev 3/18] PhonemeSpectra/PhonemeSpectra_00 random:40c8cc2a seed=0 R'=0.3929/0.4091/0.4253 (38.3s) ETA 7.9min
+[ev 4/18] PhonemeSpectra/PhonemeSpectra_00 random:484cfc0a seed=0 R'=0.3734/0.3994/0.3896 (38.7s) ETA 7.8min
+[ev 5/18] PhonemeSpectra/PhonemeSpectra_00 random:52ea8de2 seed=0 R'=0.4253/0.4481/0.5227 (13.9s) ETA 6.4min
+[ev 6/18] PhonemeSpectra/PhonemeSpectra_00 random:6c3a1b4f seed=0 R'=0.4318/0.3766/0.4123 (44.8s) ETA 6.4min
+[ev 7/18] PhonemeSpectra/PhonemeSpectra_00 random:a6f804fc seed=0 R'=0.3994/0.3864/0.4416 (16.8s) ETA 5.5min
+[ev 8/18] PhonemeSpectra/PhonemeSpectra_00 random:ef48df17 seed=0 R'=0.4156/0.4481/0.4805 (12.8s) ETA 4.6min
+[ev 9/18] PhonemeSpectra/PhonemeSpectra_00 random:f0d7a652 seed=0 R'=0.4968/0.3896/0.4123 (33.9s) ETA 4.3min
+[ev 10/18] PhonemeSpectra/PhonemeSpectra_x00 random:08462b38 seed=0 R'=0.5373/0.4902/0.4863 (63.4s) ETA 4.3min
+[ev 11/18] PhonemeSpectra/PhonemeSpectra_x00 random:1c7caddf seed=0 R'=0.5451/0.5451/0.4784 (35.6s) ETA 3.8min
+[ev 12/18] PhonemeSpectra/PhonemeSpectra_x00 random:1dcee976 seed=0 R'=0.4784/0.4941/0.4941 (63.0s) ETA 3.5min
+[ev 13/18] PhonemeSpectra/PhonemeSpectra_x00 random:41113009 seed=0 R'=0.4549/0.4353/0.4824 (66.9s) ETA 3.1min
+[ev 14/18] PhonemeSpectra/PhonemeSpectra_x00 random:5a6a3d03 seed=0 R'=0.5412/0.5608/0.5529 (30.3s) ETA 2.5min
+[ev 15/18] PhonemeSpectra/PhonemeSpectra_x00 random:a3d5ea51 seed=0 R'=0.5373/0.5373/0.5216 (45.3s) ETA 1.9min
+[ev 16/18] PhonemeSpectra/PhonemeSpectra_x00 random:a9cd0069 seed=0 R'=0.4745/0.4941/0.5725 (12.6s) ETA 1.2min
+[ev 17/18] PhonemeSpectra/PhonemeSpectra_x00 random:da677b96 seed=0 R'=0.5412/0.5216/0.5490 (13.6s) ETA 0.6min
+[ev 18/18] PhonemeSpectra/PhonemeSpectra_x00 random:f07a5b45 seed=0 R'=0.5804/0.4510/0.4980 (75.9s) ETA 0.0min
+[ev] 完成 18 条轨迹，墙钟 11.0 min
+EV 网格: 计划 18 格 → 复用 0 → 待跑 18
+[ev 1/18] Handwriting/Handwriting_00 random:08aea94e seed=0 R'=0.8065/0.8194/0.8516 (48.3s) ETA 13.7min
+[ev 2/18] Handwriting/Handwriting_00 random:39d4367c seed=0 R'=0.7935/0.8000/0.7806 (48.5s) ETA 12.9min
+[ev 3/18] Handwriting/Handwriting_00 random:4ea19d1c seed=0 R'=0.7161/0.7097/0.6968 (42.6s) ETA 11.6min
+[ev 4/18] Handwriting/Handwriting_00 random:8e2d1e86 seed=0 R'=0.7935/0.7032/0.6710 (22.5s) ETA 9.5min
+[ev 5/18] Handwriting/Handwriting_00 random:b59e609f seed=0 R'=0.6516/0.7161/0.7290 (34.8s) ETA 8.5min
+[ev 6/18] Handwriting/Handwriting_00 random:d5612a0a seed=0 R'=0.7613/0.8194/0.8065 (49.2s) ETA 8.2min
+[ev 7/18] Handwriting/Handwriting_00 random:dc5a8428 seed=0 R'=0.6129/0.6516/0.7161 (30.6s) ETA 7.2min
+[ev 8/18] Handwriting/Handwriting_00 random:e296fb41 seed=0 R'=0.7935/0.7935/0.7935 (47.9s) ETA 6.8min
+[ev 9/18] Handwriting/Handwriting_00 random:f61d522c seed=0 R'=0.7161/0.8065/0.8000 (53.3s) ETA 6.3min
+[ev 10/18] Handwriting/Handwriting_x00 random:070db150 seed=0 R'=0.8119/0.8218/0.7723 (11.0s) ETA 5.2min
+[ev 11/18] Handwriting/Handwriting_x00 random:0db30c7f seed=0 R'=0.7624/0.8515/0.7921 (46.5s) ETA 4.6min
+[ev 12/18] Handwriting/Handwriting_x00 random:2652fba2 seed=0 R'=0.6535/0.6535/0.7228 (45.6s) ETA 4.0min
+[ev 13/18] Handwriting/Handwriting_x00 random:28df7bb1 seed=0 R'=0.7030/0.7228/0.7129 (40.1s) ETA 3.3min
+[ev 14/18] Handwriting/Handwriting_x00 random:4dca17d5 seed=0 R'=0.8020/0.7921/0.8218 (49.6s) ETA 2.7min
+[ev 15/18] Handwriting/Handwriting_x00 random:4e152adb seed=0 R'=0.6733/0.7723/0.7723 (51.9s) ETA 2.1min
+[ev 16/18] Handwriting/Handwriting_x00 random:b34aeb32 seed=0 R'=0.6634/0.7030/0.6733 (39.5s) ETA 1.4min
+[ev 17/18] Handwriting/Handwriting_x00 random:d2e10c04 seed=0 R'=0.6337/0.7624/0.6733 (23.3s) ETA 0.7min
+[ev 18/18] Handwriting/Handwriting_x00 random:de4b4c96 seed=0 R'=0.7129/0.8317/0.8416 (22.9s) ETA 0.0min
+[ev] 完成 18 条轨迹，墙钟 11.8 min
+EV 网格: 计划 18 格 → 复用 0 → 待跑 10
+[ev 1/10] HandMovementDirection/HandMovementDirection_00 random:c444a958 seed=0 R'=0.3623/0.4493/0.4348 (102.0s) ETA 15.3min
+[ev 2/10] HandMovementDirection/HandMovementDirection_x00 random:2f051956 seed=0 R'=0.6250/0.6562/0.6250 (39.2s) ETA 9.4min
+[ev 3/10] HandMovementDirection/HandMovementDirection_x00 random:32051aad seed=0 R'=0.3438/0.3125/0.4688 (30.8s) ETA 6.7min

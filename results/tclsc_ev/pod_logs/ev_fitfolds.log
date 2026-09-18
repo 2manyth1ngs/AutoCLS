@@ -1,0 +1,14 @@
+  [Handwriting] TS2Vec fit (17164, 1152, 1) 42s → /workspace/wp/CLS/results/tclsc_ev/folds/Handwriting/shared_ts2vec.pt
+[fit-folds Handwriting] 特征 87 切片 91s
+  [UniMiB-SHAR] TS2Vec fit (16068, 1152, 1) 44s → /workspace/wp/CLS/results/tclsc_ev/folds/UniMiB-SHAR/shared_ts2vec.pt
+[fit-folds UniMiB-SHAR] 特征 87 切片 74s
+  [PhonemeSpectra] TS2Vec fit (16068, 1152, 1) 33s → /workspace/wp/CLS/results/tclsc_ev/folds/PhonemeSpectra/shared_ts2vec.pt
+[fit-folds PhonemeSpectra] 特征 87 切片 76s
+  [UWaveGestureLibrary] TS2Vec fit (18844, 1152, 1) 38s → /workspace/wp/CLS/results/tclsc_ev/folds/UWaveGestureLibrary/shared_ts2vec.pt
+[fit-folds UWaveGestureLibrary] 特征 87 切片 70s
+  [EthanolConcentration] TS2Vec fit (18592, 1152, 1) 39s → /workspace/wp/CLS/results/tclsc_ev/folds/EthanolConcentration/shared_ts2vec.pt
+[fit-folds EthanolConcentration] 特征 87 切片 71s
+  [Cricket] TS2Vec fit (19084, 1152, 1) 38s → /workspace/wp/CLS/results/tclsc_ev/folds/Cricket/shared_ts2vec.pt
+[fit-folds Cricket] 特征 87 切片 70s
+  [HandMovementDirection] TS2Vec fit (17824, 1152, 1) 37s → /workspace/wp/CLS/results/tclsc_ev/folds/HandMovementDirection/shared_ts2vec.pt
+[fit-folds HandMovementDirection] 特征 87 切片 73s

@@ -1,0 +1,12 @@
+{
+ "tag": "ES",
+ "test": "HandMovementDirection",
+ "arm": "es_field_hard",
+ "seed": 2,
+ "n_train_slices": 75,
+ "n_train_records": 4500,
+ "train_seconds": 1512.0,
+ "bce_first": 0.5107159186154604,
+ "bce_last": 0.03689455300230871,
+ "train_pairs_last": 1400
+}

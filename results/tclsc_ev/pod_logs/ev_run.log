@@ -1,0 +1,8 @@
+CUDA NVIDIA GeForce RTX 5090
+== [07:19:59] rprime ev_et / ev_blind / rand_u start in background (Ethanol first, then reverse order)
+== [07:19:59] fit-folds start
+== [07:33:30] fit-folds done: 609 npz
+== [07:33:31] train-es start (2 procs)
+pids 2223 2224
+== [07:34:31] train-es exited: 0 models
+== models < 21 → 单进程 --resume 补训

@@ -1,0 +1,12 @@
+{
+ "tag": "ES",
+ "test": "Cricket",
+ "arm": "es_field_hard",
+ "seed": 1,
+ "n_train_slices": 75,
+ "n_train_records": 4500,
+ "train_seconds": 1267.0,
+ "bce_first": 0.5358956754207611,
+ "bce_last": 0.03958776881918311,
+ "train_pairs_last": 1244
+}

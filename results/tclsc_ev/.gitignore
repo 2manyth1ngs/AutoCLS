@@ -4,3 +4,4 @@ folds/
 run.err
 run.log
 inflight.txt
+set_encoder_init.pt

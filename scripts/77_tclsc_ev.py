@@ -511,8 +511,9 @@ def cmd_analyze(outdir: Path) -> dict:
     props = {g: load_proposals(outdir, g) for g in guides}
     rand_u = load_proposals(outdir, RAND_U)
     arms = guides + ([RAND_U] if rand_u else []) + [RAND_NB]
-    slices = [s for s in ev_slices() if all(s in props[g] for g in guides)]
-    a: dict = {"protocol": "results/tclsc_ev/PROTOCOL.md", "slices": slices, "arms": arms, "per_budget": {}, "paired": {}, "gates": {}, "over": {}, "diag": {}}
+    slices = ev_slices()          # 各臂各自只在有提名的切片上统计（如 ev_es 只训完部分折时只有部分切片）；配对块自动取交集
+    a: dict = {"protocol": "results/tclsc_ev/PROTOCOL.md", "slices": slices, "arms": arms, "slices_by_guide": {g: sorted(props[g]) for g in guides},
+               "per_budget": {}, "paired": {}, "gates": {}, "over": {}, "diag": {}}
     per_slice_290: dict[str, dict] = {}
     for b in pq.BUDGETS:
         stats: dict[str, dict] = {arm: {} for arm in arms}
@@ -524,7 +525,11 @@ def cmd_analyze(outdir: Path) -> dict:
             dl = float(dk[(d, int(b))])
             truth = {k: v for (t, bb, k), v in val.items() if t == s and bb == int(b)}
             for g in guides:
+                if s not in props[g]:
+                    continue
                 keys = [p["cls_key"] for p in props[g][s]["proposals"]]
+                if not any(k in truth for k in keys):      # 提名尚未打标签（如 ev_es 的 Ethanol 段）→ 不计
+                    continue
                 st = slice_stats(truth, keys, ref=ref["ref"], delta=dl)
                 st.update({"pred_above": float(np.mean([p["above_trust"] for p in props[g][s]["proposals"]])),
                            "realized_above": float(np.mean([truth[k] > ref["ref"] for k in keys if k in truth])) if any(k in truth for k in keys) else None,
@@ -585,11 +590,13 @@ def cmd_analyze(outdir: Path) -> dict:
         a["over"]["ev_blind"] = {"pred_above_share": agg290["ev_blind"]["pred_above_share"], "realized_above_share": agg290["ev_blind"]["realized_above_share"],
                                 "over": (agg290["ev_blind"]["pred_above_share"] or 0.0) - (agg290["ev_blind"]["realized_above_share"] or 0.0)}
     a["verdict"] = verdict_ev(a["gates"])
+    sl_of = lambda g: [s for s in slices if s in props[g]]
     a["diag"] = {"reused_rows": sum(1 for r in ev_rows if r.get("reused_from")), "n_rows": len(ev_rows),
-                 "proposals_in_nb_labeled": {g: int(sum(props[g][s].get("proposals_in_nb_labeled", 0) for s in slices)) for g in guides},
-                 "trust_in_top3_share": {g: float(np.mean([props[g][s]["trust_in_top3"] for s in slices])) for g in guides},
-                 "hamming_hist": {g: {str(h): int(sum(p["hamming_to_trust"] == h for s in slices for p in props[g][s]["proposals"])) for h in (1, 2, 3)} for g in guides},
-                 "overlap_between_guides": {f"{x}&{y}": int(sum(len({p["cls_key"] for p in props[x][s]["proposals"]} & {p["cls_key"] for p in props[y][s]["proposals"]}) for s in slices))
+                 "proposals_in_nb_labeled": {g: int(sum(props[g][s].get("proposals_in_nb_labeled", 0) for s in sl_of(g))) for g in guides},
+                 "trust_in_top3_share": {g: float(np.mean([props[g][s]["trust_in_top3"] for s in sl_of(g)])) for g in guides},
+                 "hamming_hist": {g: {str(h): int(sum(p["hamming_to_trust"] == h for s in sl_of(g) for p in props[g][s]["proposals"])) for h in (1, 2, 3)} for g in guides},
+                 "overlap_between_guides": {f"{x}&{y}": int(sum(len({p["cls_key"] for p in props[x][s]["proposals"]} & {p["cls_key"] for p in props[y][s]["proposals"]})
+                                                              for s in slices if s in props[x] and s in props[y]))
                                             for x, y in itertools.combinations(guides, 2)}}
     a["es_exam"] = es_exam(outdir)
     a["predictions"] = predictions(a)
@@ -616,7 +623,9 @@ def es_exam(outdir: Path) -> Optional[dict]:
            "diag": {t: per.get("diag") for t, per in rk_es[group].items()}}
     out["es"]["hit3"] = float(np.mean([r["regret"][ES_ARM + "3"] == 0 for r in rows_es if ES_ARM + "3" in r["regret"]]))
     if group in rk_nb:
-        rows_nb = _g76._eval(rk_nb[group], cat_z, dk, list(_g76.ARMS), "normal", group=group)
+        folds_es = set(rk_es[group])
+        out["folds"] = sorted(folds_es)
+        rows_nb = _g76._eval({t: per for t, per in rk_nb[group].items() if t in folds_es}, cat_z, dk, list(_g76.ARMS), "normal", group=group)   # 只比同折
         out["nb_same_group"] = {arm: _g73._pooled(rows_nb, arm) for arm in _g76.ARMS}
         key = lambda r: (r["fold"], r["task_id"] if "task_id" in r else r.get("slice"), r.get("budget"), r.get("iters"))
         merged = {}

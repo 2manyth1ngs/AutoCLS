@@ -1,0 +1,7 @@
+⚠️ [Handwriting] es 模型不全，跳过
+⚠️ [UniMiB-SHAR] es 模型不全，跳过
+⚠️ [PhonemeSpectra] es 模型不全，跳过
+⚠️ [UWaveGestureLibrary] es 模型不全，跳过
+[rank-es] EthanolConcentration diag {'n_slices': 87, 'cos_within': 0.9514276534386735, 'cos_cross': 0.19315426205760794, 'norm_median': 39.0592402274294, 'norm_min': 21.695185319797115, 'norm_max': 77.14604182124525}
+[rank-es] Cricket diag {'n_slices': 87, 'cos_within': 0.9523348158907916, 'cos_cross': 0.11624510953001434, 'norm_median': 46.82534050508369, 'norm_min': 13.952464474525996, 'norm_max': 65.72141319714584}
+[rank-es] HandMovementDirection diag {'n_slices': 87, 'cos_within': 0.9477547909262106, 'cos_cross': 0.1744807632528746, 'norm_median': 33.307802280428476, 'norm_min': 8.760753917832847, 'norm_max': 55.74253264613634}
