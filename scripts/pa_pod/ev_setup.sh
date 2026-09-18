@@ -33,7 +33,11 @@ echo "== HEAD $(cat "$UP/HEAD.txt")"
 
 df -h /workspace | tail -1
 AVAIL_GB=$(df -BG --output=avail /workspace | tail -1 | tr -dc '0-9')
-[ "${AVAIL_GB:-0}" -ge 12 ] || { echo "FREE ${AVAIL_GB:-?} GB < 12 GB on /workspace"; exit 4; }
+[ "${AVAIL_GB:-0}" -ge 6 ] || { echo "FREE ${AVAIL_GB:-?} GB < 6 GB on /workspace"; exit 4; }
+# 折特征（87 切片 × 7 折 ≈ 5 GB）放容器盘（30 GB，随 pod 停止消失、可再生；S1E 同做法），网络卷只有 10 GB
+mkdir -p /root/ev_folds results/tclsc_ev
+[ -L results/tclsc_ev/folds ] || { rm -rf results/tclsc_ev/folds; ln -s /root/ev_folds results/tclsc_ev/folds; }
+df -h /root | tail -1
 
 mkdir -p data/uea_cache
 FETCH_FAIL=""
