@@ -1,0 +1,5 @@
+*.tar.gz
+run.log
+run.err
+inflight.txt
+smoke/
