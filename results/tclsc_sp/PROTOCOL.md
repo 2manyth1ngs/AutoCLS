@@ -51,4 +51,4 @@ EV1 的机理读数：训练标签的分布（random-10 全空间均匀，65% �
 
 ## §6 执行台账（跑后填写）
 
-（空）
+- 2026-09-18 本地零 GPU：`78 --all` 28 s；6 例单测绿；**SP-DEAD**（G-S1 ✗ random AUC 0.709 / ρ 0.357、G-S2 ✗ kept z-bad 0.153 / strict 0.261（random）、G-S3 ✓ S⁺ 0.653 / 召回 0.906；预测 2/6）。五个非 chance 集 AUC 0.75–0.84 / kept z-bad 2–10%，Ethanol 0.43 / HMD 0.55 拉低 pooled；random-10 实测 z-bad 25%（非 65%），剪枝对步骤 2 的覆盖增益只 1.2–1.3×。REPORT.md。

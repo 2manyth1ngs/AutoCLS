@@ -1,0 +1,491 @@
+{
+ "protocol": "results/tclsc_sp/PROTOCOL.md",
+ "labels": {
+  "rows": 1827,
+  "slices": 87,
+  "configs": 881,
+  "evaluable_slices": [
+   "Cricket_01",
+   "Cricket_03",
+   "EthanolConcentration_02",
+   "HandMovementDirection_03",
+   "HandMovementDirection_04",
+   "Handwriting_00",
+   "Handwriting_01",
+   "Handwriting_02",
+   "Handwriting_03",
+   "Handwriting_04",
+   "Handwriting_05",
+   "PhonemeSpectra_00",
+   "UWaveGestureLibrary_00",
+   "UWaveGestureLibrary_01",
+   "UWaveGestureLibrary_02",
+   "UWaveGestureLibrary_05",
+   "UniMiB-SHAR_00",
+   "UniMiB-SHAR_01",
+   "UniMiB-SHAR_02",
+   "UniMiB-SHAR_03",
+   "UniMiB-SHAR_04",
+   "UniMiB-SHAR_05"
+  ],
+  "zbad_rate": 0.17624521072796934,
+  "zbad_rate_random": 0.2471264367816092,
+  "strict_rate_evaluable": 0.31601731601731603
+ },
+ "by_dataset": {
+  "Cricket": {
+   "n": 252,
+   "zbad_rate": 0.1746031746031746,
+   "evaluable_slices": 2,
+   "strict_rate": 0.35714285714285715
+  },
+  "EthanolConcentration": {
+   "n": 252,
+   "zbad_rate": 0.15873015873015872,
+   "evaluable_slices": 1,
+   "strict_rate": 0.8095238095238095
+  },
+  "HandMovementDirection": {
+   "n": 252,
+   "zbad_rate": 0.17063492063492064,
+   "evaluable_slices": 2,
+   "strict_rate": 0.11904761904761904
+  },
+  "Handwriting": {
+   "n": 252,
+   "zbad_rate": 0.20634920634920634,
+   "evaluable_slices": 6,
+   "strict_rate": 0.23015873015873015
+  },
+  "PhonemeSpectra": {
+   "n": 252,
+   "zbad_rate": 0.19444444444444445,
+   "evaluable_slices": 1,
+   "strict_rate": 0.42857142857142855
+  },
+  "SelfRegulationSCP2": {
+   "n": 63,
+   "zbad_rate": 0.1746031746031746,
+   "evaluable_slices": 0,
+   "strict_rate": null
+  },
+  "UWaveGestureLibrary": {
+   "n": 252,
+   "zbad_rate": 0.14285714285714285,
+   "evaluable_slices": 4,
+   "strict_rate": 0.27380952380952384
+  },
+  "UniMiB-SHAR": {
+   "n": 252,
+   "zbad_rate": 0.1865079365079365,
+   "evaluable_slices": 6,
+   "strict_rate": 0.38095238095238093
+  }
+ },
+ "pooled": {
+  "all": {
+   "n": 1764,
+   "auc": 0.785172268042834,
+   "spearman": 0.4458952769792421,
+   "kept_frac": 0.7602040816326531,
+   "zbad_rate": 0.09321401938851603,
+   "strict_rate": 0.1844380403458213,
+   "n_strict": 347,
+   "recall_good": 0.905688622754491,
+   "n_good": 668
+  },
+  "random": {
+   "n": 840,
+   "auc": 0.7093784612602566,
+   "spearman": 0.3574663003488861,
+   "kept_frac": 0.6392857142857142,
+   "zbad_rate": 0.1527001862197393,
+   "strict_rate": 0.2608695652173913,
+   "n_strict": 138,
+   "recall_good": 0.796078431372549,
+   "n_good": 255
+  }
+ },
+ "folds": {
+  "Handwriting": {
+   "tau": -0.37400293411798713,
+   "all": {
+    "n": 252,
+    "auc": 0.8643749999999999,
+    "spearman": 0.6781011887508237,
+    "kept_frac": 0.7698412698412699,
+    "zbad_rate": 0.10309278350515463,
+    "strict_rate": 0.13402061855670103,
+    "n_strict": 97,
+    "recall_good": 0.9514563106796117,
+    "n_good": 103
+   },
+   "random": {
+    "n": 120,
+    "auc": 0.7668511885379354,
+    "spearman": 0.4925332449365685,
+    "kept_frac": 0.6166666666666667,
+    "zbad_rate": 0.1891891891891892,
+    "strict_rate": 0.1891891891891892,
+    "n_strict": 37,
+    "recall_good": 0.8214285714285714,
+    "n_good": 28
+   },
+   "n_train": 1575
+  },
+  "UniMiB-SHAR": {
+   "tau": -0.17474798534514602,
+   "all": {
+    "n": 252,
+    "auc": 0.9284898806434873,
+    "spearman": 0.6490026761975154,
+    "kept_frac": 0.6746031746031746,
+    "zbad_rate": 0.023529411764705882,
+    "strict_rate": 0.1511627906976744,
+    "n_strict": 86,
+    "recall_good": 0.896551724137931,
+    "n_good": 116
+   },
+   "random": {
+    "n": 120,
+    "auc": 0.8387321490769767,
+    "spearman": 0.59745779633665,
+    "kept_frac": 0.5166666666666667,
+    "zbad_rate": 0.06451612903225806,
+    "strict_rate": 0.1875,
+    "n_strict": 32,
+    "recall_good": 0.76,
+    "n_good": 50
+   },
+   "n_train": 1575
+  },
+  "PhonemeSpectra": {
+   "tau": -0.2403767996307988,
+   "all": {
+    "n": 252,
+    "auc": 0.8645320197044334,
+    "spearman": 0.4887036030395774,
+    "kept_frac": 0.6865079365079365,
+    "zbad_rate": 0.06936416184971098,
+    "strict_rate": 0.23076923076923078,
+    "n_strict": 13,
+    "recall_good": 0.8673469387755102,
+    "n_good": 98
+   },
+   "random": {
+    "n": 120,
+    "auc": 0.7523148148148148,
+    "spearman": 0.44097889593730516,
+    "kept_frac": 0.5416666666666666,
+    "zbad_rate": 0.13846153846153847,
+    "strict_rate": 0.5,
+    "n_strict": 4,
+    "recall_good": 0.7435897435897436,
+    "n_good": 39
+   },
+   "n_train": 1575
+  },
+  "UWaveGestureLibrary": {
+   "tau": -0.2115644919380016,
+   "all": {
+    "n": 252,
+    "auc": 0.900462962962963,
+    "spearman": 0.6402444990382147,
+    "kept_frac": 0.7380952380952381,
+    "zbad_rate": 0.03763440860215054,
+    "strict_rate": 0.15625,
+    "n_strict": 64,
+    "recall_good": 0.9387755102040817,
+    "n_good": 98
+   },
+   "random": {
+    "n": 120,
+    "auc": 0.7855973813420623,
+    "spearman": 0.543386123635738,
+    "kept_frac": 0.65,
+    "zbad_rate": 0.08974358974358974,
+    "strict_rate": 0.2857142857142857,
+    "n_strict": 28,
+    "recall_good": 0.9705882352941176,
+    "n_good": 34
+   },
+   "n_train": 1575
+  },
+  "EthanolConcentration": {
+   "tau": -0.8261951732528882,
+   "all": {
+    "n": 252,
+    "auc": 0.5115566037735849,
+    "spearman": -0.044125402564746036,
+    "kept_frac": 0.8571428571428571,
+    "zbad_rate": 0.1574074074074074,
+    "strict_rate": 0.7894736842105263,
+    "n_strict": 19,
+    "recall_good": 0.8117647058823529,
+    "n_good": 85
+   },
+   "random": {
+    "n": 120,
+    "auc": 0.43181818181818177,
+    "spearman": -0.25400232052404736,
+    "kept_frac": 0.8,
+    "zbad_rate": 0.20833333333333334,
+    "strict_rate": 0.7777777777777778,
+    "n_strict": 9,
+    "recall_good": 0.6818181818181818,
+    "n_good": 44
+   },
+   "n_train": 1575
+  },
+  "Cricket": {
+   "tau": -0.35105425267040086,
+   "all": {
+    "n": 252,
+    "auc": 0.8762565559440559,
+    "spearman": 0.667344033573058,
+    "kept_frac": 0.75,
+    "zbad_rate": 0.07407407407407407,
+    "strict_rate": 0.1935483870967742,
+    "n_strict": 31,
+    "recall_good": 0.93,
+    "n_good": 100
+   },
+   "random": {
+    "n": 120,
+    "auc": 0.7571583907212759,
+    "spearman": 0.5427394167190336,
+    "kept_frac": 0.575,
+    "zbad_rate": 0.14492753623188406,
+    "strict_rate": 0.2727272727272727,
+    "n_strict": 11,
+    "recall_good": 0.7878787878787878,
+    "n_good": 33
+   },
+   "n_train": 1575
+  },
+  "HandMovementDirection": {
+   "tau": -0.553695739305699,
+   "all": {
+    "n": 252,
+    "auc": 0.5647602091910537,
+    "spearman": 0.21278007122565873,
+    "kept_frac": 0.8452380952380952,
+    "zbad_rate": 0.1596244131455399,
+    "strict_rate": 0.10810810810810811,
+    "n_strict": 37,
+    "recall_good": 0.9411764705882353,
+    "n_good": 68
+   },
+   "random": {
+    "n": 120,
+    "auc": 0.5499181669394435,
+    "spearman": 0.10863695164910259,
+    "kept_frac": 0.775,
+    "zbad_rate": 0.1935483870967742,
+    "strict_rate": 0.17647058823529413,
+    "n_strict": 17,
+    "recall_good": 0.8888888888888888,
+    "n_good": 27
+   },
+   "n_train": 1575
+  }
+ },
+ "final": {
+  "tau": -0.38403239830837044,
+  "space_fraction": 0.65341,
+  "n_space": 100000,
+  "sampler_check": {
+   "n": 50,
+   "min_zhat": -0.38125407672458506,
+   "all_valid": true
+  },
+  "known_in_splus": {
+   "4f7d4135": true,
+   "cffb5503": true,
+   "8c4aa283": true,
+   "f48e5da1": true,
+   "a1f67db4": true,
+   "e490b88e": true,
+   "9092e36e": true,
+   "65627517": true,
+   "20be4f74": false,
+   "8b87d66f": true,
+   "c92058f2": true
+  },
+  "known_zhat": {
+   "4f7d4135": 0.5305239658511867,
+   "cffb5503": 0.6444653346877598,
+   "8c4aa283": 0.45811918283556236,
+   "f48e5da1": 0.15649654150073888,
+   "a1f67db4": 0.4658713403357725,
+   "e490b88e": 0.41745362305706757,
+   "9092e36e": 0.6240215105918533,
+   "65627517": -0.11922828760408889,
+   "20be4f74": -1.2091152151528024,
+   "8b87d66f": -0.20170131159181787,
+   "c92058f2": 0.3932070843115914
+  },
+  "oof_kept_frac": 0.7783251231527094,
+  "oof_zbad_rate_kept": 0.09985935302390998
+ },
+ "curve": [
+  {
+   "quantile": 0.0,
+   "tau": -1.9198745535942443,
+   "kept_frac_labeled": 1.0,
+   "zbad_rate": 0.17624521072796934,
+   "recall_good": 1.0
+  },
+  {
+   "quantile": 0.1,
+   "tau": -0.9431251101702859,
+   "kept_frac_labeled": 0.8998357963875205,
+   "zbad_rate": 0.1356447688564477,
+   "recall_good": 0.9694767441860465
+  },
+  {
+   "quantile": 0.2,
+   "tau": -0.46210970884762514,
+   "kept_frac_labeled": 0.7996715927750411,
+   "zbad_rate": 0.1054072553045859,
+   "recall_good": 0.9229651162790697
+  },
+  {
+   "quantile": 0.3,
+   "tau": -0.20741502119895774,
+   "kept_frac_labeled": 0.7060755336617406,
+   "zbad_rate": 0.08682170542635659,
+   "recall_good": 0.8561046511627907
+  },
+  {
+   "quantile": 0.4,
+   "tau": -0.08283207813596946,
+   "kept_frac_labeled": 0.6042692939244664,
+   "zbad_rate": 0.07336956521739131,
+   "recall_good": 0.8037790697674418
+  },
+  {
+   "quantile": 0.5,
+   "tau": 0.1562006977383236,
+   "kept_frac_labeled": 0.5002736726874658,
+   "zbad_rate": 0.060175054704595186,
+   "recall_good": 0.7165697674418605
+  },
+  {
+   "quantile": 0.6,
+   "tau": 0.34099839284507333,
+   "kept_frac_labeled": 0.40120415982484947,
+   "zbad_rate": 0.05320600272851296,
+   "recall_good": 0.6061046511627907
+  },
+  {
+   "quantile": 0.7,
+   "tau": 0.42890915269765495,
+   "kept_frac_labeled": 0.3021346469622332,
+   "zbad_rate": 0.06521739130434782,
+   "recall_good": 0.4273255813953488
+  },
+  {
+   "quantile": 0.8,
+   "tau": 0.4902996151933632,
+   "kept_frac_labeled": 0.20525451559934318,
+   "zbad_rate": 0.064,
+   "recall_good": 0.2877906976744186
+  }
+ ],
+ "importance": {
+  "temperature": 0.1932205912731316,
+  "sim_func": 0.10944373854719355,
+  "norm": 0.08954749506118694,
+  "rescale": 0.08295157646226158,
+  "emb_mask": 0.00749401239634183,
+  "emb_jitter": 0.0072879010569543165,
+  "freq_mask": 0.005143264558060947,
+  "kernel": 0.004273081735812346,
+  "crop": 0.0028576784375886843,
+  "jitter": 0.002333114542015423,
+  "order": 0.002123465596961388,
+  "adj_neighbor": 0.002088719363680681,
+  "pool": 0.0005769311505229352,
+  "resize": 0.000472302215189616,
+  "instance": 0.0,
+  "cross_scale": -0.0002452173428400916,
+  "point_mask": -0.002274440668478358,
+  "loss_type": -0.005443139321564263,
+  "temporal": -0.00657684810276354
+ },
+ "ridge": {
+  "Handwriting": {
+   "auc_random": 0.7775968739824162,
+   "spearman_random": 0.44921026545414044
+  },
+  "UniMiB-SHAR": {
+   "auc_random": 0.8021595262974573,
+   "spearman_random": 0.585470790362083
+  },
+  "PhonemeSpectra": {
+   "auc_random": 0.7175925925925926,
+   "spearman_random": 0.37796702868835763
+  },
+  "UWaveGestureLibrary": {
+   "auc_random": 0.6554828150572831,
+   "spearman_random": 0.3042853946423941
+  },
+  "EthanolConcentration": {
+   "auc_random": 0.4104823747680891,
+   "spearman_random": -0.20724202895618898
+  },
+  "Cricket": {
+   "auc_random": 0.7082276187024285,
+   "spearman_random": 0.46424274062852783
+  },
+  "HandMovementDirection": {
+   "auc_random": 0.5351882160392798,
+   "spearman_random": 0.0988186440304321
+  },
+  "pooled_random": {
+   "auc": 0.6625878736277397
+  }
+ },
+ "gates": {
+  "G-S1": false,
+  "G-S2": false,
+  "G-S3": true
+ },
+ "verdict": "SP-DEAD",
+ "predictions": {
+  "P1": {
+   "desc": "AUC ≥ 0.85（random 口径）",
+   "value": 0.7093784612602566,
+   "hit": false
+  },
+  "P2": {
+   "desc": "S⁺ 占空间 20–50%",
+   "value": 0.65341,
+   "hit": false
+  },
+  "P3": {
+   "desc": "置换重要性前 2 = temperature, sim_func",
+   "value": [
+    "temperature",
+    "sim_func",
+    "norm"
+   ],
+   "hit": true
+  },
+  "P4": {
+   "desc": "G-S2",
+   "hit": false
+  },
+  "P5": {
+   "desc": "好配置召回 ≥ 0.9",
+   "value": 0.905688622754491,
+   "hit": true
+  },
+  "P6": {
+   "desc": "LODO Spearman（random）≥ 0.5",
+   "value": 0.3574663003488861,
+   "hit": false
+  }
+ }
+}

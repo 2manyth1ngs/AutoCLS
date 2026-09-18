@@ -1,0 +1,8 @@
+{
+ "tau": -0.38403239830837044,
+ "space_fraction": 0.65341,
+ "purity_target": 0.1,
+ "zbad": -1.0,
+ "encoder": "binned",
+ "seed": 0
+}

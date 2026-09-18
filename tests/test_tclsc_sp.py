@@ -75,7 +75,7 @@ class TestModelAndTau:
         keep = zhat >= tau
         assert np.mean(zbad[keep]) <= 0.10
         assert g.choose_tau(zhat, zbad, target=0.10) <= g.choose_tau(zhat, zbad, target=0.01)     # 更严的目标 → 更大的 τ
-        assert keep.sum() > 0 and tau <= 0.5 + 1e-6 and tau >= -0.5 - 0.15                       # 最小满足纯度的 τ 落在边界附近
+        assert keep.sum() > 0 and tau <= -0.5 + 1e-6 and tau >= -0.5 - 0.30                      # 最小满足纯度的 τ：x/(2.5+x) ≤ 0.1 → x ≤ 0.28
 
 
 class TestSampler:
