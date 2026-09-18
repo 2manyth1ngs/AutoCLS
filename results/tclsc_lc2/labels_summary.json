@@ -1,0 +1,21 @@
+{
+ "pool_rows": 7830,
+ "truth_rows": 7830,
+ "random_configs": 870,
+ "splus_random_configs": 540,
+ "splus_share": 0.6206896551724138,
+ "points_rows": {
+  "R0": 2610,
+  "R3": 3393,
+  "R6": 4065,
+  "RA": 4230,
+  "RN": 6840
+ },
+ "points_nonshared_per_slice": {
+  "R0": 0.0,
+  "R3": 3.0,
+  "R6": 5.574712643678161,
+  "RA": 6.206896551724138,
+  "RN": 16.20689655172414
+ }
+}
