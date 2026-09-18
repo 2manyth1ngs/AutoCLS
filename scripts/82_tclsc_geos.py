@@ -253,11 +253,13 @@ def cmd_analyze(outdir: Path, *, n_perm: int = 1000) -> dict:
     n = len(ds)
     champ = [fams[int(np.nanargmax(U[i]))] for i in range(n)]
     fixed_fold = [_g81.fixed_best(U, train_idx=[j for j in range(n) if j != i]) for i in range(n)]
-    oracle_minus_fixed = np.array([0.0 - U[i, fixed_fold[i]] for i in range(n)])
+    Uf = np.where(np.isnan(U), np.nanmin(U, axis=1, keepdims=True), U)        # 缺家族（跑失败）按该靶最差家族计，保守
+    oracle_minus_fixed = np.array([0.0 - Uf[i, fixed_fold[i]] for i in range(n)])
     j_prior, j_ggs = (fams.index(str(PRIOR_FAMILY)) if str(PRIOR_FAMILY) in fams else None), (fams.index(str(GGS_FAMILY)) if str(GGS_FAMILY) in fams else None)
     s1 = {"n": n, "oracle_minus_fixed": float(oracle_minus_fixed.mean()), "frac_over_noise": float(np.mean([oracle_minus_fixed[i] > 2 * sig.get(ds[i], med) for i in range(n)])),
-          "oracle_minus_prior": float(np.nanmean([-U[i, j_prior] for i in range(n)])) if j_prior is not None else None,
-          "oracle_minus_ggs": float(np.nanmean([-U[i, j_ggs] for i in range(n)])) if j_ggs is not None else None,
+          "oracle_minus_prior": float(np.mean([-Uf[i, j_prior] for i in range(n)])) if j_prior is not None else None,
+          "oracle_minus_ggs": float(np.mean([-Uf[i, j_ggs] for i in range(n)])) if j_ggs is not None else None,
+          "n_missing_cells": int(np.isnan(U).sum()),
           "fixed_family_all": fams[_g81.fixed_best(U, train_idx=list(range(n)))], "champion_counts": dict(Counter(champ)),
           "two_family_share": float(np.mean([c in (str(PRIOR_FAMILY), str(GGS_FAMILY)) for c in champ])), "sigma_median": med,
           "per_dataset": {ds[i]: {"champion": champ[i], "oracle_minus_fixed": float(oracle_minus_fixed[i]), "sigma": sig.get(ds[i]), "acc_best": float(max(traj[ds[i]][f][max(traj[ds[i]][f])] for f in traj[ds[i]]))} for i in range(n)}}
