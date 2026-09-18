@@ -155,7 +155,7 @@ class TestStats:
         st = g.slice_stats(truth, ["p1", "p2", "p3"], ref=0.65, delta=0.04)
         assert st["best3"] == 0.70 and st["mean3"] == pytest.approx(0.6) and st["gap"] == pytest.approx(0.05) and st["over_delta"] is True and st["n"] == 3
         blk = g.paired_block({"s1": 0.7, "s2": 0.6, "s3": 0.8}, {"s1": 0.5, "s2": 0.55, "s3": 0.7})
-        assert blk["n"] == 3 and blk["delta"] == pytest.approx(0.15) and blk["wins"] == 3 and 0 <= blk["p"] <= 1
+        assert blk["n"] == 3 and blk["delta"] == pytest.approx(0.35 / 3) and blk["wins"] == 3 and 0 <= blk["p"] <= 1
         assert g.gate_v1([{"gap": 0.05, "over_delta": True}] * 3 + [{"gap": -0.01, "over_delta": False}] * 4 + [{"gap": 0.001, "over_delta": False}] * 7)
         assert not g.gate_v1([{"gap": 0.05, "over_delta": True}] * 2 + [{"gap": 0.01, "over_delta": False}] * 12)
         assert g.gate_v2({"delta": 0.012, "p": 0.01}) and not g.gate_v2({"delta": 0.012, "p": 0.2}) and not g.gate_v2({"delta": 0.005, "p": 0.01})

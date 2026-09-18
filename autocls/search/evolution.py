@@ -34,7 +34,7 @@ CLS 合法性来源（铁律 1）：交叉只在两个已合法父代之间逐�
 from __future__ import annotations
 
 import dataclasses
-from typing import Callable, Sequence
+from typing import Callable, Optional, Sequence
 
 import numpy as np
 
@@ -72,11 +72,14 @@ def _pairwise_wins(
     return wins_from_scores(S)
 
 
-def _sample_unique_cls(space, rng: np.random.Generator, n: int, exclude_keys=()) -> list:
+def _sample_unique_cls(space, rng: np.random.Generator, n: int, exclude_keys=(), *,
+                       sampler: Optional[Callable] = None, accept: Optional[Callable] = None) -> list:
     """采样 n 个互不相同（按 cls_key）的合法 CLS。
 
     space.sample_random 恒产出合法配置（test_sample_10000_all_valid 已验收），这里
     只需要处理"撞库"去重，不需要重复校验合法性。
+    WP16 EV1 钩子：`sampler(rng) -> CLS` 换掉 space.sample_random（调用方限定搜索域，如"信任域邻域"）；
+    `accept(cls) -> bool` 为额外接受域，不过即丢弃重采。两者缺省时逐位等于旧行为。
     """
     seen = set(exclude_keys)
     out = []
@@ -84,7 +87,9 @@ def _sample_unique_cls(space, rng: np.random.Generator, n: int, exclude_keys=())
     attempts = 0
     while len(out) < n and attempts < max_attempts:
         attempts += 1
-        c = space.sample_random(rng)
+        c = space.sample_random(rng) if sampler is None else sampler(rng)
+        if accept is not None and not accept(c):
+            continue
         k = cls_key(c)
         if k in seen:
             continue
@@ -115,8 +120,13 @@ def _mutate(a, rng: np.random.Generator, space):
     return type(a)(**values)
 
 
-def _make_offspring(population: Sequence, rng: np.random.Generator, space, p_cross: float, p_mut: float):
-    """按模块 docstring 的顺序语义产生一个合法后代；重试超限仍非法则返回 None。"""
+def _make_offspring(population: Sequence, rng: np.random.Generator, space, p_cross: float, p_mut: float, *,
+                    mutator: Optional[Callable] = None, accept: Optional[Callable] = None):
+    """按模块 docstring 的顺序语义产生一个合法后代；重试超限仍非法则返回 None。
+
+    WP16 EV1 钩子：`mutator(cls, rng) -> CLS` 换掉单字段全档重采（如局部 ±1/±2 档一步变异）；`accept` 同 _sample_unique_cls
+    （交叉 / 变异 / 复制出来的后代都要过它——交叉两个域内父代也可能跳出域）。缺省逐位等于旧行为。
+    """
     field_names = space.field_names
     n = len(population)
     for _ in range(_MAX_OFFSPRING_ATTEMPTS):
@@ -125,11 +135,11 @@ def _make_offspring(population: Sequence, rng: np.random.Generator, space, p_cro
             child = _crossover(population[i], population[j], rng, field_names)
         elif rng.random() < p_mut:
             i = int(rng.integers(n))
-            child = _mutate(population[i], rng, space)
+            child = _mutate(population[i], rng, space) if mutator is None else mutator(population[i], rng)
         else:
             i = int(rng.integers(n))
             child = population[i]
-        if space.validate(child):
+        if space.validate(child) and (accept is None or accept(child)):
             return child
     return None
 
@@ -147,6 +157,10 @@ def evolutionary_search(
     top_k: int = 3,
     batch_size: int = 4096,
     rng: np.random.Generator,
+    sampler: Optional[Callable] = None,
+    mutator: Optional[Callable] = None,
+    accept: Optional[Callable] = None,
+    seed_population: Optional[Sequence] = None,
 ) -> list[dict]:
     """AutoCTS++ Algorithm 2 的进化搜索部分（模块 docstring 有完整语义说明）。
 
@@ -156,12 +170,23 @@ def evolutionary_search(
         见 interfaces.md「Task 3 → Tasks 6, 7」；batch_size 是 score_pairs 单批喂入的
         候选对数上限（brief 新增，默认 4096）。rng 无默认值——调用方必须显式传入
         np.random.Generator 以保证整个搜索在给定种子下逐位确定。
+    WP16 EV1 钩子（results/tclsc_ev/PROTOCOL.md §1.2，全部可选、缺省逐位等于旧行为）：
+        sampler(rng) -> CLS：初始采样器（限定搜索域）；mutator(cls, rng) -> CLS：变异算子；
+        accept(cls) -> bool：接受域（采样与后代都要过）；seed_population：预先放进初始候选池的配置
+        （如信任域配置，按 cls_key 去重、不计入 ks；调用方保证其合法且在域内），它们与采样候选一起排序。
 
     返回按 wins 降序（并列按 cls_key 升序，interfaces.md 的稳定 tie-break）排序的
-    top-k 条目：{"cls": asdict(CLS), "cls_key", "wins", "generation_found"}。
+    top-k 条目：{"cls": asdict(CLS), "cls_key", "wins", "generation_found"}（top_k=kp 即整个最终种群）。
     """
     # 1) 采样 ks 个候选 + Round-Robin 排序 → 初始种群 top-kp（论文 §3.3 第一段）
-    sampled = _sample_unique_cls(space, rng, ks)
+    seeds: list = []
+    seen_seed: set = set()
+    for c in (seed_population or ()):
+        k = cls_key(c)
+        if k not in seen_seed:
+            seen_seed.add(k)
+            seeds.append(c)
+    sampled = seeds + _sample_unique_cls(space, rng, ks, exclude_keys=seen_seed, sampler=sampler, accept=accept)
     wins0 = _pairwise_wins(sampled, encoder, score_pairs, batch_size)
     keys0 = [cls_key(c) for c in sampled]
     order0 = sorted(range(len(sampled)), key=lambda i: (-int(wins0[i]), keys0[i]))
@@ -175,7 +200,7 @@ def evolutionary_search(
         offspring, offspring_keys = [], []
         seen = set(pop_keys)
         for _ in range(kp):
-            child = _make_offspring(population, rng, space, p_cross, p_mut)
+            child = _make_offspring(population, rng, space, p_cross, p_mut, mutator=mutator, accept=accept)
             if child is None:
                 continue
             k = cls_key(child)

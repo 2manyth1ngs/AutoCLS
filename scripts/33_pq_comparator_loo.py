@@ -250,6 +250,9 @@ E_ARMS: dict[str, ArmSpec] = {
     s.name: s for s in (
         ArmSpec("e_concat_hard", "S1", "E+ctx", "settf", "fold", "budget", head="concat", seeds=(0, 1, 2)),
         ArmSpec("e_diff_hard", "S1", "E+ctx", "settf", "fold", "budget", head="diff", seeds=(0, 1, 2)),
+        # WP16 EV1（results/tclsc_ev/PROTOCOL.md §1.1）：AutoCTS++ 原味 E（共享 TS2Vec + SetTF 联合训练）+ field 头——
+        # 与 E_T 臂 ft60_hard 同头，唯一差别 = E 的来源；ctx = 预算 one-hot，t = set_fc([E, ctx]) 只进字段加性项
+        ArmSpec("es_field_hard", "S1", "E+ctx", "settf", "fold", "budget", head="field", seeds=(0, 1, 2)),
     )
 }
 assert not (set(E_ARMS) & (set(ARMS) | set(L3_ARMS) | set(PHI_ARMS) | set(FP_ARMS))), "真 E 臂名不得与既有臂表冲突"
