@@ -4,7 +4,7 @@
 set -euo pipefail
 B="${1:?bundle dir}"
 mkdir -p "$B"
-INPUTS="results/tclsc_ev/PROTOCOL.md results/tclsc_nb/nb_catalog.json results/tclsc_nb/labels_train.jsonl results/tclsc_nb/labels_truth_k1.jsonl results/tclsc_nb/rprime_nb.jsonl \
+INPUTS="results/tclsc_ev/PROTOCOL.md results/tclsc_ev/proposals_ev_et.json results/tclsc_ev/proposals_ev_blind.json results/tclsc_ev/proposals_rand_u.json results/tclsc_nb/nb_catalog.json results/tclsc_nb/labels_train.jsonl results/tclsc_nb/labels_truth_k1.jsonl results/tclsc_nb/rprime_nb.jsonl \
 results/mx3_pq/rprime_cache.jsonl results/mx3_pq/noise_probe.jsonl results/mx3_pq/delta_calibration.json results/mx3_pq/cls_catalog.json results/mx3_pq/tasks.json \
 results/tclsc_slices/tasks.json results/tclsc_slices/cls_catalog.json results/tclsc_slices/rprime_cache.jsonl results/route_a_probe/probe_cls_catalog.json \
 results/tclsc_k3/labels_k3.jsonl data/candidates/UniMiB-SHAR.npz"

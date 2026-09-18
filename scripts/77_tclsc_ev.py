@@ -317,8 +317,11 @@ def cmd_rprime(outdir: Path, *, device: str, names: Sequence[str], with_random: 
                          eval_ratio=labels_cfg["eval_ratio"], batch_size=train_cfg["batch_size"], lr=train_cfg["lr"], device=device, label="ev")
 
 
-def cmd_verify(outdir: Path, *, names: Sequence[str] = GUIDES, with_random: bool = True) -> dict:
+def cmd_verify(outdir: Path, *, names: Sequence[str] = GUIDES, with_random: bool = True, datasets: Optional[Sequence[str]] = None) -> dict:
+    """三点齐全 / 撞键 / 错误；`datasets` 限定只对账这些数据集的格（本地 / pod 分工时各验各的）。"""
     cells = ev_cells(outdir, names=[n for n in names if proposals_path(outdir, n).exists()], with_random=with_random and proposals_path(outdir, RAND_U).exists())
+    if datasets is not None:
+        cells = [c for c in cells if pq.dataset_of(c.slice_id) in set(datasets)]
     rows = _g32.read_rows(outdir / "rprime_ev.jsonl")
     idx = _g32.cache_index(rows)
     keys = [(r["task_id"], r["cls_key"], int(r["iters"])) for r in rows]
@@ -666,7 +669,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     for fl in ("evolve", "random", "rprime", "verify", "fit-folds", "train-es", "rank-es", "analyze", "smoke", "resume"):
         ap.add_argument(f"--{fl}", action="store_true")
-    ap.add_argument("--guides", nargs="+", default=["ev_et", "ev_blind"], choices=list(GUIDES))
+    ap.add_argument("--guides", nargs="+", default=None, choices=list(GUIDES),
+                    help="evolve / rprime 缺省 ev_et ev_blind；verify 缺省全部在场的引导（并含 rand_u）")
     ap.add_argument("--datasets", nargs="+", default=list(pq.PQ_DATASETS))
     ap.add_argument("--folds", nargs="+", default=None)
     ap.add_argument("--seeds", nargs="+", type=int, default=list(SEEDS))
@@ -683,13 +687,15 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
         cmd_fit_folds(args.outdir, device=args.device, folds_sel=args.folds)
     if args.train_es:
         cmd_train_es(args.outdir, seeds=args.seeds, device=args.device, epochs=args.epochs, resume=args.resume, folds_sel=args.folds)
+    guides = list(args.guides) if args.guides else ["ev_et", "ev_blind"]
     if args.evolve:
-        cmd_evolve(args.outdir, guides=args.guides, with_random=args.random, device=args.device, smoke=args.smoke,
+        cmd_evolve(args.outdir, guides=guides, with_random=args.random, device=args.device, smoke=args.smoke,
                    cfg=(dict(ks=20, kp=6, generations=2) if args.smoke else None))
     if args.rprime:
-        cmd_rprime(args.outdir, device=args.device, names=args.guides, with_random=args.random, datasets=args.datasets, smoke=args.smoke)
+        cmd_rprime(args.outdir, device=args.device, names=guides, with_random=args.random, datasets=args.datasets, smoke=args.smoke)
     if args.verify:
-        cmd_verify(args.outdir)
+        cmd_verify(args.outdir, names=(list(args.guides) if args.guides else list(GUIDES)), with_random=(args.random or args.guides is None),
+                   datasets=(None if set(args.datasets) == set(pq.PQ_DATASETS) else list(args.datasets)))
     if args.rank_es:
         cmd_rank_es(args.outdir, device=args.device, seeds=args.seeds)
     if args.analyze:
