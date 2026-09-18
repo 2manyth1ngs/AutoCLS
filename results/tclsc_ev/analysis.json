@@ -1,0 +1,2711 @@
+{
+ "protocol": "results/tclsc_ev/PROTOCOL.md",
+ "slices": [
+  "Handwriting_00",
+  "Handwriting_x00",
+  "UniMiB-SHAR_00",
+  "UniMiB-SHAR_x00",
+  "PhonemeSpectra_00",
+  "PhonemeSpectra_x00",
+  "UWaveGestureLibrary_00",
+  "UWaveGestureLibrary_x00",
+  "EthanolConcentration_00",
+  "EthanolConcentration_x00",
+  "Cricket_00",
+  "Cricket_x00",
+  "HandMovementDirection_00",
+  "HandMovementDirection_x00"
+ ],
+ "arms": [
+  "ev_et",
+  "ev_blind",
+  "rand_u",
+  "rand_nb"
+ ],
+ "per_budget": {
+  "60": {
+   "refs": {
+    "Handwriting_00": {
+     "shared_k3": 0.7827956989247312,
+     "ggs_k1": 0.7096774193548387,
+     "ref": 0.7827956989247312,
+     "ref_k1": 0.8258064516129032
+    },
+    "Handwriting_x00": {
+     "shared_k3": 0.8019801980198021,
+     "ggs_k1": 0.7920792079207921,
+     "ref": 0.8019801980198021,
+     "ref_k1": 0.8217821782178217
+    },
+    "UniMiB-SHAR_00": {
+     "shared_k3": 0.8034744842562432,
+     "ggs_k1": 0.7947882736156352,
+     "ref": 0.8034744842562432,
+     "ref_k1": 0.7980456026058632
+    },
+    "UniMiB-SHAR_x00": {
+     "shared_k3": 0.8697068403908794,
+     "ggs_k1": 0.8501628664495114,
+     "ref": 0.8697068403908794,
+     "ref_k1": 0.8794788273615635
+    },
+    "PhonemeSpectra_00": {
+     "shared_k3": 0.5476190476190476,
+     "ggs_k1": 0.4935064935064935,
+     "ref": 0.5476190476190476,
+     "ref_k1": 0.525974025974026
+    },
+    "PhonemeSpectra_x00": {
+     "shared_k3": 0.5581699346405229,
+     "ggs_k1": 0.5490196078431373,
+     "ref": 0.5581699346405229,
+     "ref_k1": 0.5411764705882353
+    },
+    "UWaveGestureLibrary_00": {
+     "shared_k3": 0.9765625,
+     "ggs_k1": 0.9375,
+     "ref": 0.9765625,
+     "ref_k1": 0.9765625
+    },
+    "UWaveGestureLibrary_x00": {
+     "shared_k3": 0.8958333333333334,
+     "ggs_k1": 0.8,
+     "ref": 0.8958333333333334,
+     "ref_k1": 0.8875
+    },
+    "EthanolConcentration_00": {
+     "shared_k3": 0.34182590233545646,
+     "ggs_k1": 0.28662420382165604,
+     "ref": 0.34182590233545646,
+     "ref_k1": 0.3248407643312102
+    },
+    "EthanolConcentration_x00": {
+     "shared_k3": 0.6582278481012658,
+     "ggs_k1": 0.6582278481012658,
+     "ref": 0.6582278481012658,
+     "ref_k1": 0.6582278481012658
+    },
+    "Cricket_00": {
+     "shared_k3": 0.9333333333333332,
+     "ggs_k1": 0.9,
+     "ref": 0.9333333333333332,
+     "ref_k1": 0.95
+    },
+    "Cricket_x00": {
+     "shared_k3": 1.0,
+     "ggs_k1": 0.9285714285714286,
+     "ref": 1.0,
+     "ref_k1": 1.0
+    },
+    "HandMovementDirection_00": {
+     "shared_k3": 0.43478260869565216,
+     "ggs_k1": 0.3333333333333333,
+     "ref": 0.43478260869565216,
+     "ref_k1": 0.4492753623188406
+    },
+    "HandMovementDirection_x00": {
+     "shared_k3": 0.65625,
+     "ggs_k1": 0.5,
+     "ref": 0.65625,
+     "ref_k1": 0.71875
+    }
+   },
+   "stats": {
+    "ev_et": {
+     "Handwriting_00": {
+      "n": 3,
+      "best3": 0.7935483870967742,
+      "mean3": 0.7569892473118279,
+      "gap": 0.010752688172043001,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": -0.032258064516129004,
+      "hamming": [
+       3,
+       3,
+       2
+      ],
+      "trust_in_top3": false
+     },
+     "Handwriting_x00": {
+      "n": 3,
+      "best3": 0.801980198019802,
+      "mean3": 0.7425742574257427,
+      "gap": -1.1102230246251565e-16,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.01980198019801971,
+      "hamming": [
+       2,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_00": {
+      "n": 3,
+      "best3": 0.8013029315960912,
+      "mean3": 0.7947882736156352,
+      "gap": -0.0021715526601520097,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": 0.0032573289902280145,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 3,
+      "best3": 0.8827361563517915,
+      "mean3": 0.8707926167209555,
+      "gap": 0.013029315960912058,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.6666666666666666,
+      "gap_k1": 0.0032573289902280145,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_00": {
+      "n": 3,
+      "best3": 0.41883116883116883,
+      "mean3": 0.395021645021645,
+      "gap": -0.12878787878787873,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.10714285714285715,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_x00": {
+      "n": 3,
+      "best3": 0.5450980392156862,
+      "mean3": 0.5124183006535947,
+      "gap": -0.013071895424836666,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": 0.0039215686274509665,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 3,
+      "best3": 0.9609375,
+      "mean3": 0.9453125,
+      "gap": -0.015625,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.015625,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 3,
+      "best3": 0.875,
+      "mean3": 0.8583333333333334,
+      "gap": -0.02083333333333337,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.012499999999999956,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_00": {
+      "n": 3,
+      "best3": 0.29936305732484075,
+      "mean3": 0.2951167728237792,
+      "gap": -0.0424628450106157,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.02547770700636942,
+      "hamming": [
+       3,
+       3,
+       2
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_x00": {
+      "n": 3,
+      "best3": 0.6708860759493671,
+      "mean3": 0.6202531645569621,
+      "gap": 0.012658227848101333,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.012658227848101333,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_00": {
+      "n": 3,
+      "best3": 0.975,
+      "mean3": 0.9333333333333332,
+      "gap": 0.04166666666666674,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.025000000000000022,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_x00": {
+      "n": 3,
+      "best3": 0.9642857142857143,
+      "mean3": 0.9285714285714287,
+      "gap": -0.0357142857142857,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.0357142857142857,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_00": {
+      "n": 3,
+      "best3": 0.42028985507246375,
+      "mean3": 0.38164251207729466,
+      "gap": -0.014492753623188415,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.02898550724637683,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_x00": {
+      "n": 3,
+      "best3": 0.65625,
+      "mean3": 0.6458333333333334,
+      "gap": 0.0,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.0625,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     }
+    },
+    "ev_blind": {
+     "Handwriting_00": {
+      "n": 3,
+      "best3": 0.8,
+      "mean3": 0.7483870967741936,
+      "gap": 0.017204301075268824,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.6666666666666666,
+      "gap_k1": -0.02580645161290318,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Handwriting_x00": {
+      "n": 3,
+      "best3": 0.693069306930693,
+      "mean3": 0.6732673267326733,
+      "gap": -0.10891089108910912,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.12871287128712872,
+      "hamming": [
+       3,
+       3,
+       2
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_00": {
+      "n": 3,
+      "best3": 0.8013029315960912,
+      "mean3": 0.7806731813246471,
+      "gap": -0.0021715526601520097,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": 0.0032573289902280145,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 3,
+      "best3": 0.8859934853420195,
+      "mean3": 0.8729641693811074,
+      "gap": 0.016286644951140072,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.6666666666666666,
+      "gap_k1": 0.006514657980456029,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_00": {
+      "n": 3,
+      "best3": 0.4772727272727273,
+      "mean3": 0.44805194805194803,
+      "gap": -0.07034632034632027,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.04870129870129869,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_x00": {
+      "n": 3,
+      "best3": 0.5843137254901961,
+      "mean3": 0.530718954248366,
+      "gap": 0.02614379084967322,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.04313725490196085,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 3,
+      "best3": 0.96875,
+      "mean3": 0.9609375,
+      "gap": -0.0078125,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.0078125,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 3,
+      "best3": 0.9125,
+      "mean3": 0.8791666666666665,
+      "gap": 0.016666666666666607,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.025000000000000022,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_00": {
+      "n": 3,
+      "best3": 0.29936305732484075,
+      "mean3": 0.2802547770700637,
+      "gap": -0.0424628450106157,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.02547770700636942,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_x00": {
+      "n": 3,
+      "best3": 0.620253164556962,
+      "mean3": 0.5949367088607594,
+      "gap": -0.03797468354430378,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.03797468354430378,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_00": {
+      "n": 3,
+      "best3": 0.925,
+      "mean3": 0.9166666666666666,
+      "gap": -0.008333333333333193,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.02499999999999991,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_x00": {
+      "n": 3,
+      "best3": 1.0,
+      "mean3": 0.9642857142857143,
+      "gap": 0.0,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": 0.0,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_00": {
+      "n": 3,
+      "best3": 0.42028985507246375,
+      "mean3": 0.357487922705314,
+      "gap": -0.014492753623188415,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.02898550724637683,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_x00": {
+      "n": 3,
+      "best3": 0.6875,
+      "mean3": 0.625,
+      "gap": 0.03125,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": -0.03125,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     }
+    },
+    "rand_u": {
+     "Handwriting_00": {
+      "n": 3,
+      "best3": 0.7935483870967742,
+      "mean3": 0.7118279569892473,
+      "gap": 0.010752688172043001,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "Handwriting_x00": {
+      "n": 3,
+      "best3": 0.8118811881188119,
+      "mean3": 0.7194719471947195,
+      "gap": 0.009900990099009799,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "UniMiB-SHAR_00": {
+      "n": 3,
+      "best3": 0.8175895765472313,
+      "mean3": 0.6416938110749185,
+      "gap": 0.014115092290988063,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 3,
+      "best3": 0.8306188925081434,
+      "mean3": 0.6764386536373507,
+      "gap": -0.03908794788273606,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "PhonemeSpectra_00": {
+      "n": 3,
+      "best3": 0.4967532467532468,
+      "mean3": 0.4383116883116884,
+      "gap": -0.05086580086580078,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "PhonemeSpectra_x00": {
+      "n": 3,
+      "best3": 0.5411764705882353,
+      "mean3": 0.5202614379084967,
+      "gap": -0.016993464052287632,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 3,
+      "best3": 0.9609375,
+      "mean3": 0.8020833333333334,
+      "gap": -0.015625,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 3,
+      "best3": 0.875,
+      "mean3": 0.7458333333333332,
+      "gap": -0.02083333333333337,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "EthanolConcentration_00": {
+      "n": 3,
+      "best3": 0.3503184713375796,
+      "mean3": 0.2951167728237792,
+      "gap": 0.00849256900212314,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "EthanolConcentration_x00": {
+      "n": 3,
+      "best3": 0.6329113924050633,
+      "mean3": 0.6075949367088608,
+      "gap": -0.025316455696202445,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "Cricket_00": {
+      "n": 3,
+      "best3": 0.925,
+      "mean3": 0.9250000000000002,
+      "gap": -0.008333333333333193,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "Cricket_x00": {
+      "n": 3,
+      "best3": 0.9285714285714286,
+      "mean3": 0.8690476190476191,
+      "gap": -0.0714285714285714,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "HandMovementDirection_00": {
+      "n": 3,
+      "best3": 0.4492753623188406,
+      "mean3": 0.357487922705314,
+      "gap": 0.014492753623188415,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "HandMovementDirection_x00": {
+      "n": 3,
+      "best3": 0.65625,
+      "mean3": 0.6041666666666666,
+      "gap": 0.0,
+      "over_delta": false,
+      "realized_above": 0.0
+     }
+    },
+    "rand_nb": {
+     "Handwriting_00": {
+      "n": 6,
+      "best3": 0.7516129032258064,
+      "mean3": 0.6666666666666667,
+      "gap": -0.031182795698924792,
+      "over_delta": false
+     },
+     "Handwriting_x00": {
+      "n": 6,
+      "best3": 0.80990099009901,
+      "mean3": 0.7706270627062707,
+      "gap": 0.007920792079207817,
+      "over_delta": false
+     },
+     "UniMiB-SHAR_00": {
+      "n": 6,
+      "best3": 0.8001628664495113,
+      "mean3": 0.7638436482084691,
+      "gap": -0.003311617806731948,
+      "over_delta": false
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 6,
+      "best3": 0.8902280130293159,
+      "mean3": 0.8420195439739414,
+      "gap": 0.020521172638436447,
+      "over_delta": false
+     },
+     "PhonemeSpectra_00": {
+      "n": 6,
+      "best3": 0.5461038961038962,
+      "mean3": 0.4702380952380952,
+      "gap": -0.0015151515151513584,
+      "over_delta": false
+     },
+     "PhonemeSpectra_x00": {
+      "n": 6,
+      "best3": 0.5441176470588236,
+      "mean3": 0.45751633986928103,
+      "gap": -0.014052287581699296,
+      "over_delta": false
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 6,
+      "best3": 0.968359375,
+      "mean3": 0.9544270833333334,
+      "gap": -0.008203124999999978,
+      "over_delta": false
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 6,
+      "best3": 0.89125,
+      "mean3": 0.8395833333333333,
+      "gap": -0.004583333333333384,
+      "over_delta": false
+     },
+     "EthanolConcentration_00": {
+      "n": 6,
+      "best3": 0.3359872611464968,
+      "mean3": 0.30997876857749473,
+      "gap": -0.005838641188959659,
+      "over_delta": false
+     },
+     "EthanolConcentration_x00": {
+      "n": 6,
+      "best3": 0.6468354430379746,
+      "mean3": 0.6139240506329113,
+      "gap": -0.0113924050632912,
+      "over_delta": false
+     },
+     "Cricket_00": {
+      "n": 6,
+      "best3": 0.9575000000000001,
+      "mean3": 0.9291666666666668,
+      "gap": 0.02416666666666689,
+      "over_delta": false
+     },
+     "Cricket_x00": {
+      "n": 6,
+      "best3": 0.9982142857142857,
+      "mean3": 0.9107142857142856,
+      "gap": -0.0017857142857142794,
+      "over_delta": false
+     },
+     "HandMovementDirection_00": {
+      "n": 6,
+      "best3": 0.40797101449275364,
+      "mean3": 0.36714975845410625,
+      "gap": -0.026811594202898525,
+      "over_delta": false
+     },
+     "HandMovementDirection_x00": {
+      "n": 6,
+      "best3": 0.715625,
+      "mean3": 0.640625,
+      "gap": 0.059374999999999956,
+      "over_delta": false
+     }
+    }
+   },
+   "agg": {
+    "ev_et": {
+     "n": 14,
+     "frac_positive": 0.2857142857142857,
+     "frac_over_delta": 0.0,
+     "median_gap": -0.007621724042494338,
+     "mean_best3": 0.7189649345531214,
+     "mean_mean3": 0.6914986227699191,
+     "pred_above_share": 1.0,
+     "realized_above_share": 0.11904761904761904,
+     "by_dataset_median_gap": {
+      "Cricket": 0.002976190476190521,
+      "EthanolConcentration": -0.014902308581257184,
+      "HandMovementDirection": -0.007246376811594207,
+      "Handwriting": 0.005376344086021445,
+      "PhonemeSpectra": -0.0709298871063577,
+      "UWaveGestureLibrary": -0.018229166666666685,
+      "UniMiB-SHAR": 0.005428881650380024
+     },
+     "over_delta_slices": []
+    },
+    "ev_blind": {
+     "n": 14,
+     "frac_positive": 0.35714285714285715,
+     "frac_over_delta": 0.0,
+     "median_gap": -0.004992026330076005,
+     "mean_best3": 0.7196863038275708,
+     "mean_mean3": 0.6880570451977227,
+     "pred_above_share": 1.0,
+     "realized_above_share": 0.16666666666666669,
+     "by_dataset_median_gap": {
+      "Cricket": -0.004166666666666596,
+      "EthanolConcentration": -0.04021876427745974,
+      "HandMovementDirection": 0.008378623188405793,
+      "Handwriting": -0.04585329500692015,
+      "PhonemeSpectra": -0.022101264748323524,
+      "UWaveGestureLibrary": 0.004427083333333304,
+      "UniMiB-SHAR": 0.007057546145494031
+     },
+     "over_delta_slices": []
+    },
+    "rand_u": {
+     "n": 14,
+     "frac_positive": 0.35714285714285715,
+     "frac_over_delta": 0.0,
+     "median_gap": -0.011979166666666596,
+     "mean_best3": 0.7192737083032396,
+     "mean_mean3": 0.6367382914096662,
+     "pred_above_share": null,
+     "realized_above_share": 0.11904761904761904,
+     "by_dataset_median_gap": {
+      "Cricket": -0.039880952380952295,
+      "EthanolConcentration": -0.008411943347039652,
+      "HandMovementDirection": 0.007246376811594207,
+      "Handwriting": 0.0103268391355264,
+      "PhonemeSpectra": -0.03392963245904421,
+      "UWaveGestureLibrary": -0.018229166666666685,
+      "UniMiB-SHAR": -0.012486427795874
+     },
+     "over_delta_slices": []
+    },
+    "rand_nb": {
+     "n": 14,
+     "frac_positive": 0.2857142857142857,
+     "frac_over_delta": 0.0,
+     "median_gap": -0.003947475570032666,
+     "mean_best3": 0.7331334782398481,
+     "mean_mean3": 0.6811771645267755,
+     "pred_above_share": null,
+     "realized_above_share": null,
+     "by_dataset_median_gap": {
+      "Cricket": 0.011190476190476306,
+      "EthanolConcentration": -0.00861552312612543,
+      "HandMovementDirection": 0.016281702898550715,
+      "Handwriting": -0.011631001809858488,
+      "PhonemeSpectra": -0.007783719548425327,
+      "UWaveGestureLibrary": -0.006393229166666681,
+      "UniMiB-SHAR": 0.00860477741585225
+     },
+     "over_delta_slices": []
+    }
+   }
+  },
+  "120": {
+   "refs": {
+    "Handwriting_00": {
+     "shared_k3": 0.8150537634408602,
+     "ggs_k1": 0.7096774193548387,
+     "ref": 0.8150537634408602,
+     "ref_k1": 0.8387096774193549
+    },
+    "Handwriting_x00": {
+     "shared_k3": 0.8613861386138614,
+     "ggs_k1": 0.7821782178217822,
+     "ref": 0.8613861386138614,
+     "ref_k1": 0.8910891089108911
+    },
+    "UniMiB-SHAR_00": {
+     "shared_k3": 0.8110749185667753,
+     "ggs_k1": 0.7687296416938111,
+     "ref": 0.8110749185667753,
+     "ref_k1": 0.8110749185667753
+    },
+    "UniMiB-SHAR_x00": {
+     "shared_k3": 0.8729641693811074,
+     "ggs_k1": 0.8469055374592834,
+     "ref": 0.8729641693811074,
+     "ref_k1": 0.8957654723127035
+    },
+    "PhonemeSpectra_00": {
+     "shared_k3": 0.5476190476190476,
+     "ggs_k1": 0.474025974025974,
+     "ref": 0.5476190476190476,
+     "ref_k1": 0.525974025974026
+    },
+    "PhonemeSpectra_x00": {
+     "shared_k3": 0.5372549019607843,
+     "ggs_k1": 0.5333333333333333,
+     "ref": 0.5372549019607843,
+     "ref_k1": 0.5450980392156862
+    },
+    "UWaveGestureLibrary_00": {
+     "shared_k3": 0.9765625,
+     "ggs_k1": 0.9375,
+     "ref": 0.9765625,
+     "ref_k1": 0.984375
+    },
+    "UWaveGestureLibrary_x00": {
+     "shared_k3": 0.9,
+     "ggs_k1": 0.8625,
+     "ref": 0.9,
+     "ref_k1": 0.9125
+    },
+    "EthanolConcentration_00": {
+     "shared_k3": 0.3205944798301486,
+     "ggs_k1": 0.27388535031847133,
+     "ref": 0.3205944798301486,
+     "ref_k1": 0.3248407643312102
+    },
+    "EthanolConcentration_x00": {
+     "shared_k3": 0.6371308016877637,
+     "ggs_k1": 0.5569620253164557,
+     "ref": 0.6371308016877637,
+     "ref_k1": 0.6708860759493671
+    },
+    "Cricket_00": {
+     "shared_k3": 0.975,
+     "ggs_k1": 0.925,
+     "ref": 0.975,
+     "ref_k1": 0.975
+    },
+    "Cricket_x00": {
+     "shared_k3": 1.0,
+     "ggs_k1": 0.9285714285714286,
+     "ref": 1.0,
+     "ref_k1": 1.0
+    },
+    "HandMovementDirection_00": {
+     "shared_k3": 0.42512077294685985,
+     "ggs_k1": 0.34782608695652173,
+     "ref": 0.42512077294685985,
+     "ref_k1": 0.42028985507246375
+    },
+    "HandMovementDirection_x00": {
+     "shared_k3": 0.6979166666666666,
+     "ggs_k1": 0.5,
+     "ref": 0.6979166666666666,
+     "ref_k1": 0.71875
+    }
+   },
+   "stats": {
+    "ev_et": {
+     "Handwriting_00": {
+      "n": 3,
+      "best3": 0.8193548387096774,
+      "mean3": 0.8086021505376344,
+      "gap": 0.004301075268817178,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": -0.01935483870967747,
+      "hamming": [
+       3,
+       3,
+       2
+      ],
+      "trust_in_top3": false
+     },
+     "Handwriting_x00": {
+      "n": 3,
+      "best3": 0.8514851485148515,
+      "mean3": 0.7821782178217823,
+      "gap": -0.00990099009900991,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.03960396039603964,
+      "hamming": [
+       2,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_00": {
+      "n": 3,
+      "best3": 0.7882736156351792,
+      "mean3": 0.7871878393051032,
+      "gap": -0.0228013029315961,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.0228013029315961,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 3,
+      "best3": 0.8990228013029316,
+      "mean3": 0.8881650380021715,
+      "gap": 0.026058631921824116,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 1.0,
+      "gap_k1": 0.0032573289902280145,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_00": {
+      "n": 3,
+      "best3": 0.4090909090909091,
+      "mean3": 0.39610389610389607,
+      "gap": -0.13852813852813844,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.11688311688311687,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_x00": {
+      "n": 3,
+      "best3": 0.5529411764705883,
+      "mean3": 0.5084967320261438,
+      "gap": 0.015686274509803977,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.007843137254902044,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 3,
+      "best3": 0.9609375,
+      "mean3": 0.9296875,
+      "gap": -0.015625,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.0234375,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 3,
+      "best3": 0.9,
+      "mean3": 0.8708333333333332,
+      "gap": 0.0,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.012499999999999956,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_00": {
+      "n": 3,
+      "best3": 0.34394904458598724,
+      "mean3": 0.31634819532908703,
+      "gap": 0.023354564755838636,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.6666666666666666,
+      "gap_k1": 0.019108280254777066,
+      "hamming": [
+       3,
+       3,
+       2
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_x00": {
+      "n": 3,
+      "best3": 0.5949367088607594,
+      "mean3": 0.5907172995780591,
+      "gap": -0.04219409282700426,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.07594936708860767,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_00": {
+      "n": 3,
+      "best3": 0.925,
+      "mean3": 0.9250000000000002,
+      "gap": -0.04999999999999993,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.04999999999999993,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_x00": {
+      "n": 3,
+      "best3": 0.9285714285714286,
+      "mean3": 0.9047619047619048,
+      "gap": -0.0714285714285714,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.0714285714285714,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_00": {
+      "n": 3,
+      "best3": 0.4492753623188406,
+      "mean3": 0.41545893719806765,
+      "gap": 0.024154589371980728,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.02898550724637683,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_x00": {
+      "n": 3,
+      "best3": 0.8125,
+      "mean3": 0.7083333333333334,
+      "gap": 0.11458333333333337,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.09375,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     }
+    },
+    "ev_blind": {
+     "Handwriting_00": {
+      "n": 3,
+      "best3": 0.8193548387096774,
+      "mean3": 0.7419354838709676,
+      "gap": 0.004301075268817178,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": -0.01935483870967747,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Handwriting_x00": {
+      "n": 3,
+      "best3": 0.7722772277227723,
+      "mean3": 0.7194719471947195,
+      "gap": -0.08910891089108908,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.1188118811881188,
+      "hamming": [
+       3,
+       3,
+       2
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_00": {
+      "n": 3,
+      "best3": 0.8306188925081434,
+      "mean3": 0.8067318132464713,
+      "gap": 0.019543973941368087,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.6666666666666666,
+      "gap_k1": 0.019543973941368087,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 3,
+      "best3": 0.8892508143322475,
+      "mean3": 0.8762214983713354,
+      "gap": 0.016286644951140072,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.6666666666666666,
+      "gap_k1": -0.006514657980456029,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_00": {
+      "n": 3,
+      "best3": 0.461038961038961,
+      "mean3": 0.4296536796536796,
+      "gap": -0.08658008658008653,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.06493506493506496,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_x00": {
+      "n": 3,
+      "best3": 0.49411764705882355,
+      "mean3": 0.48104575163398694,
+      "gap": -0.04313725490196074,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.050980392156862675,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 3,
+      "best3": 0.96875,
+      "mean3": 0.9557291666666666,
+      "gap": -0.0078125,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.015625,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 3,
+      "best3": 0.875,
+      "mean3": 0.8375,
+      "gap": -0.025000000000000022,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.03749999999999998,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_00": {
+      "n": 3,
+      "best3": 0.267515923566879,
+      "mean3": 0.24840764331210194,
+      "gap": -0.05307855626326963,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.0573248407643312,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_x00": {
+      "n": 3,
+      "best3": 0.5949367088607594,
+      "mean3": 0.5780590717299577,
+      "gap": -0.04219409282700426,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.07594936708860767,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_00": {
+      "n": 3,
+      "best3": 0.925,
+      "mean3": 0.9,
+      "gap": -0.04999999999999993,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.04999999999999993,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_x00": {
+      "n": 3,
+      "best3": 0.9642857142857143,
+      "mean3": 0.9166666666666666,
+      "gap": -0.0357142857142857,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.0357142857142857,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_00": {
+      "n": 3,
+      "best3": 0.4782608695652174,
+      "mean3": 0.3333333333333333,
+      "gap": 0.05314009661835756,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.05797101449275366,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_x00": {
+      "n": 3,
+      "best3": 0.625,
+      "mean3": 0.6145833333333334,
+      "gap": -0.07291666666666663,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.09375,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     }
+    },
+    "rand_u": {
+     "Handwriting_00": {
+      "n": 3,
+      "best3": 0.7935483870967742,
+      "mean3": 0.7139784946236558,
+      "gap": -0.021505376344086002,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "Handwriting_x00": {
+      "n": 3,
+      "best3": 0.8316831683168316,
+      "mean3": 0.8019801980198021,
+      "gap": -0.02970297029702973,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "UniMiB-SHAR_00": {
+      "n": 3,
+      "best3": 0.8110749185667753,
+      "mean3": 0.5819761129207383,
+      "gap": 0.0,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 3,
+      "best3": 0.8371335504885994,
+      "mean3": 0.6731813246471227,
+      "gap": -0.03583061889250805,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "PhonemeSpectra_00": {
+      "n": 3,
+      "best3": 0.44805194805194803,
+      "mean3": 0.4036796536796537,
+      "gap": -0.09956709956709953,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "PhonemeSpectra_x00": {
+      "n": 3,
+      "best3": 0.5607843137254902,
+      "mean3": 0.534640522875817,
+      "gap": 0.02352941176470591,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 3,
+      "best3": 0.9765625,
+      "mean3": 0.8072916666666666,
+      "gap": 0.0,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 3,
+      "best3": 0.9,
+      "mean3": 0.8416666666666668,
+      "gap": 0.0,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "EthanolConcentration_00": {
+      "n": 3,
+      "best3": 0.3630573248407643,
+      "mean3": 0.3184713375796178,
+      "gap": 0.0424628450106157,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "EthanolConcentration_x00": {
+      "n": 3,
+      "best3": 0.6962025316455697,
+      "mean3": 0.649789029535865,
+      "gap": 0.05907172995780596,
+      "over_delta": false,
+      "realized_above": 0.6666666666666666
+     },
+     "Cricket_00": {
+      "n": 3,
+      "best3": 0.975,
+      "mean3": 0.9499999999999998,
+      "gap": 0.0,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "Cricket_x00": {
+      "n": 3,
+      "best3": 0.9642857142857143,
+      "mean3": 0.8571428571428572,
+      "gap": -0.0357142857142857,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "HandMovementDirection_00": {
+      "n": 3,
+      "best3": 0.43478260869565216,
+      "mean3": 0.3429951690821256,
+      "gap": 0.009661835748792313,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "HandMovementDirection_x00": {
+      "n": 3,
+      "best3": 0.65625,
+      "mean3": 0.5833333333333334,
+      "gap": -0.04166666666666663,
+      "over_delta": false,
+      "realized_above": 0.0
+     }
+    },
+    "rand_nb": {
+     "Handwriting_00": {
+      "n": 6,
+      "best3": 0.8283870967741936,
+      "mean3": 0.743010752688172,
+      "gap": 0.01333333333333342,
+      "over_delta": false
+     },
+     "Handwriting_x00": {
+      "n": 6,
+      "best3": 0.8678217821782178,
+      "mean3": 0.8201320132013201,
+      "gap": 0.006435643564356441,
+      "over_delta": false
+     },
+     "UniMiB-SHAR_00": {
+      "n": 6,
+      "best3": 0.8097719869706841,
+      "mean3": 0.7801302931596091,
+      "gap": -0.0013029315960911836,
+      "over_delta": false
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 6,
+      "best3": 0.8859934853420194,
+      "mean3": 0.8371335504885993,
+      "gap": 0.013029315960911947,
+      "over_delta": false
+     },
+     "PhonemeSpectra_00": {
+      "n": 6,
+      "best3": 0.5345779220779222,
+      "mean3": 0.4696969696969697,
+      "gap": -0.013041125541125353,
+      "over_delta": false
+     },
+     "PhonemeSpectra_x00": {
+      "n": 6,
+      "best3": 0.5541176470588235,
+      "mean3": 0.4901960784313725,
+      "gap": 0.0168627450980392,
+      "over_delta": false
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 6,
+      "best3": 0.974609375,
+      "mean3": 0.9661458333333334,
+      "gap": -0.001953125,
+      "over_delta": false
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 6,
+      "best3": 0.8812499999999999,
+      "mean3": 0.825,
+      "gap": -0.018750000000000155,
+      "over_delta": false
+     },
+     "EthanolConcentration_00": {
+      "n": 6,
+      "best3": 0.328343949044586,
+      "mean3": 0.30148619957537154,
+      "gap": 0.007749469214437421,
+      "over_delta": false
+     },
+     "EthanolConcentration_x00": {
+      "n": 6,
+      "best3": 0.6443037974683544,
+      "mean3": 0.6118143459915611,
+      "gap": 0.0071729957805907185,
+      "over_delta": false
+     },
+     "Cricket_00": {
+      "n": 6,
+      "best3": 0.9575000000000001,
+      "mean3": 0.9208333333333334,
+      "gap": -0.01749999999999985,
+      "over_delta": false
+     },
+     "Cricket_x00": {
+      "n": 6,
+      "best3": 0.9928571428571429,
+      "mean3": 0.9107142857142858,
+      "gap": -0.0071428571428571175,
+      "over_delta": false
+     },
+     "HandMovementDirection_00": {
+      "n": 6,
+      "best3": 0.427536231884058,
+      "mean3": 0.3526570048309179,
+      "gap": 0.002415458937198134,
+      "over_delta": false
+     },
+     "HandMovementDirection_x00": {
+      "n": 6,
+      "best3": 0.7265625,
+      "mean3": 0.6666666666666667,
+      "gap": 0.02864583333333337,
+      "over_delta": false
+     }
+    }
+   },
+   "agg": {
+    "ev_et": {
+     "n": 14,
+     "frac_positive": 0.42857142857142855,
+     "frac_over_delta": 0.0,
+     "median_gap": -0.004950495049504955,
+     "mean_best3": 0.7310956095757967,
+     "mean_mean3": 0.702276741237894,
+     "pred_above_share": 1.0,
+     "realized_above_share": 0.21428571428571427,
+     "by_dataset_median_gap": {
+      "Cricket": -0.060714285714285665,
+      "EthanolConcentration": -0.009419764035582812,
+      "HandMovementDirection": 0.06936896135265705,
+      "Handwriting": -0.0027999574150963658,
+      "PhonemeSpectra": -0.061420932009167234,
+      "UWaveGestureLibrary": -0.0078125,
+      "UniMiB-SHAR": 0.0016286644951140072
+     },
+     "over_delta_slices": []
+    },
+    "ev_blind": {
+     "n": 14,
+     "frac_positive": 0.2857142857142857,
+     "frac_over_delta": 0.0,
+     "median_gap": -0.03895418927064498,
+     "mean_best3": 0.711814828403514,
+     "mean_mean3": 0.6742385277866586,
+     "pred_above_share": 1.0,
+     "realized_above_share": 0.14285714285714285,
+     "by_dataset_median_gap": {
+      "Cricket": -0.042857142857142816,
+      "EthanolConcentration": -0.04763632454513694,
+      "HandMovementDirection": -0.009888285024154536,
+      "Handwriting": -0.04240391781113595,
+      "PhonemeSpectra": -0.06485867074102364,
+      "UWaveGestureLibrary": -0.01640625000000001,
+      "UniMiB-SHAR": 0.01791530944625408
+     },
+     "over_delta_slices": []
+    },
+    "rand_u": {
+     "n": 14,
+     "frac_positive": 0.2857142857142857,
+     "frac_over_delta": 0.0,
+     "median_gap": 0.0,
+     "mean_best3": 0.7320297832652942,
+     "mean_mean3": 0.6471518833409945,
+     "pred_above_share": null,
+     "realized_above_share": 0.11904761904761904,
+     "by_dataset_median_gap": {
+      "Cricket": -0.01785714285714285,
+      "EthanolConcentration": 0.05076728748421083,
+      "HandMovementDirection": -0.016002415458937158,
+      "Handwriting": -0.025604173320557866,
+      "PhonemeSpectra": -0.03801884390119681,
+      "UWaveGestureLibrary": 0.0,
+      "UniMiB-SHAR": -0.017915309446254024
+     },
+     "over_delta_slices": []
+    },
+    "rand_nb": {
+     "n": 14,
+     "frac_positive": 0.5714285714285714,
+     "frac_over_delta": 0.0,
+     "median_gap": 0.004425551250777288,
+     "mean_best3": 0.7438309226182859,
+     "mean_mean3": 0.6925440947936795,
+     "pred_above_share": null,
+     "realized_above_share": null,
+     "by_dataset_median_gap": {
+      "Cricket": -0.012321428571428483,
+      "EthanolConcentration": 0.00746123249751407,
+      "HandMovementDirection": 0.015530646135265752,
+      "Handwriting": 0.00988448844884493,
+      "PhonemeSpectra": 0.0019108097784569233,
+      "UWaveGestureLibrary": -0.010351562500000078,
+      "UniMiB-SHAR": 0.005863192182410382
+     },
+     "over_delta_slices": []
+    }
+   }
+  },
+  "290": {
+   "refs": {
+    "Handwriting_00": {
+     "shared_k3": 0.8236559139784946,
+     "ggs_k1": 0.7290322580645161,
+     "ref": 0.8236559139784946,
+     "ref_k1": 0.8258064516129032
+    },
+    "Handwriting_x00": {
+     "shared_k3": 0.834983498349835,
+     "ggs_k1": 0.8316831683168316,
+     "ref": 0.834983498349835,
+     "ref_k1": 0.8415841584158416
+    },
+    "UniMiB-SHAR_00": {
+     "shared_k3": 0.8175895765472313,
+     "ggs_k1": 0.752442996742671,
+     "ref": 0.8175895765472313,
+     "ref_k1": 0.8241042345276873
+    },
+    "UniMiB-SHAR_x00": {
+     "shared_k3": 0.8892508143322475,
+     "ggs_k1": 0.7654723127035831,
+     "ref": 0.8892508143322475,
+     "ref_k1": 0.8925081433224755
+    },
+    "PhonemeSpectra_00": {
+     "shared_k3": 0.5216450216450217,
+     "ggs_k1": 0.5097402597402597,
+     "ref": 0.5216450216450217,
+     "ref_k1": 0.5097402597402597
+    },
+    "PhonemeSpectra_x00": {
+     "shared_k3": 0.5581699346405228,
+     "ggs_k1": 0.6509803921568628,
+     "ref": 0.6509803921568628,
+     "ref_k1": 0.5647058823529412
+    },
+    "UWaveGestureLibrary_00": {
+     "shared_k3": 0.9739583333333334,
+     "ggs_k1": 0.921875,
+     "ref": 0.9739583333333334,
+     "ref_k1": 0.9765625
+    },
+    "UWaveGestureLibrary_x00": {
+     "shared_k3": 0.875,
+     "ggs_k1": 0.825,
+     "ref": 0.875,
+     "ref_k1": 0.8875
+    },
+    "EthanolConcentration_00": {
+     "shared_k3": 0.3205944798301486,
+     "ggs_k1": 0.2802547770700637,
+     "ref": 0.3205944798301486,
+     "ref_k1": 0.35668789808917195
+    },
+    "EthanolConcentration_x00": {
+     "shared_k3": 0.6540084388185654,
+     "ggs_k1": 0.6075949367088608,
+     "ref": 0.6540084388185654,
+     "ref_k1": 0.6075949367088608
+    },
+    "Cricket_00": {
+     "shared_k3": 0.9333333333333332,
+     "ggs_k1": 0.9,
+     "ref": 0.9333333333333332,
+     "ref_k1": 0.95
+    },
+    "Cricket_x00": {
+     "shared_k3": 0.9880952380952381,
+     "ggs_k1": 0.9642857142857143,
+     "ref": 0.9880952380952381,
+     "ref_k1": 1.0
+    },
+    "HandMovementDirection_00": {
+     "shared_k3": 0.48792270531400966,
+     "ggs_k1": 0.30434782608695654,
+     "ref": 0.48792270531400966,
+     "ref_k1": 0.463768115942029
+    },
+    "HandMovementDirection_x00": {
+     "shared_k3": 0.6770833333333334,
+     "ggs_k1": 0.5625,
+     "ref": 0.6770833333333334,
+     "ref_k1": 0.65625
+    }
+   },
+   "stats": {
+    "ev_et": {
+     "Handwriting_00": {
+      "n": 3,
+      "best3": 0.8258064516129032,
+      "mean3": 0.8043010752688172,
+      "gap": 0.0021505376344086446,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.0,
+      "hamming": [
+       3,
+       3,
+       2
+      ],
+      "trust_in_top3": false
+     },
+     "Handwriting_x00": {
+      "n": 3,
+      "best3": 0.8217821782178217,
+      "mean3": 0.7623762376237623,
+      "gap": -0.01320132013201325,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.01980198019801982,
+      "hamming": [
+       2,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_00": {
+      "n": 3,
+      "best3": 0.8143322475570033,
+      "mean3": 0.7893593919652552,
+      "gap": -0.0032573289902280145,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.009771986970684043,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 3,
+      "best3": 0.9022801302931596,
+      "mean3": 0.8838219326818675,
+      "gap": 0.013029315960912058,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.009771986970684043,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_00": {
+      "n": 3,
+      "best3": 0.4253246753246753,
+      "mean3": 0.39610389610389607,
+      "gap": -0.09632034632034636,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.08441558441558439,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_x00": {
+      "n": 3,
+      "best3": 0.5215686274509804,
+      "mean3": 0.4954248366013072,
+      "gap": -0.12941176470588234,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.04313725490196074,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 3,
+      "best3": 0.9765625,
+      "mean3": 0.9557291666666666,
+      "gap": 0.0026041666666666297,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.0,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 3,
+      "best3": 0.8875,
+      "mean3": 0.8708333333333332,
+      "gap": 0.012499999999999956,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.0,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_00": {
+      "n": 3,
+      "best3": 0.31210191082802546,
+      "mean3": 0.29936305732484075,
+      "gap": -0.00849256900212314,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.04458598726114649,
+      "hamming": [
+       3,
+       3,
+       2
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_x00": {
+      "n": 3,
+      "best3": 0.6962025316455697,
+      "mean3": 0.649789029535865,
+      "gap": 0.04219409282700426,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.08860759493670889,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_00": {
+      "n": 3,
+      "best3": 0.925,
+      "mean3": 0.9166666666666666,
+      "gap": -0.008333333333333193,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.02499999999999991,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_x00": {
+      "n": 3,
+      "best3": 0.9285714285714286,
+      "mean3": 0.8928571428571429,
+      "gap": -0.059523809523809534,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.0714285714285714,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_00": {
+      "n": 3,
+      "best3": 0.43478260869565216,
+      "mean3": 0.391304347826087,
+      "gap": -0.0531400966183575,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.02898550724637683,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_x00": {
+      "n": 3,
+      "best3": 0.71875,
+      "mean3": 0.6979166666666666,
+      "gap": 0.04166666666666663,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 1.0,
+      "gap_k1": 0.0625,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     }
+    },
+    "ev_blind": {
+     "Handwriting_00": {
+      "n": 3,
+      "best3": 0.8516129032258064,
+      "mean3": 0.7591397849462366,
+      "gap": 0.027956989247311825,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.02580645161290318,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Handwriting_x00": {
+      "n": 3,
+      "best3": 0.7722772277227723,
+      "mean3": 0.7326732673267328,
+      "gap": -0.06270627062706269,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.06930693069306926,
+      "hamming": [
+       3,
+       3,
+       2
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_00": {
+      "n": 3,
+      "best3": 0.8175895765472313,
+      "mean3": 0.8099891422366993,
+      "gap": 0.0,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.006514657980456029,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 3,
+      "best3": 0.8925081433224755,
+      "mean3": 0.8762214983713354,
+      "gap": 0.0032573289902280145,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.0,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_00": {
+      "n": 3,
+      "best3": 0.5194805194805194,
+      "mean3": 0.4707792207792208,
+      "gap": -0.0021645021645022577,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": 0.009740259740259716,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "PhonemeSpectra_x00": {
+      "n": 3,
+      "best3": 0.5686274509803921,
+      "mean3": 0.5137254901960784,
+      "gap": -0.08235294117647063,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": 0.0039215686274509665,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 3,
+      "best3": 0.9765625,
+      "mean3": 0.96875,
+      "gap": 0.0026041666666666297,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.0,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 3,
+      "best3": 0.9125,
+      "mean3": 0.8791666666666668,
+      "gap": 0.03749999999999998,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.6666666666666666,
+      "gap_k1": 0.025000000000000022,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_00": {
+      "n": 3,
+      "best3": 0.25477707006369427,
+      "mean3": 0.23566878980891723,
+      "gap": -0.06581740976645434,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.10191082802547768,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "EthanolConcentration_x00": {
+      "n": 3,
+      "best3": 0.6075949367088608,
+      "mean3": 0.5780590717299577,
+      "gap": -0.04641350210970463,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": 0.0,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_00": {
+      "n": 3,
+      "best3": 0.925,
+      "mean3": 0.8916666666666666,
+      "gap": -0.008333333333333193,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.02499999999999991,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "Cricket_x00": {
+      "n": 3,
+      "best3": 0.9642857142857143,
+      "mean3": 0.9285714285714287,
+      "gap": -0.023809523809523836,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": -0.0357142857142857,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_00": {
+      "n": 3,
+      "best3": 0.6231884057971014,
+      "mean3": 0.41545893719806765,
+      "gap": 0.13526570048309178,
+      "over_delta": true,
+      "pred_above": 1.0,
+      "realized_above": 0.3333333333333333,
+      "gap_k1": 0.15942028985507245,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     },
+     "HandMovementDirection_x00": {
+      "n": 3,
+      "best3": 0.65625,
+      "mean3": 0.6145833333333334,
+      "gap": -0.02083333333333337,
+      "over_delta": false,
+      "pred_above": 1.0,
+      "realized_above": 0.0,
+      "gap_k1": 0.0,
+      "hamming": [
+       3,
+       3,
+       3
+      ],
+      "trust_in_top3": false
+     }
+    },
+    "rand_u": {
+     "Handwriting_00": {
+      "n": 3,
+      "best3": 0.7806451612903226,
+      "mean3": 0.7290322580645161,
+      "gap": -0.043010752688172005,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "Handwriting_x00": {
+      "n": 3,
+      "best3": 0.8415841584158416,
+      "mean3": 0.7590759075907592,
+      "gap": 0.0066006600660065695,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "UniMiB-SHAR_00": {
+      "n": 3,
+      "best3": 0.8045602605863192,
+      "mean3": 0.5515743756786101,
+      "gap": -0.013029315960912058,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 3,
+      "best3": 0.8110749185667753,
+      "mean3": 0.6568946796959826,
+      "gap": -0.07817589576547224,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "PhonemeSpectra_00": {
+      "n": 3,
+      "best3": 0.4837662337662338,
+      "mean3": 0.44805194805194803,
+      "gap": -0.0378787878787879,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "PhonemeSpectra_x00": {
+      "n": 3,
+      "best3": 0.5529411764705883,
+      "mean3": 0.5333333333333333,
+      "gap": -0.0980392156862745,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 3,
+      "best3": 0.96875,
+      "mean3": 0.7994791666666666,
+      "gap": -0.00520833333333337,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 3,
+      "best3": 0.8625,
+      "mean3": 0.8249999999999998,
+      "gap": -0.012499999999999956,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "EthanolConcentration_00": {
+      "n": 3,
+      "best3": 0.3248407643312102,
+      "mean3": 0.2760084925690021,
+      "gap": 0.00424628450106157,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "EthanolConcentration_x00": {
+      "n": 3,
+      "best3": 0.6582278481012658,
+      "mean3": 0.6118143459915611,
+      "gap": 0.00421940928270037,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "Cricket_00": {
+      "n": 3,
+      "best3": 0.95,
+      "mean3": 0.9333333333333332,
+      "gap": 0.01666666666666672,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     },
+     "Cricket_x00": {
+      "n": 3,
+      "best3": 0.9642857142857143,
+      "mean3": 0.880952380952381,
+      "gap": -0.023809523809523836,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "HandMovementDirection_00": {
+      "n": 3,
+      "best3": 0.4782608695652174,
+      "mean3": 0.3864734299516908,
+      "gap": -0.009661835748792258,
+      "over_delta": false,
+      "realized_above": 0.0
+     },
+     "HandMovementDirection_x00": {
+      "n": 3,
+      "best3": 0.75,
+      "mean3": 0.5833333333333334,
+      "gap": 0.07291666666666663,
+      "over_delta": false,
+      "realized_above": 0.3333333333333333
+     }
+    },
+    "rand_nb": {
+     "Handwriting_00": {
+      "n": 6,
+      "best3": 0.8499999999999999,
+      "mean3": 0.732258064516129,
+      "gap": 0.026344086021505286,
+      "over_delta": false
+     },
+     "Handwriting_x00": {
+      "n": 6,
+      "best3": 0.8445544554455445,
+      "mean3": 0.8118811881188119,
+      "gap": 0.009570957095709542,
+      "over_delta": false
+     },
+     "UniMiB-SHAR_00": {
+      "n": 6,
+      "best3": 0.8232899022801303,
+      "mean3": 0.7953311617806732,
+      "gap": 0.005700325732899025,
+      "over_delta": false
+     },
+     "UniMiB-SHAR_x00": {
+      "n": 6,
+      "best3": 0.8969055374592834,
+      "mean3": 0.8577633007600433,
+      "gap": 0.007654723127035856,
+      "over_delta": false
+     },
+     "PhonemeSpectra_00": {
+      "n": 6,
+      "best3": 0.5241883116883116,
+      "mean3": 0.4453463203463204,
+      "gap": 0.002543290043289903,
+      "over_delta": false
+     },
+     "PhonemeSpectra_x00": {
+      "n": 6,
+      "best3": 0.5496078431372549,
+      "mean3": 0.4980392156862745,
+      "gap": -0.1013725490196079,
+      "over_delta": false
+     },
+     "UWaveGestureLibrary_00": {
+      "n": 6,
+      "best3": 0.97265625,
+      "mean3": 0.9648437500000002,
+      "gap": -0.0013020833333333703,
+      "over_delta": false
+     },
+     "UWaveGestureLibrary_x00": {
+      "n": 6,
+      "best3": 0.8806250000000002,
+      "mean3": 0.8291666666666666,
+      "gap": 0.005625000000000213,
+      "over_delta": false
+     },
+     "EthanolConcentration_00": {
+      "n": 6,
+      "best3": 0.31114649681528667,
+      "mean3": 0.2961783439490445,
+      "gap": -0.009447983014861938,
+      "over_delta": false
+     },
+     "EthanolConcentration_x00": {
+      "n": 6,
+      "best3": 0.6917721518987341,
+      "mean3": 0.6308016877637131,
+      "gap": 0.03776371308016868,
+      "over_delta": false
+     },
+     "Cricket_00": {
+      "n": 6,
+      "best3": 0.9437500000000002,
+      "mean3": 0.8958333333333333,
+      "gap": 0.010416666666666963,
+      "over_delta": false
+     },
+     "Cricket_x00": {
+      "n": 6,
+      "best3": 0.9750000000000002,
+      "mean3": 0.8988095238095237,
+      "gap": -0.013095238095237938,
+      "over_delta": false
+     },
+     "HandMovementDirection_00": {
+      "n": 6,
+      "best3": 0.40652173913043477,
+      "mean3": 0.36714975845410625,
+      "gap": -0.0814009661835749,
+      "over_delta": false
+     },
+     "HandMovementDirection_x00": {
+      "n": 6,
+      "best3": 0.725,
+      "mean3": 0.6510416666666667,
+      "gap": 0.04791666666666661,
+      "over_delta": false
+     }
+    }
+   },
+   "agg": {
+    "ev_et": {
+     "n": 14,
+     "frac_positive": 0.42857142857142855,
+     "frac_over_delta": 0.0,
+     "median_gap": -0.005795331161780604,
+     "mean_best3": 0.7278975207283729,
+     "mean_mean3": 0.7004176272230124,
+     "pred_above_share": 1.0,
+     "realized_above_share": 0.19047619047619047,
+     "by_dataset_median_gap": {
+      "Cricket": -0.033928571428571364,
+      "EthanolConcentration": 0.01685076191244056,
+      "HandMovementDirection": -0.005736714975845436,
+      "Handwriting": -0.005525391248802303,
+      "PhonemeSpectra": -0.11286605551311435,
+      "UWaveGestureLibrary": 0.007552083333333293,
+      "UniMiB-SHAR": 0.004885993485342022
+     },
+     "over_delta_slices": []
+    },
+    "ev_blind": {
+     "n": 14,
+     "frac_positive": 0.35714285714285715,
+     "frac_over_delta": 0.07142857142857142,
+     "median_gap": -0.005248917748917725,
+     "mean_best3": 0.7387324605810406,
+     "mean_mean3": 0.6910323784165244,
+     "pred_above_share": 1.0,
+     "realized_above_share": 0.14285714285714285,
+     "by_dataset_median_gap": {
+      "Cricket": -0.016071428571428514,
+      "EthanolConcentration": -0.056115455938079484,
+      "HandMovementDirection": 0.057216183574879204,
+      "Handwriting": -0.01737464068987543,
+      "PhonemeSpectra": -0.04225872167048644,
+      "UWaveGestureLibrary": 0.020052083333333304,
+      "UniMiB-SHAR": 0.0016286644951140072
+     },
+     "over_delta_slices": [
+      "HandMovementDirection_00"
+     ]
+    },
+    "rand_u": {
+     "n": 14,
+     "frac_positive": 0.35714285714285715,
+     "frac_over_delta": 0.0,
+     "median_gap": -0.011080917874396107,
+     "mean_best3": 0.7308169360985347,
+     "mean_mean3": 0.6410254989437941,
+     "pred_above_share": null,
+     "realized_above_share": 0.11904761904761904,
+     "by_dataset_median_gap": {
+      "Cricket": -0.0035714285714285587,
+      "EthanolConcentration": 0.00423284689188097,
+      "HandMovementDirection": 0.031627415458937186,
+      "Handwriting": -0.018205046311082718,
+      "PhonemeSpectra": -0.0679590017825312,
+      "UWaveGestureLibrary": -0.008854166666666663,
+      "UniMiB-SHAR": -0.04560260586319215
+     },
+     "over_delta_slices": []
+    },
+    "rand_nb": {
+     "n": 14,
+     "frac_positive": 0.6428571428571429,
+     "frac_over_delta": 0.0,
+     "median_gap": 0.005662662866449619,
+     "mean_best3": 0.7425012634182128,
+     "mean_mean3": 0.691031712989379,
+     "pred_above_share": null,
+     "realized_above_share": null,
+     "by_dataset_median_gap": {
+      "Cricket": -0.0013392857142854875,
+      "EthanolConcentration": 0.014157865032653372,
+      "HandMovementDirection": -0.016742149758454145,
+      "Handwriting": 0.017957521558607414,
+      "PhonemeSpectra": -0.049414629488159,
+      "UWaveGestureLibrary": 0.0021614583333334214,
+      "UniMiB-SHAR": 0.006677524429967441
+     },
+     "over_delta_slices": []
+    }
+   }
+  }
+ },
+ "paired": {
+  "ev_et_vs_rand_u_mean3": {
+   "n": 14,
+   "mean_x": 0.7004176272230126,
+   "mean_y": 0.6410254989437941,
+   "delta": 0.05939212827921834,
+   "p": 0.01763916015625,
+   "wins": 11,
+   "losses": 3
+  },
+  "ev_et_vs_rand_u_best3": {
+   "n": 14,
+   "mean_x": 0.7278975207283729,
+   "mean_y": 0.7308169360985349,
+   "delta": -0.0029194153701620645,
+   "p": 0.6922842642473905,
+   "wins": 6,
+   "losses": 8
+  },
+  "ev_et_vs_rand_nb_mean3": {
+   "n": 14,
+   "mean_x": 0.7004176272230126,
+   "mean_y": 0.691031712989379,
+   "delta": 0.009385914233633394,
+   "p": 0.19549560546875,
+   "wins": 8,
+   "losses": 6
+  },
+  "ev_blind_vs_rand_u_mean3": {
+   "n": 14,
+   "mean_x": 0.6910323784165244,
+   "mean_y": 0.6410254989437941,
+   "delta": 0.05000687947273027,
+   "p": 0.067626953125,
+   "wins": 9,
+   "losses": 5
+  },
+  "ev_blind_vs_rand_u_best3": {
+   "n": 14,
+   "mean_x": 0.7387324605810406,
+   "mean_y": 0.7308169360985349,
+   "delta": 0.007915524482505681,
+   "p": 0.350351706125841,
+   "wins": 8,
+   "losses": 5
+  },
+  "ev_blind_vs_rand_nb_mean3": {
+   "n": 14,
+   "mean_x": 0.6910323784165244,
+   "mean_y": 0.691031712989379,
+   "delta": 6.654271453279284e-07,
+   "p": 0.45159912109375,
+   "wins": 9,
+   "losses": 5
+  },
+  "ev_et_vs_blind_mean3": {
+   "n": 14,
+   "mean_x": 0.7004176272230126,
+   "mean_y": 0.6910323784165244,
+   "delta": 0.009385248806488068,
+   "p": 0.27081298828125,
+   "wins": 7,
+   "losses": 7
+  },
+  "ev_et_vs_blind_best3": {
+   "n": 14,
+   "mean_x": 0.7278975207283729,
+   "mean_y": 0.7387324605810406,
+   "delta": -0.010834939852667745,
+   "p": 0.5930273268491695,
+   "wins": 5,
+   "losses": 7
+  }
+ },
+ "gates": {
+  "ev_et": {
+   "G-V1": false,
+   "G-V2": true,
+   "G-V3": false
+  },
+  "ev_blind": {
+   "G-V1": false,
+   "G-V2": false
+  },
+  "rand_u": {
+   "G-V1": false
+  },
+  "rand_nb": {
+   "G-V1": false
+  }
+ },
+ "over": {
+  "ev_et": {
+   "pred_above_share": 1.0,
+   "realized_above_share": 0.19047619047619047,
+   "over": 0.8095238095238095,
+   "G-V4": false
+  },
+  "ev_blind": {
+   "pred_above_share": 1.0,
+   "realized_above_share": 0.14285714285714285,
+   "over": 0.8571428571428572
+  }
+ },
+ "diag": {
+  "reused_rows": 0,
+  "n_rows": 378,
+  "proposals_in_nb_labeled": {
+   "ev_et": 0,
+   "ev_blind": 0
+  },
+  "trust_in_top3_share": {
+   "ev_et": 0.0,
+   "ev_blind": 0.0
+  },
+  "hamming_hist": {
+   "ev_et": {
+    "1": 0,
+    "2": 3,
+    "3": 39
+   },
+   "ev_blind": {
+    "1": 0,
+    "2": 1,
+    "3": 41
+   }
+  },
+  "overlap_between_guides": {
+   "ev_et&ev_blind": 0
+  }
+ },
+ "verdict": "EV-DEAD",
+ "es_exam": null,
+ "predictions": {
+  "P1": {
+   "desc": "G-V1 ev_et",
+   "hit": false
+  },
+  "P2": {
+   "desc": "G-V2 ev_et",
+   "hit": true
+  },
+  "P3": {
+   "desc": "G-V3 ev_et > blind",
+   "hit": false
+  },
+  "P4": {
+   "desc": "ev_es mean3 ≤ ev_et mean3",
+   "hit": null
+  },
+  "P5": {
+   "desc": "高估 blind − et ≥ 0.10",
+   "hit": false
+  },
+  "P6": {
+   "desc": "超 δ 只在 HMD / Ethanol",
+   "value": [
+    "HandMovementDirection"
+   ],
+   "hit": true
+  },
+  "P7": {
+   "desc": "≥ 50% 切片最终种群前 3 含信任域（ev_et）",
+   "value": 0.0,
+   "hit": false
+  },
+  "es_gates": {}
+ }
+}
