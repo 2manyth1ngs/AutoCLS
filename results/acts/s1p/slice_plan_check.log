@@ -1,0 +1,84 @@
+[slice] Handwriting_a00 c0w0n0 C=1/3 win=(96, 152) T=56/152 n=234/1000 k=26 maj=0.098 iters=200
+[slice] Handwriting_a01 c1w2n3 C=2/3 win=(8, 128) T=120/152 n=673/1000 k=26 maj=0.061 iters=600
+[slice] Handwriting_a02 c2w3n1 C=2/3 win=(1, 151) T=150/152 n=359/1000 k=26 maj=0.070 iters=600
+[slice] Handwriting_a03 c3w1n2 C=3/3 win=(52, 147) T=95/152 n=570/1000 k=26 maj=0.054 iters=600
+[slice] Handwriting_a04 c0w1n1 C=1/3 win=(31, 128) T=97/152 n=410/1000 k=26 maj=0.071 iters=200
+[slice] Handwriting_a05 c1w3n2 C=2/3 win=(7, 145) T=138/152 n=454/1000 k=26 maj=0.059 iters=600
+[slice] Handwriting_a06 c2w2n0 C=2/3 win=(14, 116) T=102/152 n=261/1000 k=26 maj=0.088 iters=200
+[slice] Handwriting_a07 c3w0n3 C=3/3 win=(15, 80) T=65/152 n=879/1000 k=26 maj=0.052 iters=600
+[slice] UniMiB-SHAR_a00 c0w0n0 C=1/3 win=(44, 109) T=65/151 n=173/11771 k=17 maj=0.168 iters=200
+[slice] UniMiB-SHAR_a01 c1w2n3 C=2/3 win=(6, 123) T=117/151 n=1004/11771 k=17 maj=0.168 iters=600
+[slice] UniMiB-SHAR_a02 c2w3n1 C=2/3 win=(10, 151) T=141/151 n=287/11771 k=17 maj=0.167 iters=200
+[slice] UniMiB-SHAR_a03 c3w1n2 C=3/3 win=(34, 126) T=92/151 n=374/11771 k=17 maj=0.168 iters=600
+[slice] UniMiB-SHAR_a04 c0w1n1 C=1/3 win=(0, 99) T=99/151 n=264/11771 k=17 maj=0.174 iters=200
+[slice] UniMiB-SHAR_a05 c1w3n2 C=2/3 win=(5, 147) T=142/151 n=549/11771 k=17 maj=0.168 iters=600
+[slice] UniMiB-SHAR_a06 c2w2n0 C=2/3 win=(27, 132) T=105/151 n=203/11771 k=17 maj=0.167 iters=200
+[slice] UniMiB-SHAR_a07 c3w0n3 C=3/3 win=(60, 132) T=72/151 n=844/11771 k=17 maj=0.168 iters=600
+[slice] PhonemeSpectra_a00 c0w0n0 C=3/11 win=(2, 63) T=61/217 n=374/6668 k=39 maj=0.086 iters=200
+[slice] PhonemeSpectra_a01 c1w2n3 C=4/11 win=(11, 162) T=151/217 n=984/6668 k=39 maj=0.035 iters=600
+[slice] PhonemeSpectra_a02 c2w3n1 C=7/11 win=(25, 217) T=192/217 n=501/6668 k=39 maj=0.090 iters=600
+[slice] PhonemeSpectra_a03 c3w1n2 C=10/11 win=(75, 195) T=120/217 n=734/6668 k=39 maj=0.068 iters=600
+[slice] PhonemeSpectra_a04 c0w1n1 C=3/11 win=(85, 216) T=131/217 n=474/6668 k=39 maj=0.038 iters=600
+[slice] PhonemeSpectra_a05 c1w3n2 C=4/11 win=(1, 192) T=191/217 n=721/6668 k=39 maj=0.051 iters=600
+[slice] PhonemeSpectra_a06 c2w2n0 C=6/11 win=(8, 178) T=170/217 n=280/6668 k=39 maj=0.050 iters=600
+[slice] PhonemeSpectra_a07 c3w0n3 C=11/11 win=(34, 112) T=78/217 n=955/6668 k=39 maj=0.045 iters=600
+[slice] UWaveGestureLibrary_a00 c0w0n0 C=1/3 win=(105, 217) T=112/315 n=95/440 k=8 maj=0.189 iters=200
+[slice] UWaveGestureLibrary_a01 c1w2n3 C=2/3 win=(121, 304) T=183/315 n=393/440 k=8 maj=0.127 iters=600
+[slice] UWaveGestureLibrary_a02 c2w3n1 C=2/3 win=(0, 313) T=313/315 n=160/440 k=8 maj=0.125 iters=600
+[slice] UWaveGestureLibrary_a03 c3w1n2 C=3/3 win=(6, 174) T=168/315 n=263/440 k=8 maj=0.148 iters=600
+[slice] UWaveGestureLibrary_a04 c0w1n1 C=1/3 win=(141, 300) T=159/315 n=148/440 k=8 maj=0.149 iters=200
+[slice] UWaveGestureLibrary_a05 c1w3n2 C=2/3 win=(16, 296) T=280/315 n=196/440 k=8 maj=0.143 iters=600
+[slice] UWaveGestureLibrary_a06 c2w2n0 C=2/3 win=(83, 292) T=209/315 n=105/440 k=8 maj=0.133 iters=200
+[slice] UWaveGestureLibrary_a07 c3w0n3 C=3/3 win=(178, 276) T=98/315 n=388/440 k=8 maj=0.134 iters=600
+[slice] EthanolConcentration_a00 c0w0n0 C=1/3 win=(1283, 1663) T=380/1751 n=85/524 k=4 maj=0.259 iters=200
+[slice] EthanolConcentration_a01 c1w2n3 C=2/3 win=(86, 1258) T=1172/1751 n=368/524 k=4 maj=0.253 iters=600
+[slice] EthanolConcentration_a02 c2w3n1 C=2/3 win=(19, 1733) T=1714/1751 n=168/524 k=4 maj=0.250 iters=600
+[slice] EthanolConcentration_a03 c3w1n2 C=3/3 win=(590, 1379) T=789/1751 n=292/524 k=4 maj=0.253 iters=600
+[slice] EthanolConcentration_a04 c0w1n1 C=1/3 win=(86, 670) T=584/1751 n=136/524 k=4 maj=0.250 iters=200
+[slice] EthanolConcentration_a05 c1w3n2 C=2/3 win=(235, 1622) T=1387/1751 n=293/524 k=4 maj=0.256 iters=600
+[slice] EthanolConcentration_a06 c2w2n0 C=2/3 win=(594, 1689) T=1095/1751 n=95/524 k=4 maj=0.274 iters=600
+[slice] EthanolConcentration_a07 c3w0n3 C=3/3 win=(1546, 1598) T=52/1751 n=498/524 k=4 maj=0.251 iters=200
+[slice] Cricket_a00 c0w0n0 C=1/6 win=(860, 1125) T=265/1197 n=98/180 k=12 maj=0.102 iters=200
+[slice] Cricket_a01 c1w2n3 C=3/6 win=(244, 1031) T=787/1197 n=153/180 k=12 maj=0.098 iters=600
+[slice] Cricket_a02 c2w3n1 C=4/6 win=(16, 1149) T=1133/1197 n=116/180 k=12 maj=0.129 iters=600
+[slice] Cricket_a03 c3w1n2 C=5/6 win=(667, 1047) T=380/1197 n=137/180 k=12 maj=0.109 iters=600
+[slice] Cricket_a04 c0w1n1 C=2/6 win=(642, 1127) T=485/1197 n=105/180 k=12 maj=0.143 iters=600
+[slice] Cricket_a05 c1w3n2 C=3/6 win=(12, 1006) T=994/1197 n=132/180 k=12 maj=0.083 iters=600
+[slice] Cricket_a06 c2w2n0 C=4/6 win=(126, 910) T=784/1197 n=99/180 k=12 maj=0.111 iters=600
+[slice] Cricket_a07 c3w0n3 C=6/6 win=(832, 958) T=126/1197 n=180/180 k=12 maj=0.083 iters=600
+[slice] HandMovementDirection_a00 c0w0n0 C=3/10 win=(25, 101) T=76/400 n=90/234 k=4 maj=0.311 iters=200
+[slice] HandMovementDirection_a01 c1w2n3 C=4/10 win=(91, 337) T=246/400 n=218/234 k=4 maj=0.298 iters=600
+[slice] HandMovementDirection_a02 c2w3n1 C=7/10 win=(44, 384) T=340/400 n=119/234 k=4 maj=0.294 iters=600
+[slice] HandMovementDirection_a03 c3w1n2 C=8/10 win=(135, 334) T=199/400 n=165/234 k=4 maj=0.297 iters=600
+[slice] HandMovementDirection_a04 c0w1n1 C=1/10 win=(13, 203) T=190/400 n=124/234 k=4 maj=0.298 iters=200
+[slice] HandMovementDirection_a05 c1w3n2 C=5/10 win=(32, 371) T=339/400 n=149/234 k=4 maj=0.302 iters=600
+[slice] HandMovementDirection_a06 c2w2n0 C=7/10 win=(36, 330) T=294/400 n=91/234 k=4 maj=0.297 iters=600
+[slice] HandMovementDirection_a07 c3w0n3 C=8/10 win=(75, 154) T=79/400 n=227/234 k=4 maj=0.304 iters=600
+[slice] SelfRegulationSCP2_a00 c0w0n0 C=1/7 win=(101, 321) T=220/1152 n=90/380 k=2 maj=0.500 iters=200
+[slice] SelfRegulationSCP2_a01 c1w2n3 C=3/7 win=(249, 1058) T=809/1152 n=314/380 k=2 maj=0.500 iters=600
+[slice] SelfRegulationSCP2_a02 c2w3n1 C=4/7 win=(253, 1135) T=882/1152 n=124/380 k=2 maj=0.500 iters=600
+[slice] SelfRegulationSCP2_a03 c3w1n2 C=7/7 win=(500, 1075) T=575/1152 n=232/380 k=2 maj=0.500 iters=600
+[slice] SelfRegulationSCP2_a04 c0w1n1 C=1/7 win=(15, 342) T=327/1152 n=165/380 k=2 maj=0.503 iters=200
+[slice] SelfRegulationSCP2_a05 c1w3n2 C=3/7 win=(14, 1079) T=1065/1152 n=237/380 k=2 maj=0.502 iters=600
+[slice] SelfRegulationSCP2_a06 c2w2n0 C=5/7 win=(261, 1052) T=791/1152 n=95/380 k=2 maj=0.505 iters=600
+[slice] SelfRegulationSCP2_a07 c3w0n3 C=6/7 win=(127, 301) T=174/1152 n=379/380 k=2 maj=0.501 iters=600
+[slice] SelfRegulationSCP1_a00 c0w0n0 C=1/6 win=(231, 406) T=175/896 n=115/561 k=2 maj=0.504 iters=200
+[slice] SelfRegulationSCP1_a01 c1w2n3 C=3/6 win=(109, 669) T=560/896 n=410/561 k=2 maj=0.502 iters=600
+[slice] SelfRegulationSCP1_a02 c2w3n1 C=4/6 win=(8, 888) T=880/896 n=160/561 k=2 maj=0.500 iters=600
+[slice] SelfRegulationSCP1_a03 c3w1n2 C=6/6 win=(362, 804) T=442/896 n=298/561 k=2 maj=0.503 iters=600
+[slice] SelfRegulationSCP1_a04 c0w1n1 C=2/6 win=(130, 419) T=289/896 n=160/561 k=2 maj=0.500 iters=200
+[slice] SelfRegulationSCP1_a05 c1w3n2 C=3/6 win=(92, 793) T=701/896 n=339/561 k=2 maj=0.501 iters=600
+[slice] SelfRegulationSCP1_a06 c2w2n0 C=4/6 win=(205, 713) T=508/896 n=118/561 k=2 maj=0.500 iters=600
+[slice] SelfRegulationSCP1_a07 c3w0n3 C=6/6 win=(548, 787) T=239/896 n=349/561 k=2 maj=0.501 iters=600
+[slice] 72 任务 → results\acts\s1p\tasks.json；16 任务前缀自检 OK
+[plan A] 880 格（{'shared': 720, 'ablation3x': 160}），24 任务、探针 72；iters {600: 700, 200: 40, 1800: 140}；估时 4090 5.6 h
+[data] Handwriting: X=(1000, 152, 3) classes=26
+[data] Handwriting_a00: train=(165, 56, 1) eval=(69, 56, 1) classes=26 size=9240 window=(96, 152)
+Traceback (most recent call last):
+  File "D:\DevelopDoc\CLS\scripts\83_acts_corpus.py", line 1314, in <module>
+    raise SystemExit(main())
+  File "D:\DevelopDoc\CLS\scripts\83_acts_corpus.py", line 1303, in main
+    if not check_deployment(cfg, outdir)["ok"]:
+  File "D:\DevelopDoc\CLS\scripts\83_acts_corpus.py", line 625, in check_deployment
+    got = {"n_train": int(arr["X"].shape[0]), "T": int(arr["X"].shape[1]), "C": int(arr["X"].shape[2]),
+KeyError: 'X'

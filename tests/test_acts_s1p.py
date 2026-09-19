@@ -222,3 +222,32 @@ class TestReadoutsS1P:
     def test_verdict_s1p(self):
         v = _g83().verdict_s1p
         assert v({"G-A1": True, "G-A2": True}) == "ACTS-S1P-GO" and v({"G-A1": False, "G-A2": True}) == "ACTS-S1P-SAME" and v({"G-A1": True, "G-A2": False}) == "ACTS-S1P-NOISE"
+
+
+def test_load_dataset_full_registry_fallback(monkeypatch):
+    """PQ 池外的源（SelfRegulationSCP1，准入 fallback）走默认注册表，且原生长度（crop_len=None）。"""
+    import autocls.data.source_pool as sp
+    seen = []
+    monkeypatch.setattr(sp, "load_source_dataset", lambda name, reg, crop_len="auto": (seen.append((name, reg.get(name).role, crop_len)) or (np.zeros((4, 8, 2), np.float32), np.arange(4))))
+    X, y = _ac().load_dataset_full("SelfRegulationSCP1")
+    assert seen == [("SelfRegulationSCP1", "source", None)] and X.shape == (4, 8, 2)
+    _ac().load_dataset_full("Cricket")
+    assert seen[-1] == ("Cricket", "source", None)
+
+
+def test_check_deployment_cv_mode(cfg, tmp_path):
+    """CV 模式下 --check 核 fold_md5（而非 split_md5）且 plan_A key 序一致。"""
+    g83 = _g83()
+    rng = np.random.default_rng(0)
+    X = rng.standard_normal((200, 80, 5)).astype(np.float32)
+    y = np.tile(np.arange(4), 50)
+    _tasks, meta = g83.slice_dataset(cfg, "Toy", 2, X=X, y=y)
+    assert all("fold_md5" in m and m["n_eval"] == 0 for m in meta.values())
+    payload = {"stage": "s1p", "datasets": ["Toy"], "n_tasks": 2, "protocol": cfg["protocol"], "slicing": dict(cfg["slicing"]), "eval": dict(cfg["eval"]), "tasks": meta}
+    g83._write_json(tmp_path / "tasks.json", payload)
+    c2 = {**cfg, "admission": {**cfg["admission"], "candidates": ["Toy"], "task_rows": [0, 1]}, "ablation": {**cfg["ablation"], "dataset": "Toy"}}
+    plan, _cat = g83.build_plan_s1p(c2, meta, phase="A", n_shared=2, n_random=1)
+    g83._write_json(tmp_path / "plan_A.json", plan)
+    r = g83.check_deployment(c2, tmp_path, load_dataset=lambda name: (X, y), plan_kwargs=dict(n_shared=2, n_random=1))
+    assert r["ok"] and r["mismatches"] == [] and r["plan_keys_match"] is True
+

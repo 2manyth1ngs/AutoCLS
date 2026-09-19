@@ -354,8 +354,8 @@ def make_cell(tid: str, m: Mapping, origin: str, c: CLS, k: str, seed: int, prot
 def load_dataset_full(name: str) -> tuple[np.ndarray, np.ndarray]:
     """源数据集 TRAIN+TEST 合并、**原生长度**（不用注册表 crop_len；部署靶就是原生长度）。注册表分派同 pq_common.REG_OF。"""
     pq = importlib.import_module("scripts.pq_common")
-    from autocls.data.source_pool import load_source_dataset
-    reg = pq.registry_for(name)
+    from autocls.data.source_pool import load_registry, load_source_dataset
+    reg = pq.registry_for(name) if name in pq.REG_OF else load_registry()     # PQ 池外的源（如 SCP1）走默认注册表 configs/source_pool.yaml
     return load_source_dataset(name, reg, crop_len=None)
 
 

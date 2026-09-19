@@ -617,7 +617,11 @@ def check_deployment(cfg: Mapping, outdir: Path, *, load_dataset=None, plan_kwar
     meta = payload["tasks"]
     tasks = tasks_from_meta(meta)
     dataset_of = {tid: m["dataset"] for tid, m in meta.items()}
-    loader = ac.make_task_loader(tasks, dataset_of, load_dataset or ac.load_dataset_full, eval_ratio=float(cfg["slicing"]["eval_ratio"]))
+    if _is_cv(cfg):
+        loader = make_task_loader_cv(tasks, dataset_of, load_dataset or ac.load_dataset_full, n_folds=int(cfg["eval"]["n_folds"]),
+                                     fold_seed_key=str(cfg["eval"].get("fold_seed_key", "cv_folds")))
+    else:
+        loader = ac.make_task_loader(tasks, dataset_of, load_dataset or ac.load_dataset_full, eval_ratio=float(cfg["slicing"]["eval_ratio"]))
     mismatches = []
     for tid, m in meta.items():
         arr = loader(tid)
