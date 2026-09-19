@@ -1,5 +1,5 @@
 """WP17-ACTS S1（results/acts/s1/PROTOCOL.md）——先于实现。覆盖：约束引擎泛化（kernel=0 门控、空间计数）、
-SlicedTask.time_window、AutoCTSTierSlicer（四档、前缀稳定）、剪枝谓词、shared / random 目录、锚规则、best-of-3 + 失败地板、
+SlicedTask.time_window、AutoCTSTierSlicer（三轴四档 OA(16, 4³)、对数样本档、按类分层、前缀稳定）、剪枝谓词、shared / random 目录、锚规则、best-of-3 + 失败地板、
 格构造（官方 options / iters 规则 / 锚 seed）、切片数组（训练部分标准化）、G-A 读数量（对半分 / 交互份额）、保真度表、
 冠军保留率、读数码、切片 sanity 覆盖表。零 GPU、不读真实数据。"""
 from __future__ import annotations
@@ -94,7 +94,7 @@ class TestActsSpace:
         assert _canonical_count(aspace) == 39 and aspace.space_size() == free * 39
 
 
-# ---------------------------------------------------------------- 切片（PROTOCOL §1.1）
+# ---------------------------------------------------------------- 切片（PROTOCOL §1.1 / §1.9：三轴 OA(16, 4³)）
 class TestSlicer:
     def test_tier_candidates(self):
         tc = _sl().tier_candidates
@@ -107,8 +107,46 @@ class TestSlicer:
         assert sorted(x for p in parts for x in p) == list(range(50, 401))
         assert [tc(50, 50, i) for i in range(4)] == [[50]] * 4
 
+    def test_log_tier_candidates(self):
+        ltc = _sl().log_tier_candidates
+        parts = [ltc(78, 1024, i) for i in range(4)]          # PS：k = 39 → n_lo 78
+        assert parts[0][0] == 78 and parts[-1][-1] == 1024
+        assert sorted(x for p in parts for x in p) == list(range(78, 1025))
+        # 对数等分：各档上界 ≈ 78 · (1024/78)^{(i+1)/4}
+        r = 1024 / 78
+        for i in range(3):
+            assert parts[i][-1] == max(k for k in range(78, 1025) if k < 78 * r ** ((i + 1) / 4))
+        assert [ltc(32, 32, i) for i in range(4)] == [[32]] * 4
+        assert all(len(p) >= 1 for p in (ltc(32, 40, i) for i in range(4)))   # 窄区间空档取几何中点
+
+    def test_oa_design_from_config(self, cfg):
+        sl = _sl()
+        d = [tuple(r) for r in cfg["slicing"]["design"]]
+        assert len(d) == 16 and all(len(r) == 3 for r in d)
+        for i, j in ((0, 1), (0, 2), (1, 2)):                  # 强度 2：任两列 16 个组合各一次
+            assert len({(r[i], r[j]) for r in d}) == 16
+        for n in (4, 8, 12, 16):                               # 前缀各轴等频
+            for col in range(3):
+                counts = [sum(1 for r in d[:n] if r[col] == lv) for lv in range(4)]
+                assert counts == [n // 4] * 4
+        assert sl.is_orthogonal_array(d) and sl.AutoCTSTierSlicer.from_config(cfg["slicing"]).design == d
+
+    def test_stratified_sample(self):
+        strat = _sl().stratified_sample
+        rng = np.random.default_rng(0)
+        y = np.array([0] * 50 + [1] * 30 + [2] * 20)             # 100 样本，比例 5:3:2
+        idx = strat(y, n=40, rng=rng, min_per_class=2)
+        assert len(idx) == 40 and len(set(idx)) == 40 and list(idx) == sorted(idx)
+        counts = np.bincount(y[idx], minlength=3)
+        assert counts.tolist() == [20, 12, 8]                      # 2 + 余量 34 按可用数 48:28:18 分 → 17/10/7 (最大余数)
+        idx6 = strat(y, n=6, rng=np.random.default_rng(1), min_per_class=2)
+        assert np.bincount(y[idx6], minlength=3).tolist() == [2, 2, 2]
+        with pytest.raises(ValueError):
+            strat(y, n=5, rng=rng, min_per_class=2)
+        assert len(strat(y, n=100, rng=rng, min_per_class=2)) == 100
+
     def test_prefix_stable_tiers_and_records(self, cfg):
-        sl, tc = _sl(), _sl().tier_candidates
+        sl, tc, ltc = _sl(), _sl().tier_candidates, _sl().log_tier_candidates
         rng = np.random.default_rng(0)
         y = rng.integers(0, 5, size=300).astype(np.int64)
         s = sl.AutoCTSTierSlicer.from_config(cfg["slicing"])
@@ -116,23 +154,27 @@ class TestSlicer:
         t16 = s.slice(y, n_channels=6, seq_len=200, n_tasks=16, pool_name="Toy")
         assert t16[:8] == t8 and len(t16) == 16
         assert [t.task_id for t in t16] == [f"Toy_a{i:02d}" for i in range(16)]
-        order = cfg["slicing"]["tier_order"]
+        design = [tuple(r) for r in cfg["slicing"]["design"]]
+        n_lo, n_hi = max(32, 2 * 5), min(1024, 300)
         for i, t in enumerate(t16):
-            ci, ti = order[i % len(order)]
-            assert t.tag == f"c{ci}t{ti}" and t.pool == "Toy"
+            ci, wi, ni = design[i % 16]
+            assert t.tag == f"c{ci}w{wi}n{ni}" and t.pool == "Toy"
             assert set(t.classes) == set(range(5))
             assert list(t.channels) == sorted(set(t.channels)) and all(0 <= c < 6 for c in t.channels)
             assert len(t.channels) in tc(1, 6, ci)
             t0, t1 = t.time_window
-            assert 0 <= t0 < t1 <= 200 and (t1 - t0) in tc(50, 200, ti)
-            assert list(t.sample_indices) == sorted(set(t.sample_indices)) and len(t.sample_indices) == 300
-        # 17 个起从头循环档位
+            assert 0 <= t0 < t1 <= 200 and (t1 - t0) in tc(50, 200, wi)
+            n = len(t.sample_indices)
+            assert list(t.sample_indices) == sorted(set(t.sample_indices)) and n in ltc(n_lo, n_hi, ni)
+            assert np.bincount(y[list(t.sample_indices)], minlength=5).min() >= 2      # 分层：每类 ≥ 2
+        assert len({len(t.sample_indices) for t in t16}) > 4                              # 样本数轴真的在变
         t17 = s.slice(y, n_channels=6, seq_len=200, n_tasks=17, pool_name="Toy")
-        assert t17[:16] == t16 and t17[16].tag == f"c{order[0][0]}t{order[0][1]}"
-        # 样本上限 / 下限 / 序列下限
-        small = dataclasses.replace(s, n_samples_max=100)
-        assert all(len(t.sample_indices) == 100 for t in small.slice(y, n_channels=6, seq_len=200, n_tasks=4, pool_name="Toy"))
-        with pytest.raises(ValueError, match="min_samples"):
+        assert t17[:16] == t16 and t17[16].tag == "c{}w{}n{}".format(*design[0])
+        # n_cap = None → 上界 = N；数据集级下限；序列下限
+        full = dataclasses.replace(s, n_cap=None)
+        top = [t for t in full.slice(y, n_channels=6, seq_len=200, n_tasks=16, pool_name="Toy") if t.tag.endswith("n3")]
+        assert all(len(t.sample_indices) in ltc(n_lo, 300, 3) for t in top)
+        with pytest.raises(ValueError, match="n_lo"):
             s.slice(y[:20], n_channels=6, seq_len=200, n_tasks=2, pool_name="Toy")
         with pytest.raises(ValueError, match="window_min"):
             s.slice(y, n_channels=6, seq_len=40, n_tasks=2, pool_name="Toy")

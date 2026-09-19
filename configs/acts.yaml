@@ -25,18 +25,25 @@ prune:
     - {name: infonce_tau10, all: [{field: loss_type, equals: info_nce}, {field: temperature, equals: 10.0}]}
   champion_retention_min: 0.90      # G-A0：官方口径 29 靶冠军在剪后空间的保留率
 
-# --- 任务划分（PROTOCOL §1.1；AutoCTS++ dataset_slice.py 两维四档） ---
+# --- 任务划分（PROTOCOL §1.1 / §1.9；AutoCTS++ dataset_slice.py 的两维 + 分类特有的实例内时间窗 = 三轴四档） ---
+# 映射更正（用户 2026-09-19）：AutoCTS++ 的 T 轴语义是训练样本量 → 对应本方案的样本数 n（对数四档、按类分层抽样）；
+# 实例内时间窗 L 是分类特有的附加轴；三轴用 OA(16, 4^3) 采样，每集仍 16 个子集、标签预算不变。
 slicing:
   seed: 0
   tiers: 4                          # 25/50/75/100% 四档（前三档右开、末档闭）
-  channel_min: 1
-  window_min: 50                    # encoder 适用边界（CLAUDE.md limitation）
-  n_samples_max: 1024
-  min_samples: 32
+  channel_min: 1                    # 通道子集大小 ∈ [1, C]，线性四档
+  window_min: 50                    # 实例内时间窗 ∈ [50, L]，线性四档；50 = encoder 适用边界
+  n_min: 32                         # 样本数 n ∈ [max(n_min, n_min_per_class·k), min(n_cap, N)]，对数四档
+  n_min_per_class: 2                # 分层抽样每类先取 2 个（70/30 分层划分两侧各 ≥ 1）
+  n_cap: 1024                       # 按预算：S1 = 1024；S2 若取 N 改此处（协议修订）
+  min_samples: 32                   # 数据集级下限：N < n_lo 报错
   eval_ratio: 0.3                   # 切片内 70/30 分层（评估部分出 R'）
-  # 档位顺序 (channel_tier, window_tier)：任意前缀在两维上尽量均衡；第 17 个起循环
-  tier_order: [[0, 0], [3, 3], [1, 2], [2, 1], [0, 3], [3, 0], [1, 1], [2, 2],
-               [0, 1], [1, 0], [2, 3], [3, 2], [0, 2], [2, 0], [1, 3], [3, 1]]
+  # OA(16, 4^3)：(通道档, 窗长档, 样本档) = (a, b, a XOR b)，GF(4) 加法；行序按 t = 0..3 分块（块内 b = α·a XOR t）
+  # → 前 4 / 8 / 12 行在三轴上各档等频；试点 8 = 前 8 行；第 17 个起循环
+  design: [[0, 0, 0], [1, 2, 3], [2, 3, 1], [3, 1, 2],
+           [0, 1, 1], [1, 3, 2], [2, 2, 0], [3, 0, 3],
+           [0, 2, 2], [1, 0, 1], [2, 1, 3], [3, 3, 0],
+           [0, 3, 3], [1, 1, 0], [2, 0, 2], [3, 2, 1]]
 
 # --- 每任务 2L 候选（PROTOCOL §1.2） ---
 candidates:
