@@ -64,6 +64,32 @@ TS2VEC_MAX_SAMPLES = 10000
 # 1e7 上限 7.4 s，val_acc 与 C=1e4 同为 0.20；HW n=150 两者都 <1 s）。漏掉它就是"更不忠实
 # 且不可终止"。sklearn 默认 -1 = 无界。
 TS2VEC_SVM_MAX_ITER = 10_000_000
+# sklearn 1.3.x（Python 3.8 能装的上限，WP17-ACTS 实验室服务器）参数校验拒绝 SVC(C=np.inf)（区间 (0, inf) 开）；
+# 1.7.x 接受。拒绝时用有限替身：硬间隔极限下 libsvm 与 inf 同解到容差；本地 / pod（接受 inf）逐位不变。
+TS2VEC_C_INF_SURROGATE = 1e10
+
+
+def _sklearn_accepts_inf_c() -> bool:
+    """安装的 sklearn 是否接受 SVC(C=np.inf)（无参数校验的老版本视为接受）。"""
+    est = SVC(C=np.inf)
+    validate = getattr(est, "_validate_params", None)
+    if validate is None:
+        return True
+    try:
+        validate()
+        return True
+    except Exception:  # noqa: BLE001
+        return False
+
+
+def _c_inf() -> float:
+    return np.inf if _sklearn_accepts_inf_c() else TS2VEC_C_INF_SURROGATE
+
+
+def ts2vec_c_grid() -> list:
+    """官方 C 网格；inf 在拒绝它的 sklearn 上换成 TS2VEC_C_INF_SURROGATE（长度、顺序不变）。"""
+    c_inf = _c_inf()
+    return [c if np.isfinite(c) else c_inf for c in TS2VEC_C_GRID]
 
 
 def _fit_svm_ts2vec(feats: np.ndarray, y: np.ndarray) -> SVC:
@@ -82,17 +108,18 @@ def _fit_svm_ts2vec(feats: np.ndarray, y: np.ndarray) -> SVC:
     """
     nb_classes = int(np.unique(y).shape[0])
     n = int(feats.shape[0])
+    c_inf = _c_inf()
     if n // nb_classes < 5 or n < 50:
         # 官方回退分支：SVC(C=inf, gamma='scale') 直接拟合（小样本，默认无界 max_iter）
-        return SVC(C=np.inf, kernel="rbf", gamma="scale").fit(feats, y)
+        return SVC(C=c_inf, kernel="rbf", gamma="scale").fit(feats, y)
     # 官方网格的 base estimator：param_grid 里的单值项（kernel rbf / gamma scale /
     # max_iter 1e7 / 其余 sklearn 默认）写进 estimator，只有 C 真正扫描
-    base = SVC(C=np.inf, kernel="rbf", gamma="scale", max_iter=TS2VEC_SVM_MAX_ITER)
+    base = SVC(C=c_inf, kernel="rbf", gamma="scale", max_iter=TS2VEC_SVM_MAX_ITER)
     if n > TS2VEC_MAX_SAMPLES:
         from sklearn.model_selection import train_test_split
         feats, _f2, y, _y2 = train_test_split(feats, y, train_size=TS2VEC_MAX_SAMPLES,
                                               random_state=0)
-    grid_params = {"C": list(TS2VEC_C_GRID)}
+    grid_params = {"C": ts2vec_c_grid()}
     grid = GridSearchCV(base, grid_params, cv=5, n_jobs=-1)
     try:
         grid.fit(feats, y)

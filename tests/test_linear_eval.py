@@ -181,3 +181,43 @@ class TestSvmGrid:
         res2 = evaluate_classification(enc, X_train, y_train, X_test, y_test,
                                        device="cpu", grid="ts2vec")
         assert res2["svm_grid"] == "ts2vec" and res2["acc"] > 0.95
+
+
+# ---- 官方网格的 C=inf 在旧 sklearn（1.3.x，py3.8 上限）被参数校验拒绝：用有限替身（WP17-ACTS 实验室服务器） ----
+
+def _tiny_separable(n=24, seed=0):
+    rng = np.random.default_rng(seed)
+    y = np.repeat([0, 1], n // 2)
+    X = rng.standard_normal((n, 4)) + y[:, None] * 6.0
+    return X.astype(np.float32), y
+
+
+def test_ts2vec_svm_c_inf_kept_when_sklearn_accepts_it(monkeypatch):
+    from autocls.downstream import linear_eval as le
+    monkeypatch.setattr(le, "_sklearn_accepts_inf_c", lambda: True)
+    X, y = _tiny_separable()
+    clf = le.fit_svm(X, y, grid="ts2vec")           # n < 50 → 官方回退分支 SVC(C=inf)
+    assert clf.C == np.inf
+
+
+def test_ts2vec_svm_uses_finite_surrogate_when_inf_rejected(monkeypatch):
+    from autocls.downstream import linear_eval as le
+    monkeypatch.setattr(le, "_sklearn_accepts_inf_c", lambda: False)
+    X, y = _tiny_separable()
+    clf = le.fit_svm(X, y, grid="ts2vec")
+    assert clf.C == le.TS2VEC_C_INF_SURROGATE and np.isfinite(clf.C) and clf.C >= 1e9
+    assert (clf.predict(X) == y).mean() == 1.0
+    grid = le.ts2vec_c_grid()
+    assert all(np.isfinite(c) for c in grid) and grid[-1] == le.TS2VEC_C_INF_SURROGATE and len(grid) == len(le.TS2VEC_C_GRID)
+
+
+def test_sklearn_accepts_inf_c_matches_installed_version():
+    from autocls.downstream import linear_eval as le
+    from sklearn.svm import SVC
+    try:
+        SVC(C=np.inf)._validate_params()
+        expect = True
+    except Exception:  # noqa: BLE001
+        expect = False
+    assert le._sklearn_accepts_inf_c() is expect
+
