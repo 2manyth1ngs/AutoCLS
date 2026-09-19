@@ -85,3 +85,50 @@ cost_model:
   eval_s_intercept: 0.5
   eval_s_per_n: 0.004
   gpu_factor_5090: 0.7
+
+# =====================================================================
+# --- S1′ profile（PROTOCOL results/acts/s1p/PROTOCOL.md；用户 2026-09-19 拍板）---
+# load_acts_config(profile="s1p") 把本块**覆盖**到上面的基线上（逐键深合并）；基线值不动，S1 仍可逐位复现。
+# =====================================================================
+profiles:
+  s1p:
+    slicing:
+      n_min: 80                     # 样本数轴下限 n_lo = max(n_min, n_lo_per_class · k)
+      n_lo_per_class: 7             # 机制理由：外层 5 折后折内 0.8n，官方网格条件 0.8n//k ≥ 5 ∧ 0.8n ≥ 50 ⇔ n ≥ 6.25k ∧ n ≥ 62.5
+      n_min_per_class: 5            # 分层抽样每类 ≥ 5（5 折分层每折训练部分含全部类）
+    eval:
+      mode: cv5                     # 整切片预训练 + 分层 5 折 CV（折内官方网格），标准化在整个切片上
+      n_folds: 5
+      fold_seed_key: cv_folds       # run_seed_for(task_id, fold_seed_key)
+    labels:
+      aggregate: endpoint           # R′ = 100% iters 截点的 5 折均值（不再 best-of-3）
+      shared_seeds: [0, 1]          # shared 标签 = 两种子均值；噪声估计 = 20 条 shared 全部（无偏）
+      random_seeds: [0]
+      probe0_seeds: 3
+      anchors: none                 # 锚臂取消
+    admission:
+      candidates: [Handwriting, UniMiB-SHAR, PhonemeSpectra, UWaveGestureLibrary, EthanolConcentration,
+                   Cricket, HandMovementDirection, SelfRegulationSCP2, SelfRegulationSCP1]
+      task_rows: [1, 7]             # OA 前 8 行里 n 档 = 3 的两行 → _a01 / _a07
+      min_survivors: 8              # 两种子都存活的 shared 配置数下限
+      rho_min: 0.30                 # Spearman(seed0, seed1) 两任务均值门
+      pool_floor: 7                 # 源池底线；不足时按 fallback 顺序启用
+      fallback: [SelfRegulationSCP1]
+      published_gap:                # 发表数字（acc − 多数类）只作先验记录，不作门
+        HandMovementDirection: -0.067
+        EthanolConcentration: 0.057
+        SelfRegulationSCP2: 0.078
+        SelfRegulationSCP1: 0.381
+    pilot:
+      datasets: [PhonemeSpectra, Cricket, UWaveGestureLibrary]
+      add_if_admitted: [HandMovementDirection]
+      n_tasks: 8
+    ablation:
+      dataset: Cricket
+      arm: ablation3x
+      budget_mult: 3
+      fractions: [0.0833333333, 0.1666666667, 0.3333333333, 0.6666666667, 1.0]   # 前三个截点 = 1× 的 25/50/100%
+      decision: {failed_drop_min: 0.15, surv_rho_max: 0.5}
+    gates:
+      G-A1: {split_half_rho_max: 0.70, half_size: 3, n_draws: 200}
+      G-A2: {real_interaction_share_min: 0.50, min_datasets_pass_frac: 0.5}
