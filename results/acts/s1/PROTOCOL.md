@@ -83,6 +83,16 @@ AutoCTS++ `exps/dataset_slice.py` 的两维 = 变量子集 [3, min(300, N)] × �
 4. 旧构造对半分（同 §1.5 定义、half_size 3）：mx3_pq 7 集 6 切片 shared-10 best-of-3——特别是 PS / HMD / Cricket 三集，作为 G-A1 的 before 数。
 5. **切片分布 sanity（用户 2026-09-19 要求）**：把切出来的子集（试点 24 + 全设计 8 集 × 16，零 GPU）与 29 个官方靶的 (C, L, n_train, 类别数) 画在同一组散点图上（`slice_sanity.png`，对数轴），并给覆盖表：每个靶在四个轴上是否落在子集云的范围内、到最近子集的 log 距离；落在云外的靶（预期：C ≥ 24 的 EEG / PEMS / DuckDuckGeese、EigenWorms L 17984、FaceDetection n 5890）逐个列出，作为 §8-2 源池决定的输入。**这是"子集分布像不像目标分布"的直观检验，不设门。**
 
+### 1.8 §1.7 实测回填（2026-09-19，零 GPU，协议锁 516076b 之后、任何 R′ 之前；`precheck.{json,md}` / `slice_sanity.{json,md,png}` / `plan.json`）
+
+1. **G-A0**：28/29 = 0.966 ✓（丢 HMD 冠军 51b6f52899fe = WP3 提名配置，info_nce τ = 100，acc 0.486）。
+2. 均匀采样剪掉份额 0.294；kernel = 0 规范化改写份额 0.186；受约束五字段规范形 49 → 39（空间 −20.4%）。
+3. **保真度参照带**：官方 29 × 目录（25% → 100%）ρ 中位 0.568 [q25 0.426, q75 0.742]、recall@3 0.770、残差 z@100% − z@25% 按 aug_max（≤ 0.5 / (0.5, 0.8] / > 0.8）= +0.325 / −0.104 / +0.049；UCR 84 × 20（60 → 290）0.725 [0.544, 0.785]、0.849、+0.177 / +0.020 / −0.041。读法：低增强配置在早截点被系统性低估（残差为正），试点若同带则新构造没有改变截点保真度。
+4. **旧构造对半分**（§1.5 同一定义：half 3、best-of-3、within-task z，mx3_pq 6 切片 × shared-10）：PS **0.895**、Cricket **0.774**、HMD 0.487；其余 HW 0.937 / UWave 0.828 / UM 0.770 / Ethanol 0.537。G-A1 的 before 数 = PS 0.895 / Cricket 0.774（SX §4 的 0.76 / 0.91 是 R′@290 单预算口径，不作门）。
+5. **切片 sanity**（用户要求）：子集云（试点 24 + 全设计 128）C [1, 11]、L [50, 1676]、n_train [132, 720]、k [2, 39]；29 靶里 **23 个在任一轴云外**（C 9 / L 9 / n 14 / k 0；只看试点 25：C 10 / L 12 / n 14 / k 8）。C 轴云外 = 全部 C ≥ 12 的靶（EEG/MEG 5 个、PEMS-SF 963、DuckDuckGeese 1345、SAD 13、JapaneseVowels 12）——源池最大 C = 11；L 轴云外 = 5 个 L < 50 的短序列靶（encoder 边界，本来不可评）+ 4 个长靶（EigenWorms 17984 / MotorImagery 3000 / StandWalkJump 2500 / Ethanol 1751 vs 云顶 1676）；**n 轴云外 14 = 8 个 n_train < 132 的小靶（ERing 30 / BasicMotions 40 / StandWalkJump 12 / AtrialFibrillation 15 / DuckDuckGeese 50 / Cricket 108 / UWave 120 / EigenWorms 128）+ 6 个 > 720 的大靶（PenDigits / SAD / FaceDetection / PS / LSST / CT）**。根因：本构造的两维（通道、窗长）都不改样本数，每集样本数是常数（PS 1024 → n_train 714–717、HMD 165、Cricket 132）；AutoCTS++ 的连续时间窗轴在预测语料里**同时就是训练样本数轴**，翻译到分类语料时这一维没有对应物。P7 ✓（C 轴 9 ≥ 8）。这是 §8-2（源池）与"要不要加第三维（样本数四档）"的决定输入；S1 本身按锁定设计跑。
+6. **计划**：1,008 格（shared 480 / random 480 / anchor 48）+ probe0 72；iters 600: 840 / 200: 168；锚 = shared[14] 8c482976ce21（aug_max 0.80，info_nce / dot / layer_norm τ 0.1）与 shared[18] e3d737685461（0.80，info_nce / dot / layer_norm τ 0.01）——shared-20 里 aug_max ≤ 0.8 的只有这两条（其余 18 条 0.90–0.95：六个比率各 11 档均匀采样下 P(max ≤ 0.8) = (9/11)^6 ≈ 0.30，与 AutoCTS++ 均匀采样同一性质，接受）；估时 4090 4.9 h / 5090 单进程 ≈ 3.4 h、2 进程 ≈ 2 h ≈ $2–3。
+7. **冒烟**（本地 4060，HMD 2 任务 × (2 shared + 1 random + 2 锚 seed 1) × 8 iters + probe0 1 个）：10/10 格三截点齐、probe0 2/2；acc 0.275–0.333 ≈ 多数类 0.304（8 iters 只验管线不验学习）；Windows 评估超时走 43 号 loky 子进程版。
+
 ## §2 判读（先于数据）
 
 | 门 | 定义 | 不过的含义 |

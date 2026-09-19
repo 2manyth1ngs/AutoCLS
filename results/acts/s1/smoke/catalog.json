@@ -1,0 +1,117 @@
+{
+ "shared": [
+  {
+   "cls_key": "9bf55c58e8a4",
+   "cls": {
+    "resize": 0.9,
+    "rescale": 0.7,
+    "jitter": 0.5,
+    "point_mask": 0.2,
+    "freq_mask": 0.3,
+    "crop": 0.0,
+    "order": 0,
+    "emb_jitter": 0.0,
+    "emb_mask": 0.1,
+    "norm": "l2",
+    "instance": true,
+    "temporal": false,
+    "cross_scale": false,
+    "kernel": null,
+    "pool": null,
+    "adj_neighbor": null,
+    "loss_type": "triplet",
+    "sim_func": "cosine",
+    "temperature": 1.0
+   },
+   "aug_max": 0.9
+  },
+  {
+   "cls_key": "79db9191458b",
+   "cls": {
+    "resize": 0.6,
+    "rescale": 0.95,
+    "jitter": 0.3,
+    "point_mask": 0.8,
+    "freq_mask": 0.7,
+    "crop": 0.0,
+    "order": 1,
+    "emb_jitter": 0.9,
+    "emb_mask": 0.6,
+    "norm": "none",
+    "instance": true,
+    "temporal": false,
+    "cross_scale": false,
+    "kernel": null,
+    "pool": null,
+    "adj_neighbor": null,
+    "loss_type": "triplet",
+    "sim_func": "dot",
+    "temperature": 1.0
+   },
+   "aug_max": 0.95
+  }
+ ],
+ "random": {
+  "HandMovementDirection_a00": [
+   {
+    "cls_key": "d941a7b86f95",
+    "cls": {
+     "resize": 0.1,
+     "rescale": 0.4,
+     "jitter": 0.8,
+     "point_mask": 0.7,
+     "freq_mask": 0.7,
+     "crop": 0.5,
+     "order": 0,
+     "emb_jitter": 0.4,
+     "emb_mask": 0.6,
+     "norm": "l2",
+     "instance": true,
+     "temporal": false,
+     "cross_scale": false,
+     "kernel": null,
+     "pool": null,
+     "adj_neighbor": null,
+     "loss_type": "info_nce",
+     "sim_func": "dot",
+     "temperature": 1.0
+    },
+    "aug_max": 0.8
+   }
+  ],
+  "HandMovementDirection_a01": [
+   {
+    "cls_key": "ea40bbfb137a",
+    "cls": {
+     "resize": 0.5,
+     "rescale": 0.5,
+     "jitter": 0.5,
+     "point_mask": 0.4,
+     "freq_mask": 0.3,
+     "crop": 0.3,
+     "order": 0,
+     "emb_jitter": 0.8,
+     "emb_mask": 0.9,
+     "norm": "layer_norm",
+     "instance": true,
+     "temporal": true,
+     "cross_scale": true,
+     "kernel": 2,
+     "pool": "avg",
+     "adj_neighbor": true,
+     "loss_type": "info_nce",
+     "sim_func": "euclidean",
+     "temperature": 0.1
+    },
+    "aug_max": 0.5
+   }
+  ]
+ },
+ "anchors": [
+  "9bf55c58e8a4",
+  "79db9191458b"
+ ],
+ "anchor_seeds": [
+  1
+ ]
+}

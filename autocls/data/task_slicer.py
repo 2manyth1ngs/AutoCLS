@@ -61,6 +61,9 @@ class SlicedTask:
     task_type 为显式任务类型（铁律 7，取值唯一真源 autocls/task_types.py；
     当前恒 classification）——下游按任务类型分发的逻辑（评估器、R' 优劣方向等）
     从这里读，禁止隐式假设。
+    time_window（WP17-ACTS，results/acts/s1/PROTOCOL.md §1.1）：实例内连续时间窗 [t0, t1)，
+    全部实例同一窗（对应 AutoCTS++ dataset_slice.py 的连续时间窗）；缺省 None = 全长，
+    旧对象的构造 / 相等性 / materialize 逐位不变。
     """
 
     task_id: str
@@ -70,6 +73,7 @@ class SlicedTask:
     sample_indices: tuple[int, ...]
     tag: str = ""
     task_type: str = TASK_CLASSIFICATION
+    time_window: tuple[int, int] | None = None
 
 
 @dataclass(frozen=True)
@@ -246,12 +250,17 @@ def make_leaveout_split(
 def materialize_task(
     task: SlicedTask, X: np.ndarray, y: np.ndarray
 ) -> tuple[np.ndarray, np.ndarray]:
-    """按任务定义取数据：X (n, T, |channels|) float32；标签重映射到 0..k-1。
+    """按任务定义取数据：X (n, T′, |channels|) float32；标签重映射到 0..k-1。
 
     重映射保序（classes 升序第 i 类 → i）：下游分类头要求连续标签。
+    time_window 给定时先取 [t0, t1) 时间步（T′ = t1 − t0）；None 时与旧路径逐位相同。
     """
     idx = np.array(task.sample_indices)
-    Xt = X[idx][:, :, list(task.channels)].astype(np.float32, copy=False)
+    Xt = X[idx]
+    if task.time_window is not None:
+        t0, t1 = task.time_window
+        Xt = Xt[:, t0:t1]
+    Xt = Xt[:, :, list(task.channels)].astype(np.float32, copy=False)
     remap = {orig: local for local, orig in enumerate(task.classes)}
     yt = np.array([remap[v] for v in y[idx]], dtype=np.int64)
     return Xt, yt

@@ -1,0 +1,2364 @@
+{
+ "pilot": [
+  {
+   "id": "PhonemeSpectra_a00",
+   "C": 3,
+   "L": 61,
+   "n": 714,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a01",
+   "C": 9,
+   "L": 217,
+   "n": 716,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a02",
+   "C": 5,
+   "L": 174,
+   "n": 712,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a03",
+   "C": 7,
+   "L": 96,
+   "n": 714,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a04",
+   "C": 3,
+   "L": 215,
+   "n": 714,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a05",
+   "C": 9,
+   "L": 65,
+   "n": 715,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a06",
+   "C": 4,
+   "L": 106,
+   "n": 716,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a07",
+   "C": 8,
+   "L": 144,
+   "n": 717,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "HandMovementDirection_a00",
+   "C": 3,
+   "L": 76,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a01",
+   "C": 8,
+   "L": 374,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a02",
+   "C": 5,
+   "L": 265,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a03",
+   "C": 6,
+   "L": 199,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a04",
+   "C": 1,
+   "L": 365,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a05",
+   "C": 10,
+   "L": 51,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a06",
+   "C": 5,
+   "L": 171,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a07",
+   "C": 6,
+   "L": 310,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "Cricket_a00",
+   "C": 1,
+   "L": 265,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a01",
+   "C": 6,
+   "L": 1151,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a02",
+   "C": 3,
+   "L": 837,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a03",
+   "C": 4,
+   "L": 456,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a04",
+   "C": 2,
+   "L": 1059,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a05",
+   "C": 5,
+   "L": 222,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a06",
+   "C": 3,
+   "L": 603,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a07",
+   "C": 4,
+   "L": 855,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  }
+ ],
+ "full": [
+  {
+   "id": "Handwriting_a00",
+   "C": 1,
+   "L": 56,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a01",
+   "C": 3,
+   "L": 133,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a02",
+   "C": 2,
+   "L": 124,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a03",
+   "C": 2,
+   "L": 93,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a04",
+   "C": 1,
+   "L": 149,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a05",
+   "C": 3,
+   "L": 62,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a06",
+   "C": 2,
+   "L": 77,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a07",
+   "C": 2,
+   "L": 108,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a08",
+   "C": 1,
+   "L": 80,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a09",
+   "C": 2,
+   "L": 70,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a10",
+   "C": 2,
+   "L": 132,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a11",
+   "C": 3,
+   "L": 118,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a12",
+   "C": 1,
+   "L": 120,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a13",
+   "C": 2,
+   "L": 71,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a14",
+   "C": 2,
+   "L": 142,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "Handwriting_a15",
+   "C": 3,
+   "L": 92,
+   "n": 700,
+   "k": 26,
+   "dataset": "Handwriting"
+  },
+  {
+   "id": "UniMiB-SHAR_a00",
+   "C": 1,
+   "L": 65,
+   "n": 718,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a01",
+   "C": 3,
+   "L": 130,
+   "n": 719,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a02",
+   "C": 2,
+   "L": 116,
+   "n": 717,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a03",
+   "C": 2,
+   "L": 99,
+   "n": 718,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a04",
+   "C": 1,
+   "L": 150,
+   "n": 717,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a05",
+   "C": 3,
+   "L": 63,
+   "n": 717,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a06",
+   "C": 2,
+   "L": 80,
+   "n": 717,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a07",
+   "C": 2,
+   "L": 120,
+   "n": 718,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a08",
+   "C": 1,
+   "L": 84,
+   "n": 716,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a09",
+   "C": 2,
+   "L": 59,
+   "n": 719,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a10",
+   "C": 2,
+   "L": 133,
+   "n": 716,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a11",
+   "C": 3,
+   "L": 116,
+   "n": 717,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a12",
+   "C": 1,
+   "L": 101,
+   "n": 717,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a13",
+   "C": 2,
+   "L": 50,
+   "n": 716,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a14",
+   "C": 2,
+   "L": 126,
+   "n": 718,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "UniMiB-SHAR_a15",
+   "C": 3,
+   "L": 81,
+   "n": 715,
+   "k": 17,
+   "dataset": "UniMiB-SHAR"
+  },
+  {
+   "id": "PhonemeSpectra_a00",
+   "C": 3,
+   "L": 61,
+   "n": 714,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a01",
+   "C": 9,
+   "L": 217,
+   "n": 716,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a02",
+   "C": 5,
+   "L": 174,
+   "n": 712,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a03",
+   "C": 7,
+   "L": 96,
+   "n": 714,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a04",
+   "C": 3,
+   "L": 215,
+   "n": 714,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a05",
+   "C": 9,
+   "L": 65,
+   "n": 715,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a06",
+   "C": 4,
+   "L": 106,
+   "n": 716,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a07",
+   "C": 8,
+   "L": 144,
+   "n": 717,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a08",
+   "C": 1,
+   "L": 124,
+   "n": 715,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a09",
+   "C": 5,
+   "L": 86,
+   "n": 716,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a10",
+   "C": 8,
+   "L": 189,
+   "n": 713,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a11",
+   "C": 11,
+   "L": 143,
+   "n": 717,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a12",
+   "C": 3,
+   "L": 155,
+   "n": 714,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a13",
+   "C": 8,
+   "L": 89,
+   "n": 716,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a14",
+   "C": 4,
+   "L": 177,
+   "n": 720,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "PhonemeSpectra_a15",
+   "C": 10,
+   "L": 131,
+   "n": 714,
+   "k": 39,
+   "dataset": "PhonemeSpectra"
+  },
+  {
+   "id": "UWaveGestureLibrary_a00",
+   "C": 1,
+   "L": 112,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a01",
+   "C": 3,
+   "L": 310,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a02",
+   "C": 2,
+   "L": 246,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a03",
+   "C": 2,
+   "L": 137,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a04",
+   "C": 1,
+   "L": 292,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a05",
+   "C": 3,
+   "L": 80,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a06",
+   "C": 2,
+   "L": 143,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a07",
+   "C": 2,
+   "L": 208,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a08",
+   "C": 1,
+   "L": 141,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a09",
+   "C": 2,
+   "L": 53,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a10",
+   "C": 2,
+   "L": 307,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a11",
+   "C": 3,
+   "L": 231,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a12",
+   "C": 1,
+   "L": 188,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a13",
+   "C": 2,
+   "L": 76,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a14",
+   "C": 2,
+   "L": 310,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "UWaveGestureLibrary_a15",
+   "C": 3,
+   "L": 133,
+   "n": 312,
+   "k": 8,
+   "dataset": "UWaveGestureLibrary"
+  },
+  {
+   "id": "EthanolConcentration_a00",
+   "C": 1,
+   "L": 380,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a01",
+   "C": 3,
+   "L": 1389,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a02",
+   "C": 2,
+   "L": 1288,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a03",
+   "C": 2,
+   "L": 894,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a04",
+   "C": 1,
+   "L": 1434,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a05",
+   "C": 3,
+   "L": 324,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a06",
+   "C": 2,
+   "L": 670,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a07",
+   "C": 2,
+   "L": 1142,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a08",
+   "C": 1,
+   "L": 545,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a09",
+   "C": 2,
+   "L": 83,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a10",
+   "C": 2,
+   "L": 1676,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a11",
+   "C": 3,
+   "L": 922,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a12",
+   "C": 1,
+   "L": 922,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a13",
+   "C": 2,
+   "L": 304,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a14",
+   "C": 2,
+   "L": 1447,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "EthanolConcentration_a15",
+   "C": 3,
+   "L": 563,
+   "n": 367,
+   "k": 4,
+   "dataset": "EthanolConcentration"
+  },
+  {
+   "id": "Cricket_a00",
+   "C": 1,
+   "L": 265,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a01",
+   "C": 6,
+   "L": 1151,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a02",
+   "C": 3,
+   "L": 837,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a03",
+   "C": 4,
+   "L": 456,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a04",
+   "C": 2,
+   "L": 1059,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a05",
+   "C": 5,
+   "L": 222,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a06",
+   "C": 3,
+   "L": 603,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a07",
+   "C": 4,
+   "L": 855,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a08",
+   "C": 2,
+   "L": 450,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a09",
+   "C": 3,
+   "L": 269,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a10",
+   "C": 4,
+   "L": 991,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a11",
+   "C": 5,
+   "L": 816,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a12",
+   "C": 2,
+   "L": 787,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a13",
+   "C": 4,
+   "L": 129,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a14",
+   "C": 3,
+   "L": 929,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "Cricket_a15",
+   "C": 6,
+   "L": 370,
+   "n": 132,
+   "k": 12,
+   "dataset": "Cricket"
+  },
+  {
+   "id": "HandMovementDirection_a00",
+   "C": 3,
+   "L": 76,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a01",
+   "C": 8,
+   "L": 374,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a02",
+   "C": 5,
+   "L": 265,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a03",
+   "C": 6,
+   "L": 199,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a04",
+   "C": 1,
+   "L": 365,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a05",
+   "C": 10,
+   "L": 51,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a06",
+   "C": 5,
+   "L": 171,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a07",
+   "C": 6,
+   "L": 310,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a08",
+   "C": 3,
+   "L": 159,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a09",
+   "C": 4,
+   "L": 118,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a10",
+   "C": 7,
+   "L": 365,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a11",
+   "C": 10,
+   "L": 253,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a12",
+   "C": 1,
+   "L": 244,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a13",
+   "C": 6,
+   "L": 86,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a14",
+   "C": 5,
+   "L": 397,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "HandMovementDirection_a15",
+   "C": 9,
+   "L": 175,
+   "n": 165,
+   "k": 4,
+   "dataset": "HandMovementDirection"
+  },
+  {
+   "id": "SelfRegulationSCP2_a00",
+   "C": 1,
+   "L": 220,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a01",
+   "C": 7,
+   "L": 1144,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a02",
+   "C": 3,
+   "L": 639,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a03",
+   "C": 5,
+   "L": 391,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a04",
+   "C": 1,
+   "L": 878,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a05",
+   "C": 6,
+   "L": 92,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a06",
+   "C": 3,
+   "L": 442,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a07",
+   "C": 4,
+   "L": 690,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a08",
+   "C": 1,
+   "L": 369,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a09",
+   "C": 3,
+   "L": 217,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a10",
+   "C": 5,
+   "L": 1128,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a11",
+   "C": 7,
+   "L": 611,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a12",
+   "C": 1,
+   "L": 869,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a13",
+   "C": 5,
+   "L": 268,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a14",
+   "C": 3,
+   "L": 1094,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  },
+  {
+   "id": "SelfRegulationSCP2_a15",
+   "C": 6,
+   "L": 582,
+   "n": 266,
+   "k": 2,
+   "dataset": "SelfRegulationSCP2"
+  }
+ ],
+ "targets": {
+  "RacketSports": {
+   "C": 6,
+   "L": 30,
+   "n": 151,
+   "k": 4,
+   "class": "B"
+  },
+  "Libras": {
+   "C": 2,
+   "L": 45,
+   "n": 180,
+   "k": 15,
+   "class": "B"
+  },
+  "ERing": {
+   "C": 4,
+   "L": 65,
+   "n": 30,
+   "k": 6,
+   "class": "E"
+  },
+  "JapaneseVowels": {
+   "C": 12,
+   "L": 29,
+   "n": 270,
+   "k": 9,
+   "class": "A"
+  },
+  "BasicMotions": {
+   "C": 6,
+   "L": 100,
+   "n": 40,
+   "k": 4,
+   "class": "A"
+  },
+  "Epilepsy": {
+   "C": 3,
+   "L": 206,
+   "n": 137,
+   "k": 4,
+   "class": "A"
+  },
+  "AtrialFibrillation": {
+   "C": 2,
+   "L": 640,
+   "n": 15,
+   "k": 3,
+   "class": "C"
+  },
+  "NATOPS": {
+   "C": 24,
+   "L": 51,
+   "n": 180,
+   "k": 6,
+   "class": "E"
+  },
+  "FingerMovements": {
+   "C": 28,
+   "L": 50,
+   "n": 316,
+   "k": 2,
+   "class": "D"
+  },
+  "ArticularyWordRecognition": {
+   "C": 9,
+   "L": 144,
+   "n": 275,
+   "k": 25,
+   "class": "A"
+  },
+  "Heartbeat": {
+   "C": 61,
+   "L": 405,
+   "n": 204,
+   "k": 2,
+   "class": "D"
+  },
+  "DuckDuckGeese": {
+   "C": 1345,
+   "L": 270,
+   "n": 50,
+   "k": 5,
+   "class": "C"
+  },
+  "PEMS-SF": {
+   "C": 963,
+   "L": 144,
+   "n": 267,
+   "k": 7,
+   "class": "E"
+  },
+  "CharacterTrajectories": {
+   "C": 3,
+   "L": 182,
+   "n": 1422,
+   "k": 20,
+   "class": "A"
+  },
+  "SelfRegulationSCP1": {
+   "C": 6,
+   "L": 896,
+   "n": 268,
+   "k": 2,
+   "class": "E"
+  },
+  "SelfRegulationSCP2": {
+   "C": 7,
+   "L": 1152,
+   "n": 200,
+   "k": 2,
+   "class": "D"
+  },
+  "LSST": {
+   "C": 6,
+   "L": 36,
+   "n": 2459,
+   "k": 14,
+   "class": "B"
+  },
+  "StandWalkJump": {
+   "C": 4,
+   "L": 2500,
+   "n": 12,
+   "k": 3,
+   "class": "C"
+  },
+  "EigenWorms": {
+   "C": 6,
+   "L": 17984,
+   "n": 128,
+   "k": 5,
+   "class": "E"
+  },
+  "MotorImagery": {
+   "C": 64,
+   "L": 3000,
+   "n": 278,
+   "k": 2,
+   "class": "D"
+  },
+  "FaceDetection": {
+   "C": 144,
+   "L": 62,
+   "n": 5890,
+   "k": 2,
+   "class": "D"
+  },
+  "SpokenArabicDigits": {
+   "C": 13,
+   "L": 93,
+   "n": 6599,
+   "k": 10,
+   "class": "A"
+  },
+  "PenDigits": {
+   "C": 2,
+   "L": 8,
+   "n": 7494,
+   "k": 10,
+   "class": "A"
+  },
+  "Handwriting": {
+   "C": 3,
+   "L": 152,
+   "n": 150,
+   "k": 26,
+   "class": "LODO"
+  },
+  "UWaveGestureLibrary": {
+   "C": 3,
+   "L": 315,
+   "n": 120,
+   "k": 8,
+   "class": "LODO"
+  },
+  "PhonemeSpectra": {
+   "C": 11,
+   "L": 217,
+   "n": 3315,
+   "k": 39,
+   "class": "LODO"
+  },
+  "EthanolConcentration": {
+   "C": 3,
+   "L": 1751,
+   "n": 261,
+   "k": 4,
+   "class": "LODO"
+  },
+  "Cricket": {
+   "C": 6,
+   "L": 1197,
+   "n": 108,
+   "k": 12,
+   "class": "LODO"
+  },
+  "HandMovementDirection": {
+   "C": 10,
+   "L": 400,
+   "n": 160,
+   "k": 4,
+   "class": "LODO"
+  }
+ },
+ "coverage_all": {
+  "per_target": {
+   "RacketSports": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.32218994689872665,
+    "values": {
+     "C": 6.0,
+     "L": 30.0,
+     "n": 151.0,
+     "k": 4.0
+    }
+   },
+   "Libras": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.3696543622007621,
+    "values": {
+     "C": 2.0,
+     "L": 45.0,
+     "n": 180.0,
+     "k": 15.0
+    }
+   },
+   "ERing": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.7702347802409738,
+    "values": {
+     "C": 4.0,
+     "L": 65.0,
+     "n": 30.0,
+     "k": 6.0
+    }
+   },
+   "JapaneseVowels": {
+    "inside": {
+     "C": false,
+     "L": false,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.4859590210413708,
+    "values": {
+     "C": 12.0,
+     "L": 29.0,
+     "n": 270.0,
+     "k": 9.0
+    }
+   },
+   "BasicMotions": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.6188999068308638,
+    "values": {
+     "C": 6.0,
+     "L": 100.0,
+     "n": 40.0,
+     "k": 4.0
+    }
+   },
+   "Epilepsy": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.1384638782460469,
+    "values": {
+     "C": 3.0,
+     "L": 206.0,
+     "n": 137.0,
+     "k": 4.0
+    }
+   },
+   "AtrialFibrillation": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 1.1181271810887294,
+    "values": {
+     "C": 2.0,
+     "L": 640.0,
+     "n": 15.0,
+     "k": 3.0
+    }
+   },
+   "NATOPS": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.42070975169799446,
+    "values": {
+     "C": 24.0,
+     "L": 51.0,
+     "n": 180.0,
+     "k": 6.0
+    }
+   },
+   "FingerMovements": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.6085079601475959,
+    "values": {
+     "C": 28.0,
+     "L": 50.0,
+     "n": 316.0,
+     "k": 2.0
+    }
+   },
+   "ArticularyWordRecognition": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.46127879565333835,
+    "values": {
+     "C": 9.0,
+     "L": 144.0,
+     "n": 275.0,
+     "k": 25.0
+    }
+   },
+   "Heartbeat": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.870405378673176,
+    "values": {
+     "C": 61.0,
+     "L": 405.0,
+     "n": 204.0,
+     "k": 2.0
+    }
+   },
+   "DuckDuckGeese": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 2.193286233276935,
+    "values": {
+     "C": 1345.0,
+     "L": 270.0,
+     "n": 50.0,
+     "k": 5.0
+    }
+   },
+   "PEMS-SF": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 2.024213341571317,
+    "values": {
+     "C": 963.0,
+     "L": 144.0,
+     "n": 267.0,
+     "k": 7.0
+    }
+   },
+   "CharacterTrajectories": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.33771612036957765,
+    "values": {
+     "C": 3.0,
+     "L": 182.0,
+     "n": 1422.0,
+     "k": 20.0
+    }
+   },
+   "SelfRegulationSCP1": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.12551290267899265,
+    "values": {
+     "C": 6.0,
+     "L": 896.0,
+     "n": 268.0,
+     "k": 2.0
+    }
+   },
+   "SelfRegulationSCP2": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.12388861286602779,
+    "values": {
+     "C": 7.0,
+     "L": 1152.0,
+     "n": 200.0,
+     "k": 2.0
+    }
+   },
+   "LSST": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.6657910705689023,
+    "values": {
+     "C": 6.0,
+     "L": 36.0,
+     "n": 2459.0,
+     "k": 14.0
+    }
+   },
+   "StandWalkJump": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 1.2615311749629143,
+    "values": {
+     "C": 4.0,
+     "L": 2500.0,
+     "n": 12.0,
+     "k": 3.0
+    }
+   },
+   "EigenWorms": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 1.228195420797699,
+    "values": {
+     "C": 6.0,
+     "L": 17984.0,
+     "n": 128.0,
+     "k": 5.0
+    }
+   },
+   "MotorImagery": {
+    "inside": {
+     "C": false,
+     "L": false,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 1.048499597673439,
+    "values": {
+     "C": 64.0,
+     "L": 3000.0,
+     "n": 278.0,
+     "k": 2.0
+    }
+   },
+   "FaceDetection": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 1.9349452971213246,
+    "values": {
+     "C": 144.0,
+     "L": 62.0,
+     "n": 5890.0,
+     "k": 2.0
+    }
+   },
+   "SpokenArabicDigits": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 1.147697380291671,
+    "values": {
+     "C": 13.0,
+     "L": 93.0,
+     "n": 6599.0,
+     "k": 10.0
+    }
+   },
+   "PenDigits": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 1.3139730235677307,
+    "values": {
+     "C": 2.0,
+     "L": 8.0,
+     "n": 7494.0,
+     "k": 10.0
+    }
+   },
+   "Handwriting": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.36949331846514244,
+    "values": {
+     "C": 3.0,
+     "L": 152.0,
+     "n": 150.0,
+     "k": 26.0
+    }
+   },
+   "UWaveGestureLibrary": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.1934469508808621,
+    "values": {
+     "C": 3.0,
+     "L": 315.0,
+     "n": 120.0,
+     "k": 8.0
+    }
+   },
+   "PhonemeSpectra": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.6712520074352069,
+    "values": {
+     "C": 11.0,
+     "L": 217.0,
+     "n": 3315.0,
+     "k": 39.0
+    }
+   },
+   "EthanolConcentration": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.1789656014669387,
+    "values": {
+     "C": 3.0,
+     "L": 1751.0,
+     "n": 261.0,
+     "k": 4.0
+    }
+   },
+   "Cricket": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.08879636024459413,
+    "values": {
+     "C": 6.0,
+     "L": 1197.0,
+     "n": 108.0,
+     "k": 12.0
+    }
+   },
+   "HandMovementDirection": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.10208872684876724,
+    "values": {
+     "C": 10.0,
+     "L": 400.0,
+     "n": 160.0,
+     "k": 4.0
+    }
+   }
+  },
+  "cloud_range": {
+   "C": [
+    1.0,
+    11.0
+   ],
+   "L": [
+    50.0,
+    1676.0
+   ],
+   "n": [
+    132.0,
+    720.0
+   ],
+   "k": [
+    2.0,
+    39.0
+   ]
+  },
+  "summary": {
+   "n_targets": 29,
+   "n_subsets": 152,
+   "outside_any": 23,
+   "outside_by_axis": {
+    "C": 9,
+    "L": 9,
+    "n": 14,
+    "k": 0
+   }
+  }
+ },
+ "coverage_pilot": {
+  "per_target": {
+   "RacketSports": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.32218994689872665,
+    "values": {
+     "C": 6.0,
+     "L": 30.0,
+     "n": 151.0,
+     "k": 4.0
+    }
+   },
+   "Libras": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.6432342140432535,
+    "values": {
+     "C": 2.0,
+     "L": 45.0,
+     "n": 180.0,
+     "k": 15.0
+    }
+   },
+   "ERing": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.7741867819951013,
+    "values": {
+     "C": 4.0,
+     "L": 65.0,
+     "n": 30.0,
+     "k": 6.0
+    }
+   },
+   "JapaneseVowels": {
+    "inside": {
+     "C": false,
+     "L": false,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.4859590210413708,
+    "values": {
+     "C": 12.0,
+     "L": 29.0,
+     "n": 270.0,
+     "k": 9.0
+    }
+   },
+   "BasicMotions": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.6627997427347779,
+    "values": {
+     "C": 6.0,
+     "L": 100.0,
+     "n": 40.0,
+     "k": 4.0
+    }
+   },
+   "Epilepsy": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.249559065571629,
+    "values": {
+     "C": 3.0,
+     "L": 206.0,
+     "n": 137.0,
+     "k": 4.0
+    }
+   },
+   "AtrialFibrillation": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": false
+    },
+    "nearest_log_dist": 1.1181271810887294,
+    "values": {
+     "C": 2.0,
+     "L": 640.0,
+     "n": 15.0,
+     "k": 3.0
+    }
+   },
+   "NATOPS": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.42070975169799446,
+    "values": {
+     "C": 24.0,
+     "L": 51.0,
+     "n": 180.0,
+     "k": 6.0
+    }
+   },
+   "FingerMovements": {
+    "inside": {
+     "C": false,
+     "L": false,
+     "n": true,
+     "k": false
+    },
+    "nearest_log_dist": 0.6085079601475959,
+    "values": {
+     "C": 28.0,
+     "L": 50.0,
+     "n": 316.0,
+     "k": 2.0
+    }
+   },
+   "ArticularyWordRecognition": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.4616544834171436,
+    "values": {
+     "C": 9.0,
+     "L": 144.0,
+     "n": 275.0,
+     "k": 25.0
+    }
+   },
+   "Heartbeat": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": true,
+     "k": false
+    },
+    "nearest_log_dist": 0.9373650021112441,
+    "values": {
+     "C": 61.0,
+     "L": 405.0,
+     "n": 204.0,
+     "k": 2.0
+    }
+   },
+   "DuckDuckGeese": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 2.291661372822755,
+    "values": {
+     "C": 1345.0,
+     "L": 270.0,
+     "n": 50.0,
+     "k": 5.0
+    }
+   },
+   "PEMS-SF": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 2.05930737665802,
+    "values": {
+     "C": 963.0,
+     "L": 144.0,
+     "n": 267.0,
+     "k": 7.0
+    }
+   },
+   "CharacterTrajectories": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.4229403473837394,
+    "values": {
+     "C": 3.0,
+     "L": 182.0,
+     "n": 1422.0,
+     "k": 20.0
+    }
+   },
+   "SelfRegulationSCP1": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": true,
+     "k": false
+    },
+    "nearest_log_dist": 0.5427471916370147,
+    "values": {
+     "C": 6.0,
+     "L": 896.0,
+     "n": 268.0,
+     "k": 2.0
+    }
+   },
+   "SelfRegulationSCP2": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": true,
+     "k": false
+    },
+    "nearest_log_dist": 0.5828150136844513,
+    "values": {
+     "C": 7.0,
+     "L": 1152.0,
+     "n": 200.0,
+     "k": 2.0
+    }
+   },
+   "LSST": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.763287027358469,
+    "values": {
+     "C": 6.0,
+     "L": 36.0,
+     "n": 2459.0,
+     "k": 14.0
+    }
+   },
+   "StandWalkJump": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": false,
+     "k": false
+    },
+    "nearest_log_dist": 1.2615311749629143,
+    "values": {
+     "C": 4.0,
+     "L": 2500.0,
+     "n": 12.0,
+     "k": 3.0
+    }
+   },
+   "EigenWorms": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 1.2529660077207039,
+    "values": {
+     "C": 6.0,
+     "L": 17984.0,
+     "n": 128.0,
+     "k": 5.0
+    }
+   },
+   "MotorImagery": {
+    "inside": {
+     "C": false,
+     "L": false,
+     "n": true,
+     "k": false
+    },
+    "nearest_log_dist": 1.3323617513650512,
+    "values": {
+     "C": 64.0,
+     "L": 3000.0,
+     "n": 278.0,
+     "k": 2.0
+    }
+   },
+   "FaceDetection": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": false,
+     "k": false
+    },
+    "nearest_log_dist": 1.9622134239936386,
+    "values": {
+     "C": 144.0,
+     "L": 62.0,
+     "n": 5890.0,
+     "k": 2.0
+    }
+   },
+   "SpokenArabicDigits": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 1.1535253718475196,
+    "values": {
+     "C": 13.0,
+     "L": 93.0,
+     "n": 6599.0,
+     "k": 10.0
+    }
+   },
+   "PenDigits": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 1.4836391929520651,
+    "values": {
+     "C": 2.0,
+     "L": 8.0,
+     "n": 7494.0,
+     "k": 10.0
+    }
+   },
+   "Handwriting": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.43831348982259155,
+    "values": {
+     "C": 3.0,
+     "L": 152.0,
+     "n": 150.0,
+     "k": 26.0
+    }
+   },
+   "UWaveGestureLibrary": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.2722884028738277,
+    "values": {
+     "C": 3.0,
+     "L": 315.0,
+     "n": 120.0,
+     "k": 8.0
+    }
+   },
+   "PhonemeSpectra": {
+    "inside": {
+     "C": false,
+     "L": true,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.6712520074352069,
+    "values": {
+     "C": 11.0,
+     "L": 217.0,
+     "n": 3315.0,
+     "k": 39.0
+    }
+   },
+   "EthanolConcentration": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.6276961956667217,
+    "values": {
+     "C": 3.0,
+     "L": 1751.0,
+     "n": 261.0,
+     "k": 4.0
+    }
+   },
+   "Cricket": {
+    "inside": {
+     "C": true,
+     "L": false,
+     "n": false,
+     "k": true
+    },
+    "nearest_log_dist": 0.08879636024459413,
+    "values": {
+     "C": 6.0,
+     "L": 1197.0,
+     "n": 108.0,
+     "k": 12.0
+    }
+   },
+   "HandMovementDirection": {
+    "inside": {
+     "C": true,
+     "L": true,
+     "n": true,
+     "k": true
+    },
+    "nearest_log_dist": 0.10208872684876724,
+    "values": {
+     "C": 10.0,
+     "L": 400.0,
+     "n": 160.0,
+     "k": 4.0
+    }
+   }
+  },
+  "cloud_range": {
+   "C": [
+    1.0,
+    10.0
+   ],
+   "L": [
+    51.0,
+    1151.0
+   ],
+   "n": [
+    132.0,
+    717.0
+   ],
+   "k": [
+    4.0,
+    39.0
+   ]
+  },
+  "summary": {
+   "n_targets": 29,
+   "n_subsets": 24,
+   "outside_any": 25,
+   "outside_by_axis": {
+    "C": 10,
+    "L": 12,
+    "n": 14,
+    "k": 8
+   }
+  }
+ },
+ "skipped": []
+}

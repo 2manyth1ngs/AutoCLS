@@ -11,6 +11,14 @@ CLS dataclass 只固定字段名与顺序（AutoCL Table 1 的结构），加载
 - 只有显式调用 ``all_field_names`` / ``twin`` / ``encoder_overrides`` /
   ``CLSEncoder(fields="all")`` 的新代码才看得到它们；
 - dataclass 里"带默认值的字段"恰好就是扩展字段，加载 yaml 时互校（名、默认值、顺序）。
+
+**约束（WP17-ACTS S1 泛化，results/acts/s1/PROTOCOL.md §1.3）**：两种写法——
+``when_any: [gates]``（任一 gate 为真则 gated 字段有效，否则置无效档；旧写法）与
+``when_equals: {field: value}``（全部相等时触发）；无效档用 ``inactive_value``（各字段同值）或
+``inactive_values: {field: value}``。约束按序迭代到不动点（可链式触发，如 kernel=0 → cross_scale=false →
+第一条约束再把 kernel/pool/adj 置 null）；只有一条 when_any 约束的旧 space.yaml 一趟即定，采样流 / validate /
+编码逐位不变。``space_size`` 按"自由字段积 × 受约束字段规范形计数"枚举，旧空间仍 = 49 × 自由字段积。
+第二条约束只在 configs/acts.yaml 里（opt-in，经 scripts/acts_common.acts_space 追加），不进 space.yaml。
 """
 from __future__ import annotations
 
@@ -24,6 +32,33 @@ import numpy as np
 import yaml
 
 DEFAULT_SPACE_YAML = Path(__file__).resolve().parents[2] / "configs" / "space.yaml"
+
+
+def _gate_fields(c: dict) -> list[str]:
+    """一条约束的触发字段（when_any 的成员 / when_equals 的键）。"""
+    if "when_any" in c:
+        return list(c["when_any"])
+    if "when_equals" in c:
+        return list(c["when_equals"])
+    raise ValueError("约束须有 when_any 或 when_equals 之一")
+
+
+def _same(a: Any, b: Any) -> bool:
+    """取值相等且不把 0/1 与 False/True 混同（when_equals: {kernel: 0} 不得命中布尔字段）。"""
+    return a == b and isinstance(a, bool) == isinstance(b, bool)
+
+
+def _fires(c: dict, values: dict) -> bool:
+    """约束是否触发（触发 = gated 字段置无效档）。"""
+    if "when_any" in c:
+        return not any(values[g] for g in c["when_any"])
+    return all(_same(values[f], v) for f, v in c["when_equals"].items())
+
+
+def _inactive_map(c: dict) -> dict[str, Any]:
+    if "inactive_values" in c:
+        return {n: c["inactive_values"].get(n) for n in c["gated_fields"]}
+    return {n: c.get("inactive_value") for n in c["gated_fields"]}
 
 
 @dataclass(frozen=True)
@@ -119,17 +154,20 @@ class CLSSpace:
             if "encoder_kwarg" not in f:
                 raise ValueError(f"扩展字段 {name} 必须声明 encoder_kwarg（build_encoder overrides 的键）")
 
-        seen: set[str] = set()
         for c in self._constraints:
-            refs = set(c["when_any"]) | set(c["gated_fields"])
+            gates, gated = _gate_fields(c), list(c["gated_fields"])
+            refs = set(gates) | set(gated)
             unknown = refs - set(self._by_name)
             if unknown:
                 raise ValueError(f"约束引用了未知字段: {unknown}")
             if refs & set(ext_names):
                 raise ValueError(f"约束不得引用扩展字段: {refs & set(ext_names)}")
-            if refs & seen:
-                raise ValueError("暂不支持约束间共享 gate/gated 字段（space_size 计数假设互斥）")
-            seen |= refs
+            for f, v in (c.get("when_equals") or {}).items():
+                if not any(_same(v, ch) for ch in self._by_name[f]["choices"]):
+                    raise ValueError(f"约束 when_equals {f}={v!r} 不在该字段档位内")
+            extra = set(c.get("inactive_values") or {}) - set(gated)
+            if extra:
+                raise ValueError(f"约束 inactive_values 引用了非 gated 字段: {extra}")
 
     @classmethod
     def from_yaml(cls, path: str | Path = DEFAULT_SPACE_YAML) -> "CLSSpace":
@@ -157,12 +195,27 @@ class CLSSpace:
         return list(self._by_name[name]["choices"])
 
     def inactive_overrides(self, values: dict) -> dict[str, Any]:
-        """给定各字段取值，返回应置为无效档的 {gated_field: inactive_value}。"""
+        """给定各字段取值，返回应置为无效档的 {gated_field: inactive_value}。
+
+        按序迭代到不动点：某条约束触发后改写的取值可能让另一条触发（acts.yaml 的
+        kernel=0 → cross_scale=false → 第一条约束）。已施加的改写一律保留在返回值里
+        （即便该约束在不动点处不再触发），调用方 ``values.update(...)`` 后即得规范形；
+        只有一条约束时一趟即定，返回值与泛化前逐位相同。
+        """
+        cur = dict(values)
         out: dict[str, Any] = {}
-        for c in self._constraints:
-            if not any(values[g] for g in c["when_any"]):
-                for name in c["gated_fields"]:
-                    out[name] = c.get("inactive_value")
+        for _ in range(len(self._constraints) + 1):
+            changed = False
+            for c in self._constraints:
+                if not _fires(c, cur):
+                    continue
+                for name, val in _inactive_map(c).items():
+                    out[name] = val
+                    if not _same(cur[name], val):
+                        cur[name] = val
+                        changed = True
+            if not changed:
+                break
         return out
 
     def sample_random(self, rng: Optional[np.random.Generator] = None) -> CLS:
@@ -199,18 +252,24 @@ class CLSSpace:
         return out
 
     def space_size(self, include_extensions: bool = False) -> int:
-        """合法配置总数。门控字段在 gate 全关时只有无效档一种取法。默认不计扩展字段。"""
-        constrained = {n for c in self._constraints for n in (*c["when_any"], *c["gated_fields"])}
+        """合法配置总数 = 自由字段积 × 受约束字段的规范形个数（枚举原始写法经 inactive_overrides
+        去重）。旧 space.yaml 的 (temporal, cross_scale, kernel, pool, adj_neighbor) 64 种写法归为 49 种，
+        与泛化前的门控公式同值。默认不计扩展字段。"""
+        constrained: list[str] = []
+        for c in self._constraints:
+            for n in (*_gate_fields(c), *c["gated_fields"]):
+                if n not in constrained:
+                    constrained.append(n)
         size = math.prod(
             len(f["choices"]) for f in self._fields if f["name"] not in constrained
         )
-        for c in self._constraints:
-            gate_choices = [self._by_name[g]["choices"] for g in c["when_any"]]
-            active = math.prod(len(self._by_name[n]["choices"]) for n in c["gated_fields"])
-            size *= sum(
-                active if any(combo) else 1
-                for combo in itertools.product(*gate_choices)
-            )
+        if constrained:
+            forms: set[tuple] = set()
+            for combo in itertools.product(*[self._by_name[n]["choices"] for n in constrained]):
+                values = dict(zip(constrained, combo))
+                values.update(self.inactive_overrides(values))
+                forms.add(tuple((values[n], isinstance(values[n], bool)) for n in constrained))
+            size *= len(forms)
         if include_extensions:
             size *= math.prod(len(f["choices"]) for f in self._ext_fields)
         return size
