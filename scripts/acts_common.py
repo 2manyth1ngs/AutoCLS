@@ -12,6 +12,7 @@
 """
 from __future__ import annotations
 
+import hashlib
 import importlib
 import math
 import sys
@@ -237,6 +238,12 @@ def task_arrays(task: SlicedTask, X: np.ndarray, y: np.ndarray, *, eval_ratio: f
             "train_idx": tr, "eval_idx": ev, "majority": majority_rate(yte), "mean": mu, "std": sd}
 
 
+def split_md5_of(arrays: Mapping) -> str:
+    """切片 train/eval 划分的指纹（十进制索引串的 md5，与 numpy 版本 / 字节序无关）：跨机器部署自检用。"""
+    s = ",".join(str(int(i)) for i in arrays["train_idx"]) + "|" + ",".join(str(int(i)) for i in arrays["eval_idx"])
+    return hashlib.md5(s.encode()).hexdigest()
+
+
 def load_dataset_full(name: str) -> tuple[np.ndarray, np.ndarray]:
     """源数据集 TRAIN+TEST 合并、**原生长度**（不用注册表 crop_len；部署靶就是原生长度）。注册表分派同 pq_common.REG_OF。"""
     pq = importlib.import_module("scripts.pq_common")
@@ -417,7 +424,7 @@ __all__ = [
     "load_acts_config", "acts_space", "prune_rules", "is_pruned", "pruned_share", "normalization_stats",
     "shared_catalog", "random_catalog", "aug_max", "pick_anchors",
     "best_of_checkpoints", "majority_rate", "floor_of", "label_of",
-    "estimate_cell_seconds", "build_cells", "split_seed_for", "task_arrays", "load_dataset_full", "make_task_loader",
+    "estimate_cell_seconds", "build_cells", "split_seed_for", "task_arrays", "split_md5_of", "load_dataset_full", "make_task_loader",
     "split_half_rho", "interaction_share", "anchor_noise_ms", "fidelity_metrics", "champion_retention", "verdict_s1",
     "target_sizes_29", "coverage_table",
 ]

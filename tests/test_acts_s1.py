@@ -7,6 +7,7 @@ from __future__ import annotations
 import dataclasses
 import importlib
 import itertools
+import json
 
 import numpy as np
 import pytest
@@ -368,3 +369,31 @@ class TestReadouts:
         assert t["per_target"]["T1"]["nearest_log_dist"] >= 0
         assert t["summary"]["n_targets"] == 2 and t["summary"]["outside_any"] == 1
         assert t["summary"]["outside_by_axis"]["C"] == 1 and t["summary"]["outside_by_axis"]["n"] == 0
+
+
+# ---------------------------------------------------------------- 部署自检（实验室服务器：npz 重建的划分必须与本地 tasks.json 逐任务一致）
+class TestDeploymentCheck:
+    def test_split_md5_and_check_deployment(self, cfg, tmp_path):
+        g83 = importlib.import_module("scripts.83_acts_corpus")
+        ac = _ac()
+        rng = np.random.default_rng(0)
+        X = rng.standard_normal((120, 80, 5)).astype(np.float32)
+        y = np.tile(np.arange(4), 30)
+        _tasks, meta = g83.slice_dataset(cfg, "Toy", 2, X=X, y=y)
+        assert all(len(m["split_md5"]) == 32 for m in meta.values())
+        t0 = next(iter(meta))
+        arr = ac.task_arrays(_tasks[0], X, y, eval_ratio=float(cfg["slicing"]["eval_ratio"]), seed=ac.split_seed_for(t0))
+        assert ac.split_md5_of(arr) == meta[t0]["split_md5"]
+        payload = {"stage": "smoke", "datasets": ["Toy"], "n_tasks": 2, "protocol": cfg["protocol"], "slicing": dict(cfg["slicing"]), "tasks": meta}
+        g83._write_json(tmp_path / "tasks.json", payload)
+        kw = dict(n_shared=2, n_random=1, anchor_aug_max_le=1.0)
+        plan, _catalog = g83.build_plan(cfg, payload, **kw)
+        g83._write_json(tmp_path / "plan.json", plan)
+        r = g83.check_deployment(cfg, tmp_path, load_dataset=lambda name: (X, y), plan_kwargs=kw)
+        assert r["ok"] and r["n_tasks"] == 2 and r["mismatches"] == [] and r["plan_keys_match"] is True
+        bad = json.loads((tmp_path / "tasks.json").read_text(encoding="utf-8"))
+        bad["tasks"][t0]["split_md5"] = "0" * 32
+        g83._write_json(tmp_path / "tasks.json", bad)
+        r2 = g83.check_deployment(cfg, tmp_path, load_dataset=lambda name: (X, y), plan_kwargs=kw)
+        assert not r2["ok"] and r2["mismatches"][0][0] == t0
+

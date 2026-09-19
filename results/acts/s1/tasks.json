@@ -312,6 +312,7 @@
    "k": 39,
    "majority": 0.19148936170212766,
    "iters": 200,
+   "split_md5": "80511cf43ccd8a7376ab41a92262e7fb",
    "L_full": 217,
    "C_full": 11,
    "N_full": 6668
@@ -1338,6 +1339,7 @@
    "k": 39,
    "majority": 0.04659498207885305,
    "iters": 600,
+   "split_md5": "0117deb3c96841a19a90422ee7a81449",
    "L_full": 217,
    "C_full": 11,
    "N_full": 6668
@@ -1668,6 +1670,7 @@
    "k": 39,
    "majority": 0.10588235294117647,
    "iters": 600,
+   "split_md5": "a815b7622fea505ed9c3d8aa21a11e55",
    "L_full": 217,
    "C_full": 11,
    "N_full": 6668
@@ -2280,6 +2283,7 @@
    "k": 39,
    "majority": 0.07878787878787878,
    "iters": 600,
+   "split_md5": "831e0a95c89c27a73d12c7dc0edade5a",
    "L_full": 217,
    "C_full": 11,
    "N_full": 6668
@@ -2583,6 +2587,7 @@
    "k": 39,
    "majority": 0.02564102564102564,
    "iters": 200,
+   "split_md5": "2529db248ff4443735a7922236bcf977",
    "L_full": 217,
    "C_full": 11,
    "N_full": 6668
@@ -3172,6 +3177,7 @@
    "k": 39,
    "majority": 0.05,
    "iters": 600,
+   "split_md5": "c3bfc8ef3d8105f35eca9702b51f0bf7",
    "L_full": 217,
    "C_full": 11,
    "N_full": 6668
@@ -3326,6 +3332,7 @@
    "k": 39,
    "majority": 0.05,
    "iters": 200,
+   "split_md5": "babfd1980dd30e0e2601eef9301fe9dc",
    "L_full": 217,
    "C_full": 11,
    "N_full": 6668
@@ -4310,6 +4317,7 @@
    "k": 39,
    "majority": 0.036231884057971016,
    "iters": 600,
+   "split_md5": "dcd08049d3e03760e4a22d27fc999218",
    "L_full": 217,
    "C_full": 11,
    "N_full": 6668
@@ -4384,6 +4392,7 @@
    "k": 4,
    "majority": 0.3076923076923077,
    "iters": 200,
+   "split_md5": "aeb3e6f04b8ca7f6ae9ec6d1f820f259",
    "L_full": 400,
    "C_full": 10,
    "N_full": 234
@@ -4626,6 +4635,7 @@
    "k": 4,
    "majority": 0.3114754098360656,
    "iters": 600,
+   "split_md5": "f8d79a5da1c1321aace1f67f31f14442",
    "L_full": 400,
    "C_full": 10,
    "N_full": 234
@@ -4731,6 +4741,7 @@
    "k": 4,
    "majority": 0.3157894736842105,
    "iters": 600,
+   "split_md5": "4b94e78331bceed96f1be9ae03fcb3ba",
    "L_full": 400,
    "C_full": 10,
    "N_full": 234
@@ -4894,6 +4905,7 @@
    "k": 4,
    "majority": 0.2894736842105263,
    "iters": 600,
+   "split_md5": "9dac17e937146ebf0d78d144ca98564c",
    "L_full": 400,
    "C_full": 10,
    "N_full": 234
@@ -4999,6 +5011,7 @@
    "k": 4,
    "majority": 0.2857142857142857,
    "iters": 200,
+   "split_md5": "d5f4871d66631436f56eb8d22420667f",
    "L_full": 400,
    "C_full": 10,
    "N_full": 234
@@ -5138,6 +5151,7 @@
    "k": 4,
    "majority": 0.3225806451612903,
    "iters": 600,
+   "split_md5": "bd6e01ea5e8a64e42174cda5dbc96888",
    "L_full": 400,
    "C_full": 10,
    "N_full": 234
@@ -5217,6 +5231,7 @@
    "k": 4,
    "majority": 0.3076923076923077,
    "iters": 200,
+   "split_md5": "d87db5e52b8ca1a39db762e328a6838d",
    "L_full": 400,
    "C_full": 10,
    "N_full": 234
@@ -5479,6 +5494,7 @@
    "k": 4,
    "majority": 0.29850746268656714,
    "iters": 200,
+   "split_md5": "4c1893e060dc6cba66c7e498f33525cc",
    "L_full": 400,
    "C_full": 10,
    "N_full": 234
@@ -5565,6 +5581,7 @@
    "k": 12,
    "majority": 0.26666666666666666,
    "iters": 200,
+   "split_md5": "812569cc38714cbd49d5d323ef2e9afc",
    "L_full": 1197,
    "C_full": 6,
    "N_full": 180
@@ -5733,6 +5750,7 @@
    "k": 12,
    "majority": 0.10810810810810811,
    "iters": 600,
+   "split_md5": "455633c80c7d1c27e3443ccd439d0cc5",
    "L_full": 1197,
    "C_full": 6,
    "N_full": 180
@@ -5843,6 +5861,7 @@
    "k": 12,
    "majority": 0.15384615384615385,
    "iters": 600,
+   "split_md5": "490736903bf1de483f73bab23fa180ae",
    "L_full": 1197,
    "C_full": 6,
    "N_full": 180
@@ -5985,6 +6004,7 @@
    "k": 12,
    "majority": 0.12,
    "iters": 600,
+   "split_md5": "580e3ec6faeb82e11a786ea14953cc29",
    "L_full": 1197,
    "C_full": 6,
    "N_full": 180
@@ -6080,6 +6100,7 @@
    "k": 12,
    "majority": 0.21428571428571427,
    "iters": 200,
+   "split_md5": "8ddff99c7108935593ea13a78357b002",
    "L_full": 1197,
    "C_full": 6,
    "N_full": 180
@@ -6213,6 +6234,7 @@
    "k": 12,
    "majority": 0.15384615384615385,
    "iters": 600,
+   "split_md5": "e9d10286f8054e4184a72eafeaee6151",
    "L_full": 1197,
    "C_full": 6,
    "N_full": 180
@@ -6303,6 +6325,7 @@
    "k": 12,
    "majority": 0.26666666666666666,
    "iters": 600,
+   "split_md5": "5b0e27f75d0b50eb61165a3a1d3171cd",
    "L_full": 1197,
    "C_full": 6,
    "N_full": 180
@@ -6528,6 +6551,7 @@
    "k": 12,
    "majority": 0.08333333333333333,
    "iters": 200,
+   "split_md5": "1404e814041674b7ebec398369b9267e",
    "L_full": 1197,
    "C_full": 6,
    "N_full": 180

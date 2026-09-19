@@ -9,6 +9,8 @@
   --run [--parts N --part i]     39.execute（--resume；loader = 任务 id → 切片数组）
   --probe0                       每任务 3 个 iters=0 探针 → probe0.jsonl（--resume）
   --verify                       plan vs runs / probe0 对账
+  --check                        部署自检：本机数据（npz）重建的切片划分（n_train / n_eval / T / C / majority / split_md5）与 tasks.json
+                                 逐任务一致 + 本机重建 plan 的 key 序与 plan.json 一致（实验室服务器 setup 调用）
   --smoke                        本地冒烟（HMD 2 任务 × 3 条 × 8 iters + 探针 1 个）→ results/acts/s1/smoke/
   --analyze                      标签 / G-A 读数 / 保真度 / 相似度 / 读数码 → analysis.json / tables.md / labels.jsonl
 """
@@ -103,6 +105,7 @@ def slice_dataset(cfg: Mapping, name: str, n_tasks: int, *, X: Optional[np.ndarr
         meta[t.task_id] = {**dataclasses.asdict(t), "dataset": name, "n_train": n_train, "n_eval": int(len(arr["yte"])),
                            "T": T, "C": C, "k": int(len(t.classes)), "majority": float(arr["majority"]),
                            "iters": int(_g35.resolve_iters_from_size(proto, n_train * T * C)),
+                           "split_md5": ac.split_md5_of(arr),
                            "L_full": int(X.shape[1]), "C_full": int(X.shape[2]), "N_full": int(len(y))}
     return tasks, meta
 
@@ -514,6 +517,36 @@ def cmd_verify(cfg: Mapping, outdir: Path) -> dict:
     return v
 
 
+# ---------------------------------------------------------------- 部署自检（跨机器 / 跨 numpy 版本）
+def check_deployment(cfg: Mapping, outdir: Path, *, load_dataset=None, plan_kwargs: Optional[Mapping] = None) -> dict:
+    """从本机数据重建每任务切片数组，n_train / n_eval / T / C / majority / split_md5 须与 tasks.json 逐任务一致；
+    plan.json 存在时本机重建的 cell key 序须逐位一致（目录采样与 cache_key 的跨机器一致性）。"""
+    payload = load_tasks(outdir)
+    meta = payload["tasks"]
+    tasks = tasks_from_meta(meta)
+    dataset_of = {tid: m["dataset"] for tid, m in meta.items()}
+    loader = ac.make_task_loader(tasks, dataset_of, load_dataset or ac.load_dataset_full, eval_ratio=float(cfg["slicing"]["eval_ratio"]))
+    mismatches = []
+    for tid, m in meta.items():
+        arr = loader(tid)
+        got = {"n_train": int(arr["Xtr"].shape[0]), "n_eval": int(len(arr["yte"])), "T": int(arr["Xtr"].shape[1]), "C": int(arr["Xtr"].shape[2]),
+               "majority": round(float(arr["majority"]), 6), "split_md5": ac.split_md5_of(arr)}
+        exp = {"n_train": int(m["n_train"]), "n_eval": int(m["n_eval"]), "T": int(m["T"]), "C": int(m["C"]),
+               "majority": round(float(m["majority"]), 6), "split_md5": m.get("split_md5")}
+        if got != exp:
+            mismatches.append((tid, exp, got))
+    plan_ok = None
+    if (outdir / "plan.json").exists():
+        plan = load_plan(outdir)
+        rebuilt, _c = build_plan(cfg, payload, **dict(plan_kwargs or {}))
+        plan_ok = bool([c["key"] for c in rebuilt["cells"]] == [c["key"] for c in plan["cells"]])
+    ok = not mismatches and plan_ok is not False
+    print(f"[check] tasks {len(meta)} mismatches {len(mismatches)} plan_keys_match {plan_ok} → {'OK' if ok else 'NOT OK'}", flush=True)
+    for tid, exp, got in mismatches[:5]:
+        print(f"  {tid}: expected {exp} got {got}", flush=True)
+    return {"ok": bool(ok), "n_tasks": len(meta), "mismatches": mismatches, "plan_keys_match": plan_ok}
+
+
 # ---------------------------------------------------------------- smoke
 def cmd_smoke(args, cfg: Mapping, outdir: Path) -> bool:
     sm = outdir / "smoke"
@@ -705,7 +738,7 @@ def analysis_markdown(a: Mapping, cfg: Mapping) -> str:
 # ---------------------------------------------------------------- main
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    for flag in ("slice", "sanity", "precheck", "plan", "run", "probe0", "verify", "smoke", "analyze"):
+    for flag in ("slice", "sanity", "precheck", "plan", "run", "probe0", "verify", "check", "smoke", "analyze"):
         ap.add_argument(f"--{flag}", action="store_true")
     ap.add_argument("--stage", default="pilot", choices=("pilot", "full"))
     ap.add_argument("--outdir", default=str(OUT))
@@ -744,6 +777,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     if args.verify:
         v = cmd_verify(cfg, outdir)
         if not v["ok"]:
+            return 1
+    if args.check:
+        if not check_deployment(cfg, outdir)["ok"]:
             return 1
     if args.analyze:
         cmd_analyze(cfg, outdir)

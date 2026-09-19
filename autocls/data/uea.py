@@ -15,6 +15,10 @@ z-score（对齐 datasets.py 的按通道标准化，防泄漏语义）：统计
 
 crop_len：长序列（Cricket L=1197、超长 EEG）按算力预算裁到定长（REPORT.md §5 的
 CROP 杠杆）。裁剪取前缀（截断非重采样），保持与增强 crop 字段的时间语义一致。
+
+npz 直读（WP17-ACTS，实验室服务器 py3.8 env 装不了 aeon）：`export_uea_merged_npz` 把 `load_uea_merged`
+的解析结果（X float32 / y int64 / crop_len）落成 `<cache_dir>/<name>/<name>_merged.npz`；`load_uea_merged`
+默认先查同名 npz，crop_len 匹配即直读（与本地解析逐位同），否则回落解析；`use_npz=False` 强制解析。
 """
 from __future__ import annotations
 
@@ -165,13 +169,37 @@ def load_uea_cached(
     return Xt, yi
 
 
+NPZ_SUFFIX = "_merged.npz"
+
+
+def merged_npz_path(name: str, cache_dir: str | Path = DEFAULT_CACHE) -> Path:
+    return Path(cache_dir) / name / f"{name}{NPZ_SUFFIX}"
+
+
+def export_uea_merged_npz(
+    name: str, *, cache_dir: str | Path = DEFAULT_CACHE, crop_len: int | None = None,
+    out_dir: str | Path | None = None,
+) -> Path:
+    """把 load_uea_merged 的解析结果落成 npz（X float32、y int64、crop_len；-1 = None）。服务器无 aeon 时直读，与本地逐位同。"""
+    X, y = load_uea_merged(name, cache_dir=cache_dir, crop_len=crop_len, use_npz=False)
+    p = merged_npz_path(name, out_dir or cache_dir)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(p, X=np.ascontiguousarray(X, dtype=np.float32), y=np.asarray(y, dtype=np.int64),
+                        crop_len=np.int64(-1 if crop_len is None else int(crop_len)))
+    return p
+
+
 def load_uea_merged(
     name: str,
     *,
     cache_dir: str | Path = DEFAULT_CACHE,
     crop_len: int | None = None,
+    use_npz: bool = True,
 ) -> tuple[np.ndarray, np.ndarray]:
     """加载 TRAIN+TEST 合并的整数据集（路线 A 源池"把整档案当源候选"口径）。
+
+    use_npz（默认 True）：`<cache_dir>/<name>/<name>_merged.npz` 存在且 crop_len 匹配时直读（export_uea_merged_npz 的产物，
+    与解析逐位同），否则解析 .ts；False 强制解析。
 
     合并原始序列后一次性 pad_and_zscore + encode_labels：z-score 统计量与目标长度
     在**合并真实步**上统一计算（比按切分各自处理更一致），标签编码也在合并集上做
@@ -181,6 +209,12 @@ def load_uea_merged(
     注意：本函数不带任何"源/目标"角色判断——泄漏防护（铁律 6）在 source_pool 层做，
     该层拒绝对目标池数据集调用本函数。
     """
+    if use_npz:
+        p = merged_npz_path(name, cache_dir)
+        if p.exists():
+            with np.load(p) as z:
+                if int(z["crop_len"]) == (-1 if crop_len is None else int(crop_len)):
+                    return np.ascontiguousarray(z["X"], dtype=np.float32), np.asarray(z["y"], dtype=np.int64)
     seqs, y = _load_raw_seqs(name, "TRAIN", cache_dir)
     seqs_te, y_te = _load_raw_seqs(name, "TEST", cache_dir)
     seqs = seqs + seqs_te

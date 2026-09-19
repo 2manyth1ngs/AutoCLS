@@ -346,3 +346,30 @@ def test_load_uea_pair_unknown_scaler_raises(monkeypatch, tmp_path):
     _fake_raw(monkeypatch, *_synthetic_splits())
     with pytest.raises(ValueError):
         load_uea_pair("Fake", cache_dir=tmp_path, scaler="global")
+
+
+# ---- npz 直读（WP17-ACTS 实验室服务器无 aeon：本地导出 *_merged.npz 上传，load_uea_merged 先查 npz） ----
+
+def test_export_and_load_uea_merged_npz_roundtrip(monkeypatch, tmp_path):
+    from autocls.data.uea import export_uea_merged_npz
+    _fake_raw(monkeypatch, *_synthetic_splits())
+    X0, y0 = load_uea_merged("Fake", cache_dir=tmp_path, use_npz=False)
+    p = export_uea_merged_npz("Fake", cache_dir=tmp_path)
+    assert p == tmp_path / "Fake" / "Fake_merged.npz" and p.exists()
+    X1, y1 = load_uea_merged("Fake", cache_dir=tmp_path)                 # 默认走 npz
+    assert X1.tobytes() == X0.tobytes() and X1.dtype == np.float32
+    assert np.array_equal(y1, y0) and y1.dtype == np.int64
+    X3, _ = load_uea_merged("Fake", cache_dir=tmp_path, use_npz=False)   # 强制解析仍逐位同
+    assert X3.tobytes() == X0.tobytes()
+    Xc0, _ = load_uea_merged("Fake", cache_dir=tmp_path, crop_len=3, use_npz=False)
+    Xc1, _ = load_uea_merged("Fake", cache_dir=tmp_path, crop_len=3)     # npz 的 crop_len 不匹配 → 回落解析
+    assert Xc1.shape[1] == 3 and Xc1.tobytes() == Xc0.tobytes()
+    # 解析器不可用（服务器没有 aeon）：匹配的 npz 仍可读，不匹配的抛错
+    def _no_aeon(*a, **k):
+        raise ImportError("no aeon")
+    monkeypatch.setattr("autocls.data.uea._load_raw_seqs", _no_aeon)
+    X4, y4 = load_uea_merged("Fake", cache_dir=tmp_path)
+    assert X4.tobytes() == X0.tobytes() and np.array_equal(y4, y0)
+    with pytest.raises(ImportError):
+        load_uea_merged("Fake", cache_dir=tmp_path, crop_len=3)
+
