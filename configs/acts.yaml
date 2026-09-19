@@ -1,0 +1,80 @@
+# =====================================================================
+# WP17-ACTS（严格复现 AutoCTS++）的唯一真源——scripts/acts_common.py 读。
+# 协议 results/acts/s1/PROTOCOL.md（S1）；方案 docs/AUTOCTS_STRICT_REPRO_PLAN.md。
+# 约定：
+# - 档位与合法性仍只来自 configs/space.yaml（铁律 1）；本文件只 **追加** 约束（normalize）
+#   与剪枝谓词（prune），且只在 acts_common.acts_space() 生效——默认 CLSSpace 逐位不变。
+# - 训练量口径只来自 configs/train.yaml protocols（铁律 2）；这里只记协议名。
+# - S1 锁定后 pilot / slicing / candidates / labels / prune / normalize 只增不改；S2 只改 full。
+# =====================================================================
+protocol: ts2vec_official          # configs/train.yaml: protocols 键（batch 8、iters 200/600、截点 25/50/100%）
+
+# --- 规范化第二条约束（PROTOCOL §1.3）：kernel = 0 → 单尺度，pool / cross_scale 失活 ---
+# cross_scale 无效档取 false（不是 null）：temporal=false 时第一条约束接着触发，
+# 落到与旧空间"只有 instance"逐位相同的规范形，不产生第二种写法。
+normalize:
+  constraints:
+    - when_equals: {kernel: 0}
+      gated_fields: [pool, cross_scale]
+      inactive_values: {pool: null, cross_scale: false}
+
+# --- 结构性剪枝（PROTOCOL §1.2；方案 §3.6-2）：三语料一致的两条，其余不剪 ---
+prune:
+  rules:
+    - {name: tau100,        all: [{field: temperature, equals: 100.0}]}
+    - {name: infonce_tau10, all: [{field: loss_type, equals: info_nce}, {field: temperature, equals: 10.0}]}
+  champion_retention_min: 0.90      # G-A0：官方口径 29 靶冠军在剪后空间的保留率
+
+# --- 任务划分（PROTOCOL §1.1；AutoCTS++ dataset_slice.py 两维四档） ---
+slicing:
+  seed: 0
+  tiers: 4                          # 25/50/75/100% 四档（前三档右开、末档闭）
+  channel_min: 1
+  window_min: 50                    # encoder 适用边界（CLAUDE.md limitation）
+  n_samples_max: 1024
+  min_samples: 32
+  eval_ratio: 0.3                   # 切片内 70/30 分层（评估部分出 R'）
+  # 档位顺序 (channel_tier, window_tier)：任意前缀在两维上尽量均衡；第 17 个起循环
+  tier_order: [[0, 0], [3, 3], [1, 2], [2, 1], [0, 3], [3, 0], [1, 1], [2, 2],
+               [0, 1], [1, 0], [2, 3], [3, 2], [0, 2], [2, 0], [1, 3], [3, 1]]
+
+# --- 每任务 2L 候选（PROTOCOL §1.2） ---
+candidates:
+  n_shared: 20                      # 固定 seed 均匀采样，全部任务同一批（= sample_arch(use_seed=True)）
+  n_random: 20                      # 每任务 rng = [random_seed, hash(task_id)]
+  shared_seed: 0
+  random_seed: 0
+
+# --- 标签（PROTOCOL §1.4） ---
+labels:
+  best_of: checkpoints              # R' = max over 三截点 acc
+  probe0_seeds: 3                   # iters=0 探针（失败地板）种子数
+  floor_rule: max_majority_probe0   # floor = max(多数类占比, mean probe0)
+  anchors:
+    n: 2
+    seeds: [1]
+    rule: first_shared_aug_max_le_0.8
+
+# --- S1 试点 ---
+pilot:
+  datasets: [PhonemeSpectra, HandMovementDirection, Cricket]
+  n_tasks: 8
+
+# --- S2 全语料（待拍板：方案 §8-2 源池、§8-3 L；S1 不读此块） ---
+full:
+  datasets: [Handwriting, UniMiB-SHAR, PhonemeSpectra, UWaveGestureLibrary,
+             EthanolConcentration, Cricket, HandMovementDirection, SelfRegulationSCP2]
+  n_tasks: 16
+
+# --- 门（PROTOCOL §2） ---
+gates:
+  G-A1: {split_half_rho_max: 0.70, half_size: 3, n_draws: 200}
+  G-A2: {real_interaction_share_min: 0.50, min_datasets_pass: 2}
+
+# --- 成本估计（PROTOCOL §1.4；4090 锚粗拟合，5090 × 0.7） ---
+cost_model:
+  iter_s_intercept: 0.006
+  iter_s_per_tc: 1.0e-5
+  eval_s_intercept: 0.5
+  eval_s_per_n: 0.004
+  gpu_factor_5090: 0.7
