@@ -1,0 +1,671 @@
+{
+ "by_temperature": {
+  "1.0": [
+   0.5864978902953587,
+   237
+  ],
+  "0.1": [
+   0.5227272727272727,
+   308
+  ],
+  "0.01": [
+   0.4620938628158845,
+   277
+  ],
+  "10.0": [
+   0.6811594202898551,
+   138
+  ]
+ },
+ "by_loss": {
+  "triplet": [
+   0.5551663747810858,
+   571
+  ],
+  "info_nce": [
+   0.5269922879177378,
+   389
+  ]
+ },
+ "by_loss_temp": {
+  "triplet/τ=1.0": [
+   0.5782312925170068,
+   147
+  ],
+  "triplet/τ=0.1": [
+   0.5034965034965035,
+   143
+  ],
+  "info_nce/τ=0.1": [
+   0.5393939393939394,
+   165
+  ],
+  "triplet/τ=0.01": [
+   0.46153846153846156,
+   143
+  ],
+  "info_nce/τ=0.01": [
+   0.4626865671641791,
+   134
+  ],
+  "info_nce/τ=1.0": [
+   0.6,
+   90
+  ],
+  "triplet/τ=10.0": [
+   0.6811594202898551,
+   138
+  ]
+ },
+ "by_norm_sim": {
+  "l2+cosine": [
+   0.5833333333333334,
+   120
+  ],
+  "none+dot": [
+   0.5333333333333333,
+   75
+  ],
+  "layer_norm+cosine": [
+   0.5268817204301075,
+   93
+  ],
+  "layer_norm+euclidean": [
+   0.5116279069767442,
+   129
+  ],
+  "l2+dot": [
+   0.5789473684210527,
+   76
+  ],
+  "none+euclidean": [
+   0.4946236559139785,
+   93
+  ],
+  "layer_norm+dot": [
+   0.46,
+   150
+  ],
+  "none+cosine": [
+   0.5660377358490566,
+   106
+  ],
+  "l2+euclidean": [
+   0.6610169491525424,
+   118
+  ]
+ },
+ "by_pairs": {
+  "T=0 CS=0 k=None": [
+   0.4967532467532468,
+   308
+  ],
+  "T=0 CS=1 k=3": [
+   0.6013986013986014,
+   143
+  ],
+  "T=1 CS=1 k=3": [
+   0.6351351351351351,
+   74
+  ],
+  "T=1 CS=0 k=2": [
+   0.5324675324675324,
+   77
+  ],
+  "T=1 CS=0 k=0": [
+   0.5392156862745098,
+   102
+  ],
+  "T=1 CS=0 k=3": [
+   0.5542168674698795,
+   83
+  ],
+  "T=0 CS=1 k=5": [
+   0.5892857142857143,
+   56
+  ],
+  "T=1 CS=1 k=5": [
+   0.5,
+   32
+  ],
+  "T=1 CS=1 k=2": [
+   0.5833333333333334,
+   24
+  ],
+  "T=1 CS=0 k=5": [
+   0.6,
+   35
+  ],
+  "T=0 CS=1 k=2": [
+   0.38461538461538464,
+   26
+  ]
+ },
+ "by_augmax": {
+  "aug>0.8": [
+   0.5447470817120622,
+   771
+  ],
+  "aug(0.5,0.8]": [
+   0.5406976744186046,
+   172
+  ],
+  "aug≤0.5": [
+   0.5294117647058824,
+   17
+  ]
+ },
+ "per_task": [
+  {
+   "task": "PhonemeSpectra_a00",
+   "dataset": "PhonemeSpectra",
+   "n": 145,
+   "n_eval": 47,
+   "k": 39,
+   "n_eval_per_k": 1.205128205128205,
+   "failed": 0.875,
+   "anchor_dacc": 0.01773049645390072,
+   "surv_sd": 0.008510638297872342,
+   "snr": 0.4799999999999998,
+   "states": [
+    "FF",
+    "SF"
+   ]
+  },
+  {
+   "task": "PhonemeSpectra_a01",
+   "dataset": "PhonemeSpectra",
+   "n": 956,
+   "n_eval": 279,
+   "k": 39,
+   "n_eval_per_k": 7.153846153846154,
+   "failed": 0.3,
+   "anchor_dacc": 0.0035842293906810097,
+   "surv_sd": 0.021215016757106117,
+   "snr": 5.918989675232597,
+   "states": [
+    "FF",
+    "SS"
+   ]
+  },
+  {
+   "task": "PhonemeSpectra_a02",
+   "dataset": "PhonemeSpectra",
+   "n": 257,
+   "n_eval": 85,
+   "k": 39,
+   "n_eval_per_k": 2.1794871794871793,
+   "failed": 0.35,
+   "anchor_dacc": 0.0,
+   "surv_sd": 0.016339791932369042,
+   "snr": Infinity,
+   "states": [
+    "FF",
+    "SS"
+   ]
+  },
+  {
+   "task": "PhonemeSpectra_a03",
+   "dataset": "PhonemeSpectra",
+   "n": 536,
+   "n_eval": 165,
+   "k": 39,
+   "n_eval_per_k": 4.230769230769231,
+   "failed": 0.525,
+   "anchor_dacc": 0.021212121212121224,
+   "surv_sd": 0.02289551316737016,
+   "snr": 1.0793599064617354,
+   "states": [
+    "FF",
+    "SS"
+   ]
+  },
+  {
+   "task": "PhonemeSpectra_a04",
+   "dataset": "PhonemeSpectra",
+   "n": 234,
+   "n_eval": 78,
+   "k": 39,
+   "n_eval_per_k": 2.0,
+   "failed": 0.325,
+   "anchor_dacc": 0.012820512820512824,
+   "surv_sd": 0.01358057896113494,
+   "snr": 1.059285158968525,
+   "states": [
+    "SS",
+    "SS"
+   ]
+  },
+  {
+   "task": "PhonemeSpectra_a05",
+   "dataset": "PhonemeSpectra",
+   "n": 519,
+   "n_eval": 160,
+   "k": 39,
+   "n_eval_per_k": 4.102564102564102,
+   "failed": 0.325,
+   "anchor_dacc": 0.009375000000000008,
+   "surv_sd": 0.01841987617044237,
+   "snr": 1.964786791513851,
+   "states": [
+    "FF",
+    "SS"
+   ]
+  },
+  {
+   "task": "PhonemeSpectra_a06",
+   "dataset": "PhonemeSpectra",
+   "n": 82,
+   "n_eval": 40,
+   "k": 39,
+   "n_eval_per_k": 1.0256410256410255,
+   "failed": 0.525,
+   "anchor_dacc": 0.0,
+   "surv_sd": 0.011164843913471806,
+   "snr": Infinity,
+   "states": [
+    "FF",
+    "FF"
+   ]
+  },
+  {
+   "task": "PhonemeSpectra_a07",
+   "dataset": "PhonemeSpectra",
+   "n": 907,
+   "n_eval": 276,
+   "k": 39,
+   "n_eval_per_k": 7.076923076923077,
+   "failed": 0.65,
+   "anchor_dacc": 0.001811594202898545,
+   "surv_sd": 0.011873778205957001,
+   "snr": 6.554325569688285,
+   "states": [
+    "FF",
+    "SS"
+   ]
+  },
+  {
+   "task": "HandMovementDirection_a00",
+   "dataset": "HandMovementDirection",
+   "n": 40,
+   "n_eval": 13,
+   "k": 4,
+   "n_eval_per_k": 3.25,
+   "failed": 0.875,
+   "anchor_dacc": 0.0,
+   "surv_sd": 0.0,
+   "snr": Infinity,
+   "states": [
+    "FF",
+    "FF"
+   ]
+  },
+  {
+   "task": "HandMovementDirection_a01",
+   "dataset": "HandMovementDirection",
+   "n": 207,
+   "n_eval": 61,
+   "k": 4,
+   "n_eval_per_k": 15.25,
+   "failed": 0.525,
+   "anchor_dacc": 0.0245901639344262,
+   "surv_sd": 0.02521421776738992,
+   "snr": 1.0253781892071911,
+   "states": [
+    "SF",
+    "SS"
+   ]
+  },
+  {
+   "task": "HandMovementDirection_a02",
+   "dataset": "HandMovementDirection",
+   "n": 67,
+   "n_eval": 19,
+   "k": 4,
+   "n_eval_per_k": 4.75,
+   "failed": 0.7,
+   "anchor_dacc": 0.05263157894736842,
+   "surv_sd": 0.05460482279819621,
+   "snr": 1.037491633165728,
+   "states": [
+    "SF",
+    "FF"
+   ]
+  },
+  {
+   "task": "HandMovementDirection_a03",
+   "dataset": "HandMovementDirection",
+   "n": 124,
+   "n_eval": 38,
+   "k": 4,
+   "n_eval_per_k": 9.5,
+   "failed": 0.35,
+   "anchor_dacc": 0.01315789473684209,
+   "surv_sd": 0.053872402356968684,
+   "snr": 4.094302579129624,
+   "states": [
+    "SF",
+    "SS"
+   ]
+  },
+  {
+   "task": "HandMovementDirection_a04",
+   "dataset": "HandMovementDirection",
+   "n": 73,
+   "n_eval": 21,
+   "k": 4,
+   "n_eval_per_k": 5.25,
+   "failed": 0.75,
+   "anchor_dacc": 0.07142857142857142,
+   "surv_sd": 0.021821789023599235,
+   "snr": 0.30550504633038933,
+   "states": [
+    "FS",
+    "SF"
+   ]
+  },
+  {
+   "task": "HandMovementDirection_a05",
+   "dataset": "HandMovementDirection",
+   "n": 103,
+   "n_eval": 31,
+   "k": 4,
+   "n_eval_per_k": 7.75,
+   "failed": 0.5,
+   "anchor_dacc": 0.016129032258064502,
+   "surv_sd": 0.06370457309074676,
+   "snr": 3.9496835316263024,
+   "states": [
+    "SS",
+    "FF"
+   ]
+  },
+  {
+   "task": "HandMovementDirection_a06",
+   "dataset": "HandMovementDirection",
+   "n": 41,
+   "n_eval": 13,
+   "k": 4,
+   "n_eval_per_k": 3.25,
+   "failed": 0.275,
+   "anchor_dacc": 0.07692307692307693,
+   "surv_sd": 0.06410103964771653,
+   "snr": 0.8333135154203148,
+   "states": [
+    "SS",
+    "FS"
+   ]
+  },
+  {
+   "task": "HandMovementDirection_a07",
+   "dataset": "HandMovementDirection",
+   "n": 223,
+   "n_eval": 67,
+   "k": 4,
+   "n_eval_per_k": 16.75,
+   "failed": 0.825,
+   "anchor_dacc": 0.022388059701492574,
+   "surv_sd": 0.00674259629033769,
+   "snr": 0.3011693009684163,
+   "states": [
+    "FS",
+    "SF"
+   ]
+  },
+  {
+   "task": "Cricket_a00",
+   "dataset": "Cricket",
+   "n": 46,
+   "n_eval": 15,
+   "k": 12,
+   "n_eval_per_k": 1.25,
+   "failed": 0.825,
+   "anchor_dacc": 0.0,
+   "surv_sd": 0.0,
+   "snr": Infinity,
+   "states": [
+    "FF",
+    "SS"
+   ]
+  },
+  {
+   "task": "Cricket_a01",
+   "dataset": "Cricket",
+   "n": 126,
+   "n_eval": 37,
+   "k": 12,
+   "n_eval_per_k": 3.0833333333333335,
+   "failed": 0.25,
+   "anchor_dacc": 0.0,
+   "surv_sd": 0.03989475644231445,
+   "snr": Infinity,
+   "states": [
+    "FF",
+    "SS"
+   ]
+  },
+  {
+   "task": "Cricket_a02",
+   "dataset": "Cricket",
+   "n": 67,
+   "n_eval": 26,
+   "k": 12,
+   "n_eval_per_k": 2.1666666666666665,
+   "failed": 0.725,
+   "anchor_dacc": 0.0,
+   "surv_sd": 0.019151138374306494,
+   "snr": Infinity,
+   "states": [
+    "FF",
+    "FF"
+   ]
+  },
+  {
+   "task": "Cricket_a03",
+   "dataset": "Cricket",
+   "n": 98,
+   "n_eval": 25,
+   "k": 12,
+   "n_eval_per_k": 2.0833333333333335,
+   "failed": 0.525,
+   "anchor_dacc": 0.0,
+   "surv_sd": 0.03446464324998925,
+   "snr": Infinity,
+   "states": [
+    "FF",
+    "SS"
+   ]
+  },
+  {
+   "task": "Cricket_a04",
+   "dataset": "Cricket",
+   "n": 54,
+   "n_eval": 14,
+   "k": 12,
+   "n_eval_per_k": 1.1666666666666667,
+   "failed": 0.55,
+   "anchor_dacc": 0.0,
+   "surv_sd": 0.04892392065848395,
+   "snr": Infinity,
+   "states": [
+    "SS",
+    "FF"
+   ]
+  },
+  {
+   "task": "Cricket_a05",
+   "dataset": "Cricket",
+   "n": 91,
+   "n_eval": 26,
+   "k": 12,
+   "n_eval_per_k": 2.1666666666666665,
+   "failed": 0.25,
+   "anchor_dacc": 0.038461538461538436,
+   "surv_sd": 0.040623024404499636,
+   "snr": 1.0561986345169911,
+   "states": [
+    "FF",
+    "SS"
+   ]
+  },
+  {
+   "task": "Cricket_a06",
+   "dataset": "Cricket",
+   "n": 47,
+   "n_eval": 15,
+   "k": 12,
+   "n_eval_per_k": 1.25,
+   "failed": 0.75,
+   "anchor_dacc": 0.0,
+   "surv_sd": 0.019999999999999997,
+   "snr": Infinity,
+   "states": [
+    "FF",
+    "FF"
+   ]
+  },
+  {
+   "task": "Cricket_a07",
+   "dataset": "Cricket",
+   "n": 180,
+   "n_eval": 48,
+   "k": 12,
+   "n_eval_per_k": 4.0,
+   "failed": 0.5,
+   "anchor_dacc": 0.0,
+   "surv_sd": 0.024183722429674776,
+   "snr": Infinity,
+   "states": [
+    "FF",
+    "SS"
+   ]
+  }
+ ],
+ "corr": {
+  "failed~log n": -0.357051500306999,
+  "failed~n_eval/k": -0.1187778474979618,
+  "|Δ|~log n": 0.114873369830081,
+  "|Δ|~n_eval/k": 0.5220094880396126,
+  "SNR~log n": 0.5340659340659341,
+  "SNR~n_eval/k": 0.13406593406593406
+ },
+ "fidelity_all": {
+  "PhonemeSpectra_a00": 0.5599824868585518,
+  "PhonemeSpectra_a01": 0.7541554908791861,
+  "PhonemeSpectra_a02": 0.7215888300330546,
+  "PhonemeSpectra_a03": 0.7907045836947362,
+  "PhonemeSpectra_a04": 0.08991129912335759,
+  "PhonemeSpectra_a05": 0.6554618476983711,
+  "PhonemeSpectra_a06": 0.04865610806093484,
+  "PhonemeSpectra_a07": 0.8009790999811711,
+  "HandMovementDirection_a00": 0.06143260078903668,
+  "HandMovementDirection_a01": 0.17104067966903447,
+  "HandMovementDirection_a02": 0.3147391089585654,
+  "HandMovementDirection_a03": 0.3411129802967543,
+  "HandMovementDirection_a04": 0.07628084582566938,
+  "HandMovementDirection_a05": 0.30742808863584054,
+  "HandMovementDirection_a06": 0.030857138608618793,
+  "HandMovementDirection_a07": 0.42587112810477956,
+  "Cricket_a00": 0.4975917073794557,
+  "Cricket_a01": 0.8046990610441549,
+  "Cricket_a02": 0.6865865263618205,
+  "Cricket_a03": 0.8487014091747491,
+  "Cricket_a04": 0.161714533220472,
+  "Cricket_a05": 0.7323122774312194,
+  "Cricket_a06": 0.7702775187969602,
+  "Cricket_a07": 0.2259659293457143
+ },
+ "fidelity_surv": {
+  "PhonemeSpectra_a00": -0.18633899812498247,
+  "PhonemeSpectra_a01": 0.4222720098178163,
+  "PhonemeSpectra_a02": 0.35983896052281406,
+  "PhonemeSpectra_a03": 0.39031345023114805,
+  "PhonemeSpectra_a04": -0.24863802678550648,
+  "PhonemeSpectra_a05": 0.1985783315705267,
+  "PhonemeSpectra_a06": -0.20343012249653233,
+  "PhonemeSpectra_a07": 0.30804799322914633,
+  "HandMovementDirection_a00": -0.892217816219194,
+  "HandMovementDirection_a01": -0.4155789473259154,
+  "HandMovementDirection_a02": -0.23540302762408435,
+  "HandMovementDirection_a03": 0.07658510717924229,
+  "HandMovementDirection_a04": 0.0,
+  "HandMovementDirection_a05": 0.19963574078241514,
+  "HandMovementDirection_a06": -0.39695627640104186,
+  "HandMovementDirection_a07": -0.07856742013183862,
+  "Cricket_a00": -0.5346338310781813,
+  "Cricket_a01": 0.5946852032483201,
+  "Cricket_a02": -0.47827712489611,
+  "Cricket_a03": 0.36287847580377475,
+  "Cricket_a04": -0.21238480998405393,
+  "Cricket_a05": 0.40690102098200953,
+  "Cricket_a06": -0.24152294576982394,
+  "Cricket_a07": -0.487978450009267
+ },
+ "cv_agree": {
+  "PhonemeSpectra_a01": {
+   "n_cfg": 40,
+   "rho_all": 0.7623885706298308,
+   "rho_surv": 0.4683619773625297
+  },
+  "PhonemeSpectra_a03": {
+   "n_cfg": 40,
+   "rho_all": 0.8030834193792707,
+   "rho_surv": 0.6944275426961573
+  },
+  "PhonemeSpectra_a05": {
+   "n_cfg": 40,
+   "rho_all": 0.7855968617189824,
+   "rho_surv": 0.5110874429086611
+  },
+  "PhonemeSpectra_a07": {
+   "n_cfg": 40,
+   "rho_all": 0.728792458708549,
+   "rho_surv": 0.5504237295116937
+  },
+  "HandMovementDirection_a01": {
+   "n_cfg": 40,
+   "rho_all": 0.13917735916189167,
+   "rho_surv": -0.022678220867640184
+  },
+  "HandMovementDirection_a03": {
+   "n_cfg": 40,
+   "rho_all": 0.2976273324753674,
+   "rho_surv": 0.3841122323215928
+  },
+  "HandMovementDirection_a04": {
+   "n_cfg": 40,
+   "rho_all": 0.3299791032408995,
+   "rho_surv": -0.5715374460740156
+  },
+  "HandMovementDirection_a05": {
+   "n_cfg": 40,
+   "rho_all": 0.582607808138821,
+   "rho_surv": -0.052859098782168275
+  },
+  "HandMovementDirection_a07": {
+   "n_cfg": 40,
+   "rho_all": 0.03375980526608653,
+   "rho_surv": -0.15811388300841897
+  },
+  "Cricket_a01": {
+   "n_cfg": 40,
+   "rho_all": 0.9029662551533748,
+   "rho_surv": 0.8249253869721648
+  },
+  "Cricket_a03": {
+   "n_cfg": 40,
+   "rho_all": 0.7700570085638835,
+   "rho_surv": 0.5910601211002854
+  },
+  "Cricket_a05": {
+   "n_cfg": 40,
+   "rho_all": 0.7778375139590487,
+   "rho_surv": 0.5119506940619388
+  },
+  "Cricket_a07": {
+   "n_cfg": 40,
+   "rho_all": 0.367238121187212,
+   "rho_surv": 0.2983157966565021
+  }
+ }
+}
