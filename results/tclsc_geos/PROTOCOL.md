@@ -53,4 +53,7 @@
 
 ## §6 执行台账（跑后填写）
 
-（空）
+- 协议锁 b2d8638 → 实现 47ef7cf（本地冒烟 Handwriting 2 家族 8 iters OK，4 例单测绿）→ nan 安全 analyze 3b3043d。
+- pod **6oo9sxhtizdffp**（geos-family，RTX 5090 $0.99/h，EUR-NO-1 卷 tudo4ntlot）：2026-09-18 16:42 UTC 起跑（5090 第 6 次重试才有货），2 进程按 4090 锚估时贪心分靶（p0 280 格 / p1 300 格，共用 runs.jsonl）；≈ 1 h 后 NVML 掉线（新进程 cuda=False，在跑进程无恙）→ 杀编排脚本只留两 runner；两 runner **20:58 UTC 收官**（训练墙钟 4.3 h）。
+- 2026-09-19 06:38 UTC 手动 `--verify`：planned 580 / have 580 / missing 0 / bad 0 → OK；无 oom_failures；tar md5 675236cd… scp 拉回本地核对一致；`pod_ctl.py stop` + `confirm-stopped 3` 三次 EXITED。**uptime 50416 s ≈ 14.0 h ≈ $13.9**：训练 ≈ $4.2 + 收官后空转 ≈ 9.7 h ≈ $9.6（本地监控失败 + 会话断档、编排脚本已被杀无自停；教训入 memory `geos-pod-ledger`：手动接管 runner 必须布 pod 侧自停守护）。
+- 本地：`82 --verify` OK → `82 --analyze --n-perm 1000` → `analysis.json` / `tables.md` / `REPORT.md`。pod 日志 `pod_logs/geos_{p0,p1,run,verify}.log` 入库。
