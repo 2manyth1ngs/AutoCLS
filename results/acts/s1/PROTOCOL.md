@@ -101,7 +101,12 @@ AutoCTS++ `exps/dataset_slice.py` 的两维 = 变量子集 [3, min(300, N)] × �
 - **重跑**：`--slice --sanity --plan` 与冒烟；重点看两个数：n 轴云外从 14 降到多少、最近子集 log 距 ≥ 1.0 的外推靶还剩几个（实测填 §1.10）。修订前的 sanity 数字保留在 §1.8-5 作对照。
 - **不变**：目录 / 锚 / 标签 / 地板 / 门 / 读数码 / 前置对照的其它项；旧 `slice_pool_tasks` 路径仍一字不动。
 
-### 1.10 修订后实测回填（跑后填写）
+### 1.10 修订后实测回填（2026-09-19，零 GPU + 本地冒烟，任何 R′ 之前）
+
+- **切片**：24 任务重切，16 任务前缀自检 OK；OA 行序 c/w/n 三轴前 8 行各档两次；样本数轴真的在变——PS n ∈ {82, 145, 234, 257, 519, 536, 907, 956}（n_train 42–677）、HMD n ∈ {40, 41, 67, 73, 103, 124, 207, 223}、Cricket n ∈ {46, 47, 54, 67, 91, 98, 126, 180}；iters 200: 420 / 600: 588（小 n 格变多），估时 4090 3.7 h / 5090 单进程 ≈ 2.6 h。
+- **sanity 两个数**：n 轴云外 **14 → 8**（P8 ≤ 6 ✗）：剩 6 个 n_train > 696 的大靶（PenDigits 7494 / SAD 6599 / FaceDetection 5890 / PS 3315 / LSST 2459 / CT 1422，cap = 1024 之外）+ 2 个 n_train < 21 的极小靶（StandWalkJump 12 / AtrialFibrillation 15，n_lo = max(32, 2k) 之下）；最近子集 log 距 ≥ 1.0 的外推靶 **9 → 7**（P9 ≤ 7 ✓）：DuckDuckGeese 2.15 / PEMS-SF 2.12 / FaceDetection 1.97 / PenDigits 1.51 / MotorImagery 1.25 / SAD 1.18 / EigenWorms 1.16（全由 C ≥ 12 或 L 极端驱动；Heartbeat 0.98 刚落线下）。任一轴云外 23 → 19（C 9 / L 9 / n 8 / k 0）；子集云 n_train [21, 696]、L [50, 1714]、C [1, 11]。小靶 ERing / BasicMotions / DuckDuckGeese(n) / Cricket / UWave / EigenWorms(n) 已入云。
+- **代价**：小 n 任务的标签很吵——PS_a06 n = 82（k = 39 → 每类 2，训练 42 / 评估 40，acc 量子 2.5%，官方 SVM 走 C = ∞ 回退分支）、HMD_a00 评估 13 条（量子 7.7%）；这正是 G-A2 用锚测噪声的对象，不另设门。
+- **冒烟**（本地 4060，新切片器）：10/10 格三截点齐、probe0 2/2 OK。
 
 ## §2 判读（先于数据）
 

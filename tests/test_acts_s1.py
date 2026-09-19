@@ -129,7 +129,7 @@ class TestSlicer:
             for col in range(3):
                 counts = [sum(1 for r in d[:n] if r[col] == lv) for lv in range(4)]
                 assert counts == [n // 4] * 4
-        assert sl.is_orthogonal_array(d) and sl.AutoCTSTierSlicer.from_config(cfg["slicing"]).design == d
+        assert sl.is_orthogonal_array(d) and sl.AutoCTSTierSlicer.from_config(cfg["slicing"]).design == tuple(d)
 
     def test_stratified_sample(self):
         strat = _sl().stratified_sample
@@ -137,10 +137,10 @@ class TestSlicer:
         y = np.array([0] * 50 + [1] * 30 + [2] * 20)             # 100 样本，比例 5:3:2
         idx = strat(y, n=40, rng=rng, min_per_class=2)
         assert len(idx) == 40 and len(set(idx)) == 40 and list(idx) == sorted(idx)
-        counts = np.bincount(y[idx], minlength=3)
-        assert counts.tolist() == [20, 12, 8]                      # 2 + 余量 34 按可用数 48:28:18 分 → 17/10/7 (最大余数)
+        counts = np.bincount(y[list(idx)], minlength=3)
+        assert counts.tolist() == [20, 12, 8]                      # 目标 = n·类频率 = 40 × (0.5, 0.3, 0.2)，每类 ≥ 2
         idx6 = strat(y, n=6, rng=np.random.default_rng(1), min_per_class=2)
-        assert np.bincount(y[idx6], minlength=3).tolist() == [2, 2, 2]
+        assert np.bincount(y[list(idx6)], minlength=3).tolist() == [2, 2, 2]
         with pytest.raises(ValueError):
             strat(y, n=5, rng=rng, min_per_class=2)
         assert len(strat(y, n=100, rng=rng, min_per_class=2)) == 100
