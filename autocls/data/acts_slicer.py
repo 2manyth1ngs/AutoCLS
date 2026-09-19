@@ -145,7 +145,8 @@ class AutoCTSTierSlicer:
     channel_min: int = 1
     window_min: int = 50
     n_min: int = 32
-    n_min_per_class: int = 2
+    n_min_per_class: int = 2          # 分层抽样每类下限
+    n_lo_per_class: Optional[int] = None   # n_lo = max(n_min, n_lo_per_class · k)；None = 沿用 n_min_per_class（S1 基线）
     n_cap: Optional[int] = 1024
     min_samples: int = 32
     design: tuple[tuple[int, int, int], ...] = DEFAULT_DESIGN
@@ -159,6 +160,7 @@ class AutoCTSTierSlicer:
             seed=int(sc.get("seed", 0)), tiers=int(sc.get("tiers", 4)),
             channel_min=int(sc.get("channel_min", 1)), window_min=int(sc.get("window_min", 50)),
             n_min=int(sc.get("n_min", 32)), n_min_per_class=int(sc.get("n_min_per_class", 2)),
+            n_lo_per_class=(int(sc["n_lo_per_class"]) if sc.get("n_lo_per_class") is not None else None),
             n_cap=(None if cap is None else int(cap)), min_samples=int(sc.get("min_samples", 32)),
             design=tuple(tuple(int(x) for x in row) for row in design) if design else DEFAULT_DESIGN,
         )
@@ -171,8 +173,9 @@ class AutoCTSTierSlicer:
                 raise ValueError(f"design 行 {row} 须是三轴档位且各在 [0, {self.tiers})")
 
     def sample_bounds(self, n_samples: int, n_classes: int) -> tuple[int, int]:
-        """样本数轴区间 [max(n_min, n_min_per_class·k), min(n_cap, N)]。"""
-        n_lo = max(int(self.n_min), int(self.n_min_per_class) * int(n_classes))
+        """样本数轴区间 [max(n_min, n_lo_per_class·k), min(n_cap, N)]（S1′：n_lo_per_class 7 = 官方网格条件 0.8n//k ≥ 5 的余量版；S1 基线 None → 2）。"""
+        coef = int(self.n_lo_per_class) if self.n_lo_per_class is not None else int(self.n_min_per_class)
+        n_lo = max(int(self.n_min), coef * int(n_classes))
         n_hi = int(n_samples) if self.n_cap is None else min(int(self.n_cap), int(n_samples))
         return n_lo, n_hi
 

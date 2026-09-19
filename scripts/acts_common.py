@@ -45,8 +45,24 @@ SANITY_AXES = ("C", "L", "n", "k")
 
 
 # ---------------------------------------------------------------- 配置 / 空间
-def load_acts_config(path: str | Path | None = None) -> dict:
-    return yaml.safe_load(Path(path or ACTS_YAML).read_text(encoding="utf-8"))
+def _deep_merge(base: Mapping, over: Mapping) -> dict:
+    out = dict(base)
+    for k, v in over.items():
+        out[k] = _deep_merge(out[k], v) if isinstance(v, Mapping) and isinstance(out.get(k), Mapping) else v
+    return out
+
+
+def load_acts_config(path: str | Path | None = None, profile: Optional[str] = None) -> dict:
+    """acts.yaml；profile（如 "s1p"）= `profiles.<name>` 逐键深合并到基线上（基线不动，S1 可复现），并写 cfg["profile"]。"""
+    cfg = yaml.safe_load(Path(path or ACTS_YAML).read_text(encoding="utf-8"))
+    if not profile:
+        return cfg
+    prof = (cfg.get("profiles") or {}).get(profile)
+    if prof is None:
+        raise KeyError(f"acts.yaml 无 profiles.{profile}")
+    merged = _deep_merge({k: v for k, v in cfg.items() if k != "profiles"}, prof)
+    merged["profile"] = str(profile)
+    return merged
 
 
 def acts_space(cfg: Optional[Mapping] = None, space_yaml: str | Path = DEFAULT_SPACE_YAML) -> CLSSpace:
@@ -244,6 +260,97 @@ def split_md5_of(arrays: Mapping) -> str:
     return hashlib.md5(s.encode()).hexdigest()
 
 
+# ---------------------------------------------------------------- S1′：分层 5 折 CV 切片数组（PROTOCOL s1p §1.2）
+def stratified_folds(y: np.ndarray, *, n_folds: int, seed: int) -> list[tuple[np.ndarray, np.ndarray]]:
+    """任务内固定的分层 K 折（sklearn StratifiedKFold，shuffle + random_state=seed）→ [(train_idx, test_idx)]。"""
+    from sklearn.model_selection import StratifiedKFold
+    y = np.asarray(y)
+    skf = StratifiedKFold(n_splits=int(n_folds), shuffle=True, random_state=int(seed))
+    return [(np.asarray(tr, dtype=np.int64), np.asarray(te, dtype=np.int64)) for tr, te in skf.split(np.zeros(len(y)), y)]
+
+
+def fold_md5_of(folds: Sequence[tuple[np.ndarray, np.ndarray]]) -> str:
+    s = "|".join(",".join(str(int(i)) for i in te) for _tr, te in folds)
+    return hashlib.md5(s.encode()).hexdigest()
+
+
+def cv_fold_seed_for(task_id: str, key: str = "cv_folds") -> int:
+    return run_seed_for(task_id, key)
+
+
+def task_arrays_cv(task: SlicedTask, X: np.ndarray, y: np.ndarray, *, n_folds: int, seed: int) -> dict:
+    """整切片：物化 → 按通道在全部样本上标准化（预训练集 = 整个切片）→ 固定分层 K 折。"""
+    Xt, yt = materialize_task(task, X, y)
+    raw = Xt.astype(np.float64)
+    flat = raw.reshape(-1, raw.shape[-1])
+    mu, sd = flat.mean(0), flat.std(0)
+    sd = np.where(sd < 1e-8, 1.0, sd)
+    Xs = ((raw - mu) / sd).astype(np.float32)
+    folds = stratified_folds(yt, n_folds=n_folds, seed=seed)
+    return {"X": Xs, "y": yt, "folds": folds, "fold_md5": fold_md5_of(folds), "majority": majority_rate(yt), "mean": mu, "std": sd}
+
+
+def cv_eval(feats: np.ndarray, y: np.ndarray, folds: Sequence[tuple[np.ndarray, np.ndarray]], grid: str, seed: int) -> dict:
+    """每折在训练折特征上跑官方网格（35._svm_variants → fit_svm(grid)）、测试折出 acc / f1；返回折均值与逐折值。"""
+    g35 = importlib.import_module("scripts.35_protocol_alignment")
+    accs, f1s, cs, cvs = [], [], [], []
+    for tr, te in folds:
+        v = g35._svm_variants(feats[tr], y[tr], {"cv": feats[te]}, y[te], (grid,), seed)[f"cv/{grid}"]
+        accs.append(float(v["acc"])); f1s.append(float(v["f1"])); cs.append(v.get("svm_c")); cvs.append(v.get("svm_cv_score"))
+    return {"acc": float(np.mean(accs)), "f1": float(np.mean(f1s)), "fold_acc": accs, "fold_f1": f1s, "svm_c": cs, "svm_cv_score": cvs}
+
+
+# ---------------------------------------------------------------- S1′：终点标签 / 两种子均值 / 噪声 / 准入（PROTOCOL s1p §1.3–1.4）
+def endpoint_of(row: Optional[Mapping]) -> Optional[float]:
+    """R′ = 终点截点 acc；error / 缺截点 / 非有限 → None。"""
+    if not row or row.get("error") or not row.get("checkpoint_results"):
+        return None
+    a = row["checkpoint_results"][-1].get("acc")
+    return float(a) if a is not None and np.isfinite(float(a)) else None
+
+
+def label_multi_seed(rows: Sequence[Optional[Mapping]], floor: float) -> tuple[float, bool]:
+    """多种子终点均值后套地板；任一种子缺 → 地板（failed）。"""
+    vals = [endpoint_of(r) for r in rows]
+    if not vals or any(v is None for v in vals):
+        return float(floor), True
+    return label_of(float(np.mean(vals)), floor)
+
+
+def noise_ms_of_mean(z0: np.ndarray, z1: np.ndarray) -> float:
+    """两种子均值标签的噪声均方 = mean((z0 − z1)²) / 4（单种子噪声 /2 的一半）。"""
+    d = (np.asarray(z0, dtype=float) - np.asarray(z1, dtype=float)).ravel()
+    d = d[np.isfinite(d)]
+    return float(np.mean(d ** 2) / 4.0) if d.size else float("nan")
+
+
+def admission_rho(s0: np.ndarray, s1: np.ndarray, failed0: np.ndarray, failed1: np.ndarray, *, min_survivors: int) -> dict:
+    """源准入量：两种子都存活的配置上 Spearman(seed0, seed1)；存活数 < min_survivors → nan。"""
+    s0, s1 = np.asarray(s0, float), np.asarray(s1, float)
+    surv = ~np.asarray(failed0, bool) & ~np.asarray(failed1, bool) & np.isfinite(s0) & np.isfinite(s1)
+    n = int(surv.sum())
+    if n < int(min_survivors) or np.std(s0[surv]) == 0 or np.std(s1[surv]) == 0:
+        return {"n_survivors": n, "rho": float("nan")}
+    return {"n_survivors": n, "rho": float(spearmanr(s0[surv], s1[surv]).correlation)}
+
+
+def make_cell(tid: str, m: Mapping, origin: str, c: CLS, k: str, seed: int, protos: Mapping, cfg: Mapping, *,
+              iters: Optional[int] = None, fractions: Optional[Sequence[float]] = None, extra: Optional[Mapping] = None) -> dict:
+    """单格构造（S1′ 计划用；S1 的 build_cells 保持原样）：35._cell + 截点（可自定义分位）+ 任务尺寸 + eval 模式。"""
+    g35 = importlib.import_module("scripts.35_protocol_alignment")
+    g39 = importlib.import_module("scripts.39_sh_deploy")
+    pname = str(cfg["protocol"])
+    sizes = {tid: (int(m["n_train"]), int(m["T"]), int(m["C"]))}
+    cell = g35._cell(STAGE, tid, pname, protos[pname], sizes, arm_names=[origin], cls_key_=k, cls=c, seed=int(seed), iters=iters)
+    cell["checkpoints"] = list(g39.checkpoints_for(cell["iters"], fractions) if fractions else g39.checkpoints_for(cell["iters"]))
+    cell.update({"task_id": tid, "origin": origin, "twin_of": None, "n_train": int(m["n_train"]), "T": int(m["T"]), "C": int(m["C"]),
+                 "eval": str((cfg.get("eval") or {}).get("mode", "holdout"))})
+    if extra:
+        cell.update(dict(extra))
+    g39.check_extension_consistency(cell)
+    return cell
+
+
 def load_dataset_full(name: str) -> tuple[np.ndarray, np.ndarray]:
     """源数据集 TRAIN+TEST 合并、**原生长度**（不用注册表 crop_len；部署靶就是原生长度）。注册表分派同 pq_common.REG_OF。"""
     pq = importlib.import_module("scripts.pq_common")
@@ -427,4 +534,6 @@ __all__ = [
     "estimate_cell_seconds", "build_cells", "split_seed_for", "task_arrays", "split_md5_of", "load_dataset_full", "make_task_loader",
     "split_half_rho", "interaction_share", "anchor_noise_ms", "fidelity_metrics", "champion_retention", "verdict_s1",
     "target_sizes_29", "coverage_table",
+    "stratified_folds", "fold_md5_of", "cv_fold_seed_for", "task_arrays_cv", "cv_eval", "endpoint_of", "label_multi_seed",
+    "noise_ms_of_mean", "admission_rho", "make_cell",
 ]

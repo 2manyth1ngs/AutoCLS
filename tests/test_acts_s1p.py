@@ -210,10 +210,10 @@ class TestReadoutsS1P:
     def test_ablation_readout(self):
         g83 = _g83()
         cfgs = [f"k{i}" for i in range(10)]
-        base = np.linspace(0.4, 0.9, 10)
+        base = np.array([0.46, 0.5, 0.52, 0.54, 0.55, 0.6, 0.7, 0.8, 0.9, 1.0])
         rows = [{"task_id": "Cricket_a00", "cls_key": k, "error": None,
-                 "checkpoint_results": [{"acc": v - 0.3}, {"acc": v - 0.2}, {"acc": v - 0.1}, {"acc": v}, {"acc": v + 0.05}]} for k, v in zip(cfgs, base)]
-        r = g83.ablation_readout(rows, floors={"Cricket_a00": 0.45})
+                 "checkpoint_results": [{"acc": v - 0.2}, {"acc": v - 0.15}, {"acc": v - 0.1}, {"acc": v - 0.05}, {"acc": v}]} for k, v in zip(cfgs, base)]
+        r = g83.ablation_readout(rows, floors={"Cricket_a00": 0.455})   # 0.455 避开 0.55 − 0.1 的浮点边界     # 1× 终点 = 第 3 截点 v − 0.1 ≤ 0.45 ⇔ v ≤ 0.55 → 5/10；3× 终点 v 全部 > 0.45
         t = r["per_task"]["Cricket_a00"]
         assert t["failed_1x"] == pytest.approx(0.5) and t["failed_3x"] == pytest.approx(0.0)      # 1× 终点 = 第 3 截点
         assert t["surv_rho_13"] == pytest.approx(1.0) and t["surv_rho_23"] == pytest.approx(1.0)

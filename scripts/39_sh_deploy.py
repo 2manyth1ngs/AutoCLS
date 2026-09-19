@@ -559,9 +559,11 @@ def run_trajectory_cell(cell: dict, arrays: dict, device: str) -> dict:
             **({"n_train_fit": int(Xtr_fit.shape[0])} if "Xtr_fit" in arrays else {})}
 
 
-def execute(cells: list[dict], args, tag: str, *, loader=None) -> None:
-    """``loader(dataset, har_npz) -> arrays``；默认 ``load_arrays_any``（调用时解析，旧调用逐位不变）。"""
+def execute(cells: list[dict], args, tag: str, *, loader=None, runner=None) -> None:
+    """``loader(dataset, har_npz) -> arrays``；默认 ``load_arrays_any``（调用时解析，旧调用逐位不变）。
+    ``runner(cell, arrays, device) -> row``；默认 ``run_trajectory_cell``（WP17-ACTS S1′ 用 CV 执行体注入，本函数其余逻辑不变）。"""
     loader = loader or load_arrays_any
+    runner = runner or run_trajectory_cell
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     runs, inflight, oom_log = outdir / "runs.jsonl", outdir / "inflight.txt", outdir / "oom_failures.jsonl"
@@ -576,7 +578,7 @@ def execute(cells: list[dict], args, tag: str, *, loader=None) -> None:
                    f"iters={cell['iters']} ckpt={cell['checkpoints']}")
             inflight.write_text(f"{cell['key']}\t{who}", encoding="utf-8")
             try:
-                row = run_trajectory_cell(cell, arrays, args.device)
+                row = runner(cell, arrays, args.device)
             except RprimeOOM as e:
                 inflight.write_text("", encoding="utf-8")
                 append_jsonl(oom_log, {**cell, "error": str(e), "device_name": device_label(args.device)})
