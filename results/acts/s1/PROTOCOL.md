@@ -148,3 +148,7 @@ AutoCTS++ `exps/dataset_slice.py` 的两维 = 变量子集 [3, min(300, N)] × �
 1（档位与合法性只经 space.yaml；acts.yaml 只加约束 / 剪枝，旧路径逐位不变，单测金标）；2（iters 按协议规则显式落盘、三截点同一轨迹）；3（runs.jsonl + probe0.jsonl + resume + verify）；5（先红；补全处注释"论文未给全，按 X 语义补全"）；6（试点三集只作源；LODO 在 S3；靶数据只在 §1.7-5 读尺寸）；7（比较器 / 空间 / 切片核心不引入数据集概念：acts_slicer 只吃 y / C / L）；8（R′ 优劣仍经 is_better）。
 
 ## §6 执行台账（跑后填写）
+
+- 协议锁 516076b → 实现 + 零 GPU 前置 7542904 → 三轴修订锁 5094284 → 实现 222d967 → 实验室部署（npz 直读、--check）dee3b54 → sklearn 1.3.2 的 C=inf 替身 7ed16ab。
+- 服务器 8k-4090（`/home/b311/data/wangwenjie/kejunyu/AutoCLS`，conda env pytorch，py3.8 / torch 2.4.1 / sklearn 1.3.2）：`acts_lab_setup.sh` 2026-09-19 12:28 UTC（npz md5 ALL MATCH、`--check` 24 任务 0 mismatch + plan key 序一致、22 单测绿）；冒烟 10/10 + probe0 2/2；`acts_lab_run.sh` 12:32 UTC 起 2 进程 GPU 0 / 1（共享卡，nice 10）→ 1,008 格 + 72 探针 → `--verify` OK → 15:38 UTC 收官（墙钟 3.1 h，GPU 累计 6.23 h）；`out_acts_s1.tar.gz` md5 7d71d251… 拉回本地，`--verify` OK。
+- 本地 `--analyze` → `analysis.json` / `tables.md` / `labels.jsonl` → REPORT.md：**ACTS-S1-NOISE**（G-A0 ✓ / G-A1 ✓ 0.177 / G-A2 ✗ 0.240），预测 5/8。S2 按协议不铺；修订建议见 REPORT §5。

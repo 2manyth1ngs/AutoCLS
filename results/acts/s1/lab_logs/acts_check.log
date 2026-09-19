@@ -1,0 +1,8 @@
+[data] Cricket_a01: train=(89, 787, 3) eval=(37, 787, 3) classes=12 size=210129 window=(244, 1031)
+[data] Cricket_a02: train=(41, 1133, 4) eval=(26, 1133, 4) classes=12 size=185812 window=(16, 1149)
+[data] Cricket_a03: train=(73, 380, 5) eval=(25, 380, 5) classes=12 size=138700 window=(667, 1047)
+[data] Cricket_a04: train=(40, 485, 2) eval=(14, 485, 2) classes=12 size=38800 window=(642, 1127)
+[data] Cricket_a05: train=(65, 994, 3) eval=(26, 994, 3) classes=12 size=193830 window=(12, 1006)
+[data] Cricket_a06: train=(32, 784, 4) eval=(15, 784, 4) classes=12 size=100352 window=(126, 910)
+[data] Cricket_a07: train=(132, 126, 6) eval=(48, 126, 6) classes=12 size=99792 window=(832, 958)
+[check] tasks 24 mismatches 0 plan_keys_match True → OK

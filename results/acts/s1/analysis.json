@@ -1,0 +1,454 @@
+{
+ "gates": {
+  "G-A0": true,
+  "G-A1": true,
+  "G-A2": false
+ },
+ "verdict": "ACTS-S1-NOISE",
+ "per_dataset": {
+  "Cricket": {
+   "n_tasks": 8,
+   "split_half_3": 0.34106792603595154,
+   "split_half_4": 0.43122110849048684,
+   "ms_int": 0.8661491034738423,
+   "ss_int": 115.19783076202103,
+   "df": 133,
+   "ms_noise": 0.0716674629718107,
+   "real_share": 0.9172573605579273,
+   "n_cfg": 20,
+   "failed_share_shared": 0.55625,
+   "failed_share_random": 0.5375,
+   "missing": 0,
+   "errors": 0
+  },
+  "HandMovementDirection": {
+   "n_tasks": 8,
+   "split_half_3": -0.037552631351985374,
+   "split_half_4": -0.007401845701750996,
+   "ms_int": 0.8374295033171256,
+   "ss_int": 111.3781239411777,
+   "df": 133,
+   "ms_noise": 1.0259965285917678,
+   "real_share": -0.22517361106542466,
+   "n_cfg": 20,
+   "failed_share_shared": 0.6625,
+   "failed_share_random": 0.5375,
+   "missing": 0,
+   "errors": 0
+  },
+  "PhonemeSpectra": {
+   "n_tasks": 8,
+   "split_half_3": 0.22812513212357943,
+   "split_half_4": 0.27995670031882536,
+   "ms_int": 1.0923217808921897,
+   "ss_int": 145.27879685866122,
+   "df": 133,
+   "ms_noise": 1.0264230721518601,
+   "real_share": 0.06032902565259169,
+   "n_cfg": 20,
+   "failed_share_shared": 0.45,
+   "failed_share_random": 0.51875,
+   "missing": 0,
+   "errors": 0
+  }
+ },
+ "split_half_3_mean": 0.1772134756025152,
+ "split_half_before": {
+  "Cricket": 0.7737277098848268,
+  "EthanolConcentration": 0.5365454545454545,
+  "HandMovementDirection": 0.4872611044461109,
+  "Handwriting": 0.9366666666666665,
+  "PhonemeSpectra": 0.8952727272727273,
+  "UWaveGestureLibrary": 0.8276720635998795,
+  "UniMiB-SHAR": 0.7699393939393938
+ },
+ "pooled": {
+  "ms_int": 0.9319667958943859,
+  "ms_noise": 0.7080290212384796,
+  "real_share": 0.24028514282099367,
+  "n_datasets_pass": 1
+ },
+ "floors": {
+  "PhonemeSpectra_a00": {
+   "majority": 0.19148936170212766,
+   "probe_accs": [
+    0.19148936170212766,
+    0.23404255319148937,
+    0.1702127659574468
+   ],
+   "floor": 0.19858156028368792
+  },
+  "PhonemeSpectra_a01": {
+   "majority": 0.04659498207885305,
+   "probe_accs": [
+    0.11469534050179211,
+    0.11469534050179211,
+    0.1111111111111111
+   ],
+   "floor": 0.1135005973715651
+  },
+  "PhonemeSpectra_a02": {
+   "majority": 0.10588235294117647,
+   "probe_accs": [
+    0.10588235294117647,
+    0.10588235294117647,
+    0.1411764705882353
+   ],
+   "floor": 0.1176470588235294
+  },
+  "PhonemeSpectra_a03": {
+   "majority": 0.07878787878787878,
+   "probe_accs": [
+    0.1393939393939394,
+    0.11515151515151516,
+    0.13333333333333333
+   ],
+   "floor": 0.12929292929292932
+  },
+  "PhonemeSpectra_a04": {
+   "majority": 0.02564102564102564,
+   "probe_accs": [
+    0.038461538461538464,
+    0.07692307692307693,
+    0.038461538461538464
+   ],
+   "floor": 0.05128205128205129
+  },
+  "PhonemeSpectra_a05": {
+   "majority": 0.05,
+   "probe_accs": [
+    0.1125,
+    0.08125,
+    0.1
+   ],
+   "floor": 0.09791666666666667
+  },
+  "PhonemeSpectra_a06": {
+   "majority": 0.05,
+   "probe_accs": [
+    0.05,
+    0.05,
+    0.075
+   ],
+   "floor": 0.05833333333333333
+  },
+  "PhonemeSpectra_a07": {
+   "majority": 0.036231884057971016,
+   "probe_accs": [
+    0.08695652173913043,
+    0.11231884057971014,
+    0.11594202898550725
+   ],
+   "floor": 0.10507246376811595
+  },
+  "HandMovementDirection_a00": {
+   "majority": 0.3076923076923077,
+   "probe_accs": [
+    0.23076923076923078,
+    0.23076923076923078,
+    0.23076923076923078
+   ],
+   "floor": 0.3076923076923077
+  },
+  "HandMovementDirection_a01": {
+   "majority": 0.3114754098360656,
+   "probe_accs": [
+    0.36065573770491804,
+    0.3114754098360656,
+    0.3114754098360656
+   ],
+   "floor": 0.3278688524590164
+  },
+  "HandMovementDirection_a02": {
+   "majority": 0.3157894736842105,
+   "probe_accs": [
+    0.21052631578947367,
+    0.10526315789473684,
+    0.15789473684210525
+   ],
+   "floor": 0.3157894736842105
+  },
+  "HandMovementDirection_a03": {
+   "majority": 0.2894736842105263,
+   "probe_accs": [
+    0.2894736842105263,
+    0.2894736842105263,
+    0.2894736842105263
+   ],
+   "floor": 0.2894736842105263
+  },
+  "HandMovementDirection_a04": {
+   "majority": 0.2857142857142857,
+   "probe_accs": [
+    0.2857142857142857,
+    0.2857142857142857,
+    0.2857142857142857
+   ],
+   "floor": 0.2857142857142857
+  },
+  "HandMovementDirection_a05": {
+   "majority": 0.3225806451612903,
+   "probe_accs": [
+    0.3225806451612903,
+    0.3225806451612903,
+    0.3225806451612903
+   ],
+   "floor": 0.3225806451612903
+  },
+  "HandMovementDirection_a06": {
+   "majority": 0.3076923076923077,
+   "probe_accs": [
+    0.3076923076923077,
+    0.23076923076923078,
+    0.23076923076923078
+   ],
+   "floor": 0.3076923076923077
+  },
+  "HandMovementDirection_a07": {
+   "majority": 0.29850746268656714,
+   "probe_accs": [
+    0.23880597014925373,
+    0.23880597014925373,
+    0.2537313432835821
+   ],
+   "floor": 0.29850746268656714
+  },
+  "Cricket_a00": {
+   "majority": 0.26666666666666666,
+   "probe_accs": [
+    0.6,
+    0.6,
+    0.6
+   ],
+   "floor": 0.6
+  },
+  "Cricket_a01": {
+   "majority": 0.10810810810810811,
+   "probe_accs": [
+    0.8648648648648649,
+    0.8378378378378378,
+    0.8648648648648649
+   ],
+   "floor": 0.8558558558558559
+  },
+  "Cricket_a02": {
+   "majority": 0.15384615384615385,
+   "probe_accs": [
+    0.9230769230769231,
+    0.8846153846153846,
+    0.9230769230769231
+   ],
+   "floor": 0.9102564102564102
+  },
+  "Cricket_a03": {
+   "majority": 0.12,
+   "probe_accs": [
+    0.72,
+    0.76,
+    0.8
+   ],
+   "floor": 0.7600000000000001
+  },
+  "Cricket_a04": {
+   "majority": 0.21428571428571427,
+   "probe_accs": [
+    0.42857142857142855,
+    0.42857142857142855,
+    0.42857142857142855
+   ],
+   "floor": 0.42857142857142855
+  },
+  "Cricket_a05": {
+   "majority": 0.15384615384615385,
+   "probe_accs": [
+    0.8846153846153846,
+    0.8846153846153846,
+    0.8461538461538461
+   ],
+   "floor": 0.8717948717948718
+  },
+  "Cricket_a06": {
+   "majority": 0.26666666666666666,
+   "probe_accs": [
+    0.8666666666666667,
+    0.9333333333333333,
+    0.8666666666666667
+   ],
+   "floor": 0.888888888888889
+  },
+  "Cricket_a07": {
+   "majority": 0.08333333333333333,
+   "probe_accs": [
+    0.8541666666666666,
+    0.8125,
+    0.7916666666666666
+   ],
+   "floor": 0.8194444444444443
+  }
+ },
+ "fidelity_pilot": {
+  "rho_per_task": {
+   "PhonemeSpectra_a00": 0.5599824868585518,
+   "PhonemeSpectra_a01": 0.7541554908791861,
+   "PhonemeSpectra_a02": 0.7215888300330546,
+   "PhonemeSpectra_a03": 0.7907045836947362,
+   "PhonemeSpectra_a04": 0.08991129912335759,
+   "PhonemeSpectra_a05": 0.6554618476983711,
+   "PhonemeSpectra_a06": 0.04865610806093484,
+   "PhonemeSpectra_a07": 0.8009790999811711,
+   "HandMovementDirection_a00": 0.06143260078903668,
+   "HandMovementDirection_a01": 0.17104067966903447,
+   "HandMovementDirection_a02": 0.3147391089585654,
+   "HandMovementDirection_a03": 0.3411129802967543,
+   "HandMovementDirection_a04": 0.07628084582566938,
+   "HandMovementDirection_a05": 0.30742808863584054,
+   "HandMovementDirection_a06": 0.030857138608618793,
+   "HandMovementDirection_a07": 0.42587112810477956,
+   "Cricket_a00": 0.4975917073794557,
+   "Cricket_a01": 0.8046990610441549,
+   "Cricket_a02": 0.6865865263618205,
+   "Cricket_a03": 0.8487014091747491,
+   "Cricket_a04": 0.161714533220472,
+   "Cricket_a05": 0.7323122774312194,
+   "Cricket_a06": 0.7702775187969602,
+   "Cricket_a07": 0.2259659293457143
+  },
+  "rho_median": 0.4617314177421176,
+  "rho_q25": 0.16870914305689386,
+  "rho_q75": 0.737773080793211,
+  "recall3_per_task": {
+   "PhonemeSpectra_a00": 0.6666666666666666,
+   "PhonemeSpectra_a01": 1.0,
+   "PhonemeSpectra_a02": 0.6666666666666666,
+   "PhonemeSpectra_a03": 1.0,
+   "PhonemeSpectra_a04": 0.3333333333333333,
+   "PhonemeSpectra_a05": 0.3333333333333333,
+   "PhonemeSpectra_a06": 0.3333333333333333,
+   "PhonemeSpectra_a07": 1.0,
+   "HandMovementDirection_a00": 0.3333333333333333,
+   "HandMovementDirection_a01": 0.6666666666666666,
+   "HandMovementDirection_a02": 0.6666666666666666,
+   "HandMovementDirection_a03": 0.6666666666666666,
+   "HandMovementDirection_a04": 0.3333333333333333,
+   "HandMovementDirection_a05": 1.0,
+   "HandMovementDirection_a06": 0.0,
+   "HandMovementDirection_a07": 1.0,
+   "Cricket_a00": 0.3333333333333333,
+   "Cricket_a01": 1.0,
+   "Cricket_a02": 0.6666666666666666,
+   "Cricket_a03": 0.6666666666666666,
+   "Cricket_a04": 0.6666666666666666,
+   "Cricket_a05": 1.0,
+   "Cricket_a06": 0.6666666666666666,
+   "Cricket_a07": 0.3333333333333333
+  },
+  "recall3_mean": 0.6388888888888888,
+  "residual_by_augmax": {
+   "le0.5": {
+    "PhonemeSpectra_a00": 1.218311733247157,
+    "PhonemeSpectra_a04": -0.29887898516918965,
+    "PhonemeSpectra_a05": 0.3156968016207856,
+    "PhonemeSpectra_a06": 1.0075322699629745,
+    "PhonemeSpectra_a07": 0.41189060366543895,
+    "HandMovementDirection_a01": 1.8803954807958227,
+    "HandMovementDirection_a02": -0.39205003301862856,
+    "HandMovementDirection_a03": -0.2653135989356729,
+    "HandMovementDirection_a04": 0.07320367085243051,
+    "HandMovementDirection_a06": 0.34943716968316607,
+    "HandMovementDirection_a07": -0.31766871791263085,
+    "Cricket_a01": -0.3576916744405656,
+    "Cricket_a04": 0.12713240549411384,
+    "Cricket_a05": -0.08997850753139147
+   },
+   "0.5-0.8": {
+    "PhonemeSpectra_a00": 0.21635194756056975,
+    "PhonemeSpectra_a01": -0.4838245163942968,
+    "PhonemeSpectra_a02": -0.03556901339426713,
+    "PhonemeSpectra_a03": 0.30746432296118387,
+    "PhonemeSpectra_a04": 0.640391337070808,
+    "PhonemeSpectra_a05": 0.23874556479606393,
+    "PhonemeSpectra_a06": -0.3017458983118176,
+    "PhonemeSpectra_a07": 0.4293049836382576,
+    "HandMovementDirection_a00": 0.07169323570385218,
+    "HandMovementDirection_a01": -1.0071657272079455,
+    "HandMovementDirection_a02": 0.22004101136765347,
+    "HandMovementDirection_a03": -0.25165887259693315,
+    "HandMovementDirection_a04": -0.010457667264633184,
+    "HandMovementDirection_a05": -0.2955314713142514,
+    "HandMovementDirection_a06": 0.2933292774503773,
+    "HandMovementDirection_a07": -0.7713850072983223,
+    "Cricket_a00": -0.009369391896546425,
+    "Cricket_a01": -0.2001215378525613,
+    "Cricket_a02": 0.08817453918947697,
+    "Cricket_a03": 0.159854195204134,
+    "Cricket_a04": 0.1289302941171346,
+    "Cricket_a05": 0.13462704801899802,
+    "Cricket_a06": -0.004725763528924238,
+    "Cricket_a07": -0.06023682514323304
+   },
+   "gt0.8": {
+    "PhonemeSpectra_a00": -0.13891463489929567,
+    "PhonemeSpectra_a01": 0.06911778805632794,
+    "PhonemeSpectra_a02": 0.008892253348566581,
+    "PhonemeSpectra_a03": -0.08926383569840853,
+    "PhonemeSpectra_a04": -0.10737784961380767,
+    "PhonemeSpectra_a05": -0.062091117349789046,
+    "PhonemeSpectra_a06": 0.08255973612382217,
+    "PhonemeSpectra_a07": -0.1240751765410154,
+    "HandMovementDirection_a00": -0.007965915078206431,
+    "HandMovementDirection_a01": 0.03863750528630651,
+    "HandMovementDirection_a02": -0.06235724416061798,
+    "HandMovementDirection_a03": 0.08434144841026911,
+    "HandMovementDirection_a04": -2.220446049250313e-16,
+    "HandMovementDirection_a05": 0.0857994594138163,
+    "HandMovementDirection_a06": -0.05506445438728909,
+    "HandMovementDirection_a07": 0.1498781442940177,
+    "Cricket_a00": 0.001653422099389757,
+    "Cricket_a01": 0.07195951717045257,
+    "Cricket_a02": -0.022043634797370246,
+    "Cricket_a03": -0.028209563859552547,
+    "Cricket_a04": -0.03217638950981569,
+    "Cricket_a05": -0.017151668604811727,
+    "Cricket_a06": 0.0013719958632353421,
+    "Cricket_a07": 0.010630027966448883
+   }
+  },
+  "residual_by_augmax_mean": {
+   "le0.5": 0.26157275845098643,
+   "0.5-0.8": -0.020953497296884272,
+   "gt0.8": -0.005910424436138641
+  },
+  "n_tasks": 24
+ },
+ "fidelity_reference": {
+  "official29": 0.5684533515349603,
+  "ucr84": 0.7250593765152324
+ },
+ "similarity": {
+  "same_dataset_mean": 0.09882841812656643,
+  "cross_dataset_mean": 0.032769661676327895,
+  "n_same_pairs": 84,
+  "n_cross_pairs": 192
+ },
+ "failed_share_random_all": 0.53125,
+ "cost": {
+  "n_rows": 1008,
+  "gpu_seconds": 22429.10000000002,
+  "gpu_hours": 6.230305555555561,
+  "devices": [
+   "NVIDIA GeForce RTX 4090"
+  ]
+ },
+ "predictions": {
+  "P1": true,
+  "P2": false,
+  "P3": true,
+  "P4": true,
+  "P5": false,
+  "P6": null,
+  "P7": true
+ },
+ "n_labels": 1008,
+ "n_missing": 0,
+ "n_error": 0
+}
