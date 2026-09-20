@@ -1,0 +1,285 @@
+{
+ "gates": {
+  "G-A0": true,
+  "G-A1": false,
+  "G-A2": true
+ },
+ "verdict": "ACTS-S1P-SAME",
+ "pilot_sets": [
+  "PhonemeSpectra",
+  "Cricket",
+  "UWaveGestureLibrary"
+ ],
+ "per_dataset": {
+  "PhonemeSpectra": {
+   "n_tasks": 8,
+   "split_half_3": 0.8401155940271144,
+   "ms_int": 0.3689976772189315,
+   "ss_int": 49.07669107011789,
+   "df": 133,
+   "ms_noise": 0.30777980491820695,
+   "real_share": 0.16590313728290257,
+   "n_cfg": 20,
+   "noise_ms_single": 0.6155596098364139,
+   "noise_ms_cond_surv": 0.9889048849478926,
+   "n_cond_pairs": 51,
+   "failed_share_shared": 0.59375,
+   "failed_share_random": 0.6125,
+   "missing": 0
+  },
+  "Cricket": {
+   "n_tasks": 8,
+   "split_half_3": 0.7056277592012543,
+   "ms_int": 0.3927286593639496,
+   "ss_int": 52.23291169540529,
+   "df": 133,
+   "ms_noise": 0.1046464276399844,
+   "real_share": 0.7335401296929379,
+   "n_cfg": 20,
+   "noise_ms_single": 0.2092928552799688,
+   "noise_ms_cond_surv": 0.35244202494103793,
+   "n_cond_pairs": 45,
+   "failed_share_shared": 0.65,
+   "failed_share_random": 0.5125,
+   "missing": 0
+  },
+  "UWaveGestureLibrary": {
+   "n_tasks": 8,
+   "split_half_3": 0.7983680589467019,
+   "ms_int": 0.4349826399709652,
+   "ss_int": 57.852691116138374,
+   "df": 133,
+   "ms_noise": 0.1238788411744832,
+   "real_share": 0.715209689327482,
+   "n_cfg": 20,
+   "noise_ms_single": 0.2477576823489664,
+   "noise_ms_cond_surv": 0.3212567600499773,
+   "n_cond_pairs": 85,
+   "failed_share_shared": 0.4,
+   "failed_share_random": 0.2875,
+   "missing": 0
+  }
+ },
+ "split_half_3_mean": 0.7813704707250236,
+ "pooled": {
+  "ms_int": 0.39890299218461545,
+  "ms_noise_mean": 0.17849902294845452,
+  "real_share": 0.5525252343410757,
+  "n_datasets_pass": 2
+ },
+ "fidelity_surv_median": 0.4384793176339534,
+ "fidelity_surv_n": 24,
+ "similarity": {
+  "same_dataset_mean": 0.49992720599326723,
+  "cross_dataset_mean": 0.33704700628228856
+ },
+ "failed_share_all": 0.509375,
+ "n_labels": 960,
+ "n_missing": 0,
+ "admission": {
+  "admitted": [
+   "Handwriting",
+   "UniMiB-SHAR",
+   "UWaveGestureLibrary"
+  ],
+  "rejected": [
+   "PhonemeSpectra",
+   "EthanolConcentration",
+   "Cricket",
+   "HandMovementDirection",
+   "SelfRegulationSCP2"
+  ],
+  "fallback_used": [
+   "SelfRegulationSCP1"
+  ],
+  "pool": [
+   "Handwriting",
+   "UniMiB-SHAR",
+   "UWaveGestureLibrary",
+   "SelfRegulationSCP1"
+  ],
+  "below_floor": true,
+  "metrics": {
+   "Handwriting": 0.8917582417582417,
+   "UniMiB-SHAR": 0.8363636363636363,
+   "PhonemeSpectra": null,
+   "UWaveGestureLibrary": 0.6377762211934546,
+   "EthanolConcentration": null,
+   "Cricket": null,
+   "HandMovementDirection": null,
+   "SelfRegulationSCP2": null,
+   "SelfRegulationSCP1": 0.3812184939074674
+  },
+  "detail": {
+   "Handwriting": {
+    "Handwriting_a01": {
+     "n_survivors": 13,
+     "rho": 0.8846153846153846,
+     "floor": 0.3228487193661323,
+     "failed0": 0.3,
+     "failed1": 0.3,
+     "noise_ms_single": 0.05614199789690533
+    },
+    "Handwriting_a07": {
+     "n_survivors": 14,
+     "rho": 0.8989010989010989,
+     "floor": 0.45465151515151514,
+     "failed0": 0.3,
+     "failed1": 0.3,
+     "noise_ms_single": 0.06407800954335216
+    }
+   },
+   "UniMiB-SHAR": {
+    "UniMiB-SHAR_a01": {
+     "n_survivors": 10,
+     "rho": 0.9272727272727272,
+     "floor": 0.6928855721393035,
+     "failed0": 0.5,
+     "failed1": 0.5,
+     "noise_ms_single": 0.03360246207845796
+    },
+    "UniMiB-SHAR_a07": {
+     "n_survivors": 10,
+     "rho": 0.7454545454545454,
+     "floor": 0.5687423687423688,
+     "failed0": 0.45,
+     "failed1": 0.5,
+     "noise_ms_single": 0.0827853842107621
+    }
+   },
+   "PhonemeSpectra": {
+    "PhonemeSpectra_a01": {
+     "n_survivors": 8,
+     "rho": 0.6428571428571429,
+     "floor": 0.14502227286853828,
+     "failed0": 0.6,
+     "failed1": 0.6,
+     "noise_ms_single": 0.08510899239712769
+    },
+    "PhonemeSpectra_a07": {
+     "n_survivors": 7,
+     "rho": NaN,
+     "floor": 0.1005235602094241,
+     "failed0": 0.6,
+     "failed1": 0.6,
+     "noise_ms_single": 0.199485812226243
+    }
+   },
+   "UWaveGestureLibrary": {
+    "UWaveGestureLibrary_a01": {
+     "n_survivors": 10,
+     "rho": 0.3780558086578446,
+     "floor": 0.7695012441847885,
+     "failed0": 0.4,
+     "failed1": 0.5,
+     "noise_ms_single": 0.20901543975990128
+    },
+    "UWaveGestureLibrary_a07": {
+     "n_survivors": 11,
+     "rho": 0.8974966337290644,
+     "floor": 0.8497169497169498,
+     "failed0": 0.45,
+     "failed1": 0.35,
+     "noise_ms_single": 0.06500958122018186
+    }
+   },
+   "EthanolConcentration": {
+    "EthanolConcentration_a01": {
+     "n_survivors": 3,
+     "rho": NaN,
+     "floor": 0.3461804270023448,
+     "failed0": 0.8,
+     "failed1": 0.85,
+     "noise_ms_single": 0.34975347666663215
+    },
+    "EthanolConcentration_a07": {
+     "n_survivors": 9,
+     "rho": 0.7,
+     "floor": 0.4664781144781145,
+     "failed0": 0.45,
+     "failed1": 0.45,
+     "noise_ms_single": 0.12592527557819871
+    }
+   },
+   "Cricket": {
+    "Cricket_a01": {
+     "n_survivors": 9,
+     "rho": 0.6276205565667923,
+     "floor": 0.8969175627240144,
+     "failed0": 0.45,
+     "failed1": 0.5,
+     "noise_ms_single": 0.14590753935342232
+    },
+    "Cricket_a07": {
+     "n_survivors": 0,
+     "rho": NaN,
+     "floor": 0.861111111111111,
+     "failed0": 0.85,
+     "failed1": 0.85,
+     "noise_ms_single": 1.7307692307692037
+    }
+   },
+   "HandMovementDirection": {
+    "HandMovementDirection_a01": {
+     "n_survivors": 1,
+     "rho": NaN,
+     "floor": 0.2981651376146789,
+     "failed0": 0.75,
+     "failed1": 0.75,
+     "noise_ms_single": 0.6162111269891937
+    },
+    "HandMovementDirection_a07": {
+     "n_survivors": 4,
+     "rho": NaN,
+     "floor": 0.3039647577092511,
+     "failed0": 0.65,
+     "failed1": 0.6,
+     "noise_ms_single": 0.7377267448593663
+    }
+   },
+   "SelfRegulationSCP2": {
+    "SelfRegulationSCP2_a01": {
+     "n_survivors": 7,
+     "rho": NaN,
+     "floor": 0.5274449564772146,
+     "failed0": 0.5,
+     "failed1": 0.55,
+     "noise_ms_single": 0.565171413642876
+    },
+    "SelfRegulationSCP2_a07": {
+     "n_survivors": 1,
+     "rho": NaN,
+     "floor": 0.5366432748538011,
+     "failed0": 0.8,
+     "failed1": 0.85,
+     "noise_ms_single": 0.6364342105678505
+    }
+   },
+   "SelfRegulationSCP1": {
+    "SelfRegulationSCP1_a01": {
+     "n_survivors": 12,
+     "rho": 0.6278747498550463,
+     "floor": 0.7902439024390245,
+     "failed0": 0.3,
+     "failed1": 0.15,
+     "noise_ms_single": 0.40985636453689755
+    },
+    "SelfRegulationSCP1_a07": {
+     "n_survivors": 10,
+     "rho": 0.1345622379598885,
+     "floor": 0.7499930986887507,
+     "failed0": 0.45,
+     "failed1": 0.35,
+     "noise_ms_single": 0.6721833033540636
+    }
+   }
+  },
+  "published_gap": {
+   "HandMovementDirection": -0.067,
+   "EthanolConcentration": 0.057,
+   "SelfRegulationSCP2": 0.078,
+   "SelfRegulationSCP1": 0.381
+  }
+ },
+ "budget": "1x"
+}

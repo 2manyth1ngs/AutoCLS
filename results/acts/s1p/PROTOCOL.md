@@ -87,3 +87,8 @@
 1（档位只经 space.yaml；acts.yaml 只加 profile）；2（iters 规则显式落盘；3× 臂 iters = 3 × 规则值显式写进格；截点同一轨迹）；3（runs.jsonl + probe0.jsonl + resume + verify；阶段 A 格全部复用）；5（先红）；6（SCP1 若入源即从靶集移出；试点集只作源；靶数据只在 sanity 读尺寸）；7；8。
 
 ## §6 执行台账（跑后填写）
+
+- 协议锁 009bf86 → 实现 ed477f8（16 单测绿、本地冒烟 12/12 + 2/2）→ 阶段 A 准备 585ed15（72 任务、plan_A 880 格、服务器 `--check` 0 mismatch）。
+- 阶段 A（8k-4090 GPU 0 / 1，服务器时钟 2026-09-19 17:17 起）880 格 + 72 探针，15.85 GPU-h，verify OK（error 2 = PS_a07 一条配置两种子 SVM 480 s 超时 → failed）；`--analyze-a` → ADM 准入 HW / UniMiB / UWave + fallback SCP1（源池 4 < 7，limitation）、BUD = 1×；入库 edda5e3；`--plan-b` → plan_B 1,200 格 + 24 探针任务。
+- 阶段 B（GPU 0 / 1 / 6 三进程，服务器时钟 2026-09-20 00:13:38 起、03:35:38 退出，墙钟 3.37 h，10.74 GPU-h）1,200 格 + 36 新探针，verify 1200/1200 error 0、probe0 72/72 OK；拉回前缀核对逐位一致；`--analyze` → **ACTS-S1P-SAME**（G-A1 ✗ 0.781、G-A2 ✓ 0.553）；REPORT.md、diag_s1p.md 入库（本 commit）。
+- 预测 5/9（P1 ✓ P2 ✗ P3 ✗ P4 ✓ P5 ✓ P6 ✗ P7 ✗ P8 ✓ P9 ✓）。事后发现的协议盲点：G-A1 的对半分量在"强共同序 + 真实交互并存"时必 > 0.7，测不出分化（REPORT §5.1）。
