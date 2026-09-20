@@ -237,6 +237,17 @@ class TestPlanCAndHeadroom:
         assert r2["regret1_mean"] > 0.05 / 6 and r2["per_task"][0] == pytest.approx(0.99 - S1b[0, 0], abs=0.01)
 
 
+# ---------------------------------------------------------------- 分片：--resume 时只按未完成的格均分（磁盘写满后重启不再把已完成的任务算进负载）
+def test_part_tasks_balance_pending_only(cfg):
+    g = _g83()
+    cells = [{"task_id": f"T{i}", "key": f"k{i}_{s}", "iters": 600, "T": 100, "C": 3, "n_train": 200} for i in range(6) for s in (0, 1)]
+    done = {c["key"] for c in cells if c["task_id"] in ("T0", "T1", "T2", "T3")}          # 前 4 个任务已跑完
+    parts = g.part_tasks(cells, done, 2, cfg)
+    assert sorted(parts[0] + parts[1]) == ["T4", "T5"] and len(parts[0]) == 1 and len(parts[1]) == 1
+    assert sorted(sum(g.part_tasks(cells, set(), 2, cfg), [])) == [f"T{i}" for i in range(6)]   # 无完成记录 → 与原分法同（全部任务）
+    assert sorted(sum(g.part_tasks(cells, {c["key"] for c in cells}, 2, cfg), [])) == []        # 全部完成 → 空
+
+
 # ---------------------------------------------------------------- 注册表回退
 def test_load_dataset_full_candidate_pool_fallback(monkeypatch):
     import autocls.data.source_pool as sp

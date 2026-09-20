@@ -515,11 +515,18 @@ def plan_path(outdir: Path, phase: Optional[str]) -> Path:
     return outdir / (f"plan_{phase}.json" if phase else "plan.json")
 
 
+def part_tasks(cells: Sequence[Mapping], done_keys: set, n_parts: int, cfg: Mapping) -> list[list[str]]:
+    """分片只按**未完成**的格均衡（--resume 重启时已完成的任务不再占负载；无完成记录时与 split_parts 全量分法相同）。"""
+    pending = [c for c in cells if c["key"] not in done_keys]
+    return split_parts(pending, n_parts, cfg) if pending else [[] for _ in range(int(n_parts))]
+
+
 def cmd_run(args, cfg: Mapping, outdir: Path) -> None:
     plan = json.loads(plan_path(outdir, getattr(args, "phase", None)).read_text(encoding="utf-8"))
     cells = plan["cells"]
     if getattr(args, "parts", 0):
-        sel = set(split_parts(cells, int(args.parts), cfg)[int(args.part)])
+        done_keys = set(_g35.load_done(outdir / "runs.jsonl")) if args.resume and (outdir / "runs.jsonl").exists() else set()
+        sel = set(part_tasks(cells, done_keys, int(args.parts), cfg)[int(args.part)])
         cells = [c for c in cells if c["task_id"] in sel]
     if args.tasks:
         sel = set(args.tasks)
