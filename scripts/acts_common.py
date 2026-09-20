@@ -22,7 +22,7 @@ from typing import Any, Callable, Iterable, Mapping, Optional, Sequence
 
 import numpy as np
 import yaml
-from scipy.stats import spearmanr
+from scipy.stats import rankdata, spearmanr
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -34,6 +34,7 @@ from autocls.space.cls_space import CLS, CLSSpace, DEFAULT_SPACE_YAML  # noqa: E
 
 ACTS_YAML = ROOT / "configs" / "acts.yaml"
 UEA30_YAML = ROOT / "configs" / "uea30.yaml"
+CANDIDATE_POOL_YAML = ROOT / "configs" / "candidate_pool.yaml"   # S1″ 外部源（npz）注册表
 OUT_ROOT = ROOT / "results" / "acts"
 STAGE = "s1_labels"
 ARM_SHARED, ARM_RANDOM, ARM_ANCHOR = "shared", "random", "anchor"
@@ -57,10 +58,22 @@ def load_acts_config(path: str | Path | None = None, profile: Optional[str] = No
     cfg = yaml.safe_load(Path(path or ACTS_YAML).read_text(encoding="utf-8"))
     if not profile:
         return cfg
-    prof = (cfg.get("profiles") or {}).get(profile)
-    if prof is None:
-        raise KeyError(f"acts.yaml 无 profiles.{profile}")
-    merged = _deep_merge({k: v for k, v in cfg.items() if k != "profiles"}, prof)
+    profiles = cfg.get("profiles") or {}
+    chain: list[dict] = []
+    name: Optional[str] = str(profile)
+    seen: set[str] = set()
+    while name:                                   # S1″：`extends: s1p` → 先叠父 profile 再叠子（链式，防环）
+        if name in seen:
+            raise ValueError(f"profiles.{name} 的 extends 成环")
+        seen.add(name)
+        prof = profiles.get(name)
+        if prof is None:
+            raise KeyError(f"acts.yaml 无 profiles.{name}")
+        chain.append({k: v for k, v in prof.items() if k != "extends"})
+        name = prof.get("extends")
+    merged = {k: v for k, v in cfg.items() if k != "profiles"}
+    for prof in reversed(chain):
+        merged = _deep_merge(merged, prof)
     merged["profile"] = str(profile)
     return merged
 
@@ -87,12 +100,49 @@ def prune_rules(cfg: Optional[Mapping] = None) -> list[dict]:
     return list((cfg.get("prune") or {}).get("rules") or [])
 
 
+def _cond_ok(value: Any, cond: Mapping) -> bool:
+    """剪枝谓词单条件：equals（S1）/ gte / lte / in（S1″ 新增，只对数值档位；档位取值仍只来自 space.yaml）。"""
+    if "equals" in cond:
+        return _match(value, cond["equals"])
+    if "gte" in cond:
+        return isinstance(value, (int, float)) and not isinstance(value, bool) and float(value) >= float(cond["gte"]) - 1e-12
+    if "lte" in cond:
+        return isinstance(value, (int, float)) and not isinstance(value, bool) and float(value) <= float(cond["lte"]) + 1e-12
+    if "in" in cond:
+        return any(_match(value, t) for t in cond["in"])
+    raise ValueError(f"未知剪枝条件 {dict(cond)}")
+
+
 def is_pruned(cls_cfg: CLS, cfg: Optional[Mapping] = None) -> bool:
-    """任一规则的全部条件成立 → 剪掉（S1：τ=100；info_nce ∧ τ=10）。"""
+    """任一规则的全部条件成立 → 剪掉（S1：τ=100；info_nce ∧ τ=10；S1″ 加 家族 ∧ τ ≥ 1、triplet ∧ τ ≥ 10）。"""
     for rule in prune_rules(cfg):
-        if all(_match(getattr(cls_cfg, cond["field"]), cond["equals"]) for cond in rule["all"]):
+        if all(_cond_ok(getattr(cls_cfg, cond["field"]), cond) for cond in rule["all"]):
             return True
     return False
+
+
+def pruning_regret(rows: Iterable[Mapping], cfg: Mapping) -> dict:
+    """S1″ G-A0（regret 门）：官方口径目录（stage s1_catalog、seed 0、非 error）每靶 (冠军 acc − 剪后最好 acc)；
+    均值 ≤ prune.regret_gate.mean_max 过门。剪后为空的靶 gap = 冠军 acc（全剪）。"""
+    by: dict[str, list] = defaultdict(list)
+    for r in rows:
+        if r.get("stage") != "s1_catalog" or int(r.get("seed", 0)) != 0 or r.get("error") or r.get("acc") is None:
+            continue
+        by[r["dataset"]].append(r)
+    gaps: dict[str, float] = {}
+    lost: list[tuple[str, str, float]] = []
+    for d, rs in sorted(by.items()):
+        best = max(rs, key=lambda r: float(r["acc"]))
+        keep = [float(r["acc"]) for r in rs if not is_pruned(CLS(**r["cls"]), cfg)]
+        gap = float(best["acc"]) - (max(keep) if keep else 0.0)
+        gaps[d] = gap
+        if is_pruned(CLS(**best["cls"]), cfg):
+            lost.append((d, best["cls_key"], gap))
+    n = len(gaps)
+    mean_gap = float(np.mean(list(gaps.values()))) if n else float("nan")
+    gate = float(((cfg.get("prune") or {}).get("regret_gate") or {}).get("mean_max", 0.01))
+    return {"n": n, "mean_gap": mean_gap, "max_gap": (max(gaps.values()) if n else float("nan")), "n_lost": len(lost), "lost": lost,
+            "per_target": gaps, "gate_mean_max": gate, "ok": bool(n and mean_gap <= gate + 1e-9)}
 
 
 def pruned_share(space: CLSSpace, cfg: Mapping, *, n: int = 20000, seed: int = 0) -> float:
@@ -355,7 +405,14 @@ def load_dataset_full(name: str) -> tuple[np.ndarray, np.ndarray]:
     """源数据集 TRAIN+TEST 合并、**原生长度**（不用注册表 crop_len；部署靶就是原生长度）。注册表分派同 pq_common.REG_OF。"""
     pq = importlib.import_module("scripts.pq_common")
     from autocls.data.source_pool import load_registry, load_source_dataset
-    reg = pq.registry_for(name) if name in pq.REG_OF else load_registry()     # PQ 池外的源（如 SCP1）走默认注册表 configs/source_pool.yaml
+    if name in pq.REG_OF:
+        reg = pq.registry_for(name)
+    else:
+        reg = load_registry()                                                  # PQ 池外的源（如 SCP1）走默认注册表 configs/source_pool.yaml
+        if not any(e.name == name for e in reg.entries):
+            reg = load_registry(CANDIDATE_POOL_YAML)                          # S1″ 外部源（PTB-XL / SleepEDF / PAMAP2 / Opportunity）走候选池注册表（npz）
+            if not any(e.name == name for e in reg.entries):
+                raise KeyError(f"{name!r} 不在 source_pool.yaml 也不在 candidate_pool.yaml")
     return load_source_dataset(name, reg, crop_len=None)
 
 
@@ -526,8 +583,214 @@ def coverage_table(subsets: Sequence[Mapping], targets: Mapping[str, Mapping]) -
             "summary": {"n_targets": len(targets), "n_subsets": int(S.shape[0]), "outside_any": outside_any, "outside_by_axis": outside_by_axis}}
 
 
+# ================================================================ S1″（PROTOCOL results/acts/s1pp/PROTOCOL.md）
+# ---------------------------------------------------------------- §1.2 尺度：中位钉底 + 前一半噪声 + 两因素分解
+def clip_z(v: Sequence[float], q: float) -> tuple[np.ndarray, float, float, float]:
+    """任务内候选向量 v 取 v_c = max(v, quantile_q(v))（秩定义的地板，不依赖探针），再在 v_c 上 z 化；返回 (z, mu, sd, cut)。"""
+    v = np.asarray(v, dtype=float)
+    cut = float(np.quantile(v, float(q)))
+    c = np.maximum(v, cut)
+    mu = float(c.mean())
+    sd = float(c.std()) or 1.0
+    return (c - mu) / sd, mu, sd, cut
+
+
+def clip_z_apply(v: Sequence[float], mu: float, sd: float, cut: float) -> np.ndarray:
+    """用同一任务的 (mu, sd, cut) 把另一向量（如单种子值）钉底 z 化。"""
+    return (np.maximum(np.asarray(v, dtype=float), cut) - mu) / sd
+
+
+def top_half_sigma(a0: Sequence[float], a1: Sequence[float], *, top_frac: float = 0.5) -> tuple[float, float, int]:
+    """σ_task = 两种子都有的配置里按两种子均值排前 top_frac 的 (seed0 − seed1)² 均值 / 2 开方；σ_mean = σ_task / √2；返回 (σ_task, σ_mean, n_top)。"""
+    a0, a1 = np.asarray(a0, dtype=float), np.asarray(a1, dtype=float)
+    idx = np.where(np.isfinite(a0) & np.isfinite(a1))[0]
+    if idx.size == 0:
+        return float("nan"), float("nan"), 0
+    order = idx[np.argsort(-(a0[idx] + a1[idx]))]
+    n_top = max(1, int(round(len(order) * float(top_frac))))
+    d = a0[order[:n_top]] - a1[order[:n_top]]
+    sigma = float(np.sqrt(np.mean(d ** 2) / 2.0))
+    return sigma, sigma / math.sqrt(2.0), n_top
+
+
+def two_way_decomp(Z: np.ndarray) -> dict:
+    """任务 × 配置矩阵的两因素分解：SS_task / SS_cfg / SS_int、MS_int = SS_int / ((n_t−1)(n_c−1))。"""
+    Z = np.asarray(Z, dtype=float)
+    nt, nc = Z.shape
+    G = Z.mean()
+    ss_task = float(((Z.mean(1) - G) ** 2).sum() * nc)
+    ss_cfg = float(((Z.mean(0) - G) ** 2).sum() * nt)
+    ss_int = float(((Z - Z.mean(0, keepdims=True) - Z.mean(1, keepdims=True) + G) ** 2).sum())
+    df = max(1, (nt - 1) * (nc - 1))
+    return {"ss_task": ss_task, "ss_cfg": ss_cfg, "ss_int": ss_int, "ss_total": ss_task + ss_cfg + ss_int, "ms_int": ss_int / df, "df": df,
+            "n_tasks": int(nt), "n_cfg": int(nc)}
+
+
+def net_interaction_share(Z: np.ndarray, Z0: np.ndarray, Z1: np.ndarray) -> dict:
+    """净占比 = (SS_int − MS_noise·|Z|) / SS_total；毛占比 = SS_int / SS_total；真实份额 = (MS_int − MS_noise) / MS_int（S1′ G-A2 量）。
+    MS_noise = 两种子均值标签的噪声均方 = mean((z0 − z1)²) / 4。"""
+    Z = np.asarray(Z, dtype=float)
+    d = two_way_decomp(Z)
+    nm = noise_ms_of_mean(np.asarray(Z0, dtype=float), np.asarray(Z1, dtype=float))
+    nm = 0.0 if not np.isfinite(nm) else nm
+    tot = d["ss_total"]
+    gross = d["ss_int"] / tot if tot > 0 else float("nan")
+    net = (d["ss_int"] - nm * Z.size) / tot if tot > 0 else float("nan")
+    real = (d["ms_int"] - nm) / d["ms_int"] if d["ms_int"] > 0 else float("nan")
+    return {**d, "ms_noise": float(nm), "gross_share": float(gross), "net_share": float(net), "real_share": float(real)}
+
+
+# ---------------------------------------------------------------- §1.5 准入 v2（不依赖探针地板）
+def admission_v2_metrics(tasks: Mapping[str, tuple[Sequence[float], Sequence[float]]], *, clip_quantile: float, noise_top_frac: float) -> dict:
+    """tasks = {task_id: (seed0 向量, seed1 向量)}（同一批 shared，同序）。
+    (i) rho_top = 各任务前一半（按两种子均值）Spearman(seed0, seed1) 的均值；(ii) net_share = 任务 × shared 钉底 z 的交互净占比；
+    (iii) iqr_sigma = 各任务前一半 IQR / σ_mean 的中位。"""
+    Z, Z0, Z1, rho, iqr, per = [], [], [], [], [], {}
+    for tid, (a0, a1) in tasks.items():
+        a0, a1 = np.asarray(a0, dtype=float), np.asarray(a1, dtype=float)
+        m = (a0 + a1) / 2.0
+        z, mu, sd, cut = clip_z(m, clip_quantile)
+        Z.append(z); Z0.append(clip_z_apply(a0, mu, sd, cut)); Z1.append(clip_z_apply(a1, mu, sd, cut))
+        order = np.argsort(-m)
+        top = order[: max(2, int(round(len(order) * 0.5)))]
+        r = float(spearmanr(a0[top], a1[top]).correlation) if np.std(a0[top]) > 0 and np.std(a1[top]) > 0 else float("nan")
+        sig, sm, _n = top_half_sigma(a0, a1, top_frac=noise_top_frac)
+        q75, q25 = np.percentile(m[top], [75, 25])
+        iq = (q75 - q25) / sm if sm > 0 else float("nan")
+        rho.append(r); iqr.append(iq)
+        per[tid] = {"rho_top": r, "sigma_task": sig, "sigma_mean": sm, "iqr_sigma": iq, "n_top": int(len(top))}
+    share = net_interaction_share(np.array(Z), np.array(Z0), np.array(Z1)) if len(Z) >= 2 else {"net_share": float("nan"), "gross_share": float("nan"), "real_share": float("nan"), "ms_noise": float("nan")}
+    return {"rho_top": float(np.nanmean(rho)) if rho else float("nan"), "net_share": float(share["net_share"]), "gross_share": float(share["gross_share"]),
+            "real_share": float(share["real_share"]), "ms_noise": float(share["ms_noise"]), "iqr_sigma": float(np.nanmedian(iqr)) if iqr else float("nan"),
+            "n_tasks": len(tasks), "per_task": per}
+
+
+def admission_v2_decision(metrics: Mapping[str, Mapping], cfg: Mapping) -> dict:
+    """三条全过才准入：rho_top ≥ top_half_rho_min ∧ net_share ≥ net_share_min ∧ iqr_sigma ≥ iqr_sigma_min，且 n_tasks ≥ min_tasks。"""
+    a = cfg["admission"]
+    order = [s for s in a.get("candidates", []) if s in metrics] + [s for s in metrics if s not in a.get("candidates", [])]
+    admitted, rejected, reasons = [], [], {}
+    for src in order:
+        m = metrics[src]
+        why = []
+        if int(m.get("n_tasks", 0)) < int(a.get("min_tasks", 4)):
+            why.append("min_tasks")
+        else:
+            if not (np.isfinite(m.get("rho_top", float("nan"))) and m["rho_top"] >= float(a["top_half_rho_min"])):
+                why.append("rho_top")
+            if not (np.isfinite(m.get("net_share", float("nan"))) and m["net_share"] >= float(a["net_share_min"])):
+                why.append("net_share")
+            if not (np.isfinite(m.get("iqr_sigma", float("nan"))) and m["iqr_sigma"] >= float(a["iqr_sigma_min"])):
+                why.append("iqr_sigma")
+        (admitted if not why else rejected).append(src)
+        reasons[src] = why
+    return {"admitted": admitted, "rejected": rejected, "pool": list(admitted), "below_floor": len(admitted) < int(a["pool_floor"]), "reasons": reasons,
+            "metrics": {s: {k: (None if isinstance(v, float) and not np.isfinite(v) else v) for k, v in metrics[s].items() if k != "per_task"} for s in order}}
+
+
+# ---------------------------------------------------------------- §1.1 配对规则（S2 用；本轮只报产量）
+def pair_weights(vals: Sequence[float], n_seeds: Sequence[int], sigma_task: float, *, dead_zone_sigma: float, cap_sigma: float, top_quartile_boost: float) -> np.ndarray:
+    """对 (i, j)：sd_gap = σ_task·√(1/n_i + 1/n_j)；gap < dead_zone·sd_gap → 0，否则 min(gap / (cap·sd_gap), 1)；含前四分位配置的对 × boost。"""
+    v = np.asarray(vals, dtype=float)
+    n = np.asarray(n_seeds, dtype=float)
+    q75 = float(np.quantile(v, 0.75))
+    top = v >= q75
+    W = np.zeros((len(v), len(v)), dtype=float)
+    for i in range(len(v)):
+        for j in range(i + 1, len(v)):
+            sd_gap = float(sigma_task) * math.sqrt(1.0 / n[i] + 1.0 / n[j])
+            gap = abs(v[i] - v[j])
+            if sd_gap <= 0 or gap < float(dead_zone_sigma) * sd_gap:
+                continue
+            w = min(gap / (float(cap_sigma) * sd_gap), 1.0)
+            if top[i] or top[j]:
+                w *= float(top_quartile_boost)
+            W[i, j] = W[j, i] = w
+    return W
+
+
+def pair_yield(W: np.ndarray) -> int:
+    W = np.asarray(W, dtype=float)
+    return int((np.triu(W, 1) > 0).sum())
+
+
+# ---------------------------------------------------------------- §1.7 整集数组（第 2 步）
+def whole_arrays_official(X: np.ndarray, y: np.ndarray, *, n_train: int) -> dict:
+    """合并 npz 的前 n_train 行 = 官方 TRAIN（load_uea_merged 按 TRAIN、TEST 顺序拼接）；TRAIN 拟合按通道标准化后套用到 TEST（= 官方 scaler: train）。"""
+    n_train = int(n_train)
+    tr = np.arange(n_train, dtype=np.int64)
+    ev = np.arange(n_train, len(y), dtype=np.int64)
+    Xtr_raw = np.asarray(X[tr], dtype=np.float64)
+    flat = Xtr_raw.reshape(-1, Xtr_raw.shape[-1])
+    mu, sd = flat.mean(0), flat.std(0)
+    sd = np.where(sd < 1e-8, 1.0, sd)
+    Xtr = ((Xtr_raw - mu) / sd).astype(np.float32)
+    Xte = ((np.asarray(X[ev], dtype=np.float64) - mu) / sd).astype(np.float32)
+    ytr, yte = np.asarray(y)[tr], np.asarray(y)[ev]
+    return {"Xtr": Xtr, "ytr": ytr, "Xte_train": Xte, "Xte_split": Xte, "yte": yte, "train_idx": tr, "eval_idx": ev,
+            "majority": majority_rate(yte), "mean": mu, "std": sd}
+
+
+def whole_arrays_cv(X: np.ndarray, y: np.ndarray, *, n_folds: int, seed: int) -> dict:
+    """整集：按通道在全部样本上标准化 + 固定分层 K 折（= task_arrays_cv 去掉物化）。"""
+    raw = np.asarray(X, dtype=np.float64)
+    flat = raw.reshape(-1, raw.shape[-1])
+    mu, sd = flat.mean(0), flat.std(0)
+    sd = np.where(sd < 1e-8, 1.0, sd)
+    Xs = ((raw - mu) / sd).astype(np.float32)
+    y = np.asarray(y)
+    folds = stratified_folds(y, n_folds=n_folds, seed=seed)
+    return {"X": Xs, "y": y, "folds": folds, "fold_md5": fold_md5_of(folds), "majority": majority_rate(y), "mean": mu, "std": sd}
+
+
+def step2_decision(rho_eval_mean: float, rho_slice_mean: float, cfg: Mapping) -> dict:
+    """决策 W：ρ_eval 均值 < rho_eval_min → 口径问题（切片改 holdout）；另记 ρ_slice < rho_slice_min 的 n/L 效应。"""
+    d = cfg["whole_eval"]["decision"]
+    protocol_issue = bool(np.isfinite(rho_eval_mean) and rho_eval_mean < float(d["rho_eval_min"]))
+    nl = bool(np.isfinite(rho_slice_mean) and rho_slice_mean < float(d["rho_slice_min"]))
+    code = "W-PROTOCOL" if protocol_issue else ("W-NL" if nl else "W-CONSISTENT")
+    return {"code": code, "eval_mode": ("holdout" if protocol_issue else "cv5"), "nl_effect": nl}
+
+
+# ---------------------------------------------------------------- §1.8 余量与决策 H
+def honest_headroom(S0: np.ndarray, S1: np.ndarray, groups: Sequence[str]) -> dict:
+    """任务 × 候选（同一批 shared）两种子矩阵：任务 oracle 按 seed 0 选、seed 1 评；全局冠军按 seed 0 平均排名在**其他组**（LODO）上选、seed 1 评；
+    regret@3 = 全局前 3 里按 seed 0 选一条、seed 1 评。返回逐任务与均值。"""
+    S0, S1 = np.asarray(S0, dtype=float), np.asarray(S1, dtype=float)
+    groups = np.asarray(groups)
+    r1, r3, champ = [], [], []
+    for i in range(S0.shape[0]):
+        tr = np.where(groups != groups[i])[0]
+        if tr.size == 0:
+            r1.append(float("nan")); r3.append(float("nan")); champ.append(None); continue
+        mr = np.array([rankdata(-S0[j]) for j in tr]).mean(0)
+        g = np.argsort(mr)
+        best = int(np.argmax(S0[i]))
+        pick3 = int(g[:3][int(np.argmax(S0[i, g[:3]]))])
+        r1.append(float(S1[i, best] - S1[i, g[0]])); r3.append(float(S1[i, best] - S1[i, pick3])); champ.append(int(g[0]))
+    r1a, r3a = np.array(r1), np.array(r3)
+    return {"regret1_mean": float(np.nanmean(r1a)) if np.isfinite(r1a).any() else float("nan"),
+            "regret1_median": float(np.nanmedian(r1a)) if np.isfinite(r1a).any() else float("nan"),
+            "regret3_mean": float(np.nanmean(r3a)) if np.isfinite(r3a).any() else float("nan"),
+            "per_task": r1, "per_task_r3": r3, "champion": champ, "n_tasks": int(S0.shape[0])}
+
+
+def headroom_decision(h_same: float, cfg: Mapping) -> str:
+    h = cfg["headroom"]
+    if h_same is None or not np.isfinite(h_same):
+        return "HEADROOM-NA"
+    if h_same >= float(h["go_min"]):
+        return "HEADROOM-GO"
+    if h_same < float(h["stop_max"]):
+        return "HEADROOM-B"
+    return "HEADROOM-MID"
+
+
 __all__ = [
     "ACTS_YAML", "OUT_ROOT", "STAGE", "ARM_SHARED", "ARM_RANDOM", "ARM_ANCHOR", "AUG_FIELDS", "AUGMAX_GROUPS", "SANITY_AXES",
+    "CANDIDATE_POOL_YAML", "pruning_regret", "clip_z", "clip_z_apply", "top_half_sigma", "two_way_decomp", "net_interaction_share",
+    "admission_v2_metrics", "admission_v2_decision", "pair_weights", "pair_yield", "whole_arrays_official", "whole_arrays_cv",
+    "step2_decision", "honest_headroom", "headroom_decision",
     "load_acts_config", "acts_space", "prune_rules", "is_pruned", "pruned_share", "normalization_stats",
     "shared_catalog", "random_catalog", "aug_max", "pick_anchors",
     "best_of_checkpoints", "majority_rate", "floor_of", "label_of",

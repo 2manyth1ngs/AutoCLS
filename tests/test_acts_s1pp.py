@@ -98,11 +98,11 @@ class TestScale:
 
 # ---------------------------------------------------------------- 准入 v2（§1.5）
 class TestAdmissionV2:
-    def _source(self, rng, n_tasks=4, n_shared=30, structured=True, noise=0.01):
+    def _source(self, rng, n_tasks=4, n_shared=30, structured=True, noise=0.01, scale=0.3):
         base = np.sort(rng.uniform(0.3, 0.9, n_shared))[::-1]
         tasks = {}
         for t in range(n_tasks):
-            m = base + (rng.normal(scale=0.08, size=n_shared) if structured else 0.0)
+            m = base + (rng.normal(scale=scale, size=n_shared) if structured else 0.0)   # 任务特异 0.3 → 净占比 ≈ 0.39；无任务特异 → ≈ 0
             a0 = m + rng.normal(scale=noise, size=n_shared); a1 = m + rng.normal(scale=noise, size=n_shared)
             tasks[f"S_a{t:02d}"] = (a0, a1)
         return tasks
@@ -134,7 +134,7 @@ class TestPairs:
         assert W[0, 1] == 0                                              # gap 0.01 < 2·sd_gap(0.02)
         assert W[0, 3] == 2.0 and W[2, 3] == 1.0                         # 封顶 1，含前四分位（0.90）的对 ×2
         assert 0 < W[1, 2] < 2.0
-        assert ac.pair_yield(W) == 4
+        assert ac.pair_yield(W) == 5                                     # 只有 (0, 1) 落在死区
 
     def test_shared30_prefix_reuses_s1p_unpruned(self, cfg, cfg_p):
         ac = _ac()
