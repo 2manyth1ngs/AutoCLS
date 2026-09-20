@@ -1,0 +1,18 @@
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_official: official train=(108, 1197, 6) test=(72, 1197, 6)
+[probe0] Cricket_whole_official s0 acc=0.986 maj=0.083 (1.2s)
+[probe0] Cricket_whole_official s1 acc=0.972 maj=0.083 (0.1s)
+[probe0] Cricket_whole_official s2 acc=0.958 maj=0.083 (0.1s)
+[data] Cricket_whole_cv5: cv5 X=(180, 1197, 6) folds=5
+[probe0] Cricket_whole_cv5 s0 acc=0.989 maj=0.083 (0.5s)
+[probe0] Cricket_whole_cv5 s1 acc=0.983 maj=0.083 (0.5s)
+[probe0] Cricket_whole_cv5 s2 acc=0.956 maj=0.083 (0.4s)
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_official: official train=(120, 315, 3) test=(320, 315, 3)
+[probe0] UWaveGestureLibrary_whole_official s0 acc=0.706 maj=0.125 (0.2s)
+[probe0] UWaveGestureLibrary_whole_official s1 acc=0.694 maj=0.125 (0.1s)
+[probe0] UWaveGestureLibrary_whole_official s2 acc=0.700 maj=0.125 (0.1s)
+[data] UWaveGestureLibrary_whole_cv5: cv5 X=(440, 315, 3) folds=5
+[probe0] UWaveGestureLibrary_whole_cv5 s0 acc=0.900 maj=0.125 (0.9s)
+[probe0] UWaveGestureLibrary_whole_cv5 s1 acc=0.882 maj=0.125 (0.9s)
+[probe0] UWaveGestureLibrary_whole_cv5 s2 acc=0.902 maj=0.125 (0.9s)

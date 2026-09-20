@@ -1,0 +1,10 @@
+python 3.8.20 torch 2.4.1+cu121 cuda 12.1 n_gpu 8
+== HEAD 875c9a6fd0c898b2996c6445a867f9648cbe29ae
+== npz md5 check: ALL MATCH
+/dev/sda         15T   14T  4.1G  100% /home/b311/data
+== cache seed: 2080 rows / 108 probes
+CUDA gate OK NVIDIA GeForce RTX 4090
+[check] tasks 104 mismatches 0 plan_keys_match None → OK
+..................                                                       [100%]
+18 passed in 2.84s
+== setup done
