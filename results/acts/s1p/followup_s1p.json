@@ -1,0 +1,236 @@
+{
+ "global_champion": {
+  "PhonemeSpectra|in-sample": {
+   "regret1_mean": 0.004399375564729548,
+   "regret1_median": 0.0029058030803080226,
+   "regret1_all_mean": 0.007110810743079631,
+   "regret3_mean": 0.0035592854746394585,
+   "frac_gt_2sigma": 0.125,
+   "sigma_mean_median": 0.005461490436377102,
+   "champion": "2a667428c99d"
+  },
+  "PhonemeSpectra|LODO": {
+   "regret1_mean": 0.029654298785175563,
+   "regret1_median": 0.0286333097595474,
+   "regret1_all_mean": 0.03236573396352564,
+   "regret3_mean": 0.0035592854746394585,
+   "frac_gt_2sigma": 0.875,
+   "sigma_mean_median": 0.005461490436377102,
+   "champion": "f59dbb24477e"
+  },
+  "Cricket|in-sample": {
+   "regret1_mean": 0.027417667957293917,
+   "regret1_median": 0.028739648033126286,
+   "regret1_all_mean": 0.048006783555429006,
+   "regret3_mean": 0.013705618212197151,
+   "frac_gt_2sigma": 0.5,
+   "sigma_mean_median": 0.007667151753895698,
+   "champion": "2a667428c99d"
+  },
+  "Cricket|LODO": {
+   "regret1_mean": 0.027417667957293917,
+   "regret1_median": 0.028739648033126286,
+   "regret1_all_mean": 0.048006783555429006,
+   "regret3_mean": 0.005902137736815152,
+   "frac_gt_2sigma": 0.5,
+   "sigma_mean_median": 0.007667151753895698,
+   "champion": "2a667428c99d"
+  },
+  "UWaveGestureLibrary|in-sample": {
+   "regret1_mean": 0.01942183080632446,
+   "regret1_median": 0.0013461538461538303,
+   "regret1_all_mean": 0.025931346861344677,
+   "regret3_mean": 0.01382213445004915,
+   "frac_gt_2sigma": 0.25,
+   "sigma_mean_median": 0.012895388757189086,
+   "champion": "2a667428c99d"
+  },
+  "UWaveGestureLibrary|LODO": {
+   "regret1_mean": 0.01942183080632446,
+   "regret1_median": 0.0013461538461538303,
+   "regret1_all_mean": 0.025931346861344677,
+   "regret3_mean": 0.014158672911587608,
+   "frac_gt_2sigma": 0.25,
+   "sigma_mean_median": 0.012895388757189086,
+   "champion": "2a667428c99d"
+  },
+  "合并|in-sample": {
+   "regret1_mean": 0.017079624776115975,
+   "regret1_median": 0.005309423347397979,
+   "regret1_all_mean": 0.02701631371995111,
+   "regret3_mean": 0.010362346045628587,
+   "frac_gt_2sigma": 0.2916666666666667,
+   "sigma_mean_median": 0.008563984863058425,
+   "champion": "2a667428c99d"
+  }
+ },
+ "composition": {
+  "shared": {
+   "n": 20,
+   "tau": {
+    "1.0": 4,
+    "0.1": 7,
+    "0.01": 6,
+    "10.0": 3
+   },
+   "loss": {
+    "triplet": 12,
+    "info_nce": 8
+   },
+   "bad_family": 2,
+   "aug_max_mean": 0.915
+  },
+  "random_pilot": {
+   "n": 480,
+   "tau": {
+    "0.1": 136,
+    "1.0": 139,
+    "10.0": 66,
+    "0.01": 139
+   },
+   "loss": {
+    "triplet": 291,
+    "info_nce": 189
+   },
+   "bad_family": 33,
+   "aug_max_mean": 0.8662499999999999
+  },
+  "random_all": {
+   "n": 1440,
+   "tau": {
+    "0.1": 419,
+    "0.01": 411,
+    "1.0": 409,
+    "10.0": 201
+   },
+   "loss": {
+    "triplet": 831,
+    "info_nce": 609
+   },
+   "bad_family": 81,
+   "aug_max_mean": 0.8641319444444445
+  }
+ },
+ "failed_loss_tau": {
+  "triplet|1.0": 0.6413793103448275,
+  "triplet|0.1": 0.43356643356643354,
+  "info_nce|0.1": 0.484472049689441,
+  "triplet|0.01": 0.29411764705882354,
+  "info_nce|0.01": 0.4,
+  "info_nce|1.0": 0.5777777777777777,
+  "triplet|10.0": 0.7753623188405797
+ },
+ "adm_alt": {
+  "Cricket": {
+   "both_survivors": [
+    7,
+    9,
+    4,
+    2,
+    11,
+    7,
+    5,
+    0
+   ],
+   "tasks_ge8": 2,
+   "median": 6.0
+  },
+  "PhonemeSpectra": {
+   "both_survivors": [
+    5,
+    8,
+    8,
+    11,
+    6,
+    2,
+    4,
+    7
+   ],
+   "tasks_ge8": 3,
+   "median": 6.5
+  },
+  "UWaveGestureLibrary": {
+   "both_survivors": [
+    12,
+    10,
+    13,
+    8,
+    8,
+    12,
+    11,
+    11
+   ],
+   "tasks_ge8": 8,
+   "median": 11.0
+  }
+ },
+ "pair_yield": {
+  "PhonemeSpectra": {
+   "surv_median": 15.5,
+   "pairs": 977,
+   "informative": 211,
+   "frac": 0.21596724667349027,
+   "failed_surv_pairs": 2999,
+   "sigma_median": 0.007723713845895451
+  },
+  "Cricket": {
+   "surv_median": 21.0,
+   "pairs": 1169,
+   "informative": 415,
+   "frac": 0.3550042771599658,
+   "failed_surv_pairs": 2537,
+   "sigma_median": 0.010842989995131959
+  },
+  "UWaveGestureLibrary": {
+   "surv_median": 27.5,
+   "pairs": 2702,
+   "informative": 852,
+   "frac": 0.3153219837157661,
+   "failed_surv_pairs": 2786,
+   "sigma_median": 0.018236833672490335
+  }
+ },
+ "subfloor_seed_agreement": {
+  "PhonemeSpectra": {
+   "rho_mean": 0.6817057747283134,
+   "n_tasks": 8,
+   "rhos": [
+    -0.11349693251533742,
+    0.847637026689399,
+    0.8272727272727273,
+    0.9285714285714288,
+    0.8391608391608393,
+    0.8727272727272729,
+    0.5426829268292683,
+    0.709090909090909
+   ]
+  },
+  "Cricket": {
+   "rho_mean": 0.6165693607947483,
+   "n_tasks": 8,
+   "rhos": [
+    0.39285714285714296,
+    0.1666666666666667,
+    0.8694096601073346,
+    0.9550810014727541,
+    0.7,
+    0.14285714285714288,
+    0.8526315789473684,
+    0.8530516934495772
+   ]
+  },
+  "UWaveGestureLibrary": {
+   "rho_mean": 0.7719087635054022,
+   "n_tasks": 7,
+   "rhos": [
+    0.6904761904761906,
+    0.7142857142857143,
+    0.8095238095238096,
+    0.8319327731092437,
+    0.7142857142857144,
+    0.6785714285714287,
+    0.9642857142857145
+   ]
+  }
+ }
+}
