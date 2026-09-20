@@ -132,3 +132,64 @@ profiles:
     gates:
       G-A1: {split_half_rho_max: 0.70, half_size: 3, n_draws: 200}
       G-A2: {real_interaction_share_min: 0.50, min_datasets_pass_frac: 0.5}
+
+  # =====================================================================
+  # --- S1″ profile（PROTOCOL results/acts/s1pp/PROTOCOL.md；用户 2026-09-20 拍板四步方案 + 评审修订）---
+  # extends: s1p → 先把 s1p 叠到基线，再叠本块；基线与 s1p 不动。
+  # =====================================================================
+  s1pp:
+    extends: s1p
+    prune:                                # §1.3：S1 两条 + 家族 ∧ τ ≥ 1 + triplet ∧ τ ≥ 10；谓词新增比较 gte
+      rules:
+        - {name: tau100,        all: [{field: temperature, equals: 100.0}]}
+        - {name: infonce_tau10, all: [{field: loss_type, equals: info_nce}, {field: temperature, equals: 10.0}]}
+        - {name: tel_tau_ge1,   all: [{field: loss_type, equals: triplet}, {field: sim_func, equals: euclidean}, {field: norm, equals: l2}, {field: temperature, gte: 1.0}]}
+        - {name: triplet_tau10, all: [{field: loss_type, equals: triplet}, {field: temperature, gte: 10.0}]}
+      champion_retention_min: 0.90        # 只作旁读数；G-A0 改用 regret_gate
+      regret_gate: {mean_max: 0.01}       # 官方 29 靶 (冠军 − 剪后最好) 均值 ≤ 0.01；FaceDetection 0.055 预记 limitation
+    candidates:
+      n_shared: 30                        # 同 rng 流接受制采样：前 17 = S1′ shared-20 未剪的 17（标签复用）+ 13 新
+      n_random: 20                        # 试点 24 任务复用 S1′ random-20（剪掉的移出候选集）；新任务不采 random
+      random_reuse_from: s1p
+    labels:
+      floor_mode: diagnostic              # (a′)：标签 = 原始终点 acc（shared 两种子均值）；探针地板只作诊断
+      shared_seeds: [0, 1]
+      random_seeds: [0]
+      probe0_seeds: 3
+      pairs: {dead_zone_sigma: 2.0, cap_sigma: 4.0, top_quartile_boost: 2.0}   # §1.1 配对规则（S2 用，本轮只报产量）
+    scale:                                # §1.2 门 / 准入 / 余量统计量的尺度（写死）
+      clip_quantile: 0.5                  # 中位钉底：v_c = max(v, median(v)) 再 z 化
+      noise_top_frac: 0.5                 # σ_task 只用两种子均值排前一半的 shared
+    admission:                            # §1.5 准入 v2：三条全过；每源 ≥ 4 任务（OA 行 1 / 7 / 3 / 5）
+      rule: v2
+      candidates: [Handwriting, UniMiB-SHAR, PhonemeSpectra, UWaveGestureLibrary, EthanolConcentration,
+                   Cricket, HandMovementDirection, SelfRegulationSCP2, SelfRegulationSCP1,
+                   PTB-XL, SleepEDF, PAMAP2, Opportunity]
+      task_rows: [1, 7, 3, 5]
+      min_tasks: 4
+      top_half_rho_min: 0.40              # (i) 前一半配置 Spearman(seed0, seed1) 均值
+      net_share_min: 0.25                 # (ii) 交互净占比（钉底尺度）
+      iqr_sigma_min: 2.0                  # (iii) 前一半 IQR / σ_mean 中位
+      pool_floor: 7
+      fallback: []
+      domains:                            # 第 4 步跨域余量的分组（HAR / ECG / EEG-external vs UEA）
+        external: [UniMiB-SHAR, PTB-XL, SleepEDF, PAMAP2, Opportunity]
+    whole_eval:                           # §1.7 第 2 步：整集评估口径对照（第 1 步第三个数已触发）
+      datasets: [Cricket, UWaveGestureLibrary]
+      modes: [official, cv5]
+      seeds: [0, 1]
+      probe0_seeds: 3
+      shared_from: s1p                    # S1′ shared-20（含被新规则剪掉的 3 条，与切片标签一一对应）
+      n_train_official: {Cricket: 108, UWaveGestureLibrary: 120}   # 官方 TRAIN 行数（合并 npz 前 n_train 行）；与 uea30.yaml 逐位核
+      decision: {rho_eval_min: 0.50, rho_slice_min: 0.50}
+    pilot:
+      datasets: [PhonemeSpectra, Cricket, UWaveGestureLibrary]
+      add_if_admitted: []
+      n_tasks: 8
+    ablation: {}                          # 无消融臂
+    gates:
+      G-A1n: {net_share_min: 0.25, min_datasets_pass_frac: 0.5}
+      G-A2: {real_interaction_share_min: 0.50, min_datasets_pass_frac: 0.5}
+    headroom:                             # §1.8 第 4 步决策 H（用 H_same）
+      go_min: 0.03
+      stop_max: 0.02
