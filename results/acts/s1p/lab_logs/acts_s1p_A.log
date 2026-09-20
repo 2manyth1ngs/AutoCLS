@@ -1,0 +1,7 @@
+CUDA NVIDIA GeForce RTX 4090
+CUDA NVIDIA GeForce RTX 4090
+== [17:17:46] phase A start (2 procs, GPU 0 / 1)
+pids 556856 557649
+== [00:06:07] both exited; rows 880
+[verify] planned 880 have 880 missing 0 error 2 bad 0; probe0 72/72 → OK
+tar: 从成员名中删除开头的“/”

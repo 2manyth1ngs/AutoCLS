@@ -6,26 +6,28 @@
 set -uo pipefail
 REPO="/home/b311/data/wangwenjie/kejunyu/AutoCLS"
 LOG="$REPO/logs"; UP="$REPO/upload"; OUT="results/acts/s1p"
-PHASE="${PHASE:?A|B}"; GPU0="${GPU0:-0}"; GPU1="${GPU1:-1}"
+PHASE="${PHASE:?A|B}"; GPUS="${GPUS:-${GPU0:-0} ${GPU1:-1}}"      # 空格分隔的卡号列表（每卡一进程）；兼容旧的 GPU0/GPU1
+GPU0=$(echo $GPUS | cut -d" " -f1)
+NP=$(echo $GPUS | wc -w)
 COMMON="--profile s1p --outdir $OUT --phase $PHASE"
 cd "$REPO"; mkdir -p "$LOG" "$UP" "$OUT"
 source "$HOME/miniconda3/etc/profile.d/conda.sh"; conda activate pytorch
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 LOKY_MAX_CPU_COUNT=8
 export AUTOCLS_TRIPLET_CHUNK_ELEMS=67108864 AUTOCLS_INFONCE_CHUNK_ELEMS=67108864
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
-for g in "$GPU0" "$GPU1"; do
+for g in $GPUS; do
   CUDA_VISIBLE_DEVICES=$g python - <<'PY' || { echo "CUDA gate FAILED on GPU $g"; exit 5; }
 import torch; assert torch.cuda.is_available(); x = torch.randn(64, 64, device="cuda") @ torch.randn(64, 64, device="cuda"); torch.cuda.synchronize(); print("CUDA", torch.cuda.get_device_name(0))
 PY
 done
-echo "== [$(date -u +%H:%M:%S)] phase $PHASE start (2 procs, GPU $GPU0 / $GPU1)"
-CUDA_VISIBLE_DEVICES=$GPU0 nohup nice -n 10 python scripts/83_acts_corpus.py --run --resume --device cuda $COMMON --parts 2 --part 0 > "$LOG/acts_s1p_${PHASE}_p0.log" 2>&1 < /dev/null &
-P0=$!
-sleep 20
-CUDA_VISIBLE_DEVICES=$GPU1 nohup nice -n 10 python scripts/83_acts_corpus.py --run --resume --device cuda $COMMON --parts 2 --part 1 > "$LOG/acts_s1p_${PHASE}_p1.log" 2>&1 < /dev/null &
-P1=$!
-echo "pids $P0 $P1"
-while kill -0 "$P0" 2>/dev/null || kill -0 "$P1" 2>/dev/null; do sleep 60; done
+echo "== [$(date -u +%H:%M:%S)] phase $PHASE start ($NP procs, GPUs $GPUS)"
+PIDS=""; i=0
+for g in $GPUS; do
+  CUDA_VISIBLE_DEVICES=$g nohup nice -n 10 python scripts/83_acts_corpus.py --run --resume --device cuda $COMMON --parts $NP --part $i > "$LOG/acts_s1p_${PHASE}_p$i.log" 2>&1 < /dev/null &
+  PIDS="$PIDS $!"; i=$((i+1)); sleep 20
+done
+echo "pids$PIDS"
+alive=1; while [ $alive = 1 ]; do alive=0; for pid in $PIDS; do kill -0 "$pid" 2>/dev/null && alive=1; done; [ $alive = 1 ] && sleep 60; done
 echo "== [$(date -u +%H:%M:%S)] both exited; rows $(wc -l < "$OUT/runs.jsonl")"
 CUDA_VISIBLE_DEVICES=$GPU0 nice -n 10 python scripts/83_acts_corpus.py --probe0 --resume --device cuda $COMMON > "$LOG/acts_s1p_${PHASE}_probe0.log" 2>&1
 python scripts/83_acts_corpus.py --verify --device cpu $COMMON > "$LOG/acts_s1p_${PHASE}_verify.log" 2>&1; cat "$LOG/acts_s1p_${PHASE}_verify.log"

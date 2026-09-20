@@ -1,0 +1,25 @@
+[smoke] 计划 12 格，已有 0，待跑 12
+[data] HandMovementDirection: X=(234, 400, 10) classes=4
+[data] HandMovementDirection_a00: X=(90, 76, 3) classes=4 folds=5 window=(25, 101)
+[smoke 1/12] HandMovementDirection_a00/shared/9bf55c58 s0 iters=8 ckpt=[2, 4, 8] acc@ckpt=[0.289 0.300 0.311] (3.8s+2.8s)
+[smoke 2/12] HandMovementDirection_a00/shared/9bf55c58 s1 iters=8 ckpt=[2, 4, 8] acc@ckpt=[0.300 0.311 0.311] (2.1s+2.7s)
+[smoke 3/12] HandMovementDirection_a00/shared/79db9191 s0 iters=8 ckpt=[2, 4, 8] acc@ckpt=[0.289 0.289 0.311] (2.2s+2.7s)
+[smoke 4/12] HandMovementDirection_a00/shared/79db9191 s1 iters=8 ckpt=[2, 4, 8] acc@ckpt=[0.322 0.278 0.278] (2.2s+2.7s)
+[data] HandMovementDirection_a01: X=(218, 246, 4) classes=4 folds=5 window=(91, 337)
+[smoke 5/12] HandMovementDirection_a01/shared/9bf55c58 s0 iters=8 ckpt=[2, 4, 8] acc@ckpt=[0.289 0.266 0.275] (2.2s+2.7s)
+[smoke 6/12] HandMovementDirection_a01/shared/9bf55c58 s1 iters=8 ckpt=[2, 4, 8] acc@ckpt=[0.284 0.252 0.271] (2.1s+2.5s)
+[smoke 7/12] HandMovementDirection_a01/shared/79db9191 s0 iters=8 ckpt=[2, 4, 8] acc@ckpt=[0.280 0.280 0.294] (2.2s+2.6s)
+[smoke 8/12] HandMovementDirection_a01/shared/79db9191 s1 iters=8 ckpt=[2, 4, 8] acc@ckpt=[0.247 0.252 0.266] (2.3s+2.7s)
+[data] HandMovementDirection_a00: X=(90, 76, 3) classes=4 folds=5 window=(25, 101)
+[smoke 9/12] HandMovementDirection_a00/ablation3x/9bf55c58 s0 iters=24 ckpt=[2, 4, 8, 16, 24] acc@ckpt=[0.289 0.300 0.311 0.289 0.311] (4.3s+4.5s)
+[smoke 10/12] HandMovementDirection_a00/ablation3x/79db9191 s0 iters=24 ckpt=[2, 4, 8, 16, 24] acc@ckpt=[0.289 0.289 0.311 0.289 0.289] (4.5s+4.5s)
+[data] HandMovementDirection_a01: X=(218, 246, 4) classes=4 folds=5 window=(91, 337)
+[smoke 11/12] HandMovementDirection_a01/ablation3x/9bf55c58 s0 iters=24 ckpt=[2, 4, 8, 16, 24] acc@ckpt=[0.289 0.266 0.275 0.289 0.308] (4.5s+4.5s)
+[smoke 12/12] HandMovementDirection_a01/ablation3x/79db9191 s0 iters=24 ckpt=[2, 4, 8, 16, 24] acc@ckpt=[0.280 0.280 0.294 0.261 0.261] (4.6s+4.5s)
+[smoke] 收官
+[data] HandMovementDirection: X=(234, 400, 10) classes=4
+[data] HandMovementDirection_a00: X=(90, 76, 3) classes=4 folds=5 window=(25, 101)
+[probe0] HandMovementDirection_a00 s0 acc=0.267 maj=0.311 (1.0s)
+[data] HandMovementDirection_a01: X=(218, 246, 4) classes=4 folds=5 window=(91, 337)
+[probe0] HandMovementDirection_a01 s0 acc=0.266 maj=0.298 (0.4s)
+smoke OK: 12/12 格、probe0 2/2；[('HandMovementDirection_a00', 'shared', 0, 0.311), ('HandMovementDirection_a00', 'shared', 1, 0.311), ('HandMovementDirection_a00', 'shared', 0, 0.311), ('HandMovementDirection_a00', 'shared', 1, 0.278), ('HandMovementDirection_a01', 'shared', 0, 0.275), ('HandMovementDirection_a01', 'shared', 1, 0.271), ('HandMovementDirection_a01', 'shared', 0, 0.294), ('HandMovementDirection_a01', 'shared', 1, 0.266), ('HandMovementDirection_a00', 'ablation3x', 0, 0.311), ('HandMovementDirection_a00', 'ablation3x', 0, 0.289), ('HandMovementDirection_a01', 'ablation3x', 0, 0.308), ('HandMovementDirection_a01', 'ablation3x', 0, 0.261)]
