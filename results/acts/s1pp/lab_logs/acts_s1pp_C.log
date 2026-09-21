@@ -1,0 +1,9 @@
+CUDA NVIDIA GeForce RTX 4090
+CUDA NVIDIA GeForce RTX 4090
+CUDA NVIDIA GeForce RTX 4090
+== [23:42:40] phase C start (3 procs, GPUs 6 4 5)
+pids 305231 305993 306767
+== [03:08:40] all exited; rows 4856
+[verify] planned 4243 have 4243 missing 0 error 4 bad 0; probe0 192/192 → OK
+tar: 从成员名中删除开头的“/”
+tar: 从硬连接目标中删除开头的“/”

@@ -108,3 +108,8 @@ OA 设计与 tier 行序、n_lo = max(80, 7k)、每类 ≥ 5、iters 规则、�
 1（档位只经 space.yaml；剪枝谓词只在 acts.yaml，新增比较运算 gte）；2（iters 规则显式；整集官方划分格 iters 按官方 TRAIN 尺寸）；3（runs.jsonl + probe0.jsonl + resume + verify；S1′ 标签复用）；5（先红；标定值 §0 如实声明）；6（外部源只作源；靶数据只在 sanity 读尺寸；SCP1 若入源仍从靶集移出）；7；8。
 
 ## §6 执行台账（跑后填写）
+
+- 协议锁 345404b → 实现 875c9a6（18 单测绿、本地 4060 冒烟 W）→ 服务器 setup（HEAD 875c9a6，新源 npz md5 ALL MATCH，`--check` 104 任务 0 mismatch，18 单测绿，缓存种子 2080 行 / 108 探针）。
+- 第 2 步（PHASE=W，GPU 4 / 5，服务器时钟 2026-09-20 05:40 起、07:31 收官，160 格 + 12 探针 verify OK）→ 拉回 → `--analyze-w`：**W-CONSISTENT**（ρ_eval 0.885 / 0.860，ρ_slice(cv5) 0.770 / 0.776，切片口径维持 cv5）；入库 bc37ae6。中途本地会话重启把 scratchpad 的 SSH 助手清掉，监控失联约 50 分钟，服务器作业不受影响。
+- 第 3 步（PHASE=C，GPU 6 / 4 / 5 三进程，服务器时钟 09-20 07:56 起、09-21 11:13 verify OK，墙钟 27.3 h）：plan_C 4,243 格（已有 1,627、新 2,616 = 54.4 GPU-h）+ 探针 192；共享数据盘两次写满到 0（各死一次，`/tmp/acts_watchdog/` 守护自动修复 + resume）、分片两次重平衡（`part_tasks` 只按未完成格均分，0bba490）；error 4 = 配置 8c482976 在 PS_a07 / PAMAP2_a01 两种子 SVM 480 s 超时。
+- 终读：**ACTS-S1PP-GO**（G-A0 0.006 ✓、G-A1′ 2/3 ✓、G-A2 0.648 ✓）；**ADM v2 0/13、源池空、H 无定义（HEADROOM-NA）**；预测 4/11（P5 P8 P9 P11 ✓）。事后（协议外）：v2 三条判据有机制偏差且未复现标定样本（REPORT §4.1）；v3′ 可靠性准入 11/13；H 对先验 @1 0.022（MID）、对 SH6-3-3 0.008 / 中位 0（B）。REPORT.md 入库。
