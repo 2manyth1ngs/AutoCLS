@@ -106,4 +106,5 @@ OA 设计与行序、s1p 切片参数、s1pp 剪枝四条与 shared-30、cv5、i
 
 ## §6 执行台账（跑后填写）
 
-- 协议锁 → 实现 → 冒烟 → 打包 → 请示 → 服务器 setup / run → 拉回 → analyze → REPORT。
+- 协议锁 05db9a4 → 实现 d03ada4（18 单测绿、相关 101 例绿）→ 零 GPU：8 个新 npz（K 全保留、min_class_count 5）、`--slice-all` 80 任务前缀自检 OK、`--plan-adm` 2,400 格 + 120 探针（C0 shared-30 = S1″ OK；cost_model 估 4090 9.6 h，S1″ 经验该模型对多通道低估 3.7×，单变量预期 1–3×）、本地 `--check` 80 任务 0 mismatch / plan key 一致 → 本地 4060 冒烟（Adiac 行 0/1 × shared 2 × 2 种子，iters 8）8/8 格 + 2 探针 OK → 打包 `bundles/ucradm/`（code_head.tar + acts_inputs + acts_npz 47.6 MB + md5 20 项，HEAD d03ada4）。
+- 待：用户请示 → 服务器 setup / run（PHASE=M）→ 拉回 → `--verify --phase M` → `--analyze-adm` → REPORT。
