@@ -80,6 +80,12 @@ def stratified_subsample(X, y, cap: int, seed: int):
     return X[sel], y[sel], True
 
 
+def effective_min_class_count(spec: dict) -> int:
+    """剔稀类阈值：adapter SPEC 可用 `min_class_count` 覆盖驱动默认（WP17-ACTS UCR-ADM：UCR 十源取 5 = ACTS 切片器每类 ≥ 5 的
+    对应物；调研期默认 64 会把 Adiac / ShapesAll / FiftyWords 整个剔空）。未写则逐位沿用 MIN_CLASS_COUNT。"""
+    return int(spec.get("min_class_count", MIN_CLASS_COUNT))
+
+
 def prepare_one(mod_name: str, *, skip_existing: bool) -> dict:
     mod = importlib.import_module(f"{PKG}.{mod_name}")
     spec = dict(mod.SPEC)
@@ -104,9 +110,10 @@ def prepare_one(mod_name: str, *, skip_existing: bool) -> dict:
         raise ValueError(f"{name}: 流式候选应开窗到 (N, {WINDOW_LEN}, C)，实得 {X.shape}")
     n_raw, k_raw = X.shape[0], len(np.unique(y))
 
-    X, y = drop_rare_classes(X, y, MIN_CLASS_COUNT)
+    min_cc = effective_min_class_count(spec)
+    X, y = drop_rare_classes(X, y, min_cc)
     if X.shape[0] == 0:
-        raise ValueError(f"{name}: 剔稀类（<{MIN_CLASS_COUNT}）后无样本")
+        raise ValueError(f"{name}: 剔稀类（<{min_cc}）后无样本")
     X, y, capped = stratified_subsample(X, y, MAX_SAMPLES, SUBSAMPLE_SEED)
     X = zscore_channels(X)
 
@@ -114,7 +121,7 @@ def prepare_one(mod_name: str, *, skip_existing: bool) -> dict:
             "n_samples_raw": n_raw, "n_classes_raw": k_raw,
             "n_classes_dropped": k_raw - len(np.unique(y)),
             "subsampled": capped, "window_len": WINDOW_LEN, "window_stride": WINDOW_STRIDE,
-            "min_class_count": MIN_CLASS_COUNT, "seconds": round(time.time() - t0, 1)}
+            "min_class_count": min_cc, "seconds": round(time.time() - t0, 1)}
     save_candidate(name, X, y, full)
     d = describe(X, y)
     print(f"[{name}] N={d['n_samples']}(raw {n_raw}) L={d['seq_len']} C={d['n_channels']} "

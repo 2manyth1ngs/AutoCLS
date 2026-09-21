@@ -193,3 +193,32 @@ profiles:
     headroom:                             # §1.8 第 4 步决策 H（用 H_same）
       go_min: 0.03
       stop_max: 0.02
+
+  # =====================================================================
+  # --- UCR-ADM profile（PROTOCOL results/acts/ucradm/PROTOCOL.md；用户 2026-09-21 拍板 A 档 10 源准入实测）---
+  # extends: s1pp → 切片 / cv5 / 剪枝四条 / shared-30 rng 流逐位 = S1″；只改"源从哪来"（configs/acts_sources.yaml）
+  # 与"准入尺子"（v3′ 可靠性门 + acc 单位 chance 护栏）。无 random、无锚、无试点、无整集对照。
+  # =====================================================================
+  ucradm:
+    extends: s1pp
+    admission:                            # §1.4 / §1.5：准入 = v3′ ∧ 护栏；每源 4 任务（OA 行 1 / 7 / 3 / 5）
+      rule: v3
+      candidates: [NonInvasiveFetalECGThorax1, CinCECGTorso, SemgHandMovementCh2, EOGHorizontalSignal, ShapesAll,
+                   MixedShapesSmallTrain, LargeKitchenAppliances, Adiac, FiftyWords, FordA]
+      task_rows: [1, 7, 3, 5]
+      min_tasks: 4
+      rho_min: 0.5                        # 任务级 Spearman(seed 0, seed 1) 全 30 条
+      min_pass: 3                         # 4 任务的严格过半（S1″ posthoc v3′ 同尺子：3/4 进、1/4 拒）
+      min_valid_cfg: 20                   # 两种子齐的 shared < 20 条 → 该任务不计
+      guard: {headroom_min: 0.10, min_pass: 3}   # h_t = median(前一半两种子均值) − 切片多数类占比
+      pool_floor: 0                       # 本轮只报准入数，不设池底线
+      fallback: []
+      domains: {external: []}
+      reference: s1pp                     # §1.7 多样性参照 = S1″ v3′ 池（results/acts/s1pp/labels.jsonl 重算）
+    pilot:
+      datasets: []
+      add_if_admitted: []
+      n_tasks: 8                          # 每源切 8 行（tasks.json），准入只用其中 4 行
+    whole_eval: null                      # 无整集对照（深合并里 null 才能清掉 s1pp 块）
+    smoke: {dataset: Adiac}               # 本地冒烟用的 npz 源（走 acts_sources.yaml）
+    verdict: {go_min: 7, partial_min: 4, diverse_rho_max: 0.3, diverse_min: 2}   # §1.8

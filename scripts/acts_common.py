@@ -35,6 +35,7 @@ from autocls.space.cls_space import CLS, CLSSpace, DEFAULT_SPACE_YAML  # noqa: E
 ACTS_YAML = ROOT / "configs" / "acts.yaml"
 UEA30_YAML = ROOT / "configs" / "uea30.yaml"
 CANDIDATE_POOL_YAML = ROOT / "configs" / "candidate_pool.yaml"   # S1″ 外部源（npz）注册表
+ACTS_SOURCES_YAML = ROOT / "configs" / "acts_sources.yaml"       # UCR-ADM 扩池源（npz）注册表（PROTOCOL results/acts/ucradm §1.1）
 OUT_ROOT = ROOT / "results" / "acts"
 STAGE = "s1_labels"
 ARM_SHARED, ARM_RANDOM, ARM_ANCHOR = "shared", "random", "anchor"
@@ -412,8 +413,16 @@ def load_dataset_full(name: str) -> tuple[np.ndarray, np.ndarray]:
         if not any(e.name == name for e in reg.entries):
             reg = load_registry(CANDIDATE_POOL_YAML)                          # S1″ 外部源（PTB-XL / SleepEDF / PAMAP2 / Opportunity）走候选池注册表（npz）
             if not any(e.name == name for e in reg.entries):
-                raise KeyError(f"{name!r} 不在 source_pool.yaml 也不在 candidate_pool.yaml")
+                reg = acts_sources_registry()                                 # UCR-ADM 扩池源（UCR 十源 npz）第三级回退
+                if not any(e.name == name for e in reg.entries):
+                    raise KeyError(f"{name!r} 不在 source_pool.yaml / candidate_pool.yaml / acts_sources.yaml")
     return load_source_dataset(name, reg, crop_len=None)
+
+
+def acts_sources_registry(path: str | Path = ACTS_SOURCES_YAML):
+    """configs/acts_sources.yaml（UCR-ADM 扩池源，schema 同 source_pool.yaml）。"""
+    from autocls.data.source_pool import load_registry
+    return load_registry(path)
 
 
 def make_task_loader(tasks: Mapping[str, SlicedTask], dataset_of: Mapping[str, str], load_dataset: Callable[[str], tuple[np.ndarray, np.ndarray]],
@@ -689,6 +698,110 @@ def admission_v2_decision(metrics: Mapping[str, Mapping], cfg: Mapping) -> dict:
 
 
 # ---------------------------------------------------------------- §1.1 配对规则（S2 用；本轮只报产量）
+def _paired_valid(a0: Sequence, a1: Sequence) -> tuple[np.ndarray, np.ndarray]:
+    """两种子都有限值的配置（单种子缺 → 该配置剔除；PROTOCOL ucradm §1.4）。"""
+    x = np.array([np.nan if v is None else float(v) for v in a0], dtype=float)
+    y = np.array([np.nan if v is None else float(v) for v in a1], dtype=float)
+    ok = np.isfinite(x) & np.isfinite(y)
+    return x[ok], y[ok]
+
+
+def admission_v3_metrics(tasks: Mapping[str, tuple[Sequence, Sequence]], *, rho_min: float, min_valid_cfg: int) -> dict:
+    """准入 v3′（UCR-ADM §1.4；= S1″ posthoc §1 的尺子）：每任务 ρ_t = Spearman(seed 0 全部 shared, seed 1 全部 shared)，
+    pass = #{ρ_t ≥ rho_min}；两种子齐的配置 < min_valid_cfg 的任务不计（skipped）。"""
+    from scipy.stats import spearmanr
+    rho: list[float] = []
+    n_valid: dict[str, int] = {}
+    skipped: list[str] = []
+    for tid, (a0, a1) in tasks.items():
+        x, y = _paired_valid(a0, a1)
+        n_valid[tid] = int(len(x))
+        if len(x) < int(min_valid_cfg):
+            skipped.append(tid)
+            continue
+        r = float(spearmanr(x, y)[0])
+        rho.append(r if np.isfinite(r) else 0.0)
+    return {"rho": rho, "pass": int(sum(1 for r in rho if r >= float(rho_min))), "n": len(rho), "n_valid": n_valid, "skipped": skipped,
+            "rho_min": float(rho_min)}
+
+
+def chance_guard(tasks: Mapping[str, tuple[Sequence, Sequence]], majority: Mapping[str, float], *, headroom_min: float,
+                 top_frac: float = 0.5) -> dict:
+    """chance 护栏（UCR-ADM §1.5）：h_t = median(按两种子均值排前 top_frac 的 shared 的两种子均值) − 切片多数类占比；pass = #{h_t ≥ headroom_min}。"""
+    h: list[float] = []
+    for tid, (a0, a1) in tasks.items():
+        x, y = _paired_valid(a0, a1)
+        if len(x) == 0:
+            continue
+        m = (x + y) / 2.0
+        top = np.sort(m)[int(np.floor(len(m) * (1.0 - float(top_frac)))):]
+        h.append(float(np.median(top)) - float(majority[tid]))
+    return {"h": h, "pass": int(sum(1 for v in h if v >= float(headroom_min))), "n": len(h), "headroom_min": float(headroom_min)}
+
+
+def admission_v3_decision(metrics: Mapping[str, Mapping], cfg: Mapping) -> dict:
+    """准入 = v3′（pass ≥ min_pass）∧ 护栏（guard.pass ≥ guard.min_pass）；任务数 < min_pass → NA（不准入）。"""
+    a = cfg["admission"]
+    min_pass = int(a["min_pass"]); g_min = int(a["guard"]["min_pass"])
+    admitted: list[str] = []
+    reasons: dict[str, list[str]] = {}
+    for src, m in metrics.items():
+        why: list[str] = []
+        if int(m["n"]) < min_pass:
+            why.append("na")
+        elif int(m["pass"]) < min_pass:
+            why.append("rho")
+        g = m.get("guard") or {}
+        if int(g.get("n", 0)) < g_min or int(g.get("pass", 0)) < g_min:
+            why.append("guard")
+        if why:
+            reasons[src] = why
+        else:
+            admitted.append(src)
+    return {"rule": str(a.get("rule", "v3")), "admitted": admitted, "reasons": reasons, "pool": list(admitted),
+            "n_admitted": len(admitted), "n_candidates": len(metrics)}
+
+
+def profile_diversity(profiles: Mapping[str, Sequence[float]], ref: Sequence[float]) -> dict:
+    """多样性读数（UCR-ADM §1.7）：每源画像 vs 参照画像的 Spearman、源间两两 Spearman 矩阵。"""
+    from scipy.stats import spearmanr
+    names = list(profiles)
+    P = [np.asarray(profiles[n], dtype=float) for n in names]
+    r = np.asarray(ref, dtype=float)
+    rho_ref = {n: float(spearmanr(p, r)[0]) for n, p in zip(names, P)}
+    M = np.ones((len(names), len(names)))
+    for i in range(len(names)):
+        for j in range(i + 1, len(names)):
+            M[i, j] = M[j, i] = float(spearmanr(P[i], P[j])[0])
+    return {"names": names, "rho_vs_ref": rho_ref, "pairwise": M.tolist()}
+
+
+def between_source_decomp(by_source: Mapping[str, np.ndarray]) -> dict:
+    """池级源间偏好差异（S1″ posthoc §3 同定义）：每 (源, 任务) 内配置排秩 → 去配置主效应（全体均值）→
+    SS_between = Σ_s n_t(s)·Σ_c (m_sc − m̄_c)²、SS_within = Σ_{s,t,c} (r_stc − m_sc)²，两者归一到和 1；
+    agree[s] = Spearman(源 s 的平均秩画像, 其余源的平均秩画像)。"""
+    from scipy.stats import rankdata, spearmanr
+    R: dict[str, np.ndarray] = {}
+    for s, A in by_source.items():
+        A = np.asarray(A, dtype=float)
+        R[s] = np.vstack([rankdata(-row) for row in A])            # 高 acc → 小秩
+    allr = np.vstack(list(R.values()))
+    cfg_mean = allr.mean(axis=0)
+    ss_b = ss_w = 0.0
+    means: dict[str, np.ndarray] = {}
+    for s, Rs in R.items():
+        m = Rs.mean(axis=0)
+        means[s] = m
+        ss_b += float(Rs.shape[0] * np.sum((m - cfg_mean) ** 2))
+        ss_w += float(np.sum((Rs - m) ** 2))
+    tot = ss_b + ss_w
+    agree = {}
+    for s, m in means.items():
+        others = np.vstack([R[o] for o in R if o != s]).mean(axis=0) if len(R) > 1 else m
+        agree[s] = float(spearmanr(m, others)[0])
+    return {"ss_between": (ss_b / tot if tot > 0 else float("nan")), "ss_within": (ss_w / tot if tot > 0 else float("nan")), "agree": agree}
+
+
 def pair_weights(vals: Sequence[float], n_seeds: Sequence[int], sigma_task: float, *, dead_zone_sigma: float, cap_sigma: float, top_quartile_boost: float) -> np.ndarray:
     """对 (i, j)：sd_gap = σ_task·√(1/n_i + 1/n_j)；gap < dead_zone·sd_gap → 0，否则 min(gap / (cap·sd_gap), 1)；含前四分位配置的对 × boost。"""
     v = np.asarray(vals, dtype=float)

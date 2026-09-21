@@ -174,11 +174,11 @@ class TestDiversity:
         ac = _ac()
         rng = np.random.default_rng(0)
         base = np.linspace(0.9, 0.5, 30)
-        same = {s: np.tile(base, (4, 1)) + rng.normal(scale=1e-3, size=(4, 30)) for s in ("A", "B", "C")}
+        same = {s: np.tile(base, (4, 1)) + rng.normal(scale=0.01, size=(4, 30)) for s in ("A", "B", "C")}   # 噪声 ≈ 相邻档距，秩有抖动但序一致
         r = ac.between_source_decomp(same)
         assert r["ss_between"] + r["ss_within"] == pytest.approx(1.0) and r["ss_between"] < 0.2
         assert all(v > 0.9 for v in r["agree"].values())
-        diff = {**same, "D": np.tile(base[::-1], (4, 1)) + rng.normal(scale=1e-3, size=(4, 30))}
+        diff = {**same, "D": np.tile(base[::-1], (4, 1)) + rng.normal(scale=0.01, size=(4, 30))}
         r2 = ac.between_source_decomp(diff)
         assert r2["ss_between"] > r["ss_between"] and r2["agree"]["D"] < 0
 

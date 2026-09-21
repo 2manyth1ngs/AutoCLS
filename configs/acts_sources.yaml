@@ -1,0 +1,29 @@
+# =====================================================================
+# WP17-ACTS 扩池源注册表（UCR 单变量，npz）——results/acts/ucradm/PROTOCOL.md §1.1；手工维护、只增不改。
+# schema 同 configs/source_pool.yaml（autocls.data.source_pool.load_registry 直接吃）；
+# scripts.acts_common.load_dataset_full 在 source_pool.yaml → candidate_pool.yaml 之后第三级回退到本表。
+# 数据 = data/candidates/<name>.npz（scripts/prepare_candidates.py，TRAIN+TEST 合并、原生长度、整集按通道 z-score，
+# SPEC min_class_count 5）；候选池的 --emit-registry 不写本表（其 N ≥ 1000 初筛是调研期尺子）。
+# 铁律 6：与 UEA 30 靶 / 8 源无同名；同源兄弟（Thorax2 / EOGV / WordSynonyms / MixedShapesRegular / FordB / 电器族）不入。
+# n_classes_range / planned_tasks 只为满足 schema（ACTS 切片器不读）。
+# =====================================================================
+encode_length_floor: 50
+
+slice:
+  seed: 0
+  n_samples: 1024
+  min_samples: 32
+
+target_pool: []
+
+source_pool:
+  - {name: NonInvasiveFetalECGThorax1, source: npz, domain: ECG,     n_channels: 1, n_classes: 42, l_enc: 750,  crop_len: null, n_classes_range: [42, 42], planned_tasks: 16, tested: false}
+  - {name: CinCECGTorso,               source: npz, domain: ECG,     n_channels: 1, n_classes: 4,  l_enc: 1639, crop_len: null, n_classes_range: [4, 4],   planned_tasks: 16, tested: false}
+  - {name: SemgHandMovementCh2,        source: npz, domain: EMG,     n_channels: 1, n_classes: 6,  l_enc: 1500, crop_len: null, n_classes_range: [6, 6],   planned_tasks: 16, tested: false}
+  - {name: EOGHorizontalSignal,        source: npz, domain: EOG,     n_channels: 1, n_classes: 12, l_enc: 1250, crop_len: null, n_classes_range: [12, 12], planned_tasks: 16, tested: false}
+  - {name: ShapesAll,                  source: npz, domain: Image,   n_channels: 1, n_classes: 60, l_enc: 512,  crop_len: null, n_classes_range: [60, 60], planned_tasks: 16, tested: false}
+  - {name: MixedShapesSmallTrain,      source: npz, domain: Image,   n_channels: 1, n_classes: 5,  l_enc: 1024, crop_len: null, n_classes_range: [5, 5],   planned_tasks: 16, tested: false}
+  - {name: LargeKitchenAppliances,     source: npz, domain: Device,  n_channels: 1, n_classes: 3,  l_enc: 720,  crop_len: null, n_classes_range: [3, 3],   planned_tasks: 16, tested: false}
+  - {name: Adiac,                      source: npz, domain: Image,   n_channels: 1, n_classes: 37, l_enc: 176,  crop_len: null, n_classes_range: [37, 37], planned_tasks: 16, tested: false}
+  - {name: FiftyWords,                 source: npz, domain: Image,   n_channels: 1, n_classes: 50, l_enc: 270,  crop_len: null, n_classes_range: [50, 50], planned_tasks: 16, tested: false}
+  - {name: FordA,                      source: npz, domain: Sensor,  n_channels: 1, n_classes: 2,  l_enc: 500,  crop_len: null, n_classes_range: [2, 2],   planned_tasks: 16, tested: false}

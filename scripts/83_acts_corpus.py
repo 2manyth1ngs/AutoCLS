@@ -21,6 +21,8 @@ S1′（--profile s1p，PROTOCOL results/acts/s1p/PROTOCOL.md；评估 = 整切�
   --analyze-a                    ADM（准入）+ BUD（预算）判定 → analysis_A.json / tables_A.md
   --plan-b                       阶段 B：试点集 × 8 任务 × (shared × 2 种子 + random) − 阶段 A 已跑 → plan_B.json
   --analyze                      （profile s1p 时）终点 / 两种子均值标签、G-A1 / G-A2（无偏噪声）、读数码 → analysis.json / tables.md
+  --plan-adm / --analyze-adm     UCR-ADM（profile ucradm，PROTOCOL results/acts/ucradm）：准入计划 plan_M（候选 × OA 行 1/7/3/5 × shared-30 × 2 种子，
+                                 无 random）/ 准入 v3′ + chance 护栏 + 诊断 + 多样性 + 读数码 → analysis_M.json / tables_M.md；--phase M 接 run / probe0 / verify
 """
 from __future__ import annotations
 
@@ -537,7 +539,7 @@ def cmd_run(args, cfg: Mapping, outdir: Path) -> None:
     phase = getattr(args, "phase", None)
     if phase == "W":                                  # S1″ 第 2 步：整集 official / cv5 混排，按格分发
         loader, runner = make_whole_loader(cfg, plan["tasks_meta"]), dispatch_runner
-    elif phase == "C":                                # S1″ 主批：切片 loader 按 cfg eval 模式，执行体按格分发
+    elif phase in ("C", "M"):                         # S1″ 主批 / UCR-ADM 准入：切片 loader 按 cfg eval 模式，执行体按格分发
         loader, runner = _loader_for(cfg, load_tasks(outdir)), dispatch_runner
     else:
         loader, runner = _loader_for(cfg, load_tasks(outdir)), (run_trajectory_cell_cv if _is_cv(cfg) else None)
@@ -661,7 +663,11 @@ def check_deployment(cfg: Mapping, outdir: Path, *, load_dataset=None, plan_kwar
         if got != exp:
             mismatches.append((tid, exp, got))
     plan_ok = None
-    if _is_cv(cfg) and (outdir / "plan_A.json").exists():
+    if _is_cv(cfg) and (outdir / "plan_M.json").exists():            # UCR-ADM：本机重建 plan_M 的 cell key 序须逐位一致
+        plan = json.loads((outdir / "plan_M.json").read_text(encoding="utf-8"))
+        rebuilt = build_plan_adm(cfg, payload["tasks"], shared=ac.shared_catalog(ac.acts_space(cfg), cfg), existing_keys=set())
+        plan_ok = bool([c["key"] for c in rebuilt["cells"]] == [c["key"] for c in plan["cells"]])
+    elif _is_cv(cfg) and (outdir / "plan_A.json").exists():
         plan = json.loads((outdir / "plan_A.json").read_text(encoding="utf-8"))
         rebuilt, _c = build_plan_s1p(cfg, payload["tasks"], phase="A", **dict(plan_kwargs or {}))
         plan_ok = bool([c["key"] for c in rebuilt["cells"]] == [c["key"] for c in plan["cells"]])
@@ -1457,8 +1463,222 @@ def cmd_analyze_c(cfg: Mapping, outdir: Path) -> dict:
     return a
 
 
+# ================================================================ UCR-ADM（PROTOCOL results/acts/ucradm/PROTOCOL.md）
+def build_plan_adm(cfg: Mapping, meta: Mapping[str, Mapping], *, shared: Sequence[tuple[CLS, str]], existing_keys: set) -> dict:
+    """准入计划（§1.3）：candidates × OA 行 task_rows × shared × shared_seeds；无 random、无锚。probe_tasks 按候选序 × 行序。"""
+    protos = _g35.load_protocols()
+    s_seeds = [int(s) for s in cfg["labels"]["shared_seeds"]]
+    tids: list[str] = []
+    for _src, ts in admission_tasks(cfg, meta).items():
+        tids += ts
+    cells: list[dict] = []
+    for tid in tids:
+        for c, k in shared:
+            for sd in s_seeds:
+                cells.append(ac.make_cell(tid, meta[tid], ac.ARM_SHARED, c, k, sd, protos, cfg))
+    keys = [c["key"] for c in cells]
+    if len(keys) != len(set(keys)):
+        raise ValueError("cache_key 撞键")
+    n_exist = sum(1 for k in keys if k in existing_keys)
+    est = float(sum(ac.estimate_cell_seconds(c, cfg) for c in cells if c["key"] not in existing_keys))
+    return {"phase": "M", "profile": cfg.get("profile"), "n_cells": len(cells), "n_existing": n_exist, "n_new": len(cells) - n_exist,
+            "n_tasks": len(tids), "probe_tasks": tids, "n_probe": len(tids) * int(cfg["labels"]["probe0_seeds"]), "protocol": cfg["protocol"],
+            "est_seconds_4090_new": est, "eval_mode": str((cfg.get("eval") or {}).get("mode", "holdout")),
+            "tasks_meta": {tid: {k: meta[tid][k] for k in ("dataset", "n_train", "T", "C", "k", "majority", "iters", "tag", "time_window", "fold_md5") if k in meta[tid]} for tid in tids},
+            "cells": cells}
+
+
+def cmd_plan_adm(cfg: Mapping, outdir: Path) -> dict:
+    payload = load_tasks(outdir)
+    meta = payload["tasks"]
+    space = ac.acts_space(cfg)
+    shared = ac.shared_catalog(space, cfg)
+    ref = ac.OUT_ROOT / str(cfg["admission"].get("reference", "s1pp")) / "catalog.json"
+    if ref.exists():                                              # C0：shared-30 逐位 = S1″（同 rng 流 + 同剪枝；标签可并入 S2）
+        ref_keys = [x["cls_key"] for x in json.loads(ref.read_text(encoding="utf-8"))["shared"]]
+        if [k for _c, k in shared] != ref_keys:
+            raise SystemExit(f"C0：shared-30 ≠ {ref}（rng 流 / 剪枝被改动？）")
+    existing = set(_g35.load_done(outdir / "runs.jsonl")) if (outdir / "runs.jsonl").exists() else set()
+    plan = build_plan_adm(cfg, meta, shared=shared, existing_keys=existing)
+    catalog = {"shared": [{"cls_key": k, "cls": c.to_dict(), "aug_max": ac.aug_max(c)} for c, k in shared], "random": {}, "anchors": [], "anchor_seeds": []}
+    _write_json(outdir / "plan_M.json", plan)
+    _write_json(outdir / "catalog.json", catalog)
+    print(f"[plan M] {plan['n_cells']} 格（已有 {plan['n_existing']}、新 {plan['n_new']}；eval {plan['eval_mode']}），{plan['n_tasks']} 任务、探针 {plan['n_probe']}；"
+          f"新格估时 4090 {plan['est_seconds_4090_new'] / 3600:.1f} h；shared-30 C0 {'OK' if ref.exists() else '（无参照）'}", flush=True)
+    return plan
+
+
+def _raw_seed_frames(plan: Mapping, rows: Mapping, cat: Mapping, cfg: Mapping) -> dict[str, tuple[np.ndarray, np.ndarray]]:
+    """每任务 shared 两种子**原始**终点（缺 → nan，不填补；v3′ / 护栏用）。"""
+    shared_keys = [s["cls_key"] for s in cat["shared"]]
+    s_seeds = [int(s) for s in cfg["labels"]["shared_seeds"]]
+    by: dict[tuple, Optional[float]] = {}
+    for c in plan["cells"]:
+        by[(c["task_id"], c["cls_key"], int(c["seed"]))] = ac.endpoint_of(rows.get(c["key"]))
+    out = {}
+    for tid in plan["probe_tasks"]:
+        a = [np.array([np.nan if by.get((tid, k, sd)) is None else float(by[(tid, k, sd)]) for k in shared_keys], float) for sd in s_seeds[:2]]
+        out[tid] = (a[0], a[1] if len(a) > 1 else np.full(len(shared_keys), np.nan))
+    return out
+
+
+def _clipped_profile(vals: Sequence[float], q: float) -> np.ndarray:
+    z, _mu, _sd, _cut = ac.clip_z(np.asarray(vals, dtype=float), q)
+    return z
+
+
+def reference_pool_profiles(cfg: Mapping) -> dict:
+    """§1.7 参照：S1″ v3′ 准入源在其准入 4 行上的钉底 z 画像（shared 两种子均值，同 clip_quantile）与两种子均值原始 acc 矩阵。"""
+    ref_dir = ac.OUT_ROOT / str(cfg["admission"].get("reference", "s1pp"))
+    post = json.loads((ref_dir / "posthoc_s1pp.json").read_text(encoding="utf-8"))
+    admitted = [s for s, v in post["v3_admission"].items() if v.get("admit")]
+    cat = json.loads((ref_dir / "catalog.json").read_text(encoding="utf-8"))
+    shared_keys = [x["cls_key"] for x in cat["shared"]]
+    rows_by: dict[str, dict[str, float]] = defaultdict(dict)
+    for r in read_jsonl(ref_dir / "labels.jsonl"):
+        if r.get("arm") == ac.ARM_SHARED:
+            rows_by[r["task_id"]][r["cls_key"]] = float(r["r_prime"])
+    q = float(cfg["scale"]["clip_quantile"])
+    task_rows = [int(r) for r in cfg["admission"]["task_rows"]]
+    profiles: dict[str, np.ndarray] = {}
+    raw: dict[str, np.ndarray] = {}
+    for src in admitted:
+        tids = [f"{src}_a{r:02d}" for r in task_rows if f"{src}_a{r:02d}" in rows_by]
+        Z, A = [], []
+        for tid in tids:
+            v = np.array([rows_by[tid].get(k, np.nan) for k in shared_keys], float)
+            if not np.isfinite(v).all():
+                continue
+            Z.append(_clipped_profile(v, q)); A.append(v)
+        if Z:
+            profiles[src] = np.mean(Z, axis=0); raw[src] = np.array(A)
+    return {"admitted": admitted, "shared_keys": shared_keys, "profiles": profiles, "raw": raw}
+
+
+def verdict_ucradm(n_adm: int, n_diverse: int, cfg: Mapping) -> str:
+    v = cfg["verdict"]
+    code = "UCR-ADM-GO" if n_adm >= int(v["go_min"]) else ("UCR-ADM-PARTIAL" if n_adm >= int(v["partial_min"]) else "UCR-ADM-DEAD")
+    return code + ("+DIVERSE" if n_diverse >= int(v["diverse_min"]) else "+SAME")
+
+
+def cmd_analyze_adm(cfg: Mapping, outdir: Path) -> dict:
+    """UCR-ADM 终读：标签落盘（(a′) 口径）→ 每源 v3′ + chance 护栏 → 决策 → 诊断（v2 三条 / 真实份额 / 探针地板 failed / σ_task / 耗时）
+    → 多样性（vs S1″ v3′ 池均值画像、UCR 两两、合池秩方差分解）→ 读数码 → analysis_M.json / tables_M.md。"""
+    plan = json.loads((outdir / "plan_M.json").read_text(encoding="utf-8"))
+    cat = json.loads((outdir / "catalog.json").read_text(encoding="utf-8"))
+    rows = _g35.load_done(outdir / "runs.jsonl")
+    probe = load_probe0(outdir)
+    meta = plan["tasks_meta"]
+    a = cfg["admission"]
+    q, tf = float(cfg["scale"]["clip_quantile"]), float(cfg["scale"]["noise_top_frac"])
+    frames = _frames_c(plan, rows, cat, cfg)
+    raw = _raw_seed_frames(plan, rows, cat, cfg)
+    floors = floors_cv(probe, meta)
+    cls_of = {s["cls_key"]: s["cls"] for s in cat["shared"]}
+    from autocls.labeling import append_jsonl_many
+    labels = []
+    for tid, f in frames.items():
+        for i, k in enumerate(f["frame_keys"]):
+            labels.append({"task_id": tid, "dataset": meta[tid]["dataset"], "cls_key": k, "arm": ac.ARM_SHARED,
+                           "r_prime": float(f["frame_vals"][i]), "seed_vals": [float(f["a0"][i]), float(f["a1"][i])],
+                           "floor_diag": floors[tid]["floor"], "failed_diag": bool(f["frame_vals"][i] <= floors[tid]["floor"])})
+    (outdir / "labels.jsonl").unlink(missing_ok=True)
+    append_jsonl_many(outdir / "labels.jsonl", labels)
+    # 准入 v3′ + 护栏 + v2 诊断
+    per_src: dict[str, dict] = {}
+    for src, tids in admission_tasks(cfg, meta).items():
+        tids = [t for t in tids if t in raw]
+        rt = {t: raw[t] for t in tids}
+        m = ac.admission_v3_metrics(rt, rho_min=float(a["rho_min"]), min_valid_cfg=int(a["min_valid_cfg"]))
+        m["guard"] = ac.chance_guard(rt, {t: float(meta[t]["majority"]) for t in tids}, headroom_min=float(a["guard"]["headroom_min"]), top_frac=tf)
+        m["v2"] = ac.admission_v2_metrics({t: (frames[t]["a0"], frames[t]["a1"]) for t in tids}, clip_quantile=q, noise_top_frac=tf)
+        m["failed_diag_shared"] = float(np.mean([np.mean(frames[t]["m"] <= floors[t]["floor"]) for t in tids])) if tids else float("nan")
+        m["surv_both_median"] = float(np.median([int(np.sum((frames[t]["a0"] > floors[t]["floor"]) & (frames[t]["a1"] > floors[t]["floor"]))) for t in tids])) if tids else float("nan")
+        m["sigma_task"] = [ac.top_half_sigma(frames[t]["a0"], frames[t]["a1"], top_frac=tf)[0] for t in tids]
+        m["tasks"] = tids
+        m["n_both_missing"] = int(sum(frames[t]["n_both_missing"] for t in tids))
+        per_src[src] = m
+    dec = ac.admission_v3_decision(per_src, cfg)
+    # 多样性（§1.7）
+    ref = reference_pool_profiles(cfg)
+    ref_mean = np.mean(list(ref["profiles"].values()), axis=0) if ref["profiles"] else None
+    prof = {src: np.mean([_clipped_profile(frames[t]["m"], q) for t in m["tasks"]], axis=0) for src, m in per_src.items() if m["tasks"]}
+    div = ac.profile_diversity(prof, ref_mean) if ref_mean is not None and prof else {"names": [], "rho_vs_ref": {}, "pairwise": []}
+    by_src_ucr = {src: np.array([frames[t]["m"] for t in m["tasks"]]) for src, m in per_src.items() if src in dec["admitted"] and m["tasks"]}
+    decomp_ucr = ac.between_source_decomp(by_src_ucr) if len(by_src_ucr) >= 2 else None
+    pooled = {**ref["raw"], **by_src_ucr}
+    decomp_pool = ac.between_source_decomp(pooled) if len(pooled) >= 2 else None
+    decomp_ref = ac.between_source_decomp(ref["raw"]) if len(ref["raw"]) >= 2 else None
+    n_div = int(sum(1 for src in dec["admitted"] if src in div["rho_vs_ref"] and div["rho_vs_ref"][src] < float(cfg["verdict"]["diverse_rho_max"])))
+    code = verdict_ucradm(dec["n_admitted"], n_div, cfg)
+    # 诊断：failed 按 τ、耗时、error
+    by_tau: dict[str, list] = defaultdict(list)
+    for tid, f in frames.items():
+        fl = floors[tid]["floor"]
+        for i, k in enumerate(f["shared_keys"]):
+            by_tau[str(cls_of[k]["temperature"])].append(bool(f["m"][i] <= fl))
+    secs = [float(r.get("pretrain_seconds") or 0) + float(r.get("eval_seconds") or 0) for c in plan["cells"] for r in [rows.get(c["key"])] if r and not r.get("error")]
+    errs = [(c["task_id"], c["cls_key"], c["seed"], rows[c["key"]].get("error")) for c in plan["cells"] if c["key"] in rows and rows[c["key"]].get("error")]
+    out = {"verdict": code, "admission": dec, "per_source": per_src, "diversity": div, "n_diverse": n_div,
+           "decomp_ucr": decomp_ucr, "decomp_pool": decomp_pool, "decomp_ref": decomp_ref, "reference_admitted": ref["admitted"],
+           "failed_diag_by_tau": {t: float(np.mean(v)) for t, v in sorted(by_tau.items(), key=lambda kv: float(kv[0]))},
+           "cell_seconds": {"median": float(np.median(secs)) if secs else float("nan"), "mean": float(np.mean(secs)) if secs else float("nan"), "n": len(secs),
+                            "gpu_hours": float(np.sum(secs)) / 3600.0 if secs else float("nan")},
+           "errors": errs, "n_labels": len(labels)}
+    _write_json(outdir / "analysis_M.json", out)
+    md = [f"# UCR-ADM 读数（{code}）", "",
+          f"准入 {dec['n_admitted']}/{dec['n_candidates']}：{dec['admitted']}；参照池（S1″ v3′）{len(ref['admitted'])} 源", "",
+          "| 源 | 任务 | ρ_t（v3′） | pass | h_t（护栏） | pass_h | v2 前一半 ρ | 净占比 | 真实份额 | IQR/σ_mean | failed(诊断) | 都超地板 中位 | ρ vs 池均值 | 判定 |",
+          "|---|---:|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---|"]
+    for src, m in per_src.items():
+        v2 = m["v2"]
+        md.append(f"| {src} | {m['n']} | {' '.join(_f(r, 2) for r in m['rho'])} | {m['pass']}/{m['n']} | {' '.join(_f(h, 3) for h in m['guard']['h'])} | {m['guard']['pass']}/{m['guard']['n']} | "
+                  f"{_f(v2['rho_top'], 2)} | {_f(v2['net_share'], 2)} | {_f(v2['real_share'], 2)} | {_f(v2['iqr_sigma'], 1)} | {_f(m['failed_diag_shared'], 2)} | {_f(m['surv_both_median'], 0)} | "
+                  f"{_f(div['rho_vs_ref'].get(src, float('nan')), 2)} | {'准入' if src in dec['admitted'] else '拒 ' + ','.join(dec['reasons'].get(src, []))} |")
+    md += ["", f"多样性：+DIVERSE 计数 {n_div}（ρ < {cfg['verdict']['diverse_rho_max']}）；"
+           f"合池 SS_between {_f(decomp_pool['ss_between'], 2) if decomp_pool else 'nan'}（参照池 {_f(decomp_ref['ss_between'], 2) if decomp_ref else 'nan'}，UCR 池 {_f(decomp_ucr['ss_between'], 2) if decomp_ucr else 'nan'}）",
+           f"failed（探针地板口径）按 τ：{out['failed_diag_by_tau']}；单格耗时中位 {_f(out['cell_seconds']['median'], 1)} s（{out['cell_seconds']['n']} 格，{_f(out['cell_seconds']['gpu_hours'], 1)} GPU-h）；error {len(errs)}；标签 {len(labels)}"]
+    if decomp_pool:
+        md += ["", "| 源 | 合池 agree（与其余源平均序的 Spearman） |", "|---|---:|"] + [f"| {s} | {_f(v, 2)} |" for s, v in decomp_pool["agree"].items()]
+    (outdir / "tables_M.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    print("\n".join(md), flush=True)
+    return out
+
+
+def cmd_smoke_adm(args, cfg: Mapping, outdir: Path) -> bool:
+    """UCR-ADM 冒烟：cfg.smoke.dataset（npz 源）切 8 行 → 行 [0, 1] × shared 2 × 2 种子（iters 8）+ 探针 1 种子。"""
+    sm = outdir / "smoke"
+    sm.mkdir(parents=True, exist_ok=True)
+    name = str(cfg["smoke"]["dataset"])
+    X, y = ac.load_dataset_full(name)
+    _tasks, meta = slice_dataset(cfg, name, 8, X=X, y=y)
+    payload = {"stage": "smoke", "datasets": [name], "n_tasks": 8, "protocol": cfg["protocol"], "slicing": dict(cfg["slicing"]), "eval": dict(cfg.get("eval") or {}), "tasks": meta}
+    _write_json(sm / "tasks.json", payload)
+    c2 = {**cfg, "admission": {**cfg["admission"], "candidates": [name], "task_rows": [0, 1]}}
+    shared = ac.shared_catalog(ac.acts_space(cfg), cfg, n=2)
+    plan = build_plan_adm(c2, meta, shared=shared, existing_keys=set())
+    for c in plan["cells"]:
+        c["iters"] = SMOKE_ITERS
+        c["checkpoints"] = list(_g39.checkpoints_for(c["iters"]))
+    _write_json(sm / "plan_M.json", plan)
+    _write_json(sm / "catalog.json", {"shared": [{"cls_key": k, "cls": c.to_dict(), "aug_max": ac.aug_max(c)} for c, k in shared], "random": {}, "anchors": [], "anchor_seeds": []})
+    _install_win_timeout()
+    ns = argparse.Namespace(outdir=str(sm), resume=False, device=args.device, joblib_backend=args.joblib_backend, har_npz=None)
+    _g39.execute(plan["cells"], ns, "smoke-adm", loader=_loader_for(cfg, payload), runner=dispatch_runner)
+    ns2 = argparse.Namespace(resume=False, device=args.device, phase="M")
+    cmd_probe0(ns2, cfg, sm, n_seeds=1)
+    rows = list(_g35.load_done(sm / "runs.jsonl").values())
+    probe = load_probe0(sm)
+    ok = (len(rows) == plan["n_cells"] and all(r.get("error") is None and len(r.get("checkpoint_results") or []) == 3 for r in rows) and len(probe) == 2)
+    print(f"smoke-adm {'OK' if ok else 'FAILED'}: {len(rows)}/{plan['n_cells']} 格、probe0 {len(probe)}/2；"
+          f"{[(r['task_id'], r['seed'], round(r['acc'], 3)) for r in rows]}", flush=True)
+    return ok
+
+
 # ---------------------------------------------------------------- smoke
 def cmd_smoke(args, cfg: Mapping, outdir: Path) -> bool:
+    if str((cfg.get("admission") or {}).get("rule")) == "v3":
+        return cmd_smoke_adm(args, cfg, outdir)
     sm = outdir / "smoke"
     sm.mkdir(parents=True, exist_ok=True)
     X, y = ac.load_dataset_full(SMOKE_DATASET)
@@ -1661,11 +1881,11 @@ def analysis_markdown(a: Mapping, cfg: Mapping) -> str:
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     for flag in ("slice", "sanity", "precheck", "plan", "run", "probe0", "verify", "check", "smoke", "analyze",
-                 "slice-all", "plan-a", "analyze-a", "plan-b", "plan-w", "analyze-w", "plan-c", "analyze-c"):
+                 "slice-all", "plan-a", "analyze-a", "plan-b", "plan-w", "analyze-w", "plan-c", "analyze-c", "plan-adm", "analyze-adm"):
         ap.add_argument(f"--{flag}", action="store_true")
     ap.add_argument("--stage", default="pilot", choices=("pilot", "full"))
     ap.add_argument("--profile", default=None, help="acts.yaml profiles.<name>（S1′ = s1p）")
-    ap.add_argument("--phase", default=None, choices=(None, "A", "B", "W", "C"), help="S1′ 阶段 A / B；S1″ 阶段 W（整集口径对照）/ C（主批）（run / probe0 / verify 读 plan_<phase>.json）")
+    ap.add_argument("--phase", default=None, choices=(None, "A", "B", "W", "C", "M"), help="S1′ 阶段 A / B；S1″ 阶段 W（整集口径对照）/ C（主批）；UCR-ADM 阶段 M（准入）（run / probe0 / verify 读 plan_<phase>.json）")
     ap.add_argument("--outdir", default=str(OUT))
     ap.add_argument("--config", default=str(ac.ACTS_YAML))
     ap.add_argument("--resume", action="store_true")
@@ -1695,6 +1915,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         cmd_plan_w(cfg, outdir)
     if args.plan_c:
         cmd_plan_c(cfg, outdir)
+    if args.plan_adm:
+        cmd_plan_adm(cfg, outdir)
     if args.slice:
         cmd_slice(cfg, outdir, args.stage)
     if args.sanity:
@@ -1719,6 +1941,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         cmd_analyze_w(cfg, outdir)
     if args.analyze_c:
         cmd_analyze_c(cfg, outdir)
+    if args.analyze_adm:
+        cmd_analyze_adm(cfg, outdir)
     if args.check:
         if not check_deployment(cfg, outdir)["ok"]:
             return 1
