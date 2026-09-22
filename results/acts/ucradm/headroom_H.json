@@ -1,0 +1,553 @@
+{
+ "pools": {
+  "v3′ 11（复现 S1″ posthoc）": {
+   "sources": [
+    "Handwriting",
+    "UniMiB-SHAR",
+    "PhonemeSpectra",
+    "UWaveGestureLibrary",
+    "EthanolConcentration",
+    "Cricket",
+    "SelfRegulationSCP1",
+    "PTB-XL",
+    "SleepEDF",
+    "PAMAP2",
+    "Opportunity"
+   ],
+   "n_tasks": 56,
+   "results": {
+    "prior1": {
+     "task_mean": 0.021986389448685997,
+     "task_median": 0.016381987577639735,
+     "n": 56,
+     "source_equal_mean": 0.022840519858263412,
+     "source_equal_median": 0.017919513393935382,
+     "per_source": {
+      "Cricket": 0.026885959053782202,
+      "EthanolConcentration": 0.0447286427623009,
+      "Handwriting": 0.09184911413976615,
+      "Opportunity": -0.0005417752367741502,
+      "PAMAP2": 0.017919513393935382,
+      "PTB-XL": 0.006731321554443642,
+      "PhonemeSpectra": 0.010154084266965492,
+      "SelfRegulationSCP1": 0.014588715595013485,
+      "SleepEDF": 0.02160851310530565,
+      "UWaveGestureLibrary": 0.019523690519958656,
+      "UniMiB-SHAR": -0.0022020607137998582
+     }
+    },
+    "top3": {
+     "task_mean": 0.016949422004399212,
+     "task_median": 0.008240827325423111,
+     "n": 56,
+     "source_equal_mean": 0.016649694273009073,
+     "source_equal_median": 0.009593966996343913,
+     "per_source": {
+      "Cricket": 0.009593966996343913,
+      "EthanolConcentration": 0.01827894803451839,
+      "Handwriting": 0.07723082267445981,
+      "Opportunity": 0.004328065807376852,
+      "PAMAP2": 0.013942312394566975,
+      "PTB-XL": 0.009207799657958537,
+      "PhonemeSpectra": 0.012642644055367558,
+      "SelfRegulationSCP1": 0.002379974324002526,
+      "SleepEDF": 0.004096328789842646,
+      "UWaveGestureLibrary": 0.031908660006777695,
+      "UniMiB-SHAR": -0.00046288573811509304
+     }
+    },
+    "sh633": {
+     "task_mean": 0.007590482974328762,
+     "task_median": 0.0,
+     "n": 56,
+     "source_equal_mean": 0.007171685924679217,
+     "source_equal_median": 0.004328065807376852,
+     "per_source": {
+      "Cricket": 0.00831622670544574,
+      "EthanolConcentration": -0.004019245637317245,
+      "Handwriting": 0.0260704590026075,
+      "Opportunity": 0.004328065807376852,
+      "PAMAP2": 0.008942312394566998,
+      "PTB-XL": 0.025144264101203267,
+      "PhonemeSpectra": 0.0010089244079886303,
+      "SelfRegulationSCP1": 7.61417425668709e-05,
+      "SleepEDF": -0.009042862738514929,
+      "UWaveGestureLibrary": 0.018053065355696937,
+      "UniMiB-SHAR": 1.1194029850752907e-05
+     }
+    },
+    "sh1043": {
+     "task_mean": 0.006214337884888905,
+     "task_median": 0.0,
+     "n": 56,
+     "source_equal_mean": 0.0057652761723349984,
+     "source_equal_median": 0.0034028863019607922,
+     "per_source": {
+      "Cricket": 0.0046857796199901575,
+      "EthanolConcentration": -0.0031425653334014175,
+      "Handwriting": 0.0227798607120092,
+      "Opportunity": 0.004328065807376852,
+      "PAMAP2": 0.002469740404523052,
+      "PTB-XL": 0.015075875043452536,
+      "PhonemeSpectra": 0.0034028863019607922,
+      "SelfRegulationSCP1": 0.0030392672912938345,
+      "SleepEDF": -0.004726092552179484,
+      "UWaveGestureLibrary": 0.015494026570808714,
+      "UniMiB-SHAR": 1.1194029850752907e-05
+     }
+    }
+   },
+   "decision_H_same": "HEADROOM-MID"
+  },
+  "v3′ 11 + UCR 10 = 21（主）": {
+   "sources": [
+    "Handwriting",
+    "UniMiB-SHAR",
+    "PhonemeSpectra",
+    "UWaveGestureLibrary",
+    "EthanolConcentration",
+    "Cricket",
+    "SelfRegulationSCP1",
+    "PTB-XL",
+    "SleepEDF",
+    "PAMAP2",
+    "Opportunity",
+    "NonInvasiveFetalECGThorax1",
+    "CinCECGTorso",
+    "SemgHandMovementCh2",
+    "EOGHorizontalSignal",
+    "ShapesAll",
+    "MixedShapesSmallTrain",
+    "LargeKitchenAppliances",
+    "Adiac",
+    "FiftyWords",
+    "FordA"
+   ],
+   "n_tasks": 96,
+   "results": {
+    "prior1": {
+     "task_mean": 0.03093383393243197,
+     "task_median": 0.017913245758073355,
+     "n": 96,
+     "source_equal_mean": 0.03208937180041332,
+     "source_equal_median": 0.017777289726742,
+     "per_source": {
+      "Adiac": 0.017777289726742,
+      "CinCECGTorso": 0.014458765324713685,
+      "Cricket": 0.026885959053782202,
+      "EOGHorizontalSignal": 0.03401883903818724,
+      "EthanolConcentration": 0.0447286427623009,
+      "FiftyWords": 0.016098904607270925,
+      "FordA": 0.007149674636250075,
+      "Handwriting": 0.09184911413976615,
+      "LargeKitchenAppliances": 0.0535395250295663,
+      "MixedShapesSmallTrain": -0.0008474564709052002,
+      "NonInvasiveFetalECGThorax1": 0.03872477804651617,
+      "Opportunity": -0.0005417752367741502,
+      "PAMAP2": 0.017919513393935382,
+      "PTB-XL": 0.006731321554443642,
+      "PhonemeSpectra": 0.010154084266965492,
+      "SelfRegulationSCP1": 0.011256619476519736,
+      "SemgHandMovementCh2": 0.21587778936466268,
+      "ShapesAll": 0.01719360345429058,
+      "SleepEDF": 0.02160851310530565,
+      "UWaveGestureLibrary": 0.031495163248940014,
+      "UniMiB-SHAR": -0.0022020607137998582
+     }
+    },
+    "top3": {
+     "task_mean": 0.01293052828304419,
+     "task_median": 0.0,
+     "n": 96,
+     "source_equal_mean": 0.013582435207706741,
+     "source_equal_median": 0.004147628123083474,
+     "per_source": {
+      "Adiac": 0.0,
+      "CinCECGTorso": 0.0016683065659450769,
+      "Cricket": 0.008664809864383588,
+      "EOGHorizontalSignal": 0.002472677595628414,
+      "EthanolConcentration": 0.012373085435674003,
+      "FiftyWords": 0.009761241395533138,
+      "FordA": 0.0024691776182089176,
+      "Handwriting": 0.06377419690881993,
+      "LargeKitchenAppliances": 0.04275954414088973,
+      "MixedShapesSmallTrain": -0.0013176316461279425,
+      "NonInvasiveFetalECGThorax1": -0.0011627906976744151,
+      "Opportunity": 0.004123715916117793,
+      "PAMAP2": 0.004147628123083474,
+      "PTB-XL": 0.025982799156539532,
+      "PhonemeSpectra": -0.0011956627119384684,
+      "SelfRegulationSCP1": 0.00745059579292906,
+      "SemgHandMovementCh2": 0.08155152691087898,
+      "ShapesAll": 0.0,
+      "SleepEDF": 0.006008897095853588,
+      "UWaveGestureLibrary": 0.017632392278773862,
+      "UniMiB-SHAR": -0.00193337038167668
+     }
+    },
+    "sh633": {
+     "task_mean": 0.009111097668288876,
+     "task_median": 0.0,
+     "n": 96,
+     "source_equal_mean": 0.008584504440022272,
+     "source_equal_median": 0.0034028863019607922,
+     "per_source": {
+      "Adiac": 0.0,
+      "CinCECGTorso": 0.008375706214689305,
+      "Cricket": 0.009060341265349742,
+      "EOGHorizontalSignal": 0.0016803278688524576,
+      "EthanolConcentration": -0.0021425653334014444,
+      "FiftyWords": 0.013299354865773313,
+      "FordA": 0.001512304302845019,
+      "Handwriting": 0.04253809383061154,
+      "LargeKitchenAppliances": 0.017950525439798304,
+      "MixedShapesSmallTrain": -0.004765140084185965,
+      "NonInvasiveFetalECGThorax1": -0.0011627906976744151,
+      "Opportunity": 0.004328065807376852,
+      "PAMAP2": 0.00402711889241697,
+      "PTB-XL": 0.0012827715951766738,
+      "PhonemeSpectra": 0.0034028863019607922,
+      "SelfRegulationSCP1": 0.007285402965613891,
+      "SemgHandMovementCh2": 0.05987881338102258,
+      "ShapesAll": 0.0,
+      "SleepEDF": -0.009042862738514929,
+      "UWaveGestureLibrary": 0.0259285232311548,
+      "UniMiB-SHAR": -0.003162283868397786
+     }
+    },
+    "sh1043": {
+     "task_mean": 0.0030034242310696163,
+     "task_median": 0.0,
+     "n": 96,
+     "source_equal_mean": 0.00299978181769929,
+     "source_equal_median": 0.001762965541246081,
+     "per_source": {
+      "Adiac": 0.0,
+      "CinCECGTorso": -0.0027902621722846466,
+      "Cricket": 0.0046857796199901575,
+      "EOGHorizontalSignal": 0.0041256830601092975,
+      "EthanolConcentration": 0.002824241838256719,
+      "FiftyWords": 0.001762965541246081,
+      "FordA": -0.00237196765498654,
+      "Handwriting": 0.0260704590026075,
+      "LargeKitchenAppliances": 0.0,
+      "MixedShapesSmallTrain": -0.004553998632946005,
+      "NonInvasiveFetalECGThorax1": 0.0,
+      "Opportunity": 0.004328065807376852,
+      "PAMAP2": 0.006861373697248985,
+      "PTB-XL": 0.015075875043452536,
+      "PhonemeSpectra": -0.00023097385129591287,
+      "SelfRegulationSCP1": 0.005959739828134636,
+      "SemgHandMovementCh2": 0.005648148148148138,
+      "ShapesAll": 0.0,
+      "SleepEDF": -0.009042862738514929,
+      "UWaveGestureLibrary": 0.004631957605291462,
+      "UniMiB-SHAR": 1.1194029850752907e-05
+     }
+    }
+   },
+   "decision_H_same": "HEADROOM-GO"
+  },
+  "护栏后 9 + UCR 10 = 19（去 PS / Ethanol）": {
+   "sources": [
+    "Handwriting",
+    "UniMiB-SHAR",
+    "UWaveGestureLibrary",
+    "Cricket",
+    "SelfRegulationSCP1",
+    "PTB-XL",
+    "SleepEDF",
+    "PAMAP2",
+    "Opportunity",
+    "NonInvasiveFetalECGThorax1",
+    "CinCECGTorso",
+    "SemgHandMovementCh2",
+    "EOGHorizontalSignal",
+    "ShapesAll",
+    "MixedShapesSmallTrain",
+    "LargeKitchenAppliances",
+    "Adiac",
+    "FiftyWords",
+    "FordA"
+   ],
+   "n_tasks": 84,
+   "results": {
+    "prior1": {
+     "task_mean": 0.023539929351295185,
+     "task_median": 0.015171411890033681,
+     "n": 84,
+     "source_equal_mean": 0.023732982292875113,
+     "source_equal_median": 0.016098904607270925,
+     "per_source": {
+      "Adiac": 0.017777289726742,
+      "CinCECGTorso": 0.014458765324713685,
+      "Cricket": 0.011916689563631698,
+      "EOGHorizontalSignal": 0.03401883903818724,
+      "FiftyWords": 0.016098904607270925,
+      "FordA": 0.007149674636250075,
+      "Handwriting": 0.09184911413976615,
+      "LargeKitchenAppliances": 0.0535395250295663,
+      "MixedShapesSmallTrain": -0.0008474564709052002,
+      "NonInvasiveFetalECGThorax1": 0.03872477804651617,
+      "Opportunity": -0.0005417752367741502,
+      "PAMAP2": -0.0008523718769165023,
+      "PTB-XL": 0.006731321554443642,
+      "SelfRegulationSCP1": 0.011256619476519736,
+      "SemgHandMovementCh2": 0.08155152691087898,
+      "ShapesAll": 0.01719360345429058,
+      "SleepEDF": 0.02160851310530565,
+      "UWaveGestureLibrary": 0.031495163248940014,
+      "UniMiB-SHAR": -0.0022020607137998582
+     }
+    },
+    "top3": {
+     "task_mean": 0.014064329465774456,
+     "task_median": 0.0,
+     "n": 84,
+     "source_equal_mean": 0.014160721928321374,
+     "source_equal_median": 0.004123715916117793,
+     "per_source": {
+      "Adiac": 0.0,
+      "CinCECGTorso": 0.0016683065659450769,
+      "Cricket": 0.008664809864383588,
+      "EOGHorizontalSignal": 0.002472677595628414,
+      "FiftyWords": 0.009761241395533138,
+      "FordA": 0.0024691776182089176,
+      "Handwriting": 0.06377419690881993,
+      "LargeKitchenAppliances": 0.04275954414088973,
+      "MixedShapesSmallTrain": -0.0013176316461279425,
+      "NonInvasiveFetalECGThorax1": -0.0011627906976744151,
+      "Opportunity": 0.004123715916117793,
+      "PAMAP2": -0.0008523718769165023,
+      "PTB-XL": 0.025982799156539532,
+      "SelfRegulationSCP1": 0.00745059579292906,
+      "SemgHandMovementCh2": 0.08155152691087898,
+      "ShapesAll": 0.0,
+      "SleepEDF": 0.006008897095853588,
+      "UWaveGestureLibrary": 0.017632392278773862,
+      "UniMiB-SHAR": -0.00193337038167668
+     }
+    },
+    "sh633": {
+     "task_mean": 0.01132688710830664,
+     "task_median": 0.0,
+     "n": 84,
+     "source_equal_mean": 0.010677671830417628,
+     "source_equal_median": 0.004328065807376852,
+     "per_source": {
+      "Adiac": 0.0,
+      "CinCECGTorso": 0.008375706214689305,
+      "Cricket": 0.009060341265349742,
+      "EOGHorizontalSignal": 0.0016803278688524576,
+      "FiftyWords": 0.013299354865773313,
+      "FordA": 0.001512304302845019,
+      "Handwriting": 0.04253809383061154,
+      "LargeKitchenAppliances": 0.017950525439798304,
+      "MixedShapesSmallTrain": -0.004765140084185965,
+      "NonInvasiveFetalECGThorax1": -0.0011627906976744151,
+      "Opportunity": 0.004328065807376852,
+      "PAMAP2": 0.00402711889241697,
+      "PTB-XL": 0.025144264101203267,
+      "SelfRegulationSCP1": 0.007285402965613891,
+      "SemgHandMovementCh2": 0.05987881338102258,
+      "ShapesAll": 0.0,
+      "SleepEDF": -0.009042862738514929,
+      "UWaveGestureLibrary": 0.0259285232311548,
+      "UniMiB-SHAR": -0.003162283868397786
+     }
+    },
+    "sh1043": {
+     "task_mean": 0.0033199946385717096,
+     "task_median": 0.0,
+     "n": 84,
+     "source_equal_mean": 0.0031790605360381198,
+     "source_equal_median": 0.001762965541246081,
+     "per_source": {
+      "Adiac": 0.0,
+      "CinCECGTorso": -0.0027902621722846466,
+      "Cricket": 0.0046857796199901575,
+      "EOGHorizontalSignal": 0.0041256830601092975,
+      "FiftyWords": 0.001762965541246081,
+      "FordA": -0.00237196765498654,
+      "Handwriting": 0.0260704590026075,
+      "LargeKitchenAppliances": 0.0,
+      "MixedShapesSmallTrain": -0.004553998632946005,
+      "NonInvasiveFetalECGThorax1": 0.0,
+      "Opportunity": 0.004328065807376852,
+      "PAMAP2": 0.006861373697248985,
+      "PTB-XL": 0.015075875043452536,
+      "SelfRegulationSCP1": 0.005959739828134636,
+      "SemgHandMovementCh2": 0.005648148148148138,
+      "ShapesAll": 0.0,
+      "SleepEDF": -0.009042862738514929,
+      "UWaveGestureLibrary": 0.004631957605291462,
+      "UniMiB-SHAR": 1.1194029850752907e-05
+     }
+    }
+   },
+   "decision_H_same": "HEADROOM-MID"
+  },
+  "UCR 10": {
+   "sources": [
+    "NonInvasiveFetalECGThorax1",
+    "CinCECGTorso",
+    "SemgHandMovementCh2",
+    "EOGHorizontalSignal",
+    "ShapesAll",
+    "MixedShapesSmallTrain",
+    "LargeKitchenAppliances",
+    "Adiac",
+    "FiftyWords",
+    "FordA"
+   ],
+   "n_tasks": 40,
+   "results": {
+    "prior1": {
+     "task_mean": 0.020986691568595933,
+     "task_median": 1.4343086632395696e-05,
+     "n": 40,
+     "source_equal_mean": 0.020986691568595933,
+     "source_equal_median": 0.006096080527136408,
+     "per_source": {
+      "Adiac": 0.005093063527875724,
+      "CinCECGTorso": 0.007099097526397091,
+      "EOGHorizontalSignal": 0.008470801681637635,
+      "FiftyWords": 0.015471983156008035,
+      "FordA": -0.012193324780988474,
+      "LargeKitchenAppliances": 0.017275086843307086,
+      "MixedShapesSmallTrain": -0.004118918272654398,
+      "NonInvasiveFetalECGThorax1": 0.002583459895709933,
+      "SemgHandMovementCh2": 0.1701856661086667,
+      "ShapesAll": 0.0
+     }
+    },
+    "top3": {
+     "task_mean": 0.013820205188328188,
+     "task_median": 0.0,
+     "n": 40,
+     "source_equal_mean": 0.013820205188328188,
+     "source_equal_median": 0.0020687420920769972,
+     "per_source": {
+      "Adiac": 0.0,
+      "CinCECGTorso": 0.0016683065659450769,
+      "EOGHorizontalSignal": 0.002472677595628414,
+      "FiftyWords": 0.009761241395533138,
+      "FordA": 0.0024691776182089176,
+      "LargeKitchenAppliances": 0.04275954414088973,
+      "MixedShapesSmallTrain": -0.0013176316461279425,
+      "NonInvasiveFetalECGThorax1": -0.0011627906976744151,
+      "SemgHandMovementCh2": 0.08155152691087898,
+      "ShapesAll": 0.0
+     }
+    },
+    "sh633": {
+     "task_mean": 0.005326070703025457,
+     "task_median": 0.0,
+     "n": 40,
+     "source_equal_mean": 0.005326070703025457,
+     "source_equal_median": 0.0,
+     "per_source": {
+      "Adiac": 0.0,
+      "CinCECGTorso": -0.0027902621722846466,
+      "EOGHorizontalSignal": 0.0041256830601092975,
+      "FiftyWords": -0.0030509007021707057,
+      "FordA": 0.0024691776182089176,
+      "LargeKitchenAppliances": 0.0,
+      "MixedShapesSmallTrain": -0.005936731921756644,
+      "NonInvasiveFetalECGThorax1": 0.0,
+      "SemgHandMovementCh2": 0.05404122542487788,
+      "ShapesAll": 0.004402515723270467
+     }
+    },
+    "sh1043": {
+     "task_mean": 0.00018205682892863257,
+     "task_median": 0.0,
+     "n": 40,
+     "source_equal_mean": 0.00018205682892863257,
+     "source_equal_median": 0.0,
+     "per_source": {
+      "Adiac": 0.0,
+      "CinCECGTorso": -0.0027902621722846466,
+      "EOGHorizontalSignal": 0.0041256830601092975,
+      "FiftyWords": 0.001762965541246081,
+      "FordA": -0.00237196765498654,
+      "LargeKitchenAppliances": 0.0,
+      "MixedShapesSmallTrain": -0.004553998632946005,
+      "NonInvasiveFetalECGThorax1": 0.0,
+      "SemgHandMovementCh2": 0.005648148148148138,
+      "ShapesAll": 0.0
+     }
+    }
+   },
+   "decision_H_same": "HEADROOM-MID"
+  }
+ },
+ "cross": {
+  "three_group_lodo": {
+   "prior1": 0.02462531160237556,
+   "top3": 0.013845675692922202,
+   "sh633": 0.010063231069635905,
+   "sh1043": 0.0089583557190359
+  },
+  "nonucr_to_ucr": {
+   "prior1": 0.027966545030351075,
+   "top3": 0.017230844686321127,
+   "sh633": 0.010635042347477497,
+   "sh1043": 0.00966979901030208
+  },
+  "ucr_to_nonucr": {
+   "prior1": 0.022887314753749912,
+   "top3": 0.011074395229127268,
+   "sh633": 0.010387173702590768,
+   "sh1043": 0.0050186866611703195
+  },
+  "H_cross_prior1": 0.025426929892050493,
+  "per_domain_three_group": {
+   "uea": 0.028329583393073468,
+   "external": 0.011275155523168292,
+   "ucr": 0.027966545030351075
+  }
+ },
+ "curve": {
+  "2": {
+   "prior1": 0.028461828048142068,
+   "top3": 0.015218123482473122,
+   "sh633": 0.009964740226140566
+  },
+  "4": {
+   "prior1": 0.027636233215033,
+   "top3": 0.01510998657047557,
+   "sh633": 0.008956985819629237
+  },
+  "6": {
+   "prior1": 0.027594502522504727,
+   "top3": 0.01470588171115959,
+   "sh633": 0.009547546041898853
+  },
+  "8": {
+   "prior1": 0.026651331994087552,
+   "top3": 0.014211868734313748,
+   "sh633": 0.009253530764512958
+  },
+  "10": {
+   "prior1": 0.02691513401657223,
+   "top3": 0.013849635684184163,
+   "sh633": 0.009083010149363396
+  },
+  "12": {
+   "prior1": 0.026812925141529498,
+   "top3": 0.01350868417750839,
+   "sh633": 0.0093717920246884
+  },
+  "15": {
+   "prior1": 0.02780025079325461,
+   "top3": 0.012650682291585067,
+   "sh633": 0.009474260071541113
+  },
+  "20": {
+   "prior1": 0.03093383393243197,
+   "top3": 0.01293052828304419,
+   "sh633": 0.009111097668288876
+  }
+ }
+}
