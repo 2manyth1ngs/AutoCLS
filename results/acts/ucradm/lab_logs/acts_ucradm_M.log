@@ -1,0 +1,15 @@
+CUDA NVIDIA GeForce RTX 4090
+CUDA NVIDIA GeForce RTX 4090
+CUDA NVIDIA GeForce RTX 4090
+== [23:37:06] phase M start (3 procs, GPUs 1 6 4, free 1643 GB)
+pids 2051592 2052954 2054495
+== [01:14:06] part 2 exited rc=0 (restarts 0) → done
+== [01:18:06] part 0 exited rc=0 (restarts 0) → done
+== [01:30:06] part 1 exited rc=0 (restarts 0) → done
+== [01:30:06] all exited; rows 2425
+[verify] planned 2400 have 2400 missing 0 error 0 bad 0; probe0 120/120 → OK
+tar: 从成员名中删除开头的“/”
+tar: 从硬连接目标中删除开头的“/”
+tar: /tmp/ucradm_out/logs/acts_ucradm_M.log: 在我们读入文件时文件发生了变化
+-rw-r--r-- 1 wangwenjie students 1132268 9月  22 09:34 /home/b311/data/wangwenjie/kejunyu/AutoCLS/upload/out_acts_ucradm_M.tar.gz
+== [01:34:47] acts ucradm phase M done

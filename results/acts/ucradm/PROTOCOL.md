@@ -107,4 +107,5 @@ OA 设计与行序、s1p 切片参数、s1pp 剪枝四条与 shared-30、cv5、i
 ## §6 执行台账（跑后填写）
 
 - 协议锁 05db9a4 → 实现 d03ada4（18 单测绿、相关 101 例绿）→ 零 GPU：8 个新 npz（K 全保留、min_class_count 5）、`--slice-all` 80 任务前缀自检 OK、`--plan-adm` 2,400 格 + 120 探针（C0 shared-30 = S1″ OK；cost_model 估 4090 9.6 h，S1″ 经验该模型对多通道低估 3.7×，单变量预期 1–3×）、本地 `--check` 80 任务 0 mismatch / plan key 一致 → 本地 4060 冒烟（Adiac 行 0/1 × shared 2 × 2 种子，iters 8）8/8 格 + 2 探针 OK → 打包 `bundles/ucradm/`（code_head.tar + acts_inputs + acts_npz 47.6 MB + md5 20 项，HEAD d03ada4）。
-- 待：用户请示 → 服务器 setup / run（PHASE=M）→ 拉回 → `--verify --phase M` → `--analyze-adm` → REPORT。
+- 用户 2026-09-21 同意（"使用三卡"）→ 服务器 setup（HEAD d03ada4，npz md5 ALL MATCH，磁盘 5.4 GB，CUDA OK，`--check` 80 任务 0 mismatch，18 单测绿）→ run PHASE=M 10:46 UTC 起 GPU 1/5/6 → 11:52 换 GPU 5 → 4（邻居 100% 利用率）→ 13:23 共享盘写满三 worker ENOSPC、截断 1 行修复、输出 symlink 到 /tmp/ucradm_out（3eed38e）13:26 重启 → 23:37 第一片收官后剩余 525 格重分三片 → 01:30 UTC 三片收官 → 探针 120 → verify OK 01:34（服务器 + 本地各一次，md5 1b4793f5 / 245debac）。墙钟 14.8 h，47.4 GPU-h（cost_model 9.6 h，低估 4.9×），单格中位 52.3 s，error 0，重复行 25（重启在跑格，按 key 去重）。
+- `--analyze-adm`：**UCR-ADM-GO+SAME**，10/10 准入（v3′ 9 源 4/4、EOGH 3/4；护栏 h_t ≥ 0.24 全过），合池源间秩方差 0.60 ≈ 参照 0.59；预测 4/9（P1 P2 P6 P9）。REPORT.md 入库。
