@@ -137,3 +137,58 @@ class TestGates:
         g = _g83()
         a = g.build_parser().parse_args(["--plan-s2", "--analyze-s2", "--phase", "S", "--profile", "s2"])
         assert a.plan_s2 and a.analyze_s2 and a.phase == "S"
+
+
+class TestHeadroomRand:
+    """§1.5 修订 1（2026-09-22）：H 三层——H_cat（目录内，原定义）/ H_rand（oracle 扩到 shared ∪ random；raw 与扣赢家诅咒 adj 两版）；H_search 留 S5。"""
+
+    @staticmethod
+    def _M():
+        end0 = np.array([[0.50, 0.60, 0.70, 0.65, 0.55],
+                         [0.40, 0.45, 0.50, 0.48, 0.42],
+                         [0.80, 0.85, 0.90, 0.88, 0.82],
+                         [0.30, 0.35, 0.40, 0.38, 0.32]])
+        end1 = end0 + np.array([0.01, -0.01, 0.01, -0.01, 0.0])          # 种子噪声：sd(diff)/√2 ≈ 0.0063
+        M = {"end_0": end0, "end_1": end1, "q25_0": end0.copy(), "q50_0": end0.copy()}
+        groups = np.array(["A", "A", "B", "B"])
+        # random seed 0（nan = 该任务没有第 j 条）：任务 0 一条高出 shared 最好 0.10（≫ κ_2·σ ≈ 0.004）；
+        # 任务 1 高出 0.001（< κ_3·σ ≈ 0.005）；任务 2 / 3 全低于 shared 最好
+        R0 = np.array([[0.80, 0.30, np.nan],
+                       [0.501, 0.20, 0.10],
+                       [0.50, 0.60, 0.70],
+                       [0.10, 0.20, np.nan]])
+        return M, groups, R0
+
+    def test_expected_max_normal(self):
+        g = _g83()
+        assert abs(g.expected_max_normal(20) - 1.867) < 0.01
+        assert abs(g.expected_max_normal(2) - 0.564) < 0.01
+        assert abs(g.expected_max_normal(1)) < 1e-6
+
+    def test_no_random_keeps_catalog_only(self):
+        g = _g83()
+        M, groups, _ = self._M()
+        H = g._headroom_four(M, groups)
+        assert {"prior1", "top3", "sh633", "sh1043"} <= set(H) and "rand_raw" not in H and "rand_adj" not in H
+
+    def test_random_extends_oracle_raw_and_adjusted(self):
+        g = _g83()
+        M, groups, R0 = self._M()
+        H = g._headroom_four(M, groups, rand_end0=R0)
+        cat, raw, adj = H["per_task"]["prior1"], H["per_task"]["rand_raw"]["prior1"], H["per_task"]["rand_adj"]["prior1"]
+        assert raw[0] - cat[0] == pytest.approx(0.10, abs=0.03) and cat[0] < adj[0] < raw[0]     # 任务 0：抬 oracle，扣减后仍抬
+        assert raw[1] > cat[1] and adj[1] == pytest.approx(cat[1])                                 # 任务 1：+0.001 < κ·σ → 回到目录内
+        assert raw[2] == pytest.approx(cat[2]) and adj[2] == pytest.approx(cat[2]) and raw[3] == pytest.approx(cat[3])
+        for b in ("prior1", "top3", "sh633", "sh1043"):
+            assert H[b] <= H["rand_adj"][b] <= H["rand_raw"][b]
+        ext = H["oracle_ext"]
+        assert ext["raw_frac"] == pytest.approx(0.5) and ext["adj_frac"] == pytest.approx(0.25)
+        assert ext["raw_mean"] > ext["adj_mean"] > 0
+
+    def test_random_end0_matrix_pads_with_nan(self):
+        g = _g83()
+        frames = {"t0": {"frame_vals": np.array([0.5, 0.6, 0.7, 0.2])}, "t1": {"frame_vals": np.array([0.5, 0.6])},
+                  "t2": {"frame_vals": np.array([0.5, 0.6, 0.9, 0.8, 0.1])}}
+        R = g._random_end0_matrix(frames, ["t0", "t1", "t2"], n_sh=2)
+        assert R.shape == (3, 3)
+        assert R[0, :2].tolist() == [0.7, 0.2] and np.isnan(R[0, 2]) and np.isnan(R[1]).all() and R[2].tolist() == [0.9, 0.8, 0.1]
