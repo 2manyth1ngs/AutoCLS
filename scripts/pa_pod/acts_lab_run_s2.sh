@@ -24,7 +24,7 @@ PY
 done
 free_gb() { df -BG --output=avail "$LOG" | tail -1 | tr -dc '0-9'; }   # 看输出所在盘（LOG 与 runs.jsonl symlink 同盘）
 launch() {  # launch <part_index> <gpu> → LAST_PID（不用 $(...)：子 shell 里起的进程不是主 shell 的子进程，wait 拿不到退出码）
-  CUDA_VISIBLE_DEVICES=$2 nohup nice -n 10 python scripts/83_acts_corpus.py --run --resume --device cuda $COMMON --parts $NP --part $1 >> "$LOG/acts_ucradm_${PHASE}_p$1.log" 2>&1 < /dev/null &
+  CUDA_VISIBLE_DEVICES=$2 nohup nice -n 10 python scripts/83_acts_corpus.py --run --resume --device cuda $COMMON --parts $NP --part $1 >> "$LOG/acts_s2_${PHASE}_p$1.log" 2>&1 < /dev/null &
   LAST_PID=$!
 }
 echo "== [$(date -u +%H:%M:%S)] phase $PHASE start ($NP procs, GPUs $GPUS, free $(free_gb) GB)"
@@ -50,13 +50,13 @@ while :; do
   sleep 120
 done
 echo "== [$(date -u +%H:%M:%S)] all exited; rows $(wc -l < "$OUT/runs.jsonl")"
-CUDA_VISIBLE_DEVICES=$GPU0 nice -n 10 python scripts/83_acts_corpus.py --probe0 --resume --device cuda $COMMON > "$LOG/acts_ucradm_${PHASE}_probe0.log" 2>&1
-python scripts/83_acts_corpus.py --verify --device cpu $COMMON > "$LOG/acts_ucradm_${PHASE}_verify.log" 2>&1; cat "$LOG/acts_ucradm_${PHASE}_verify.log"
-if ! grep -q "→ OK" "$LOG/acts_ucradm_${PHASE}_verify.log"; then
+CUDA_VISIBLE_DEVICES=$GPU0 nice -n 10 python scripts/83_acts_corpus.py --probe0 --resume --device cuda $COMMON > "$LOG/acts_s2_${PHASE}_probe0.log" 2>&1
+python scripts/83_acts_corpus.py --verify --device cpu $COMMON > "$LOG/acts_s2_${PHASE}_verify.log" 2>&1; cat "$LOG/acts_s2_${PHASE}_verify.log"
+if ! grep -q "→ OK" "$LOG/acts_s2_${PHASE}_verify.log"; then
   echo "== verify NOT OK → 单进程 --resume 补跑"
-  CUDA_VISIBLE_DEVICES=$GPU0 nice -n 10 python scripts/83_acts_corpus.py --run --resume --device cuda $COMMON >> "$LOG/acts_ucradm_${PHASE}_fix.log" 2>&1
-  CUDA_VISIBLE_DEVICES=$GPU0 nice -n 10 python scripts/83_acts_corpus.py --probe0 --resume --device cuda $COMMON >> "$LOG/acts_ucradm_${PHASE}_fix.log" 2>&1
-  python scripts/83_acts_corpus.py --verify --device cpu $COMMON > "$LOG/acts_ucradm_${PHASE}_verify.log" 2>&1; cat "$LOG/acts_ucradm_${PHASE}_verify.log"
+  CUDA_VISIBLE_DEVICES=$GPU0 nice -n 10 python scripts/83_acts_corpus.py --run --resume --device cuda $COMMON >> "$LOG/acts_s2_${PHASE}_fix.log" 2>&1
+  CUDA_VISIBLE_DEVICES=$GPU0 nice -n 10 python scripts/83_acts_corpus.py --probe0 --resume --device cuda $COMMON >> "$LOG/acts_s2_${PHASE}_fix.log" 2>&1
+  python scripts/83_acts_corpus.py --verify --device cpu $COMMON > "$LOG/acts_s2_${PHASE}_verify.log" 2>&1; cat "$LOG/acts_s2_${PHASE}_verify.log"
 fi
 tar -chzf "$UP/out_acts_s2_${PHASE}.tar.gz" "$OUT/runs.jsonl" "$OUT/probe0.jsonl" $( [ -f "$OUT/oom_failures.jsonl" ] && echo "$OUT/oom_failures.jsonl" ) "$LOG"/acts_s2_*.log
 ls -la "$UP/out_acts_s2_${PHASE}.tar.gz"
