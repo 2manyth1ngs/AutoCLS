@@ -62,3 +62,6 @@
 1（档位只经 space.yaml；剪枝只在 acts.yaml）；2（iters 规则显式；截点同一轨迹）；3（缓存种子合并、resume、verify；旧格不重跑）；5（先红；§0 声明轴分组与砍源表已看）；6（源只作源；HMD / SCP2 若被 G-P 剔除只作靶；砍掉的 4 源不进训练集）；7；8。
 
 ## §5 执行台账（跑后填写）
+
+- 协议锁 ff7bcfa → 实现 119ada9（test_acts_s2 8 例绿、ACTS 五个测试文件共 83 例绿）→ 零 GPU：tasks.json 184 任务（19 源，前缀自检 OK；已有 S1″ 104 / UCR-ADM 80 任务 fold_md5 逐位同）、缓存种子合并 7,256 runs / 324 probe0、plan_S **14,643 格 = shared 11,040 + random 3,603，已有 5,683、新 8,960**；探针 552（已有 324、新 228）；random 目录 reuse 24 / new 160；cost_model 4090 33.8 h（UCR-ADM 实测低估 4.9× → 预期 135–170 GPU-h，三卡共享 ≈ 2–2.5 天墙钟）；本地 --check 184 任务 0 mismatch / plan key 一致；4060 冒烟 8/8 OK；bundle `bundles/s2/`（HEAD 119ada9，9.4 MB：代码 + 输入 + 缓存种子 + 19 源数据 md5 清单）。
+- 待：用户看数后拍板上服务器 → setup（数据 md5 核对 / 根盘 symlink / 合并种子 / --check / pytest）→ PHASE=S。
