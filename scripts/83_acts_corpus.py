@@ -1899,7 +1899,7 @@ def cmd_analyze_s2(cfg: Mapping, outdir: Path) -> dict:
     q50_0 = np.array([[_ckpt(rows, plan, t, k, 0, 1) for k in cat_keys(cat)] for t in plan["probe_tasks"]])
     M.update({"q25_0": _fill_single(q25_0, M["end_0"]), "q50_0": _fill_single(q50_0, M["end_0"])})
     groups = np.array([meta[t]["dataset"] for t in plan["probe_tasks"]])
-    H = _headroom_four(M, groups)
+    H = _headroom_four(M, groups, rand_end0=_random_end0_matrix(frames, plan["probe_tasks"], n_sh))   # 修订 1：H_cat + H_rand raw / adj
     # random z-bad、配对产量
     zbad = []
     yields = {}
@@ -1936,7 +1936,11 @@ def cmd_analyze_s2(cfg: Mapping, outdir: Path) -> dict:
            "| 源 | 行 | ρ_seed 中位 / 最低 | h_t 中位 / 最低 | failed(诊断) | 轴得分 |", "|---|---:|---|---|---:|---:|"]
     md += [f"| {s} | {v['n']} | {_f(v['rho_median'], 2)} / {_f(v['rho_min'], 2)} | {_f(v['h_median'], 3)} / {_f(v['h_min'], 3)} | {_f(v['failed_diag_shared'], 2)} | {_f(score[s], 2)} |" for s, v in per_src.items()]
     md += ["", f"轴：PC1 占比 {_f(ev1, 2)}；源得分 vs UCR-ADM 事后 4 行版 Spearman {_f(rho_axis, 2)}；反向源前 8 行投影 {{{', '.join(f'{s}: {_f(v, 2)}' for s, v in rev_consist.items())}}}",
-           f"H（LODO，seed 1 评；任务加权）：先验@1 {_f(H['prior1'])} / 前 3 {_f(H['top3'])} / SH6-3-3 {_f(H['sh633'])} / SH10-4-3 {_f(H['sh1043'])}；regret@3 中位 {_f(H['top3_median'])}",
+           f"H_cat（目录内；LODO，seed 1 评；任务加权）：先验@1 {_f(H['prior1'])} / 前 3 {_f(H['top3'])} / SH6-3-3 {_f(H['sh633'])} / SH10-4-3 {_f(H['sh1043'])}；regret@3 中位 {_f(H['top3_median'])}",
+           f"**H_rand_adj（主指标；oracle 扩到 shared ∪ random，扣 κ_n·σ_i）**：先验@1 {_f(H['rand_adj']['prior1'])} / **前 3 {_f(H['rand_adj']['top3'])}** / SH6-3-3 {_f(H['rand_adj']['sh633'])} / SH10-4-3 {_f(H['rand_adj']['sh1043'])}；"
+           f"regret@3 中位 {_f(H['rand_adj']['top3_median'])}；H_rand_raw 前 3 {_f(H['rand_raw']['top3'])}；"
+           f"oracle 扩展：raw 份额 {_f(H['oracle_ext']['raw_frac'], 2)} / 均值 {_f(H['oracle_ext']['raw_mean'])}，adj 份额 {_f(H['oracle_ext']['adj_frac'], 2)} / 均值 {_f(H['oracle_ext']['adj_mean'])}"
+           f"（κ 均值 {_f(H['oracle_ext']['kappa_mean'], 2)}、σ 中位 {_f(H['oracle_ext']['sigma_median'])}）；判读：H_rand 只能给 GO（§1.5）",
            f"random-20 z-bad 均值 {_f(out['random_zbad_mean'], 2)}；配对产量中位 {_f(out['pair_yield_median'], 0)}；failed 按 τ {out['failed_diag_by_tau']}；"
            f"单格中位 {_f(out['cell_seconds']['median'], 1)} s（{out['cell_seconds']['n']} 格，{_f(out['cell_seconds']['gpu_hours'], 1)} GPU-h）；error {len(errs)}；标签 {len(labels)}"]
     (outdir / "tables_S.md").write_text("\n".join(md) + "\n", encoding="utf-8")
@@ -1981,10 +1985,39 @@ def _fill_single(Q: np.ndarray, ref: np.ndarray) -> np.ndarray:
     return Q
 
 
-def _headroom_four(M: dict, groups: np.ndarray) -> dict:
-    """S1″ 规则四个底（LODO 先验；oracle seed 0 选 seed 1 评；SH 截点淘汰按 seed 0）。"""
+def expected_max_normal(n: int) -> float:
+    """n 个独立标准正态最大值的期望 E[max]（数值积分 ∫ x·n·φ(x)·Φ(x)^(n−1) dx）：n=1 → 0、n=2 → 0.564、n=20 → 1.867。
+    赢家诅咒扣减用（S2 PROTOCOL §1.5；GEO-S 的 1.82σ = n=18 同源）。"""
+    n = int(n)
+    if n <= 1:
+        return 0.0
+    from scipy.stats import norm
+    x = np.linspace(-9.0, 9.0, 36001)
+    pdf = n * norm.pdf(x) * norm.cdf(x) ** (n - 1)
+    return float((np.trapezoid if hasattr(np, "trapezoid") else np.trapz)(x * pdf, x))
+
+
+def _random_end0_matrix(frames: Mapping[str, Mapping], tasks: Sequence[str], n_sh: int) -> np.ndarray:
+    """每任务 random 臂（seed 0）终点 → (n_tasks × max_n_random) 矩阵，右侧 nan 补齐（frame_vals 前 n_sh 条为 shared）。"""
+    vals = [np.asarray(frames[t]["frame_vals"], float)[n_sh:] for t in tasks]
+    w = max((len(v) for v in vals), default=0)
+    R = np.full((len(tasks), w), np.nan)
+    for i, v in enumerate(vals):
+        R[i, :len(v)] = v
+    return R
+
+
+def _headroom_four(M: dict, groups: np.ndarray, rand_end0: Optional[np.ndarray] = None) -> dict:
+    """S1″ 规则四个底（LODO 先验；oracle seed 0 选 seed 1 评；SH 截点淘汰按 seed 0）= H_cat。
+    协议修订 1（S2 PROTOCOL §1.5）：给 rand_end0（每任务 random 臂 seed 0 终点，nan 补齐）时另算 H_rand——oracle 扩到 shared ∪ random：
+    raw = max(oracle_cat@seed1, max_j R0_j)；adj = max(oracle_cat@seed1, max_j R0_j − κ_n·σ_i)，κ_n = expected_max_normal(有效 random 数)、
+    σ_i = 该任务 shared 两种子差 sd/√2（赢家诅咒扣减）。四个底不变（先验只对 shared 排序）。"""
     S0, S1 = M["end_0"], M["end_1"]
     out = {b: [] for b in ("prior1", "top3", "sh633", "sh1043")}
+    use_rand = rand_end0 is not None
+    if use_rand:
+        rr = {b: [] for b in out}; ra = {b: [] for b in out}
+        ext_raw, ext_adj, kappas, sigmas = [], [], [], []
     for i in range(S0.shape[0]):
         tr = np.where(groups != groups[i])[0]
         mr = np.array([rankdata(-S0[j]) for j in tr]).mean(0)
@@ -1996,9 +2029,29 @@ def _headroom_four(M: dict, groups: np.ndarray) -> dict:
         picks = {"prior1": int(order[0]), "top3": int(order[:3][int(np.argmax(S0[i, order[:3]]))]), "sh633": sh(6, 3, 3), "sh1043": sh(10, 4, 3)}
         for b, p in picks.items():
             out[b].append(float(S1[i, oracle] - S1[i, p]))
+        if use_rand:
+            o_cat = float(S1[i, oracle])
+            r = rand_end0[i][np.isfinite(rand_end0[i])]
+            sigma = float(np.std(S0[i] - S1[i]) / np.sqrt(2.0))
+            kappa = expected_max_normal(len(r))
+            o_raw = max(o_cat, float(r.max())) if len(r) else o_cat
+            o_adj = max(o_cat, float(r.max()) - kappa * sigma) if len(r) else o_cat
+            ext_raw.append(o_raw - o_cat); ext_adj.append(o_adj - o_cat); kappas.append(kappa); sigmas.append(sigma)
+            for b, p in picks.items():
+                rr[b].append(float(o_raw - S1[i, p])); ra[b].append(float(o_adj - S1[i, p]))
     res = {b: float(np.mean(v)) for b, v in out.items()}
     res["top3_median"] = float(np.median(out["top3"])); res["prior1_median"] = float(np.median(out["prior1"]))
     res["per_task"] = out
+    if use_rand:
+        def _sum(d):
+            r_ = {b: float(np.mean(v)) for b, v in d.items()}
+            r_["top3_median"] = float(np.median(d["top3"])); r_["prior1_median"] = float(np.median(d["prior1"]))
+            return r_
+        res["rand_raw"] = _sum(rr); res["rand_adj"] = _sum(ra)
+        res["per_task"]["rand_raw"] = rr; res["per_task"]["rand_adj"] = ra
+        res["oracle_ext"] = {"raw_mean": float(np.mean(ext_raw)), "adj_mean": float(np.mean(ext_adj)),
+                             "raw_frac": float(np.mean(np.array(ext_raw) > 0)), "adj_frac": float(np.mean(np.array(ext_adj) > 0)),
+                             "kappa_mean": float(np.mean(kappas)), "sigma_median": float(np.median(sigmas))}
     return res
 
 

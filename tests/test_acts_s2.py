@@ -151,10 +151,10 @@ class TestHeadroomRand:
         end1 = end0 + np.array([0.01, -0.01, 0.01, -0.01, 0.0])          # 种子噪声：sd(diff)/√2 ≈ 0.0063
         M = {"end_0": end0, "end_1": end1, "q25_0": end0.copy(), "q50_0": end0.copy()}
         groups = np.array(["A", "A", "B", "B"])
-        # random seed 0（nan = 该任务没有第 j 条）：任务 0 一条高出 shared 最好 0.10（≫ κ_2·σ ≈ 0.004）；
-        # 任务 1 高出 0.001（< κ_3·σ ≈ 0.005）；任务 2 / 3 全低于 shared 最好
+        # random seed 0（nan = 该任务没有第 j 条）；目录 oracle 按 seed 0 选、seed 1 评（任务 0 → 0.71、任务 1 → 0.51）：
+        # 任务 0 一条高出目录 oracle 0.09（≫ κ_2·σ ≈ 0.004）；任务 1 高出 0.002（< κ_3·σ ≈ 0.005）；任务 2 / 3 全低于
         R0 = np.array([[0.80, 0.30, np.nan],
-                       [0.501, 0.20, 0.10],
+                       [0.512, 0.20, 0.10],
                        [0.50, 0.60, 0.70],
                        [0.10, 0.20, np.nan]])
         return M, groups, R0
