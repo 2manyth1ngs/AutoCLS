@@ -1,0 +1,21 @@
+CUDA NVIDIA GeForce RTX 4090
+CUDA NVIDIA GeForce RTX 4090
+CUDA NVIDIA GeForce RTX 4090
+CUDA NVIDIA GeForce RTX 4090
+CUDA NVIDIA GeForce RTX 4090
+CUDA NVIDIA GeForce RTX 4090
+== [18:23:04] phase S start (6 procs, GPUs 3 4 6 5 0 1, free 1648 GB)
+pids 1545782 1547591 1549237 1550739 1552885 1554529
+== [20:35:04] part 5 exited rc=0 (restarts 0) → done
+== [20:39:04] part 1 exited rc=0 (restarts 0) → done
+== [20:55:04] part 3 exited rc=0 (restarts 0) → done
+== [21:21:04] part 4 exited rc=0 (restarts 0) → done
+== [21:31:04] part 0 exited rc=0 (restarts 0) → done
+== [21:35:04] part 2 exited rc=0 (restarts 0) → done
+== [21:35:04] all exited; rows 16416
+[verify] planned 14643 have 14643 missing 0 error 12 bad 0; probe0 552/552 → OK
+tar: 从成员名中删除开头的“/”
+tar: 从硬连接目标中删除开头的“/”
+tar: /tmp/acts_s2_out/logs/acts_s2_S.log: 在我们读入文件时文件发生了变化
+-rw-r--r-- 1 wangwenjie students 6785633 9月  24 05:45 /home/b311/data/wangwenjie/kejunyu/AutoCLS/upload/out_acts_s2_S.tar.gz
+== [21:45:22] acts s2 phase S done
