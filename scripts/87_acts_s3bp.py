@@ -168,6 +168,12 @@ def c0_refs(D: Mapping, phi_sh: np.ndarray, b_ref: np.ndarray, a_hat_probe: np.n
     return out
 
 
+def c0_shared_refs(blind3: float, probe3: float, land3: float) -> dict:
+    """shared 参照对 S3-A analysis.json 逐位比较（修订：初版写死了四舍五入值 0.02131 / 0.00984 / 0.00611，致 C0 误报 ✗）。"""
+    s3a = json.loads((ROOT / "results/acts/s3a/analysis.json").read_text(encoding="utf-8"))
+    return {"blind3": (blind3, s3a["blind"]["regret3"]), "probe3": (probe3, s3a["summary"]["probe"]["regret3"]), "land3": (land3, s3a["summary"]["land25"]["regret3"])}
+
+
 def _src_means(x, groups):
     ok = np.isfinite(x)
     srcs = list(dict.fromkeys(groups.tolist()))
@@ -196,8 +202,8 @@ def cmd_analyze(outdir: Path = OUT) -> dict:
     c0r = c0_refs(D, phi_sh, b_ref, ref["probe"]["a_hat"])
     s3ap = json.loads((ROOT / "results/acts/s3ap/analysis.json").read_text(encoding="utf-8"))["task1"]["summary"]
     c0 = {"mu_sp_median": (float(np.nanmedian(c0r["mu"]["sp"])), s3ap["mu|hat"]["sp_median"]), "L_sp_median": (float(np.nanmedian(c0r["L"]["sp"])), s3ap["L|hat"]["sp_median"]),
-          "blind3": (float(blind3.mean()), 0.02131), "probe3": (float(probe3.mean()), 0.00984), "land3": (float(ref["land25"]["mean_regret3"]), 0.00611)}
-    c0_ok = abs(c0["mu_sp_median"][0] - c0["mu_sp_median"][1]) < 1e-12 and abs(c0["L_sp_median"][0] - c0["L_sp_median"][1]) < 1e-12 and all(abs(a - b) < 5e-5 for k, (a, b) in c0.items() if k.endswith("3"))
+          **c0_shared_refs(float(blind3.mean()), float(probe3.mean()), float(ref["land25"]["mean_regret3"]))}
+    c0_ok = all(abs(a - b) < 1e-12 for a, b in c0.values())
     mu_sp_src = _src_means(c0r["mu"]["sp"], groups)
     rows, gates = {}, {}
     refs_rows = {}

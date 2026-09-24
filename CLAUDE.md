@@ -33,6 +33,8 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **对比学习策�
 
 **S3-B 已跑（2026-09-24，用户拍板加副门「E 替代 ④」与对照组「E ⊕ ④」，实验室 8k-4090 四卡 1.5 h；`results/acts/s3b/{PROTOCOL,REPORT,tables}.md`，锁 f911b6b / 实现 6c01f8d `scripts/86_acts_s3b.py`）：读数码 S3B-E-NOT-BETTER（无 +REPLACE / +ADD），预测 3/8**——E_pt（每任务 TS2Vec 严格复现）/ E_sh（17 折共享 TS2Vec）× 均值池化 / SetTF 回归 a(t) × {E, E ⊕ ④} 8 臂：E-only ρ_a1 0.32–0.53 vs ③ land25 0.81（差 CI 上界全 < 0）；最好 E_pt + mean regret@3 0.014（任务盲 0.021、④ 0.010；对 ④ +0.004 [−0.001, 0.008] 超非劣效界）；E ⊕ ④ 全都不如 ④ 单用（0.012–0.021）；SetTF 不如均值池化（pt 0.32 vs 0.45）、best_epoch 中位 4、cross-E Δ ≈ 0、集内余弦 0.88–0.91 = 身份型 E 第三次复现（S1E / EV1）；HMD / SCP2 â₁ 方向错；E_pt 成本中位 0.87 全跑当量。读法：S3 三段合起来 = 目录内任务感知增量 ≈ 0.01，最便宜兑现 = ④（4 探针 + 低秩，3.36 当量）；AutoCTS++ 式 E 替代不了也加不到它上面；S3-C 两块积木（名单外排序 0.20 / E 内容不可迁移）已分别判负。待拍板：S4 用 ④ + 低秩（+SH6）对表，或 S3 收口写负结果。
 
+**S3-B′ 已跑（2026-09-24，用户问“S3-B 有没有用 diff / field”→ 拍板先做零 GPU 近似；`results/acts/s3bp/{PROTOCOL,REPORT,tables}.md`，锁 3ee4443 / 实现 7a68ec0 `scripts/87_acts_s3bp.py`）：读数码 FE-VALUE+REPLACE，预测 3/6**——E 直接进 field 结构（ridge on [φ, u_kφ]，u = E_mean 训练折 PCA r ∈ {4, 8, 16}）：**E_sh r = 8 shared regret@3 0.0096，vs 任务盲 +0.012 [0.002, 0.025] p 0.041，与 ④ 持平（−0.000 [−0.004, 0.003]），目标侧成本只有编码 ≈ 0.005 当量**；同一份 E 在 S3-B 回归 a(t) 形态下 0.019 = 结构决定 E 能否被用上；但 F1 内容 ✗（cross-E +0.007 占增益六成、p 0.50）、F4 名单外 ✗（random-20 Spearman 0.11–0.15 ≈ μ-only）、r 不单调（0.010 / 0.0096 / 0.013）、α 17/17 折触网格上界 10⁴、未做多臂校正（Holm 2 臂 p 0.08）。读法：S3 三段第一个“零目标侧成本 E 追平 ④”的正信号，待确认。待拍板：零 GPU 确认版（α 网格扩到 10⁵–10⁶、r 内层选、多重 cross 指派、加 E_sh-field ⊕ ④、Holm）→ 过则 S3-C field 副臂有前置证据。
+
 ## 用户正式主张（2026-09-13，覆盖本文件所有与之冲突的"主臂 / 放弃 / 判死"表述）
 
 **论文主臂 = 从数据集特征得到 CLS 偏好（dataset-aware 预测式）。形式不限**：T-CLSC 式比较器、原始空间机制特征的规则、转导式（目标上一次短训的表示空间特征）、任何"输入数据集、输出该数据集的 CLS 偏好"的模型都算。
