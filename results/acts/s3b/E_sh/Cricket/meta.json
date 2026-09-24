@@ -1,0 +1,27 @@
+{
+ "fold": "Cricket",
+ "fit_datasets": [
+  "Handwriting",
+  "UniMiB-SHAR",
+  "PhonemeSpectra",
+  "UWaveGestureLibrary",
+  "PTB-XL",
+  "SleepEDF",
+  "PAMAP2",
+  "NonInvasiveFetalECGThorax1",
+  "ShapesAll",
+  "LargeKitchenAppliances",
+  "Adiac",
+  "FordA",
+  "SemgHandMovementCh2",
+  "EthanolConcentration",
+  "CinCECGTorso",
+  "SelfRegulationSCP1"
+ ],
+ "n_instances": 54734,
+ "t_max": 1000,
+ "n_iters": 600,
+ "batch_size": 32,
+ "seconds": 55.3,
+ "device_name": "NVIDIA GeForce RTX 4090"
+}

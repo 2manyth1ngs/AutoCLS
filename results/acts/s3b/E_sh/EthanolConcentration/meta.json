@@ -1,0 +1,27 @@
+{
+ "fold": "EthanolConcentration",
+ "fit_datasets": [
+  "Handwriting",
+  "UniMiB-SHAR",
+  "PhonemeSpectra",
+  "UWaveGestureLibrary",
+  "Cricket",
+  "PTB-XL",
+  "SleepEDF",
+  "PAMAP2",
+  "NonInvasiveFetalECGThorax1",
+  "ShapesAll",
+  "LargeKitchenAppliances",
+  "Adiac",
+  "FordA",
+  "SemgHandMovementCh2",
+  "CinCECGTorso",
+  "SelfRegulationSCP1"
+ ],
+ "n_instances": 53750,
+ "t_max": 1000,
+ "n_iters": 600,
+ "batch_size": 32,
+ "seconds": 91.1,
+ "device_name": "NVIDIA GeForce RTX 4090"
+}

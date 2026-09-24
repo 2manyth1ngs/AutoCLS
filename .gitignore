@@ -22,3 +22,7 @@ results/protocol_probe/*.err
 results/mx4_deploy/smoke/
 results/uea30/smoke/
 results/mx4_p1/smoke/
+
+# S3-B 大文件（服务器回传原件；入库的是 settf_compact.npz / settf_meta.json）
+results/acts/s3b/settf/
+bundles/s3b_out/

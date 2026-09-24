@@ -133,3 +133,6 @@ GPU 段（E 抽取 + SetTF 训练）在实验室服务器跑，上服务器前�
   2. E_pt 默认严格口径（不切段）；**只有 OOM 时**才回退为切段到 1000 重训，npz 记 `split_len`。REPORT 报回退任务数。
   3. SetTF 的 "ALL" 折（只用于 HMD / SCP2 表征）验证源取池顺序第一个源（Handwriting）。
 - `--prep` 本地生成 `targets.npz`（176 任务 × 17 折 + ALL：μ / B / A / ④ 特征 / end0·end1）。本地 4060 冒烟 OK：E_pt 2 任务、E_sh 1 折（小 iters）、SetTF 2 折 × 3 epoch。耗时锚点（4060）：E_pt PTB-XL_a05 fit 600 iters 79 s；SetTF 真实尺寸每 epoch ≈ 5 s，峰值显存 1.7 GB；SleepEDF_a02（2822 步）严格口径在 8 GB 上 OOM。
+- **执行**：用户 2026-09-24 授权四卡 → 8k-4090 setup 全过（HEAD 6c01f8d、19 源 md5 ALL MATCH、单测 15 例、4090 冒烟 OK）→ `GPUS="6 5 2 4" JOBS_PER_GPU=2` 15:25 起、16:34 阶段 1 完（E_pt 176/176，其中 OOM 回退 2 个：SleepEDF_a01 / a02；E_sh 18 折 × 176）、16:56 SetTF 72/72 完；墙钟 1.5 h，0 重试 0 Traceback。本地看门的后台守望两次被 Claude Code 因本机内存不足回收（与实验无关）。
+- **C0 更正**：§0 / §4 写的 "③ 0.0058" 是起草时抄错的数；S3-A `analysis.json` 里 land25 regret@3 = 0.006109，本轮同一路径逐位相同（K 17/17 一致），④ 0.0098 / 任务盲 0.0213 也逐位相同 → C0 通过。
+- `--analyze`：**S3B-E-NOT-BETTER**（预测 3/8）。E-only ρ 0.32–0.53 vs ③ 0.81（差的 CI 上界全 < 0）；最好 E_pt + mean regret@3 0.014，对 ④ +0.004 [−0.001, 0.008]（SG1 上界 > 0.005 ✗）；E ⊕ ④ 全都不如 ④（SG2 ✗）；SetTF cross-E Δ ≈ 0、集内余弦 0.88–0.91、best_epoch 中位 4；HMD / SCP2 â₁ 方向错；E_pt 成本中位 0.87 当量。settf 原始 JSON（68 MB）不入库，入库 `settf_compact.npz` + `settf_meta.json`。REPORT.md 入库。

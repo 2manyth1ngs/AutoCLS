@@ -1,0 +1,8 @@
+[sh] PhonemeSpectra fit (52798, 1000, 1) 114s
+[sh] PhonemeSpectra encoded 176
+[sh] SleepEDF fit (44606, 1000, 1) 95s
+[sh] SleepEDF encoded 176
+[sh] LargeKitchenAppliances fit (56144, 1000, 1) 103s
+[sh] LargeKitchenAppliances encoded 176
+[sh] EthanolConcentration fit (53750, 1000, 1) 91s
+[sh] EthanolConcentration encoded 176

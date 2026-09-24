@@ -1,0 +1,7 @@
+== [15:25:11] stage 1 E extraction (4 GPUs: 6 5 2 4)
+== [16:34:09] stage 1 done: E_pt 176 / 176；E_sh 折 18 / 18
+[pack] results/acts/s3b/E_sh/SleepEDF 176
+[pack] results/acts/s3b/E_sh/UWaveGestureLibrary 176
+[pack] results/acts/s3b/E_sh/UniMiB-SHAR 176
+== [16:34:12] stage 3 SetTF
+== [16:56:04] stage 3 done: settf json 72 / 72

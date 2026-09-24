@@ -1,0 +1,27 @@
+{
+ "fold": "LargeKitchenAppliances",
+ "fit_datasets": [
+  "Handwriting",
+  "UniMiB-SHAR",
+  "PhonemeSpectra",
+  "UWaveGestureLibrary",
+  "Cricket",
+  "PTB-XL",
+  "SleepEDF",
+  "PAMAP2",
+  "NonInvasiveFetalECGThorax1",
+  "ShapesAll",
+  "Adiac",
+  "FordA",
+  "SemgHandMovementCh2",
+  "EthanolConcentration",
+  "CinCECGTorso",
+  "SelfRegulationSCP1"
+ ],
+ "n_instances": 56144,
+ "t_max": 1000,
+ "n_iters": 600,
+ "batch_size": 32,
+ "seconds": 102.7,
+ "device_name": "NVIDIA GeForce RTX 4090"
+}

@@ -1,0 +1,27 @@
+{
+ "fold": "UniMiB-SHAR",
+ "fit_datasets": [
+  "Handwriting",
+  "PhonemeSpectra",
+  "UWaveGestureLibrary",
+  "Cricket",
+  "PTB-XL",
+  "SleepEDF",
+  "PAMAP2",
+  "NonInvasiveFetalECGThorax1",
+  "ShapesAll",
+  "LargeKitchenAppliances",
+  "Adiac",
+  "FordA",
+  "SemgHandMovementCh2",
+  "EthanolConcentration",
+  "CinCECGTorso",
+  "SelfRegulationSCP1"
+ ],
+ "n_instances": 52798,
+ "t_max": 1000,
+ "n_iters": 600,
+ "batch_size": 32,
+ "seconds": 108.3,
+ "device_name": "NVIDIA GeForce RTX 4090"
+}
