@@ -52,6 +52,14 @@ class TestPure:
         assert g.fit_pool_sources(["A", "B", "C"], "B") == ["A", "C"]
         assert g.fit_pool_sources(["A", "B", "C"], "ALL") == ["A", "B", "C"]
 
+    def test_split_long(self):
+        g = _g()
+        x = np.full((2, 25, 1), np.nan, np.float32); x[0, :25, 0] = 1.0; x[1, :8, 0] = 2.0
+        y = g.split_long(x, 10)
+        assert y.shape == (4, 10, 1)                       # 行 0 → 3 段；行 1 → 1 段（其余全 NaN 丢弃）
+        assert np.isnan(y[2, 5:, 0]).all() and not np.isnan(y[2, :5, 0]).any()
+        assert g.split_long(x, 30) is not None and g.split_long(x, 30).shape == (2, 25, 1)
+
     def test_holm(self):
         g = _g()
         assert np.allclose(g.holm([0.01, 0.04, 0.03, 0.5]), [0.04, 0.09, 0.09, 0.5])

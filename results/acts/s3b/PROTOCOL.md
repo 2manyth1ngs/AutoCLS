@@ -127,3 +127,9 @@ GPU 段（E 抽取 + SetTF 训练）在实验室服务器跑，上服务器前�
 - 8：acc 越大越好。
 
 ## §8 执行台账（跑后填写）
+- 协议锁 f911b6b（14 例先红）→ 实现（`scripts/86_acts_s3b.py` + `scripts/pa_pod/acts_lab_{bundle,setup,run}_s3b.sh`；单测 15 例绿，锁后补 1 例 `split_long`）。
+- **锁后、看数据前的实现层偏差（本地 4060 冒烟暴露的显存问题）**：
+  1. E_sh 共享池按最长源（SleepEDF 3000 步）NaN 填充后，时间对比损失显存按 B·T² 增长，8 GB 上 OOM。改为按 TS2Vec 原码 `max_train_length` 语义（`split_with_nan`）把序列切成 ≤ 1000 的段，丢弃全 NaN 段（原码上限 3000，这里取 1000 是因为实验室 4090 与他人共享）。编码仍用全长。
+  2. E_pt 默认严格口径（不切段）；**只有 OOM 时**才回退为切段到 1000 重训，npz 记 `split_len`。REPORT 报回退任务数。
+  3. SetTF 的 "ALL" 折（只用于 HMD / SCP2 表征）验证源取池顺序第一个源（Handwriting）。
+- `--prep` 本地生成 `targets.npz`（176 任务 × 17 折 + ALL：μ / B / A / ④ 特征 / end0·end1）。本地 4060 冒烟 OK：E_pt 2 任务、E_sh 1 折（小 iters）、SetTF 2 折 × 3 epoch。耗时锚点（4060）：E_pt PTB-XL_a05 fit 600 iters 79 s；SetTF 真实尺寸每 epoch ≈ 5 s，峰值显存 1.7 GB；SleepEDF_a02（2822 步）严格口径在 8 GB 上 OOM。
