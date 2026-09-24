@@ -123,13 +123,13 @@ class TestLOSO:
         return g.loso_evaluate(Z, groups, end0, end1, {"f": feats}, Ks=(1, 2, 3), alphas=(0.1, 1, 10, 100, 1000), **kw)
 
     def test_no_leak_heldout_labels(self):
-        """留出源的 Z / end 改动不影响该源的 â（真 a 与 regret 会变）。"""
+        """留出源的 Z / end 改动不影响该源的 â（真 a 与 regret 会变）。b_ref 是读数的符号约定（固定传入），不是拟合量。"""
         Z, groups, a, b, e0, e1 = _planted(seed=3)
         X = a[:, None] + np.random.default_rng(0).normal(scale=0.3, size=(len(a), 1))
-        r1 = self._run(Z, groups, e0, e1, X)
+        r1 = self._run(Z, groups, e0, e1, X, b_ref=b)
         Z2 = Z.copy(); m = groups == "S0"
         Z2[m] = np.random.default_rng(9).normal(size=Z2[m].shape)
-        r2 = self._run(Z2, groups, e0, e1, X)
+        r2 = self._run(Z2, groups, e0, e1, X, b_ref=b)
         assert np.allclose(r1["f"]["a_hat"][m, 0], r2["f"]["a_hat"][m, 0])
         assert not np.allclose(r1["f"]["a_true"][m, 0], r2["f"]["a_true"][m, 0])
 
