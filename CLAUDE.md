@@ -35,6 +35,8 @@ Zero-Shot NAS for Contrastive Learning Strategy Search。把 **对比学习策�
 
 **S3-B′ 已跑（2026-09-24，用户问“S3-B 有没有用 diff / field”→ 拍板先做零 GPU 近似；`results/acts/s3bp/{PROTOCOL,REPORT,tables}.md`，锁 3ee4443 / 实现 7a68ec0 `scripts/87_acts_s3bp.py`）：读数码 FE-VALUE+REPLACE，预测 3/6**——E 直接进 field 结构（ridge on [φ, u_kφ]，u = E_mean 训练折 PCA r ∈ {4, 8, 16}）：**E_sh r = 8 shared regret@3 0.0096，vs 任务盲 +0.012 [0.002, 0.025] p 0.041，与 ④ 持平（−0.000 [−0.004, 0.003]），目标侧成本只有编码 ≈ 0.005 当量**；同一份 E 在 S3-B 回归 a(t) 形态下 0.019 = 结构决定 E 能否被用上；但 F1 内容 ✗（cross-E +0.007 占增益六成、p 0.50）、F4 名单外 ✗（random-20 Spearman 0.11–0.15 ≈ μ-only）、r 不单调（0.010 / 0.0096 / 0.013）、α 17/17 折触网格上界 10⁴、未做多臂校正（Holm 2 臂 p 0.08）。读法：S3 三段第一个“零目标侧成本 E 追平 ④”的正信号，待确认。待拍板：零 GPU 确认版（α 网格扩到 10⁵–10⁶、r 内层选、多重 cross 指派、加 E_sh-field ⊕ ④、Holm）→ 过则 S3-C field 副臂有前置证据。
 
+**S3-B″ 已跑（2026-09-25，用户拍板“五项改动一起做”；`results/acts/s3bpp/{PROTOCOL,REPORT,tables}.md`，锁 d8372c0 / 实现 b05f83d `scripts/88_acts_s3bpp.py`，C0 含 S3-B′ 复现臂逐位过）：读数码 FEC-NOT-CONFIRMED，预测 1/7**——α 网格扩到 1e6 后 4 臂 × 17 折全选 1e4（S3-B′ 触顶是假警报）；E_sh r 内层选（14/17 折 r = 4）regret@3 0.0098，vs 任务盲 +0.011 [0.000, 0.028] p 0.10 / Holm 0.20（F2 ✗，S3-B′ 的 p 0.041 靠固定 r = 8）、E − ④ 97.5% 上界 0.0053（F3 ✗）；**16 次偏移 cross 下 E_sh 内容被证实：+0.013 [0.003, 0.028] p 0.003 / Holm 0.005（F1 ✓，S3 线首次）**；E ⊕ ④ 两臂 0.009 ≈ ④（F5 ✗）；random-20 仍 ≈ μ-only。读法：field 结构用上了 E 的内容，但兑现的选择增益 ≈ 0.01 在 n = 17 源上边缘、也叠不到 ④ 上。待拍板：按预注册收口 / 加源（UCR-ADM B 档 12 源，n 17 → 29）提功效 / S3-C field 副臂（GPU）。
+
 ## 用户正式主张（2026-09-13，覆盖本文件所有与之冲突的"主臂 / 放弃 / 判死"表述）
 
 **论文主臂 = 从数据集特征得到 CLS 偏好（dataset-aware 预测式）。形式不限**：T-CLSC 式比较器、原始空间机制特征的规则、转导式（目标上一次短训的表示空间特征）、任何"输入数据集、输出该数据集的 CLS 偏好"的模型都算。
