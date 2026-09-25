@@ -1,0 +1,73 @@
+{
+ "E-mean": 0.6034497468213854,
+ "E-lcb": 0.6080784004910004,
+ "B-mean": 0.6003388314118457,
+ "B-lcb": 0.6025213008675375,
+ "B-lcb-div": 0.6024112472569801,
+ "X-lcb": 0.61174945890134,
+ "E-lcb−B-lcb": {
+  "d": 0.005557099623462888,
+  "p": 0.9664472341537476,
+  "npos": 3
+ },
+ "E-lcb−X-lcb": {
+  "d": -0.0036710584103395918,
+  "p": 0.35962629318237305,
+  "npos": 2
+ },
+ "B-lcb−B-mean": {
+  "d": 0.0021824694556918434,
+  "p": 0.47316575050354004,
+  "npos": 3
+ },
+ "per_source": {
+  "E-mean": {
+   "Handwriting": 0.5709067259234515,
+   "PhonemeSpectra": 0.1248585924498848,
+   "UWaveGestureLibrary": 0.8820024862586661,
+   "Cricket": 0.9185710182887603,
+   "EthanolConcentration": 0.32613924644308223,
+   "SelfRegulationSCP1": 0.798220411564468
+  },
+  "E-lcb": {
+   "Handwriting": 0.5922801949336873,
+   "PhonemeSpectra": 0.1350297928622305,
+   "UWaveGestureLibrary": 0.8850422517037934,
+   "Cricket": 0.9130542098284034,
+   "EthanolConcentration": 0.3297739960259575,
+   "SelfRegulationSCP1": 0.7932899575919307
+  },
+  "B-mean": {
+   "Handwriting": 0.5578126140434827,
+   "PhonemeSpectra": 0.11241201687347907,
+   "UWaveGestureLibrary": 0.8861209982763303,
+   "Cricket": 0.9181643625192012,
+   "EthanolConcentration": 0.33217641643632817,
+   "SelfRegulationSCP1": 0.795346580322253
+  },
+  "B-lcb": {
+   "Handwriting": 0.5548997944330165,
+   "PhonemeSpectra": 0.11730456032006997,
+   "UWaveGestureLibrary": 0.8837909094527794,
+   "Cricket": 0.9157378359394488,
+   "EthanolConcentration": 0.34627274891077603,
+   "SelfRegulationSCP1": 0.7971219561491347
+  },
+  "B-lcb-div": {
+   "Handwriting": 0.5528851424183645,
+   "PhonemeSpectra": 0.1194169949586262,
+   "UWaveGestureLibrary": 0.8837313027311834,
+   "Cricket": 0.9160346070695533,
+   "EthanolConcentration": 0.3438276157163734,
+   "SelfRegulationSCP1": 0.7985718206477798
+  },
+  "X-lcb": {
+   "Handwriting": 0.607799801766416,
+   "PhonemeSpectra": 0.13114889038606364,
+   "UWaveGestureLibrary": 0.8874171276935785,
+   "Cricket": 0.9060993989085387,
+   "EthanolConcentration": 0.33941876421646927,
+   "SelfRegulationSCP1": 0.7986127704369741
+  }
+ }
+}
