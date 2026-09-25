@@ -137,3 +137,6 @@
 - 8：acc 越大越好。
 
 ## §10 执行台账（跑后填写）
+- 协议锁 c03d661（10 例先红）→ 实现：`scripts/89_acts_s3c.py`（--prep / --train / --search / --plan-runs / --analyze / --smoke）+ 83 `--phase` 增 X（提名真跑，走 else 分支 = 切片 loader + `run_trajectory_cell_cv`）+ 三件套 `acts_lab_{bundle,setup,run}_s3c.sh`；单测 10 例绿。
+- 本地 `--prep`：160 任务，重建终点与 S2 labels.jsonl **0 处不符**（C0 ✓），error 格 2 个（按任务最小值填），搜索任务 24，S2 已有可复用格 1,887。本地冒烟 OK（合成窗口 4 臂 × 2 折 × 2 epoch；Ks 2,000 × 2 代，提名 3 条合法且未剪枝）；`--plan-runs` 在冒烟输出上生成 72 格；83 phase X 本地真跑 1 格 OK（Handwriting_a01，600 iters，44 s）。
+- 用户 2026-09-25 授权实验室服务器四卡运行。

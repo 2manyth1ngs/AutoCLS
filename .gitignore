@@ -26,3 +26,6 @@ results/mx4_p1/smoke/
 # S3-B 大文件（服务器回传原件；入库的是 settf_compact.npz / settf_meta.json）
 results/acts/s3b/settf/
 bundles/s3b_out/
+results/acts/s3c/smoke/
+bundles/s3c/
+bundles/s3c_out/

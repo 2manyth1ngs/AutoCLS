@@ -2295,7 +2295,7 @@ def build_parser() -> argparse.ArgumentParser:
         ap.add_argument(f"--{flag}", action="store_true")
     ap.add_argument("--stage", default="pilot", choices=("pilot", "full"))
     ap.add_argument("--profile", default=None, help="acts.yaml profiles.<name>（S1′ = s1p）")
-    ap.add_argument("--phase", default=None, choices=(None, "A", "B", "W", "C", "M", "S"), help="S1′ 阶段 A / B；S1″ 阶段 W（整集口径对照）/ C（主批）；UCR-ADM 阶段 M（准入）；S2 阶段 S（全语料）（run / probe0 / verify 读 plan_<phase>.json）")
+    ap.add_argument("--phase", default=None, choices=(None, "A", "B", "W", "C", "M", "S", "X"), help="S1′ 阶段 A / B；S1″ 阶段 W（整集口径对照）/ C（主批）；UCR-ADM 阶段 M（准入）；S2 阶段 S（全语料）；S3-C 阶段 X（搜索提名真跑，plan 由 89 --plan-runs 写）（run / probe0 / verify 读 plan_<phase>.json）")
     ap.add_argument("--outdir", default=str(OUT))
     ap.add_argument("--config", default=str(ac.ACTS_YAML))
     ap.add_argument("--resume", action="store_true")
