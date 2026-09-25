@@ -29,3 +29,6 @@ bundles/s3b_out/
 results/acts/s3c/smoke/
 bundles/s3c/
 bundles/s3c_out/
+results/acts/s3cd/smoke/
+bundles/s3cd/
+bundles/s3cd_out/

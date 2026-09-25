@@ -47,3 +47,4 @@ PROTOCOL + 单测先红 → 协议锁 → 实现 `--prep / --embed / --search / 
 2（iters 规则显式、截点同轨迹）；3（runs.jsonl、resume）；5（先红、§0 声明）；6（比较器 / ridge / μ·B 只在训练源；靶只考，E 只用 TRAIN）；7；8。
 
 ## §6 执行台账（跑后填写）
+- 协议锁 b5cc7b1（4 例先红）→ 实现 `scripts/90_acts_s3cd.py` + `scripts/pa_pod/acts_lab_run_s3cd.sh`（STAGE=A / B）；单测 4 例绿。本地 `--prep`：6 个靶的 ④ 探针在 6 折上完全相同 = [2a667428, a04011c2, 2a667428, 00cc0074]（μ 前 2 + b₁ 两端，b₁ 最大端恰为 μ 第 1 名，所以每靶实际 3 条不同探针；S3-A ④ 定义原样，不改）。本地 embed 冒烟（UWave 官方 TRAIN 120×315×3，600 iters，37 s，窗口表征 (100, 152, 256)）OK。
