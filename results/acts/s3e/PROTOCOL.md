@@ -87,3 +87,4 @@ PROTOCOL + 单测先红 → 协议锁 → 实现 91（`--train` / `--select` / `
 3（runs.jsonl + resume）；4（TCLSC 头已注释 AutoCTS++ 对应项）；5（先红、§0 声明）；6（训练、辅助目标、选臂只用训练源与验证源；留出源只考）；7；8。
 
 ## §9 执行台账（跑后填写）
+- 协议锁 09d21b7（6 例先红）→ 实现 `scripts/91_acts_s3e.py` + `scripts/pa_pod/acts_lab_run_s3e.sh`（全自动流水，按各卡空闲显存分槽）；单测 6 例绿；本地 `--prep` 生成 axis_targets.npz（6 折轴坐标目标）；本地冒烟 OK（合成窗口：diff-on-L4 / field-off-L0 × 1 折 × 2 epoch + seed 1；两模型集成搜索 Ks 1,000 × 2 代给出 mean / lcb / lcb-div 各 3 条）。
