@@ -1,0 +1,8 @@
+[ACTS-s1pp] 计划 20 格，已有 18，待跑 2
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_official: official train=(120, 315, 3) test=(320, 315, 3)
+[ACTS-s1pp 1/2] UWaveGestureLibrary_whole_official/shared/051c49f0 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.891 0.897 0.919] (37.5s+0.8s)
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_official: official train=(108, 1197, 6) test=(72, 1197, 6)
+[ACTS-s1pp 2/2] Cricket_whole_official/shared/018d72f2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.931 0.944 0.972] (57.7s+0.6s)
+[ACTS-s1pp] 收官

@@ -1,0 +1,6 @@
+[embed] Handwriting Xtr=(150, 152, 3) iters=200 split=0 17s
+[embed] PhonemeSpectra Xtr=(3315, 217, 11) iters=600 split=0 39s
+[embed] UWaveGestureLibrary Xtr=(120, 315, 3) iters=600 split=0 40s
+[embed] Cricket Xtr=(108, 1197, 6) iters=600 split=0 61s
+[embed] EthanolConcentration Xtr=(261, 1751, 3) iters=600 split=0 77s
+[embed] SelfRegulationSCP1 Xtr=(268, 896, 6) iters=600 split=0 59s

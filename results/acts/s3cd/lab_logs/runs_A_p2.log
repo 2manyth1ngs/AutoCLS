@@ -1,0 +1,24 @@
+[ACTS-s1pp] 计划 18 格，已有 0，待跑 18
+[data] Handwriting: X=(1000, 152, 3) classes=26
+[data] Handwriting_whole_official: official train=(150, 152, 3) test=(850, 152, 3)
+[ACTS-s1pp 1/18] Handwriting_whole_official/random/1a1d2e11 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.372 0.478 0.536] (20.0s+1.1s)
+[ACTS-s1pp 2/18] Handwriting_whole_official/random/c363fec4 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.414 0.509 0.542] (17.0s+0.9s)
+[ACTS-s1pp 3/18] Handwriting_whole_official/random/ae3b6ff0 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.372 0.436 0.524] (15.2s+0.9s)
+[ACTS-s1pp 4/18] Handwriting_whole_official/random/4eac35cd s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.364 0.368 0.361] (37.0s+0.9s)
+[ACTS-s1pp 5/18] Handwriting_whole_official/random/4a45743a s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.339 0.347 0.362] (42.1s+0.9s)
+[ACTS-s1pp 6/18] Handwriting_whole_official/random/02cf848f s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.366 0.371 0.375] (22.9s+0.9s)
+[ACTS-s1pp 7/18] Handwriting_whole_official/shared/2a667428 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.414 0.419 0.447] (58.8s+0.9s)
+[ACTS-s1pp 8/18] Handwriting_whole_official/shared/a04011c2 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.376 0.415 0.442] (14.0s+0.9s)
+[ACTS-s1pp 9/18] Handwriting_whole_official/shared/00cc0074 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.235 0.247 0.252] (32.8s+0.9s)
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_official: official train=(268, 896, 6) test=(293, 896, 6)
+[ACTS-s1pp 10/18] SelfRegulationSCP1_whole_official/random/7b097cb4 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.857 0.792 0.761] (101.9s+0.9s)
+[ACTS-s1pp 11/18] SelfRegulationSCP1_whole_official/random/f8e5fa2f s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.843 0.812 0.686] (120.1s+1.0s)
+[ACTS-s1pp 12/18] SelfRegulationSCP1_whole_official/random/f336d444 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.836 0.823 0.771] (138.2s+0.9s)
+[ACTS-s1pp 13/18] SelfRegulationSCP1_whole_official/random/ffb3c116 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.850 0.833 0.833] (104.5s+0.9s)
+[ACTS-s1pp 14/18] SelfRegulationSCP1_whole_official/random/f768d302 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.874 0.870 0.823] (96.6s+1.0s)
+[ACTS-s1pp 15/18] SelfRegulationSCP1_whole_official/random/4cda9cf9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.853 0.840 0.846] (123.7s+1.0s)
+[ACTS-s1pp 16/18] SelfRegulationSCP1_whole_official/shared/2a667428 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.747 0.737 0.758] (245.6s+0.9s)
+[ACTS-s1pp 17/18] SelfRegulationSCP1_whole_official/shared/a04011c2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.775 0.778 0.741] (61.1s+1.0s)
+[ACTS-s1pp 18/18] SelfRegulationSCP1_whole_official/shared/00cc0074 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.826 0.788 0.829] (156.7s+0.9s)
+[ACTS-s1pp] 收官

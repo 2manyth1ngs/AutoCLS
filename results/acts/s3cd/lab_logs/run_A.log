@@ -1,0 +1,12 @@
+== HEAD 3df6bacc5d4e151b2dce4e8c9667200c745b24ba
+== S3-C models A/D: 12 / 12
+4 passed in 0.48s
+== [16:43:01] embed
+== [16:48:00] search
+== [16:48:49] search done: 12 / 12
+[plan] 54 格 → results/acts/s3cd/runs/plan_W.json
+== [16:48:51] runs
+verify: plan 54 / done 54 / error 0 → OK
+== [17:14:40] probe0
+-rw-r--r-- 1 wangwenjie students 20669 9月  26 01:15 /home/b311/data/wangwenjie/kejunyu/AutoCLS/upload/out_acts_s3cd_A.tar.gz
+== [17:15:40] acts s3cd stage A done

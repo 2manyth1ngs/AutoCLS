@@ -1,0 +1,30 @@
+[data] Handwriting: X=(1000, 152, 3) classes=26
+[data] Handwriting_whole_official: official train=(150, 152, 3) test=(850, 152, 3)
+[probe0] Handwriting_whole_official s0 acc=0.261 maj=0.051 (1.9s)
+[probe0] Handwriting_whole_official s1 acc=0.242 maj=0.051 (0.3s)
+[probe0] Handwriting_whole_official s2 acc=0.272 maj=0.051 (0.3s)
+[data] PhonemeSpectra: X=(6668, 217, 11) classes=39
+[data] PhonemeSpectra_whole_official: official train=(3315, 217, 11) test=(3353, 217, 11)
+[probe0] PhonemeSpectra_whole_official s0 acc=0.207 maj=0.026 (17.0s)
+[probe0] PhonemeSpectra_whole_official s1 acc=0.209 maj=0.026 (15.4s)
+[probe0] PhonemeSpectra_whole_official s2 acc=0.219 maj=0.026 (15.7s)
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_official: official train=(120, 315, 3) test=(320, 315, 3)
+[probe0] UWaveGestureLibrary_whole_official s0 acc=0.706 maj=0.125 (0.3s)
+[probe0] UWaveGestureLibrary_whole_official s1 acc=0.694 maj=0.125 (0.2s)
+[probe0] UWaveGestureLibrary_whole_official s2 acc=0.700 maj=0.125 (0.2s)
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_official: official train=(108, 1197, 6) test=(72, 1197, 6)
+[probe0] Cricket_whole_official s0 acc=0.986 maj=0.083 (0.3s)
+[probe0] Cricket_whole_official s1 acc=0.972 maj=0.083 (0.2s)
+[probe0] Cricket_whole_official s2 acc=0.958 maj=0.083 (0.2s)
+[data] EthanolConcentration: X=(524, 1751, 3) classes=4
+[data] EthanolConcentration_whole_official: official train=(261, 1751, 3) test=(263, 1751, 3)
+[probe0] EthanolConcentration_whole_official s0 acc=0.259 maj=0.251 (0.5s)
+[probe0] EthanolConcentration_whole_official s1 acc=0.266 maj=0.251 (0.5s)
+[probe0] EthanolConcentration_whole_official s2 acc=0.247 maj=0.251 (0.5s)
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_official: official train=(268, 896, 6) test=(293, 896, 6)
+[probe0] SelfRegulationSCP1_whole_official s0 acc=0.730 maj=0.502 (0.3s)
+[probe0] SelfRegulationSCP1_whole_official s1 acc=0.761 maj=0.502 (0.3s)
+[probe0] SelfRegulationSCP1_whole_official s2 acc=0.778 maj=0.502 (0.3s)

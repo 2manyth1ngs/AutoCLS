@@ -1,0 +1,13 @@
+[ACTS-s1pp] 计划 9 格，已有 0，待跑 9
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_official: official train=(108, 1197, 6) test=(72, 1197, 6)
+[ACTS-s1pp 1/9] Cricket_whole_official/random/286d635d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.861 0.847 0.875] (84.5s+0.8s)
+[ACTS-s1pp 2/9] Cricket_whole_official/random/c79f7a2b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.639 0.806 0.917] (84.6s+0.8s)
+[ACTS-s1pp 3/9] Cricket_whole_official/random/abf862cc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.417 0.569 0.458] (94.6s+0.9s)
+[ACTS-s1pp 4/9] Cricket_whole_official/random/58bd50f0 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.972 0.958] (188.6s+0.7s)
+[ACTS-s1pp 5/9] Cricket_whole_official/random/2bc0ec02 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.986 0.972] (153.4s+0.6s)
+[ACTS-s1pp 6/9] Cricket_whole_official/random/7c4c0e80 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 0.958 0.944] (124.8s+0.7s)
+[ACTS-s1pp 7/9] Cricket_whole_official/shared/2a667428 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.972 0.958] (435.7s+0.7s)
+[ACTS-s1pp 8/9] Cricket_whole_official/shared/a04011c2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 0.944 0.986] (86.3s+0.7s)
+[ACTS-s1pp 9/9] Cricket_whole_official/shared/00cc0074 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.861 0.861 0.903] (272.8s+0.7s)
+[ACTS-s1pp] 收官
