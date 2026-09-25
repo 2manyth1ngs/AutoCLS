@@ -88,3 +88,5 @@ PROTOCOL + 单测先红 → 协议锁 → 实现 91（`--train` / `--select` / `
 
 ## §9 执行台账（跑后填写）
 - 协议锁 09d21b7（6 例先红）→ 实现 `scripts/91_acts_s3e.py` + `scripts/pa_pod/acts_lab_run_s3e.sh`（全自动流水，按各卡空闲显存分槽）；单测 6 例绿；本地 `--prep` 生成 axis_targets.npz（6 折轴坐标目标）；本地冒烟 OK（合成窗口：diff-on-L4 / field-off-L0 × 1 折 × 2 epoch + seed 1；两模型集成搜索 Ks 1,000 × 2 代给出 mean / lcb / lcb-div 各 3 条）。
+- **执行**：首启 15 槽（6.5 GB/槽）→ GPU 3 他人进程挤 OOM，无产出时停掉（kill 脚本连带杀掉同一 ssh shell，重启改为单独一条命令）→ 20:13 UTC 以 12 槽（8 GB/槽、重试 20）重启；筛选 48 训练 21:08 完、★ = field-on-L4（验证源 regret@3 0.0141）、集成 24 训练 21:40 完、搜索 6 折 21:42 完、plan-runs 310 格全新、真跑 22:13 完，verify 310/310、error 0，墙钟 2.0 h。
+- `--analyze`：**S3E-CATALOG-PAR**（预测 4/7）。E-lcb 0.618 vs 随机 0.599（+0.019，p 0.016，6/6）/ 目录任务盲前 3 0.617 / S3-C A 0.608（p 0.15）；E-mean 0.612；排序 ★ 集成 0.019（R1 / R2 / R3 全 ✗，换源 −0.003）。事后 `posthoc_seeds`：★ 臂 30 次训练 21 次在 epoch 0 早停；逐种子留出 regret 0.011–0.019。REPORT.md 入库；train/*.npz（53 MB）不入库。

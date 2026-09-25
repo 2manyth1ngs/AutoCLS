@@ -1,0 +1,16 @@
+[train] field-on-L4_s1_EthanolConcentration ep 0 train 1.1945 val 0.6806 49s
+[train] field-on-L4_s1_EthanolConcentration ep 1 train 0.6965 val 0.6756 94s
+[train] field-on-L4_s1_EthanolConcentration ep 2 train 0.5438 val 0.6689 142s
+[train] field-on-L4_s1_EthanolConcentration ep 3 train 0.4927 val 0.6978 192s
+[train] field-on-L4_s1_EthanolConcentration ep 4 train 0.4633 val 0.7044 236s
+[train] field-on-L4_s1_EthanolConcentration ep 5 train 0.4740 val 0.6963 280s
+[train] field-on-L4_s1_EthanolConcentration ep 6 train 0.4580 val 0.7369 324s
+[train] field-on-L4_s1_EthanolConcentration ep 7 train 0.4367 val 0.6948 369s
+[train] field-on-L4_s1_EthanolConcentration done best val 0.6689 epochs 8 370s
+[train] field-on-L4_s3_EthanolConcentration ep 0 train 1.1882 val 0.6587 55s
+[train] field-on-L4_s3_EthanolConcentration ep 1 train 0.7199 val 0.6646 104s
+[train] field-on-L4_s3_EthanolConcentration ep 2 train 0.5497 val 0.6792 161s
+[train] field-on-L4_s3_EthanolConcentration ep 3 train 0.5011 val 0.7181 217s
+[train] field-on-L4_s3_EthanolConcentration ep 4 train 0.4744 val 0.7021 275s
+[train] field-on-L4_s3_EthanolConcentration ep 5 train 0.4605 val 0.6857 329s
+[train] field-on-L4_s3_EthanolConcentration done best val 0.6587 epochs 6 330s

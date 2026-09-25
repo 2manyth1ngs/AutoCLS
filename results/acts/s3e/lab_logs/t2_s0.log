@@ -1,0 +1,14 @@
+[train] field-on-L4_s1_Handwriting ep 0 train 1.1486 val 0.5293 51s
+[train] field-on-L4_s1_Handwriting ep 1 train 0.6925 val 0.5824 103s
+[train] field-on-L4_s1_Handwriting ep 2 train 0.5590 val 0.5932 154s
+[train] field-on-L4_s1_Handwriting ep 3 train 0.5089 val 0.6330 207s
+[train] field-on-L4_s1_Handwriting ep 4 train 0.4935 val 0.7079 257s
+[train] field-on-L4_s1_Handwriting ep 5 train 0.4730 val 0.6704 306s
+[train] field-on-L4_s1_Handwriting done best val 0.5293 epochs 6 307s
+[train] field-on-L4_s3_Handwriting ep 0 train 1.1843 val 0.5552 52s
+[train] field-on-L4_s3_Handwriting ep 1 train 0.7210 val 0.5883 104s
+[train] field-on-L4_s3_Handwriting ep 2 train 0.5629 val 0.5929 156s
+[train] field-on-L4_s3_Handwriting ep 3 train 0.5316 val 0.5809 213s
+[train] field-on-L4_s3_Handwriting ep 4 train 0.4996 val 0.6246 274s
+[train] field-on-L4_s3_Handwriting ep 5 train 0.4837 val 0.6539 332s
+[train] field-on-L4_s3_Handwriting done best val 0.5552 epochs 6 333s

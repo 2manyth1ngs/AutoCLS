@@ -1,0 +1,14 @@
+[train] field-on-L4_s1_SelfRegulationSCP1 ep 0 train 1.1869 val 0.5800 56s
+[train] field-on-L4_s1_SelfRegulationSCP1 ep 1 train 0.7014 val 0.6071 106s
+[train] field-on-L4_s1_SelfRegulationSCP1 ep 2 train 0.5494 val 0.6532 159s
+[train] field-on-L4_s1_SelfRegulationSCP1 ep 3 train 0.5062 val 0.7122 209s
+[train] field-on-L4_s1_SelfRegulationSCP1 ep 4 train 0.4973 val 0.7587 263s
+[train] field-on-L4_s1_SelfRegulationSCP1 ep 5 train 0.4736 val 0.5849 311s
+[train] field-on-L4_s1_SelfRegulationSCP1 done best val 0.5800 epochs 6 313s
+[train] field-on-L4_s3_SelfRegulationSCP1 ep 0 train 1.1958 val 0.5515 50s
+[train] field-on-L4_s3_SelfRegulationSCP1 ep 1 train 0.6985 val 0.5571 101s
+[train] field-on-L4_s3_SelfRegulationSCP1 ep 2 train 0.5427 val 0.5865 151s
+[train] field-on-L4_s3_SelfRegulationSCP1 ep 3 train 0.5074 val 0.5936 207s
+[train] field-on-L4_s3_SelfRegulationSCP1 ep 4 train 0.4782 val 0.5904 263s
+[train] field-on-L4_s3_SelfRegulationSCP1 ep 5 train 0.4674 val 0.6226 321s
+[train] field-on-L4_s3_SelfRegulationSCP1 done best val 0.5515 epochs 6 323s

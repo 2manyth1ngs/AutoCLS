@@ -1,0 +1,15 @@
+[train] field-on-L4_s2_Cricket ep 0 train 1.1872 val 0.5788 53s
+[train] field-on-L4_s2_Cricket ep 1 train 0.6826 val 0.6020 103s
+[train] field-on-L4_s2_Cricket ep 2 train 0.5444 val 0.5898 155s
+[train] field-on-L4_s2_Cricket ep 3 train 0.4998 val 0.6061 203s
+[train] field-on-L4_s2_Cricket ep 4 train 0.4910 val 0.6183 252s
+[train] field-on-L4_s2_Cricket ep 5 train 0.4820 val 0.6367 299s
+[train] field-on-L4_s2_Cricket done best val 0.5788 epochs 6 300s
+[train] field-on-L4_s4_Cricket ep 0 train 1.2086 val 0.5710 56s
+[train] field-on-L4_s4_Cricket ep 1 train 0.6989 val 0.5680 107s
+[train] field-on-L4_s4_Cricket ep 2 train 0.5659 val 0.5981 163s
+[train] field-on-L4_s4_Cricket ep 3 train 0.5325 val 0.5998 225s
+[train] field-on-L4_s4_Cricket ep 4 train 0.4972 val 0.5883 285s
+[train] field-on-L4_s4_Cricket ep 5 train 0.4836 val 0.6305 342s
+[train] field-on-L4_s4_Cricket ep 6 train 0.4593 val 0.6101 399s
+[train] field-on-L4_s4_Cricket done best val 0.5680 epochs 7 400s

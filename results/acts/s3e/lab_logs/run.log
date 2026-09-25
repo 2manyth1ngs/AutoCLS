@@ -1,0 +1,23 @@
+== HEAD c38c27afaa0e5283a2b9e82d40e255db9cbd3b86
+== E_pt 176 / 176
+6 passed in 0.06s
+== GPU 0 free 24546 MiB → 2 槽
+== GPU 1 free 12327 MiB → 1 槽
+== GPU 2 free 18189 MiB → 2 槽
+== GPU 3 free 11900 MiB → 1 槽
+== GPU 4 free 14945 MiB → 1 槽
+== GPU 5 free 22495 MiB → 2 槽
+== GPU 6 free 20567 MiB → 2 槽
+== GPU 7 free 16620 MiB → 1 槽
+== 共 12 槽：0 0 1 2 2 3 4 5 5 6 6 7
+== [20:13:21] T1 筛选
+== [21:08:49] T1 完：48 / 48
+[select] ★ = field-on-L4；验证源 regret@3 {"diff-on-L4": 0.0198, "diff-on-L0": 0.0157, "diff-off-L4": 0.0175, "diff-off-L0": 0.0154, "field-on-L4": 0.0141, "field-on-L0": 0.0153, "field-off-L4": 0.021, "field-off-L0": 0.0224}
+== ★ = field-on-L4
+== [21:08:49] T2 集成
+== [21:40:34] T2 完：30 / 30
+== [21:40:34] 搜索
+== [21:41:55] 搜索完：6 / 6
+[plan-runs] 310 new cells（复用 S2 / S3-C 已有格）
+== [21:41:58] 真跑
+verify: plan 310 / done 310 / error 0 → OK

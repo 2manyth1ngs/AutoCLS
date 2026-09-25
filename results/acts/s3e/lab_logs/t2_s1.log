@@ -1,0 +1,14 @@
+[train] field-on-L4_s1_PhonemeSpectra ep 0 train 1.2376 val 0.5679 52s
+[train] field-on-L4_s1_PhonemeSpectra ep 1 train 0.7153 val 0.5863 105s
+[train] field-on-L4_s1_PhonemeSpectra ep 2 train 0.5690 val 0.5848 158s
+[train] field-on-L4_s1_PhonemeSpectra ep 3 train 0.5173 val 0.6018 211s
+[train] field-on-L4_s1_PhonemeSpectra ep 4 train 0.4836 val 0.5985 263s
+[train] field-on-L4_s1_PhonemeSpectra ep 5 train 0.4886 val 0.5826 314s
+[train] field-on-L4_s1_PhonemeSpectra done best val 0.5679 epochs 6 315s
+[train] field-on-L4_s3_PhonemeSpectra ep 0 train 1.2104 val 0.5616 54s
+[train] field-on-L4_s3_PhonemeSpectra ep 1 train 0.7025 val 0.5734 107s
+[train] field-on-L4_s3_PhonemeSpectra ep 2 train 0.5704 val 0.5652 161s
+[train] field-on-L4_s3_PhonemeSpectra ep 3 train 0.5209 val 0.5618 222s
+[train] field-on-L4_s3_PhonemeSpectra ep 4 train 0.5135 val 0.5722 281s
+[train] field-on-L4_s3_PhonemeSpectra ep 5 train 0.4846 val 0.5741 337s
+[train] field-on-L4_s3_PhonemeSpectra done best val 0.5616 epochs 6 338s
