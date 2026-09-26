@@ -1,0 +1,6 @@
+[aug] UWaveGestureLibrary: 30 任务、300 条扩充标签
+[train] I_s0_UWaveGestureLibrary done best val 0.4265 epochs 24 alpha [100.0, 100000.0, 100000.0] 36s
+[aug] Handwriting: 30 任务、300 条扩充标签
+[train] I_s2_Handwriting done best val 0.4155 epochs 18 alpha [100.0, 100000.0, 10000.0] 25s
+[aug] EthanolConcentration: 30 任务、300 条扩充标签
+[train] I_s3_EthanolConcentration done best val 0.5396 epochs 10 alpha [100.0, 100000.0, 1000.0] 17s

@@ -1,0 +1,32 @@
+[aug-search] Handwriting PhonemeSpectra_a00 ['400d41eadd5e', '03b67cae718a', '3683a496c79d', 'cdb5a098a8ad', '6e4b3b89ed42'] pred [0.87, 0.87, 0.87, 0.86, 0.87] 8s
+[aug-search] Handwriting PhonemeSpectra_a04 ['e2f8e9707429', 'a902e1b565da', '15bc07861817', '519e2953edda', 'a7d697c0179e'] pred [0.87, 0.87, 0.86, 0.86, 0.86] 15s
+[aug-search] Handwriting UWaveGestureLibrary_a00 ['d90884251627', '646f3dd1b28b', '7605bf837d06', 'c0e9fef3fa74', '816c126ad6bd'] pred [0.87, 0.87, 0.87, 0.87, 0.86] 23s
+[aug-search] Handwriting UWaveGestureLibrary_a04 ['e54fce1fd485', 'f07a7747aa67', '1d9455b252ef', '7c345465ff99', '2089804e3578'] pred [0.84, 0.84, 0.84, 0.84, 0.84] 30s
+[aug-search] Handwriting Cricket_a00 ['623e9ce51679', '23c2e871f75f', '9ab5cbfdf9cd', '786e035ddf60', '3b12a8c1fa39'] pred [0.82, 0.82, 0.82, 0.81, 0.81] 37s
+[aug-search] Handwriting Cricket_a04 ['38f49dcf3aae', 'eedaa21d8b5b', '82db9a15aa00', '23dcecadb8e6', 'e83394730f91'] pred [0.83, 0.82, 0.82, 0.81, 0.81] 44s
+[aug-search] Handwriting PTB-XL_a00 ['4270add02406', '18ab1cc1d02f', 'ac5cce50c5ad', 'fec17ee30938', 'ee307dcf99d0'] pred [0.82, 0.82, 0.82, 0.82, 0.81] 51s
+[aug-search] Handwriting PTB-XL_a04 ['6fa415e1de04', '9cfb025274f2', '1058af9b8d2b', 'd30e56832124', 'f18bd449fd0d'] pred [0.85, 0.84, 0.84, 0.84, 0.84] 59s
+[aug-search] Handwriting SleepEDF_a00 ['dcbb39c21310', 'f0c718e4e01e', 'a0f1da8ba04b', 'f52512e6d05d', '169fa504d8f9'] pred [0.86, 0.86, 0.86, 0.85, 0.84] 66s
+[aug-search] Handwriting SleepEDF_a04 ['507036403b6d', '8cf2333e80e1', '339422894144', 'd523500b4e19', '90fe3aab754a'] pred [0.82, 0.82, 0.82, 0.82, 0.82] 74s
+[aug-search] Handwriting PAMAP2_a00 ['a23a3bcd0d2c', 'fc7b920bd6d8', '0a20d3611064', '5db2b5ad87bf', '804e34f2e08f'] pred [0.83, 0.82, 0.81, 0.81, 0.81] 81s
+[aug-search] Handwriting PAMAP2_a04 ['21bc0e7a6c2c', '57e56db80ebc', '8e79b84141f5', '23a767dd428e', 'ca68d40061a4'] pred [0.84, 0.83, 0.83, 0.84, 0.83] 88s
+[aug-search] Handwriting NonInvasiveFetalECGThorax1_a00 ['dc46f31282f1', '462a91ed31cd', '223bb0d5c64a', '46ce8cd53b74', '245f42d2cc40'] pred [0.84, 0.84, 0.83, 0.83, 0.82] 95s
+[aug-search] Handwriting NonInvasiveFetalECGThorax1_a04 ['1610a61ce53d', '321a68fc2e2d', '83b472b03645', '4e7cc93ca629', 'c298ebe88a40'] pred [0.83, 0.83, 0.82, 0.82, 0.82] 102s
+[aug-search] Handwriting ShapesAll_a00 ['10b7f4637a5a', 'c7fefbfa2485', '6b18cdd18da7', '10a245596d4d', 'b784e909d6a5'] pred [0.88, 0.88, 0.88, 0.88, 0.88] 109s
+[aug-search] Handwriting ShapesAll_a04 ['d04bab1a3afb', 'f6f9cbb1a313', '6956fc47eb36', 'a2b81cc4c282', 'adf0ad94b4a6'] pred [0.87, 0.86, 0.86, 0.86, 0.85] 116s
+[aug-search] Handwriting LargeKitchenAppliances_a00 ['829900d65fc7', '816fb4a7f2e2', '75b655ecc310', '8575b5889fc3', '8196f5f4df7c'] pred [0.8, 0.8, 0.79, 0.79, 0.8] 122s
+[aug-search] Handwriting LargeKitchenAppliances_a04 ['40f7c39b7c7e', 'd3b081ba7ff1', '677e6f894e25', 'c7d1b47d92b7', 'e8ddec49b7eb'] pred [0.81, 0.81, 0.82, 0.81, 0.8] 128s
+[aug-search] Handwriting Adiac_a00 ['9524251d0230', '0dd99c6dccd1', 'e3060cb59b3b', '477876a403f4', '634d5065e1c8'] pred [0.9, 0.9, 0.89, 0.89, 0.89] 135s
+[aug-search] Handwriting Adiac_a04 ['1a3ba71e385e', '4bac77e346a8', '61e1fc924eee', 'cd68370bc659', 'b642e603ae1f'] pred [0.89, 0.89, 0.89, 0.89, 0.89] 141s
+[aug-search] Handwriting FordA_a00 ['6fff7337ef92', 'eca1c21e9c0d', '9ea813f8dd4f', 'd1538d287afd', '92bebf33e889'] pred [0.91, 0.91, 0.9, 0.9, 0.9] 149s
+[aug-search] Handwriting FordA_a04 ['a163c325cc6c', '1dfa633c0378', 'a45b2b437bb7', '5a65c8a86518', '142644e48888'] pred [0.91, 0.9, 0.9, 0.9, 0.9] 154s
+[aug-search] Handwriting SemgHandMovementCh2_a00 ['f690d7d82abf', 'cb920ba680ec', '407d6593c920', '9c60e2503bf4', '443f0c7241d1'] pred [0.8, 0.8, 0.8, 0.79, 0.8] 162s
+[aug-search] Handwriting SemgHandMovementCh2_a04 ['3e07e3aa0781', 'bcefc4ae0ec3', 'ede5229e3803', 'af2787ceec07', 'bb7cb10ec106'] pred [0.82, 0.81, 0.82, 0.81, 0.81] 169s
+[aug-search] Handwriting EthanolConcentration_a00 ['ff07cf6eed6d', 'ac16571718ba', 'fcd276378279', '3ec06b410436', '2b1fff940ebb'] pred [0.84, 0.84, 0.84, 0.83, 0.83] 176s
+[aug-search] Handwriting EthanolConcentration_a04 ['843ce0b967b1', 'bfe25eac79b3', '4d5c677383fe', '98a11f6fe3f6', '0c1b9d6125c2'] pred [0.81, 0.81, 0.81, 0.81, 0.81] 183s
+[aug-search] Handwriting CinCECGTorso_a00 ['7764764c98ad', 'b7673c966a9d', 'eb5ab4c057e7', 'efaddf4f5b6c', 'e9e04c32d697'] pred [0.83, 0.83, 0.83, 0.82, 0.82] 189s
+[aug-search] Handwriting CinCECGTorso_a04 ['be4b4e06fff8', '0a61e4a0030b', 'd68f96f07cf1', '76ce65d6c9cf', 'd59badbff1f1'] pred [0.8, 0.81, 0.8, 0.8, 0.8] 197s
+[aug-search] Handwriting SelfRegulationSCP1_a00 ['7a47350760cc', '7cef8231c6e9', '37b55b375f07', '5919696885ea', '674bdd2895e5'] pred [0.84, 0.83, 0.84, 0.84, 0.83] 203s
+[aug-search] Handwriting SelfRegulationSCP1_a04 ['9a4da99e2571', '2ecce84bcd22', '7a50d7d845e1', '1f8720f81648', 'fb2605599bbd'] pred [0.84, 0.84, 0.84, 0.83, 0.83] 210s
+scripts/97_acts_s3j.py:104: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  m = g96.AxisComparator(enc.dim).to(dev); m.load_state_dict(torch.load(s3i / "models" / f"I_s{sd}_{fold}.pt", map_location=dev)); m.eval(); models.append(m)

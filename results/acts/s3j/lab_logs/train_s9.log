@@ -1,0 +1,6 @@
+[aug] Cricket: 30 任务、300 条扩充标签
+[train] I_s1_Cricket done best val 0.4605 epochs 20 alpha [10.0, 100000.0, 1000.0] 39s
+[aug] PhonemeSpectra: 30 任务、300 条扩充标签
+[train] I_s3_PhonemeSpectra done best val 0.4510 epochs 20 alpha [10.0, 100000.0, 100000.0] 60s
+[aug] SelfRegulationSCP1: 30 任务、300 条扩充标签
+[train] I_s4_SelfRegulationSCP1 done best val 0.3977 epochs 18 alpha [10.0, 100000.0, 100000.0] 17s

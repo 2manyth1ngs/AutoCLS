@@ -1,0 +1,32 @@
+[aug-search] SelfRegulationSCP1 UniMiB-SHAR_a00 ['b059166e9615', '4bb56e4ab35b', 'a8ef435a867b', '9c7a6da73612', '2239c1963e55'] pred [0.89, 0.89, 0.89, 0.89, 0.89] 10s
+[aug-search] SelfRegulationSCP1 UniMiB-SHAR_a04 ['3db04ec84518', 'd56362a631b6', '428cb4f9bc5d', 'b9f5eb18af08', '43c41ab9dc4c'] pred [0.85, 0.84, 0.84, 0.84, 0.84] 21s
+[aug-search] SelfRegulationSCP1 PhonemeSpectra_a00 ['342eb8b889bc', '547a5f383239', 'e763b60c5f04', 'd85e1f3fcf73', 'd51dc5ba9f39'] pred [0.87, 0.87, 0.87, 0.87, 0.87] 31s
+[aug-search] SelfRegulationSCP1 PhonemeSpectra_a04 ['9db50adc6ea9', '13d6f2d74dbe', 'caf6f5d4ea41', 'e3ad8f77eb24', '093991f28a7c'] pred [0.89, 0.89, 0.88, 0.89, 0.89] 41s
+[aug-search] SelfRegulationSCP1 UWaveGestureLibrary_a00 ['3011e17eb763', '15b2d3309a06', '3a9ed4d84db3', '2037d2b5f11d', 'ef3dacad144a'] pred [0.86, 0.85, 0.85, 0.85, 0.85] 51s
+[aug-search] SelfRegulationSCP1 UWaveGestureLibrary_a04 ['a43a29aa2479', '1281074f636c', '5fa685cf7978', '2c11034b6c93', '795a121ffc09'] pred [0.85, 0.84, 0.85, 0.84, 0.85] 60s
+[aug-search] SelfRegulationSCP1 Cricket_a00 ['03d5b282474e', '9a847871bc63', 'b84dd7262406', 'e5777415050c', 'fc7fd79ad67d'] pred [0.79, 0.8, 0.8, 0.8, 0.8] 71s
+[aug-search] SelfRegulationSCP1 Cricket_a04 ['8fee8696435a', '751620d8ed28', '8b887a8976d6', '84f3ab8e16fc', '77c9cb7367af'] pred [0.83, 0.83, 0.83, 0.82, 0.82] 80s
+[aug-search] SelfRegulationSCP1 PTB-XL_a00 ['44480d65f905', '98e92e4a6e7d', 'b42fcc95fe0e', 'ca38b7dffc9a', '2f6a70237d28'] pred [0.86, 0.84, 0.84, 0.84, 0.85] 91s
+[aug-search] SelfRegulationSCP1 PTB-XL_a04 ['63d7f7d451bc', 'd0ac2183908a', '3d91a68a0180', 'f7ef5358c38a', '8e6edd8bda3d'] pred [0.83, 0.82, 0.82, 0.82, 0.83] 101s
+[aug-search] SelfRegulationSCP1 SleepEDF_a00 ['c7ebc2c7e7c9', 'a61aa6c2fa31', 'c81721d4076a', 'a16eabe273ba', 'aea00a93031a'] pred [0.87, 0.86, 0.85, 0.87, 0.85] 111s
+[aug-search] SelfRegulationSCP1 SleepEDF_a04 ['f97f64cbd781', '171be59a80e1', '21622a38d482', '32ec81a9e68a', '73a87f784012'] pred [0.85, 0.85, 0.84, 0.84, 0.84] 122s
+[aug-search] SelfRegulationSCP1 PAMAP2_a00 ['b8d009692d0a', '62092ad0cc41', '73403458270f', '8a4715103246', 'dcc389b5ef61'] pred [0.84, 0.84, 0.83, 0.83, 0.83] 132s
+[aug-search] SelfRegulationSCP1 PAMAP2_a04 ['0ecd397b867b', '1d5ccc4284dc', '16de6de2476a', '4468362430b0', '9985e44ae78f'] pred [0.85, 0.83, 0.84, 0.84, 0.84] 142s
+[aug-search] SelfRegulationSCP1 NonInvasiveFetalECGThorax1_a00 ['75d69ad96643', '39622ed8cffc', 'c75bc2b27b63', '291fedf7366d', '1ba5fb243e34'] pred [0.84, 0.84, 0.83, 0.83, 0.83] 152s
+[aug-search] SelfRegulationSCP1 NonInvasiveFetalECGThorax1_a04 ['0012341ba801', 'dd6b87abb0bd', '79a7d19172a6', '8bb38bbc65d8', '251d4a304a1e'] pred [0.85, 0.85, 0.84, 0.84, 0.84] 162s
+[aug-search] SelfRegulationSCP1 ShapesAll_a00 ['9a1eeef42418', '9daf46311a5b', '5c6c4b75860d', '3c71cf2cae1f', '981ce751b61e'] pred [0.89, 0.88, 0.88, 0.88, 0.88] 172s
+[aug-search] SelfRegulationSCP1 ShapesAll_a04 ['1956b92d8308', 'aed980c9c77b', '798848bcb31c', '6c67f14c0887', 'f1a7c88de8b2'] pred [0.86, 0.87, 0.86, 0.86, 0.86] 183s
+[aug-search] SelfRegulationSCP1 LargeKitchenAppliances_a00 ['eac352d349d0', 'bc1334a43009', '738f1b2eb51e', '7294389f1d4c', '2bcd9d17b97a'] pred [0.84, 0.83, 0.84, 0.83, 0.83] 192s
+[aug-search] SelfRegulationSCP1 LargeKitchenAppliances_a04 ['e74663c77c5c', '2ace6efe5e3c', 'f17c4a503add', '0cd0e7aaf259', '90af95ec62fe'] pred [0.87, 0.87, 0.87, 0.86, 0.86] 202s
+[aug-search] SelfRegulationSCP1 Adiac_a00 ['f31c077ea654', '29eeff0cc799', '62d2f6b9e6cb', 'f9502acec7f0', '205fc404962a'] pred [0.92, 0.92, 0.92, 0.91, 0.91] 212s
+[aug-search] SelfRegulationSCP1 Adiac_a04 ['390a9c7b059e', 'b747ab25e82d', '24c70219d26f', '553cb3efa8cf', 'e24e55ec1173'] pred [0.91, 0.91, 0.9, 0.91, 0.9] 222s
+[aug-search] SelfRegulationSCP1 FordA_a00 ['82b3ada5b503', 'bb64465a1b8b', '5173e59b8954', '69f9275a27b2', '5b002ba838b1'] pred [0.92, 0.92, 0.92, 0.92, 0.91] 232s
+[aug-search] SelfRegulationSCP1 FordA_a04 ['c5437c5125cc', '4d5b9180536a', 'aa0e310caea7', '10fc7c30e263', '74dedd26837c'] pred [0.91, 0.91, 0.91, 0.91, 0.92] 242s
+[aug-search] SelfRegulationSCP1 SemgHandMovementCh2_a00 ['6faa1212ec78', 'a80711d688e7', '625c2c9f3e6a', '8728579f9c91', '67c83649f6be'] pred [0.84, 0.84, 0.82, 0.83, 0.83] 253s
+[aug-search] SelfRegulationSCP1 SemgHandMovementCh2_a04 ['8eff6f1a31e6', '08e15157b95c', 'a52194852af5', '360a8664e74e', 'cdef19c54795'] pred [0.84, 0.85, 0.84, 0.83, 0.83] 263s
+[aug-search] SelfRegulationSCP1 EthanolConcentration_a00 ['4b2d4c66bc23', 'f570b05edc0c', '2f5ecd6d0f0f', '8c07f568c767', '390235a85234'] pred [0.88, 0.87, 0.87, 0.88, 0.87] 273s
+[aug-search] SelfRegulationSCP1 EthanolConcentration_a04 ['8d42bc0e7e32', 'da985ed8ad66', 'ba4fe8405d53', '726c120b5366', 'f649ce1f3c88'] pred [0.87, 0.87, 0.86, 0.86, 0.87] 284s
+[aug-search] SelfRegulationSCP1 CinCECGTorso_a00 ['1309feb4c656', 'cd3c904233db', 'aafb1d22d718', '68ba49e8ab64', 'dd5180788722'] pred [0.84, 0.84, 0.84, 0.84, 0.83] 294s
+[aug-search] SelfRegulationSCP1 CinCECGTorso_a04 ['3db0907d6753', '5c5e5f758673', '4245a70210cf', 'a4c6d91f0776', 'd10b6786a95f'] pred [0.85, 0.84, 0.83, 0.83, 0.82] 304s
+scripts/97_acts_s3j.py:104: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  m = g96.AxisComparator(enc.dim).to(dev); m.load_state_dict(torch.load(s3i / "models" / f"I_s{sd}_{fold}.pt", map_location=dev)); m.eval(); models.append(m)

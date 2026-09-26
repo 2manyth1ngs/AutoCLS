@@ -1,0 +1,23 @@
+== HEAD 4b34e8c5de298996cc15e75cf98abd3ba599fbc1
+== S3-I 模型 30 / 30
+3 passed in 0.07s
+== GPU 0 free 16561 MiB → 1 槽
+== GPU 1 free 12327 MiB → 1 槽
+== GPU 2 free 13074 MiB → 1 槽
+== GPU 3 free 11084 MiB → 1 槽
+== GPU 4 free 18139 MiB → 2 槽
+== GPU 5 free 18139 MiB → 2 槽
+== GPU 6 free 11565 MiB → 1 槽
+== GPU 7 free 12833 MiB → 1 槽
+== 共 10 槽：0 1 2 3 4 4 5 5 6 7
+== [17:03:50] 扩充搜索
+== [17:09:33] 扩充搜索完：6 / 6
+[plan] runs_aug: 900 new cells（已有格复用）
+== [17:09:38] 扩充真跑
+verify runs_aug: plan 900 / done 900 / error 0 → OK
+== [17:54:56] I′ 训练
+== [17:57:31] I′ 完：30 / 30
+== [18:02:10] 考卷搜索完：6 / 6
+[plan] runs: 856 new cells（已有格复用）
+== [18:02:15] 考卷真跑
+verify runs: plan 856 / done 856 / error 0 → OK
