@@ -1,0 +1,6 @@
+[train] EP_s1_UWaveGestureLibrary done best val 0.5078 epochs 9 K 1 5s
+[train] EP_s3_Handwriting done best val 0.4450 epochs 26 K 1 12s
+[train] EP_s4_EthanolConcentration done best val 0.6389 epochs 7 K 1 4s
+[train] ET_s1_UWaveGestureLibrary done best val 0.4635 epochs 20 K 1 9s
+[train] ET_s3_Handwriting done best val 0.4737 epochs 11 K 1 5s
+[train] ET_s4_EthanolConcentration done best val 0.5597 epochs 10 K 1 6s

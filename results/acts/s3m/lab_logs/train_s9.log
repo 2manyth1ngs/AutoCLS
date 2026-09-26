@@ -1,0 +1,6 @@
+[train] EP_s1_Cricket done best val 0.5345 epochs 16 K 1 23s
+[train] EP_s3_PhonemeSpectra done best val 0.5135 epochs 12 K 1 20s
+[train] EP_s4_SelfRegulationSCP1 done best val 0.5020 epochs 15 K 1 26s
+[train] ET_s1_Cricket done best val 0.5186 epochs 16 K 1 29s
+[train] ET_s3_PhonemeSpectra done best val 0.5014 epochs 23 K 1 69s
+[train] ET_s4_SelfRegulationSCP1 done best val 0.5038 epochs 21 K 1 29s
