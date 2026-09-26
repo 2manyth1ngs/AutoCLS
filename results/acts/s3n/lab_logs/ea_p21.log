@@ -1,0 +1,6 @@
+[ea] CinCECGTorso_a13 X=(134, 641, 1) 2s
+[ea] FordA_a05 X=(296, 500, 1) 2s
+[ea] NonInvasiveFetalECGThorax1_a05 X=(645, 726, 1) 3s
+[ea] PhonemeSpectra_a05 X=(721, 191, 4) 4s
+[ea] SemgHandMovementCh2_a05 X=(460, 1245, 1) 4s
+[ea] SleepEDF_a05 X=(348, 2814, 1) 6s

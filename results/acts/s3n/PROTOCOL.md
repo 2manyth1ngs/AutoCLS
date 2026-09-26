@@ -57,3 +57,6 @@ PROTOCOL + 单测先红 → 协议锁 → 实现 101（`--compute-ea` 服务器 
 5（先红、§0 声明）；6（E_A 只用任务自己的数据与标签，不用 CLS 结果；标准化、PCA、降秩回归只在折内训练侧拟合）；7（`response_profile` 按 task_type 分发；比较器只见坐标）。
 
 ## §8 执行台账（跑后填写）
+- 协议锁 84feeb0（3 例先红）→ 实现 256f6f7（`scripts/101_acts_s3n.py` + `scripts/pa_pod/acts_lab_run_s3n_ea.sh`；100.cmd_prep 加 e_vars / feat 钩子）；单测 3 例绿；本地单任务冒烟 OK。
+- **E_A**：8k-4090 CPU 24 份并行，23:34 UTC，10 s 完成 160 / 160（最慢 PTB-XL_a05 8 s），NaN 0。
+- **第一道门**（本地 3.4 min）：E_A 族最好 eaP4+pt4+sh4 / λ 100 / K 3，EV −0.0099；均值嵌入最好仍为 pt4+sh4 / λ 100 / K 1 +0.0021 → **S3N-NO-GAIN**，停止。
