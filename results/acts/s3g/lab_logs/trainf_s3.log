@@ -1,0 +1,57 @@
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] F_s0_Cricket start (= blind) val 0.5570
+[train] F_s0_Cricket ep 0 q 1 train 0.6559 val 0.5567 18s
+[train] F_s0_Cricket ep 0 q 2 train 0.6458 val 0.5566 35s
+[train] F_s0_Cricket ep 0 q 3 train 0.6422 val 0.5554 52s
+[train] F_s0_Cricket ep 0 q 4 train 0.6384 val 0.5517 68s
+[train] F_s0_Cricket ep 1 q 1 train 0.5914 val 0.5474 85s
+[train] F_s0_Cricket ep 1 q 2 train 0.5861 val 0.5402 100s
+[train] F_s0_Cricket ep 1 q 3 train 0.5773 val 0.5375 116s
+[train] F_s0_Cricket ep 1 q 4 train 0.5730 val 0.5382 130s
+[train] F_s0_Cricket ep 2 q 1 train 0.5539 val 0.5334 145s
+[train] F_s0_Cricket ep 2 q 2 train 0.5461 val 0.5335 160s
+[train] F_s0_Cricket ep 2 q 3 train 0.5393 val 0.5324 174s
+[train] F_s0_Cricket ep 2 q 4 train 0.5373 val 0.5276 187s
+[train] F_s0_Cricket ep 3 q 1 train 0.5289 val 0.5304 202s
+[train] F_s0_Cricket ep 3 q 2 train 0.5235 val 0.5275 216s
+[train] F_s0_Cricket ep 3 q 3 train 0.5168 val 0.5245 230s
+[train] F_s0_Cricket ep 3 q 4 train 0.5193 val 0.5262 245s
+[train] F_s0_Cricket ep 4 q 1 train 0.5166 val 0.5290 261s
+[train] F_s0_Cricket ep 4 q 2 train 0.5113 val 0.5258 276s
+[train] F_s0_Cricket ep 4 q 3 train 0.5085 val 0.5241 292s
+[train] F_s0_Cricket ep 4 q 4 train 0.5045 val 0.5250 307s
+[train] F_s0_Cricket ep 5 q 1 train 0.4864 val 0.5370 323s
+[train] F_s0_Cricket ep 5 q 2 train 0.4961 val 0.5238 340s
+[train] F_s0_Cricket ep 5 q 3 train 0.4929 val 0.5265 356s
+[train] F_s0_Cricket ep 5 q 4 train 0.4925 val 0.5307 370s
+[train] F_s0_Cricket ep 6 q 1 train 0.5054 val 0.5296 383s
+[train] F_s0_Cricket ep 6 q 2 train 0.4990 val 0.5285 396s
+[train] F_s0_Cricket ep 6 q 3 train 0.4950 val 0.5318 409s
+[train] F_s0_Cricket ep 6 q 4 train 0.4930 val 0.5288 423s
+[train] F_s0_Cricket ep 7 q 1 train 0.5098 val 0.5249 437s
+[train] F_s0_Cricket ep 7 q 2 train 0.4864 val 0.5273 452s
+[train] F_s0_Cricket done start 0.5570 best 0.5238 at (5, 2) evals 30 453s
+[aug] UWaveGestureLibrary: 30 任务、150 条扩充标签
+[train] F_s2_UWaveGestureLibrary start (= blind) val 0.4740
+[train] F_s2_UWaveGestureLibrary ep 0 q 1 train 0.6315 val 0.4740 18s
+[train] F_s2_UWaveGestureLibrary ep 0 q 2 train 0.6344 val 0.4741 34s
+[train] F_s2_UWaveGestureLibrary ep 0 q 3 train 0.6280 val 0.4744 48s
+[train] F_s2_UWaveGestureLibrary ep 0 q 4 train 0.6195 val 0.4751 63s
+[train] F_s2_UWaveGestureLibrary ep 1 q 1 train 0.5916 val 0.4760 78s
+[train] F_s2_UWaveGestureLibrary ep 1 q 2 train 0.5667 val 0.4870 93s
+[train] F_s2_UWaveGestureLibrary ep 1 q 3 train 0.5515 val 0.4902 108s
+[train] F_s2_UWaveGestureLibrary ep 1 q 4 train 0.5422 val 0.5188 124s
+[train] F_s2_UWaveGestureLibrary ep 2 q 1 train 0.4963 val 0.5050 139s
+[train] F_s2_UWaveGestureLibrary done start 0.4740 best 0.4740 at (0, 1) evals 9 141s
+[aug] PhonemeSpectra: 30 任务、150 条扩充标签
+[train] F_s4_PhonemeSpectra start (= blind) val 0.5078
+[train] F_s4_PhonemeSpectra ep 0 q 1 train 0.6380 val 0.5077 17s
+[train] F_s4_PhonemeSpectra ep 0 q 2 train 0.6408 val 0.5077 32s
+[train] F_s4_PhonemeSpectra ep 0 q 3 train 0.6331 val 0.5078 47s
+[train] F_s4_PhonemeSpectra ep 0 q 4 train 0.6239 val 0.5078 61s
+[train] F_s4_PhonemeSpectra ep 1 q 1 train 0.5932 val 0.5079 75s
+[train] F_s4_PhonemeSpectra ep 1 q 2 train 0.5790 val 0.5105 90s
+[train] F_s4_PhonemeSpectra ep 1 q 3 train 0.5662 val 0.5187 105s
+[train] F_s4_PhonemeSpectra ep 1 q 4 train 0.5565 val 0.5209 121s
+[train] F_s4_PhonemeSpectra ep 2 q 1 train 0.5188 val 0.5345 137s
+[train] F_s4_PhonemeSpectra done start 0.5078 best 0.5077 at (0, 1) evals 9 140s

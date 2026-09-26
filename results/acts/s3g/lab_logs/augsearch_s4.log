@@ -1,0 +1,32 @@
+[aug-search] EthanolConcentration Handwriting_a00 ['7b11a77c8d79', 'a49705c4aeb0', '2247e7adb37d', 'c883db03f13d', '7e88fd0e30cd'] pred [0.73, 0.72, 0.72, 0.73, 0.72] 7s
+[aug-search] EthanolConcentration Handwriting_a04 ['7c48b93883d4', '7dca24afa73b', '48016ccbef9e', '419f41227e00', 'fbe80517ac73'] pred [0.73, 0.72, 0.72, 0.72, 0.72] 13s
+[aug-search] EthanolConcentration UniMiB-SHAR_a00 ['33b4d5aff400', 'b61f4a082a78', '731b6c6f10ea', '6e34e01e25e3', '32666b5bf12d'] pred [0.74, 0.74, 0.74, 0.74, 0.73] 21s
+[aug-search] EthanolConcentration UniMiB-SHAR_a04 ['fb543554df51', '1bc8d1d8b415', 'c1761df0a044', 'bfc467c3d943', 'c12d5a8d5499'] pred [0.72, 0.71, 0.71, 0.71, 0.71] 27s
+[aug-search] EthanolConcentration PhonemeSpectra_a00 ['fe91b4098eeb', 'de765deb3de1', '708c890efb83', '37d7a435280f', '5dec4331ee6f'] pred [0.72, 0.72, 0.72, 0.72, 0.72] 34s
+[aug-search] EthanolConcentration PhonemeSpectra_a04 ['fe6f9ee7bede', 'cbf991fbb349', 'b85906f7ac73', '8057021105ea', 'aa549d9a2964'] pred [0.73, 0.73, 0.73, 0.72, 0.72] 41s
+[aug-search] EthanolConcentration UWaveGestureLibrary_a00 ['6f265962afd7', 'd9aa234070ac', 'd00673260f27', 'f64dfb845061', 'ca73a049bbbe'] pred [0.73, 0.73, 0.73, 0.73, 0.73] 49s
+[aug-search] EthanolConcentration UWaveGestureLibrary_a04 ['c4160d6e26a8', '8f79a3a39325', 'c8db002866ff', '3a21362fdd3b', 'd6f79d7cdc19'] pred [0.73, 0.73, 0.73, 0.73, 0.73] 56s
+[aug-search] EthanolConcentration Cricket_a00 ['6750875f241d', '9f924ac0dae7', '0be58d8fe5ed', '1b7cb88784c8', '3d2792a2a3cd'] pred [0.72, 0.72, 0.72, 0.72, 0.71] 63s
+[aug-search] EthanolConcentration Cricket_a04 ['53118c7159fa', '9fd881c3ad7e', 'a357c0f46f52', 'f9a495945c20', 'a788cc76ce89'] pred [0.72, 0.72, 0.72, 0.72, 0.71] 70s
+[aug-search] EthanolConcentration PTB-XL_a00 ['e67749a61a91', 'dc9d4f163584', '6fe87d9fd19e', '9899b75cef3e', '843e885359b6'] pred [0.73, 0.73, 0.73, 0.73, 0.73] 78s
+[aug-search] EthanolConcentration PTB-XL_a04 ['fb94927bf840', '7d90386f787d', '0484e293248d', '8c6bd289227a', 'b00142747df9'] pred [0.73, 0.73, 0.73, 0.72, 0.72] 84s
+[aug-search] EthanolConcentration SleepEDF_a00 ['843e885359b6', 'bc37c8464adc', 'f478be90cea1', '3b3700c7175d', 'b2bc95609a94'] pred [0.73, 0.72, 0.72, 0.72, 0.72] 91s
+[aug-search] EthanolConcentration SleepEDF_a04 ['15c3f2fd8b55', 'ad54a22c0ae1', '77f056a8c61f', '069f7cebd7f8', '3b730f90eb3b'] pred [0.72, 0.72, 0.72, 0.72, 0.72] 97s
+[aug-search] EthanolConcentration PAMAP2_a00 ['966c0c9c6480', '417af31c376c', '00225e8eee27', '0ca9ff9afd26', '08d4966b697e'] pred [0.72, 0.72, 0.72, 0.72, 0.71] 103s
+[aug-search] EthanolConcentration PAMAP2_a04 ['aafe200a5f6c', '59ac3d443ee6', '8c1e2f9d1d7a', '605909d18b62', '72858bca58cf'] pred [0.73, 0.73, 0.73, 0.73, 0.73] 109s
+[aug-search] EthanolConcentration NonInvasiveFetalECGThorax1_a00 ['a2004bab8544', '048dd5706bad', '0cc4481d5af8', '1740167e050d', '31abdec60314'] pred [0.72, 0.72, 0.72, 0.72, 0.72] 115s
+[aug-search] EthanolConcentration NonInvasiveFetalECGThorax1_a04 ['06eefdb97ecb', '0852658e93be', 'bdf60693b579', '982ef729eb6f', '659cb7741901'] pred [0.73, 0.73, 0.73, 0.73, 0.73] 122s
+[aug-search] EthanolConcentration ShapesAll_a00 ['4f5d239aa8ec', '0a72d1963ce5', '46f9a76c8dc8', '0635506ede7b', '0b730ee05d1f'] pred [0.74, 0.73, 0.73, 0.73, 0.73] 129s
+[aug-search] EthanolConcentration ShapesAll_a04 ['a75ee002268e', 'd092186b0a0c', '8ec8c7525f20', 'a74ce1fe2df6', 'b917f30263ee'] pred [0.72, 0.72, 0.72, 0.71, 0.71] 136s
+[aug-search] EthanolConcentration LargeKitchenAppliances_a00 ['37b85e4add46', 'e784c7f1b800', 'de34a35ac94d', 'cf2497b8ae6c', '25a34dadfb7c'] pred [0.72, 0.72, 0.72, 0.72, 0.71] 144s
+[aug-search] EthanolConcentration LargeKitchenAppliances_a04 ['4024ec040019', '73c35a998ea0', '9de4cc25a4ed', '0c1d6a912e15', '0710dfe23a49'] pred [0.72, 0.72, 0.72, 0.72, 0.72] 151s
+[aug-search] EthanolConcentration Adiac_a00 ['7061b373e870', 'ab9b05f66ca1', '828e35568ac9', '148564495087', '7aa898d79c29'] pred [0.73, 0.73, 0.73, 0.72, 0.72] 159s
+[aug-search] EthanolConcentration Adiac_a04 ['a9cca0bb2784', '0f85b1ed0ed9', 'b0f0b2e62787', '51bfea956223', 'e58ad18d0339'] pred [0.73, 0.73, 0.73, 0.73, 0.73] 166s
+[aug-search] EthanolConcentration FordA_a00 ['d95fa4414fdf', 'ddde6c1b96e1', '6452855d62fa', '1c2666b05c73', 'f46706337843'] pred [0.72, 0.72, 0.72, 0.71, 0.72] 174s
+[aug-search] EthanolConcentration FordA_a04 ['630c163249dd', 'e83183d129ba', '7151bdeeaa27', '9ab1459b400a', 'da2bf590105f'] pred [0.73, 0.73, 0.72, 0.73, 0.72] 181s
+[aug-search] EthanolConcentration SemgHandMovementCh2_a00 ['45b6ad580bb9', '80f852c5ef46', 'a91ff0c1f7c6', '2b89406324fe', 'd0f3ccb0a4eb'] pred [0.72, 0.73, 0.72, 0.72, 0.72] 188s
+[aug-search] EthanolConcentration SemgHandMovementCh2_a04 ['ea421cec76c6', 'bd96c2ce80c4', 'c3349c80b312', '1ba103d1d78d', '6a8696a158c7'] pred [0.72, 0.72, 0.72, 0.72, 0.71] 195s
+[aug-search] EthanolConcentration SelfRegulationSCP1_a00 ['f3ace179829d', '3e7ff3a8fc7a', 'eea9df301128', '9ec6b34d9153', 'b4c4c16b0527'] pred [0.73, 0.73, 0.72, 0.72, 0.72] 202s
+[aug-search] EthanolConcentration SelfRegulationSCP1_a04 ['69a32ca00599', 'a8235b1b69c1', 'eb9997185043', '2ac13c51b777', '74430def9bc5'] pred [0.73, 0.73, 0.72, 0.72, 0.72] 208s
+/home/b311/data/wangwenjie/kejunyu/AutoCLS/scripts/93_acts_s3f.py:217: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  m = build().to(dev); m.load_state_dict(torch.load(p, map_location=dev)); m.eval(); out.append(m)

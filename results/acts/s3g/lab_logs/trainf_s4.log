@@ -1,0 +1,48 @@
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] F_s0_EthanolConcentration start (= blind) val 0.6511
+[train] F_s0_EthanolConcentration ep 0 q 1 train 0.6511 val 0.6513 15s
+[train] F_s0_EthanolConcentration ep 0 q 2 train 0.6537 val 0.6514 30s
+[train] F_s0_EthanolConcentration ep 0 q 3 train 0.6498 val 0.6520 45s
+[train] F_s0_EthanolConcentration ep 0 q 4 train 0.6423 val 0.6542 59s
+[train] F_s0_EthanolConcentration ep 1 q 1 train 0.6061 val 0.6644 74s
+[train] F_s0_EthanolConcentration ep 1 q 2 train 0.6072 val 0.6699 88s
+[train] F_s0_EthanolConcentration ep 1 q 3 train 0.5926 val 0.7341 102s
+[train] F_s0_EthanolConcentration ep 1 q 4 train 0.5813 val 0.7053 116s
+[train] F_s0_EthanolConcentration done start 0.6511 best 0.6511 at (-1, 0) evals 8 117s
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] F_s2_Cricket start (= blind) val 0.5545
+[train] F_s2_Cricket ep 0 q 1 train 0.6366 val 0.5546 15s
+[train] F_s2_Cricket ep 0 q 2 train 0.6374 val 0.5546 31s
+[train] F_s2_Cricket ep 0 q 3 train 0.6313 val 0.5537 44s
+[train] F_s2_Cricket ep 0 q 4 train 0.6203 val 0.5517 58s
+[train] F_s2_Cricket ep 1 q 1 train 0.5927 val 0.5455 72s
+[train] F_s2_Cricket ep 1 q 2 train 0.5656 val 0.5335 86s
+[train] F_s2_Cricket ep 1 q 3 train 0.5580 val 0.5276 99s
+[train] F_s2_Cricket ep 1 q 4 train 0.5462 val 0.5301 112s
+[train] F_s2_Cricket ep 2 q 1 train 0.5146 val 0.5287 125s
+[train] F_s2_Cricket ep 2 q 2 train 0.5064 val 0.5337 138s
+[train] F_s2_Cricket ep 2 q 3 train 0.5033 val 0.5276 152s
+[train] F_s2_Cricket ep 2 q 4 train 0.5041 val 0.5263 165s
+[train] F_s2_Cricket ep 3 q 1 train 0.4891 val 0.5322 178s
+[train] F_s2_Cricket ep 3 q 2 train 0.4785 val 0.5358 191s
+[train] F_s2_Cricket ep 3 q 3 train 0.4825 val 0.5225 205s
+[train] F_s2_Cricket ep 3 q 4 train 0.4884 val 0.5249 219s
+[train] F_s2_Cricket ep 4 q 1 train 0.4766 val 0.5242 233s
+[train] F_s2_Cricket ep 4 q 2 train 0.4734 val 0.5298 246s
+[train] F_s2_Cricket ep 4 q 3 train 0.4743 val 0.5300 259s
+[train] F_s2_Cricket ep 4 q 4 train 0.4727 val 0.5310 272s
+[train] F_s2_Cricket ep 5 q 1 train 0.4723 val 0.5313 285s
+[train] F_s2_Cricket ep 5 q 2 train 0.4599 val 0.5356 299s
+[train] F_s2_Cricket ep 5 q 3 train 0.4573 val 0.5322 313s
+[train] F_s2_Cricket done start 0.5545 best 0.5225 at (3, 3) evals 23 314s
+[aug] UWaveGestureLibrary: 30 任务、150 条扩充标签
+[train] F_s4_UWaveGestureLibrary start (= blind) val 0.4745
+[train] F_s4_UWaveGestureLibrary ep 0 q 1 train 0.6380 val 0.4746 16s
+[train] F_s4_UWaveGestureLibrary ep 0 q 2 train 0.6203 val 0.4747 30s
+[train] F_s4_UWaveGestureLibrary ep 0 q 3 train 0.6132 val 0.4752 45s
+[train] F_s4_UWaveGestureLibrary ep 0 q 4 train 0.6019 val 0.4760 59s
+[train] F_s4_UWaveGestureLibrary ep 1 q 1 train 0.5742 val 0.4775 73s
+[train] F_s4_UWaveGestureLibrary ep 1 q 2 train 0.5585 val 0.4950 88s
+[train] F_s4_UWaveGestureLibrary ep 1 q 3 train 0.5482 val 0.5198 102s
+[train] F_s4_UWaveGestureLibrary ep 1 q 4 train 0.5379 val 0.5156 116s
+[train] F_s4_UWaveGestureLibrary done start 0.4745 best 0.4745 at (-1, 0) evals 8 117s

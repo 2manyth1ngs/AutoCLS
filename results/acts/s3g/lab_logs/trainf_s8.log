@@ -1,0 +1,30 @@
+[aug] UWaveGestureLibrary: 30 任务、150 条扩充标签
+[train] F_s1_UWaveGestureLibrary start (= blind) val 0.4770
+[train] F_s1_UWaveGestureLibrary ep 0 q 1 train 0.6324 val 0.4770 15s
+[train] F_s1_UWaveGestureLibrary ep 0 q 2 train 0.6248 val 0.4770 29s
+[train] F_s1_UWaveGestureLibrary ep 0 q 3 train 0.6247 val 0.4774 43s
+[train] F_s1_UWaveGestureLibrary ep 0 q 4 train 0.6166 val 0.4799 58s
+[train] F_s1_UWaveGestureLibrary ep 1 q 1 train 0.5754 val 0.4892 72s
+[train] F_s1_UWaveGestureLibrary ep 1 q 2 train 0.5627 val 0.5071 87s
+[train] F_s1_UWaveGestureLibrary ep 1 q 3 train 0.5498 val 0.4958 101s
+[train] F_s1_UWaveGestureLibrary ep 1 q 4 train 0.5361 val 0.5106 115s
+[train] F_s1_UWaveGestureLibrary ep 2 q 1 train 0.5053 val 0.5204 129s
+[train] F_s1_UWaveGestureLibrary ep 2 q 2 train 0.4970 val 0.5178 143s
+[train] F_s1_UWaveGestureLibrary done start 0.4770 best 0.4770 at (0, 2) evals 10 144s
+[aug] PhonemeSpectra: 30 任务、150 条扩充标签
+[train] F_s3_PhonemeSpectra start (= blind) val 0.5081
+[train] F_s3_PhonemeSpectra ep 0 q 1 train 0.6597 val 0.5081 16s
+[train] F_s3_PhonemeSpectra ep 0 q 2 train 0.6490 val 0.5081 33s
+[train] F_s3_PhonemeSpectra ep 0 q 3 train 0.6353 val 0.5075 49s
+[train] F_s3_PhonemeSpectra ep 0 q 4 train 0.6259 val 0.5064 63s
+[train] F_s3_PhonemeSpectra ep 1 q 1 train 0.5793 val 0.5055 77s
+[train] F_s3_PhonemeSpectra ep 1 q 2 train 0.5578 val 0.5039 92s
+[train] F_s3_PhonemeSpectra ep 1 q 3 train 0.5479 val 0.5333 107s
+[train] F_s3_PhonemeSpectra ep 1 q 4 train 0.5422 val 0.5293 121s
+[train] F_s3_PhonemeSpectra ep 2 q 1 train 0.5251 val 0.5240 134s
+[train] F_s3_PhonemeSpectra ep 2 q 2 train 0.5189 val 0.5407 147s
+[train] F_s3_PhonemeSpectra ep 2 q 3 train 0.5110 val 0.5496 162s
+[train] F_s3_PhonemeSpectra ep 2 q 4 train 0.5065 val 0.5344 177s
+[train] F_s3_PhonemeSpectra ep 3 q 1 train 0.5162 val 0.5394 191s
+[train] F_s3_PhonemeSpectra ep 3 q 2 train 0.5186 val 0.5387 206s
+[train] F_s3_PhonemeSpectra done start 0.5081 best 0.5039 at (1, 2) evals 14 208s

@@ -1,0 +1,25 @@
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] blind_s1_EthanolConcentration ep 0 train 0.6787 val 0.6683 1s
+[train] blind_s1_EthanolConcentration ep 1 train 0.6098 val 0.6521 2s
+[train] blind_s1_EthanolConcentration ep 2 train 0.5552 val 0.6792 2s
+[train] blind_s1_EthanolConcentration ep 3 train 0.5530 val 0.6829 3s
+[train] blind_s1_EthanolConcentration ep 4 train 0.5386 val 0.6791 3s
+[train] blind_s1_EthanolConcentration ep 5 train 0.5391 val 0.6864 4s
+[train] blind_s1_EthanolConcentration ep 6 train 0.5299 val 0.6948 4s
+[train] blind_s1_EthanolConcentration done best val 0.6521 epochs 7 4s
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] blind_s3_Cricket ep 0 train 0.6767 val 0.6488 1s
+[train] blind_s3_Cricket ep 1 train 0.6146 val 0.5815 2s
+[train] blind_s3_Cricket ep 2 train 0.5868 val 0.5633 3s
+[train] blind_s3_Cricket ep 3 train 0.5770 val 0.5563 3s
+[train] blind_s3_Cricket ep 4 train 0.5705 val 0.5532 4s
+[train] blind_s3_Cricket ep 5 train 0.5729 val 0.5516 5s
+[train] blind_s3_Cricket ep 6 train 0.5721 val 0.5535 6s
+[train] blind_s3_Cricket ep 7 train 0.5520 val 0.5564 6s
+[train] blind_s3_Cricket ep 8 train 0.5610 val 0.5480 7s
+[train] blind_s3_Cricket ep 9 train 0.5649 val 0.5491 8s
+[train] blind_s3_Cricket ep 10 train 0.5499 val 0.5539 9s
+[train] blind_s3_Cricket ep 11 train 0.5461 val 0.5526 10s
+[train] blind_s3_Cricket ep 12 train 0.5443 val 0.5513 10s
+[train] blind_s3_Cricket ep 13 train 0.5392 val 0.5606 11s
+[train] blind_s3_Cricket done best val 0.5480 epochs 14 11s

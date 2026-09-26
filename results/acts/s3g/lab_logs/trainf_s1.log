@@ -1,0 +1,48 @@
+[aug] PhonemeSpectra: 30 任务、150 条扩充标签
+[train] F_s0_PhonemeSpectra start (= blind) val 0.5199
+[train] F_s0_PhonemeSpectra ep 0 q 1 train 0.6438 val 0.5201 15s
+[train] F_s0_PhonemeSpectra ep 0 q 2 train 0.6443 val 0.5200 30s
+[train] F_s0_PhonemeSpectra ep 0 q 3 train 0.6478 val 0.5199 45s
+[train] F_s0_PhonemeSpectra ep 0 q 4 train 0.6384 val 0.5197 59s
+[train] F_s0_PhonemeSpectra ep 1 q 1 train 0.5781 val 0.5192 73s
+[train] F_s0_PhonemeSpectra ep 1 q 2 train 0.5834 val 0.5215 87s
+[train] F_s0_PhonemeSpectra ep 1 q 3 train 0.5757 val 0.5347 102s
+[train] F_s0_PhonemeSpectra ep 1 q 4 train 0.5726 val 0.5387 116s
+[train] F_s0_PhonemeSpectra ep 2 q 1 train 0.5437 val 0.5399 130s
+[train] F_s0_PhonemeSpectra ep 2 q 2 train 0.5387 val 0.5562 145s
+[train] F_s0_PhonemeSpectra ep 2 q 3 train 0.5413 val 0.5456 159s
+[train] F_s0_PhonemeSpectra ep 2 q 4 train 0.5339 val 0.5647 172s
+[train] F_s0_PhonemeSpectra ep 3 q 1 train 0.5246 val 0.5418 187s
+[train] F_s0_PhonemeSpectra done start 0.5199 best 0.5192 at (1, 1) evals 13 188s
+[aug] Handwriting: 30 任务、150 条扩充标签
+[train] F_s2_Handwriting start (= blind) val 0.4911
+[train] F_s2_Handwriting ep 0 q 1 train 0.6514 val 0.4909 15s
+[train] F_s2_Handwriting ep 0 q 2 train 0.6502 val 0.4910 29s
+[train] F_s2_Handwriting ep 0 q 3 train 0.6430 val 0.4908 42s
+[train] F_s2_Handwriting ep 0 q 4 train 0.6293 val 0.4903 57s
+[train] F_s2_Handwriting ep 1 q 1 train 0.5820 val 0.4900 71s
+[train] F_s2_Handwriting ep 1 q 2 train 0.5735 val 0.4863 84s
+[train] F_s2_Handwriting ep 1 q 3 train 0.5658 val 0.4847 96s
+[train] F_s2_Handwriting ep 1 q 4 train 0.5575 val 0.4899 108s
+[train] F_s2_Handwriting ep 2 q 1 train 0.5367 val 0.4920 122s
+[train] F_s2_Handwriting ep 2 q 2 train 0.5224 val 0.5004 136s
+[train] F_s2_Handwriting ep 2 q 3 train 0.5142 val 0.4969 147s
+[train] F_s2_Handwriting ep 2 q 4 train 0.5158 val 0.5006 161s
+[train] F_s2_Handwriting ep 3 q 1 train 0.4990 val 0.5115 175s
+[train] F_s2_Handwriting ep 3 q 2 train 0.5023 val 0.5058 188s
+[train] F_s2_Handwriting ep 3 q 3 train 0.5053 val 0.4982 202s
+[train] F_s2_Handwriting done start 0.4911 best 0.4847 at (1, 3) evals 15 203s
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] F_s3_SelfRegulationSCP1 start (= blind) val 0.4956
+[train] F_s3_SelfRegulationSCP1 ep 0 q 1 train 0.6192 val 0.4956 13s
+[train] F_s3_SelfRegulationSCP1 ep 0 q 2 train 0.6097 val 0.4956 27s
+[train] F_s3_SelfRegulationSCP1 ep 0 q 3 train 0.6066 val 0.4954 42s
+[train] F_s3_SelfRegulationSCP1 ep 0 q 4 train 0.5963 val 0.4958 55s
+[train] F_s3_SelfRegulationSCP1 ep 1 q 1 train 0.5571 val 0.4975 68s
+[train] F_s3_SelfRegulationSCP1 ep 1 q 2 train 0.5513 val 0.5036 81s
+[train] F_s3_SelfRegulationSCP1 ep 1 q 3 train 0.5326 val 0.5653 95s
+[train] F_s3_SelfRegulationSCP1 ep 1 q 4 train 0.5281 val 0.5333 108s
+[train] F_s3_SelfRegulationSCP1 ep 2 q 1 train 0.4991 val 0.5379 122s
+[train] F_s3_SelfRegulationSCP1 ep 2 q 2 train 0.4921 val 0.5530 135s
+[train] F_s3_SelfRegulationSCP1 ep 2 q 3 train 0.4804 val 0.5738 147s
+[train] F_s3_SelfRegulationSCP1 done start 0.4956 best 0.4954 at (0, 3) evals 11 148s

@@ -1,0 +1,32 @@
+[aug-search] UWaveGestureLibrary Handwriting_a00 ['c2a59a536505', '2b4c0974bd53', '31798120e9ff', '2e68ea89c9d7', 'b4e2220de0ef'] pred [0.83, 0.83, 0.83, 0.82, 0.83] 6s
+[aug-search] UWaveGestureLibrary Handwriting_a04 ['efd172f041c5', '0a50b38c560f', 'ae046016aa9a', '7716756d14d8', 'c34bc55b146a'] pred [0.84, 0.83, 0.83, 0.83, 0.83] 11s
+[aug-search] UWaveGestureLibrary UniMiB-SHAR_a00 ['324e800b8902', 'e525a528c993', '28dc2ad34381', '084d789a819c', '40248efc9e40'] pred [0.84, 0.83, 0.84, 0.83, 0.83] 17s
+[aug-search] UWaveGestureLibrary UniMiB-SHAR_a04 ['73dafe18c865', '8cbe1510460f', 'fb56d2029beb', '20c03c6022cf', '6912443f670f'] pred [0.85, 0.84, 0.84, 0.83, 0.84] 22s
+[aug-search] UWaveGestureLibrary PhonemeSpectra_a00 ['9511c6afe727', 'f09c49b76ce7', '729d260d15ed', 'c822c5c65029', '0091e7783877'] pred [0.84, 0.85, 0.84, 0.84, 0.84] 28s
+[aug-search] UWaveGestureLibrary PhonemeSpectra_a04 ['84ad34c531a3', '609e44b07da0', 'afd9763303fb', '2a4a72390634', '2581a3ee2e84'] pred [0.84, 0.84, 0.85, 0.84, 0.84] 33s
+[aug-search] UWaveGestureLibrary PTB-XL_a00 ['468cba6a82f5', 'cebb29ad9b00', 'bf01a0fdddb8', '592153c8e3c6', 'de9d8afa5d6a'] pred [0.85, 0.85, 0.84, 0.84, 0.84] 39s
+[aug-search] UWaveGestureLibrary PTB-XL_a04 ['12f90ce83746', 'ad8594f537af', '3bcf75edd6df', 'ff02bd0d3f95', '6248d18dd31a'] pred [0.81, 0.83, 0.81, 0.81, 0.81] 44s
+[aug-search] UWaveGestureLibrary SleepEDF_a00 ['33b4e82ff0fb', 'e77661b840fb', 'e1fb417ea762', '92359c980124', 'b644ba40a4ea'] pred [0.83, 0.83, 0.83, 0.83, 0.82] 51s
+[aug-search] UWaveGestureLibrary SleepEDF_a04 ['64c06fa41b5f', '63578e1eec01', '1a57ac052466', 'f0cd6d99940e', 'faee6dc0b5bc'] pred [0.84, 0.84, 0.84, 0.84, 0.84] 56s
+[aug-search] UWaveGestureLibrary PAMAP2_a00 ['ff03b191c49b', '39f4ff319699', '72f3e839ca44', 'cf8cd81a3297', '29fd3fe207fe'] pred [0.84, 0.84, 0.84, 0.83, 0.83] 62s
+[aug-search] UWaveGestureLibrary PAMAP2_a04 ['d15648fddb1c', '1e98bc447441', '00b9802dd76d', 'e92dc2c73465', '0d39b0cdde12'] pred [0.84, 0.84, 0.83, 0.83, 0.84] 67s
+[aug-search] UWaveGestureLibrary NonInvasiveFetalECGThorax1_a00 ['49ab68453a8f', 'd7083a706ad0', '73c07bf22eb4', 'f94d4d155866', '0a73a6f673ff'] pred [0.84, 0.84, 0.83, 0.83, 0.82] 73s
+[aug-search] UWaveGestureLibrary NonInvasiveFetalECGThorax1_a04 ['a572fcc42844', '5c051ec145b8', '07fbfb805201', 'bd350f66c12f', 'a3162c44af49'] pred [0.83, 0.83, 0.82, 0.83, 0.82] 78s
+[aug-search] UWaveGestureLibrary ShapesAll_a00 ['476b9bc6d6e8', 'c0ced601d051', '786897922a80', 'b84d8d8a66d9', '147bea26cb82'] pred [0.84, 0.84, 0.84, 0.83, 0.83] 84s
+[aug-search] UWaveGestureLibrary ShapesAll_a04 ['12b7a30ecf3a', 'cf925c09749b', 'a06ede0c95bf', 'e11a2d5b99ec', '3d3ea5eb6777'] pred [0.84, 0.84, 0.84, 0.83, 0.84] 89s
+[aug-search] UWaveGestureLibrary LargeKitchenAppliances_a00 ['2dee5155bd97', 'ea999d2ca448', '7b95caf38940', '56257af9a952', 'cf3fe2cf9997'] pred [0.84, 0.84, 0.83, 0.84, 0.84] 95s
+[aug-search] UWaveGestureLibrary LargeKitchenAppliances_a04 ['8a5803bdf9b4', 'ddbe15f4681c', '1df14ed0ec72', 'd8a04ee632a9', '425de0b04d01'] pred [0.85, 0.84, 0.85, 0.84, 0.84] 100s
+[aug-search] UWaveGestureLibrary Adiac_a00 ['cedeb3cd9d3b', '017e00bff74e', '19ec6bf94d98', '8653c6b29f62', '47da5d78859c'] pred [0.83, 0.82, 0.82, 0.83, 0.82] 106s
+[aug-search] UWaveGestureLibrary Adiac_a04 ['5d7c1f2d65bf', '0ab6e4502b21', '12360809b939', 'dda8d7913b29', '3e2c0dda448e'] pred [0.84, 0.84, 0.84, 0.84, 0.84] 112s
+[aug-search] UWaveGestureLibrary FordA_a00 ['5b20833288b2', 'ec4d1f79ca02', 'f0e811ac5dea', '135fa8ae3f54', 'bff0427bf014'] pred [0.85, 0.84, 0.85, 0.84, 0.84] 118s
+[aug-search] UWaveGestureLibrary FordA_a04 ['bcf4589b29b0', 'df52028b718a', 'f5373f527e61', 'c1fe7c027a98', '012b58cd158c'] pred [0.85, 0.85, 0.85, 0.85, 0.84] 123s
+[aug-search] UWaveGestureLibrary SemgHandMovementCh2_a00 ['ce04f91be659', 'ec6aeff0876c', 'bb77ab003e18', 'a0c978ff808f', '7c106e2a0c92'] pred [0.85, 0.84, 0.84, 0.84, 0.84] 129s
+[aug-search] UWaveGestureLibrary SemgHandMovementCh2_a04 ['90fe14dd749c', '8865230f1385', 'a3fc0fa152d8', '1efeed01d5eb', '9e8e5f1d4bee'] pred [0.84, 0.83, 0.84, 0.84, 0.83] 134s
+[aug-search] UWaveGestureLibrary EthanolConcentration_a00 ['fa87c47f4a7c', 'f4c6a6440004', '690b62c0163c', 'b26383213a7b', 'c9923f5b6011'] pred [0.84, 0.84, 0.84, 0.83, 0.83] 140s
+[aug-search] UWaveGestureLibrary EthanolConcentration_a04 ['ba6239aefb2f', '70d4c92b60ef', '063a5dfbb20c', 'e03bd7ea7ca0', '0d50fabf9fce'] pred [0.84, 0.84, 0.83, 0.83, 0.83] 145s
+[aug-search] UWaveGestureLibrary CinCECGTorso_a00 ['f6ef184010ea', 'ae070458fa6e', 'fdf9c1e2a5d0', 'd7035c7e80f5', '94bb5677721b'] pred [0.83, 0.83, 0.83, 0.82, 0.83] 151s
+[aug-search] UWaveGestureLibrary CinCECGTorso_a04 ['e36774665986', '227bd422b327', 'e9ffa7139b31', '6dcd1fb189c6', '7f0e7921db8b'] pred [0.83, 0.83, 0.83, 0.83, 0.83] 156s
+[aug-search] UWaveGestureLibrary SelfRegulationSCP1_a00 ['f7107efafc68', 'b5a9bc06fb4b', '44ac0458fb50', 'cf862c6a1f04', '57857265c12a'] pred [0.84, 0.84, 0.83, 0.83, 0.83] 162s
+[aug-search] UWaveGestureLibrary SelfRegulationSCP1_a04 ['de800f910553', '2b836811254d', '70a31fa00dc3', '4aa3730ef3af', '69fa3ff7e0ae'] pred [0.82, 0.82, 0.82, 0.82, 0.81] 168s
+/home/b311/data/wangwenjie/kejunyu/AutoCLS/scripts/93_acts_s3f.py:217: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  m = build().to(dev); m.load_state_dict(torch.load(p, map_location=dev)); m.eval(); out.append(m)

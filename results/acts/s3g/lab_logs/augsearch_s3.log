@@ -1,0 +1,32 @@
+[aug-search] Cricket Handwriting_a00 ['a305496ffa9a', '4a26a31b68a1', 'dd1e0a17bb6d', 'fae1d9f57bd9', '80a7d12989fd'] pred [0.79, 0.79, 0.79, 0.79, 0.79] 7s
+[aug-search] Cricket Handwriting_a04 ['668f9ed58512', '2b0268021173', '8cd34aa7c1c0', '27e349950853', 'ad34ac5c36df'] pred [0.78, 0.78, 0.78, 0.78, 0.77] 13s
+[aug-search] Cricket UniMiB-SHAR_a00 ['f04771b075cd', 'd081b908cc6e', '4cf561125f55', '8424637c5c38', 'd563cc04ab15'] pred [0.8, 0.8, 0.8, 0.79, 0.8] 19s
+[aug-search] Cricket UniMiB-SHAR_a04 ['1731c77cc0de', '06759cdec3a6', '6cda82c4e6cc', 'ffd493f0edbc', '5490bffc6d1d'] pred [0.8, 0.79, 0.79, 0.79, 0.79] 25s
+[aug-search] Cricket PhonemeSpectra_a00 ['a9035a66c5f3', '446ae3ff6a70', '0ca6a7379594', '5d8e5fbee732', '91a83bc3f037'] pred [0.78, 0.78, 0.78, 0.78, 0.78] 31s
+[aug-search] Cricket PhonemeSpectra_a04 ['ab230afe925f', 'b69db5dc335c', 'fb9162c26d88', '4ab11d014509', 'd72798ec34e3'] pred [0.8, 0.8, 0.8, 0.8, 0.8] 38s
+[aug-search] Cricket UWaveGestureLibrary_a00 ['194be2dd3380', '70eff9078e54', 'b5272f911152', 'bfff3625ce89', '694d9f221dd5'] pred [0.79, 0.79, 0.78, 0.78, 0.77] 45s
+[aug-search] Cricket UWaveGestureLibrary_a04 ['8e2e4e5f8684', '7b7a487545b3', 'ab5cb03d4fc7', 'ab64e0dd411d', '271ac63d5801'] pred [0.78, 0.78, 0.79, 0.78, 0.78] 53s
+[aug-search] Cricket SleepEDF_a00 ['70b0b15375ea', 'dc631e73ff53', '20f353d84bfc', '0be17f533ed2', 'eaaf2041eadd'] pred [0.79, 0.78, 0.79, 0.79, 0.78] 60s
+[aug-search] Cricket SleepEDF_a04 ['93a8aa454a27', '726fb429c327', '6e74ff31898c', '0408b7131660', '464eb741fce3'] pred [0.79, 0.79, 0.79, 0.79, 0.79] 67s
+[aug-search] Cricket PAMAP2_a00 ['378d5470705a', 'fa1370cd63bf', 'a531a7ad312b', '1db0aa5d7fc8', 'de1897cdfb90'] pred [0.8, 0.8, 0.8, 0.8, 0.79] 74s
+[aug-search] Cricket PAMAP2_a04 ['a8943a81b908', 'ae3c18b7967f', 'ecf57ef345e5', '4e0a9daee626', '39fa5c2e67e0'] pred [0.79, 0.79, 0.79, 0.78, 0.79] 81s
+[aug-search] Cricket NonInvasiveFetalECGThorax1_a00 ['b4cf787cb826', 'c9c6dcc1214f', '43c9437f35eb', '0ba431a3dcae', 'f0a0621f2a09'] pred [0.8, 0.79, 0.79, 0.79, 0.79] 88s
+[aug-search] Cricket NonInvasiveFetalECGThorax1_a04 ['18695f89ced3', '89195d2348e2', '2bee6cbf7b8d', 'bee7912193ee', 'f8132c781098'] pred [0.8, 0.79, 0.79, 0.79, 0.79] 95s
+[aug-search] Cricket ShapesAll_a00 ['dde99e12c884', 'c1aaaf4cd9c7', '3f4e3a43a4f5', 'c74a5a63e79a', '5732aa2c8d87'] pred [0.79, 0.79, 0.79, 0.79, 0.78] 102s
+[aug-search] Cricket ShapesAll_a04 ['3d5bf8267c04', '6f7b1bc3dd10', '5d8d8e24e1c2', '7baad83186db', '16ba12397546'] pred [0.8, 0.8, 0.8, 0.79, 0.79] 110s
+[aug-search] Cricket LargeKitchenAppliances_a00 ['ab03cdc7053f', 'd745e5f8a74a', '787d2445f5ad', '143e6049c630', 'b54f68532395'] pred [0.79, 0.78, 0.78, 0.78, 0.78] 118s
+[aug-search] Cricket LargeKitchenAppliances_a04 ['a75d7c01384c', 'c14a2d9fdfcc', '1c806503272f', 'fe1f25c671e8', '42a98a377717'] pred [0.8, 0.79, 0.79, 0.79, 0.78] 125s
+[aug-search] Cricket Adiac_a00 ['eb2b3efcd901', 'ba53037b3e0c', '2c34ebd5e0d3', '778db75b078b', '9ed247fd004a'] pred [0.79, 0.79, 0.79, 0.79, 0.79] 132s
+[aug-search] Cricket Adiac_a04 ['eda3feed4842', 'e0be97e0d674', 'afe95dd78f7e', '5e4762a28d6f', '3099e4018f95'] pred [0.79, 0.79, 0.79, 0.78, 0.78] 140s
+[aug-search] Cricket FordA_a00 ['4da74396be86', '538bf43406d9', '938ac9dc5e44', '4b158a296fee', '9c2df2bee00a'] pred [0.79, 0.79, 0.79, 0.79, 0.79] 147s
+[aug-search] Cricket FordA_a04 ['f1f2058db0cc', '1ede07dbddf6', '6ea59d3905db', '6608caf2ecbd', '954323487a79'] pred [0.8, 0.8, 0.8, 0.8, 0.8] 154s
+[aug-search] Cricket SemgHandMovementCh2_a00 ['e9960e48be65', '2b63f39e7dbe', 'd541ee36d8a5', '0726bfecb350', '80d3fe44b178'] pred [0.8, 0.8, 0.8, 0.8, 0.79] 161s
+[aug-search] Cricket SemgHandMovementCh2_a04 ['ff6c0e51c540', '6ef3f09d7c30', '0738927fa506', '0819673e44c3', '0e0db45dd16c'] pred [0.79, 0.79, 0.8, 0.8, 0.79] 167s
+[aug-search] Cricket EthanolConcentration_a00 ['0b608ad4e759', 'e4927f94abc1', '459aca55a768', 'a2999d892bfd', 'd587aae37dc0'] pred [0.79, 0.79, 0.79, 0.79, 0.79] 172s
+[aug-search] Cricket EthanolConcentration_a04 ['7c5e4a9826a2', '3374b3f85009', '7bf1fbdc3fb6', 'cdaa8e4a54bc', 'ccafc36b6a48'] pred [0.78, 0.78, 0.78, 0.78, 0.78] 178s
+[aug-search] Cricket CinCECGTorso_a00 ['d938e3987caa', 'c0896fc59e2d', 'e4f446a1c767', '306c21eb5892', 'dd5fe4836bf7'] pred [0.79, 0.79, 0.79, 0.78, 0.78] 184s
+[aug-search] Cricket CinCECGTorso_a04 ['a217efaab620', '82f0933a2626', '1a8b5cfdc745', '560841f55f55', '44a79866498a'] pred [0.8, 0.8, 0.8, 0.8, 0.8] 191s
+[aug-search] Cricket SelfRegulationSCP1_a00 ['552cdabe73cb', '14d4211302c8', 'f24a481f664b', 'f13852cf4305', 'dffe0299ec1e'] pred [0.79, 0.79, 0.78, 0.79, 0.78] 197s
+[aug-search] Cricket SelfRegulationSCP1_a04 ['55c9bc488943', 'bdeb334aee2c', '5526ac1ba30a', '51ea93fa79f1', 'fca425f8cbf9'] pred [0.8, 0.78, 0.79, 0.78, 0.78] 202s
+/home/b311/data/wangwenjie/kejunyu/AutoCLS/scripts/93_acts_s3f.py:217: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  m = build().to(dev); m.load_state_dict(torch.load(p, map_location=dev)); m.eval(); out.append(m)

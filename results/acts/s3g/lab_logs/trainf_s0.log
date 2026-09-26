@@ -1,0 +1,43 @@
+[aug] Handwriting: 30 任务、150 条扩充标签
+[train] F_s0_Handwriting start (= blind) val 0.4660
+[train] F_s0_Handwriting ep 0 q 1 train 0.5726 val 0.4660 16s
+[train] F_s0_Handwriting ep 0 q 2 train 0.5752 val 0.4659 31s
+[train] F_s0_Handwriting ep 0 q 3 train 0.5719 val 0.4654 46s
+[train] F_s0_Handwriting ep 0 q 4 train 0.5625 val 0.4635 61s
+[train] F_s0_Handwriting ep 1 q 1 train 0.5202 val 0.4595 76s
+[train] F_s0_Handwriting ep 1 q 2 train 0.5153 val 0.4586 91s
+[train] F_s0_Handwriting ep 1 q 3 train 0.5015 val 0.4779 104s
+[train] F_s0_Handwriting ep 1 q 4 train 0.4917 val 0.4880 118s
+[train] F_s0_Handwriting ep 2 q 1 train 0.4528 val 0.4802 133s
+[train] F_s0_Handwriting ep 2 q 2 train 0.4416 val 0.4781 147s
+[train] F_s0_Handwriting ep 2 q 3 train 0.4448 val 0.4722 161s
+[train] F_s0_Handwriting ep 2 q 4 train 0.4477 val 0.4881 174s
+[train] F_s0_Handwriting ep 3 q 1 train 0.4449 val 0.4863 187s
+[train] F_s0_Handwriting ep 3 q 2 train 0.4456 val 0.4820 201s
+[train] F_s0_Handwriting done start 0.4660 best 0.4586 at (1, 2) evals 14 202s
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] F_s1_SelfRegulationSCP1 start (= blind) val 0.5073
+[train] F_s1_SelfRegulationSCP1 ep 0 q 1 train 0.6562 val 0.5073 14s
+[train] F_s1_SelfRegulationSCP1 ep 0 q 2 train 0.6440 val 0.5075 27s
+[train] F_s1_SelfRegulationSCP1 ep 0 q 3 train 0.6369 val 0.5075 42s
+[train] F_s1_SelfRegulationSCP1 ep 0 q 4 train 0.6313 val 0.5067 56s
+[train] F_s1_SelfRegulationSCP1 ep 1 q 1 train 0.5629 val 0.5086 69s
+[train] F_s1_SelfRegulationSCP1 ep 1 q 2 train 0.5595 val 0.5150 82s
+[train] F_s1_SelfRegulationSCP1 ep 1 q 3 train 0.5509 val 0.5545 94s
+[train] F_s1_SelfRegulationSCP1 ep 1 q 4 train 0.5414 val 0.5673 107s
+[train] F_s1_SelfRegulationSCP1 ep 2 q 1 train 0.5073 val 0.5604 118s
+[train] F_s1_SelfRegulationSCP1 ep 2 q 2 train 0.5103 val 0.5486 130s
+[train] F_s1_SelfRegulationSCP1 ep 2 q 3 train 0.5064 val 0.5677 144s
+[train] F_s1_SelfRegulationSCP1 ep 2 q 4 train 0.5071 val 0.5799 156s
+[train] F_s1_SelfRegulationSCP1 done start 0.5073 best 0.5067 at (0, 4) evals 12 158s
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] F_s3_EthanolConcentration start (= blind) val 0.6420
+[train] F_s3_EthanolConcentration ep 0 q 1 train 0.6742 val 0.6420 15s
+[train] F_s3_EthanolConcentration ep 0 q 2 train 0.6590 val 0.6422 28s
+[train] F_s3_EthanolConcentration ep 0 q 3 train 0.6504 val 0.6440 41s
+[train] F_s3_EthanolConcentration ep 0 q 4 train 0.6386 val 0.6491 53s
+[train] F_s3_EthanolConcentration ep 1 q 1 train 0.6158 val 0.6580 66s
+[train] F_s3_EthanolConcentration ep 1 q 2 train 0.5968 val 0.6924 79s
+[train] F_s3_EthanolConcentration ep 1 q 3 train 0.5809 val 0.7034 92s
+[train] F_s3_EthanolConcentration ep 1 q 4 train 0.5712 val 0.6919 106s
+[train] F_s3_EthanolConcentration done start 0.6420 best 0.6420 at (-1, 0) evals 8 107s

@@ -1,0 +1,35 @@
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] blind_s1_Cricket ep 0 train 0.6803 val 0.6539 1s
+[train] blind_s1_Cricket ep 1 train 0.6232 val 0.5805 1s
+[train] blind_s1_Cricket ep 2 train 0.5789 val 0.5707 2s
+[train] blind_s1_Cricket ep 3 train 0.5655 val 0.5616 2s
+[train] blind_s1_Cricket ep 4 train 0.5693 val 0.5625 3s
+[train] blind_s1_Cricket ep 5 train 0.5664 val 0.5554 3s
+[train] blind_s1_Cricket ep 6 train 0.5555 val 0.5592 4s
+[train] blind_s1_Cricket ep 7 train 0.5573 val 0.5603 4s
+[train] blind_s1_Cricket ep 8 train 0.5583 val 0.5599 5s
+[train] blind_s1_Cricket ep 9 train 0.5539 val 0.5613 5s
+[train] blind_s1_Cricket ep 10 train 0.5545 val 0.5596 6s
+[train] blind_s1_Cricket done best val 0.5554 epochs 11 6s
+[aug] UWaveGestureLibrary: 30 任务、150 条扩充标签
+[train] blind_s3_UWaveGestureLibrary ep 0 train 0.6787 val 0.6355 1s
+[train] blind_s3_UWaveGestureLibrary ep 1 train 0.6128 val 0.5193 1s
+[train] blind_s3_UWaveGestureLibrary ep 2 train 0.5749 val 0.4925 2s
+[train] blind_s3_UWaveGestureLibrary ep 3 train 0.5821 val 0.4976 2s
+[train] blind_s3_UWaveGestureLibrary ep 4 train 0.5802 val 0.4972 3s
+[train] blind_s3_UWaveGestureLibrary ep 5 train 0.5619 val 0.4894 3s
+[train] blind_s3_UWaveGestureLibrary ep 6 train 0.5686 val 0.4846 4s
+[train] blind_s3_UWaveGestureLibrary ep 7 train 0.5629 val 0.4819 4s
+[train] blind_s3_UWaveGestureLibrary ep 8 train 0.5634 val 0.4884 5s
+[train] blind_s3_UWaveGestureLibrary ep 9 train 0.5592 val 0.4899 5s
+[train] blind_s3_UWaveGestureLibrary ep 10 train 0.5608 val 0.4817 6s
+[train] blind_s3_UWaveGestureLibrary ep 11 train 0.5451 val 0.4820 6s
+[train] blind_s3_UWaveGestureLibrary ep 12 train 0.5467 val 0.4812 7s
+[train] blind_s3_UWaveGestureLibrary ep 13 train 0.5499 val 0.4861 8s
+[train] blind_s3_UWaveGestureLibrary ep 14 train 0.5463 val 0.4806 8s
+[train] blind_s3_UWaveGestureLibrary ep 15 train 0.5416 val 0.4895 9s
+[train] blind_s3_UWaveGestureLibrary ep 16 train 0.5368 val 0.4865 9s
+[train] blind_s3_UWaveGestureLibrary ep 17 train 0.5397 val 0.4947 10s
+[train] blind_s3_UWaveGestureLibrary ep 18 train 0.5144 val 0.4891 10s
+[train] blind_s3_UWaveGestureLibrary ep 19 train 0.5151 val 0.4881 11s
+[train] blind_s3_UWaveGestureLibrary done best val 0.4806 epochs 20 11s

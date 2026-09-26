@@ -1,0 +1,32 @@
+[aug-search] PhonemeSpectra Handwriting_a00 ['5a635158b967', '6e7a9addb63e', '356d8496725c', '6177e50d14ec', 'a7a0f7c1d034'] pred [0.84, 0.84, 0.84, 0.84, 0.84] 6s
+[aug-search] PhonemeSpectra Handwriting_a04 ['46db9b0cfe1a', '308c6473a9d5', '573c96a4a0aa', '102d5ec52e09', 'fd329a41f5d0'] pred [0.84, 0.85, 0.84, 0.84, 0.84] 11s
+[aug-search] PhonemeSpectra UniMiB-SHAR_a00 ['9316a7cc81fa', 'ee3982ae0714', '50c49b728239', 'c68a9392876e', '250149b2a989'] pred [0.83, 0.83, 0.83, 0.82, 0.82] 16s
+[aug-search] PhonemeSpectra UniMiB-SHAR_a04 ['20f05cb770e9', 'd8e1d36dfba8', '09d85027636d', '166332a60bc7', 'b4beaf66ad41'] pred [0.85, 0.85, 0.85, 0.85, 0.84] 21s
+[aug-search] PhonemeSpectra Cricket_a00 ['56dd427b95f2', '409e2c15cce1', 'f6a88a461c0b', '7ac9dfd7106c', 'c660484e3ebc'] pred [0.84, 0.84, 0.84, 0.84, 0.83] 26s
+[aug-search] PhonemeSpectra Cricket_a04 ['a4f3bfe78bfc', '5e0b85b77824', '167771f963a1', '97c05c61dda1', '1a857426c384'] pred [0.83, 0.83, 0.83, 0.83, 0.83] 31s
+[aug-search] PhonemeSpectra PTB-XL_a00 ['e0436bed3a2a', '4b5315a837e9', '2f3d833f2d9b', 'e871c99756c1', '6fffe57d40dc'] pred [0.84, 0.84, 0.84, 0.84, 0.84] 36s
+[aug-search] PhonemeSpectra PTB-XL_a04 ['428a66addb28', '1eec8ab3dddf', '8e42344eee85', '9bd08c2a2e59', '96428bdaaa5a'] pred [0.83, 0.82, 0.81, 0.81, 0.81] 41s
+[aug-search] PhonemeSpectra SleepEDF_a00 ['ed6e2cb17697', '1ccbe13abaf1', 'b1f1e6e0cd2a', 'e90e55069c6c', '21c907138859'] pred [0.82, 0.82, 0.82, 0.82, 0.82] 47s
+[aug-search] PhonemeSpectra SleepEDF_a04 ['61ea54d6742a', 'c21db0fba219', '093bf4aaa88c', 'b2f13ba2e5e1', '00666e085344'] pred [0.84, 0.84, 0.84, 0.84, 0.84] 52s
+[aug-search] PhonemeSpectra PAMAP2_a00 ['928086c9baa7', '8bd3952d5eb6', 'feee5c1b543b', 'bdbe131da02d', '0f8d5c011669'] pred [0.83, 0.82, 0.83, 0.82, 0.82] 57s
+[aug-search] PhonemeSpectra PAMAP2_a04 ['6963e1876f38', 'fb39e267256d', 'dd0485d892a2', '21e17800ad16', '007e01e5daaa'] pred [0.84, 0.83, 0.83, 0.84, 0.84] 63s
+[aug-search] PhonemeSpectra NonInvasiveFetalECGThorax1_a00 ['570ceb6d447a', '7841911a1671', 'a1f8aeef53ff', 'dc6b719f9747', '16513a67e752'] pred [0.84, 0.84, 0.84, 0.84, 0.83] 68s
+[aug-search] PhonemeSpectra NonInvasiveFetalECGThorax1_a04 ['759b4e3ca64b', '8fdfba35b083', '1b5f02bb56db', 'd7505279b5f3', 'f0e1a132964b'] pred [0.83, 0.83, 0.83, 0.83, 0.83] 73s
+[aug-search] PhonemeSpectra ShapesAll_a00 ['8e347a1c21f6', '0df735f275d8', 'd44d7afd5db5', 'ddc9d5e4cdb5', 'ed5b360fd56f'] pred [0.84, 0.84, 0.83, 0.82, 0.83] 79s
+[aug-search] PhonemeSpectra ShapesAll_a04 ['2159b4e47c7a', '0418e3d2ab65', '55a1b3fc02ef', 'da0da2aa15a0', 'ea31e308bddf'] pred [0.84, 0.83, 0.83, 0.83, 0.83] 84s
+[aug-search] PhonemeSpectra LargeKitchenAppliances_a00 ['5c6354a16315', '98aa9076c9b6', '7a231d679ad7', '0c2fad84dd30', '62a123965027'] pred [0.85, 0.85, 0.85, 0.85, 0.85] 90s
+[aug-search] PhonemeSpectra LargeKitchenAppliances_a04 ['3c973cfbd4d9', 'da654d010ffc', 'cef8b5ca80ec', 'd1e7130891c1', 'c32444613298'] pred [0.84, 0.84, 0.84, 0.84, 0.84] 95s
+[aug-search] PhonemeSpectra Adiac_a00 ['90627337344c', '9ce395638421', 'cf4dd330fc70', 'eb80e341999a', 'bb3a38b12f96'] pred [0.84, 0.83, 0.83, 0.83, 0.83] 100s
+[aug-search] PhonemeSpectra Adiac_a04 ['5db37101da97', '9cba51c49e5a', '4e56339e548d', '7dfff00600ba', '21308e6dffb7'] pred [0.82, 0.83, 0.84, 0.83, 0.83] 105s
+[aug-search] PhonemeSpectra FordA_a00 ['67e22403faf8', '6bf4c1270e99', '4e55fca709f7', 'feaf78f6a269', '5cdd7684abcf'] pred [0.82, 0.82, 0.82, 0.82, 0.82] 110s
+[aug-search] PhonemeSpectra FordA_a04 ['2b80735ba289', '3771523d21b6', 'ed68492f6a0e', '64c1b6df1077', '46b54e3e9729'] pred [0.85, 0.84, 0.85, 0.84, 0.84] 115s
+[aug-search] PhonemeSpectra SemgHandMovementCh2_a00 ['7226545e6d0c', 'e49f7175cfae', 'bc1b6ec70597', '409f98d9b63c', '5782aa31cecf'] pred [0.85, 0.85, 0.85, 0.85, 0.84] 120s
+[aug-search] PhonemeSpectra SemgHandMovementCh2_a04 ['209e91a9481e', '0ee5b2315e6f', '1bc85ea38f94', '3d7e3cabf056', '49fcfafda55f'] pred [0.83, 0.82, 0.82, 0.83, 0.82] 125s
+[aug-search] PhonemeSpectra EthanolConcentration_a00 ['e07b8cf8f5c0', '5e1d80d23134', '004c9fff8157', 'b682b4b7cba3', '8ae8aa8b276f'] pred [0.83, 0.83, 0.82, 0.82, 0.83] 130s
+[aug-search] PhonemeSpectra EthanolConcentration_a04 ['e4c8f82a5616', 'cf01dffd2183', '94383e575183', '74ec979ce78d', 'fbd81f6717b8'] pred [0.83, 0.82, 0.83, 0.82, 0.82] 135s
+[aug-search] PhonemeSpectra CinCECGTorso_a00 ['3c55bb8a9852', '3d3461c3d2f9', '839edfc70ad6', '1e6efafbbb27', '700f3142819b'] pred [0.84, 0.83, 0.83, 0.83, 0.82] 141s
+[aug-search] PhonemeSpectra CinCECGTorso_a04 ['fb4eeb976c97', '28c5a7321a0f', '9348c0702046', '8506f99f6153', 'aa9b4d91eeb7'] pred [0.83, 0.83, 0.82, 0.83, 0.83] 146s
+[aug-search] PhonemeSpectra SelfRegulationSCP1_a00 ['f2808a1a182f', '39eab5f26872', '7b657709ff92', '0e3bd232e336', '9dc2918c08f0'] pred [0.86, 0.85, 0.84, 0.85, 0.85] 151s
+[aug-search] PhonemeSpectra SelfRegulationSCP1_a04 ['eda81ae5fb71', '3054c1b87a1a', '462b3bc31f0e', 'e222480b6580', 'f51d90be53da'] pred [0.84, 0.83, 0.82, 0.83, 0.83] 156s
+/home/b311/data/wangwenjie/kejunyu/AutoCLS/scripts/93_acts_s3f.py:217: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  m = build().to(dev); m.load_state_dict(torch.load(p, map_location=dev)); m.eval(); out.append(m)

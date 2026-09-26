@@ -1,0 +1,63 @@
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] F_s0_SelfRegulationSCP1 start (= blind) val 0.5041
+[train] F_s0_SelfRegulationSCP1 ep 0 q 1 train 0.6488 val 0.5039 15s
+[train] F_s0_SelfRegulationSCP1 ep 0 q 2 train 0.6375 val 0.5039 29s
+[train] F_s0_SelfRegulationSCP1 ep 0 q 3 train 0.6221 val 0.5038 43s
+[train] F_s0_SelfRegulationSCP1 ep 0 q 4 train 0.6163 val 0.5034 56s
+[train] F_s0_SelfRegulationSCP1 ep 1 q 1 train 0.5816 val 0.5034 70s
+[train] F_s0_SelfRegulationSCP1 ep 1 q 2 train 0.5731 val 0.5075 84s
+[train] F_s0_SelfRegulationSCP1 ep 1 q 3 train 0.5559 val 0.5213 98s
+[train] F_s0_SelfRegulationSCP1 ep 1 q 4 train 0.5443 val 0.5545 112s
+[train] F_s0_SelfRegulationSCP1 ep 2 q 1 train 0.5305 val 0.5852 126s
+[train] F_s0_SelfRegulationSCP1 ep 2 q 2 train 0.5117 val 0.5806 140s
+[train] F_s0_SelfRegulationSCP1 ep 2 q 3 train 0.5089 val 0.5667 153s
+[train] F_s0_SelfRegulationSCP1 ep 2 q 4 train 0.5105 val 0.5718 165s
+[train] F_s0_SelfRegulationSCP1 done start 0.5041 best 0.5034 at (0, 4) evals 12 166s
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] F_s2_EthanolConcentration start (= blind) val 0.6644
+[train] F_s2_EthanolConcentration ep 0 q 1 train 0.6599 val 0.6644 15s
+[train] F_s2_EthanolConcentration ep 0 q 2 train 0.6533 val 0.6642 28s
+[train] F_s2_EthanolConcentration ep 0 q 3 train 0.6450 val 0.6648 42s
+[train] F_s2_EthanolConcentration ep 0 q 4 train 0.6363 val 0.6674 55s
+[train] F_s2_EthanolConcentration ep 1 q 1 train 0.6137 val 0.6740 68s
+[train] F_s2_EthanolConcentration ep 1 q 2 train 0.6112 val 0.6884 80s
+[train] F_s2_EthanolConcentration ep 1 q 3 train 0.5982 val 0.7243 93s
+[train] F_s2_EthanolConcentration ep 1 q 4 train 0.5875 val 0.6720 106s
+[train] F_s2_EthanolConcentration ep 2 q 1 train 0.5531 val 0.7101 117s
+[train] F_s2_EthanolConcentration ep 2 q 2 train 0.5488 val 0.7324 129s
+[train] F_s2_EthanolConcentration done start 0.6644 best 0.6642 at (0, 2) evals 10 130s
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] F_s4_Cricket start (= blind) val 0.5523
+[train] F_s4_Cricket ep 0 q 1 train 0.6616 val 0.5524 13s
+[train] F_s4_Cricket ep 0 q 2 train 0.6494 val 0.5524 26s
+[train] F_s4_Cricket ep 0 q 3 train 0.6453 val 0.5519 39s
+[train] F_s4_Cricket ep 0 q 4 train 0.6399 val 0.5505 53s
+[train] F_s4_Cricket ep 1 q 1 train 0.6010 val 0.5461 66s
+[train] F_s4_Cricket ep 1 q 2 train 0.5874 val 0.5376 79s
+[train] F_s4_Cricket ep 1 q 3 train 0.5800 val 0.5287 91s
+[train] F_s4_Cricket ep 1 q 4 train 0.5698 val 0.5246 103s
+[train] F_s4_Cricket ep 2 q 1 train 0.5264 val 0.5244 116s
+[train] F_s4_Cricket ep 2 q 2 train 0.5299 val 0.5244 129s
+[train] F_s4_Cricket ep 2 q 3 train 0.5248 val 0.5235 141s
+[train] F_s4_Cricket ep 2 q 4 train 0.5288 val 0.5208 154s
+[train] F_s4_Cricket ep 3 q 1 train 0.4994 val 0.5186 167s
+[train] F_s4_Cricket ep 3 q 2 train 0.5065 val 0.5230 180s
+[train] F_s4_Cricket ep 3 q 3 train 0.5038 val 0.5178 193s
+[train] F_s4_Cricket ep 3 q 4 train 0.5041 val 0.5173 205s
+[train] F_s4_Cricket ep 4 q 1 train 0.5034 val 0.5206 219s
+[train] F_s4_Cricket ep 4 q 2 train 0.5032 val 0.5190 232s
+[train] F_s4_Cricket ep 4 q 3 train 0.4973 val 0.5178 244s
+[train] F_s4_Cricket ep 4 q 4 train 0.4970 val 0.5184 256s
+[train] F_s4_Cricket ep 5 q 1 train 0.5029 val 0.5216 268s
+[train] F_s4_Cricket ep 5 q 2 train 0.5044 val 0.5217 281s
+[train] F_s4_Cricket ep 5 q 3 train 0.4960 val 0.5208 294s
+[train] F_s4_Cricket ep 5 q 4 train 0.4892 val 0.5155 306s
+[train] F_s4_Cricket ep 6 q 1 train 0.4761 val 0.5209 319s
+[train] F_s4_Cricket ep 6 q 2 train 0.4692 val 0.5196 333s
+[train] F_s4_Cricket ep 6 q 3 train 0.4691 val 0.5291 345s
+[train] F_s4_Cricket ep 6 q 4 train 0.4752 val 0.5276 358s
+[train] F_s4_Cricket ep 7 q 1 train 0.4537 val 0.5280 370s
+[train] F_s4_Cricket ep 7 q 2 train 0.4563 val 0.5306 383s
+[train] F_s4_Cricket ep 7 q 3 train 0.4653 val 0.5359 396s
+[train] F_s4_Cricket ep 7 q 4 train 0.4675 val 0.5351 409s
+[train] F_s4_Cricket done start 0.5523 best 0.5155 at (5, 4) evals 32 410s

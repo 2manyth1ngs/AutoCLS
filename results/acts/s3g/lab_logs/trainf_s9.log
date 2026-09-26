@@ -1,0 +1,38 @@
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] F_s1_Cricket start (= blind) val 0.5554
+[train] F_s1_Cricket ep 0 q 1 train 0.6612 val 0.5552 14s
+[train] F_s1_Cricket ep 0 q 2 train 0.6553 val 0.5551 28s
+[train] F_s1_Cricket ep 0 q 3 train 0.6514 val 0.5538 41s
+[train] F_s1_Cricket ep 0 q 4 train 0.6405 val 0.5503 56s
+[train] F_s1_Cricket ep 1 q 1 train 0.5940 val 0.5415 70s
+[train] F_s1_Cricket ep 1 q 2 train 0.5894 val 0.5294 84s
+[train] F_s1_Cricket ep 1 q 3 train 0.5701 val 0.5332 98s
+[train] F_s1_Cricket ep 1 q 4 train 0.5643 val 0.5277 111s
+[train] F_s1_Cricket ep 2 q 1 train 0.5202 val 0.5268 124s
+[train] F_s1_Cricket ep 2 q 2 train 0.5247 val 0.5267 138s
+[train] F_s1_Cricket ep 2 q 3 train 0.5187 val 0.5304 151s
+[train] F_s1_Cricket ep 2 q 4 train 0.5229 val 0.5291 164s
+[train] F_s1_Cricket ep 3 q 1 train 0.5207 val 0.5403 178s
+[train] F_s1_Cricket ep 3 q 2 train 0.5113 val 0.5255 191s
+[train] F_s1_Cricket ep 3 q 3 train 0.5138 val 0.5242 204s
+[train] F_s1_Cricket ep 3 q 4 train 0.5167 val 0.5239 218s
+[train] F_s1_Cricket ep 4 q 1 train 0.5152 val 0.5262 231s
+[train] F_s1_Cricket ep 4 q 2 train 0.5108 val 0.5276 245s
+[train] F_s1_Cricket ep 4 q 3 train 0.5089 val 0.5259 258s
+[train] F_s1_Cricket ep 4 q 4 train 0.5075 val 0.5267 272s
+[train] F_s1_Cricket ep 5 q 1 train 0.5230 val 0.5300 285s
+[train] F_s1_Cricket ep 5 q 2 train 0.5008 val 0.5336 297s
+[train] F_s1_Cricket ep 5 q 3 train 0.4907 val 0.5378 309s
+[train] F_s1_Cricket ep 5 q 4 train 0.4924 val 0.5374 322s
+[train] F_s1_Cricket done start 0.5554 best 0.5239 at (3, 4) evals 24 322s
+[aug] UWaveGestureLibrary: 30 任务、150 条扩充标签
+[train] F_s3_UWaveGestureLibrary start (= blind) val 0.4806
+[train] F_s3_UWaveGestureLibrary ep 0 q 1 train 0.6532 val 0.4808 14s
+[train] F_s3_UWaveGestureLibrary ep 0 q 2 train 0.6396 val 0.4809 30s
+[train] F_s3_UWaveGestureLibrary ep 0 q 3 train 0.6308 val 0.4813 45s
+[train] F_s3_UWaveGestureLibrary ep 0 q 4 train 0.6229 val 0.4826 60s
+[train] F_s3_UWaveGestureLibrary ep 1 q 1 train 0.5881 val 0.4905 75s
+[train] F_s3_UWaveGestureLibrary ep 1 q 2 train 0.5734 val 0.5328 88s
+[train] F_s3_UWaveGestureLibrary ep 1 q 3 train 0.5546 val 0.5025 102s
+[train] F_s3_UWaveGestureLibrary ep 1 q 4 train 0.5444 val 0.5081 117s
+[train] F_s3_UWaveGestureLibrary done start 0.4806 best 0.4806 at (-1, 0) evals 8 118s

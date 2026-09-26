@@ -1,0 +1,42 @@
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] F_s1_EthanolConcentration start (= blind) val 0.6521
+[train] F_s1_EthanolConcentration ep 0 q 1 train 0.6785 val 0.6524 14s
+[train] F_s1_EthanolConcentration ep 0 q 2 train 0.6635 val 0.6527 27s
+[train] F_s1_EthanolConcentration ep 0 q 3 train 0.6529 val 0.6530 40s
+[train] F_s1_EthanolConcentration ep 0 q 4 train 0.6453 val 0.6549 53s
+[train] F_s1_EthanolConcentration ep 1 q 1 train 0.6163 val 0.6608 67s
+[train] F_s1_EthanolConcentration ep 1 q 2 train 0.5981 val 0.6672 80s
+[train] F_s1_EthanolConcentration ep 1 q 3 train 0.5814 val 0.7105 94s
+[train] F_s1_EthanolConcentration ep 1 q 4 train 0.5724 val 0.6843 106s
+[train] F_s1_EthanolConcentration done start 0.6521 best 0.6521 at (-1, 0) evals 8 108s
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] F_s3_Cricket start (= blind) val 0.5480
+[train] F_s3_Cricket ep 0 q 1 train 0.6816 val 0.5482 15s
+[train] F_s3_Cricket ep 0 q 2 train 0.6670 val 0.5482 31s
+[train] F_s3_Cricket ep 0 q 3 train 0.6482 val 0.5473 47s
+[train] F_s3_Cricket ep 0 q 4 train 0.6391 val 0.5438 61s
+[train] F_s3_Cricket ep 1 q 1 train 0.5938 val 0.5394 76s
+[train] F_s3_Cricket ep 1 q 2 train 0.5786 val 0.5305 91s
+[train] F_s3_Cricket ep 1 q 3 train 0.5770 val 0.5297 107s
+[train] F_s3_Cricket ep 1 q 4 train 0.5640 val 0.5248 122s
+[train] F_s3_Cricket ep 2 q 1 train 0.5379 val 0.5212 137s
+[train] F_s3_Cricket ep 2 q 2 train 0.5247 val 0.5148 151s
+[train] F_s3_Cricket ep 2 q 3 train 0.5222 val 0.5123 165s
+[train] F_s3_Cricket ep 2 q 4 train 0.5125 val 0.5183 178s
+[train] F_s3_Cricket ep 3 q 1 train 0.5296 val 0.5126 190s
+[train] F_s3_Cricket ep 3 q 2 train 0.5243 val 0.5127 204s
+[train] F_s3_Cricket ep 3 q 3 train 0.5187 val 0.5163 217s
+[train] F_s3_Cricket ep 3 q 4 train 0.5125 val 0.5263 230s
+[train] F_s3_Cricket ep 4 q 1 train 0.4920 val 0.5161 244s
+[train] F_s3_Cricket ep 4 q 2 train 0.4976 val 0.5189 258s
+[train] F_s3_Cricket ep 4 q 3 train 0.4952 val 0.5108 271s
+[train] F_s3_Cricket ep 4 q 4 train 0.4960 val 0.5099 283s
+[train] F_s3_Cricket ep 5 q 1 train 0.4933 val 0.5149 297s
+[train] F_s3_Cricket ep 5 q 2 train 0.4945 val 0.5186 310s
+[train] F_s3_Cricket ep 5 q 3 train 0.4942 val 0.5104 323s
+[train] F_s3_Cricket ep 5 q 4 train 0.4956 val 0.5143 336s
+[train] F_s3_Cricket ep 6 q 1 train 0.4859 val 0.5133 351s
+[train] F_s3_Cricket ep 6 q 2 train 0.4837 val 0.5156 364s
+[train] F_s3_Cricket ep 6 q 3 train 0.4766 val 0.5144 378s
+[train] F_s3_Cricket ep 6 q 4 train 0.4772 val 0.5153 392s
+[train] F_s3_Cricket done start 0.5480 best 0.5099 at (4, 4) evals 28 394s

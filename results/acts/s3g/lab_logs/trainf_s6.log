@@ -1,0 +1,38 @@
+[aug] Handwriting: 30 任务、150 条扩充标签
+[train] F_s1_Handwriting start (= blind) val 0.4782
+[train] F_s1_Handwriting ep 0 q 1 train 0.6189 val 0.4783 18s
+[train] F_s1_Handwriting ep 0 q 2 train 0.6276 val 0.4783 33s
+[train] F_s1_Handwriting ep 0 q 3 train 0.6207 val 0.4777 48s
+[train] F_s1_Handwriting ep 0 q 4 train 0.6106 val 0.4767 64s
+[train] F_s1_Handwriting ep 1 q 1 train 0.5888 val 0.4722 79s
+[train] F_s1_Handwriting ep 1 q 2 train 0.5707 val 0.4757 93s
+[train] F_s1_Handwriting ep 1 q 3 train 0.5513 val 0.4885 107s
+[train] F_s1_Handwriting ep 1 q 4 train 0.5396 val 0.4808 123s
+[train] F_s1_Handwriting ep 2 q 1 train 0.4909 val 0.4896 138s
+[train] F_s1_Handwriting ep 2 q 2 train 0.4902 val 0.4993 153s
+[train] F_s1_Handwriting ep 2 q 3 train 0.4928 val 0.4896 166s
+[train] F_s1_Handwriting ep 2 q 4 train 0.4942 val 0.4983 181s
+[train] F_s1_Handwriting ep 3 q 1 train 0.4986 val 0.4967 197s
+[train] F_s1_Handwriting done start 0.4782 best 0.4722 at (1, 1) evals 13 199s
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] F_s2_SelfRegulationSCP1 start (= blind) val 0.5011
+[train] F_s2_SelfRegulationSCP1 ep 0 q 1 train 0.6223 val 0.5013 15s
+[train] F_s2_SelfRegulationSCP1 ep 0 q 2 train 0.6325 val 0.5013 29s
+[train] F_s2_SelfRegulationSCP1 ep 0 q 3 train 0.6273 val 0.5013 44s
+[train] F_s2_SelfRegulationSCP1 ep 0 q 4 train 0.6201 val 0.5013 58s
+[train] F_s2_SelfRegulationSCP1 ep 1 q 1 train 0.5547 val 0.5019 73s
+[train] F_s2_SelfRegulationSCP1 ep 1 q 2 train 0.5557 val 0.5071 88s
+[train] F_s2_SelfRegulationSCP1 ep 1 q 3 train 0.5553 val 0.5241 103s
+[train] F_s2_SelfRegulationSCP1 ep 1 q 4 train 0.5441 val 0.5368 118s
+[train] F_s2_SelfRegulationSCP1 done start 0.5011 best 0.5011 at (-1, 0) evals 8 122s
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] F_s4_EthanolConcentration start (= blind) val 0.6618
+[train] F_s4_EthanolConcentration ep 0 q 1 train 0.6596 val 0.6618 15s
+[train] F_s4_EthanolConcentration ep 0 q 2 train 0.6421 val 0.6619 29s
+[train] F_s4_EthanolConcentration ep 0 q 3 train 0.6369 val 0.6627 43s
+[train] F_s4_EthanolConcentration ep 0 q 4 train 0.6377 val 0.6632 56s
+[train] F_s4_EthanolConcentration ep 1 q 1 train 0.5903 val 0.6675 69s
+[train] F_s4_EthanolConcentration ep 1 q 2 train 0.5946 val 0.6749 82s
+[train] F_s4_EthanolConcentration ep 1 q 3 train 0.5871 val 0.7174 96s
+[train] F_s4_EthanolConcentration ep 1 q 4 train 0.5751 val 0.6754 109s
+[train] F_s4_EthanolConcentration done start 0.6618 best 0.6618 at (-1, 0) evals 8 112s

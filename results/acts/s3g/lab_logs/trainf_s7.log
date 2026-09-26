@@ -1,0 +1,45 @@
+[aug] PhonemeSpectra: 30 任务、150 条扩充标签
+[train] F_s1_PhonemeSpectra start (= blind) val 0.5206
+[train] F_s1_PhonemeSpectra ep 0 q 1 train 0.6420 val 0.5206 16s
+[train] F_s1_PhonemeSpectra ep 0 q 2 train 0.6346 val 0.5205 31s
+[train] F_s1_PhonemeSpectra ep 0 q 3 train 0.6310 val 0.5202 45s
+[train] F_s1_PhonemeSpectra ep 0 q 4 train 0.6268 val 0.5196 61s
+[train] F_s1_PhonemeSpectra ep 1 q 1 train 0.5839 val 0.5215 77s
+[train] F_s1_PhonemeSpectra ep 1 q 2 train 0.5814 val 0.5294 92s
+[train] F_s1_PhonemeSpectra ep 1 q 3 train 0.5708 val 0.5557 107s
+[train] F_s1_PhonemeSpectra ep 1 q 4 train 0.5610 val 0.5478 122s
+[train] F_s1_PhonemeSpectra ep 2 q 1 train 0.5174 val 0.5585 137s
+[train] F_s1_PhonemeSpectra ep 2 q 2 train 0.5153 val 0.5535 151s
+[train] F_s1_PhonemeSpectra ep 2 q 3 train 0.5224 val 0.5865 166s
+[train] F_s1_PhonemeSpectra ep 2 q 4 train 0.5199 val 0.5573 180s
+[train] F_s1_PhonemeSpectra done start 0.5206 best 0.5196 at (0, 4) evals 12 183s
+[aug] Handwriting: 30 任务、150 条扩充标签
+[train] F_s3_Handwriting start (= blind) val 0.4752
+[train] F_s3_Handwriting ep 0 q 1 train 0.6137 val 0.4753 18s
+[train] F_s3_Handwriting ep 0 q 2 train 0.6051 val 0.4753 33s
+[train] F_s3_Handwriting ep 0 q 3 train 0.6028 val 0.4748 49s
+[train] F_s3_Handwriting ep 0 q 4 train 0.5900 val 0.4729 65s
+[train] F_s3_Handwriting ep 1 q 1 train 0.5394 val 0.4696 81s
+[train] F_s3_Handwriting ep 1 q 2 train 0.5380 val 0.4682 98s
+[train] F_s3_Handwriting ep 1 q 3 train 0.5284 val 0.4755 112s
+[train] F_s3_Handwriting ep 1 q 4 train 0.5092 val 0.4721 127s
+[train] F_s3_Handwriting ep 2 q 1 train 0.4939 val 0.4886 142s
+[train] F_s3_Handwriting ep 2 q 2 train 0.4851 val 0.4754 159s
+[train] F_s3_Handwriting ep 2 q 3 train 0.4745 val 0.4896 174s
+[train] F_s3_Handwriting ep 2 q 4 train 0.4720 val 0.4873 190s
+[train] F_s3_Handwriting ep 3 q 1 train 0.4529 val 0.4823 205s
+[train] F_s3_Handwriting ep 3 q 2 train 0.4577 val 0.4930 220s
+[train] F_s3_Handwriting done start 0.4752 best 0.4682 at (1, 2) evals 14 223s
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] F_s4_SelfRegulationSCP1 start (= blind) val 0.5137
+[train] F_s4_SelfRegulationSCP1 ep 0 q 1 train 0.6528 val 0.5138 14s
+[train] F_s4_SelfRegulationSCP1 ep 0 q 2 train 0.6344 val 0.5137 28s
+[train] F_s4_SelfRegulationSCP1 ep 0 q 3 train 0.6243 val 0.5138 43s
+[train] F_s4_SelfRegulationSCP1 ep 0 q 4 train 0.6131 val 0.5137 56s
+[train] F_s4_SelfRegulationSCP1 ep 1 q 1 train 0.5731 val 0.5139 70s
+[train] F_s4_SelfRegulationSCP1 ep 1 q 2 train 0.5637 val 0.5170 85s
+[train] F_s4_SelfRegulationSCP1 ep 1 q 3 train 0.5515 val 0.5253 100s
+[train] F_s4_SelfRegulationSCP1 ep 1 q 4 train 0.5391 val 0.5670 113s
+[train] F_s4_SelfRegulationSCP1 ep 2 q 1 train 0.4943 val 0.5874 127s
+[train] F_s4_SelfRegulationSCP1 ep 2 q 2 train 0.4940 val 0.5854 141s
+[train] F_s4_SelfRegulationSCP1 done start 0.5137 best 0.5137 at (0, 2) evals 10 143s

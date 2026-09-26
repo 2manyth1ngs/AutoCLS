@@ -1,0 +1,42 @@
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] blind_s0_SelfRegulationSCP1 ep 0 train 0.6784 val 0.6507 1s
+[train] blind_s0_SelfRegulationSCP1 ep 1 train 0.6140 val 0.5559 1s
+[train] blind_s0_SelfRegulationSCP1 ep 2 train 0.5749 val 0.5250 2s
+[train] blind_s0_SelfRegulationSCP1 ep 3 train 0.5692 val 0.5220 2s
+[train] blind_s0_SelfRegulationSCP1 ep 4 train 0.5526 val 0.5158 2s
+[train] blind_s0_SelfRegulationSCP1 ep 5 train 0.5566 val 0.5109 3s
+[train] blind_s0_SelfRegulationSCP1 ep 6 train 0.5517 val 0.5156 3s
+[train] blind_s0_SelfRegulationSCP1 ep 7 train 0.5460 val 0.5133 4s
+[train] blind_s0_SelfRegulationSCP1 ep 8 train 0.5463 val 0.5079 4s
+[train] blind_s0_SelfRegulationSCP1 ep 9 train 0.5388 val 0.5041 5s
+[train] blind_s0_SelfRegulationSCP1 ep 10 train 0.5414 val 0.5134 5s
+[train] blind_s0_SelfRegulationSCP1 ep 11 train 0.5377 val 0.5087 5s
+[train] blind_s0_SelfRegulationSCP1 ep 12 train 0.5380 val 0.5129 6s
+[train] blind_s0_SelfRegulationSCP1 ep 13 train 0.5277 val 0.5104 6s
+[train] blind_s0_SelfRegulationSCP1 ep 14 train 0.5308 val 0.5120 7s
+[train] blind_s0_SelfRegulationSCP1 done best val 0.5041 epochs 15 7s
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] blind_s2_EthanolConcentration ep 0 train 0.6733 val 0.6648 1s
+[train] blind_s2_EthanolConcentration ep 1 train 0.5936 val 0.6644 1s
+[train] blind_s2_EthanolConcentration ep 2 train 0.5548 val 0.6753 2s
+[train] blind_s2_EthanolConcentration ep 3 train 0.5461 val 0.6739 2s
+[train] blind_s2_EthanolConcentration ep 4 train 0.5508 val 0.6759 3s
+[train] blind_s2_EthanolConcentration ep 5 train 0.5379 val 0.6810 3s
+[train] blind_s2_EthanolConcentration ep 6 train 0.5302 val 0.6848 4s
+[train] blind_s2_EthanolConcentration done best val 0.6644 epochs 7 4s
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] blind_s4_Cricket ep 0 train 0.6752 val 0.6444 1s
+[train] blind_s4_Cricket ep 1 train 0.6189 val 0.5820 1s
+[train] blind_s4_Cricket ep 2 train 0.5891 val 0.5672 2s
+[train] blind_s4_Cricket ep 3 train 0.5727 val 0.5701 2s
+[train] blind_s4_Cricket ep 4 train 0.5686 val 0.5668 2s
+[train] blind_s4_Cricket ep 5 train 0.5699 val 0.5640 3s
+[train] blind_s4_Cricket ep 6 train 0.5689 val 0.5543 3s
+[train] blind_s4_Cricket ep 7 train 0.5657 val 0.5525 4s
+[train] blind_s4_Cricket ep 8 train 0.5584 val 0.5523 4s
+[train] blind_s4_Cricket ep 9 train 0.5569 val 0.5573 5s
+[train] blind_s4_Cricket ep 10 train 0.5579 val 0.5581 5s
+[train] blind_s4_Cricket ep 11 train 0.5538 val 0.5619 6s
+[train] blind_s4_Cricket ep 12 train 0.5473 val 0.5615 6s
+[train] blind_s4_Cricket ep 13 train 0.5476 val 0.5664 7s
+[train] blind_s4_Cricket done best val 0.5523 epochs 14 7s

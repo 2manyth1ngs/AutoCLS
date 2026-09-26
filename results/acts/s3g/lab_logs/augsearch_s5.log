@@ -1,0 +1,32 @@
+[aug-search] SelfRegulationSCP1 UniMiB-SHAR_a00 ['4a75579f5a8f', 'db7c407ff29f', '7f317132bc22', '785d18830371', '96508c90748f'] pred [0.82, 0.82, 0.82, 0.82, 0.82] 7s
+[aug-search] SelfRegulationSCP1 UniMiB-SHAR_a04 ['7919246234c2', '848030695a89', '9f1833aa2758', '7a195f1b570e', '910307c4b306'] pred [0.81, 0.81, 0.81, 0.8, 0.8] 14s
+[aug-search] SelfRegulationSCP1 PhonemeSpectra_a00 ['3e63395fd924', '8929ed9ff209', 'cfe939913fc4', '5b756c367e03', '7b864b4994e0'] pred [0.8, 0.8, 0.8, 0.8, 0.8] 20s
+[aug-search] SelfRegulationSCP1 PhonemeSpectra_a04 ['38e4674b338b', 'f548db39db9f', '230fbef59134', '94c52d43f4f8', 'fd567a04b711'] pred [0.8, 0.8, 0.79, 0.79, 0.79] 27s
+[aug-search] SelfRegulationSCP1 UWaveGestureLibrary_a00 ['b524ae603834', 'ca4a789626a5', '5e0f4151c22b', '392969de0478', '7c55d3eaae8a'] pred [0.8, 0.8, 0.79, 0.79, 0.78] 33s
+[aug-search] SelfRegulationSCP1 UWaveGestureLibrary_a04 ['808c00a9c308', 'f3474fa3f5fb', '6b68f64d92f6', 'c79cc6652f62', '495978b3b4cb'] pred [0.82, 0.82, 0.8, 0.8, 0.81] 40s
+[aug-search] SelfRegulationSCP1 Cricket_a00 ['f14babf899d1', '068db551614b', '8c024d27c84a', '92942f3da8b2', 'afc0138b7644'] pred [0.8, 0.8, 0.8, 0.8, 0.79] 47s
+[aug-search] SelfRegulationSCP1 Cricket_a04 ['afe72d3cb17d', 'ad1484adb862', '538ef7baa258', 'e0918d2f4af7', '12b6b9a5cb97'] pred [0.82, 0.82, 0.81, 0.81, 0.8] 54s
+[aug-search] SelfRegulationSCP1 PTB-XL_a00 ['4f1260dc3fe4', '70bb051f6c0d', '0342cd493adc', '5f0c5dc20ed3', 'dc83b43844ed'] pred [0.81, 0.8, 0.8, 0.8, 0.81] 61s
+[aug-search] SelfRegulationSCP1 PTB-XL_a04 ['18cb26bbbd46', 'fd9aef068e05', '719df04e5082', '7ee935ec8813', 'a5e903f4ec96'] pred [0.79, 0.79, 0.8, 0.79, 0.79] 68s
+[aug-search] SelfRegulationSCP1 SleepEDF_a00 ['f69fa8a996e0', '74f46f57649c', 'cd481e3a04d9', '13fd1f1b2e37', '0668889e45a3'] pred [0.82, 0.81, 0.81, 0.81, 0.8] 75s
+[aug-search] SelfRegulationSCP1 SleepEDF_a04 ['8d4a1236ab3f', '7cbf1ae5745a', '751c094ee9bd', '4d973efc63b7', 'e41d33628d49'] pred [0.82, 0.82, 0.82, 0.82, 0.82] 81s
+[aug-search] SelfRegulationSCP1 PAMAP2_a00 ['faa612df2d1d', 'fc2f0aed4847', '26b04d3ea9e8', 'b5c96b25d078', '02b20bb0af5e'] pred [0.82, 0.81, 0.82, 0.81, 0.8] 87s
+[aug-search] SelfRegulationSCP1 PAMAP2_a04 ['508fa23cb98b', '17a7a2f7d3ae', '1373c819e7b1', 'de3d9adc3392', 'fcd0af4c9d9a'] pred [0.82, 0.82, 0.82, 0.82, 0.82] 92s
+[aug-search] SelfRegulationSCP1 NonInvasiveFetalECGThorax1_a00 ['31dc5c26f0fd', '96082d2ab093', '22d03bccb9eb', 'bd04c7b30fce', '0ef8dca47a8d'] pred [0.81, 0.8, 0.8, 0.79, 0.8] 98s
+[aug-search] SelfRegulationSCP1 NonInvasiveFetalECGThorax1_a04 ['0016845e836a', '310da8977c78', 'eaa3783dfd2a', '621a5c41f6f7', '31a3e77803dc'] pred [0.8, 0.79, 0.79, 0.8, 0.79] 104s
+[aug-search] SelfRegulationSCP1 ShapesAll_a00 ['53ec69aaff93', '914ba0e9dbf2', '756cc52fc968', 'c392bd15cb9e', '7644b3650a26'] pred [0.82, 0.82, 0.81, 0.81, 0.81] 110s
+[aug-search] SelfRegulationSCP1 ShapesAll_a04 ['cd64af716aef', 'd0cd10775ec1', 'fbc65890e892', '51adb2229296', '191104611bb2'] pred [0.81, 0.81, 0.81, 0.81, 0.81] 115s
+[aug-search] SelfRegulationSCP1 LargeKitchenAppliances_a00 ['0a3b532f8abc', 'ed28b3b98e4b', '313b88a1f08e', '1f28304bdc9c', '2a9c8cf5e475'] pred [0.82, 0.81, 0.8, 0.8, 0.81] 122s
+[aug-search] SelfRegulationSCP1 LargeKitchenAppliances_a04 ['6f9faabb2647', '79515956dbe8', '59c3c396db5e', 'a48910f9372f', '6dbfe036f665'] pred [0.83, 0.82, 0.82, 0.82, 0.82] 128s
+[aug-search] SelfRegulationSCP1 Adiac_a00 ['40b222b71712', 'c1b7b8cad1a8', '7e136fffa786', '182d5741b2fa', 'b49ba3a005c5'] pred [0.82, 0.82, 0.82, 0.81, 0.81] 135s
+[aug-search] SelfRegulationSCP1 Adiac_a04 ['0b2bc59e3669', '58758f2a13fa', '6bc3ef62a5f5', 'dd975dad046e', '5808948fb1e5'] pred [0.81, 0.81, 0.8, 0.81, 0.8] 143s
+[aug-search] SelfRegulationSCP1 FordA_a00 ['22952b5ced6c', '5e690619e06b', 'a1b5e8852aa3', '10913396a7aa', '9fe08c7a2a86'] pred [0.81, 0.82, 0.81, 0.81, 0.81] 150s
+[aug-search] SelfRegulationSCP1 FordA_a04 ['754b14de2fb3', 'ea2059547627', '7ff40695c38f', 'b81077b44d08', 'bb4cfd98b152'] pred [0.83, 0.82, 0.83, 0.82, 0.83] 157s
+[aug-search] SelfRegulationSCP1 SemgHandMovementCh2_a00 ['bedd51a19568', '09cfb04e23f8', '3f7ed8eb058b', '67a74ae7a4fd', '2629a43978ca'] pred [0.82, 0.82, 0.81, 0.82, 0.82] 164s
+[aug-search] SelfRegulationSCP1 SemgHandMovementCh2_a04 ['34a7cfbfa869', '842eaad1f333', '805989b2e960', '960b4bfdd03d', 'b89b8084d8da'] pred [0.8, 0.8, 0.8, 0.8, 0.8] 171s
+[aug-search] SelfRegulationSCP1 EthanolConcentration_a00 ['58ff597f5822', '6bbbe57ba748', 'c839c8eb277a', 'd4a236148020', 'cb5e05fc5e30'] pred [0.81, 0.81, 0.81, 0.81, 0.8] 178s
+[aug-search] SelfRegulationSCP1 EthanolConcentration_a04 ['2f90a9bd0446', 'd3ec6e0f28e9', '8b0b95d985fc', '3a3ac15831e9', '7068f9ba030b'] pred [0.82, 0.82, 0.82, 0.81, 0.81] 185s
+[aug-search] SelfRegulationSCP1 CinCECGTorso_a00 ['243ce0238b75', 'af31b046f330', 'dc2681e1fd9e', '5d82f5993171', '560f39d55403'] pred [0.82, 0.81, 0.81, 0.81, 0.81] 193s
+[aug-search] SelfRegulationSCP1 CinCECGTorso_a04 ['4c026a8ea4f1', '6069c65949e9', 'f34fb3f94e01', '576e43aea01f', '37635cf475b8'] pred [0.8, 0.8, 0.8, 0.8, 0.8] 200s
+/home/b311/data/wangwenjie/kejunyu/AutoCLS/scripts/93_acts_s3f.py:217: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  m = build().to(dev); m.load_state_dict(torch.load(p, map_location=dev)); m.eval(); out.append(m)
