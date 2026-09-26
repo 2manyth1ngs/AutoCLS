@@ -139,7 +139,8 @@ def _dirs(args) -> list[Path]:
 
 
 # ================================================================ 训练（服务器）
-def cmd_train(args) -> None:
+def cmd_train(args, aug_fn=None) -> None:
+    """aug_fn：可选 (meta, enc) → {任务下标: (向量, 终点)}（S3-J 合并两轮扩充用；缺省即 S3-G 扩充，S3-I 原样）。"""
     import torch
     g88, g89, g91, g94, g95 = (_g(m) for m in ("88_acts_s3bpp", "89_acts_s3c", "91_acts_s3e", "94_acts_s3g", "95_acts_s3h"))
     outdir = Path(args.outdir)
@@ -158,7 +159,7 @@ def cmd_train(args) -> None:
     te = [i for i, g in enumerate(groups) if g == fold]
     V = [arr[f"{t}/vec"] for t in tasks]
     R, NS, SIG = g91._labels(arr, tasks, "L4")
-    aug = g94.load_aug(types.SimpleNamespace(**{**vars(args), "outdir": args.s3g}), fold, meta, enc)
+    aug = aug_fn(meta, enc) if aug_fn is not None else g94.load_aug(types.SimpleNamespace(**{**vars(args), "outdir": args.s3g}), fold, meta, enc)
     V, R, NS = g94.merge_aug(V, R, NS, aug)
     print(f"[aug] {fold}: {len(aug)} 任务、{sum(len(v[1]) for v in aug.values())} 条扩充标签", flush=True)
     Aax = _axis(args, fold)
