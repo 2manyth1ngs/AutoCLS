@@ -55,3 +55,5 @@ PROTOCOL + 单测先红 → 协议锁 → 实现 98（`--pull` 由人工 scp，`
 5（先红、§0 声明）；6（真实坐标只作诊断条件，明确不可部署）；7。
 
 ## §7 执行台账（跑后填写）
+- 协议锁 5136752（3 例先红）→ 实现 `scripts/98_acts_s3k.py`；单测 3 例绿；S3-J 的 I′ 模型 30 个从服务器 `/tmp/acts_s3j_out/models` 拉回 `results/acts/s3j/models/`（不入库）；本地 CPU 26 s。
+- `--analyze`：**S3K-ALL3**（预测 2/6）。R2 池内 regret 兑现 T1 8% / T12 60%；更稳的读数：池内 Spearman T1 54% / T12 91% / P 29%，名单外 T1 65% / T12 100%，目录内 regret T1 56% / T12 72%；P1+T23 − P 池内 Spearman +0.088（p 0.001）。事后 `posthoc_scale`：E 坐标幅度 / 真实幅度 a₁ 0.52、a₂ 0.000、a₃ 0.011（岭回归把 a₂ / a₃ 收缩为 0）。
