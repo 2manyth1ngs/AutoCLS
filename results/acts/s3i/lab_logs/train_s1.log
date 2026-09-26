@@ -1,0 +1,6 @@
+[aug] PhonemeSpectra: 30 任务、150 条扩充标签
+[train] I_s0_PhonemeSpectra done best val 0.4737 epochs 20 alpha [10.0, 100000.0, 100000.0] 9s
+[aug] Handwriting: 30 任务、150 条扩充标签
+[train] I_s2_Handwriting done best val 0.4168 epochs 19 alpha [100.0, 100000.0, 10000.0] 9s
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] I_s3_SelfRegulationSCP1 done best val 0.3910 epochs 18 alpha [10.0, 100000.0, 100000.0] 8s

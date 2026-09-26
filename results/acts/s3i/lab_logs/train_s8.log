@@ -1,0 +1,4 @@
+[aug] UWaveGestureLibrary: 30 任务、150 条扩充标签
+[train] I_s1_UWaveGestureLibrary done best val 0.4348 epochs 30 alpha [100.0, 100000.0, 100000.0] 17s
+[aug] PhonemeSpectra: 30 任务、150 条扩充标签
+[train] I_s3_PhonemeSpectra done best val 0.4602 epochs 18 alpha [10.0, 100000.0, 100000.0] 9s

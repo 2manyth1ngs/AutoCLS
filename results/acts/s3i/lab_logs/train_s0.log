@@ -1,0 +1,6 @@
+[aug] Handwriting: 30 任务、150 条扩充标签
+[train] I_s0_Handwriting done best val 0.4003 epochs 19 alpha [100.0, 100000.0, 10000.0] 11s
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] I_s1_SelfRegulationSCP1 done best val 0.3893 epochs 22 alpha [10.0, 100000.0, 100000.0] 13s
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] I_s3_EthanolConcentration done best val 0.5370 epochs 10 alpha [100.0, 100000.0, 1000.0] 6s

@@ -1,0 +1,6 @@
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] I_s0_Cricket done best val 0.4657 epochs 18 alpha [10.0, 100000.0, 1000.0] 15s
+[aug] UWaveGestureLibrary: 30 任务、150 条扩充标签
+[train] I_s2_UWaveGestureLibrary done best val 0.4344 epochs 22 alpha [100.0, 100000.0, 100000.0] 36s
+[aug] PhonemeSpectra: 30 任务、150 条扩充标签
+[train] I_s4_PhonemeSpectra done best val 0.4731 epochs 16 alpha [10.0, 100000.0, 100000.0] 11s

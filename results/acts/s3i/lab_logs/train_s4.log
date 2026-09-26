@@ -1,0 +1,6 @@
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] I_s0_EthanolConcentration done best val 0.5391 epochs 11 alpha [100.0, 100000.0, 1000.0] 8s
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] I_s2_Cricket done best val 0.4552 epochs 27 alpha [10.0, 100000.0, 1000.0] 19s
+[aug] UWaveGestureLibrary: 30 任务、150 条扩充标签
+[train] I_s4_UWaveGestureLibrary done best val 0.4309 epochs 21 alpha [100.0, 100000.0, 100000.0] 15s

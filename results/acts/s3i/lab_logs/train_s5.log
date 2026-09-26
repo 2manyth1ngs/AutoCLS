@@ -1,0 +1,6 @@
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] I_s0_SelfRegulationSCP1 done best val 0.4043 epochs 24 alpha [10.0, 100000.0, 100000.0] 16s
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] I_s2_EthanolConcentration done best val 0.5313 epochs 16 alpha [100.0, 100000.0, 1000.0] 12s
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] I_s4_Cricket done best val 0.4545 epochs 27 alpha [10.0, 100000.0, 1000.0] 18s
