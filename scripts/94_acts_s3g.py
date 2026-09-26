@@ -179,13 +179,13 @@ def cmd_aug_search(args) -> None:
     op.write_text(json.dumps(res, ensure_ascii=False), encoding="utf-8")
 
 
-def _plan(args, noms: Mapping[str, Mapping[str, Sequence[str]]], byk: Mapping, seeds: Sequence[int], sub: str) -> None:
+def _plan(args, noms: Mapping[str, Mapping[str, Sequence[str]]], byk: Mapping, seeds: Sequence[int], sub: str, dirs: Optional[Sequence[Path]] = None) -> None:
     ac, g35 = _g("acts_common"), _g("35_protocol_alignment")
     from autocls.space.cls_space import CLS
     meta, _arr, cfg, _s, _e = _ctx(args)
     protos = g35.load_protocols()
     tj = json.loads((S2_DIR / "tasks.json").read_text(encoding="utf-8")); tm = tj["tasks"]
-    done = set(meta["s2_done"]) | {f"{t}|{k}|{s}" for (t, k, s) in _val_map(_dirs(args))}
+    done = set(meta["s2_done"]) | {f"{t}|{k}|{s}" for (t, k, s) in _val_map(dirs if dirs is not None else _dirs(args))}
     cells, seen = [], set(done)
     for t, arms in noms.items():
         for keys in arms.values():
