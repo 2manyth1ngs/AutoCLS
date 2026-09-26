@@ -1,0 +1,22 @@
+[screen] Handwriting done 4s
+[screen] PhonemeSpectra done 7s
+[screen] UWaveGestureLibrary done 11s
+[screen] Cricket done 14s
+[screen] EthanolConcentration done 18s
+[screen] SelfRegulationSCP1 done 22s
+D:\DevelopDoc\CLS\scripts\99_acts_s3l.py:205: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho = [float(spearmanr(ah_mean[:, k], at[:, k])[0]) for k in range(3)]
+# S3-L 筛选（M★ = pt4 / DS；上搜索）
+
+| 候选 | 训练侧下游读数 | R1 regret@3 | R2 regret@3 | R2 Sp | R3 Sp | 兑现 R2 Sp | 兑现 R3 | 兑现 R1 | 留出 ρ(â,a) a₁/a₂/a₃ | 幅度比 a₁/a₂/a₃ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
+| pt4|DS | 0.5989 | 0.016 | 0.017 | 0.336 | 0.225 | 7% | -15% | -11% | +0.33/+nan/+0.25 | 0.45/0.00/0.18 |
+| pt4|MSE | 0.5903 | 0.016 | 0.020 | 0.342 | 0.223 | 10% | -16% | -11% | +0.35/+0.29/+0.26 | 0.56/0.01/0.30 |
+| pt4+sh4|DS | 0.5848 | 0.015 | 0.016 | 0.353 | 0.258 | 17% | 9% | -1% | +0.61/+nan/+0.22 | 0.42/0.00/0.05 |
+| sh4|DS | 0.5810 | 0.015 | 0.016 | 0.368 | 0.248 | 25% | 2% | -1% | +0.61/+nan/-0.10 | 0.40/0.00/0.00 |
+| sh8|DS | 0.5726 | 0.014 | 0.013 | 0.364 | 0.256 | 23% | 8% | 3% | +0.59/+nan/+nan | 0.31/0.00/0.00 |
+| pt4+sh4|MSE | 0.5671 | 0.017 | 0.018 | 0.361 | 0.245 | 21% | -1% | -16% | +0.61/+0.46/+0.22 | 0.48/0.00/0.18 |
+| sh4|MSE | 0.5511 | 0.015 | 0.015 | 0.376 | 0.248 | 29% | 2% | -5% | +0.61/+0.44/+0.01 | 0.52/0.00/0.01 |
+| sh8|MSE | 0.5354 | 0.016 | 0.017 | 0.371 | 0.270 | 26% | 18% | -9% | +0.62/+0.43/-0.05 | 0.39/0.00/0.01 |
+
+参照（S3-K）：Z R2 Sp 0.323 / T 0.504；现行 P 0.376
