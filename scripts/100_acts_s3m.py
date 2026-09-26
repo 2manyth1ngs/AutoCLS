@@ -88,7 +88,8 @@ def verdict_s3m(dE_m3: Mapping, dE_p1: Mapping, dG_m3: Mapping, dX_m3: Mapping) 
 
 
 # ================================================================ prep（本地）
-def cmd_prep(args) -> None:
+def cmd_prep(args, e_vars: Sequence[str] = E_VARS, feat=None) -> None:
+    """feat：可选 (var, fold, groups, em_sh, em_pt) → U 钩子（S3-N 加入 E_A 用；缺省 = 99.e_features，S3-M 原样）。"""
     g84, g85, g86, g89, g99 = (_g(m) for m in ("84_acts_s3a", "85_acts_s3ap", "86_acts_s3b", "89_acts_s3c", "99_acts_s3l"))
     outdir = Path(args.outdir); outdir.mkdir(parents=True, exist_ok=True)
     meta, _arr = g89.load_data(Path(args.s3c)); tasks = meta["tasks"]
@@ -101,8 +102,8 @@ def cmd_prep(args) -> None:
     for fold in g89.FOLDS:
         tr = groups != fold
         R = g84.residual(Z, Z[tr].mean(0)); Rs[fold] = R
-        for var in E_VARS:
-            U = g99.e_features(var, fold, groups, em_sh, em_pt); Us[(fold, var)] = U
+        for var in e_vars:
+            U = (feat or g99.e_features)(var, fold, groups, em_sh, em_pt); Us[(fold, var)] = U
             for lam in LAMS:
                 for k in KS:
                     tab.setdefault((var, lam, k), []).append(loso_ev(U, R, groups, lam, k, mask=tr))
