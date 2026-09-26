@@ -1,0 +1,6 @@
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] H_s0_Cricket done start 0.5570 best 0.5490 at (6, 2) evals 34 13s
+[aug] UWaveGestureLibrary: 30 任务、150 条扩充标签
+[train] H_s2_UWaveGestureLibrary done start 0.4740 best 0.4740 at (-1, 0) evals 8 6s
+[aug] PhonemeSpectra: 30 任务、150 条扩充标签
+[train] H_s4_PhonemeSpectra done start 0.5078 best 0.5053 at (3, 3) evals 23 13s

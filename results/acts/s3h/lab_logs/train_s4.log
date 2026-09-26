@@ -1,0 +1,6 @@
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] H_s0_EthanolConcentration done start 0.6511 best 0.6511 at (-1, 0) evals 8 2s
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] H_s2_Cricket done start 0.5545 best 0.5495 at (2, 3) evals 19 3s
+[aug] UWaveGestureLibrary: 30 任务、150 条扩充标签
+[train] H_s4_UWaveGestureLibrary done start 0.4745 best 0.4745 at (-1, 0) evals 8 2s

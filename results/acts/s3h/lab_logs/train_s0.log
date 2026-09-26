@@ -1,0 +1,6 @@
+[aug] Handwriting: 30 任务、150 条扩充标签
+[train] H_s0_Handwriting done start 0.4660 best 0.4600 at (3, 4) evals 24 4s
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] H_s1_SelfRegulationSCP1 done start 0.5073 best 0.5063 at (1, 1) evals 13 3s
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] H_s3_EthanolConcentration done start 0.6420 best 0.6420 at (-1, 0) evals 8 2s

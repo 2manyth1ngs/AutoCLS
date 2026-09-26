@@ -1,0 +1,6 @@
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] H_s0_SelfRegulationSCP1 done start 0.5041 best 0.5034 at (0, 2) evals 10 2s
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] H_s2_EthanolConcentration done start 0.6644 best 0.6629 at (0, 3) evals 11 3s
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] H_s4_Cricket done start 0.5523 best 0.5493 at (2, 4) evals 20 3s

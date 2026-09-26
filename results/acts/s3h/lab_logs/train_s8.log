@@ -1,0 +1,4 @@
+[aug] UWaveGestureLibrary: 30 任务、150 条扩充标签
+[train] H_s1_UWaveGestureLibrary done start 0.4770 best 0.4770 at (-1, 0) evals 8 2s
+[aug] PhonemeSpectra: 30 任务、150 条扩充标签
+[train] H_s3_PhonemeSpectra done start 0.5081 best 0.5077 at (1, 3) evals 15 3s

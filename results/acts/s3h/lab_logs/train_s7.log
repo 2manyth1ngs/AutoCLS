@@ -1,0 +1,6 @@
+[aug] PhonemeSpectra: 30 任务、150 条扩充标签
+[train] H_s1_PhonemeSpectra done start 0.5206 best 0.5193 at (0, 2) evals 10 4s
+[aug] Handwriting: 30 任务、150 条扩充标签
+[train] H_s3_Handwriting done start 0.4752 best 0.4691 at (5, 1) evals 29 10s
+[aug] SelfRegulationSCP1: 30 任务、150 条扩充标签
+[train] H_s4_SelfRegulationSCP1 done start 0.5137 best 0.5131 at (1, 1) evals 13 7s

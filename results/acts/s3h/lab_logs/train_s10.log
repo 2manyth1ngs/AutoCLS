@@ -1,0 +1,4 @@
+[aug] EthanolConcentration: 30 任务、150 条扩充标签
+[train] H_s1_EthanolConcentration done start 0.6521 best 0.6521 at (-1, 0) evals 8 2s
+[aug] Cricket: 30 任务、150 条扩充标签
+[train] H_s3_Cricket done start 0.5480 best 0.5450 at (3, 2) evals 22 4s
