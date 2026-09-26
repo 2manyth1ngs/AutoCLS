@@ -78,7 +78,8 @@ def new_tags(noms: Mapping[str, Mapping[str, Sequence[str]]], done: set) -> list
 
 
 # ================================================================ 训练（服务器）
-def cmd_train(args) -> None:
+def cmd_train(args, extra=None) -> None:
+    """extra：可选 (V, R, NS) → (V, R, NS) 钩子（S3-G 并入扩充标签用；缺省即 S3-EA 原样）。"""
     import torch
     g89, g91 = _g("89_acts_s3c"), _g("91_acts_s3e")
     outdir = Path(args.outdir)
@@ -97,6 +98,8 @@ def cmd_train(args) -> None:
     te = [i for i, g in enumerate(groups) if g == fold]
     V = [arr[f"{t}/vec"] for t in tasks]
     R, NS, SIG = g91._labels(arr, tasks, "L4")
+    if extra is not None:
+        V, R, NS = extra(V, R, NS)
     torch.manual_seed(seed)
     model = build_blind(V[0].shape[1]).to(dev)
     sc = g89.Scorer(model, "D", dev)
@@ -166,7 +169,7 @@ class ArmEnsemble:
     wins = _g("91_acts_s3e").Ensemble.wins
 
 
-def _search_task(ens, Ts, t: str, modes: Sequence[tuple], space, enc, cfg, ks: int, gens: int) -> dict:
+def _search_task(ens, Ts, t: str, modes: Sequence[tuple], space, enc, cfg, ks: int, gens: int, top: int = 3) -> dict:
     """与 91.cmd_search 同一流程（同采样种子 / 同进化种子）；modes = [(名, λ, 是否另出家族分散版)]。"""
     ac, g89, g91 = _g("acts_common"), _g("89_acts_s3c"), _g("91_acts_s3e")
     from autocls.labeling import cls_key, run_seed_for
@@ -182,7 +185,7 @@ def _search_task(ens, Ts, t: str, modes: Sequence[tuple], space, enc, cfg, ks: i
         o = g91.ens_order(ens.wins(Vc[fin], Ts), [keys[i] for i in fin], lam)
         init = [cands[fin[j]][0] for j in o[:g89.KP]]
         final = g91._evolve(ens, Ts, space, enc, cfg, init, np.random.default_rng(run_seed_for(t, "s3c_evo")), lam, g89.KP, gens, g89.P_CROSS, g89.P_MUT)
-        rec[name] = [{"cls_key": cls_key(c), "cls": c.to_dict()} for c in final[:3]]
+        rec[name] = [{"cls_key": cls_key(c), "cls": c.to_dict()} for c in final[:top]]
         if div:
             fk = [cls_key(c) for c in final]; fam = {cls_key(c): g91.family_of(c.to_dict()) for c in final}; byk = {cls_key(c): c for c in final}
             rec[div] = [{"cls_key": k, "cls": byk[k].to_dict()} for k in g91.diversified_top(fk, fam, 3)]

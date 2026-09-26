@@ -98,7 +98,8 @@ def verdict_s3f(dF_m3: Mapping, dF_p1: Mapping, dX_m3: Mapping, cat_ok: bool, n_
 
 
 # ================================================================ 训练（服务器）
-def cmd_train(args) -> None:
+def cmd_train(args, extra=None) -> None:
+    """extra：可选 (V, R, NS) → (V, R, NS) 钩子（S3-G 并入扩充标签用；缺省即 S3-F 原样）。"""
     import torch
     g88, g89, g91 = _g("88_acts_s3bpp"), _g("89_acts_s3c"), _g("91_acts_s3e")
     outdir = Path(args.outdir)
@@ -119,6 +120,8 @@ def cmd_train(args) -> None:
     te = [i for i, g in enumerate(groups) if g == fold]
     V = [arr[f"{t}/vec"] for t in tasks]
     R, NS, SIG = g91._labels(arr, tasks, "L4")
+    if extra is not None:
+        V, R, NS = extra(V, R, NS)
     W = g89.load_windows("A", fold, tasks, Path(args.s3b), synthetic=args.synthetic)
     torch.manual_seed(seed)
     model = build_field_e(V[0].shape[1]).to(dev)
