@@ -1,0 +1,68 @@
+[train] F_s0_PhonemeSpectra start (= blind) val 0.5229
+[train] F_s0_PhonemeSpectra ep 0 q 1 train 0.6162 val 0.5229 13s
+[train] F_s0_PhonemeSpectra ep 0 q 2 train 0.6155 val 0.5228 25s
+[train] F_s0_PhonemeSpectra ep 0 q 3 train 0.6071 val 0.5226 37s
+[train] F_s0_PhonemeSpectra ep 0 q 4 train 0.5997 val 0.5216 49s
+[train] F_s0_PhonemeSpectra ep 1 q 1 train 0.5760 val 0.5203 60s
+[train] F_s0_PhonemeSpectra ep 1 q 2 train 0.5503 val 0.5218 73s
+[train] F_s0_PhonemeSpectra ep 1 q 3 train 0.5397 val 0.5359 85s
+[train] F_s0_PhonemeSpectra ep 1 q 4 train 0.5322 val 0.5437 97s
+[train] F_s0_PhonemeSpectra ep 2 q 1 train 0.5001 val 0.5493 110s
+[train] F_s0_PhonemeSpectra ep 2 q 2 train 0.5091 val 0.5320 123s
+[train] F_s0_PhonemeSpectra ep 2 q 3 train 0.5030 val 0.5431 135s
+[train] F_s0_PhonemeSpectra ep 2 q 4 train 0.5052 val 0.5397 148s
+[train] F_s0_PhonemeSpectra ep 3 q 1 train 0.4811 val 0.5442 160s
+[train] F_s0_PhonemeSpectra done start 0.5229 best 0.5203 at (1, 1) evals 13 161s
+scripts/93_acts_s3f.py:126: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  blind_sd = torch.load(Path(args.s3ea) / "models" / f"blind_s{seed}_{fold}.pt", map_location=dev)
+[train] F_s2_UWaveGestureLibrary start (= blind) val 0.4687
+[train] F_s2_UWaveGestureLibrary ep 0 q 1 train 0.6267 val 0.4687 13s
+[train] F_s2_UWaveGestureLibrary ep 0 q 2 train 0.6325 val 0.4688 26s
+[train] F_s2_UWaveGestureLibrary ep 0 q 3 train 0.6255 val 0.4692 39s
+[train] F_s2_UWaveGestureLibrary ep 0 q 4 train 0.6179 val 0.4699 52s
+[train] F_s2_UWaveGestureLibrary ep 1 q 1 train 0.5603 val 0.4706 65s
+[train] F_s2_UWaveGestureLibrary ep 1 q 2 train 0.5567 val 0.4799 78s
+[train] F_s2_UWaveGestureLibrary ep 1 q 3 train 0.5561 val 0.4996 90s
+[train] F_s2_UWaveGestureLibrary ep 1 q 4 train 0.5441 val 0.4848 103s
+[train] F_s2_UWaveGestureLibrary done start 0.4687 best 0.4687 at (-1, 0) evals 8 104s
+scripts/93_acts_s3f.py:126: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  blind_sd = torch.load(Path(args.s3ea) / "models" / f"blind_s{seed}_{fold}.pt", map_location=dev)
+[train] F_s4_Cricket start (= blind) val 0.5577
+[train] F_s4_Cricket ep 0 q 1 train 0.6596 val 0.5580 14s
+[train] F_s4_Cricket ep 0 q 2 train 0.6596 val 0.5579 29s
+[train] F_s4_Cricket ep 0 q 3 train 0.6515 val 0.5573 43s
+[train] F_s4_Cricket ep 0 q 4 train 0.6443 val 0.5558 56s
+[train] F_s4_Cricket ep 1 q 1 train 0.6061 val 0.5508 68s
+[train] F_s4_Cricket ep 1 q 2 train 0.5911 val 0.5406 81s
+[train] F_s4_Cricket ep 1 q 3 train 0.5735 val 0.5278 93s
+[train] F_s4_Cricket ep 1 q 4 train 0.5675 val 0.5292 105s
+[train] F_s4_Cricket ep 2 q 1 train 0.5395 val 0.5283 117s
+[train] F_s4_Cricket ep 2 q 2 train 0.5321 val 0.5322 130s
+[train] F_s4_Cricket ep 2 q 3 train 0.5291 val 0.5275 143s
+[train] F_s4_Cricket ep 2 q 4 train 0.5212 val 0.5232 157s
+[train] F_s4_Cricket ep 3 q 1 train 0.5261 val 0.5246 169s
+[train] F_s4_Cricket ep 3 q 2 train 0.5172 val 0.5339 182s
+[train] F_s4_Cricket ep 3 q 3 train 0.5162 val 0.5280 196s
+[train] F_s4_Cricket ep 3 q 4 train 0.5174 val 0.5253 209s
+[train] F_s4_Cricket ep 4 q 1 train 0.5033 val 0.5203 222s
+[train] F_s4_Cricket ep 4 q 2 train 0.4952 val 0.5238 234s
+[train] F_s4_Cricket ep 4 q 3 train 0.4986 val 0.5238 248s
+[train] F_s4_Cricket ep 4 q 4 train 0.4973 val 0.5216 260s
+[train] F_s4_Cricket ep 5 q 1 train 0.4940 val 0.5218 271s
+[train] F_s4_Cricket ep 5 q 2 train 0.4918 val 0.5185 283s
+[train] F_s4_Cricket ep 5 q 3 train 0.4919 val 0.5173 297s
+[train] F_s4_Cricket ep 5 q 4 train 0.4886 val 0.5165 309s
+[train] F_s4_Cricket ep 6 q 1 train 0.4735 val 0.5167 322s
+[train] F_s4_Cricket ep 6 q 2 train 0.4714 val 0.5140 335s
+[train] F_s4_Cricket ep 6 q 3 train 0.4711 val 0.5140 348s
+[train] F_s4_Cricket ep 6 q 4 train 0.4706 val 0.5208 361s
+[train] F_s4_Cricket ep 7 q 1 train 0.4802 val 0.5260 374s
+[train] F_s4_Cricket ep 7 q 2 train 0.4738 val 0.5277 387s
+[train] F_s4_Cricket ep 7 q 3 train 0.4716 val 0.5277 400s
+[train] F_s4_Cricket ep 7 q 4 train 0.4722 val 0.5313 413s
+[train] F_s4_Cricket ep 8 q 1 train 0.4487 val 0.5339 426s
+[train] F_s4_Cricket ep 8 q 2 train 0.4662 val 0.5328 438s
+[train] F_s4_Cricket ep 8 q 3 train 0.4620 val 0.5447 451s
+[train] F_s4_Cricket done start 0.5577 best 0.5140 at (6, 3) evals 35 451s
+scripts/93_acts_s3f.py:126: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  blind_sd = torch.load(Path(args.s3ea) / "models" / f"blind_s{seed}_{fold}.pt", map_location=dev)

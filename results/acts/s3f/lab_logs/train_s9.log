@@ -1,0 +1,42 @@
+[train] F_s1_Cricket start (= blind) val 0.5522
+[train] F_s1_Cricket ep 0 q 1 train 0.6589 val 0.5522 15s
+[train] F_s1_Cricket ep 0 q 2 train 0.6477 val 0.5522 29s
+[train] F_s1_Cricket ep 0 q 3 train 0.6443 val 0.5509 42s
+[train] F_s1_Cricket ep 0 q 4 train 0.6337 val 0.5478 56s
+[train] F_s1_Cricket ep 1 q 1 train 0.5876 val 0.5421 69s
+[train] F_s1_Cricket ep 1 q 2 train 0.5788 val 0.5330 81s
+[train] F_s1_Cricket ep 1 q 3 train 0.5644 val 0.5303 94s
+[train] F_s1_Cricket ep 1 q 4 train 0.5542 val 0.5316 107s
+[train] F_s1_Cricket ep 2 q 1 train 0.5426 val 0.5281 120s
+[train] F_s1_Cricket ep 2 q 2 train 0.5176 val 0.5237 133s
+[train] F_s1_Cricket ep 2 q 3 train 0.5155 val 0.5315 147s
+[train] F_s1_Cricket ep 2 q 4 train 0.5153 val 0.5276 160s
+[train] F_s1_Cricket ep 3 q 1 train 0.5044 val 0.5227 174s
+[train] F_s1_Cricket ep 3 q 2 train 0.5058 val 0.5245 187s
+[train] F_s1_Cricket ep 3 q 3 train 0.5076 val 0.5248 200s
+[train] F_s1_Cricket ep 3 q 4 train 0.5007 val 0.5254 214s
+[train] F_s1_Cricket ep 4 q 1 train 0.4916 val 0.5223 228s
+[train] F_s1_Cricket ep 4 q 2 train 0.4781 val 0.5230 241s
+[train] F_s1_Cricket ep 4 q 3 train 0.4867 val 0.5259 254s
+[train] F_s1_Cricket ep 4 q 4 train 0.4866 val 0.5238 267s
+[train] F_s1_Cricket ep 5 q 1 train 0.4909 val 0.5246 280s
+[train] F_s1_Cricket ep 5 q 2 train 0.4800 val 0.5225 293s
+[train] F_s1_Cricket ep 5 q 3 train 0.4867 val 0.5249 306s
+[train] F_s1_Cricket ep 5 q 4 train 0.4923 val 0.5245 319s
+[train] F_s1_Cricket ep 6 q 1 train 0.4770 val 0.5305 332s
+[train] F_s1_Cricket done start 0.5522 best 0.5223 at (4, 1) evals 25 333s
+scripts/93_acts_s3f.py:126: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  blind_sd = torch.load(Path(args.s3ea) / "models" / f"blind_s{seed}_{fold}.pt", map_location=dev)
+[train] F_s3_EthanolConcentration start (= blind) val 0.6492
+[train] F_s3_EthanolConcentration ep 0 q 1 train 0.6583 val 0.6492 13s
+[train] F_s3_EthanolConcentration ep 0 q 2 train 0.6633 val 0.6495 24s
+[train] F_s3_EthanolConcentration ep 0 q 3 train 0.6558 val 0.6505 36s
+[train] F_s3_EthanolConcentration ep 0 q 4 train 0.6455 val 0.6519 48s
+[train] F_s3_EthanolConcentration ep 1 q 1 train 0.6195 val 0.6649 60s
+[train] F_s3_EthanolConcentration ep 1 q 2 train 0.5996 val 0.7065 71s
+[train] F_s3_EthanolConcentration ep 1 q 3 train 0.5931 val 0.6713 83s
+[train] F_s3_EthanolConcentration ep 1 q 4 train 0.5834 val 0.7053 95s
+[train] F_s3_EthanolConcentration ep 2 q 1 train 0.5357 val 0.7000 106s
+[train] F_s3_EthanolConcentration done start 0.6492 best 0.6492 at (0, 1) evals 9 108s
+scripts/93_acts_s3f.py:126: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  blind_sd = torch.load(Path(args.s3ea) / "models" / f"blind_s{seed}_{fold}.pt", map_location=dev)

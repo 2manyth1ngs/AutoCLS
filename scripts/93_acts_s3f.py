@@ -338,15 +338,16 @@ def cmd_analyze(args) -> None:
     P1 = {k: np.array(v) for k, v in P1.items()}; M3 = {k: np.array(v) for k, v in M3.items()}
     P1["cat3"], M3["cat3"], P1["oracle"] = np.array(cat_p1), np.array(cat_m3), np.array(orc)
 
-    def cmp(x, y):
+    def cmp(x, y, grp=None):
+        grp = sg if grp is None else grp
         d = np.asarray(x) - np.asarray(y)
         p = float(wilcoxon(d).pvalue) if np.any(np.abs(d) > 1e-12) else 1.0
-        return {"d": float(d.mean()), "p": p, "npos": g89.n_sources_positive(d, sg), "ci": g84.cluster_bootstrap_ci(d, sg)}
+        return {"d": float(d.mean()), "p": p, "npos": g89.n_sources_positive(d, grp), "ci": g84.cluster_bootstrap_ci(d, grp)}
     pairs = (("F-lcb", "B-lcb"), ("F-lcb", "FX-lcb"), ("F-lcb", "E-lcb"), ("E-lcb", "B-lcb"), ("F-lcb", "cat3"), ("B-lcb", "cat3"), ("E-lcb", "cat3"),
              ("F-lcb", "R"), ("B-lcb", "R"))
     C = {f"{a}−{b}": {"m3": cmp(M3[a], M3[b]), "p1": cmp(P1[a], P1[b])} for a, b in pairs}
     old_rows = np.array([not sf[s][t]["new_row"] for t, s in zip(ex, sg)])
-    C_half = {h: {f"{a}−{b}": cmp(M3[a][m], M3[b][m]) for a, b in (("F-lcb", "B-lcb"), ("E-lcb", "B-lcb"))} for h, m in (("odd", old_rows), ("even", ~old_rows))}
+    C_half = {h: {f"{a}−{b}": cmp(M3[a][m], M3[b][m], sg[m]) for a, b in (("F-lcb", "B-lcb"), ("E-lcb", "B-lcb"))} for h, m in (("odd", old_rows), ("even", ~old_rows))}
     # ---- 训练
     zf = {s: [np.load(outdir / "train" / f"F_s{sd}_{s}.npz") for sd in g91.ENS_SEEDS] for s in g89.FOLDS}
     ba = [tuple(int(x) for x in z["best_at"]) for s in g89.FOLDS for z in zf[s]]
