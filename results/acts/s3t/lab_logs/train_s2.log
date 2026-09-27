@@ -1,0 +1,178 @@
+[train] E_s0_UWaveGestureLibrary ep 0 train 0.5985 val 0.6329 acc 0.626 84s
+[train] E_s0_UWaveGestureLibrary ep 1 train 0.5303 val 0.6397 acc 0.638 168s
+[train] E_s0_UWaveGestureLibrary ep 2 train 0.4822 val 0.6754 acc 0.650 254s
+[train] E_s0_UWaveGestureLibrary ep 3 train 0.4280 val 0.7059 acc 0.661 340s
+[train] E_s0_UWaveGestureLibrary ep 4 train 0.3939 val 0.7837 acc 0.650 426s
+[train] E_s0_UWaveGestureLibrary ep 5 train 0.3712 val 0.8310 acc 0.646 513s
+[train] E_s0_UWaveGestureLibrary ep 6 train 0.3572 val 0.8852 acc 0.637 599s
+[train] E_s0_UWaveGestureLibrary ep 7 train 0.3469 val 0.8770 acc 0.639 684s
+[train] E_s0_UWaveGestureLibrary ep 8 train 0.3393 val 0.9221 acc 0.638 772s
+[train] E_s0_UWaveGestureLibrary done best acc 0.6613 @ ep 3 epochs 9 pairs/epoch 176638 795s
+[train] E_s1_Handwriting ep 0 train 0.6016 val 0.6469 acc 0.627 85s
+[train] E_s1_Handwriting ep 1 train 0.5400 val 0.6726 acc 0.625 170s
+[train] E_s1_Handwriting ep 2 train 0.5001 val 0.6752 acc 0.639 256s
+[train] E_s1_Handwriting ep 3 train 0.4442 val 0.6803 acc 0.660 342s
+[train] E_s1_Handwriting ep 4 train 0.4021 val 0.7300 acc 0.661 427s
+[train] E_s1_Handwriting ep 5 train 0.3770 val 0.7762 acc 0.657 513s
+[train] E_s1_Handwriting ep 6 train 0.3578 val 0.7968 acc 0.666 598s
+[train] E_s1_Handwriting ep 7 train 0.3411 val 0.8476 acc 0.664 685s
+[train] E_s1_Handwriting ep 8 train 0.3328 val 0.8784 acc 0.657 770s
+[train] E_s1_Handwriting ep 9 train 0.3227 val 0.9018 acc 0.656 856s
+[train] E_s1_Handwriting ep 10 train 0.3212 val 0.9606 acc 0.658 941s
+[train] E_s1_Handwriting ep 11 train 0.3143 val 0.9550 acc 0.652 1026s
+[train] E_s1_Handwriting done best acc 0.6659 @ ep 6 epochs 12 pairs/epoch 175092 1048s
+[train] E_s1_EthanolConcentration ep 0 train 0.5803 val 0.6207 acc 0.644 88s
+[train] E_s1_EthanolConcentration ep 1 train 0.5132 val 0.6298 acc 0.657 171s
+[train] E_s1_EthanolConcentration ep 2 train 0.4537 val 0.6533 acc 0.674 255s
+[train] E_s1_EthanolConcentration ep 3 train 0.4056 val 0.6999 acc 0.673 342s
+[train] E_s1_EthanolConcentration ep 4 train 0.3800 val 0.7303 acc 0.669 428s
+[train] E_s1_EthanolConcentration ep 5 train 0.3626 val 0.7771 acc 0.669 514s
+[train] E_s1_EthanolConcentration ep 6 train 0.3477 val 0.7987 acc 0.670 600s
+[train] E_s1_EthanolConcentration ep 7 train 0.3315 val 0.8145 acc 0.669 686s
+[train] E_s1_EthanolConcentration done best acc 0.6737 @ ep 2 epochs 8 pairs/epoch 180244 710s
+[train] E_s2_UWaveGestureLibrary ep 0 train 0.5947 val 0.6173 acc 0.643 51s
+[train] E_s2_UWaveGestureLibrary ep 1 train 0.5265 val 0.6010 acc 0.660 113s
+[train] E_s2_UWaveGestureLibrary ep 2 train 0.4737 val 0.6007 acc 0.688 206s
+[train] E_s2_UWaveGestureLibrary ep 3 train 0.4247 val 0.6266 acc 0.690 300s
+[train] E_s2_UWaveGestureLibrary ep 4 train 0.3967 val 0.6394 acc 0.695 393s
+[train] E_s2_UWaveGestureLibrary ep 5 train 0.3746 val 0.6599 acc 0.691 453s
+[train] E_s2_UWaveGestureLibrary ep 6 train 0.3607 val 0.6668 acc 0.694 532s
+[train] E_s2_UWaveGestureLibrary ep 7 train 0.3492 val 0.6733 acc 0.691 625s
+[train] E_s2_UWaveGestureLibrary ep 8 train 0.3350 val 0.7153 acc 0.692 720s
+[train] E_s2_UWaveGestureLibrary ep 9 train 0.3271 val 0.7511 acc 0.686 800s
+[train] E_s2_UWaveGestureLibrary done best acc 0.6947 @ ep 4 epochs 10 pairs/epoch 176638 806s
+[train] E_s0_Handwriting ep 0 train 0.5866 val 0.6440 acc 0.618 60s
+[train] E_s0_Handwriting ep 1 train 0.5128 val 0.6567 acc 0.627 141s
+[train] E_s0_Handwriting ep 2 train 0.4664 val 0.6589 acc 0.647 223s
+[train] E_s0_Handwriting ep 3 train 0.4034 val 0.7120 acc 0.649 305s
+[train] E_s0_Handwriting ep 4 train 0.3618 val 0.7479 acc 0.650 367s
+[train] E_s0_Handwriting ep 5 train 0.3329 val 0.7942 acc 0.654 417s
+[train] E_s0_Handwriting ep 6 train 0.3189 val 0.8099 acc 0.657 498s
+[train] E_s0_Handwriting ep 7 train 0.3023 val 0.8952 acc 0.656 580s
+[train] E_s0_Handwriting ep 8 train 0.2922 val 0.9060 acc 0.654 660s
+[train] E_s0_Handwriting ep 9 train 0.2782 val 0.9617 acc 0.652 731s
+[train] E_s0_Handwriting ep 10 train 0.2775 val 0.9330 acc 0.655 778s
+[train] E_s0_Handwriting ep 11 train 0.2811 val 1.0161 acc 0.648 851s
+[train] E_s0_Handwriting done best acc 0.6573 @ ep 6 epochs 12 pairs/epoch 151734 877s
+[train] E_s0_EthanolConcentration ep 0 train 0.5607 val 0.6397 acc 0.636 84s
+[train] E_s0_EthanolConcentration ep 1 train 0.4842 val 0.6404 acc 0.648 167s
+[train] E_s0_EthanolConcentration ep 2 train 0.4330 val 0.6620 acc 0.659 230s
+[train] E_s0_EthanolConcentration ep 3 train 0.3801 val 0.7038 acc 0.671 281s
+[train] E_s0_EthanolConcentration ep 4 train 0.3500 val 0.7363 acc 0.673 365s
+[train] E_s0_EthanolConcentration ep 5 train 0.3285 val 0.8198 acc 0.656 447s
+[train] E_s0_EthanolConcentration ep 6 train 0.3098 val 0.8137 acc 0.667 530s
+[train] E_s0_EthanolConcentration ep 7 train 0.2986 val 0.8715 acc 0.666 600s
+[train] E_s0_EthanolConcentration ep 8 train 0.2824 val 0.9255 acc 0.663 644s
+[train] E_s0_EthanolConcentration ep 9 train 0.2786 val 0.9412 acc 0.659 722s
+[train] E_s0_EthanolConcentration done best acc 0.6733 @ ep 4 epochs 10 pairs/epoch 156158 748s
+[train] E_s1_UWaveGestureLibrary ep 0 train 0.5675 val 0.6366 acc 0.634 82s
+[train] E_s1_UWaveGestureLibrary ep 1 train 0.4919 val 0.6524 acc 0.634 163s
+[train] E_s1_UWaveGestureLibrary ep 2 train 0.4507 val 0.6725 acc 0.659 226s
+[train] E_s1_UWaveGestureLibrary ep 3 train 0.3967 val 0.7320 acc 0.666 275s
+[train] E_s1_UWaveGestureLibrary ep 4 train 0.3562 val 0.7676 acc 0.670 356s
+[train] E_s1_UWaveGestureLibrary ep 5 train 0.3335 val 0.8453 acc 0.660 438s
+[train] E_s1_UWaveGestureLibrary ep 6 train 0.3140 val 0.8502 acc 0.658 517s
+[train] E_s1_UWaveGestureLibrary ep 7 train 0.3029 val 0.8916 acc 0.666 588s
+[train] E_s1_UWaveGestureLibrary ep 8 train 0.2888 val 0.9431 acc 0.662 636s
+[train] E_s1_UWaveGestureLibrary ep 9 train 0.2826 val 0.9625 acc 0.656 710s
+[train] E_s1_UWaveGestureLibrary done best acc 0.6700 @ ep 4 epochs 10 pairs/epoch 153942 734s
+[train] E_s2_Handwriting ep 0 train 0.5825 val 0.6399 acc 0.626 83s
+[train] E_s2_Handwriting ep 1 train 0.5151 val 0.6391 acc 0.632 164s
+[train] E_s2_Handwriting ep 2 train 0.4716 val 0.6404 acc 0.659 229s
+[train] E_s2_Handwriting ep 3 train 0.4132 val 0.6748 acc 0.655 276s
+[train] E_s2_Handwriting ep 4 train 0.3729 val 0.6971 acc 0.662 357s
+[train] E_s2_Handwriting ep 5 train 0.3433 val 0.6997 acc 0.670 439s
+[train] E_s2_Handwriting ep 6 train 0.3178 val 0.7398 acc 0.677 521s
+[train] E_s2_Handwriting ep 7 train 0.3053 val 0.7875 acc 0.670 594s
+[train] E_s2_Handwriting ep 8 train 0.2897 val 0.8354 acc 0.672 641s
+[train] E_s2_Handwriting ep 9 train 0.2910 val 0.8509 acc 0.658 707s
+[train] E_s2_Handwriting ep 10 train 0.2722 val 0.8696 acc 0.665 787s
+[train] E_s2_Handwriting ep 11 train 0.2667 val 0.8923 acc 0.670 867s
+[train] E_s2_Handwriting done best acc 0.6775 @ ep 6 epochs 12 pairs/epoch 151734 894s
+[train] E_s2_EthanolConcentration ep 0 train 0.5602 val 0.6248 acc 0.649 72s
+[train] E_s2_EthanolConcentration ep 1 train 0.4892 val 0.6215 acc 0.653 120s
+[train] E_s2_EthanolConcentration ep 2 train 0.4439 val 0.6392 acc 0.680 195s
+[train] E_s2_EthanolConcentration ep 3 train 0.3888 val 0.6473 acc 0.690 278s
+[train] E_s2_EthanolConcentration ep 4 train 0.3546 val 0.6772 acc 0.687 360s
+[train] E_s2_EthanolConcentration ep 5 train 0.3309 val 0.7143 acc 0.681 437s
+[train] E_s2_EthanolConcentration ep 6 train 0.3154 val 0.7483 acc 0.680 489s
+[train] E_s2_EthanolConcentration ep 7 train 0.3025 val 0.7601 acc 0.685 554s
+[train] E_s2_EthanolConcentration ep 8 train 0.2873 val 0.8145 acc 0.682 633s
+[train] E_s2_EthanolConcentration done best acc 0.6896 @ ep 3 epochs 9 pairs/epoch 156158 656s
+[train] B_s0_UWaveGestureLibrary ep 0 train 0.6045 val 0.6311 acc 0.647 42s
+[train] B_s0_UWaveGestureLibrary ep 1 train 0.5553 val 0.6449 acc 0.644 83s
+[train] B_s0_UWaveGestureLibrary ep 2 train 0.5157 val 0.6754 acc 0.645 117s
+[train] B_s0_UWaveGestureLibrary ep 3 train 0.4736 val 0.7349 acc 0.635 134s
+[train] B_s0_UWaveGestureLibrary ep 4 train 0.4463 val 0.7757 acc 0.635 150s
+[train] B_s0_UWaveGestureLibrary ep 5 train 0.4297 val 0.8071 acc 0.630 163s
+[train] B_s0_UWaveGestureLibrary done best acc 0.6465 @ ep 0 epochs 6 pairs/epoch 176638 164s
+[train] B_s1_Handwriting ep 0 train 0.6108 val 0.6479 acc 0.627 13s
+[train] B_s1_Handwriting ep 1 train 0.5602 val 0.6707 acc 0.627 24s
+[train] B_s1_Handwriting ep 2 train 0.5157 val 0.7180 acc 0.617 59s
+[train] B_s1_Handwriting ep 3 train 0.4717 val 0.7783 acc 0.614 99s
+[train] B_s1_Handwriting ep 4 train 0.4469 val 0.8217 acc 0.618 140s
+[train] B_s1_Handwriting ep 5 train 0.4308 val 0.8618 acc 0.614 182s
+[train] B_s1_Handwriting ep 6 train 0.4193 val 0.8823 acc 0.618 222s
+[train] B_s1_Handwriting done best acc 0.6268 @ ep 1 epochs 7 pairs/epoch 175092 226s
+[train] B_s1_EthanolConcentration ep 0 train 0.5923 val 0.6299 acc 0.646 43s
+[train] B_s1_EthanolConcentration ep 1 train 0.5409 val 0.6461 acc 0.648 65s
+[train] B_s1_EthanolConcentration ep 2 train 0.4988 val 0.6828 acc 0.639 84s
+[train] B_s1_EthanolConcentration ep 3 train 0.4583 val 0.7353 acc 0.636 97s
+[train] B_s1_EthanolConcentration ep 4 train 0.4336 val 0.7861 acc 0.633 110s
+[train] B_s1_EthanolConcentration ep 5 train 0.4187 val 0.8146 acc 0.631 123s
+[train] B_s1_EthanolConcentration ep 6 train 0.4070 val 0.8438 acc 0.631 142s
+[train] B_s1_EthanolConcentration done best acc 0.6485 @ ep 1 epochs 7 pairs/epoch 180244 146s
+[train] B_s2_UWaveGestureLibrary ep 0 train 0.6070 val 0.6336 acc 0.642 42s
+[train] B_s2_UWaveGestureLibrary ep 1 train 0.5542 val 0.6410 acc 0.646 84s
+[train] B_s2_UWaveGestureLibrary ep 2 train 0.5100 val 0.6817 acc 0.640 125s
+[train] B_s2_UWaveGestureLibrary ep 3 train 0.4672 val 0.7387 acc 0.633 166s
+[train] B_s2_UWaveGestureLibrary ep 4 train 0.4404 val 0.7890 acc 0.621 208s
+[train] B_s2_UWaveGestureLibrary ep 5 train 0.4251 val 0.8098 acc 0.620 241s
+[train] B_s2_UWaveGestureLibrary ep 6 train 0.4139 val 0.8362 acc 0.627 259s
+[train] B_s2_UWaveGestureLibrary done best acc 0.6465 @ ep 1 epochs 7 pairs/epoch 176638 261s
+[train] B_s0_Handwriting ep 0 train 0.5918 val 0.6475 acc 0.628 12s
+[train] B_s0_Handwriting ep 1 train 0.5367 val 0.6686 acc 0.634 22s
+[train] B_s0_Handwriting ep 2 train 0.4999 val 0.7045 acc 0.628 32s
+[train] B_s0_Handwriting ep 3 train 0.4532 val 0.7675 acc 0.621 43s
+[train] B_s0_Handwriting ep 4 train 0.4191 val 0.8227 acc 0.618 53s
+[train] B_s0_Handwriting ep 5 train 0.3959 val 0.8661 acc 0.617 86s
+[train] B_s0_Handwriting ep 6 train 0.3832 val 0.9087 acc 0.611 122s
+[train] B_s0_Handwriting done best acc 0.6337 @ ep 1 epochs 7 pairs/epoch 151734 126s
+[train] B_s0_EthanolConcentration ep 0 train 0.5706 val 0.6273 acc 0.650 38s
+[train] B_s0_EthanolConcentration ep 1 train 0.5134 val 0.6381 acc 0.652 75s
+[train] B_s0_EthanolConcentration ep 2 train 0.4790 val 0.6653 acc 0.654 110s
+[train] B_s0_EthanolConcentration ep 3 train 0.4371 val 0.7213 acc 0.645 147s
+[train] B_s0_EthanolConcentration ep 4 train 0.4023 val 0.7618 acc 0.642 179s
+[train] B_s0_EthanolConcentration ep 5 train 0.3820 val 0.7985 acc 0.639 195s
+[train] B_s0_EthanolConcentration ep 6 train 0.3685 val 0.8370 acc 0.634 211s
+[train] B_s0_EthanolConcentration ep 7 train 0.3589 val 0.8681 acc 0.634 222s
+[train] B_s0_EthanolConcentration done best acc 0.6541 @ ep 2 epochs 8 pairs/epoch 156158 223s
+[train] B_s1_UWaveGestureLibrary ep 0 train 0.5836 val 0.6359 acc 0.644 10s
+[train] B_s1_UWaveGestureLibrary ep 1 train 0.5268 val 0.6556 acc 0.643 21s
+[train] B_s1_UWaveGestureLibrary ep 2 train 0.4912 val 0.6875 acc 0.642 44s
+[train] B_s1_UWaveGestureLibrary ep 3 train 0.4463 val 0.7247 acc 0.643 81s
+[train] B_s1_UWaveGestureLibrary ep 4 train 0.4145 val 0.7770 acc 0.635 118s
+[train] B_s1_UWaveGestureLibrary ep 5 train 0.3939 val 0.8020 acc 0.645 155s
+[train] B_s1_UWaveGestureLibrary ep 6 train 0.3810 val 0.8523 acc 0.634 192s
+[train] B_s1_UWaveGestureLibrary ep 7 train 0.3695 val 0.8872 acc 0.639 230s
+[train] B_s1_UWaveGestureLibrary ep 8 train 0.3632 val 0.9041 acc 0.634 266s
+[train] B_s1_UWaveGestureLibrary ep 9 train 0.3566 val 0.9419 acc 0.632 290s
+[train] B_s1_UWaveGestureLibrary ep 10 train 0.3524 val 0.9478 acc 0.632 306s
+[train] B_s1_UWaveGestureLibrary done best acc 0.6447 @ ep 5 epochs 11 pairs/epoch 153942 307s
+[train] B_s2_Handwriting ep 0 train 0.5909 val 0.6499 acc 0.630 12s
+[train] B_s2_Handwriting ep 1 train 0.5367 val 0.6512 acc 0.638 23s
+[train] B_s2_Handwriting ep 2 train 0.4984 val 0.6762 acc 0.639 34s
+[train] B_s2_Handwriting ep 3 train 0.4518 val 0.7322 acc 0.638 44s
+[train] B_s2_Handwriting ep 4 train 0.4165 val 0.7906 acc 0.629 68s
+[train] B_s2_Handwriting ep 5 train 0.3967 val 0.8355 acc 0.626 102s
+[train] B_s2_Handwriting ep 6 train 0.3816 val 0.8818 acc 0.625 136s
+[train] B_s2_Handwriting ep 7 train 0.3713 val 0.9184 acc 0.623 171s
+[train] B_s2_Handwriting done best acc 0.6391 @ ep 2 epochs 8 pairs/epoch 151734 174s
+[train] B_s2_EthanolConcentration ep 0 train 0.5741 val 0.6319 acc 0.647 36s
+[train] B_s2_EthanolConcentration ep 1 train 0.5124 val 0.6438 acc 0.649 70s
+[train] B_s2_EthanolConcentration ep 2 train 0.4746 val 0.6690 acc 0.648 104s
+[train] B_s2_EthanolConcentration ep 3 train 0.4319 val 0.7201 acc 0.641 125s
+[train] B_s2_EthanolConcentration ep 4 train 0.3982 val 0.7714 acc 0.635 141s
+[train] B_s2_EthanolConcentration ep 5 train 0.3786 val 0.8140 acc 0.632 152s
+[train] B_s2_EthanolConcentration ep 6 train 0.3667 val 0.8577 acc 0.624 161s
+[train] B_s2_EthanolConcentration done best acc 0.6486 @ ep 1 epochs 7 pairs/epoch 156158 162s

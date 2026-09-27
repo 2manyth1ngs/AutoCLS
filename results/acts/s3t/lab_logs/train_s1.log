@@ -1,0 +1,220 @@
+[train] E_s0_PhonemeSpectra ep 0 train 0.5902 val 0.6318 acc 0.633 64s
+[train] E_s0_PhonemeSpectra ep 1 train 0.5139 val 0.6328 acc 0.659 150s
+[train] E_s0_PhonemeSpectra ep 2 train 0.4491 val 0.6550 acc 0.665 255s
+[train] E_s0_PhonemeSpectra ep 3 train 0.4062 val 0.6974 acc 0.663 361s
+[train] E_s0_PhonemeSpectra ep 4 train 0.3774 val 0.7529 acc 0.659 432s
+[train] E_s0_PhonemeSpectra ep 5 train 0.3576 val 0.7799 acc 0.653 532s
+[train] E_s0_PhonemeSpectra ep 6 train 0.3426 val 0.8174 acc 0.650 657s
+[train] E_s0_PhonemeSpectra ep 7 train 0.3303 val 0.8725 acc 0.642 758s
+[train] E_s0_PhonemeSpectra done best acc 0.6653 @ ep 2 epochs 8 pairs/epoch 178800 786s
+[train] E_s0_SelfRegulationSCP1 ep 0 train 0.5892 val 0.6240 acc 0.646 68s
+[train] E_s0_SelfRegulationSCP1 ep 1 train 0.5164 val 0.6235 acc 0.647 165s
+[train] E_s0_SelfRegulationSCP1 ep 2 train 0.4727 val 0.6439 acc 0.658 266s
+[train] E_s0_SelfRegulationSCP1 ep 3 train 0.4180 val 0.6848 acc 0.663 366s
+[train] E_s0_SelfRegulationSCP1 ep 4 train 0.3848 val 0.7156 acc 0.663 460s
+[train] E_s0_SelfRegulationSCP1 ep 5 train 0.3599 val 0.7750 acc 0.663 541s
+[train] E_s0_SelfRegulationSCP1 ep 6 train 0.3463 val 0.8442 acc 0.654 638s
+[train] E_s0_SelfRegulationSCP1 ep 7 train 0.3305 val 0.8946 acc 0.649 737s
+[train] E_s0_SelfRegulationSCP1 ep 8 train 0.3200 val 0.8928 acc 0.658 831s
+[train] E_s0_SelfRegulationSCP1 done best acc 0.6635 @ ep 3 epochs 9 pairs/epoch 167940 842s
+Traceback (most recent call last):
+  File "scripts/105_acts_s3r.py", line 517, in <module>
+    raise SystemExit(main())
+  File "scripts/105_acts_s3r.py", line 506, in main
+    cmd_train(args)
+  File "scripts/105_acts_s3r.py", line 228, in cmd_train
+    T = tvec(i, True)
+  File "scripts/105_acts_s3r.py", line 198, in tvec
+    return None if arm == "B" else sc.task_vec(W[i], None, rng, sub)
+  File "/home/b311/data/wangwenjie/kejunyu/AutoCLS/scripts/89_acts_s3c.py", line 210, in task_vec
+    return self.m.encode_tasks([torch.as_tensor(np.asarray(w), dtype=torch.float32, device=self.dev)])[0]
+  File "/home/b311/data/wangwenjie/kejunyu/AutoCLS/autocls/comparator/tclsc_model.py", line 178, in encode_tasks
+    return self.set_encoder.set_encode(windows_list)
+  File "/home/b311/data/wangwenjie/kejunyu/AutoCLS/autocls/task_embed/set_transformer.py", line 176, in set_encode
+    cls_protos = self.intra_setpool(x).squeeze(1)      # (n_i, nz)  Eq.10
+  File "/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/b311/data/wangwenjie/kejunyu/AutoCLS/autocls/task_embed/set_transformer.py", line 126, in forward
+    x1 = self.enc(X)
+  File "/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/container.py", line 219, in forward
+    input = module(input)
+  File "/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/b311/data/wangwenjie/kejunyu/AutoCLS/autocls/task_embed/set_transformer.py", line 68, in forward
+    return self.mab(X, X)
+  File "/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/b311/data/wangwenjie/kejunyu/AutoCLS/autocls/task_embed/set_transformer.py", line 48, in forward
+    Q_ = torch.cat(Q.split(dim_split, -1), -3)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 23.53 GiB of which 8.19 MiB is free. Process 777532 has 6.63 GiB memory in use. Process 778763 has 2.15 GiB memory in use. Process 778534 has 5.28 GiB memory in use. Process 883516 has 5.17 GiB memory in use. Process 1258959 has 2.83 GiB memory in use. Process 1259429 has 808.00 MiB memory in use. Including non-PyTorch memory, this process has 630.00 MiB memory in use. Of the allocated memory 165.14 MiB is allocated by PyTorch, and 8.86 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+== [14:19:32] GPU 3 retry #1: python scripts/105_acts_s3r.py --device cuda --resume --stop acc --train --arm E --fold Cricket --seed 1 --gate 1 --outdir results/acts/s3t/g1
+[train] E_s1_Cricket ep 0 train 0.5872 val 0.6348 acc 0.635 107s
+[train] E_s1_Cricket ep 1 train 0.5195 val 0.6462 acc 0.625 235s
+[train] E_s1_Cricket ep 2 train 0.4628 val 0.6626 acc 0.666 293s
+[train] E_s1_Cricket ep 3 train 0.4157 val 0.6617 acc 0.658 354s
+[train] E_s1_Cricket ep 4 train 0.3889 val 0.7439 acc 0.659 421s
+[train] E_s1_Cricket ep 5 train 0.3706 val 0.7926 acc 0.658 492s
+[train] E_s1_Cricket ep 6 train 0.3558 val 0.8301 acc 0.646 566s
+[train] E_s1_Cricket ep 7 train 0.3429 val 0.8545 acc 0.649 673s
+[train] E_s1_Cricket done best acc 0.6659 @ ep 2 epochs 8 pairs/epoch 178972 703s
+[train] E_s2_PhonemeSpectra ep 0 train 0.5873 val 0.6170 acc 0.646 126s
+[train] E_s2_PhonemeSpectra ep 1 train 0.5211 val 0.6090 acc 0.669 210s
+[train] E_s2_PhonemeSpectra ep 2 train 0.4647 val 0.6001 acc 0.692 289s
+[train] E_s2_PhonemeSpectra ep 3 train 0.4152 val 0.6375 acc 0.676 395s
+[train] E_s2_PhonemeSpectra ep 4 train 0.3886 val 0.6615 acc 0.686 503s
+[train] E_s2_PhonemeSpectra ep 5 train 0.3699 val 0.6878 acc 0.682 603s
+[train] E_s2_PhonemeSpectra ep 6 train 0.3546 val 0.7134 acc 0.683 681s
+[train] E_s2_PhonemeSpectra ep 7 train 0.3411 val 0.7494 acc 0.682 796s
+[train] E_s2_PhonemeSpectra done best acc 0.6921 @ ep 2 epochs 8 pairs/epoch 178800 820s
+Traceback (most recent call last):
+  File "scripts/105_acts_s3r.py", line 517, in <module>
+    raise SystemExit(main())
+  File "scripts/105_acts_s3r.py", line 506, in main
+    cmd_train(args)
+  File "scripts/105_acts_s3r.py", line 228, in cmd_train
+    T = tvec(i, True)
+  File "scripts/105_acts_s3r.py", line 198, in tvec
+    return None if arm == "B" else sc.task_vec(W[i], None, rng, sub)
+  File "/home/b311/data/wangwenjie/kejunyu/AutoCLS/scripts/89_acts_s3c.py", line 210, in task_vec
+    return self.m.encode_tasks([torch.as_tensor(np.asarray(w), dtype=torch.float32, device=self.dev)])[0]
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 23.53 GiB of which 7.50 MiB is free. Process 777532 has 6.63 GiB memory in use. Process 778763 has 2.15 GiB memory in use. Process 778534 has 5.72 GiB memory in use. Process 883516 has 5.17 GiB memory in use. Process 1436066 has 3.42 GiB memory in use. Including non-PyTorch memory, this process has 396.00 MiB memory in use. Of the allocated memory 10.33 MiB is allocated by PyTorch, and 1.67 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+== [14:46:33] GPU 3 retry #1: python scripts/105_acts_s3r.py --device cuda --resume --stop acc --train --arm E --fold SelfRegulationSCP1 --seed 2 --gate 1 --outdir results/acts/s3t/g1
+[train] E_s2_SelfRegulationSCP1 ep 0 train 0.5818 val 0.6063 acc 0.656 97s
+[train] E_s2_SelfRegulationSCP1 ep 1 train 0.5135 val 0.6045 acc 0.668 164s
+[train] E_s2_SelfRegulationSCP1 ep 2 train 0.4637 val 0.6097 acc 0.687 261s
+[train] E_s2_SelfRegulationSCP1 ep 3 train 0.4140 val 0.6248 acc 0.693 361s
+[train] E_s2_SelfRegulationSCP1 ep 4 train 0.3830 val 0.6426 acc 0.696 457s
+[train] E_s2_SelfRegulationSCP1 ep 5 train 0.3577 val 0.6920 acc 0.687 532s
+[train] E_s2_SelfRegulationSCP1 ep 6 train 0.3419 val 0.6889 acc 0.693 582s
+[train] E_s2_SelfRegulationSCP1 ep 7 train 0.3277 val 0.7261 acc 0.690 667s
+[train] E_s2_SelfRegulationSCP1 ep 8 train 0.3172 val 0.7515 acc 0.694 755s
+[train] E_s2_SelfRegulationSCP1 ep 9 train 0.3114 val 0.7662 acc 0.689 841s
+[train] E_s2_SelfRegulationSCP1 done best acc 0.6961 @ ep 4 epochs 10 pairs/epoch 167940 850s
+[train] E_s0_Cricket ep 0 train 0.5717 val 0.6486 acc 0.630 55s
+[train] E_s0_Cricket ep 1 train 0.4954 val 0.6555 acc 0.641 129s
+[train] E_s0_Cricket ep 2 train 0.4472 val 0.6557 acc 0.661 220s
+[train] E_s0_Cricket ep 3 train 0.3936 val 0.7056 acc 0.672 299s
+[train] E_s0_Cricket ep 4 train 0.3574 val 0.7330 acc 0.670 368s
+[train] E_s0_Cricket ep 5 train 0.3355 val 0.8059 acc 0.662 422s
+[train] E_s0_Cricket ep 6 train 0.3165 val 0.8391 acc 0.667 480s
+[train] E_s0_Cricket ep 7 train 0.2996 val 0.8953 acc 0.661 560s
+[train] E_s0_Cricket ep 8 train 0.2872 val 0.8773 acc 0.658 640s
+[train] E_s0_Cricket done best acc 0.6720 @ ep 3 epochs 9 pairs/epoch 154990 663s
+[train] E_s1_PhonemeSpectra ep 0 train 0.5623 val 0.6375 acc 0.639 79s
+[train] E_s1_PhonemeSpectra ep 1 train 0.4882 val 0.6363 acc 0.644 134s
+[train] E_s1_PhonemeSpectra ep 2 train 0.4350 val 0.6712 acc 0.664 208s
+[train] E_s1_PhonemeSpectra ep 3 train 0.3797 val 0.6965 acc 0.664 287s
+[train] E_s1_PhonemeSpectra ep 4 train 0.3463 val 0.7497 acc 0.670 365s
+[train] E_s1_PhonemeSpectra ep 5 train 0.3228 val 0.7514 acc 0.665 430s
+[train] E_s1_PhonemeSpectra ep 6 train 0.3064 val 0.8070 acc 0.662 482s
+[train] E_s1_PhonemeSpectra ep 7 train 0.2922 val 0.8567 acc 0.654 562s
+[train] E_s1_PhonemeSpectra ep 8 train 0.2796 val 0.8887 acc 0.660 645s
+[train] E_s1_PhonemeSpectra ep 9 train 0.2686 val 0.9299 acc 0.648 738s
+[train] E_s1_PhonemeSpectra done best acc 0.6698 @ ep 4 epochs 10 pairs/epoch 154534 754s
+[train] E_s1_SelfRegulationSCP1 ep 0 train 0.5543 val 0.6330 acc 0.637 48s
+[train] E_s1_SelfRegulationSCP1 ep 1 train 0.4749 val 0.6313 acc 0.648 111s
+[train] E_s1_SelfRegulationSCP1 ep 2 train 0.4397 val 0.6514 acc 0.655 187s
+[train] E_s1_SelfRegulationSCP1 ep 3 train 0.4026 val 0.6766 acc 0.662 263s
+[train] E_s1_SelfRegulationSCP1 ep 4 train 0.3575 val 0.7604 acc 0.666 337s
+[train] E_s1_SelfRegulationSCP1 ep 5 train 0.3261 val 0.7684 acc 0.662 389s
+[train] E_s1_SelfRegulationSCP1 ep 6 train 0.3068 val 0.8396 acc 0.665 449s
+[train] E_s1_SelfRegulationSCP1 ep 7 train 0.2904 val 0.8665 acc 0.666 537s
+[train] E_s1_SelfRegulationSCP1 ep 8 train 0.2835 val 0.9035 acc 0.664 605s
+[train] E_s1_SelfRegulationSCP1 ep 9 train 0.2709 val 0.8966 acc 0.668 681s
+[train] E_s1_SelfRegulationSCP1 ep 10 train 0.2607 val 0.9638 acc 0.663 741s
+[train] E_s1_SelfRegulationSCP1 ep 11 train 0.2591 val 1.0728 acc 0.650 788s
+[train] E_s1_SelfRegulationSCP1 ep 12 train 0.2513 val 0.9988 acc 0.660 863s
+[train] E_s1_SelfRegulationSCP1 ep 13 train 0.2499 val 1.0605 acc 0.656 939s
+[train] E_s1_SelfRegulationSCP1 ep 14 train 0.2418 val 1.1189 acc 0.646 1014s
+[train] E_s1_SelfRegulationSCP1 done best acc 0.6675 @ ep 9 epochs 15 pairs/epoch 146176 1045s
+[train] E_s2_Cricket ep 0 train 0.5724 val 0.6367 acc 0.632 57s
+[train] E_s2_Cricket ep 1 train 0.4969 val 0.6328 acc 0.644 95s
+[train] E_s2_Cricket ep 2 train 0.4428 val 0.6499 acc 0.673 157s
+[train] E_s2_Cricket ep 3 train 0.3913 val 0.6497 acc 0.675 222s
+[train] E_s2_Cricket ep 4 train 0.3595 val 0.6797 acc 0.682 286s
+[train] E_s2_Cricket ep 5 train 0.3332 val 0.6955 acc 0.685 333s
+[train] E_s2_Cricket ep 6 train 0.3118 val 0.7377 acc 0.684 368s
+[train] E_s2_Cricket ep 7 train 0.3010 val 0.8041 acc 0.674 427s
+[train] E_s2_Cricket ep 8 train 0.2836 val 0.7859 acc 0.682 496s
+[train] E_s2_Cricket ep 9 train 0.2768 val 0.8767 acc 0.676 572s
+[train] E_s2_Cricket ep 10 train 0.2694 val 0.8570 acc 0.676 624s
+[train] E_s2_Cricket done best acc 0.6850 @ ep 5 epochs 11 pairs/epoch 154990 627s
+[train] B_s0_PhonemeSpectra ep 0 train 0.6010 val 0.6360 acc 0.644 8s
+[train] B_s0_PhonemeSpectra ep 1 train 0.5518 val 0.6474 acc 0.642 15s
+[train] B_s0_PhonemeSpectra ep 2 train 0.5123 val 0.6857 acc 0.637 22s
+[train] B_s0_PhonemeSpectra ep 3 train 0.4672 val 0.7467 acc 0.627 29s
+[train] B_s0_PhonemeSpectra ep 4 train 0.4402 val 0.7944 acc 0.627 36s
+[train] B_s0_PhonemeSpectra ep 5 train 0.4245 val 0.8213 acc 0.628 43s
+[train] B_s0_PhonemeSpectra done best acc 0.6443 @ ep 0 epochs 6 pairs/epoch 178800 44s
+[train] B_s0_SelfRegulationSCP1 ep 0 train 0.5940 val 0.6229 acc 0.657 10s
+[train] B_s0_SelfRegulationSCP1 ep 1 train 0.5394 val 0.6444 acc 0.654 36s
+[train] B_s0_SelfRegulationSCP1 ep 2 train 0.4977 val 0.6795 acc 0.647 61s
+[train] B_s0_SelfRegulationSCP1 ep 3 train 0.4544 val 0.7291 acc 0.639 87s
+[train] B_s0_SelfRegulationSCP1 ep 4 train 0.4292 val 0.7747 acc 0.636 113s
+[train] B_s0_SelfRegulationSCP1 ep 5 train 0.4132 val 0.8062 acc 0.632 139s
+[train] B_s0_SelfRegulationSCP1 done best acc 0.6567 @ ep 0 epochs 6 pairs/epoch 167940 141s
+[train] B_s1_Cricket ep 0 train 0.6015 val 0.6414 acc 0.634 29s
+[train] B_s1_Cricket ep 1 train 0.5511 val 0.6616 acc 0.634 57s
+[train] B_s1_Cricket ep 2 train 0.5074 val 0.7141 acc 0.631 70s
+[train] B_s1_Cricket ep 3 train 0.4660 val 0.7637 acc 0.621 80s
+[train] B_s1_Cricket ep 4 train 0.4421 val 0.8144 acc 0.626 90s
+[train] B_s1_Cricket ep 5 train 0.4258 val 0.8580 acc 0.618 99s
+[train] B_s1_Cricket done best acc 0.6344 @ ep 0 epochs 6 pairs/epoch 178972 99s
+[train] B_s2_PhonemeSpectra ep 0 train 0.5991 val 0.6334 acc 0.647 8s
+[train] B_s2_PhonemeSpectra ep 1 train 0.5485 val 0.6488 acc 0.646 15s
+[train] B_s2_PhonemeSpectra ep 2 train 0.5064 val 0.6901 acc 0.637 23s
+[train] B_s2_PhonemeSpectra ep 3 train 0.4646 val 0.7473 acc 0.625 30s
+[train] B_s2_PhonemeSpectra ep 4 train 0.4364 val 0.7843 acc 0.629 38s
+[train] B_s2_PhonemeSpectra ep 5 train 0.4202 val 0.8310 acc 0.615 60s
+[train] B_s2_PhonemeSpectra done best acc 0.6468 @ ep 0 epochs 6 pairs/epoch 178800 64s
+[train] B_s2_SelfRegulationSCP1 ep 0 train 0.5946 val 0.6273 acc 0.653 38s
+[train] B_s2_SelfRegulationSCP1 ep 1 train 0.5401 val 0.6352 acc 0.656 69s
+[train] B_s2_SelfRegulationSCP1 ep 2 train 0.4964 val 0.6728 acc 0.647 90s
+[train] B_s2_SelfRegulationSCP1 ep 3 train 0.4517 val 0.7402 acc 0.633 110s
+[train] B_s2_SelfRegulationSCP1 ep 4 train 0.4249 val 0.7666 acc 0.632 134s
+[train] B_s2_SelfRegulationSCP1 ep 5 train 0.4089 val 0.8216 acc 0.633 160s
+[train] B_s2_SelfRegulationSCP1 ep 6 train 0.3980 val 0.8496 acc 0.621 184s
+[train] B_s2_SelfRegulationSCP1 done best acc 0.6559 @ ep 1 epochs 7 pairs/epoch 167940 185s
+[train] B_s0_Cricket ep 0 train 0.5814 val 0.6414 acc 0.641 9s
+[train] B_s0_Cricket ep 1 train 0.5244 val 0.6527 acc 0.643 18s
+[train] B_s0_Cricket ep 2 train 0.4867 val 0.6879 acc 0.640 27s
+[train] B_s0_Cricket ep 3 train 0.4430 val 0.7428 acc 0.633 34s
+[train] B_s0_Cricket ep 4 train 0.4107 val 0.8015 acc 0.632 40s
+[train] B_s0_Cricket ep 5 train 0.3924 val 0.8422 acc 0.632 47s
+[train] B_s0_Cricket ep 6 train 0.3781 val 0.8730 acc 0.634 53s
+[train] B_s0_Cricket done best acc 0.6429 @ ep 1 epochs 7 pairs/epoch 154990 53s
+[train] B_s1_PhonemeSpectra ep 0 train 0.5773 val 0.6389 acc 0.645 7s
+[train] B_s1_PhonemeSpectra ep 1 train 0.5188 val 0.6509 acc 0.643 13s
+[train] B_s1_PhonemeSpectra ep 2 train 0.4820 val 0.6890 acc 0.645 20s
+[train] B_s1_PhonemeSpectra ep 3 train 0.4400 val 0.7443 acc 0.634 40s
+[train] B_s1_PhonemeSpectra ep 4 train 0.4084 val 0.7874 acc 0.630 64s
+[train] B_s1_PhonemeSpectra ep 5 train 0.3882 val 0.8262 acc 0.630 89s
+[train] B_s1_PhonemeSpectra ep 6 train 0.3734 val 0.8705 acc 0.631 114s
+[train] B_s1_PhonemeSpectra ep 7 train 0.3645 val 0.8823 acc 0.630 139s
+[train] B_s1_PhonemeSpectra done best acc 0.6451 @ ep 2 epochs 8 pairs/epoch 154534 141s
+[train] B_s1_SelfRegulationSCP1 ep 0 train 0.5732 val 0.6361 acc 0.646 24s
+[train] B_s1_SelfRegulationSCP1 ep 1 train 0.5096 val 0.6428 acc 0.652 46s
+[train] B_s1_SelfRegulationSCP1 ep 2 train 0.4730 val 0.6686 acc 0.650 70s
+[train] B_s1_SelfRegulationSCP1 ep 3 train 0.4289 val 0.7197 acc 0.643 83s
+[train] B_s1_SelfRegulationSCP1 ep 4 train 0.3969 val 0.7817 acc 0.643 95s
+[train] B_s1_SelfRegulationSCP1 ep 5 train 0.3786 val 0.8134 acc 0.642 105s
+[train] B_s1_SelfRegulationSCP1 ep 6 train 0.3666 val 0.8382 acc 0.639 113s
+[train] B_s1_SelfRegulationSCP1 done best acc 0.6518 @ ep 1 epochs 7 pairs/epoch 146176 113s
+[train] B_s2_Cricket ep 0 train 0.5823 val 0.6512 acc 0.635 7s
+[train] B_s2_Cricket ep 1 train 0.5266 val 0.6563 acc 0.642 15s
+[train] B_s2_Cricket ep 2 train 0.4872 val 0.6856 acc 0.633 22s
+[train] B_s2_Cricket ep 3 train 0.4397 val 0.7453 acc 0.630 29s
+[train] B_s2_Cricket ep 4 train 0.4068 val 0.8045 acc 0.625 39s
+[train] B_s2_Cricket ep 5 train 0.3868 val 0.8397 acc 0.621 63s
+[train] B_s2_Cricket ep 6 train 0.3740 val 0.8664 acc 0.625 81s
+[train] B_s2_Cricket done best acc 0.6416 @ ep 1 epochs 7 pairs/epoch 154990 83s

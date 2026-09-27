@@ -1,0 +1,169 @@
+[train] E_s0_Cricket ep 0 train 0.5955 val 0.6442 acc 0.630 87s
+[train] E_s0_Cricket ep 1 train 0.5246 val 0.6485 acc 0.638 175s
+[train] E_s0_Cricket ep 2 train 0.4695 val 0.6751 acc 0.659 263s
+[train] E_s0_Cricket ep 3 train 0.4210 val 0.7000 acc 0.664 351s
+[train] E_s0_Cricket ep 4 train 0.3905 val 0.7587 acc 0.661 441s
+[train] E_s0_Cricket ep 5 train 0.3690 val 0.7979 acc 0.659 530s
+[train] E_s0_Cricket ep 6 train 0.3522 val 0.8263 acc 0.658 619s
+[train] E_s0_Cricket ep 7 train 0.3404 val 0.8881 acc 0.653 706s
+[train] E_s0_Cricket ep 8 train 0.3293 val 0.8936 acc 0.650 796s
+[train] E_s0_Cricket done best acc 0.6641 @ ep 3 epochs 9 pairs/epoch 178972 818s
+[train] E_s1_PhonemeSpectra ep 0 train 0.5900 val 0.6540 acc 0.641 89s
+[train] E_s1_PhonemeSpectra ep 1 train 0.5201 val 0.6442 acc 0.645 178s
+[train] E_s1_PhonemeSpectra ep 2 train 0.4768 val 0.6596 acc 0.652 266s
+[train] E_s1_PhonemeSpectra ep 3 train 0.4219 val 0.6972 acc 0.665 354s
+[train] E_s1_PhonemeSpectra ep 4 train 0.3865 val 0.7026 acc 0.666 443s
+[train] E_s1_PhonemeSpectra ep 5 train 0.3630 val 0.7490 acc 0.668 532s
+[train] E_s1_PhonemeSpectra ep 6 train 0.3474 val 0.7822 acc 0.666 621s
+[train] E_s1_PhonemeSpectra ep 7 train 0.3336 val 0.8490 acc 0.653 711s
+[train] E_s1_PhonemeSpectra ep 8 train 0.3230 val 0.8812 acc 0.652 800s
+[train] E_s1_PhonemeSpectra ep 9 train 0.3142 val 0.9052 acc 0.653 888s
+[train] E_s1_PhonemeSpectra ep 10 train 0.3091 val 0.9924 acc 0.644 976s
+[train] E_s1_PhonemeSpectra done best acc 0.6677 @ ep 5 epochs 11 pairs/epoch 178800 999s
+[train] E_s1_SelfRegulationSCP1 ep 0 train 0.5819 val 0.6278 acc 0.635 79s
+[train] E_s1_SelfRegulationSCP1 ep 1 train 0.5084 val 0.6266 acc 0.652 158s
+[train] E_s1_SelfRegulationSCP1 ep 2 train 0.4690 val 0.6557 acc 0.652 236s
+[train] E_s1_SelfRegulationSCP1 ep 3 train 0.4268 val 0.6871 acc 0.665 315s
+[train] E_s1_SelfRegulationSCP1 ep 4 train 0.3857 val 0.7413 acc 0.668 395s
+[train] E_s1_SelfRegulationSCP1 ep 5 train 0.3624 val 0.7603 acc 0.658 475s
+[train] E_s1_SelfRegulationSCP1 ep 6 train 0.3441 val 0.8186 acc 0.664 555s
+[train] E_s1_SelfRegulationSCP1 ep 7 train 0.3310 val 0.8514 acc 0.652 635s
+[train] E_s1_SelfRegulationSCP1 ep 8 train 0.3210 val 0.8847 acc 0.650 714s
+[train] E_s1_SelfRegulationSCP1 ep 9 train 0.3107 val 0.9264 acc 0.640 768s
+[train] E_s1_SelfRegulationSCP1 done best acc 0.6682 @ ep 4 epochs 10 pairs/epoch 167940 773s
+[train] E_s2_Cricket ep 0 train 0.5901 val 0.6210 acc 0.638 57s
+[train] E_s2_Cricket ep 1 train 0.5220 val 0.6229 acc 0.667 153s
+[train] E_s2_Cricket ep 2 train 0.4632 val 0.6191 acc 0.681 248s
+[train] E_s2_Cricket ep 3 train 0.4199 val 0.6403 acc 0.683 345s
+[train] E_s2_Cricket ep 4 train 0.3885 val 0.6805 acc 0.685 409s
+[train] E_s2_Cricket ep 5 train 0.3686 val 0.6799 acc 0.681 487s
+[train] E_s2_Cricket ep 6 train 0.3517 val 0.7185 acc 0.682 581s
+[train] E_s2_Cricket ep 7 train 0.3377 val 0.7425 acc 0.679 678s
+[train] E_s2_Cricket ep 8 train 0.3320 val 0.7574 acc 0.684 759s
+[train] E_s2_Cricket ep 9 train 0.3222 val 0.7791 acc 0.676 819s
+[train] E_s2_Cricket done best acc 0.6846 @ ep 4 epochs 10 pairs/epoch 178972 843s
+[train] E_s0_PhonemeSpectra ep 0 train 0.5658 val 0.6354 acc 0.631 86s
+[train] E_s0_PhonemeSpectra ep 1 train 0.4902 val 0.6574 acc 0.633 171s
+[train] E_s0_PhonemeSpectra ep 2 train 0.4438 val 0.6657 acc 0.652 251s
+[train] E_s0_PhonemeSpectra ep 3 train 0.3852 val 0.7342 acc 0.660 305s
+[train] E_s0_PhonemeSpectra ep 4 train 0.3453 val 0.7974 acc 0.645 373s
+[train] E_s0_PhonemeSpectra ep 5 train 0.3193 val 0.8555 acc 0.652 458s
+[train] E_s0_PhonemeSpectra ep 6 train 0.3034 val 0.9039 acc 0.650 542s
+[train] E_s0_PhonemeSpectra ep 7 train 0.2901 val 0.9293 acc 0.643 624s
+[train] E_s0_PhonemeSpectra ep 8 train 0.2817 val 1.0380 acc 0.643 680s
+[train] E_s0_PhonemeSpectra done best acc 0.6600 @ ep 3 epochs 9 pairs/epoch 154534 686s
+[train] E_s0_SelfRegulationSCP1 ep 0 train 0.5613 val 0.6450 acc 0.637 72s
+[train] E_s0_SelfRegulationSCP1 ep 1 train 0.4808 val 0.6346 acc 0.651 148s
+[train] E_s0_SelfRegulationSCP1 ep 2 train 0.4399 val 0.6492 acc 0.660 226s
+[train] E_s0_SelfRegulationSCP1 ep 3 train 0.3829 val 0.7076 acc 0.665 304s
+[train] E_s0_SelfRegulationSCP1 ep 4 train 0.3448 val 0.7636 acc 0.668 357s
+[train] E_s0_SelfRegulationSCP1 ep 5 train 0.3209 val 0.7993 acc 0.664 414s
+[train] E_s0_SelfRegulationSCP1 ep 6 train 0.3044 val 0.8330 acc 0.661 495s
+[train] E_s0_SelfRegulationSCP1 ep 7 train 0.2898 val 0.9186 acc 0.653 576s
+[train] E_s0_SelfRegulationSCP1 ep 8 train 0.2792 val 0.8702 acc 0.649 656s
+[train] E_s0_SelfRegulationSCP1 ep 9 train 0.2722 val 0.9593 acc 0.648 718s
+[train] E_s0_SelfRegulationSCP1 done best acc 0.6679 @ ep 4 epochs 10 pairs/epoch 146176 724s
+[train] E_s1_Cricket ep 0 train 0.5662 val 0.6517 acc 0.632 62s
+[train] E_s1_Cricket ep 1 train 0.4883 val 0.6520 acc 0.642 143s
+[train] E_s1_Cricket ep 2 train 0.4384 val 0.6752 acc 0.660 225s
+[train] E_s1_Cricket ep 3 train 0.3858 val 0.7313 acc 0.647 307s
+[train] E_s1_Cricket ep 4 train 0.3576 val 0.7566 acc 0.657 368s
+[train] E_s1_Cricket ep 5 train 0.3347 val 0.8063 acc 0.654 420s
+[train] E_s1_Cricket ep 6 train 0.3172 val 0.8733 acc 0.651 504s
+[train] E_s1_Cricket ep 7 train 0.3044 val 0.8742 acc 0.649 587s
+[train] E_s1_Cricket done best acc 0.6599 @ ep 2 epochs 8 pairs/epoch 154990 613s
+[train] E_s2_PhonemeSpectra ep 0 train 0.5642 val 0.6280 acc 0.637 79s
+[train] E_s2_PhonemeSpectra ep 1 train 0.4898 val 0.6298 acc 0.653 132s
+[train] E_s2_PhonemeSpectra ep 2 train 0.4438 val 0.6398 acc 0.678 195s
+[train] E_s2_PhonemeSpectra ep 3 train 0.3831 val 0.6659 acc 0.683 276s
+[train] E_s2_PhonemeSpectra ep 4 train 0.3484 val 0.6832 acc 0.681 358s
+[train] E_s2_PhonemeSpectra ep 5 train 0.3224 val 0.6983 acc 0.686 440s
+[train] E_s2_PhonemeSpectra ep 6 train 0.3091 val 0.7442 acc 0.686 497s
+[train] E_s2_PhonemeSpectra ep 7 train 0.2955 val 0.7488 acc 0.683 551s
+[train] E_s2_PhonemeSpectra ep 8 train 0.2849 val 0.7939 acc 0.675 633s
+[train] E_s2_PhonemeSpectra ep 9 train 0.2759 val 0.8193 acc 0.677 716s
+[train] E_s2_PhonemeSpectra ep 10 train 0.2646 val 0.8331 acc 0.683 799s
+[train] E_s2_PhonemeSpectra ep 11 train 0.2581 val 0.8389 acc 0.680 866s
+[train] E_s2_PhonemeSpectra done best acc 0.6860 @ ep 6 epochs 12 pairs/epoch 154534 872s
+[train] E_s2_SelfRegulationSCP1 ep 0 train 0.5557 val 0.6181 acc 0.650 55s
+[train] E_s2_SelfRegulationSCP1 ep 1 train 0.4787 val 0.6195 acc 0.661 134s
+[train] E_s2_SelfRegulationSCP1 ep 2 train 0.4370 val 0.6230 acc 0.678 213s
+[train] E_s2_SelfRegulationSCP1 ep 3 train 0.3854 val 0.6582 acc 0.688 288s
+[train] E_s2_SelfRegulationSCP1 ep 4 train 0.3524 val 0.6688 acc 0.686 354s
+[train] E_s2_SelfRegulationSCP1 ep 5 train 0.3286 val 0.7276 acc 0.685 398s
+[train] E_s2_SelfRegulationSCP1 ep 6 train 0.3098 val 0.7499 acc 0.689 466s
+[train] E_s2_SelfRegulationSCP1 ep 7 train 0.2909 val 0.7794 acc 0.688 545s
+[train] E_s2_SelfRegulationSCP1 ep 8 train 0.2853 val 0.8043 acc 0.677 623s
+[train] E_s2_SelfRegulationSCP1 ep 9 train 0.2742 val 0.8388 acc 0.681 701s
+[train] E_s2_SelfRegulationSCP1 ep 10 train 0.2793 val 0.8683 acc 0.677 756s
+[train] E_s2_SelfRegulationSCP1 ep 11 train 0.2616 val 0.8748 acc 0.675 806s
+[train] E_s2_SelfRegulationSCP1 done best acc 0.6894 @ ep 6 epochs 12 pairs/epoch 146176 833s
+[train] B_s0_Cricket ep 0 train 0.6038 val 0.6368 acc 0.643 47s
+[train] B_s0_Cricket ep 1 train 0.5535 val 0.6595 acc 0.639 92s
+[train] B_s0_Cricket ep 2 train 0.5125 val 0.7042 acc 0.630 134s
+[train] B_s0_Cricket ep 3 train 0.4704 val 0.7503 acc 0.629 176s
+[train] B_s0_Cricket ep 4 train 0.4446 val 0.8095 acc 0.620 217s
+[train] B_s0_Cricket ep 5 train 0.4291 val 0.8454 acc 0.619 234s
+[train] B_s0_Cricket done best acc 0.6429 @ ep 0 epochs 6 pairs/epoch 178972 235s
+[train] B_s1_PhonemeSpectra ep 0 train 0.5992 val 0.6392 acc 0.640 16s
+[train] B_s1_PhonemeSpectra ep 1 train 0.5479 val 0.6559 acc 0.640 29s
+[train] B_s1_PhonemeSpectra ep 2 train 0.5054 val 0.7017 acc 0.639 40s
+[train] B_s1_PhonemeSpectra ep 3 train 0.4636 val 0.7626 acc 0.624 52s
+[train] B_s1_PhonemeSpectra ep 4 train 0.4381 val 0.7990 acc 0.631 78s
+[train] B_s1_PhonemeSpectra ep 5 train 0.4207 val 0.8462 acc 0.618 118s
+[train] B_s1_PhonemeSpectra done best acc 0.6401 @ ep 0 epochs 6 pairs/epoch 178800 122s
+[train] B_s1_SelfRegulationSCP1 ep 0 train 0.5964 val 0.6278 acc 0.647 39s
+[train] B_s1_SelfRegulationSCP1 ep 1 train 0.5404 val 0.6408 acc 0.653 79s
+[train] B_s1_SelfRegulationSCP1 ep 2 train 0.5001 val 0.6724 acc 0.648 119s
+[train] B_s1_SelfRegulationSCP1 ep 3 train 0.4565 val 0.7199 acc 0.648 158s
+[train] B_s1_SelfRegulationSCP1 ep 4 train 0.4286 val 0.7602 acc 0.650 190s
+[train] B_s1_SelfRegulationSCP1 ep 5 train 0.4135 val 0.8103 acc 0.638 208s
+[train] B_s1_SelfRegulationSCP1 ep 6 train 0.4027 val 0.8270 acc 0.638 223s
+[train] B_s1_SelfRegulationSCP1 done best acc 0.6527 @ ep 1 epochs 7 pairs/epoch 167940 224s
+[train] B_s2_Cricket ep 0 train 0.6017 val 0.6404 acc 0.641 13s
+[train] B_s2_Cricket ep 1 train 0.5539 val 0.6450 acc 0.643 25s
+[train] B_s2_Cricket ep 2 train 0.5108 val 0.6823 acc 0.641 37s
+[train] B_s2_Cricket ep 3 train 0.4673 val 0.7282 acc 0.641 72s
+[train] B_s2_Cricket ep 4 train 0.4408 val 0.7634 acc 0.641 113s
+[train] B_s2_Cricket ep 5 train 0.4252 val 0.7825 acc 0.640 156s
+[train] B_s2_Cricket ep 6 train 0.4138 val 0.8167 acc 0.634 197s
+[train] B_s2_Cricket done best acc 0.6425 @ ep 1 epochs 7 pairs/epoch 178972 201s
+[train] B_s0_PhonemeSpectra ep 0 train 0.5770 val 0.6338 acc 0.649 37s
+[train] B_s0_PhonemeSpectra ep 1 train 0.5203 val 0.6501 acc 0.648 73s
+[train] B_s0_PhonemeSpectra ep 2 train 0.4831 val 0.6914 acc 0.643 97s
+[train] B_s0_PhonemeSpectra ep 3 train 0.4416 val 0.7363 acc 0.639 113s
+[train] B_s0_PhonemeSpectra ep 4 train 0.4083 val 0.7910 acc 0.630 126s
+[train] B_s0_PhonemeSpectra ep 5 train 0.3875 val 0.8517 acc 0.623 137s
+[train] B_s0_PhonemeSpectra done best acc 0.6489 @ ep 0 epochs 6 pairs/epoch 154534 138s
+[train] B_s0_SelfRegulationSCP1 ep 0 train 0.5698 val 0.6320 acc 0.653 10s
+[train] B_s0_SelfRegulationSCP1 ep 1 train 0.5123 val 0.6366 acc 0.656 20s
+[train] B_s0_SelfRegulationSCP1 ep 2 train 0.4769 val 0.6637 acc 0.657 34s
+[train] B_s0_SelfRegulationSCP1 ep 3 train 0.4336 val 0.7180 acc 0.638 69s
+[train] B_s0_SelfRegulationSCP1 ep 4 train 0.3985 val 0.8011 acc 0.633 104s
+[train] B_s0_SelfRegulationSCP1 ep 5 train 0.3776 val 0.8308 acc 0.623 140s
+[train] B_s0_SelfRegulationSCP1 ep 6 train 0.3642 val 0.8734 acc 0.618 174s
+[train] B_s0_SelfRegulationSCP1 ep 7 train 0.3565 val 0.9002 acc 0.619 208s
+[train] B_s0_SelfRegulationSCP1 done best acc 0.6570 @ ep 2 epochs 8 pairs/epoch 146176 212s
+[train] B_s1_Cricket ep 0 train 0.5832 val 0.6422 acc 0.641 37s
+[train] B_s1_Cricket ep 1 train 0.5240 val 0.6547 acc 0.636 68s
+[train] B_s1_Cricket ep 2 train 0.4896 val 0.6901 acc 0.640 84s
+[train] B_s1_Cricket ep 3 train 0.4457 val 0.7279 acc 0.637 99s
+[train] B_s1_Cricket ep 4 train 0.4122 val 0.7819 acc 0.634 110s
+[train] B_s1_Cricket ep 5 train 0.3897 val 0.8197 acc 0.636 121s
+[train] B_s1_Cricket done best acc 0.6406 @ ep 0 epochs 6 pairs/epoch 154990 122s
+[train] B_s2_PhonemeSpectra ep 0 train 0.5786 val 0.6407 acc 0.641 11s
+[train] B_s2_PhonemeSpectra ep 1 train 0.5186 val 0.6526 acc 0.645 37s
+[train] B_s2_PhonemeSpectra ep 2 train 0.4776 val 0.6939 acc 0.641 74s
+[train] B_s2_PhonemeSpectra ep 3 train 0.4319 val 0.7390 acc 0.633 112s
+[train] B_s2_PhonemeSpectra ep 4 train 0.4004 val 0.7780 acc 0.627 149s
+[train] B_s2_PhonemeSpectra ep 5 train 0.3796 val 0.8403 acc 0.619 186s
+[train] B_s2_PhonemeSpectra ep 6 train 0.3677 val 0.8675 acc 0.624 224s
+[train] B_s2_PhonemeSpectra done best acc 0.6448 @ ep 1 epochs 7 pairs/epoch 154534 228s
+[train] B_s2_SelfRegulationSCP1 ep 0 train 0.5726 val 0.6342 acc 0.651 35s
+[train] B_s2_SelfRegulationSCP1 ep 1 train 0.5125 val 0.6391 acc 0.655 51s
+[train] B_s2_SelfRegulationSCP1 ep 2 train 0.4731 val 0.6729 acc 0.647 66s
+[train] B_s2_SelfRegulationSCP1 ep 3 train 0.4252 val 0.7411 acc 0.640 78s
+[train] B_s2_SelfRegulationSCP1 ep 4 train 0.3917 val 0.7949 acc 0.636 88s
+[train] B_s2_SelfRegulationSCP1 ep 5 train 0.3720 val 0.8433 acc 0.624 99s
+[train] B_s2_SelfRegulationSCP1 ep 6 train 0.3584 val 0.9068 acc 0.622 109s
+[train] B_s2_SelfRegulationSCP1 done best acc 0.6551 @ ep 1 epochs 7 pairs/epoch 146176 110s
