@@ -1,0 +1,17 @@
+== HEAD 5b294afea739a55d539b14da299c309d7d318c96
+== B′ 30 / EP 30 / I′ 30（各需 30）
+4 passed in 0.06s
+== GPU 0 free 24546 MiB → 2 槽
+== GPU 1 free 12327 MiB → 1 槽
+== GPU 2 free 13294 MiB → 1 槽
+== GPU 3 free 2710 MiB → 0 槽
+== GPU 4 free 18139 MiB → 2 槽
+== GPU 5 free 12739 MiB → 1 槽
+== GPU 6 free 22665 MiB → 2 槽
+== GPU 7 free 12839 MiB → 1 槽
+== 共 10 槽：0 0 1 2 4 4 5 6 6 7
+== [00:52:17] 任务盲搜索 + E 重排
+== [00:53:45] 搜索完：6 / 6
+[plan] runs: 384 new cells（已有格复用）
+== [00:53:50] 考卷真跑
+verify runs: plan 384 / done 384 / error 0 → OK
