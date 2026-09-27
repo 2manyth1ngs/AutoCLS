@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # WP17-ACTS S3-P 全自动流水（实验室 8k-4090；输出 symlink 到根盘 /tmp/acts_s3p_out）：
-#   解包 → 核对 S3-C 数据（含 ctx）/ S3-G 的 B′ 模型与扩充标签 → symlink → pytest → 按各卡空闲显存分槽 →
 #   解包 → 核对 B′（S3-G）/ EP（S3-M）/ I′（S3-J）模型 → symlink → pytest → 分槽 → 任务盲搜索 + E 重排 6 折 → plan-runs → 83 真跑 → verify → 打包 upload/out_acts_s3p.tar.gz。
 #   83 的各分片同时启动（S3-F 教训：按启动时未完成格切分，错开启动会错位）。
 #   GPUS="0 1 2 3 4 5 6 7" setsid nohup bash .../scripts/pa_pod/acts_lab_run_s3p.sh > /tmp/acts_s3p_out/logs/run.log 2>&1 < /dev/null &
