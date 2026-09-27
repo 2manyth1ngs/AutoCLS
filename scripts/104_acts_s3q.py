@@ -129,8 +129,11 @@ def run_E(D: Mapping, X_of: Callable[[str], np.ndarray], cmaps: Sequence[Sequenc
     """一个 E 的全部 LOSO 读数。返回逐任务数组（regret、Spearman、高估）与逐折 k / α / 近邻源。"""
     ac = importlib.import_module("scripts.acts_common")
     G = np.asarray(D["groups"]); Z, e0, e1 = D["Z"], D["end0"], D["end1"]
-    phi, Y, R0 = D["phi"], D["Y"], D["R0"]
-    n = len(G); nr = R0.shape[1]
+    phi, Y, R0 = D["phi"], D["Y"], D["R0"]                     # 逐任务不等长（random 10–20 条）
+    n = len(G)
+
+    def rows(idx):
+        return np.concatenate([phi[j] for j in idx]), np.concatenate([Y[j] for j in idx])
     arms3 = ("BLIND", "KNN", "KNN10", "KNNX", "ORACLE")
     r3 = {a: np.full(n, np.nan) for a in arms3}
     r1 = {a: np.full(n, np.nan) for a in arms3}
@@ -141,14 +144,14 @@ def run_E(D: Mapping, X_of: Callable[[str], np.ndarray], cmaps: Sequence[Sequenc
     kfold, afold, nbsrc = {}, {}, {}
 
     def sur_readout(model, i, arm, top=True):
-        pr = ridge_pred(model, phi[i, N_SH:])
+        pr = ridge_pred(model, phi[i][N_SH:])
         sp[arm][i] = spearman_rows(pr[None], R0[i][None])[0]
         if top and arm in sp_top:
-            hi = np.argsort(-R0[i], kind="stable")[: nr // 2]
+            hi = np.argsort(-R0[i], kind="stable")[: len(R0[i]) // 2]
             sp_top[arm][i] = spearman_rows(pr[hi][None], R0[i][hi][None])[0]
-            sur_r3[arm][i] = _regret(ridge_pred(model, phi[i, :N_SH]), e0[i], e1[i])[0]
+            sur_r3[arm][i] = _regret(ridge_pred(model, phi[i][:N_SH]), e0[i], e1[i])[0]
             t3 = np.argsort(-pr, kind="stable")[:3]
-            over[arm][i] = float(np.mean(pr[t3] - Y[i, N_SH:][t3]))
+            over[arm][i] = float(np.mean(pr[t3] - Y[i][N_SH:][t3]))
 
     for s in dict.fromkeys(G.tolist()):
         te = np.where(G == s)[0]; tr = np.where(G != s)[0]
@@ -193,31 +196,30 @@ def run_E(D: Mapping, X_of: Callable[[str], np.ndarray], cmaps: Sequence[Sequenc
         inB = {a: [] for a in alphas}; inK = {a: [] for a in alphas}
         for u in dict.fromkeys(G[tr].tolist()):
             tu = tr[G[tr] != u]; eu = tr[G[tr] == u]
-            MB = ridge_multi(phi[tu].reshape(-1, phi.shape[2]), Y[tu].reshape(-1), alphas)
+            MB = ridge_multi(*rows(tu), alphas)
             vk = {a: [] for a in alphas}
             for a in alphas:
-                P = np.array([ridge_pred(MB[a], phi[i, N_SH:]) for i in eu])
-                inB[a].append(float(np.mean(spearman_rows(P, R0[eu]))))
+                inB[a].append(float(np.mean([spearman_rows(ridge_pred(MB[a], phi[i][N_SH:])[None], R0[i][None])[0] for i in eu])))
             for i in eu:
                 o = np.argsort(-std_cos(X[tu], X[i]), kind="stable"); nb = tu[o[:kf]]
-                MK = ridge_multi(phi[nb].reshape(-1, phi.shape[2]), Y[nb].reshape(-1), alphas)
+                MK = ridge_multi(*rows(nb), alphas)
                 for a in alphas:
-                    vk[a].append(spearman_rows(ridge_pred(MK[a], phi[i, N_SH:])[None], R0[i][None])[0])
+                    vk[a].append(spearman_rows(ridge_pred(MK[a], phi[i][N_SH:])[None], R0[i][None])[0])
             for a in alphas:
                 inK[a].append(float(np.mean(vk[a])))
         aB = choose_alpha_sp({a: float(np.mean(v)) for a, v in inB.items()})
         aK = choose_alpha_sp({a: float(np.mean(v)) for a, v in inK.items()})
         afold[s] = {"blind": aB, "knn": aK}
-        MB = ridge_multi(phi[tr].reshape(-1, phi.shape[2]), Y[tr].reshape(-1), (aB,))[aB]
+        MB = ridge_multi(*rows(tr), (aB,))[aB]
         for i in te:
             sur_readout(MB, i, "SUR-BLIND")
             o = np.argsort(-std_cos(X[tr], X[i]), kind="stable"); nb = tr[o[:kf]]
-            sur_readout(ridge_multi(phi[nb].reshape(-1, phi.shape[2]), Y[nb].reshape(-1), (aK,))[aK], i, "SUR-KNN")
+            sur_readout(ridge_multi(*rows(nb), (aK,))[aK], i, "SUR-KNN")
             vx = []
             for cm in cmaps:
                 o = np.argsort(-std_cos(X[tr], X[cm[i]]), kind="stable"); nb = tr[o[:kf]]
-                mk = ridge_multi(phi[nb].reshape(-1, phi.shape[2]), Y[nb].reshape(-1), (aK,))[aK]
-                vx.append(spearman_rows(ridge_pred(mk, phi[i, N_SH:])[None], R0[i][None])[0])
+                mk = ridge_multi(*rows(nb), (aK,))[aK]
+                vx.append(spearman_rows(ridge_pred(mk, phi[i][N_SH:])[None], R0[i][None])[0])
             sp["SUR-X"][i] = float(np.mean(vx))
     return {"r3": r3, "r1": r1, "sp": sp, "sp_top": sp_top, "sur_r3": sur_r3, "over": over,
             "k": kfold, "alpha": afold, "nbsrc": nbsrc}
@@ -272,9 +274,10 @@ def load_data() -> dict:
     assert tasks == meta["tasks"], "s3c 任务序与 84 池不一致"
     assert np.allclose(arr["end0"], P["end0"]) and np.allclose(arr["end1"], P["end1"])
     assert len(S["keys"]) == N_SH and all(list(meta["keys"][t][:N_SH]) == list(S["keys"]) for t in tasks), "shared 列序不一致"
-    phi = np.stack([arr[f"{t}/vec"] for t in tasks]).astype(float)
-    R0 = np.stack([arr[f"{t}/R0"] for t in tasks]).astype(float)
-    Y = np.stack([ac.clip_z(np.r_[P["end0"][i], R0[i]], 0.5)[0] for i in range(len(tasks))])
+    phi = [np.asarray(arr[f"{t}/vec"], float) for t in tasks]
+    R0 = [np.asarray(arr[f"{t}/R0"], float) for t in tasks]
+    assert all(len(p) == N_SH + len(r) for p, r in zip(phi, R0))
+    Y = [ac.clip_z(np.r_[P["end0"][i], R0[i]], 0.5)[0] for i in range(len(tasks))]
     return {"tasks": tasks, "groups": np.asarray(P["groups"]), "Z": np.asarray(P["Z"], float), "end0": P["end0"],
             "end1": P["end1"], "phi": phi, "R0": R0, "Y": Y, "order": meta["order"]}
 
