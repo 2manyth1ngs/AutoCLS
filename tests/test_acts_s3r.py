@@ -85,3 +85,33 @@ def test_stop_rule():
     assert g.improved(0.66, 0.65, "acc") and not g.improved(0.65, 0.65, "acc") and not g.improved(0.64, 0.65, "acc")
     assert g.build_parser().parse_args(["--train"]).stop == "loss"
     assert g.build_parser().parse_args(["--train", "--stop", "acc"]).stop == "acc"
+
+
+def test_gate_pairs():
+    """S3-T：gate=c 时可用对可用只留 |Δ| > c·SE、权重 1；失败对可用不变；gate=0 与原表逐位相同。"""
+    g = _g()
+    r = np.array([0.90, 0.89, 0.80, 0.30]); fail = np.array([False, False, False, True]); ns = np.array([2, 2, 2, 2])
+    use = np.ones(4, bool)
+    base = g.pair_table(r, fail, 0.01, ns, use)
+    same = g.pair_table(r, fail, 0.01, ns, use, gate=0)
+    assert all(np.array_equal(x, y) for x, y in zip(base, same))
+    a, b, y, w, k = g.pair_table(r, fail, 0.01, ns, use, gate=2)          # SE = 0.01 → 门槛 0.02
+    kept = {(int(x), int(z)): (float(ww), int(kk)) for x, z, ww, kk in zip(a, b, w, k)}
+    assert (0, 1) not in kept and (1, 0) not in kept                      # |Δ| 0.01 ≤ 0.02 剔除
+    assert kept[(0, 2)] == (1.0, 0) and kept[(2, 1)] == (1.0, 0)          # |Δ| 0.10 / 0.09 保留，权重 1
+    assert kept[(3, 0)] == (0.25, 1) and kept[(2, 3)] == (0.25, 1)        # 失败对可用不变
+
+
+def test_gate_verdict():
+    g = _g()
+    assert g.verdict_gate(0.004, 0.01, 4) == "S3T-GATE-HELPS"
+    assert g.verdict_gate(0.004, 0.01, 3) == "S3T-GATE-NULL"
+    assert g.verdict_gate(-0.004, 0.01, 1) == "S3T-GATE-HURTS"
+    assert g.verdict_gate(0.001, 0.5, 5) == "S3T-GATE-NULL"
+
+
+def test_cli_gate():
+    a = _g().build_parser().parse_args(["--train", "--gate", "2", "--stop", "acc"])
+    assert a.gate == 2.0 and a.stop == "acc"
+    b = _g().build_parser().parse_args(["--analyze", "--compare-ref", "results/acts/s3rp"])
+    assert b.compare_ref == "results/acts/s3rp" and b.gate == 0.0
