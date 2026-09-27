@@ -76,3 +76,12 @@ def test_verdict():
 def test_cli():
     a = _g().build_parser().parse_args(["--train", "--arm", "E", "--fold", "Cricket", "--seed", "1"])
     assert a.train and a.arm == "E" and a.fold == "Cricket" and a.seed == 1
+
+
+def test_stop_rule():
+    """S3-R′：--stop acc 按验证准确率取大、严格变好才更新；默认 loss 与 S3-R 相同。"""
+    g = _g()
+    assert g.improved(0.60, 0.62, "loss") and not g.improved(0.62, 0.62, "loss")
+    assert g.improved(0.66, 0.65, "acc") and not g.improved(0.65, 0.65, "acc") and not g.improved(0.64, 0.65, "acc")
+    assert g.build_parser().parse_args(["--train"]).stop == "loss"
+    assert g.build_parser().parse_args(["--train", "--stop", "acc"]).stop == "acc"
