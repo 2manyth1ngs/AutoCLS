@@ -46,7 +46,7 @@ def val_holdout(n_random: int, task_id: str) -> np.ndarray:
     return np.sort(N_SH + rng.choice(int(n_random), size=h, replace=False))
 
 
-def _pairs(r: np.ndarray, fail: np.ndarray, sig: float, ns: np.ndarray, keep: np.ndarray):
+def _pairs(r: np.ndarray, fail: np.ndarray, sig: float, ns: np.ndarray, keep: np.ndarray, gate: float = 0.0):
     """keep (n, n) 布尔：候选有序对。返回 (a, b, y, w, kind)，kind 0 = 可用对可用、1 = 失败对可用；失败对失败与权重 0 的剔除。"""
     r = np.asarray(r, float); fail = np.asarray(fail, bool); ns = np.asarray(ns, float)
     a, b = np.where(keep & ~np.eye(len(r), dtype=bool))
@@ -54,6 +54,8 @@ def _pairs(r: np.ndarray, fail: np.ndarray, sig: float, ns: np.ndarray, keep: np
     d = np.abs(r[a] - r[b]); s = float(sig) * np.sqrt(1.0 / ns[a] + 1.0 / ns[b])
     w_ww = np.where(s <= 0, 1.0, np.minimum(d / np.where(s > 0, 2.0 * s, 1.0), 1.0))          # = 91.l4_weight
     w_ww = np.where(d == 0, 0.0, w_ww)
+    if gate > 0:                                                                          # S3-T：硬门槛 |Δ| > c·SE，进入者权重 1
+        w_ww = np.where(d > float(gate) * s, 1.0, 0.0)
     fw = fa ^ fb
     w = np.where(fw, FW_W, w_ww)
     y = np.where(fw, fb, r[a] > r[b]).astype(int)
@@ -61,9 +63,9 @@ def _pairs(r: np.ndarray, fail: np.ndarray, sig: float, ns: np.ndarray, keep: np
     return a[m], b[m], y[m], w[m].astype(float), fw[m].astype(int)
 
 
-def pair_table(r, fail, sig, ns, use):
+def pair_table(r, fail, sig, ns, use, gate: float = 0.0):
     use = np.asarray(use, bool)
-    return _pairs(r, fail, sig, ns, use[:, None] & use[None, :])
+    return _pairs(r, fail, sig, ns, use[:, None] & use[None, :], gate)
 
 
 def val_pairs(r, fail, sig, ns, held):
@@ -97,6 +99,15 @@ def verdict_s3r(gin: Mapping, gval: Mapping, gcon: Mapping) -> str:
 def improved(cur: float, best: float, mode: str) -> bool:
     """早停判据：loss（S3-R）取小，acc（S3-R′）取大；都要求严格变好。"""
     return cur < best - 1e-9 if mode == "loss" else cur > best + 1e-9
+
+
+def verdict_gate(d: float, p: float, npos: int) -> str:
+    """S3-T 主门：S3-R′ E 臂 − 本档 E 臂的 regret@3 差。"""
+    if d >= 0.003 and p < 0.05 and npos >= 4:
+        return "S3T-GATE-HELPS"
+    if d <= -0.003 and p < 0.05:
+        return "S3T-GATE-HURTS"
+    return "S3T-GATE-NULL"
 
 
 def signflip_p(d: np.ndarray) -> float:
@@ -172,10 +183,12 @@ def cmd_train(args) -> None:
     model = _build(arm, V[0].shape[1], seed, dev); sc = g89.Scorer(model, "A" if arm == "E" else "D", dev)
     opt = torch.optim.Adam(model.parameters(), lr=LR)
     rng = np.random.default_rng(seed)
-    TP, VP = {}, {}
+    gate = float(getattr(args, "gate", 0.0) or 0.0)
+    TP, TPr, VP = {}, {}, {}
     for i in tr:
         use = np.ones(len(R[i]), bool); use[H[i]] = False
-        TP[i] = pair_table(R[i], F[i], SIG[i], NSd[i], use)
+        TP[i] = pair_table(R[i], F[i], SIG[i], NSd[i], use, gate=gate)                 # 训练表（S3-T 门槛）
+        TPr[i] = TP[i] if gate == 0 else pair_table(R[i], F[i], SIG[i], NSd[i], use)  # 样本内读数表（S3-R′ 软权重口径）
         if len(H[i]):
             VP[i] = val_pairs(R[i], F[i], SIG[i], NSd[i], H[i])
     n_pairs = int(sum(len(v[0]) for v in TP.values()))
@@ -242,7 +255,7 @@ def cmd_train(args) -> None:
     model.load_state_dict(best_state); model.eval()
     torch.save(model.state_dict(), outdir / "models" / f"{tag}.pt")
     # ---- 样本内 / 验证（本 E vs 换 E；换 E = 训练源内 cross_maps 偏移 1–4）
-    out = {"hist": json.dumps(hist), "te": np.array(te), "tr": np.array(tr), "n_pairs_epoch": n_pairs, "best_epoch": best_ep, "stop": mode}
+    out = {"hist": json.dumps(hist), "te": np.array(te), "tr": np.array(tr), "n_pairs_epoch": n_pairs, "best_epoch": best_ep, "stop": mode, "gate": gate}
     with torch.no_grad():
         Tall = None if arm == "B" else torch.stack([sc.task_vec(W[i], None) for i in range(len(tasks))])
         tr_tasks = [tasks[i] for i in tr]
@@ -252,9 +265,9 @@ def cmd_train(args) -> None:
             Ti = None if Tall is None else Tall[i]
             row = []
             for kind in (0, 1):
-                p, y, w = eval_pairs(i, TP[i], Ti, kind)
+                p, y, w = eval_pairs(i, TPr[i], Ti, kind)
                 row += [weighted_acc(p, y, w) if len(p) else np.nan, float(w.sum())]
-                xs = [weighted_acc(*eval_pairs(i, TP[i], Tall[tr[m[j]]], kind)) for m in cm_in] if (arm == "E" and len(p)) else [np.nan]
+                xs = [weighted_acc(*eval_pairs(i, TPr[i], Tall[tr[m[j]]], kind)) for m in cm_in] if (arm == "E" and len(p)) else [np.nan]
                 row.append(float(np.mean(xs)))
             if i in VP:
                 p, y, w = eval_pairs(i, VP[i], Ti)
@@ -408,11 +421,58 @@ def cmd_analyze(args) -> dict:
     return o
 
 
+def heldout_scores(outdir: Path, arm: str) -> dict:
+    """留出 56 任务：3 种子 P 均值 → RR → regret@3；shared-30 可用对可用加权准确率（S3-R′ 软权重口径）与好半区准确率。"""
+    g84 = importlib.import_module("scripts.84_acts_s3a"); g89 = importlib.import_module("scripts.89_acts_s3c")
+    meta, _ = g89.load_data(S3C); tasks = meta["tasks"]; groups = np.array(meta["groups"])
+    P2 = g84.load_s2()["pool"]; e0, e1 = P2["end0"], P2["end1"]; L = load_labels(OUT)
+    out = {}
+    for f in g89.FOLDS:
+        zs = [np.load(Path(outdir) / "train" / f"{arm}_s{s}_{f}.npz") for s in SEEDS]
+        for i in [i for i in range(len(tasks)) if groups[i] == f]:
+            t = tasks[i]; keys = meta["keys"][t]
+            P = np.mean([z[f"P/{t}"] for z in zs], 0)
+            o_ = g89.rr_order(P[:N_SH, :N_SH], keys[:N_SH]); S = np.zeros((1, N_SH)); S[0, o_] = -np.arange(N_SH)
+            r, fl, ns = L[f"{t}/r"], L[f"{t}/fail"], L[f"{t}/ns"]
+            use = np.zeros(len(r), bool); use[:N_SH] = True
+            a, b, y, w, k = pair_table(r, fl, L["sig"][i], ns, use); m = k == 0
+            ok = use & ~fl
+            top = (r >= np.median(r[ok])) if ok.any() else np.zeros(len(r), bool)
+            mt = m & top[a] & top[b]
+            out[i] = {"src": f, "r3": float(g84.regret_at_k(S, e0[[i]], e1[[i]], 3)[0]),
+                      "acc": weighted_acc(P[a[m], b[m]], y[m], w[m]) if m.any() else np.nan,
+                      "acc_top": weighted_acc(P[a[mt], b[mt]], y[mt], w[mt]) if mt.any() else np.nan}
+    return out
+
+
+def cmd_compare(outdir: Path, ref: Path) -> dict:
+    """S3-T 主门 G-GATE：ref（S3-R′）E 臂 − 本档 E 臂的留出 regret@3；另报可用对准确率。"""
+    from scipy.stats import wilcoxon
+    g84 = importlib.import_module("scripts.84_acts_s3a"); g89 = importlib.import_module("scripts.89_acts_s3c")
+    A, R_ = heldout_scores(outdir, "E"), heldout_scores(ref, "E")
+    idx = sorted(A); src = np.array([A[i]["src"] for i in idx])
+    d = np.array([R_[i]["r3"] - A[i]["r3"] for i in idx])
+    p = 1.0 if np.all(np.abs(d) < 1e-15) else float(wilcoxon(d).pvalue)
+    npos = int(sum(d[src == s].mean() > 0 for s in g89.FOLDS))
+    da = np.array([A[i]["acc"] - R_[i]["acc"] for i in idx]); dt = np.array([A[i]["acc_top"] - R_[i]["acc_top"] for i in idx])
+    o = {"G_GATE": {"d": float(d.mean()), "p": p, "src_pos": npos, "ci": g84.cluster_bootstrap_ci(d, src, n_boot=10000)},
+         "verdict_gate": verdict_gate(float(d.mean()), p, npos),
+         "regret3": {"this_E": float(np.mean([A[i]["r3"] for i in idx])), "ref_E": float(np.mean([R_[i]["r3"] for i in idx]))},
+         "acc": {"this_E": float(np.nanmean([A[i]["acc"] for i in idx])), "ref_E": float(np.nanmean([R_[i]["acc"] for i in idx])),
+                 "diff_p": float(wilcoxon(da[np.isfinite(da)]).pvalue)},
+         "acc_top": {"this_E": float(np.nanmean([A[i]["acc_top"] for i in idx])), "ref_E": float(np.nanmean([R_[i]["acc_top"] for i in idx])),
+                     "diff_p": float(wilcoxon(dt[np.isfinite(dt)]).pvalue)},
+         "per_src_d": {s: float(d[src == s].mean()) for s in g89.FOLDS}}
+    (Path(outdir) / "compare.json").write_text(json.dumps(o, ensure_ascii=False, indent=1, default=float), encoding="utf-8")
+    print(json.dumps(o, ensure_ascii=False, indent=1, default=float), flush=True)
+    return o
+
+
 # ================================================================ 冒烟 / CLI
 def cmd_smoke(args) -> None:
     """合成窗口 + 每源 2 任务 + 1 epoch，两臂各跑一次 train，再核输出键。"""
     import types
-    base = dict(outdir=args.outdir, device=args.device, resume=False, synthetic=True, max_epochs=1, max_tasks_per_src=2, fold="Cricket", seed=0, stop=args.stop)
+    base = dict(outdir=args.outdir, device=args.device, resume=False, synthetic=True, max_epochs=1, max_tasks_per_src=2, fold="Cricket", seed=0, stop=args.stop, gate=args.gate)
     for arm in ARMS:
         cmd_train(types.SimpleNamespace(**base, arm=arm))
         with np.load(Path(args.outdir) / "train" / f"{arm}_s0_Cricket.npz") as z:
@@ -431,6 +491,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--max-epochs", type=int, default=None)
     ap.add_argument("--stop", choices=("loss", "acc"), default="loss")
+    ap.add_argument("--gate", type=float, default=0.0)
+    ap.add_argument("--compare-ref", default=None)
     ap.add_argument("--max-tasks-per-src", type=int, default=None)
     ap.add_argument("--outdir", default=str(OUT))
     return ap
@@ -446,6 +508,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         cmd_smoke(args)
     if args.analyze:
         cmd_analyze(args)
+        if args.compare_ref:
+            cmd_compare(Path(args.outdir), Path(args.compare_ref))
     return 0
 
 
