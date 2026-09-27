@@ -1,0 +1,32 @@
+[train] E_s0_Cricket ep 0 train 0.5907 val 0.6324 acc 0.629 89s
+[train] E_s0_Cricket ep 1 train 0.5235 val 0.6437 acc 0.646 179s
+[train] E_s0_Cricket ep 2 train 0.4627 val 0.6810 acc 0.656 267s
+[train] E_s0_Cricket ep 3 train 0.4238 val 0.7109 acc 0.657 356s
+[train] E_s0_Cricket ep 4 train 0.3996 val 0.7968 acc 0.651 445s
+[train] E_s0_Cricket ep 5 train 0.3809 val 0.7962 acc 0.656 533s
+[train] E_s0_Cricket ep 6 train 0.3672 val 0.8188 acc 0.650 623s
+[train] E_s0_Cricket ep 7 train 0.3585 val 0.8531 acc 0.660 717s
+[train] E_s0_Cricket ep 8 train 0.3515 val 0.8946 acc 0.656 806s
+[train] E_s0_Cricket ep 9 train 0.3450 val 0.9372 acc 0.656 896s
+[train] E_s0_Cricket ep 10 train 0.3733 val 0.9448 acc 0.649 986s
+[train] E_s0_Cricket ep 11 train 0.3322 val 0.9569 acc 0.653 1082s
+[train] E_s0_Cricket ep 12 train 0.3310 val 1.0215 acc 0.644 1176s
+[train] E_s0_Cricket done best acc 0.6600 @ ep 7 epochs 13 pairs/epoch 219004 1195s
+[train] E_s2_UWaveGestureLibrary ep 0 train 0.5905 val 0.6129 acc 0.647 94s
+[train] E_s2_UWaveGestureLibrary ep 1 train 0.5272 val 0.6026 acc 0.668 187s
+[train] E_s2_UWaveGestureLibrary ep 2 train 0.4709 val 0.5989 acc 0.695 280s
+[train] E_s2_UWaveGestureLibrary ep 3 train 0.4307 val 0.6518 acc 0.690 371s
+[train] E_s2_UWaveGestureLibrary ep 4 train 0.4057 val 0.6544 acc 0.688 464s
+[train] E_s2_UWaveGestureLibrary ep 5 train 0.3878 val 0.7051 acc 0.673 556s
+[train] E_s2_UWaveGestureLibrary ep 6 train 0.3799 val 0.6932 acc 0.690 645s
+[train] E_s2_UWaveGestureLibrary ep 7 train 0.3745 val 0.7174 acc 0.684 736s
+[train] E_s2_UWaveGestureLibrary done best acc 0.6948 @ ep 2 epochs 8 pairs/epoch 215000 754s
+[train] B_s1_PhonemeSpectra ep 0 train 0.6024 val 0.6366 acc 0.641 42s
+[train] B_s1_PhonemeSpectra ep 1 train 0.5507 val 0.6568 acc 0.642 85s
+[train] B_s1_PhonemeSpectra ep 2 train 0.4991 val 0.7035 acc 0.644 126s
+[train] B_s1_PhonemeSpectra ep 3 train 0.4629 val 0.7645 acc 0.640 167s
+[train] B_s1_PhonemeSpectra ep 4 train 0.4436 val 0.7976 acc 0.635 209s
+[train] B_s1_PhonemeSpectra ep 5 train 0.4314 val 0.8251 acc 0.634 250s
+[train] B_s1_PhonemeSpectra ep 6 train 0.4241 val 0.8483 acc 0.633 292s
+[train] B_s1_PhonemeSpectra ep 7 train 0.4167 val 0.8739 acc 0.628 334s
+[train] B_s1_PhonemeSpectra done best acc 0.6435 @ ep 2 epochs 8 pairs/epoch 218674 337s

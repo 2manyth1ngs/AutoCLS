@@ -1,0 +1,24 @@
+[train] E_s1_Cricket ep 0 train 0.5893 val 0.6317 acc 0.634 78s
+[train] E_s1_Cricket ep 1 train 0.5259 val 0.6481 acc 0.642 128s
+[train] E_s1_Cricket ep 2 train 0.4778 val 0.6793 acc 0.655 190s
+[train] E_s1_Cricket ep 3 train 0.4293 val 0.7095 acc 0.664 252s
+[train] E_s1_Cricket ep 4 train 0.4045 val 0.7572 acc 0.659 314s
+[train] E_s1_Cricket ep 5 train 0.3870 val 0.7844 acc 0.658 381s
+[train] E_s1_Cricket ep 6 train 0.3742 val 0.8323 acc 0.652 457s
+[train] E_s1_Cricket ep 7 train 0.3628 val 0.8482 acc 0.630 511s
+[train] E_s1_Cricket ep 8 train 0.3670 val 0.8138 acc 0.648 570s
+[train] E_s1_Cricket done best acc 0.6641 @ ep 3 epochs 9 pairs/epoch 219004 575s
+[train] B_s0_UWaveGestureLibrary ep 0 train 0.6060 val 0.6289 acc 0.647 15s
+[train] B_s0_UWaveGestureLibrary ep 1 train 0.5578 val 0.6562 acc 0.643 29s
+[train] B_s0_UWaveGestureLibrary ep 2 train 0.5080 val 0.7148 acc 0.629 43s
+[train] B_s0_UWaveGestureLibrary ep 3 train 0.4706 val 0.7604 acc 0.625 58s
+[train] B_s0_UWaveGestureLibrary ep 4 train 0.4498 val 0.8141 acc 0.615 72s
+[train] B_s0_UWaveGestureLibrary ep 5 train 0.4377 val 0.8415 acc 0.612 87s
+[train] B_s0_UWaveGestureLibrary done best acc 0.6474 @ ep 0 epochs 6 pairs/epoch 215000 88s
+[train] B_s2_PhonemeSpectra ep 0 train 0.6024 val 0.6317 acc 0.647 15s
+[train] B_s2_PhonemeSpectra ep 1 train 0.5515 val 0.6519 acc 0.645 29s
+[train] B_s2_PhonemeSpectra ep 2 train 0.5032 val 0.6961 acc 0.635 43s
+[train] B_s2_PhonemeSpectra ep 3 train 0.4662 val 0.7434 acc 0.629 56s
+[train] B_s2_PhonemeSpectra ep 4 train 0.4447 val 0.7937 acc 0.625 73s
+[train] B_s2_PhonemeSpectra ep 5 train 0.4322 val 0.8064 acc 0.626 91s
+[train] B_s2_PhonemeSpectra done best acc 0.6472 @ ep 0 epochs 6 pairs/epoch 218674 92s

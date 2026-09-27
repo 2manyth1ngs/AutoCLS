@@ -1,0 +1,24 @@
+[train] E_s1_UWaveGestureLibrary ep 0 train 0.5924 val 0.6225 acc 0.645 57s
+[train] E_s1_UWaveGestureLibrary ep 1 train 0.5260 val 0.6316 acc 0.657 108s
+[train] E_s1_UWaveGestureLibrary ep 2 train 0.4670 val 0.6501 acc 0.681 162s
+[train] E_s1_UWaveGestureLibrary ep 3 train 0.4232 val 0.7097 acc 0.668 223s
+[train] E_s1_UWaveGestureLibrary ep 4 train 0.3985 val 0.7343 acc 0.668 283s
+[train] E_s1_UWaveGestureLibrary ep 5 train 0.3806 val 0.7487 acc 0.672 340s
+[train] E_s1_UWaveGestureLibrary ep 6 train 0.3684 val 0.7942 acc 0.668 401s
+[train] E_s1_UWaveGestureLibrary ep 7 train 0.3557 val 0.8364 acc 0.665 458s
+[train] E_s1_UWaveGestureLibrary done best acc 0.6810 @ ep 2 epochs 8 pairs/epoch 215000 461s
+[train] B_s0_PhonemeSpectra ep 0 train 0.6014 val 0.6339 acc 0.644 8s
+[train] B_s0_PhonemeSpectra ep 1 train 0.5532 val 0.6495 acc 0.649 18s
+[train] B_s0_PhonemeSpectra ep 2 train 0.5038 val 0.7075 acc 0.641 29s
+[train] B_s0_PhonemeSpectra ep 3 train 0.4649 val 0.7762 acc 0.628 37s
+[train] B_s0_PhonemeSpectra ep 4 train 0.4451 val 0.8200 acc 0.625 46s
+[train] B_s0_PhonemeSpectra ep 5 train 0.4331 val 0.8344 acc 0.629 57s
+[train] B_s0_PhonemeSpectra ep 6 train 0.4242 val 0.8602 acc 0.619 68s
+[train] B_s0_PhonemeSpectra done best acc 0.6491 @ ep 1 epochs 7 pairs/epoch 218674 68s
+[train] B_s2_Handwriting ep 0 train 0.6125 val 0.6448 acc 0.634 14s
+[train] B_s2_Handwriting ep 1 train 0.5640 val 0.6615 acc 0.631 33s
+[train] B_s2_Handwriting ep 2 train 0.5129 val 0.7100 acc 0.627 50s
+[train] B_s2_Handwriting ep 3 train 0.4749 val 0.7596 acc 0.622 68s
+[train] B_s2_Handwriting ep 4 train 0.4536 val 0.8012 acc 0.626 86s
+[train] B_s2_Handwriting ep 5 train 0.4404 val 0.8340 acc 0.622 103s
+[train] B_s2_Handwriting done best acc 0.6343 @ ep 0 epochs 6 pairs/epoch 214616 105s

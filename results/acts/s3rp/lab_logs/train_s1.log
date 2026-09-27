@@ -1,0 +1,33 @@
+[train] E_s0_PhonemeSpectra ep 0 train 0.5921 val 0.6344 acc 0.632 57s
+[train] E_s0_PhonemeSpectra ep 1 train 0.5249 val 0.6425 acc 0.633 113s
+[train] E_s0_PhonemeSpectra ep 2 train 0.4624 val 0.6688 acc 0.667 180s
+[train] E_s0_PhonemeSpectra ep 3 train 0.4182 val 0.7230 acc 0.658 236s
+[train] E_s0_PhonemeSpectra ep 4 train 0.3925 val 0.7154 acc 0.650 293s
+[train] E_s0_PhonemeSpectra ep 5 train 0.3744 val 0.8022 acc 0.653 349s
+[train] E_s0_PhonemeSpectra ep 6 train 0.3609 val 0.8118 acc 0.656 405s
+[train] E_s0_PhonemeSpectra ep 7 train 0.3516 val 0.9063 acc 0.643 460s
+[train] E_s0_PhonemeSpectra done best acc 0.6668 @ ep 2 epochs 8 pairs/epoch 218674 464s
+[train] E_s2_Handwriting ep 0 train 0.6017 val 0.6346 acc 0.630 51s
+[train] E_s2_Handwriting ep 1 train 0.5459 val 0.6309 acc 0.636 103s
+[train] E_s2_Handwriting ep 2 train 0.4895 val 0.6312 acc 0.669 156s
+[train] E_s2_Handwriting ep 3 train 0.4386 val 0.6860 acc 0.666 215s
+[train] E_s2_Handwriting ep 4 train 0.4119 val 0.7071 acc 0.667 269s
+[train] E_s2_Handwriting ep 5 train 0.3903 val 0.7503 acc 0.661 319s
+[train] E_s2_Handwriting ep 6 train 0.3747 val 0.7981 acc 0.663 371s
+[train] E_s2_Handwriting ep 7 train 0.3661 val 0.8601 acc 0.649 423s
+[train] E_s2_Handwriting done best acc 0.6692 @ ep 2 epochs 8 pairs/epoch 214616 428s
+[train] B_s0_SelfRegulationSCP1 ep 0 train 0.5953 val 0.6230 acc 0.657 12s
+[train] B_s0_SelfRegulationSCP1 ep 1 train 0.5421 val 0.6361 acc 0.658 23s
+[train] B_s0_SelfRegulationSCP1 ep 2 train 0.4905 val 0.7009 acc 0.639 34s
+[train] B_s0_SelfRegulationSCP1 ep 3 train 0.4527 val 0.7576 acc 0.633 45s
+[train] B_s0_SelfRegulationSCP1 ep 4 train 0.4332 val 0.7965 acc 0.624 57s
+[train] B_s0_SelfRegulationSCP1 ep 5 train 0.4216 val 0.8239 acc 0.630 68s
+[train] B_s0_SelfRegulationSCP1 ep 6 train 0.4126 val 0.8544 acc 0.624 80s
+[train] B_s0_SelfRegulationSCP1 done best acc 0.6578 @ ep 1 epochs 7 pairs/epoch 203650 81s
+[train] B_s2_EthanolConcentration ep 0 train 0.5975 val 0.6236 acc 0.653 14s
+[train] B_s2_EthanolConcentration ep 1 train 0.5458 val 0.6478 acc 0.647 27s
+[train] B_s2_EthanolConcentration ep 2 train 0.4985 val 0.6845 acc 0.639 40s
+[train] B_s2_EthanolConcentration ep 3 train 0.4621 val 0.7442 acc 0.626 52s
+[train] B_s2_EthanolConcentration ep 4 train 0.4403 val 0.7714 acc 0.627 65s
+[train] B_s2_EthanolConcentration ep 5 train 0.4271 val 0.8047 acc 0.627 80s
+[train] B_s2_EthanolConcentration done best acc 0.6526 @ ep 0 epochs 6 pairs/epoch 218702 81s

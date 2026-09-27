@@ -35,3 +35,6 @@
 实验室 8k-4090 多卡，36 次训练，预计约 30–40 min（E 臂会多训几个 epoch）。拉回后 `105 --analyze --outdir results/acts/s3rp`。之后按原计划：过 G-IN 与 G-OUT 再接第 4 步全空间搜索；不过就报告，不追加新臂。
 
 ## §4 执行台账（跑后填写）
+- 协议锁 d489613（test_stop_rule 先红）→ 实现 aa3b730（105 `--stop acc` + `acts_lab_run_s3rp.sh`）；单测 9 例绿；冒烟 OK；S3-R 分析复算不变。
+- **执行**：8k-4090 十一槽，05:29 → 06:08 UTC，36 / 36，墙钟 39 min。服务器上 `results/acts/s3rp` 事先不存在，软链未建成，输出写在数据盘仓库目录（约 130 MB，余 172 GB）。
+- `--analyze --outdir results/acts/s3rp`：**S3R-E-FITS**（本协议预测 4/7；`analysis.json` 的 predictions 字段是 S3-R 定义，REPORT §3 按本协议重对）。G-IN +0.079 ✓；G-OUT 价值 +0.0024 p 0.65 ✗；内容 +0.0051 p 0.091 ✗（按源 CI [+0.0006, +0.0127]）；E 最优 epoch 中位 3、看到配对中位 84.5 万。

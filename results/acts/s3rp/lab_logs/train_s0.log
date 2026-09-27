@@ -1,0 +1,39 @@
+[train] E_s0_Handwriting ep 0 train 0.6056 val 0.6416 acc 0.622 53s
+[train] E_s0_Handwriting ep 1 train 0.5415 val 0.6541 acc 0.632 105s
+[train] E_s0_Handwriting ep 2 train 0.4773 val 0.6646 acc 0.653 168s
+[train] E_s0_Handwriting ep 3 train 0.4291 val 0.7248 acc 0.647 221s
+[train] E_s0_Handwriting ep 4 train 0.3961 val 0.7615 acc 0.657 273s
+[train] E_s0_Handwriting ep 5 train 0.3809 val 0.8043 acc 0.647 324s
+[train] E_s0_Handwriting ep 6 train 0.3654 val 0.8329 acc 0.652 375s
+[train] E_s0_Handwriting ep 7 train 0.3581 val 0.8630 acc 0.655 427s
+[train] E_s0_Handwriting ep 8 train 0.3507 val 0.8814 acc 0.661 478s
+[train] E_s0_Handwriting ep 9 train 0.3441 val 0.8896 acc 0.653 528s
+[train] E_s0_Handwriting ep 10 train 0.3404 val 0.9030 acc 0.649 580s
+[train] E_s0_Handwriting ep 11 train 0.3442 val 0.9339 acc 0.654 632s
+[train] E_s0_Handwriting ep 12 train 0.3301 val 0.9346 acc 0.650 691s
+[train] E_s0_Handwriting ep 13 train 0.3422 val 0.8943 acc 0.647 745s
+[train] E_s0_Handwriting done best acc 0.6607 @ ep 8 epochs 14 pairs/epoch 214616 750s
+[train] E_s1_SelfRegulationSCP1 ep 0 train 0.5775 val 0.6136 acc 0.653 56s
+[train] E_s1_SelfRegulationSCP1 ep 1 train 0.5103 val 0.6276 acc 0.657 111s
+[train] E_s1_SelfRegulationSCP1 ep 2 train 0.4610 val 0.6459 acc 0.670 168s
+[train] E_s1_SelfRegulationSCP1 ep 3 train 0.4130 val 0.7233 acc 0.662 224s
+[train] E_s1_SelfRegulationSCP1 ep 4 train 0.3897 val 0.7255 acc 0.667 282s
+[train] E_s1_SelfRegulationSCP1 ep 5 train 0.3753 val 0.7677 acc 0.665 344s
+[train] E_s1_SelfRegulationSCP1 ep 6 train 0.3622 val 0.8213 acc 0.665 401s
+[train] E_s1_SelfRegulationSCP1 ep 7 train 0.3526 val 0.8300 acc 0.658 453s
+[train] E_s1_SelfRegulationSCP1 done best acc 0.6697 @ ep 2 epochs 8 pairs/epoch 203650 456s
+[train] B_s0_EthanolConcentration ep 0 train 0.5958 val 0.6248 acc 0.651 10s
+[train] B_s0_EthanolConcentration ep 1 train 0.5476 val 0.6389 acc 0.655 21s
+[train] B_s0_EthanolConcentration ep 2 train 0.5018 val 0.6898 acc 0.639 31s
+[train] B_s0_EthanolConcentration ep 3 train 0.4630 val 0.7419 acc 0.631 42s
+[train] B_s0_EthanolConcentration ep 4 train 0.4416 val 0.7814 acc 0.626 53s
+[train] B_s0_EthanolConcentration ep 5 train 0.4298 val 0.7999 acc 0.630 64s
+[train] B_s0_EthanolConcentration ep 6 train 0.4204 val 0.8172 acc 0.629 75s
+[train] B_s0_EthanolConcentration done best acc 0.6554 @ ep 1 epochs 7 pairs/epoch 218702 75s
+[train] B_s2_Cricket ep 0 train 0.6056 val 0.6368 acc 0.642 12s
+[train] B_s2_Cricket ep 1 train 0.5528 val 0.6619 acc 0.638 22s
+[train] B_s2_Cricket ep 2 train 0.5011 val 0.7033 acc 0.628 33s
+[train] B_s2_Cricket ep 3 train 0.4650 val 0.7502 acc 0.629 43s
+[train] B_s2_Cricket ep 4 train 0.4453 val 0.7766 acc 0.625 54s
+[train] B_s2_Cricket ep 5 train 0.4332 val 0.8099 acc 0.618 63s
+[train] B_s2_Cricket done best acc 0.6417 @ ep 0 epochs 6 pairs/epoch 219004 64s

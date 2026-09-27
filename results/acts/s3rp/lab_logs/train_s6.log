@@ -1,0 +1,28 @@
+[train] E_s1_Handwriting ep 0 train 0.5995 val 0.6431 acc 0.622 51s
+[train] E_s1_Handwriting ep 1 train 0.5379 val 0.6587 acc 0.632 100s
+[train] E_s1_Handwriting ep 2 train 0.4817 val 0.6562 acc 0.653 150s
+[train] E_s1_Handwriting ep 3 train 0.4327 val 0.7590 acc 0.652 200s
+[train] E_s1_Handwriting ep 4 train 0.4058 val 0.7518 acc 0.656 250s
+[train] E_s1_Handwriting ep 5 train 0.3878 val 0.7963 acc 0.653 301s
+[train] E_s1_Handwriting ep 6 train 0.3807 val 0.8929 acc 0.643 349s
+[train] E_s1_Handwriting ep 7 train 0.3845 val 0.8302 acc 0.642 399s
+[train] E_s1_Handwriting ep 8 train 0.3690 val 0.8737 acc 0.629 448s
+[train] E_s1_Handwriting ep 9 train 0.3709 val 0.8495 acc 0.641 498s
+[train] E_s1_Handwriting done best acc 0.6563 @ ep 4 epochs 10 pairs/epoch 214616 502s
+[train] E_s2_SelfRegulationSCP1 ep 0 train 0.5815 val 0.6068 acc 0.654 50s
+[train] E_s2_SelfRegulationSCP1 ep 1 train 0.5136 val 0.6043 acc 0.670 103s
+[train] E_s2_SelfRegulationSCP1 ep 2 train 0.4603 val 0.6180 acc 0.686 160s
+[train] E_s2_SelfRegulationSCP1 ep 3 train 0.4211 val 0.6285 acc 0.694 220s
+[train] E_s2_SelfRegulationSCP1 ep 4 train 0.3949 val 0.6401 acc 0.689 270s
+[train] E_s2_SelfRegulationSCP1 ep 5 train 0.3782 val 0.6692 acc 0.688 323s
+[train] E_s2_SelfRegulationSCP1 ep 6 train 0.3637 val 0.7034 acc 0.692 377s
+[train] E_s2_SelfRegulationSCP1 ep 7 train 0.3571 val 0.7249 acc 0.684 430s
+[train] E_s2_SelfRegulationSCP1 ep 8 train 0.3483 val 0.7427 acc 0.676 516s
+[train] E_s2_SelfRegulationSCP1 done best acc 0.6941 @ ep 3 epochs 9 pairs/epoch 203650 528s
+[train] B_s1_EthanolConcentration ep 0 train 0.5960 val 0.6291 acc 0.645 34s
+[train] B_s1_EthanolConcentration ep 1 train 0.5440 val 0.6541 acc 0.643 69s
+[train] B_s1_EthanolConcentration ep 2 train 0.4977 val 0.6997 acc 0.636 96s
+[train] B_s1_EthanolConcentration ep 3 train 0.4616 val 0.7375 acc 0.630 124s
+[train] B_s1_EthanolConcentration ep 4 train 0.4415 val 0.7851 acc 0.625 152s
+[train] B_s1_EthanolConcentration ep 5 train 0.4291 val 0.8127 acc 0.636 183s
+[train] B_s1_EthanolConcentration done best acc 0.6450 @ ep 0 epochs 6 pairs/epoch 218702 184s

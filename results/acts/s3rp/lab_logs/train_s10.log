@@ -1,0 +1,23 @@
+[train] E_s1_EthanolConcentration ep 0 train 0.5803 val 0.6215 acc 0.648 78s
+[train] E_s1_EthanolConcentration ep 1 train 0.5145 val 0.6264 acc 0.660 135s
+[train] E_s1_EthanolConcentration ep 2 train 0.4573 val 0.6526 acc 0.673 197s
+[train] E_s1_EthanolConcentration ep 3 train 0.4190 val 0.7071 acc 0.673 259s
+[train] E_s1_EthanolConcentration ep 4 train 0.3945 val 0.7408 acc 0.660 322s
+[train] E_s1_EthanolConcentration ep 5 train 0.3776 val 0.7891 acc 0.660 390s
+[train] E_s1_EthanolConcentration ep 6 train 0.3629 val 0.8131 acc 0.662 461s
+[train] E_s1_EthanolConcentration ep 7 train 0.3553 val 0.8318 acc 0.665 512s
+[train] E_s1_EthanolConcentration done best acc 0.6734 @ ep 2 epochs 8 pairs/epoch 218702 518s
+[train] B_s0_Cricket ep 0 train 0.6039 val 0.6386 acc 0.642 17s
+[train] B_s0_Cricket ep 1 train 0.5569 val 0.6579 acc 0.638 33s
+[train] B_s0_Cricket ep 2 train 0.5097 val 0.7214 acc 0.626 49s
+[train] B_s0_Cricket ep 3 train 0.4728 val 0.7529 acc 0.632 62s
+[train] B_s0_Cricket ep 4 train 0.4512 val 0.8183 acc 0.618 76s
+[train] B_s0_Cricket ep 5 train 0.4383 val 0.8430 acc 0.614 91s
+[train] B_s0_Cricket done best acc 0.6418 @ ep 0 epochs 6 pairs/epoch 219004 92s
+[train] B_s2_UWaveGestureLibrary ep 0 train 0.6063 val 0.6316 acc 0.645 15s
+[train] B_s2_UWaveGestureLibrary ep 1 train 0.5556 val 0.6492 acc 0.640 30s
+[train] B_s2_UWaveGestureLibrary ep 2 train 0.5044 val 0.6881 acc 0.644 45s
+[train] B_s2_UWaveGestureLibrary ep 3 train 0.4674 val 0.7233 acc 0.638 58s
+[train] B_s2_UWaveGestureLibrary ep 4 train 0.4459 val 0.7793 acc 0.624 72s
+[train] B_s2_UWaveGestureLibrary ep 5 train 0.4318 val 0.8051 acc 0.626 87s
+[train] B_s2_UWaveGestureLibrary done best acc 0.6447 @ ep 0 epochs 6 pairs/epoch 215000 88s

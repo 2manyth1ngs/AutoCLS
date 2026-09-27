@@ -1,0 +1,24 @@
+[train] E_s1_PhonemeSpectra ep 0 train 0.5847 val 0.6258 acc 0.641 59s
+[train] E_s1_PhonemeSpectra ep 1 train 0.5187 val 0.6381 acc 0.659 112s
+[train] E_s1_PhonemeSpectra ep 2 train 0.4544 val 0.6675 acc 0.672 167s
+[train] E_s1_PhonemeSpectra ep 3 train 0.4159 val 0.6990 acc 0.672 228s
+[train] E_s1_PhonemeSpectra ep 4 train 0.3906 val 0.7413 acc 0.668 288s
+[train] E_s1_PhonemeSpectra ep 5 train 0.3723 val 0.7856 acc 0.661 348s
+[train] E_s1_PhonemeSpectra ep 6 train 0.3595 val 0.8371 acc 0.660 410s
+[train] E_s1_PhonemeSpectra ep 7 train 0.3489 val 0.9150 acc 0.649 463s
+[train] E_s1_PhonemeSpectra done best acc 0.6724 @ ep 2 epochs 8 pairs/epoch 218674 465s
+[train] B_s0_Handwriting ep 0 train 0.6125 val 0.6439 acc 0.629 9s
+[train] B_s0_Handwriting ep 1 train 0.5638 val 0.6780 acc 0.620 19s
+[train] B_s0_Handwriting ep 2 train 0.5130 val 0.7425 acc 0.619 28s
+[train] B_s0_Handwriting ep 3 train 0.4750 val 0.8087 acc 0.604 37s
+[train] B_s0_Handwriting ep 4 train 0.4539 val 0.8582 acc 0.602 45s
+[train] B_s0_Handwriting ep 5 train 0.4412 val 0.9053 acc 0.599 57s
+[train] B_s0_Handwriting done best acc 0.6291 @ ep 0 epochs 6 pairs/epoch 214616 58s
+[train] B_s1_SelfRegulationSCP1 ep 0 train 0.5947 val 0.6278 acc 0.651 11s
+[train] B_s1_SelfRegulationSCP1 ep 1 train 0.5409 val 0.6445 acc 0.657 27s
+[train] B_s1_SelfRegulationSCP1 ep 2 train 0.4905 val 0.6904 acc 0.644 44s
+[train] B_s1_SelfRegulationSCP1 ep 3 train 0.4546 val 0.7336 acc 0.653 61s
+[train] B_s1_SelfRegulationSCP1 ep 4 train 0.4344 val 0.7636 acc 0.645 78s
+[train] B_s1_SelfRegulationSCP1 ep 5 train 0.4229 val 0.8004 acc 0.641 95s
+[train] B_s1_SelfRegulationSCP1 ep 6 train 0.4143 val 0.8125 acc 0.644 111s
+[train] B_s1_SelfRegulationSCP1 done best acc 0.6565 @ ep 1 epochs 7 pairs/epoch 203650 112s

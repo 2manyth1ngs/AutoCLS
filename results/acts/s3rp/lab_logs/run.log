@@ -1,0 +1,16 @@
+== HEAD aa3b730
+== E_pt 176 / 176
+ln: 无法创建符号链接 'results/acts/s3rp/models': 没有那个文件或目录
+ln: 无法创建符号链接 'results/acts/s3rp/train': 没有那个文件或目录
+9 passed in 1.51s
+== GPU 0 free 15743 MiB → 2 槽
+== GPU 1 free 12327 MiB → 1 槽
+== GPU 2 free 7790 MiB → 1 槽
+== GPU 3 free 6396 MiB → 0 槽
+== GPU 4 free 12739 MiB → 1 槽
+== GPU 5 free 21259 MiB → 2 槽
+== GPU 6 free 18743 MiB → 2 槽
+== GPU 7 free 15915 MiB → 2 槽
+== 共 11 槽：0 0 1 2 4 5 5 6 6 7 7
+== [05:29:43] 训练 36 次
+== [06:08:25] 训练完：36 / 36
