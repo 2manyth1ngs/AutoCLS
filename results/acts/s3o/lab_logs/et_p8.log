@@ -1,0 +1,14 @@
+[et] CinCECGTorso_a00 X=(110, 87, 1) iters=200 split=0 15.6s
+[et] CinCECGTorso_a11 X=(115, 1461, 1) iters=600 split=0 53.1s
+[et] Cricket_a06 X=(99, 784, 4) iters=600 split=0 42.2s
+[et] FordA_a01 X=(609, 325, 1) iters=600 split=0 30.7s
+[et] Handwriting_a04 X=(410, 97, 1) iters=200 split=0 8.8s
+[et] LargeKitchenAppliances_a07 X=(458, 180, 1) iters=200 split=0 8.8s
+[et] PAMAP2_a02 X=(219, 125, 16) iters=600 split=0 29.0s
+[et] PTB-XL_a05 X=(435, 987, 6) iters=600 split=0 53.2s
+[et] SelfRegulationSCP1_a00 X=(115, 175, 1) iters=200 split=0 9.5s
+[et] SelfRegulationSCP1_a11 X=(98, 803, 5) iters=600 split=0 39.9s
+[et] SemgHandMovementCh2_a06 X=(102, 1123, 1) iters=600 split=0 45.3s
+[et] ShapesAll_a01 X=(923, 395, 1) iters=600 split=0 36.0s
+[et] SleepEDF_a04 X=(272, 1220, 1) iters=600 split=0 46.6s
+[et] UWaveGestureLibrary_a07 X=(388, 98, 3) iters=600 split=0 24.3s

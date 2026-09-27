@@ -1,0 +1,15 @@
+[et] Adiac_a02 X=(406, 175, 1) iters=200 split=0 16.9s
+[et] CinCECGTorso_a05 X=(299, 1524, 1) iters=600 split=0 50.6s
+[et] Cricket_a00 X=(98, 265, 1) iters=200 split=0 11.6s
+[et] EthanolConcentration_a03 X=(292, 789, 3) iters=600 split=0 38.3s
+[et] FordA_a06 X=(134, 277, 1) iters=200 split=0 10.3s
+[et] LargeKitchenAppliances_a01 X=(488, 400, 1) iters=600 split=0 26.8s
+[et] NonInvasiveFetalECGThorax1_a04 X=(521, 266, 1) iters=600 split=0 23.3s
+[et] PAMAP2_a07 X=(724, 54, 22) iters=600 split=0 42.7s
+[et] PhonemeSpectra_a02 X=(501, 192, 7) iters=600 split=0 26.8s
+[et] SelfRegulationSCP1_a05 X=(339, 701, 3) iters=600 split=0 33.1s
+[et] SemgHandMovementCh2_a00 X=(137, 345, 1) iters=200 split=0 9.5s
+[et] SemgHandMovementCh2_a11 X=(105, 1158, 1) iters=600 split=0 41.3s
+[et] ShapesAll_a06 X=(458, 318, 1) iters=600 split=0 29.1s
+[et] UWaveGestureLibrary_a01 X=(393, 183, 2) iters=600 split=0 23.3s
+[et] UniMiB-SHAR_a04 X=(264, 99, 1) iters=200 split=0 7.8s

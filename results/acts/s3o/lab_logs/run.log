@@ -1,0 +1,14 @@
+== HEAD 77df2524a78da778611580a90edde871677fa15a
+3 passed in 0.04s
+== GPU 0 free 24546 MiB → 2 槽
+== GPU 1 free 12327 MiB → 1 槽
+== GPU 2 free 13314 MiB → 1 槽
+== GPU 3 free 6382 MiB → 0 槽
+== GPU 4 free 18139 MiB → 2 槽
+== GPU 5 free 12739 MiB → 1 槽
+== GPU 6 free 22633 MiB → 2 槽
+== GPU 7 free 14859 MiB → 2 槽
+== 共 11 槽：0 0 1 2 4 4 5 6 6 7 7
+== [00:00:06] E_T 11 份
+== [00:12:59] E_T 完：160 / 160
+[merge] 160 任务；NaN et50 0 / etF 0；切段 0

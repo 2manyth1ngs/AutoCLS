@@ -51,3 +51,6 @@ PROTOCOL + 单测先红 → 协议锁 → 实现 102 → 本地单任务冒烟 �
 3（逐任务 jsonl + resume）；5；6（E_T 只用任务自己的数据与标签；标准化、PCA、降秩回归只在折内训练侧拟合）；7（rep_profile 按 task_type 分发）。
 
 ## §8 执行台账（跑后填写）
+- 协议锁 3d679ae（3 例先红）→ 实现 77df252（`scripts/102_acts_s3o.py` + `scripts/pa_pod/acts_lab_run_s3o_et.sh`）；单测 3 例绿；本地单任务冒烟 OK（Adiac_a00 14 s）。
+- **E_T**：8k-4090 七卡 11 槽，00:00 → 00:13 UTC，160 / 160，NaN 0，切段 0。
+- **第一道门**（本地 3.5 min）：E_T 族最好 etP4+pt4+sh4 / λ 100 / K 3，EV −0.0067；均值嵌入最好仍 +0.0021 → **S3O-NO-GAIN**，停止。

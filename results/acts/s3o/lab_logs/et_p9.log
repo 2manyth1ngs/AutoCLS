@@ -1,0 +1,14 @@
+[et] CinCECGTorso_a01 X=(600, 933, 1) iters=600 split=0 69.4s
+[et] CinCECGTorso_a12 X=(762, 1349, 1) iters=600 split=0 72.4s
+[et] Cricket_a07 X=(180, 126, 6) iters=600 split=0 42.9s
+[et] FordA_a02 X=(232, 433, 1) iters=600 split=0 48.1s
+[et] Handwriting_a05 X=(454, 138, 2) iters=600 split=0 39.9s
+[et] NonInvasiveFetalECGThorax1_a00 X=(392, 117, 1) iters=200 split=0 14.0s
+[et] PAMAP2_a03 X=(300, 83, 21) iters=600 split=0 56.6s
+[et] PTB-XL_a06 X=(113, 645, 9) iters=600 split=0 55.4s
+[et] SelfRegulationSCP1_a01 X=(410, 560, 3) iters=600 split=0 52.7s
+[et] SelfRegulationSCP1_a12 X=(527, 725, 1) iters=600 split=0 50.8s
+[et] SemgHandMovementCh2_a07 X=(540, 302, 1) iters=600 split=0 59.0s
+[et] ShapesAll_a02 X=(650, 413, 1) iters=600 split=0 54.1s
+[et] SleepEDF_a05 X=(348, 2814, 1) iters=600 split=0 142.0s
+[et] UniMiB-SHAR_a00 X=(173, 65, 1) iters=200 split=0 12.7s
