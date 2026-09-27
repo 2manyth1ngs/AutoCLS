@@ -1,0 +1,47 @@
+[s3s] ===== E_pt =====
+[s3s] Handwriting        hp r=8 λ=0.001  ALIGN 0.0373 RAW 0.0389 BLIND 0.0404
+[s3s] UniMiB-SHAR        hp r=8 λ=0.001  ALIGN 0.0019 RAW -0.0045 BLIND -0.0001
+[s3s] PhonemeSpectra     hp r=8 λ=0.001  ALIGN 0.0242 RAW 0.0003 BLIND -0.0012
+[s3s] UWaveGestureLibrar hp r=8 λ=0.1  ALIGN 0.0126 RAW 0.0131 BLIND 0.0176
+[s3s] Cricket            hp r=8 λ=0.01  ALIGN 0.0257 RAW 0.0200 BLIND 0.0215
+[s3s] PTB-XL             hp r=8 λ=0.01  ALIGN 0.0214 RAW 0.0321 BLIND 0.0261
+[s3s] SleepEDF           hp r=8 λ=0.1  ALIGN -0.0031 RAW -0.0175 BLIND 0.0020
+[s3s] PAMAP2             hp r=32 λ=0.1  ALIGN 0.0178 RAW 0.0242 BLIND 0.0220
+[s3s] NonInvasiveFetalEC hp r=32 λ=0.1  ALIGN 0.0029 RAW -0.0002 BLIND -0.0006
+[s3s] ShapesAll          hp r=32 λ=0.1  ALIGN 0.0017 RAW 0.0017 BLIND 0.0017
+[s3s] LargeKitchenApplia hp r=32 λ=0.01  ALIGN 0.0030 RAW 0.0030 BLIND 0.0318
+[s3s] Adiac              hp r=8 λ=0.1  ALIGN 0.0055 RAW -0.0021 BLIND 0.0013
+[s3s] FordA              hp r=8 λ=0.01  ALIGN -0.0055 RAW 0.0053 BLIND -0.0018
+[s3s] SemgHandMovementCh hp r=32 λ=0.001  ALIGN 0.0501 RAW 0.0013 BLIND 0.0825
+[s3s] EthanolConcentrati hp r=8 λ=0.01  ALIGN 0.0330 RAW 0.0218 BLIND 0.0217
+[s3s] CinCECGTorso       hp r=32 λ=0.01  ALIGN 0.0274 RAW 0.0201 BLIND 0.0318
+[s3s] SelfRegulationSCP1 hp r=32 λ=0.001  ALIGN 0.0064 RAW 0.0022 BLIND 0.0069
+[s3s] E_pt: S3S-ALIGN-NULL  ALIGN 0.0173 RAW 0.0092 BLIND 0.0213  G1 -0.0060 p 0.078  G2 +0.0024 p 0.444
+[s3s] ===== E_pt+E_TF =====
+[s3s] Handwriting        hp r=8 λ=0.01  ALIGN 0.0376 RAW 0.0415 BLIND 0.0404
+[s3s] UniMiB-SHAR        hp r=8 λ=0.001  ALIGN 0.0023 RAW 0.0019 BLIND -0.0001
+[s3s] PhonemeSpectra     hp r=32 λ=0.1  ALIGN 0.0266 RAW 0.0020 BLIND -0.0012
+[s3s] UWaveGestureLibrar hp r=8 λ=0.1  ALIGN 0.0023 RAW 0.0210 BLIND 0.0176
+[s3s] Cricket            hp r=8 λ=0.1  ALIGN 0.0074 RAW 0.0224 BLIND 0.0215
+[s3s] PTB-XL             hp r=8 λ=0.1  ALIGN 0.0261 RAW 0.0321 BLIND 0.0261
+[s3s] SleepEDF           hp r=8 λ=0.01  ALIGN -0.0078 RAW -0.0140 BLIND 0.0020
+[s3s] PAMAP2             hp r=8 λ=0.1  ALIGN 0.0209 RAW 0.0035 BLIND 0.0220
+[s3s] NonInvasiveFetalEC hp r=8 λ=0.01  ALIGN -0.0002 RAW -0.0002 BLIND -0.0006
+[s3s] ShapesAll          hp r=8 λ=0.01  ALIGN 0.0017 RAW 0.0017 BLIND 0.0017
+[s3s] LargeKitchenApplia hp r=8 λ=0.01  ALIGN 0.0030 RAW 0.0030 BLIND 0.0318
+[s3s] Adiac              hp r=8 λ=0.1  ALIGN 0.0013 RAW 0.0013 BLIND 0.0013
+[s3s] FordA              hp r=8 λ=0.001  ALIGN -0.0007 RAW 0.0053 BLIND -0.0018
+[s3s] SemgHandMovementCh hp r=32 λ=0.1  ALIGN 0.0902 RAW 0.0006 BLIND 0.0825
+[s3s] EthanolConcentrati hp r=8 λ=0.01  ALIGN 0.0271 RAW 0.0178 BLIND 0.0217
+[s3s] CinCECGTorso       hp r=8 λ=0.001  ALIGN 0.0192 RAW 0.0253 BLIND 0.0318
+[s3s] SelfRegulationSCP1 hp r=32 λ=0.1  ALIGN 0.0052 RAW 0.0042 BLIND 0.0069
+D:\DevelopDoc\CLS\scripts\106_acts_s3s.py:140: RuntimeWarning: Mean of empty slice
+  out = {"regret3": {a: float(np.nanmean(v)) for a, v in r3.items()},
+D:\DevelopDoc\CLS\scripts\106_acts_s3s.py:141: RuntimeWarning: Mean of empty slice
+  "regret3_src": {a: float(np.nanmean([np.nanmean(v[G == s]) for s in dict.fromkeys(G.tolist())])) for a, v in r3.items()},
+D:\DevelopDoc\CLS\scripts\106_acts_s3s.py:142: RuntimeWarning: Mean of empty slice
+  "nbsim": {a: float(np.nanmean(v)) for a, v in res["nbsim"].items()},
+D:\DevelopDoc\CLS\scripts\106_acts_s3s.py:147: RuntimeWarning: Mean of empty slice
+  out["uea6"] = {a: float(np.nanmean(v[u])) for a, v in r3.items()}
+[s3s] E_pt+E_TF: S3S-ALIGN-NULL  ALIGN 0.0188 RAW 0.0100 BLIND 0.0213  G1 -0.0055 p 0.470  G2 +0.0024 p 0.420
+[s3s] verdict S3S-ALIGN-NULL  predictions 2/6

@@ -1,0 +1,394 @@
+{
+ "n_tasks": 160,
+ "k": 10,
+ "E": {
+  "E_pt": {
+   "regret3": {
+    "BLIND": 0.021251037891676185,
+    "RAW": 0.00915948784036284,
+    "ALIGN": 0.017305892474559326,
+    "ORACLE": 0.004806924998997708
+   },
+   "regret3_src": {
+    "BLIND": 0.017867036477473997,
+    "RAW": 0.0093879694421127,
+    "ALIGN": 0.015425527437326957,
+    "ORACLE": 0.005296042642990447
+   },
+   "nbsim": {
+    "RAW": 0.2617675832344141,
+    "ALIGN": 0.2624335644798351,
+    "ORACLE": 0.5733483432054678
+   },
+   "G1": {
+    "d": -0.006037557995214256,
+    "d_task": -0.008146404634196488,
+    "p": 0.07806396484375,
+    "ci": [
+     -0.01737683357696295,
+     -0.0007820697304614435
+    ],
+    "n_pos": 5,
+    "n_neg": 10,
+    "n_src": 17,
+    "per_src": {
+     "Handwriting": 0.0015494912118408852,
+     "UniMiB-SHAR": -0.006405503992641823,
+     "PhonemeSpectra": -0.023853007216323857,
+     "UWaveGestureLibrary": 0.00043859649122807154,
+     "Cricket": -0.005643408134642355,
+     "PTB-XL": 0.010748040118597854,
+     "SleepEDF": -0.01444461692423648,
+     "PAMAP2": 0.006353185798630277,
+     "NonInvasiveFetalECGThorax1": -0.0031364468864468753,
+     "ShapesAll": 0.0,
+     "LargeKitchenAppliances": 0.0,
+     "Adiac": -0.007641729982466386,
+     "FordA": 0.010861617255280967,
+     "SemgHandMovementCh2": -0.048760040783066894,
+     "EthanolConcentration": -0.011175096892175239,
+     "CinCECGTorso": -0.00733179836669897,
+     "SelfRegulationSCP1": -0.0041977676155215415
+    }
+   },
+   "G2": {
+    "d": 0.00244150904014704,
+    "d_task": 0.003945145417116855,
+    "p": 0.444091796875,
+    "ci": [
+     -0.0027065784357523373,
+     0.01110224201046402
+    ],
+    "n_pos": 10,
+    "n_neg": 6,
+    "n_src": 17,
+    "per_src": {
+     "Handwriting": 0.0031056770047227303,
+     "UniMiB-SHAR": -0.0020701253874330916,
+     "PhonemeSpectra": -0.025348056721274353,
+     "UWaveGestureLibrary": 0.005012531328320816,
+     "Cricket": -0.004124468878288955,
+     "PTB-XL": 0.0047737754127155085,
+     "SleepEDF": 0.005084378386008823,
+     "PAMAP2": 0.004154179369641381,
+     "NonInvasiveFetalECGThorax1": -0.003529117043514926,
+     "ShapesAll": 0.0,
+     "LargeKitchenAppliances": 0.028799410344543974,
+     "Adiac": -0.004222676797194624,
+     "FordA": 0.0037935412602854435,
+     "SemgHandMovementCh2": 0.03242570583594175,
+     "EthanolConcentration": -0.011320649255870466,
+     "CinCECGTorso": 0.004428875776091013,
+     "SelfRegulationSCP1": 0.0005426730478046565
+    }
+   },
+   "raw_vs_blind": {
+    "d": 0.008479067035361295,
+    "d_task": 0.012091550051313344,
+    "p": 0.054718017578125,
+    "ci": [
+     0.0015161750223446635,
+     0.027243776542910953
+    ],
+    "n_pos": 10,
+    "n_neg": 6,
+    "n_src": 17,
+    "per_src": {
+     "Handwriting": 0.0015561857928818451,
+     "UniMiB-SHAR": 0.004335378605208731,
+     "PhonemeSpectra": -0.0014950495049504964,
+     "UWaveGestureLibrary": 0.004573934837092744,
+     "Cricket": 0.0015189392563534007,
+     "PTB-XL": -0.005974264705882346,
+     "SleepEDF": 0.019528995310245302,
+     "PAMAP2": -0.0021990064289888964,
+     "NonInvasiveFetalECGThorax1": -0.00039267015706805075,
+     "ShapesAll": 0.0,
+     "LargeKitchenAppliances": 0.028799410344543974,
+     "Adiac": 0.0034190531852717615,
+     "FordA": -0.0070680759949955235,
+     "SemgHandMovementCh2": 0.08118574661900865,
+     "EthanolConcentration": -0.0001455523636952269,
+     "CinCECGTorso": 0.011760674142789983,
+     "SelfRegulationSCP1": 0.004740440663326198
+    }
+   },
+   "hp": {
+    "Handwriting": [
+     8,
+     0.001
+    ],
+    "UniMiB-SHAR": [
+     8,
+     0.001
+    ],
+    "PhonemeSpectra": [
+     8,
+     0.001
+    ],
+    "UWaveGestureLibrary": [
+     8,
+     0.1
+    ],
+    "Cricket": [
+     8,
+     0.01
+    ],
+    "PTB-XL": [
+     8,
+     0.01
+    ],
+    "SleepEDF": [
+     8,
+     0.1
+    ],
+    "PAMAP2": [
+     32,
+     0.1
+    ],
+    "NonInvasiveFetalECGThorax1": [
+     32,
+     0.1
+    ],
+    "ShapesAll": [
+     32,
+     0.1
+    ],
+    "LargeKitchenAppliances": [
+     32,
+     0.01
+    ],
+    "Adiac": [
+     8,
+     0.1
+    ],
+    "FordA": [
+     8,
+     0.01
+    ],
+    "SemgHandMovementCh2": [
+     32,
+     0.001
+    ],
+    "EthanolConcentration": [
+     8,
+     0.01
+    ],
+    "CinCECGTorso": [
+     32,
+     0.01
+    ],
+    "SelfRegulationSCP1": [
+     32,
+     0.001
+    ]
+   },
+   "uea6": {
+    "BLIND": 0.01627007110941111,
+    "RAW": 0.01405730834593473,
+    "ALIGN": 0.020782874027522668,
+    "ORACLE": 0.004254708276317113
+   },
+   "verdict": "S3S-ALIGN-NULL"
+  },
+  "E_pt+E_TF": {
+   "regret3": {
+    "BLIND": 0.021251037891676185,
+    "RAW": 0.00997190718827036,
+    "ALIGN": 0.018842523584196243,
+    "ORACLE": NaN
+   },
+   "regret3_src": {
+    "BLIND": 0.017867036477473997,
+    "RAW": 0.009962183149971248,
+    "ALIGN": 0.015423184642543082,
+    "ORACLE": NaN
+   },
+   "nbsim": {
+    "RAW": 0.27070257742287784,
+    "ALIGN": 0.2623060994247478,
+    "ORACLE": NaN
+   },
+   "G1": {
+    "d": -0.005461001492571834,
+    "d_task": -0.008870616395925885,
+    "p": 0.470458984375,
+    "ci": [
+     -0.027015143956848762,
+     0.003468923927339956
+    ],
+    "n_pos": 6,
+    "n_neg": 7,
+    "n_src": 17,
+    "per_src": {
+     "Handwriting": 0.003889183185235817,
+     "UniMiB-SHAR": -0.0003595523217938684,
+     "PhonemeSpectra": -0.02453242345076783,
+     "UWaveGestureLibrary": 0.018609022556390964,
+     "Cricket": 0.015022589393852412,
+     "PTB-XL": 0.005974264705882346,
+     "SleepEDF": -0.006206082564778219,
+     "PAMAP2": -0.017469260071005764,
+     "NonInvasiveFetalECGThorax1": 0.0,
+     "ShapesAll": 0.0,
+     "LargeKitchenAppliances": 0.0,
+     "Adiac": 0.0,
+     "FordA": 0.006049024149222704,
+     "SemgHandMovementCh2": -0.0896842669310549,
+     "EthanolConcentration": -0.009238488411163252,
+     "CinCECGTorso": 0.006092153819427036,
+     "SelfRegulationSCP1": -0.0009831894331686422
+    }
+   },
+   "G2": {
+    "d": 0.0024438518349309156,
+    "d_task": 0.0024085143074799383,
+    "p": 0.4197998046875,
+    "ci": [
+     -0.002947637353526437,
+     0.007747507553093984
+    ],
+    "n_pos": 8,
+    "n_neg": 6,
+    "n_src": 17,
+    "per_src": {
+     "Handwriting": 0.002813790030749233,
+     "UniMiB-SHAR": -0.00242967770922696,
+     "PhonemeSpectra": -0.027766975423071043,
+     "UWaveGestureLibrary": 0.015288220551378448,
+     "Cricket": 0.014168234303227265,
+     "PTB-XL": 0.0,
+     "SleepEDF": 0.009773286043666465,
+     "PAMAP2": 0.0010747385879761456,
+     "NonInvasiveFetalECGThorax1": -0.00039267015706805075,
+     "ShapesAll": 0.0,
+     "LargeKitchenAppliances": 0.028799410344543974,
+     "Adiac": 0.0,
+     "FordA": -0.0010190518457728198,
+     "SemgHandMovementCh2": -0.007703417387155374,
+     "EthanolConcentration": -0.005388628488350304,
+     "CinCECGTorso": 0.0126020515647015,
+     "SelfRegulationSCP1": 0.001726170778227079
+    }
+   },
+   "raw_vs_blind": {
+    "d": 0.00790485332750275,
+    "d_task": 0.011279130703405825,
+    "p": 0.10882568359375,
+    "ci": [
+     0.0004768404141128907,
+     0.02702689571939778
+    ],
+    "n_pos": 7,
+    "n_neg": 8,
+    "n_src": 17,
+    "per_src": {
+     "Handwriting": -0.0010753931544865841,
+     "UniMiB-SHAR": -0.0020701253874330916,
+     "PhonemeSpectra": -0.0032345519723032106,
+     "UWaveGestureLibrary": -0.003320802005012516,
+     "Cricket": -0.0008543550906251474,
+     "PTB-XL": -0.005974264705882346,
+     "SleepEDF": 0.015979368608444684,
+     "PAMAP2": 0.01854399865898191,
+     "NonInvasiveFetalECGThorax1": -0.00039267015706805075,
+     "ShapesAll": 0.0,
+     "LargeKitchenAppliances": 0.028799410344543974,
+     "Adiac": 0.0,
+     "FordA": -0.0070680759949955235,
+     "SemgHandMovementCh2": 0.08198084954389953,
+     "EthanolConcentration": 0.003849859922812948,
+     "CinCECGTorso": 0.006509897745274464,
+     "SelfRegulationSCP1": 0.0027093602113957213
+    }
+   },
+   "hp": {
+    "Handwriting": [
+     8,
+     0.01
+    ],
+    "UniMiB-SHAR": [
+     8,
+     0.001
+    ],
+    "PhonemeSpectra": [
+     32,
+     0.1
+    ],
+    "UWaveGestureLibrary": [
+     8,
+     0.1
+    ],
+    "Cricket": [
+     8,
+     0.1
+    ],
+    "PTB-XL": [
+     8,
+     0.1
+    ],
+    "SleepEDF": [
+     8,
+     0.01
+    ],
+    "PAMAP2": [
+     8,
+     0.1
+    ],
+    "NonInvasiveFetalECGThorax1": [
+     8,
+     0.01
+    ],
+    "ShapesAll": [
+     8,
+     0.01
+    ],
+    "LargeKitchenAppliances": [
+     8,
+     0.01
+    ],
+    "Adiac": [
+     8,
+     0.1
+    ],
+    "FordA": [
+     8,
+     0.001
+    ],
+    "SemgHandMovementCh2": [
+     32,
+     0.1
+    ],
+    "EthanolConcentration": [
+     8,
+     0.01
+    ],
+    "CinCECGTorso": [
+     8,
+     0.001
+    ],
+    "SelfRegulationSCP1": [
+     32,
+     0.1
+    ]
+   },
+   "uea6": {
+    "BLIND": 0.01627007110941111,
+    "RAW": 0.016158145663242977,
+    "ALIGN": 0.015903359319355714,
+    "ORACLE": NaN
+   },
+   "verdict": "S3S-ALIGN-NULL"
+  }
+ },
+ "verdict": "S3S-ALIGN-NULL",
+ "c0_raw_equals_s3q_knn10": 0.00915948784036284,
+ "predictions": {
+  "P1": false,
+  "P2": false,
+  "P3": true,
+  "P4": false,
+  "P5": true,
+  "P6": false
+ }
+}
