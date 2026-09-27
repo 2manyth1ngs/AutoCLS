@@ -1,0 +1,14 @@
+== HEAD 4428beb
+== E_pt 176 / 176
+8 passed in 1.82s
+== GPU 0 free 15745 MiB → 2 槽
+== GPU 1 free 12327 MiB → 1 槽
+== GPU 2 free 7790 MiB → 1 槽
+== GPU 3 free 2698 MiB → 0 槽
+== GPU 4 free 12739 MiB → 1 槽
+== GPU 5 free 21259 MiB → 2 槽
+== GPU 6 free 21521 MiB → 2 槽
+== GPU 7 free 12795 MiB → 1 槽
+== 共 10 槽：0 0 1 2 4 5 5 6 6 7
+== [04:20:26] 训练 36 次
+== [04:52:43] 训练完：36 / 36
