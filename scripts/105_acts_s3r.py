@@ -94,6 +94,11 @@ def verdict_s3r(gin: Mapping, gval: Mapping, gcon: Mapping) -> str:
     return code + ("+CONTENT" if gcon["ok"] else "")
 
 
+def improved(cur: float, best: float, mode: str) -> bool:
+    """早停判据：loss（S3-R）取小，acc（S3-R′）取大；都要求严格变好。"""
+    return cur < best - 1e-9 if mode == "loss" else cur > best + 1e-9
+
+
 def signflip_p(d: np.ndarray) -> float:
     return importlib.import_module("scripts.104_acts_s3q").signflip_p(d)
 
@@ -196,7 +201,8 @@ def cmd_train(args) -> None:
             p = fwd(i, torch.as_tensor(a[m], device=dev), torch.as_tensor(b[m], device=dev), T).float().cpu().numpy()
         return p, y[m], w[m]
 
-    best, best_state, bad, hist, seen = np.inf, None, 0, [], 0
+    mode = getattr(args, "stop", "loss") or "loss"
+    best, best_state, bad, hist, seen, best_ep = (np.inf if mode == "loss" else -np.inf), None, 0, [], 0, 0
     t0 = time.time()
     max_ep = args.max_epochs or MAX_EPOCHS
     for ep in range(max_ep):
@@ -226,8 +232,9 @@ def cmd_train(args) -> None:
         va = weighted_acc(np.concatenate(vacc_p), np.concatenate(vacc_y), np.concatenate(vacc_w)) if vacc_p else float("nan")
         hist.append({"epoch": ep, "train_loss": tot / max(totw, 1e-12), "val_loss": vl, "val_acc": va, "pairs_seen": seen, "sec": round(time.time() - t0, 1)})
         print(f"[train] {tag} ep {ep} train {hist[-1]['train_loss']:.4f} val {vl:.4f} acc {va:.3f} {time.time() - t0:.0f}s", flush=True)
-        if vl < best - 1e-9:
-            best, bad, best_state = vl, 0, copy.deepcopy(model.state_dict())
+        cur = vl if mode == "loss" else va
+        if improved(cur, best, mode):
+            best, bad, best_state, best_ep = cur, 0, copy.deepcopy(model.state_dict()), ep
         else:
             bad += 1
             if bad >= PATIENCE:
@@ -235,7 +242,7 @@ def cmd_train(args) -> None:
     model.load_state_dict(best_state); model.eval()
     torch.save(model.state_dict(), outdir / "models" / f"{tag}.pt")
     # ---- 样本内 / 验证（本 E vs 换 E；换 E = 训练源内 cross_maps 偏移 1–4）
-    out = {"hist": json.dumps(hist), "te": np.array(te), "tr": np.array(tr), "n_pairs_epoch": n_pairs}
+    out = {"hist": json.dumps(hist), "te": np.array(te), "tr": np.array(tr), "n_pairs_epoch": n_pairs, "best_epoch": best_ep, "stop": mode}
     with torch.no_grad():
         Tall = None if arm == "B" else torch.stack([sc.task_vec(W[i], None) for i in range(len(tasks))])
         tr_tasks = [tasks[i] for i in tr]
@@ -268,7 +275,7 @@ def cmd_train(args) -> None:
             if Tall is not None:
                 out[f"X/{tasks[i]}"] = np.stack([sc.pmat(V[i][:N_SH], Tall[m[i]]) for m in cm_out]).astype(np.float32)
     np.savez_compressed(op, **out)
-    print(f"[train] {tag} done best val {best:.4f} epochs {len(hist)} pairs/epoch {n_pairs} {time.time() - t0:.0f}s", flush=True)
+    print(f"[train] {tag} done best {mode} {best:.4f} @ ep {best_ep} epochs {len(hist)} pairs/epoch {n_pairs} {time.time() - t0:.0f}s", flush=True)
 
 
 # ================================================================ 分析（本地）
@@ -303,7 +310,8 @@ def cmd_analyze(args) -> dict:
             for f in folds:
                 if (a, s, f) not in Z:
                     continue
-                h = json.loads(str(Z[(a, s, f)]["hist"])); b = int(np.argmin([x["val_loss"] for x in h]))
+                zz = Z[(a, s, f)]; h = json.loads(str(zz["hist"]))
+                b = int(zz["best_epoch"]) if "best_epoch" in zz.files else int(np.argmin([x["val_loss"] for x in h]))   # S3-R 旧文件按损失
                 ep.append(len(h)); be.append(b); tl.append(h[b]["train_loss"]); vl.append(h[b]["val_loss"]); va.append(h[b]["val_acc"])
                 seen.append(h[b]["pairs_seen"]); npe.append(int(Z[(a, s, f)]["n_pairs_epoch"]))
         tr_stats[a] = {"epochs": ep, "best_epoch": be, "best_epoch_median": float(np.median(be)) if be else None,
@@ -404,7 +412,7 @@ def cmd_analyze(args) -> dict:
 def cmd_smoke(args) -> None:
     """合成窗口 + 每源 2 任务 + 1 epoch，两臂各跑一次 train，再核输出键。"""
     import types
-    base = dict(outdir=args.outdir, device=args.device, resume=False, synthetic=True, max_epochs=1, max_tasks_per_src=2, fold="Cricket", seed=0)
+    base = dict(outdir=args.outdir, device=args.device, resume=False, synthetic=True, max_epochs=1, max_tasks_per_src=2, fold="Cricket", seed=0, stop=args.stop)
     for arm in ARMS:
         cmd_train(types.SimpleNamespace(**base, arm=arm))
         with np.load(Path(args.outdir) / "train" / f"{arm}_s0_Cricket.npz") as z:
@@ -422,6 +430,7 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--max-epochs", type=int, default=None)
+    ap.add_argument("--stop", choices=("loss", "acc"), default="loss")
     ap.add_argument("--max-tasks-per-src", type=int, default=None)
     ap.add_argument("--outdir", default=str(OUT))
     return ap
