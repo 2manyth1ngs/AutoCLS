@@ -20,7 +20,7 @@ def test_pref_sim():
 def _toy(seed=0):
     rng = np.random.default_rng(seed)
     groups = np.repeat(np.arange(4), 8); h = np.tile([0, 1], 16)
-    X = np.c_[h + 0.1 * rng.normal(size=32), 3 * rng.normal(size=(32, 9))]
+    X = np.c_[h + 0.3 * rng.normal(size=32), rng.normal(size=(32, 60))]      # 偏好只由第 0 维决定，60 维噪声让原始余弦找不准
     S = np.where(h[:, None] == h[None, :], 1.0, -1.0)
     return X, S, groups, h
 
