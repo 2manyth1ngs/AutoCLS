@@ -113,6 +113,39 @@ def improved(cur: float, best: float, mode: str) -> bool:
     return cur < best - 1e-9 if mode == "loss" else cur > best + 1e-9
 
 
+def base_rates(r: np.ndarray, use: np.ndarray, n_sh: int = N_SH) -> np.ndarray:
+    """S3-W 基准率：t(c) = 训练用 random 配置（下标 ≥ n_sh、use 为真、不含 c 自身）中值高于 c 的比例，平局记 0.5；无 random → nan。"""
+    r = np.asarray(r, float); use = np.asarray(use, bool)
+    rnd = np.where(use & (np.arange(len(r)) >= n_sh))[0]
+    out = np.full(len(r), np.nan)
+    for c in range(len(r)):
+        o = rnd[rnd != c]
+        if len(o):
+            out[c] = float(np.mean((r[o] > r[c]) + 0.5 * (r[o] == r[c])))
+    return out
+
+
+def cons_pairs(n_adv: int, refs: np.ndarray, t: np.ndarray, offset: int):
+    """S3-W 保守配对：对抗配置（扩展下标 offset..offset+n_adv−1）× 参考配置 c，双向；P(x ≻ c) 目标 t(c)，P(c ≻ x) 目标 1 − t(c)。"""
+    refs = np.asarray(refs, int); t = np.asarray(t, float)
+    xs = offset + np.arange(int(n_adv))
+    X, C = np.repeat(xs, len(refs)), np.tile(refs, len(xs))
+    a = np.concatenate([X, C]); b = np.concatenate([C, X])
+    y = np.concatenate([t[C], 1.0 - t[C]])
+    adv_first = np.r_[np.ones(len(X), bool), np.zeros(len(X), bool)]
+    return a, b, y, adv_first
+
+
+def cons_schedule(tr: Sequence[int], epoch: int, period: int, seed: int = 0) -> list:
+    """S3-W 对抗集刷新日程：epoch 0 全部训练任务；之后按固定排列分 period 组轮换。"""
+    tr = list(tr)
+    if epoch == 0 or period <= 1:
+        return tr
+    perm = np.random.default_rng(seed).permutation(len(tr))
+    g = (int(epoch) - 1) % int(period)
+    return [tr[j] for j in sorted(perm[g::int(period)])]
+
+
 def verdict_gate(d: float, p: float, npos: int) -> str:
     """S3-T 主门：S3-R′ E 臂 − 本档 E 臂的 regret@3 差。"""
     if d >= 0.003 and p < 0.05 and npos >= 4:
@@ -182,6 +215,42 @@ def _build(arm: str, cls_dim: int, seed: int, device: str, e_mode: str = "settf"
     else:                                             # = 89.build_model("D")
         m = TCLSC(cls_dim, None, task_branch="none", head="concat")
     return m.to(device)
+
+
+def _cons_init(meta: Mapping, tasks: Sequence[str], R, F, H, tr: Sequence[int], no_shared: bool) -> dict:
+    """S3-W：搜索空间 / 编码器（= 部署搜索同款）+ 每个训练任务的基准率、参考下标、已标键。"""
+    ac = importlib.import_module("scripts.acts_common")
+    from autocls.space.cls_encoder import CLSEncoder
+    cfg = ac.load_acts_config(profile="s2"); space = ac.acts_space(cfg)
+    TB, REF = {}, {}
+    for i in tr:
+        use = train_use_mask(len(R[i]), H[i], no_shared)
+        TB[i] = base_rates(R[i], use, N_SH)
+        REF[i] = np.where(use & ~np.asarray(F[i], bool) & np.isfinite(TB[i]))[0]
+    return {"cfg": cfg, "space": space, "enc": CLSEncoder(space, mode="binned"), "TB": TB, "REF": REF,
+            "lab": {i: set(meta["keys"][tasks[i]]) for i in tr}}
+
+
+def _cons_search(sc, T, cs: Mapping, i: int, rng: np.random.Generator, cands, Vc: np.ndarray, keys: Sequence[str], gens: int, top: int):
+    """S3-W 内层搜索（= 108.cmd_search 同一流程、规模缩小）：分块循环赛 → 进化 → 前 top 条未标配置的向量。"""
+    import torch
+    ac = importlib.import_module("scripts.acts_common"); g89 = importlib.import_module("scripts.89_acts_s3c")
+    from autocls.search.evolution import evolutionary_search
+    from autocls.space.cls_space import CLS
+    space, enc, cfg = cs["space"], cs["enc"], cs["cfg"]
+    init = g89.chunk_select(len(cands), lambda idx: sc.pmat(Vc[np.asarray(idx)], T), keys)
+
+    def score_pairs(a, b):
+        with torch.no_grad():
+            at = torch.as_tensor(np.asarray(a, np.float32), device=sc.dev); bt = torch.as_tensor(np.asarray(b, np.float32), device=sc.dev)
+            Tb = None if T is None else T.unsqueeze(0).expand(len(at), -1)
+            return sc.forward(at, bt, Tb).float().cpu().numpy()
+
+    evo = evolutionary_search(score_pairs, space, enc, ks=0, kp=g89.KP, generations=gens, p_cross=g89.P_CROSS, p_mut=g89.P_MUT, top_k=g89.KP,
+                              batch_size=65536, rng=rng, seed_population=[cands[j][0] for j in init],
+                              accept=lambda c: bool(space.validate(c)) and not ac.is_pruned(c, cfg))
+    out = [e for e in evo if e["cls_key"] not in cs["lab"][i]][:top]
+    return np.stack([enc.encode(CLS(**e["cls"])) for e in out]).astype(np.float32) if out else None
 
 
 def cmd_train(args) -> None:
@@ -256,11 +325,41 @@ def cmd_train(args) -> None:
     best, best_state, bad, hist, seen, best_ep = (np.inf if mode == "loss" else -np.inf), None, 0, [], 0, 0
     t0 = time.time()
     max_ep = args.max_epochs or MAX_EPOCHS
+    # ---- S3-W 保守项（cons = 0 时不执行任何新代码，与 S3-R′ 逐位相同）
+    cons = float(getattr(args, "cons", 0.0) or 0.0)
+    cons_ks, cons_gens, cons_top = int(getattr(args, "cons_ks", 2000)), int(getattr(args, "cons_gens", 3)), int(getattr(args, "cons_top", 5))
+    cons_ref, cons_period = int(getattr(args, "cons_ref", 16)), int(getattr(args, "cons_period", 3))
+    cons_hist, ADV, NADV = [], {}, {}
+    if cons > 0:
+        ac = importlib.import_module("scripts.acts_common")
+        cs = _cons_init(meta, tasks, R, F, H, tr, no_shared)
+        cons_rng = np.random.default_rng([seed, 7717])
     for ep in range(max_ep):
+        if cons > 0:                                  # 每 epoch 开始：当前模型在（轮换的）训练任务上跑全空间搜索 → 对抗集
+            tc = time.time(); model.eval()
+            cands = ac._sample_catalog(cs["space"], cs["cfg"], np.random.default_rng([seed, 9973, ep]), cons_ks, set())
+            Vc = np.stack([cs["enc"].encode(c) for c, _k in cands]).astype(np.float32); ckeys = [k for _c, k in cands]
+            sched = cons_schedule(tr, ep, cons_period, seed)
+            pa, br = [], []
+            with torch.no_grad():
+                for i in sched:
+                    Ti = tvec(i, False)
+                    xa = _cons_search(sc, Ti, cs, i, np.random.default_rng([seed, 9973, ep, i]), cands, Vc, ckeys, cons_gens, cons_top)
+                    if xa is None:
+                        ADV.pop(i, None); continue
+                    ADV[i] = torch.as_tensor(np.vstack([np.asarray(V[i], np.float32), xa]), device=dev); NADV[i] = len(xa)
+                    if len(cs["REF"][i]):
+                        ca, cb, cy, af = cons_pairs(len(xa), cs["REF"][i], cs["TB"][i], len(V[i]))
+                        Tb = None if Ti is None else Ti.unsqueeze(0).expand(int(af.sum()), -1)
+                        pa.append(float(sc.forward(ADV[i][ca[af]], ADV[i][cb[af]], Tb).float().mean())); br.append(float(cy[af].mean()))
+            model.train()
+            cons_hist.append({"epoch": ep, "n_tasks_refreshed": len(sched), "n_tasks_adv": len(ADV), "pred_adv": float(np.mean(pa)) if pa else float("nan"),
+                              "base_rate": float(np.mean(br)) if br else float("nan"), "sec": round(time.time() - tc, 1)})
+            print(f"[cons] {tag} ep {ep} 刷新 {len(sched)} 任务：对抗集预测胜率 {cons_hist[-1]['pred_adv']:.3f} vs 基准率 {cons_hist[-1]['base_rate']:.3f} {cons_hist[-1]['sec']:.0f}s", flush=True)
         model.train()
         tot, totw = 0.0, 0.0
         for batch in task_batches({i: len(TP[i][0]) for i in tr}, rng):
-            losses, wsum = [], 0.0
+            losses, wsum, lcs = [], 0.0, []
             for i, idx in batch:
                 a, b, y, w, k = (x[idx] for x in TP[i])
                 T = tvec(i, True)
@@ -269,9 +368,16 @@ def cmd_train(args) -> None:
                 wt = torch.as_tensor(w, dtype=torch.float32, device=dev)
                 losses.append(torch.nn.functional.binary_cross_entropy(p.float(), torch.as_tensor(y, dtype=torch.float32, device=dev), weight=wt, reduction="sum"))
                 wsum += float(w.sum()); seen += len(a)
-            loss = torch.stack(losses).sum() / max(wsum, 1e-12)
+                if cons > 0 and i in ADV and len(cs["REF"][i]):          # 保守配对：E detach，只约束比较头与配置支路
+                    refs = cons_rng.choice(cs["REF"][i], size=min(cons_ref, len(cs["REF"][i])), replace=False)
+                    ca, cb, cy, _af = cons_pairs(NADV[i], refs, cs["TB"][i], len(V[i]))
+                    Tb = None if T is None else T.detach().unsqueeze(0).expand(len(ca), -1)
+                    pc = sc.forward(ADV[i][torch.as_tensor(ca, device=dev)], ADV[i][torch.as_tensor(cb, device=dev)], Tb)
+                    lcs.append(torch.nn.functional.binary_cross_entropy(pc.float(), torch.as_tensor(cy, dtype=torch.float32, device=dev)))
+            lmain = torch.stack(losses).sum() / max(wsum, 1e-12)
+            loss = lmain + cons * torch.stack(lcs).mean() if lcs else lmain
             opt.zero_grad(); loss.backward(); opt.step()
-            tot += float(loss.detach()) * wsum; totw += wsum
+            tot += float(lmain.detach()) * wsum; totw += wsum
         model.eval()
         vl, vw, vacc_p, vacc_y, vacc_w = 0.0, 0.0, [], [], []
         with torch.no_grad():
@@ -294,7 +400,8 @@ def cmd_train(args) -> None:
     torch.save(model.state_dict(), outdir / "models" / f"{tag}.pt")
     # ---- 样本内 / 验证（本 E vs 换 E；换 E = 训练源内 cross_maps 偏移 1–4）
     out = {"hist": json.dumps(hist), "te": np.array(te), "tr": np.array(tr), "n_pairs_epoch": n_pairs, "best_epoch": best_ep, "stop": mode, "gate": gate,
-           "e_mode": e_mode, "no_shared": no_shared}
+           "e_mode": e_mode, "no_shared": no_shared, "cons": cons, "cons_hist": json.dumps(cons_hist),
+           "cons_cfg": json.dumps({"ks": cons_ks, "gens": cons_gens, "top": cons_top, "ref": cons_ref, "period": cons_period})}
     with torch.no_grad():
         Tall = None if arm == "B" else torch.stack([sc.task_vec(W[i], None) for i in range(len(tasks))])
         tr_tasks = [tasks[i] for i in tr]
@@ -534,6 +641,12 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--e-mode", choices=("settf", "mean", "raw"), default="settf")
     ap.add_argument("--no-shared", action="store_true")
     ap.add_argument("--raw-dir", default=str(RAW_DIR))
+    ap.add_argument("--cons", type=float, default=0.0)                  # S3-W 保守项权重 α（0 = S3-R′）
+    ap.add_argument("--cons-ks", type=int, default=2000)
+    ap.add_argument("--cons-gens", type=int, default=3)
+    ap.add_argument("--cons-top", type=int, default=5)
+    ap.add_argument("--cons-ref", type=int, default=16)
+    ap.add_argument("--cons-period", type=int, default=3)
     ap.add_argument("--compare-ref", default=None)
     ap.add_argument("--max-tasks-per-src", type=int, default=None)
     ap.add_argument("--outdir", default=str(OUT))
