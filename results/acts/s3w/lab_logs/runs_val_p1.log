@@ -1,0 +1,10 @@
+[ACTS-s1pp] 计划 6 格，已有 0，待跑 6
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_val: val D_train=(84, 1197, 6) D_val=(24, 1197, 6)
+[ACTS-s1pp 1/6] Cricket_whole_val/random/b1a09bce s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.875 0.958 0.958] (86.0s+0.7s)
+[ACTS-s1pp 2/6] Cricket_whole_val/random/821dc9ec s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.917 0.917 0.917] (55.5s+0.6s)
+[ACTS-s1pp 3/6] Cricket_whole_val/random/dacc4005 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.792 0.750 0.833] (33.2s+0.6s)
+[ACTS-s1pp 4/6] Cricket_whole_val/random/2b8fb39d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (135.0s+0.6s)
+[ACTS-s1pp 5/6] Cricket_whole_val/random/0339f6e6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.917 0.833 0.917] (194.8s+0.6s)
+[ACTS-s1pp 6/6] Cricket_whole_val/random/ea6ec295 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.875 0.875 0.917] (195.1s+0.6s)
+[ACTS-s1pp] 收官

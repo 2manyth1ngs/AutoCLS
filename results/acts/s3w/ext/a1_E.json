@@ -1,0 +1,2054 @@
+{
+ "Handwriting": {
+  "Adiac_a00": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.003389830508474523,
+   "over": -0.04130038841799999,
+   "acc": 0.7052924791086351,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6803662782486666
+  },
+  "Adiac_a04": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.008695652173913104,
+   "over": 0.055492775456083,
+   "acc": 0.7352607709750567,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6838261087894163
+  },
+  "CinCECGTorso_a00": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.1272727272727272,
+   "over": 0.02785312129557138,
+   "acc": 0.5173852573018081,
+   "aug_in_top3": 2,
+   "pred_aug": 0.584519787962238
+  },
+  "CinCECGTorso_a04": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.011596638655462121,
+   "over": -0.2639312444809412,
+   "acc": 0.7409679618268575,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6040687555190589
+  },
+  "Cricket_a00": {
+   "src": "Cricket",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.04105263157894734,
+   "over": 0.005688131839657884,
+   "acc": 0.6728343145500421,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6290214651729912
+  },
+  "Cricket_a04": {
+   "src": "Cricket",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.04761904761904767,
+   "over": -0.14375953166745603,
+   "acc": 0.7928994082840237,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6929071349992106
+  },
+  "EthanolConcentration_a00": {
+   "src": "EthanolConcentration",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.23529411764705876,
+   "over": -0.013756941140525947,
+   "acc": 0.6418570375829035,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5782430588594741
+  },
+  "EthanolConcentration_a04": {
+   "src": "EthanolConcentration",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.0584656084656085,
+   "over": -0.13154404266261377,
+   "acc": 0.5057239057239057,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5564559573373862
+  },
+  "FordA_a00": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.0715415019762845,
+   "over": -0.13541920040975564,
+   "acc": 0.7860724233983287,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6634696884791332
+  },
+  "FordA_a04": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.011428571428571344,
+   "over": 0.04312498319583635,
+   "acc": 0.6629401900503075,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6570138720847253
+  },
+  "Handwriting_a00": {
+   "src": "Handwriting",
+   "held": true,
+   "n_aug": 40,
+   "r3": 0.02562442183163735,
+   "over": 0.01609138821406919,
+   "acc": 0.5528109028960818,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6535913882140691
+  },
+  "Handwriting_a04": {
+   "src": "Handwriting",
+   "held": true,
+   "n_aug": 40,
+   "r3": 0.014634146341463372,
+   "over": -0.1822203063395702,
+   "acc": 0.8052057094878253,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6952796936604299
+  },
+  "LargeKitchenAppliances_a00": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.05105263157894746,
+   "over": -0.12171988183080595,
+   "acc": 0.681029658645775,
+   "aug_in_top3": 2,
+   "pred_aug": 0.5760578959469718
+  },
+  "LargeKitchenAppliances_a04": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.19097560975609762,
+   "over": 0.20030096661299462,
+   "acc": 0.5189732142857143,
+   "aug_in_top3": 3,
+   "pred_aug": 0.6747454110574391
+  },
+  "NonInvasiveFetalECGThorax1_a00": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.02291463810451133,
+   "over": -0.06715674620466627,
+   "acc": 0.7163515016685206,
+   "aug_in_top3": 2,
+   "pred_aug": 0.6995099204620001
+  },
+  "NonInvasiveFetalECGThorax1_a04": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.0,
+   "over": -0.23891155439946388,
+   "acc": 0.7142857142857143,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5538662233783139
+  },
+  "PAMAP2_a00": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.046666666666666634,
+   "over": 0.1806289899535478,
+   "acc": 0.6186046511627907,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6739623232868811
+  },
+  "PAMAP2_a04": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.02372881355932205,
+   "over": 0.004814428196081799,
+   "acc": 0.6926503340757239,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6875922059738595
+  },
+  "PTB-XL_a00": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.03602941176470592,
+   "over": 0.20449591562069125,
+   "acc": 0.5379918588873813,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6778292489540246
+  },
+  "PTB-XL_a04": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.01578947368421052,
+   "over": -0.0621624885290446,
+   "acc": 0.6818486269256531,
+   "aug_in_top3": 0,
+   "pred_aug": 0.656504178137622
+  },
+  "PhonemeSpectra_a00": {
+   "src": "PhonemeSpectra",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.048252252252252256,
+   "over": -0.10149830969919771,
+   "acc": 0.5808823529411765,
+   "aug_in_top3": 2,
+   "pred_aug": 0.565168356967469
+  },
+  "PhonemeSpectra_a04": {
+   "src": "PhonemeSpectra",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.048577827547592406,
+   "over": -0.11286395842871733,
+   "acc": 0.6896321070234114,
+   "aug_in_top3": 1,
+   "pred_aug": 0.660469374904616
+  },
+  "SelfRegulationSCP1_a00": {
+   "src": "SelfRegulationSCP1",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.02608695652173909,
+   "over": -0.04256447995040147,
+   "acc": 0.5343241330502477,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5341021867162652
+  },
+  "SelfRegulationSCP1_a04": {
+   "src": "SelfRegulationSCP1",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.02499999999999991,
+   "over": -0.10937750714768957,
+   "acc": 0.5454545454545454,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5459558261856436
+  },
+  "SemgHandMovementCh2_a00": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.05925925925925918,
+   "over": 0.08436738113803716,
+   "acc": 0.5810055865921788,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5204784922491483
+  },
+  "SemgHandMovementCh2_a04": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.047368421052631615,
+   "over": -0.23127090832149544,
+   "acc": 0.6687254351487928,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5370624250118379
+  },
+  "ShapesAll_a00": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.01770451770451764,
+   "over": -0.011770759109683504,
+   "acc": 0.5434782608695652,
+   "aug_in_top3": 0,
+   "pred_aug": 0.4798959075569831
+  },
+  "ShapesAll_a04": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014159292035398008,
+   "over": -0.029415336241600754,
+   "acc": 0.7982212340188994,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7116957748695104
+  },
+  "SleepEDF_a00": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.10687830687830685,
+   "over": -0.0013306019710446204,
+   "acc": 0.48579710144927535,
+   "aug_in_top3": 2,
+   "pred_aug": 0.5081138424733999
+  },
+  "SleepEDF_a04": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014612794612794744,
+   "over": -0.02833497281496733,
+   "acc": 0.7959977765425236,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7244428049628105
+  },
+  "UWaveGestureLibrary_a00": {
+   "src": "UWaveGestureLibrary",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.0736842105263158,
+   "over": -0.3256444888334309,
+   "acc": 0.5330434782608696,
+   "aug_in_top3": 0,
+   "pred_aug": 0.48602217783323587
+  },
+  "UWaveGestureLibrary_a04": {
+   "src": "UWaveGestureLibrary",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.019080459770115077,
+   "over": -0.19043938881407174,
+   "acc": 0.6065436241610739,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5153939445192616
+  },
+  "UniMiB-SHAR_a00": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.057647058823529385,
+   "over": -0.04637382859405559,
+   "acc": 0.80173564753004,
+   "aug_in_top3": 0,
+   "pred_aug": 0.732959504739278
+  },
+  "UniMiB-SHAR_a04": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.05297532656023218,
+   "over": 0.02022049020230765,
+   "acc": 0.5318151373074347,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5382204902023077
+  }
+ },
+ "PhonemeSpectra": {
+  "Adiac_a00": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.017066043249561624,
+   "over": 0.004649792641263528,
+   "acc": 0.7047353760445683,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7263164593079301
+  },
+  "Adiac_a04": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.008695652173913104,
+   "over": 0.08740853098048651,
+   "acc": 0.7290249433106576,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7157418643138198
+  },
+  "CinCECGTorso_a00": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.15454545454545454,
+   "over": 0.00012580177187926367,
+   "acc": 0.5403337969401947,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5567924684385459
+  },
+  "CinCECGTorso_a04": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.01764705882352935,
+   "over": -0.21762222196658465,
+   "acc": 0.7777777777777778,
+   "aug_in_top3": 3,
+   "pred_aug": 0.6503777780334155
+  },
+  "Cricket_a00": {
+   "src": "Cricket",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.12263157894736842,
+   "over": 0.009575645807716637,
+   "acc": 0.6568544995794785,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6329089791410499
+  },
+  "Cricket_a04": {
+   "src": "Cricket",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.05714285714285716,
+   "over": -0.0637607334657675,
+   "acc": 0.8326289095519864,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7729059332008992
+  },
+  "EthanolConcentration_a00": {
+   "src": "EthanolConcentration",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.2588235294117647,
+   "over": 0.027493007868528263,
+   "acc": 0.6764922623434045,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6194930078685283
+  },
+  "EthanolConcentration_a04": {
+   "src": "EthanolConcentration",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.07328042328042333,
+   "over": -0.08512337172196971,
+   "acc": 0.5696969696969697,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6028766282780302
+  },
+  "FordA_a00": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.07193675889328077,
+   "over": -0.07650575507639179,
+   "acc": 0.8,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7223831338124971
+  },
+  "FordA_a04": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.011428571428571344,
+   "over": 0.11511614742240417,
+   "acc": 0.6573504751257686,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7290050363112931
+  },
+  "Handwriting_a00": {
+   "src": "Handwriting",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.004532839962997193,
+   "over": 0.08757622814530297,
+   "acc": 0.5851788756388415,
+   "aug_in_top3": 2,
+   "pred_aug": 0.7250762281453029
+  },
+  "Handwriting_a04": {
+   "src": "Handwriting",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.002439024390243849,
+   "over": -0.17024300473535237,
+   "acc": 0.8178001679261125,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7072569952646477
+  },
+  "LargeKitchenAppliances_a00": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.0931578947368421,
+   "over": -0.08615245999561405,
+   "acc": 0.6793508673754897,
+   "aug_in_top3": 3,
+   "pred_aug": 0.6116253177821637
+  },
+  "LargeKitchenAppliances_a04": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.02914634146341466,
+   "over": 0.2222377078152365,
+   "acc": 0.49720982142857145,
+   "aug_in_top3": 1,
+   "pred_aug": 0.696682152259681
+  },
+  "NonInvasiveFetalECGThorax1_a00": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.02291463810451133,
+   "over": -0.021388641154324373,
+   "acc": 0.7580645161290323,
+   "aug_in_top3": 2,
+   "pred_aug": 0.745278025512342
+  },
+  "NonInvasiveFetalECGThorax1_a04": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.0,
+   "over": -0.10235670895074256,
+   "acc": 0.8015564202334631,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6904210688270352
+  },
+  "PAMAP2_a00": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.040000000000000036,
+   "over": 0.2606269623194304,
+   "acc": 0.5732558139534883,
+   "aug_in_top3": 2,
+   "pred_aug": 0.7539602956527637
+  },
+  "PAMAP2_a04": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.054412624196376325,
+   "over": 0.046086930641559665,
+   "acc": 0.7032293986636972,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7288647084193374
+  },
+  "PTB-XL_a00": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.002205882352941224,
+   "over": 0.26803968588759497,
+   "acc": 0.5006784260515604,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7413730192209284
+  },
+  "PTB-XL_a04": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.026450742240215985,
+   "over": -0.0008322992511092808,
+   "acc": 0.7454789015405224,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7178343674155573
+  },
+  "PhonemeSpectra_a00": {
+   "src": "PhonemeSpectra",
+   "held": true,
+   "n_aug": 50,
+   "r3": 0.05351351351351351,
+   "over": -0.1333178955035078,
+   "acc": 0.5441176470588235,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5333487711631589
+  },
+  "PhonemeSpectra_a04": {
+   "src": "PhonemeSpectra",
+   "held": true,
+   "n_aug": 50,
+   "r3": 0.048577827547592406,
+   "over": -0.14971472062336078,
+   "acc": 0.6474916387959866,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6236186127099725
+  },
+  "SelfRegulationSCP1_a00": {
+   "src": "SelfRegulationSCP1",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.02608695652173909,
+   "over": -0.05373822614550594,
+   "acc": 0.5364472753007785,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5229284405211607
+  },
+  "SelfRegulationSCP1_a04": {
+   "src": "SelfRegulationSCP1",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.02499999999999991,
+   "over": -0.09058530762957184,
+   "acc": 0.5723636363636364,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5647480257037614
+  },
+  "SemgHandMovementCh2_a00": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.05925925925925918,
+   "over": 0.12955362047310232,
+   "acc": 0.575977653631285,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5656647315842135
+  },
+  "SemgHandMovementCh2_a04": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.047368421052631615,
+   "over": -0.2159529508664101,
+   "acc": 0.7074677147669849,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5523803824669232
+  },
+  "ShapesAll_a00": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.022148962148962115,
+   "over": 0.031560795006376874,
+   "acc": 0.5451505016722408,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5232274616730435
+  },
+  "ShapesAll_a04": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014159292035398008,
+   "over": 0.006120935564653651,
+   "acc": 0.81100611450806,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7472320466757648
+  },
+  "SleepEDF_a00": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.09973544973544973,
+   "over": 0.003599714435361112,
+   "acc": 0.4742028985507246,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5130441588798056
+  },
+  "SleepEDF_a04": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014949494949494935,
+   "over": 0.011783691400454988,
+   "acc": 0.7887715397443024,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7645614691782329
+  },
+  "UWaveGestureLibrary_a00": {
+   "src": "UWaveGestureLibrary",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.0736842105263158,
+   "over": -0.3175728569055598,
+   "acc": 0.5417391304347826,
+   "aug_in_top3": 0,
+   "pred_aug": 0.49409380976110695
+  },
+  "UWaveGestureLibrary_a04": {
+   "src": "UWaveGestureLibrary",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.0,
+   "over": -0.1657776504465276,
+   "acc": 0.6593959731543624,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5400556828868057
+  },
+  "UniMiB-SHAR_a00": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.057647058823529385,
+   "over": -0.020854154324366103,
+   "acc": 0.8004005340453939,
+   "aug_in_top3": 2,
+   "pred_aug": 0.7584791790089674
+  },
+  "UniMiB-SHAR_a04": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.05297532656023218,
+   "over": 0.0829911319166422,
+   "acc": 0.5632953784326858,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6009911319166422
+  }
+ },
+ "UWaveGestureLibrary": {
+  "Adiac_a00": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.017066043249561624,
+   "over": 0.01612113875440435,
+   "acc": 0.7158774373259053,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7377878054210709
+  },
+  "Adiac_a04": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.008695652173913104,
+   "over": 0.07804298085953898,
+   "acc": 0.7431972789115646,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7063763141928723
+  },
+  "CinCECGTorso_a00": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.0636363636363636,
+   "over": 0.0491405229369799,
+   "acc": 0.5125173852573018,
+   "aug_in_top3": 3,
+   "pred_aug": 0.6058071896036465
+  },
+  "CinCECGTorso_a04": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.01764705882352935,
+   "over": -0.2029892943236563,
+   "acc": 0.7695978186775733,
+   "aug_in_top3": 3,
+   "pred_aug": 0.6650107056763438
+  },
+  "Cricket_a00": {
+   "src": "Cricket",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.1126315789473683,
+   "over": 0.0661210341730879,
+   "acc": 0.6661059714045416,
+   "aug_in_top3": 2,
+   "pred_aug": 0.6894543675064212
+  },
+  "Cricket_a04": {
+   "src": "Cricket",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.04761904761904767,
+   "over": -0.08584613217351333,
+   "acc": 0.8317836010143702,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7508205344931533
+  },
+  "EthanolConcentration_a00": {
+   "src": "EthanolConcentration",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.2588235294117647,
+   "over": 0.0435880631456772,
+   "acc": 0.6985998526160648,
+   "aug_in_top3": 2,
+   "pred_aug": 0.6355880631456773
+  },
+  "EthanolConcentration_a04": {
+   "src": "EthanolConcentration",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.0584656084656085,
+   "over": -0.04237460552321537,
+   "acc": 0.6208754208754209,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6456253944767846
+  },
+  "FordA_a00": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.0715415019762845,
+   "over": -0.06817847941277755,
+   "acc": 0.8100278551532033,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7307104094761113
+  },
+  "FordA_a04": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.011428571428571344,
+   "over": 0.12263122998178,
+   "acc": 0.6674119619899385,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7365201188706689
+  },
+  "Handwriting_a00": {
+   "src": "Handwriting",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.004532839962997193,
+   "over": 0.027800171244889538,
+   "acc": 0.5783645655877342,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6653001712448895
+  },
+  "Handwriting_a04": {
+   "src": "Handwriting",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.002439024390243849,
+   "over": -0.17611849162520632,
+   "acc": 0.8052057094878253,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7013815083747937
+  },
+  "LargeKitchenAppliances_a00": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.052631578947368474,
+   "over": -0.08788477260757377,
+   "acc": 0.6670397313933968,
+   "aug_in_top3": 1,
+   "pred_aug": 0.609893005170204
+  },
+  "LargeKitchenAppliances_a04": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.02914634146341466,
+   "over": 0.21299534285647997,
+   "acc": 0.5061383928571429,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6874397873009245
+  },
+  "NonInvasiveFetalECGThorax1_a00": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.02291463810451133,
+   "over": -0.022102925744321378,
+   "acc": 0.7497219132369299,
+   "aug_in_top3": 1,
+   "pred_aug": 0.744563740922345
+  },
+  "NonInvasiveFetalECGThorax1_a04": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.0,
+   "over": -0.1015845946105266,
+   "acc": 0.7937743190661478,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6911931831672512
+  },
+  "PAMAP2_a00": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.046666666666666634,
+   "over": 0.2644673325045519,
+   "acc": 0.5866279069767442,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7578006658378852
+  },
+  "PAMAP2_a04": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.054412624196376325,
+   "over": 0.03796817405494268,
+   "acc": 0.7210467706013363,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7207459518327204
+  },
+  "PTB-XL_a00": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.03602941176470592,
+   "over": 0.26832002786878084,
+   "acc": 0.4837177747625509,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7416533612021142
+  },
+  "PTB-XL_a04": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.01578947368421052,
+   "over": -0.008437315793500932,
+   "acc": 0.724715338245144,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7102293508731656
+  },
+  "PhonemeSpectra_a00": {
+   "src": "PhonemeSpectra",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.03747747747747748,
+   "over": -0.025936246918307426,
+   "acc": 0.6176470588235294,
+   "aug_in_top3": 2,
+   "pred_aug": 0.6407304197483593
+  },
+  "PhonemeSpectra_a04": {
+   "src": "PhonemeSpectra",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.04855543113101907,
+   "over": -0.06966837989083596,
+   "acc": 0.6949832775919732,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7036649534424974
+  },
+  "SelfRegulationSCP1_a00": {
+   "src": "SelfRegulationSCP1",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.02608695652173909,
+   "over": -0.025149610699878755,
+   "acc": 0.5428167020523709,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5515170559667879
+  },
+  "SelfRegulationSCP1_a04": {
+   "src": "SelfRegulationSCP1",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.02499999999999991,
+   "over": -0.06893759653468912,
+   "acc": 0.5927272727272728,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5863957367986441
+  },
+  "SemgHandMovementCh2_a00": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.05925925925925918,
+   "over": 0.1535714208734807,
+   "acc": 0.5860335195530726,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5896825319845919
+  },
+  "SemgHandMovementCh2_a04": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.015789473684210575,
+   "over": -0.18905699388848407,
+   "acc": 0.7271195957327344,
+   "aug_in_top3": 2,
+   "pred_aug": 0.5792763394448492
+  },
+  "ShapesAll_a00": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.019877899877899896,
+   "over": 0.058197993320171504,
+   "acc": 0.5473801560758083,
+   "aug_in_top3": 2,
+   "pred_aug": 0.5498646599868381
+  },
+  "ShapesAll_a04": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.0,
+   "over": 0.014904781299884706,
+   "acc": 0.7965536409116175,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7560158924109959
+  },
+  "SleepEDF_a00": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.1071428571428572,
+   "over": 0.044886566819967944,
+   "acc": 0.4718840579710145,
+   "aug_in_top3": 2,
+   "pred_aug": 0.5543310112644124
+  },
+  "SleepEDF_a04": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014612794612794744,
+   "over": 0.008365002270373956,
+   "acc": 0.7915508615897721,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7611427800481518
+  },
+  "UWaveGestureLibrary_a00": {
+   "src": "UWaveGestureLibrary",
+   "held": true,
+   "n_aug": 40,
+   "r3": 0.0421052631578947,
+   "over": -0.18839387960938958,
+   "acc": 0.7017391304347826,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6232727870572772
+  },
+  "UWaveGestureLibrary_a04": {
+   "src": "UWaveGestureLibrary",
+   "held": true,
+   "n_aug": 40,
+   "r3": 0.0,
+   "over": -0.0875067251589563,
+   "acc": 0.6996644295302014,
+   "aug_in_top3": 1,
+   "pred_aug": 0.618326608174377
+  },
+  "UniMiB-SHAR_a00": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.057647058823529385,
+   "over": -0.020029499266710604,
+   "acc": 0.8090787716955942,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7593038340666229
+  },
+  "UniMiB-SHAR_a04": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.019013062409288795,
+   "over": 0.08941299355692334,
+   "acc": 0.5867381111855325,
+   "aug_in_top3": 2,
+   "pred_aug": 0.6074129935569234
+  }
+ },
+ "Cricket": {
+  "Adiac_a00": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.003389830508474523,
+   "over": 0.004910685524206704,
+   "acc": 0.7253481894150418,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7265773521908733
+  },
+  "Adiac_a04": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.008695652173913104,
+   "over": 0.0919000233813293,
+   "acc": 0.7403628117913832,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7202333567146626
+  },
+  "CinCECGTorso_a00": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.11818181818181811,
+   "over": -0.019024833960665566,
+   "acc": 0.5632823365785814,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5376418327060011
+  },
+  "CinCECGTorso_a04": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.01764705882352935,
+   "over": -0.2599999948375755,
+   "acc": 0.7607361963190185,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6080000051624246
+  },
+  "Cricket_a00": {
+   "src": "Cricket",
+   "held": true,
+   "n_aug": 40,
+   "r3": 0.11315789473684212,
+   "over": -0.07912528300864818,
+   "acc": 0.5836837678721615,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5442080503246851
+  },
+  "Cricket_a04": {
+   "src": "Cricket",
+   "held": true,
+   "n_aug": 40,
+   "r3": 0.05714285714285716,
+   "over": -0.12692043994242952,
+   "acc": 0.8224852071005917,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7097462267242372
+  },
+  "EthanolConcentration_a00": {
+   "src": "EthanolConcentration",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.2588235294117647,
+   "over": 0.009652316047085607,
+   "acc": 0.6573323507737656,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6016523160470857
+  },
+  "EthanolConcentration_a04": {
+   "src": "EthanolConcentration",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.07328042328042333,
+   "over": -0.07489962508943349,
+   "acc": 0.5771043771043771,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6131003749105665
+  },
+  "FordA_a00": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.07193675889328077,
+   "over": -0.06872261853819639,
+   "acc": 0.8178272980501393,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7301662703506925
+  },
+  "FordA_a04": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.011428571428571344,
+   "over": 0.09254129066718397,
+   "acc": 0.6662940190050307,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7064301795560729
+  },
+  "Handwriting_a00": {
+   "src": "Handwriting",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.004532839962997193,
+   "over": 0.053016303516924435,
+   "acc": 0.5672913117546848,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6905163035169244
+  },
+  "Handwriting_a04": {
+   "src": "Handwriting",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.002439024390243849,
+   "over": -0.1763561182003469,
+   "acc": 0.8119227539882452,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7011438817996531
+  },
+  "LargeKitchenAppliances_a00": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.04210526315789476,
+   "over": -0.07264533371837056,
+   "acc": 0.710688304420817,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6251324440594072
+  },
+  "LargeKitchenAppliances_a04": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.02914634146341466,
+   "over": 0.20146703902080104,
+   "acc": 0.5200892857142857,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6759114834652455
+  },
+  "NonInvasiveFetalECGThorax1_a00": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.02291463810451133,
+   "over": -0.01726001718115988,
+   "acc": 0.753615127919911,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7494066494855065
+  },
+  "NonInvasiveFetalECGThorax1_a04": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.0,
+   "over": -0.10230722649367874,
+   "acc": 0.7887715397443024,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6904705512840991
+  },
+  "PAMAP2_a00": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.040000000000000036,
+   "over": 0.24396929517388344,
+   "acc": 0.5953488372093023,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7373026285072167
+  },
+  "PAMAP2_a04": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.054412624196376325,
+   "over": 0.05116267021331533,
+   "acc": 0.7132516703786191,
+   "aug_in_top3": 1,
+   "pred_aug": 0.733940447991093
+  },
+  "PTB-XL_a00": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.03602941176470592,
+   "over": 0.25514011418322713,
+   "acc": 0.5203527815468114,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7284734475165605
+  },
+  "PTB-XL_a04": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.01578947368421052,
+   "over": -0.02456615572712484,
+   "acc": 0.7454789015405224,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6941005109395417
+  },
+  "PhonemeSpectra_a00": {
+   "src": "PhonemeSpectra",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.010630630630630633,
+   "over": -0.06193868075145614,
+   "acc": 0.6236631016042781,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6047279859152106
+  },
+  "PhonemeSpectra_a04": {
+   "src": "PhonemeSpectra",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.048577827547592406,
+   "over": -0.07983655456205208,
+   "acc": 0.7270903010033445,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6934967787712812
+  },
+  "SelfRegulationSCP1_a00": {
+   "src": "SelfRegulationSCP1",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.02608695652173909,
+   "over": -0.04268578269415424,
+   "acc": 0.5555555555555556,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5339808839725124
+  },
+  "SelfRegulationSCP1_a04": {
+   "src": "SelfRegulationSCP1",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.02499999999999991,
+   "over": -0.0985460989442134,
+   "acc": 0.5432727272727272,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5567872343891198
+  },
+  "SemgHandMovementCh2_a00": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.05925925925925918,
+   "over": 0.12752629506919116,
+   "acc": 0.5692737430167598,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5636374061803023
+  },
+  "SemgHandMovementCh2_a04": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.047368421052631615,
+   "over": -0.20279102033211127,
+   "acc": 0.7215047725996631,
+   "aug_in_top3": 0,
+   "pred_aug": 0.565542313001222
+  },
+  "ShapesAll_a00": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.022148962148962115,
+   "over": 0.015094953482901685,
+   "acc": 0.5473801560758083,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5067616201495683
+  },
+  "ShapesAll_a04": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014159292035398008,
+   "over": 0.0022135051967645536,
+   "acc": 0.8137854363535297,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7433246163078757
+  },
+  "SleepEDF_a00": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.09973544973544973,
+   "over": 0.019155916811691376,
+   "acc": 0.48289855072463767,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5286003612561359
+  },
+  "SleepEDF_a04": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014612794612794744,
+   "over": -0.010388832157822825,
+   "acc": 0.792106725958866,
+   "aug_in_top3": 0,
+   "pred_aug": 0.742388945619955
+  },
+  "UWaveGestureLibrary_a00": {
+   "src": "UWaveGestureLibrary",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.06315789473684208,
+   "over": -0.3154766362615759,
+   "acc": 0.5643478260869565,
+   "aug_in_top3": 0,
+   "pred_aug": 0.49619003040509085
+  },
+  "UWaveGestureLibrary_a04": {
+   "src": "UWaveGestureLibrary",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.046666666666666745,
+   "over": -0.20290210945738696,
+   "acc": 0.6233221476510067,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5029312238759464
+  },
+  "UniMiB-SHAR_a00": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.057647058823529385,
+   "over": -0.007757331435051307,
+   "acc": 0.8204272363150867,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7715760018982822
+  },
+  "UniMiB-SHAR_a04": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.019013062409288795,
+   "over": 0.008293205728133524,
+   "acc": 0.5311453449430676,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5262932057281335
+  }
+ },
+ "EthanolConcentration": {
+  "Adiac_a00": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.017066043249561624,
+   "over": -0.027017981701840887,
+   "acc": 0.713091922005571,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6946486849648257
+  },
+  "Adiac_a04": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.008695652173913104,
+   "over": 0.01618556214910416,
+   "acc": 0.7494331065759637,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6445188954824375
+  },
+  "CinCECGTorso_a00": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.15454545454545454,
+   "over": 0.016547269816199917,
+   "acc": 0.5104311543810849,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5732139364828666
+  },
+  "CinCECGTorso_a04": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.0117647058823529,
+   "over": -0.2545840565827159,
+   "acc": 0.7348329925017042,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6134159434172842
+  },
+  "Cricket_a00": {
+   "src": "Cricket",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.07105263157894737,
+   "over": -0.002109513322098411,
+   "acc": 0.6904962153069807,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6212238200112349
+  },
+  "Cricket_a04": {
+   "src": "Cricket",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.04761904761904767,
+   "over": -0.16277973205523777,
+   "acc": 0.8030431107354185,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6738869346114289
+  },
+  "EthanolConcentration_a00": {
+   "src": "EthanolConcentration",
+   "held": true,
+   "n_aug": 50,
+   "r3": 0.188235294117647,
+   "over": 0.030054292429652407,
+   "acc": 0.686072218128224,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6220542924296525
+  },
+  "EthanolConcentration_a04": {
+   "src": "EthanolConcentration",
+   "held": true,
+   "n_aug": 50,
+   "r3": 0.021164021164021163,
+   "over": -0.03689903551008966,
+   "acc": 0.6754208754208754,
+   "aug_in_top3": 2,
+   "pred_aug": 0.6511009644899103
+  },
+  "FordA_a00": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.06324110671936756,
+   "over": -0.11440289017226957,
+   "acc": 0.7888579387186629,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6844859987166193
+  },
+  "FordA_a04": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.011428571428571344,
+   "over": 0.060193428057073395,
+   "acc": 0.6646171045276691,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6740823169459623
+  },
+  "Handwriting_a00": {
+   "src": "Handwriting",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.013043478260869545,
+   "over": -0.048792716629492694,
+   "acc": 0.5562180579216355,
+   "aug_in_top3": 2,
+   "pred_aug": 0.5887072833705073
+  },
+  "Handwriting_a04": {
+   "src": "Handwriting",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.002439024390243849,
+   "over": -0.22486447910157348,
+   "acc": 0.7581863979848866,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6526355208984266
+  },
+  "LargeKitchenAppliances_a00": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.04210526315789476,
+   "over": -0.10300251437006158,
+   "acc": 0.7067711247901511,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5947752634077161
+  },
+  "LargeKitchenAppliances_a04": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.02914634146341466,
+   "over": 0.1437741363545258,
+   "acc": 0.5708705357142857,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6182185807989703
+  },
+  "NonInvasiveFetalECGThorax1_a00": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.02291463810451133,
+   "over": -0.07391989579286251,
+   "acc": 0.7224694104560623,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6927467708738039
+  },
+  "NonInvasiveFetalECGThorax1_a04": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.0,
+   "over": -0.16271192006421875,
+   "acc": 0.7654252362423568,
+   "aug_in_top3": 0,
+   "pred_aug": 0.630065857713559
+  },
+  "PAMAP2_a00": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.040000000000000036,
+   "over": 0.1969462583424455,
+   "acc": 0.6319767441860465,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6902795916757788
+  },
+  "PAMAP2_a04": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.051431911163062505,
+   "over": -0.010547716516518313,
+   "acc": 0.7082405345211581,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6722300612612594
+  },
+  "PTB-XL_a00": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.002205882352941224,
+   "over": 0.18342253617776771,
+   "acc": 0.4993215739484396,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6567558695111011
+  },
+  "PTB-XL_a04": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.01578947368421052,
+   "over": -0.07769178345716654,
+   "acc": 0.6999330207635633,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6409748832095
+  },
+  "PhonemeSpectra_a00": {
+   "src": "PhonemeSpectra",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.010630630630630633,
+   "over": -0.07696203337609775,
+   "acc": 0.6169786096256684,
+   "aug_in_top3": 0,
+   "pred_aug": 0.589704633290569
+  },
+  "PhonemeSpectra_a04": {
+   "src": "PhonemeSpectra",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.048577827547592406,
+   "over": -0.11844828233122828,
+   "acc": 0.7076923076923077,
+   "aug_in_top3": 1,
+   "pred_aug": 0.654885051002105
+  },
+  "SelfRegulationSCP1_a00": {
+   "src": "SelfRegulationSCP1",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.02608695652173909,
+   "over": -0.04531845750080221,
+   "acc": 0.5605095541401274,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5313482091658644
+  },
+  "SelfRegulationSCP1_a04": {
+   "src": "SelfRegulationSCP1",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.02499999999999991,
+   "over": -0.09390746703412778,
+   "acc": 0.5789090909090909,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5614258662992054
+  },
+  "SemgHandMovementCh2_a00": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.05925925925925918,
+   "over": 0.11812424427657214,
+   "acc": 0.5664804469273743,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5542353553876833
+  },
+  "SemgHandMovementCh2_a04": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.05789473684210522,
+   "over": -0.23148046568863923,
+   "acc": 0.6771476698483998,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5368528676446941
+  },
+  "ShapesAll_a00": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.019877899877899896,
+   "over": 0.048874028609306897,
+   "acc": 0.5440356744704571,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5405406952759735
+  },
+  "ShapesAll_a04": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014159292035398008,
+   "over": -0.07162746479217386,
+   "acc": 0.8337965536409117,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6694836463189373
+  },
+  "SleepEDF_a00": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.11428571428571432,
+   "over": 0.040704244591847516,
+   "acc": 0.4846376811594203,
+   "aug_in_top3": 0,
+   "pred_aug": 0.550148689036292
+  },
+  "SleepEDF_a04": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014612794612794744,
+   "over": -0.06218898810239315,
+   "acc": 0.7787659811006115,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6905887896753847
+  },
+  "UWaveGestureLibrary_a00": {
+   "src": "UWaveGestureLibrary",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.06315789473684208,
+   "over": -0.3028544465804267,
+   "acc": 0.5591304347826087,
+   "aug_in_top3": 0,
+   "pred_aug": 0.50881222008624
+  },
+  "UWaveGestureLibrary_a04": {
+   "src": "UWaveGestureLibrary",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.046666666666666745,
+   "over": -0.18426033344740667,
+   "acc": 0.6451342281879194,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5215729998859266
+  },
+  "UniMiB-SHAR_a00": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.057647058823529385,
+   "over": -0.05545319479041666,
+   "acc": 0.7970627503337784,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7238801385429169
+  },
+  "UniMiB-SHAR_a04": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.03788098693759068,
+   "over": 0.006225827455520583,
+   "acc": 0.5190890823844608,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5242258274555206
+  }
+ },
+ "SelfRegulationSCP1": {
+  "Adiac_a00": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.017066043249561624,
+   "over": -0.007717439064549025,
+   "acc": 0.7225626740947075,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7139492276021175
+  },
+  "Adiac_a04": {
+   "src": "Adiac",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.008695652173913104,
+   "over": 0.022799008126474174,
+   "acc": 0.7465986394557823,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6511323414598075
+  },
+  "CinCECGTorso_a00": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.11818181818181811,
+   "over": 0.014474325560861256,
+   "acc": 0.5340751043115438,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5711409922275279
+  },
+  "CinCECGTorso_a04": {
+   "src": "CinCECGTorso",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.0235294117647058,
+   "over": -0.2577408832692438,
+   "acc": 0.7211997273346966,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6102591167307563
+  },
+  "Cricket_a00": {
+   "src": "Cricket",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.07210526315789478,
+   "over": -0.021870626658201164,
+   "acc": 0.671152228763667,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6014627066751321
+  },
+  "Cricket_a04": {
+   "src": "Cricket",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.04761904761904767,
+   "over": -0.14393467627569223,
+   "acc": 0.7945900253592562,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6927319903909744
+  },
+  "EthanolConcentration_a00": {
+   "src": "EthanolConcentration",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.2588235294117647,
+   "over": -0.009842182368040131,
+   "acc": 0.681650700073692,
+   "aug_in_top3": 1,
+   "pred_aug": 0.58215781763196
+  },
+  "EthanolConcentration_a04": {
+   "src": "EthanolConcentration",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.0584656084656085,
+   "over": -0.05999045104119505,
+   "acc": 0.6080808080808081,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6280095489588049
+  },
+  "FordA_a00": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.07193675889328077,
+   "over": -0.10773144508367061,
+   "acc": 0.7838440111420613,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6911574438052183
+  },
+  "FordA_a04": {
+   "src": "FordA",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.011428571428571344,
+   "over": 0.07913942525370254,
+   "acc": 0.6657350475125768,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6930283141425915
+  },
+  "Handwriting_a00": {
+   "src": "Handwriting",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.013043478260869545,
+   "over": 0.023023608077007096,
+   "acc": 0.5724020442930153,
+   "aug_in_top3": 2,
+   "pred_aug": 0.660523608077007
+  },
+  "Handwriting_a04": {
+   "src": "Handwriting",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.002439024390243849,
+   "over": -0.2009139511206498,
+   "acc": 0.7590260285474392,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6765860488793503
+  },
+  "LargeKitchenAppliances_a00": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.052631578947368474,
+   "over": -0.14841598141524526,
+   "acc": 0.6205931729155009,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5493617963625325
+  },
+  "LargeKitchenAppliances_a04": {
+   "src": "LargeKitchenAppliances",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014756097560975623,
+   "over": 0.12425248694778596,
+   "acc": 0.5597098214285714,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5986969313922305
+  },
+  "NonInvasiveFetalECGThorax1_a00": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.02291463810451133,
+   "over": -0.05931424189358925,
+   "acc": 0.7308120133481646,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7073524247730771
+  },
+  "NonInvasiveFetalECGThorax1_a04": {
+   "src": "NonInvasiveFetalECGThorax1",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.0,
+   "over": -0.153560324077046,
+   "acc": 0.7670928293496387,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6392174537007318
+  },
+  "PAMAP2_a00": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.040000000000000036,
+   "over": 0.18331591676230785,
+   "acc": 0.6343023255813953,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6766492500956411
+  },
+  "PAMAP2_a04": {
+   "src": "PAMAP2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.054412624196376325,
+   "over": 0.007864122639444693,
+   "acc": 0.7115812917594655,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6906419004172224
+  },
+  "PTB-XL_a00": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.002205882352941224,
+   "over": 0.21017514544477056,
+   "acc": 0.5244233378561737,
+   "aug_in_top3": 0,
+   "pred_aug": 0.683508478778104
+  },
+  "PTB-XL_a04": {
+   "src": "PTB-XL",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.01578947368421052,
+   "over": -0.03688273347872817,
+   "acc": 0.7186872069658405,
+   "aug_in_top3": 1,
+   "pred_aug": 0.6817839331879384
+  },
+  "PhonemeSpectra_a00": {
+   "src": "PhonemeSpectra",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.010630630630630633,
+   "over": -0.08460374915599833,
+   "acc": 0.6336898395721925,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5820629175106684
+  },
+  "PhonemeSpectra_a04": {
+   "src": "PhonemeSpectra",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.048577827547592406,
+   "over": -0.1377515618743168,
+   "acc": 0.6923076923076923,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6355817714590165
+  },
+  "SelfRegulationSCP1_a00": {
+   "src": "SelfRegulationSCP1",
+   "held": true,
+   "n_aug": 50,
+   "r3": 0.02608695652173909,
+   "over": -0.02283552992343907,
+   "acc": 0.5329087048832272,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5538311367432276
+  },
+  "SelfRegulationSCP1_a04": {
+   "src": "SelfRegulationSCP1",
+   "held": true,
+   "n_aug": 50,
+   "r3": 0.02499999999999991,
+   "over": -0.06404973532425029,
+   "acc": 0.5956363636363636,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5912835980090829
+  },
+  "SemgHandMovementCh2_a00": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.05925925925925918,
+   "over": 0.14443687880756667,
+   "acc": 0.5608938547486033,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5805479899186778
+  },
+  "SemgHandMovementCh2_a04": {
+   "src": "SemgHandMovementCh2",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.015789473684210575,
+   "over": -0.2043736097175214,
+   "acc": 0.6990454800673779,
+   "aug_in_top3": 2,
+   "pred_aug": 0.5639597236158119
+  },
+  "ShapesAll_a00": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.019877899877899896,
+   "over": 0.04527363627873093,
+   "acc": 0.5423634336677815,
+   "aug_in_top3": 1,
+   "pred_aug": 0.5369403029453975
+  },
+  "ShapesAll_a04": {
+   "src": "ShapesAll",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014159292035398008,
+   "over": -0.06184812947072926,
+   "acc": 0.8265703168426903,
+   "aug_in_top3": 0,
+   "pred_aug": 0.6792629816403819
+  },
+  "SleepEDF_a00": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.09973544973544973,
+   "over": 0.012843145824692925,
+   "acc": 0.4973913043478261,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5222875902691374
+  },
+  "SleepEDF_a04": {
+   "src": "SleepEDF",
+   "held": false,
+   "n_aug": 60,
+   "r3": 0.014612794612794744,
+   "over": -0.03643808682966576,
+   "acc": 0.8087826570316843,
+   "aug_in_top3": 0,
+   "pred_aug": 0.7163396909481121
+  },
+  "UWaveGestureLibrary_a00": {
+   "src": "UWaveGestureLibrary",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.06315789473684208,
+   "over": -0.3311353947263625,
+   "acc": 0.528695652173913,
+   "aug_in_top3": 0,
+   "pred_aug": 0.48053127194030426
+  },
+  "UWaveGestureLibrary_a04": {
+   "src": "UWaveGestureLibrary",
+   "held": false,
+   "n_aug": 40,
+   "r3": 0.046666666666666745,
+   "over": -0.20353166760669805,
+   "acc": 0.5771812080536913,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5023016657266353
+  },
+  "UniMiB-SHAR_a00": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.057647058823529385,
+   "over": -0.05988891911672245,
+   "acc": 0.7890520694259012,
+   "aug_in_top3": 1,
+   "pred_aug": 0.7194444142166111
+  },
+  "UniMiB-SHAR_a04": {
+   "src": "UniMiB-SHAR",
+   "held": false,
+   "n_aug": 50,
+   "r3": 0.019013062409288795,
+   "over": 0.007464283300770536,
+   "acc": 0.5599464166108507,
+   "aug_in_top3": 0,
+   "pred_aug": 0.5254642833007706
+  }
+ }
+}

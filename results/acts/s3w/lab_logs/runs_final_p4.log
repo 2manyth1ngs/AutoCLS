@@ -1,0 +1,30 @@
+[ACTS-s1pp] 计划 20 格，已有 0，待跑 20
+[data] Handwriting: X=(1000, 152, 3) classes=26
+[data] Handwriting_whole_official: official train=(150, 152, 3) test=(850, 152, 3)
+[ACTS-s1pp 1/20] Handwriting_whole_official/random/6b52228a s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.260 0.274 0.321] (19.8s+0.9s)
+[ACTS-s1pp 2/20] Handwriting_whole_official/random/1e5aab54 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.382 0.421 0.422] (14.0s+0.9s)
+[ACTS-s1pp 3/20] Handwriting_whole_official/random/c0565d9f s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.334 0.376 0.409] (13.9s+0.8s)
+[ACTS-s1pp 4/20] Handwriting_whole_official/random/6b52228a s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.275 0.275 0.304] (14.0s+0.8s)
+[ACTS-s1pp 5/20] Handwriting_whole_official/random/6b52228a s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.284 0.306 0.324] (13.4s+0.9s)
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_official: official train=(120, 315, 3) test=(320, 315, 3)
+[ACTS-s1pp 6/20] UWaveGestureLibrary_whole_official/random/3596da13 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.875 0.884 0.909] (27.5s+0.6s)
+[ACTS-s1pp 7/20] UWaveGestureLibrary_whole_official/random/f4a91a3a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.887 0.906 0.900] (28.0s+0.6s)
+[ACTS-s1pp 8/20] UWaveGestureLibrary_whole_official/random/aaf510f9 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.903 0.900 0.894] (27.6s+0.6s)
+[ACTS-s1pp 9/20] UWaveGestureLibrary_whole_official/random/3596da13 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.894 0.841 0.894] (25.5s+0.6s)
+[ACTS-s1pp 10/20] UWaveGestureLibrary_whole_official/random/3596da13 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.869 0.891 0.900] (22.5s+0.6s)
+[data] Handwriting: X=(1000, 152, 3) classes=26
+[data] Handwriting_whole_official: official train=(150, 152, 3) test=(850, 152, 3)
+[ACTS-s1pp 11/20] Handwriting_whole_official/random/c213bdb2 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.326 0.351 0.354] (12.0s+0.8s)
+[ACTS-s1pp 12/20] Handwriting_whole_official/random/158f6925 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.415 0.455 0.494] (11.7s+0.9s)
+[ACTS-s1pp 13/20] Handwriting_whole_official/random/a16ba384 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.445 0.492 0.494] (11.2s+0.9s)
+[ACTS-s1pp 14/20] Handwriting_whole_official/random/a16ba384 s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.429 0.484 0.515] (11.3s+0.8s)
+[ACTS-s1pp 15/20] Handwriting_whole_official/random/a16ba384 s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.429 0.476 0.509] (11.5s+0.9s)
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_official: official train=(120, 315, 3) test=(320, 315, 3)
+[ACTS-s1pp 16/20] UWaveGestureLibrary_whole_official/random/03357830 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.841 0.853 0.828] (26.0s+0.6s)
+[ACTS-s1pp 17/20] UWaveGestureLibrary_whole_official/random/31f0a23a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.847 0.866 0.844] (26.3s+0.6s)
+[ACTS-s1pp 18/20] UWaveGestureLibrary_whole_official/random/c0c0623c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.903 0.919 0.912] (23.6s+0.6s)
+[ACTS-s1pp 19/20] UWaveGestureLibrary_whole_official/random/c0c0623c s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.900 0.916 0.909] (23.4s+0.6s)
+[ACTS-s1pp 20/20] UWaveGestureLibrary_whole_official/random/c0c0623c s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.894 0.916 0.916] (23.8s+0.6s)
+[ACTS-s1pp] 收官

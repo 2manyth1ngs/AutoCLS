@@ -1,0 +1,344 @@
+[cons] E_s0_Handwriting ep 0 刷新 152 任务：对抗集预测胜率 0.478 vs 基准率 0.278 19s
+[train] E_s0_Handwriting ep 0 train 0.6059 val 0.6412 acc 0.619 152s
+[cons] E_s0_Handwriting ep 1 刷新 51 任务：对抗集预测胜率 0.732 vs 基准率 0.286 15s
+[train] E_s0_Handwriting ep 1 train 0.5409 val 0.6116 acc 0.658 258s
+[cons] E_s0_Handwriting ep 2 刷新 51 任务：对抗集预测胜率 0.793 vs 基准率 0.286 7s
+[train] E_s0_Handwriting ep 2 train 0.4747 val 0.6229 acc 0.663 393s
+[cons] E_s0_Handwriting ep 3 刷新 50 任务：对抗集预测胜率 0.884 vs 基准率 0.262 6s
+[train] E_s0_Handwriting ep 3 train 0.4410 val 0.6397 acc 0.664 496s
+[cons] E_s0_Handwriting ep 4 刷新 51 任务：对抗集预测胜率 0.887 vs 基准率 0.286 10s
+[train] E_s0_Handwriting ep 4 train 0.4131 val 0.6483 acc 0.664 606s
+[cons] E_s0_Handwriting ep 5 刷新 51 任务：对抗集预测胜率 0.916 vs 基准率 0.286 6s
+[train] E_s0_Handwriting ep 5 train 0.3985 val 0.6644 acc 0.662 729s
+[cons] E_s0_Handwriting ep 6 刷新 50 任务：对抗集预测胜率 0.935 vs 基准率 0.262 6s
+[train] E_s0_Handwriting ep 6 train 0.3872 val 0.6808 acc 0.659 818s
+[cons] E_s0_Handwriting ep 7 刷新 51 任务：对抗集预测胜率 0.921 vs 基准率 0.286 10s
+[train] E_s0_Handwriting ep 7 train 0.3786 val 0.7134 acc 0.656 926s
+[cons] E_s0_Handwriting ep 8 刷新 51 任务：对抗集预测胜率 0.942 vs 基准率 0.286 6s
+[train] E_s0_Handwriting ep 8 train 0.3710 val 0.7475 acc 0.648 1038s
+[train] E_s0_Handwriting done best acc 0.6642 @ ep 3 epochs 9 pairs/epoch 214616 1057s
+[cons] B_s0_Handwriting ep 0 刷新 152 任务：对抗集预测胜率 0.511 vs 基准率 0.278 15s
+[train] B_s0_Handwriting ep 0 train 0.6248 val 0.6510 acc 0.618 41s
+[cons] B_s0_Handwriting ep 1 刷新 51 任务：对抗集预测胜率 0.757 vs 基准率 0.286 5s
+[train] B_s0_Handwriting ep 1 train 0.5909 val 0.6497 acc 0.626 109s
+[cons] B_s0_Handwriting ep 2 刷新 51 任务：对抗集预测胜率 0.836 vs 基准率 0.286 10s
+[train] B_s0_Handwriting ep 2 train 0.5540 val 0.6581 acc 0.625 168s
+[cons] B_s0_Handwriting ep 3 刷新 50 任务：对抗集预测胜率 0.874 vs 基准率 0.262 5s
+[train] B_s0_Handwriting ep 3 train 0.5299 val 0.6762 acc 0.614 197s
+[cons] B_s0_Handwriting ep 4 刷新 51 任务：对抗集预测胜率 0.910 vs 基准率 0.286 4s
+[train] B_s0_Handwriting ep 4 train 0.5196 val 0.6843 acc 0.613 256s
+[cons] B_s0_Handwriting ep 5 刷新 51 任务：对抗集预测胜率 0.897 vs 基准率 0.286 8s
+[train] B_s0_Handwriting ep 5 train 0.5080 val 0.6965 acc 0.604 318s
+[cons] B_s0_Handwriting ep 6 刷新 50 任务：对抗集预测胜率 0.936 vs 基准率 0.262 5s
+[train] B_s0_Handwriting ep 6 train 0.4998 val 0.7016 acc 0.607 347s
+[train] B_s0_Handwriting done best acc 0.6260 @ ep 1 epochs 7 pairs/epoch 214616 347s
+[cons] E_s0_PhonemeSpectra ep 0 刷新 152 任务：对抗集预测胜率 0.478 vs 基准率 0.287 20s
+[train] E_s0_PhonemeSpectra ep 0 train 0.6168 val 0.6398 acc 0.634 156s
+[cons] E_s0_PhonemeSpectra ep 1 刷新 51 任务：对抗集预测胜率 0.742 vs 基准率 0.285 12s
+[train] E_s0_PhonemeSpectra ep 1 train 0.5751 val 0.6462 acc 0.628 398s
+[cons] E_s0_PhonemeSpectra ep 2 刷新 51 任务：对抗集预测胜率 0.813 vs 基准率 0.295 14s
+[train] E_s0_PhonemeSpectra ep 2 train 0.5350 val 0.6460 acc 0.639 620s
+[cons] E_s0_PhonemeSpectra ep 3 刷新 50 任务：对抗集预测胜率 0.869 vs 基准率 0.282 8s
+[train] E_s0_PhonemeSpectra ep 3 train 0.4899 val 0.6414 acc 0.648 699s
+[cons] E_s0_PhonemeSpectra ep 4 刷新 51 任务：对抗集预测胜率 0.866 vs 基准率 0.285 10s
+[train] E_s0_PhonemeSpectra ep 4 train 0.4684 val 0.6504 acc 0.634 804s
+[cons] E_s0_PhonemeSpectra ep 5 刷新 51 任务：对抗集预测胜率 0.880 vs 基准率 0.295 5s
+[train] E_s0_PhonemeSpectra ep 5 train 0.4581 val 0.6783 acc 0.622 890s
+[cons] E_s0_PhonemeSpectra ep 6 刷新 50 任务：对抗集预测胜率 0.899 vs 基准率 0.282 9s
+[train] E_s0_PhonemeSpectra ep 6 train 0.4416 val 0.6874 acc 0.623 977s
+[cons] E_s0_PhonemeSpectra ep 7 刷新 51 任务：对抗集预测胜率 0.899 vs 基准率 0.285 5s
+[train] E_s0_PhonemeSpectra ep 7 train 0.4346 val 0.6780 acc 0.627 1081s
+[cons] E_s0_PhonemeSpectra ep 8 刷新 51 任务：对抗集预测胜率 0.892 vs 基准率 0.295 10s
+[train] E_s0_PhonemeSpectra ep 8 train 0.4242 val 0.6826 acc 0.630 1149s
+[train] E_s0_PhonemeSpectra done best acc 0.6481 @ ep 3 epochs 9 pairs/epoch 218674 1159s
+[cons] B_s0_UWaveGestureLibrary ep 0 刷新 152 任务：对抗集预测胜率 0.511 vs 基准率 0.278 23s
+[train] B_s0_UWaveGestureLibrary ep 0 train 0.6091 val 0.6386 acc 0.636 83s
+[cons] B_s0_UWaveGestureLibrary ep 1 刷新 51 任务：对抗集预测胜率 0.780 vs 基准率 0.280 5s
+[train] B_s0_UWaveGestureLibrary ep 1 train 0.5655 val 0.6480 acc 0.638 111s
+[cons] B_s0_UWaveGestureLibrary ep 2 刷新 51 任务：对抗集预测胜率 0.840 vs 基准率 0.282 4s
+[train] B_s0_UWaveGestureLibrary ep 2 train 0.5290 val 0.6732 acc 0.620 135s
+[cons] B_s0_UWaveGestureLibrary ep 3 刷新 50 任务：对抗集预测胜率 0.890 vs 基准率 0.271 4s
+[train] B_s0_UWaveGestureLibrary ep 3 train 0.4988 val 0.6988 acc 0.614 200s
+[cons] B_s0_UWaveGestureLibrary ep 4 刷新 51 任务：对抗集预测胜率 0.909 vs 基准率 0.280 8s
+[train] B_s0_UWaveGestureLibrary ep 4 train 0.4786 val 0.7218 acc 0.609 246s
+[cons] B_s0_UWaveGestureLibrary ep 5 刷新 51 任务：对抗集预测胜率 0.948 vs 基准率 0.282 4s
+[train] B_s0_UWaveGestureLibrary ep 5 train 0.4689 val 0.7515 acc 0.605 270s
+[cons] B_s0_UWaveGestureLibrary ep 6 刷新 50 任务：对抗集预测胜率 0.949 vs 基准率 0.271 4s
+[train] B_s0_UWaveGestureLibrary ep 6 train 0.4635 val 0.7388 acc 0.610 300s
+[train] B_s0_UWaveGestureLibrary done best acc 0.6381 @ ep 1 epochs 7 pairs/epoch 215000 303s
+[cons] E_s0_Cricket ep 0 刷新 152 任务：对抗集预测胜率 0.478 vs 基准率 0.286 25s
+[train] E_s0_Cricket ep 0 train 0.6034 val 0.6370 acc 0.630 107s
+[cons] E_s0_Cricket ep 1 刷新 51 任务：对抗集预测胜率 0.737 vs 基准率 0.286 4s
+[train] E_s0_Cricket ep 1 train 0.5408 val 0.6150 acc 0.662 209s
+[cons] E_s0_Cricket ep 2 刷新 51 任务：对抗集预测胜率 0.847 vs 基准率 0.298 9s
+[train] E_s0_Cricket ep 2 train 0.4827 val 0.6387 acc 0.652 279s
+[cons] E_s0_Cricket ep 3 刷新 50 任务：对抗集预测胜率 0.882 vs 基准率 0.272 7s
+[train] E_s0_Cricket ep 3 train 0.4565 val 0.6612 acc 0.642 391s
+[cons] E_s0_Cricket ep 4 刷新 51 任务：对抗集预测胜率 0.883 vs 基准率 0.286 5s
+[train] E_s0_Cricket ep 4 train 0.4385 val 0.6846 acc 0.638 468s
+[cons] E_s0_Cricket ep 5 刷新 51 任务：对抗集预测胜率 0.909 vs 基准率 0.298 9s
+[train] E_s0_Cricket ep 5 train 0.4201 val 0.6973 acc 0.639 565s
+[cons] E_s0_Cricket ep 6 刷新 50 任务：对抗集预测胜率 0.923 vs 基准率 0.272 4s
+[train] E_s0_Cricket ep 6 train 0.4041 val 0.7086 acc 0.629 666s
+[train] E_s0_Cricket done best acc 0.6621 @ ep 1 epochs 7 pairs/epoch 219004 682s
+[cons] B_s0_EthanolConcentration ep 0 刷新 152 任务：对抗集预测胜率 0.511 vs 基准率 0.288 13s
+[train] B_s0_EthanolConcentration ep 0 train 0.5964 val 0.6302 acc 0.648 33s
+[cons] B_s0_EthanolConcentration ep 1 刷新 51 任务：对抗集预测胜率 0.818 vs 基准率 0.283 4s
+[train] B_s0_EthanolConcentration ep 1 train 0.5509 val 0.6268 acc 0.657 58s
+[cons] B_s0_EthanolConcentration ep 2 刷新 51 任务：对抗集预测胜率 0.882 vs 基准率 0.291 8s
+[train] B_s0_EthanolConcentration ep 2 train 0.5066 val 0.6504 acc 0.648 129s
+[cons] B_s0_EthanolConcentration ep 3 刷新 50 任务：对抗集预测胜率 0.899 vs 基准率 0.292 8s
+[train] B_s0_EthanolConcentration ep 3 train 0.4745 val 0.6824 acc 0.638 170s
+[cons] B_s0_EthanolConcentration ep 4 刷新 51 任务：对抗集预测胜率 0.937 vs 基准率 0.283 4s
+[train] B_s0_EthanolConcentration ep 4 train 0.4579 val 0.6984 acc 0.636 195s
+[cons] B_s0_EthanolConcentration ep 5 刷新 51 任务：对抗集预测胜率 0.945 vs 基准率 0.291 4s
+[train] B_s0_EthanolConcentration ep 5 train 0.4460 val 0.7260 acc 0.629 235s
+[cons] B_s0_EthanolConcentration ep 6 刷新 50 任务：对抗集预测胜率 0.937 vs 基准率 0.292 8s
+[train] B_s0_EthanolConcentration ep 6 train 0.4391 val 0.7486 acc 0.629 301s
+[train] B_s0_EthanolConcentration done best acc 0.6566 @ ep 1 epochs 7 pairs/epoch 218702 302s
+[cons] E_s0_SelfRegulationSCP1 ep 0 刷新 144 任务：对抗集预测胜率 0.478 vs 基准率 0.280 12s
+[train] E_s0_SelfRegulationSCP1 ep 0 train 0.5862 val 0.6140 acc 0.645 85s
+[cons] E_s0_SelfRegulationSCP1 ep 1 刷新 48 任务：对抗集预测胜率 0.757 vs 基准率 0.264 8s
+[train] E_s0_SelfRegulationSCP1 ep 1 train 0.5113 val 0.6053 acc 0.671 171s
+[cons] E_s0_SelfRegulationSCP1 ep 2 刷新 48 任务：对抗集预测胜率 0.843 vs 基准率 0.327 4s
+[train] E_s0_SelfRegulationSCP1 ep 2 train 0.4581 val 0.6135 acc 0.675 249s
+[cons] E_s0_SelfRegulationSCP1 ep 3 刷新 48 任务：对抗集预测胜率 0.860 vs 基准率 0.249 9s
+[train] E_s0_SelfRegulationSCP1 ep 3 train 0.4267 val 0.6434 acc 0.666 335s
+[cons] E_s0_SelfRegulationSCP1 ep 4 刷新 48 任务：对抗集预测胜率 0.878 vs 基准率 0.264 5s
+[train] E_s0_SelfRegulationSCP1 ep 4 train 0.4050 val 0.6751 acc 0.659 426s
+[cons] E_s0_SelfRegulationSCP1 ep 5 刷新 48 任务：对抗集预测胜率 0.903 vs 基准率 0.327 9s
+[train] E_s0_SelfRegulationSCP1 ep 5 train 0.3884 val 0.6587 acc 0.661 499s
+[cons] E_s0_SelfRegulationSCP1 ep 6 刷新 48 任务：对抗集预测胜率 0.912 vs 基准率 0.249 5s
+[train] E_s0_SelfRegulationSCP1 ep 6 train 0.3738 val 0.7128 acc 0.649 604s
+[cons] E_s0_SelfRegulationSCP1 ep 7 刷新 48 任务：对抗集预测胜率 0.929 vs 基准率 0.264 8s
+[train] E_s0_SelfRegulationSCP1 ep 7 train 0.3615 val 0.7274 acc 0.647 671s
+[train] E_s0_SelfRegulationSCP1 done best acc 0.6755 @ ep 2 epochs 8 pairs/epoch 203650 680s
+[cons] B_s0_SelfRegulationSCP1 ep 0 刷新 144 任务：对抗集预测胜率 0.511 vs 基准率 0.280 25s
+[train] B_s0_SelfRegulationSCP1 ep 0 train 0.6097 val 0.6372 acc 0.637 88s
+[cons] B_s0_SelfRegulationSCP1 ep 1 刷新 48 任务：对抗集预测胜率 0.774 vs 基准率 0.264 5s
+[train] B_s0_SelfRegulationSCP1 ep 1 train 0.5698 val 0.6291 acc 0.651 116s
+[cons] B_s0_SelfRegulationSCP1 ep 2 刷新 48 任务：对抗集预测胜率 0.850 vs 基准率 0.327 4s
+[train] B_s0_SelfRegulationSCP1 ep 2 train 0.5394 val 0.6381 acc 0.642 141s
+[cons] B_s0_SelfRegulationSCP1 ep 3 刷新 48 任务：对抗集预测胜率 0.868 vs 基准率 0.249 4s
+[train] B_s0_SelfRegulationSCP1 ep 3 train 0.5123 val 0.6582 acc 0.633 203s
+[cons] B_s0_SelfRegulationSCP1 ep 4 刷新 48 任务：对抗集预测胜率 0.889 vs 基准率 0.264 7s
+[train] B_s0_SelfRegulationSCP1 ep 4 train 0.4970 val 0.6750 acc 0.629 255s
+[cons] B_s0_SelfRegulationSCP1 ep 5 刷新 48 任务：对抗集预测胜率 0.915 vs 基准率 0.327 4s
+[train] B_s0_SelfRegulationSCP1 ep 5 train 0.4872 val 0.6808 acc 0.625 278s
+[cons] B_s0_SelfRegulationSCP1 ep 6 刷新 48 任务：对抗集预测胜率 0.925 vs 基准率 0.249 4s
+[train] B_s0_SelfRegulationSCP1 ep 6 train 0.4821 val 0.7114 acc 0.615 302s
+[train] B_s0_SelfRegulationSCP1 done best acc 0.6513 @ ep 1 epochs 7 pairs/epoch 203650 303s
+[cons] E_s1_Handwriting ep 0 刷新 152 任务：对抗集预测胜率 0.510 vs 基准率 0.278 26s
+[train] E_s1_Handwriting ep 0 train 0.6281 val 0.6485 acc 0.619 116s
+[cons] E_s1_Handwriting ep 1 刷新 51 任务：对抗集预测胜率 0.775 vs 基准率 0.244 5s
+[train] E_s1_Handwriting ep 1 train 0.5956 val 0.6396 acc 0.624 214s
+[cons] E_s1_Handwriting ep 2 刷新 51 任务：对抗集预测胜率 0.785 vs 基准率 0.300 9s
+[train] E_s1_Handwriting ep 2 train 0.5494 val 0.6480 acc 0.620 293s
+[cons] E_s1_Handwriting ep 3 刷新 50 任务：对抗集预测胜率 0.885 vs 基准率 0.292 5s
+[train] E_s1_Handwriting ep 3 train 0.4992 val 0.6471 acc 0.638 409s
+[cons] E_s1_Handwriting ep 4 刷新 51 任务：对抗集预测胜率 0.874 vs 基准率 0.244 5s
+[train] E_s1_Handwriting ep 4 train 0.4743 val 0.6527 acc 0.635 491s
+[cons] E_s1_Handwriting ep 5 刷新 51 任务：对抗集预测胜率 0.920 vs 基准率 0.300 10s
+[train] E_s1_Handwriting ep 5 train 0.4566 val 0.6658 acc 0.634 589s
+[cons] E_s1_Handwriting ep 6 刷新 50 任务：对抗集预测胜率 0.912 vs 基准率 0.292 5s
+[train] E_s1_Handwriting ep 6 train 0.4462 val 0.6803 acc 0.623 689s
+[cons] E_s1_Handwriting ep 7 刷新 51 任务：对抗集预测胜率 0.922 vs 基准率 0.244 10s
+[train] E_s1_Handwriting ep 7 train 0.4375 val 0.6804 acc 0.624 767s
+[cons] E_s1_Handwriting ep 8 刷新 51 任务：对抗集预测胜率 0.926 vs 基准率 0.300 5s
+[train] E_s1_Handwriting ep 8 train 0.4291 val 0.6954 acc 0.622 828s
+[train] E_s1_Handwriting done best acc 0.6384 @ ep 3 epochs 9 pairs/epoch 214616 832s
+[cons] B_s1_PhonemeSpectra ep 0 刷新 152 任务：对抗集预测胜率 0.510 vs 基准率 0.287 12s
+[train] B_s1_PhonemeSpectra ep 0 train 0.6087 val 0.6357 acc 0.642 60s
+[cons] B_s1_PhonemeSpectra ep 1 刷新 51 任务：对抗集预测胜率 0.811 vs 基准率 0.251 9s
+[train] B_s1_PhonemeSpectra ep 1 train 0.5629 val 0.6373 acc 0.646 139s
+[cons] B_s1_PhonemeSpectra ep 2 刷新 51 任务：对抗集预测胜率 0.840 vs 基准率 0.306 9s
+[train] B_s1_PhonemeSpectra ep 2 train 0.5196 val 0.6698 acc 0.627 183s
+[cons] B_s1_PhonemeSpectra ep 3 刷新 50 任务：对抗集预测胜率 0.902 vs 基准率 0.305 4s
+[train] B_s1_PhonemeSpectra ep 3 train 0.4902 val 0.7142 acc 0.610 210s
+[cons] B_s1_PhonemeSpectra ep 4 刷新 51 任务：对抗集预测胜率 0.905 vs 基准率 0.251 4s
+[train] B_s1_PhonemeSpectra ep 4 train 0.4806 val 0.7177 acc 0.612 252s
+[cons] B_s1_PhonemeSpectra ep 5 刷新 51 任务：对抗集预测胜率 0.944 vs 基准率 0.306 9s
+[train] B_s1_PhonemeSpectra ep 5 train 0.4681 val 0.7521 acc 0.611 332s
+[cons] B_s1_PhonemeSpectra ep 6 刷新 50 任务：对抗集预测胜率 0.930 vs 基准率 0.305 9s
+[train] B_s1_PhonemeSpectra ep 6 train 0.4603 val 0.7741 acc 0.601 384s
+[train] B_s1_PhonemeSpectra done best acc 0.6455 @ ep 1 epochs 7 pairs/epoch 218674 385s
+[cons] E_s1_UWaveGestureLibrary ep 0 刷新 152 任务：对抗集预测胜率 0.510 vs 基准率 0.278 14s
+[train] E_s1_UWaveGestureLibrary ep 0 train 0.6076 val 0.6269 acc 0.638 108s
+[cons] E_s1_UWaveGestureLibrary ep 1 刷新 51 任务：对抗集预测胜率 0.789 vs 基准率 0.246 9s
+[train] E_s1_UWaveGestureLibrary ep 1 train 0.5422 val 0.5977 acc 0.669 208s
+[cons] E_s1_UWaveGestureLibrary ep 2 刷新 51 任务：对抗集预测胜率 0.817 vs 基准率 0.289 5s
+[train] E_s1_UWaveGestureLibrary ep 2 train 0.4911 val 0.6223 acc 0.653 302s
+[cons] E_s1_UWaveGestureLibrary ep 3 刷新 50 任务：对抗集预测胜率 0.875 vs 基准率 0.299 9s
+[train] E_s1_UWaveGestureLibrary ep 3 train 0.4552 val 0.6364 acc 0.655 406s
+[cons] E_s1_UWaveGestureLibrary ep 4 刷新 51 任务：对抗集预测胜率 0.876 vs 基准率 0.246 4s
+[train] E_s1_UWaveGestureLibrary ep 4 train 0.4295 val 0.6687 acc 0.637 502s
+[cons] E_s1_UWaveGestureLibrary ep 5 刷新 51 任务：对抗集预测胜率 0.899 vs 基准率 0.289 10s
+[train] E_s1_UWaveGestureLibrary ep 5 train 0.4132 val 0.6764 acc 0.648 612s
+[cons] E_s1_UWaveGestureLibrary ep 6 刷新 50 任务：对抗集预测胜率 0.926 vs 基准率 0.299 5s
+[train] E_s1_UWaveGestureLibrary ep 6 train 0.4067 val 0.7106 acc 0.634 700s
+[train] E_s1_UWaveGestureLibrary done best acc 0.6687 @ ep 1 epochs 7 pairs/epoch 215000 717s
+[cons] B_s1_Cricket ep 0 刷新 152 任务：对抗集预测胜率 0.510 vs 基准率 0.286 27s
+[train] B_s1_Cricket ep 0 train 0.6072 val 0.6387 acc 0.633 82s
+[cons] B_s1_Cricket ep 1 刷新 51 任务：对抗集预测胜率 0.814 vs 基准率 0.258 5s
+[train] B_s1_Cricket ep 1 train 0.5610 val 0.6493 acc 0.637 111s
+[cons] B_s1_Cricket ep 2 刷新 51 任务：对抗集预测胜率 0.857 vs 基准率 0.297 5s
+[train] B_s1_Cricket ep 2 train 0.5153 val 0.6794 acc 0.632 138s
+[cons] B_s1_Cricket ep 3 刷新 50 任务：对抗集预测胜率 0.896 vs 基准率 0.302 5s
+[train] B_s1_Cricket ep 3 train 0.4860 val 0.7066 acc 0.627 215s
+[cons] B_s1_Cricket ep 4 刷新 51 任务：对抗集预测胜率 0.914 vs 基准率 0.258 10s
+[train] B_s1_Cricket ep 4 train 0.4678 val 0.7220 acc 0.632 285s
+[cons] B_s1_Cricket ep 5 刷新 51 任务：对抗集预测胜率 0.932 vs 基准率 0.297 6s
+[train] B_s1_Cricket ep 5 train 0.4577 val 0.7392 acc 0.624 315s
+[cons] B_s1_Cricket ep 6 刷新 50 任务：对抗集预测胜率 0.940 vs 基准率 0.302 4s
+[train] B_s1_Cricket ep 6 train 0.4505 val 0.7704 acc 0.630 341s
+[train] B_s1_Cricket done best acc 0.6373 @ ep 1 epochs 7 pairs/epoch 219004 342s
+[cons] E_s1_EthanolConcentration ep 0 刷新 152 任务：对抗集预测胜率 0.510 vs 基准率 0.288 28s
+[train] E_s1_EthanolConcentration ep 0 train 0.5854 val 0.6218 acc 0.646 143s
+[cons] E_s1_EthanolConcentration ep 1 刷新 51 任务：对抗集预测胜率 0.802 vs 基准率 0.278 6s
+[train] E_s1_EthanolConcentration ep 1 train 0.5164 val 0.6031 acc 0.675 219s
+[cons] E_s1_EthanolConcentration ep 2 刷新 51 任务：对抗集预测胜率 0.827 vs 基准率 0.294 10s
+[train] E_s1_EthanolConcentration ep 2 train 0.4589 val 0.6370 acc 0.663 343s
+[cons] E_s1_EthanolConcentration ep 3 刷新 50 任务：对抗集预测胜率 0.873 vs 基准率 0.293 6s
+[train] E_s1_EthanolConcentration ep 3 train 0.4292 val 0.6525 acc 0.660 418s
+[cons] E_s1_EthanolConcentration ep 4 刷新 51 任务：对抗集预测胜率 0.876 vs 基准率 0.278 9s
+[train] E_s1_EthanolConcentration ep 4 train 0.4113 val 0.6819 acc 0.653 547s
+[cons] E_s1_EthanolConcentration ep 5 刷新 51 任务：对抗集预测胜率 0.909 vs 基准率 0.294 6s
+[train] E_s1_EthanolConcentration ep 5 train 0.3925 val 0.7117 acc 0.644 615s
+[cons] E_s1_EthanolConcentration ep 6 刷新 50 任务：对抗集预测胜率 0.882 vs 基准率 0.293 8s
+[train] E_s1_EthanolConcentration ep 6 train 0.3793 val 0.7153 acc 0.652 735s
+[train] E_s1_EthanolConcentration done best acc 0.6748 @ ep 1 epochs 7 pairs/epoch 218702 739s
+[cons] B_s1_EthanolConcentration ep 0 刷新 152 任务：对抗集预测胜率 0.510 vs 基准率 0.288 13s
+[train] B_s1_EthanolConcentration ep 0 train 0.6124 val 0.6308 acc 0.645 33s
+[cons] B_s1_EthanolConcentration ep 1 刷新 51 任务：对抗集预测胜率 0.798 vs 基准率 0.278 4s
+[train] B_s1_EthanolConcentration ep 1 train 0.5763 val 0.6328 acc 0.645 57s
+[cons] B_s1_EthanolConcentration ep 2 刷新 51 任务：对抗集预测胜率 0.806 vs 基准率 0.294 8s
+[train] B_s1_EthanolConcentration ep 2 train 0.5396 val 0.6468 acc 0.634 128s
+[cons] B_s1_EthanolConcentration ep 3 刷新 50 任务：对抗集预测胜率 0.887 vs 基准率 0.293 8s
+[train] B_s1_EthanolConcentration ep 3 train 0.5178 val 0.6730 acc 0.621 189s
+[cons] B_s1_EthanolConcentration ep 4 刷新 51 任务：对抗集预测胜率 0.882 vs 基准率 0.278 5s
+[train] B_s1_EthanolConcentration ep 4 train 0.5067 val 0.6907 acc 0.612 215s
+[cons] B_s1_EthanolConcentration ep 5 刷新 51 任务：对抗集预测胜率 0.916 vs 基准率 0.294 4s
+[train] B_s1_EthanolConcentration ep 5 train 0.4927 val 0.6999 acc 0.619 240s
+[train] B_s1_EthanolConcentration done best acc 0.6454 @ ep 0 epochs 6 pairs/epoch 218702 240s
+[cons] E_s1_SelfRegulationSCP1 ep 0 刷新 144 任务：对抗集预测胜率 0.510 vs 基准率 0.280 24s
+[train] E_s1_SelfRegulationSCP1 ep 0 train 0.6130 val 0.6383 acc 0.634 128s
+[cons] E_s1_SelfRegulationSCP1 ep 1 刷新 48 任务：对抗集预测胜率 0.776 vs 基准率 0.298 5s
+[train] E_s1_SelfRegulationSCP1 ep 1 train 0.5704 val 0.6196 acc 0.655 186s
+[cons] E_s1_SelfRegulationSCP1 ep 2 刷新 48 任务：对抗集预测胜率 0.801 vs 基准率 0.247 8s
+[train] E_s1_SelfRegulationSCP1 ep 2 train 0.5167 val 0.6086 acc 0.665 293s
+[cons] E_s1_SelfRegulationSCP1 ep 3 刷新 48 任务：对抗集预测胜率 0.856 vs 基准率 0.295 8s
+[train] E_s1_SelfRegulationSCP1 ep 3 train 0.4714 val 0.6243 acc 0.654 361s
+[cons] E_s1_SelfRegulationSCP1 ep 4 刷新 48 任务：对抗集预测胜率 0.897 vs 基准率 0.298 4s
+[train] E_s1_SelfRegulationSCP1 ep 4 train 0.4522 val 0.6274 acc 0.662 463s
+[cons] E_s1_SelfRegulationSCP1 ep 5 刷新 48 任务：对抗集预测胜率 0.878 vs 基准率 0.247 9s
+[train] E_s1_SelfRegulationSCP1 ep 5 train 0.4349 val 0.6397 acc 0.646 555s
+[cons] E_s1_SelfRegulationSCP1 ep 6 刷新 48 任务：对抗集预测胜率 0.887 vs 基准率 0.295 4s
+[train] E_s1_SelfRegulationSCP1 ep 6 train 0.4244 val 0.6620 acc 0.643 657s
+[cons] E_s1_SelfRegulationSCP1 ep 7 刷新 48 任务：对抗集预测胜率 0.918 vs 基准率 0.298 9s
+[train] E_s1_SelfRegulationSCP1 ep 7 train 0.4185 val 0.6753 acc 0.634 755s
+[train] E_s1_SelfRegulationSCP1 done best acc 0.6645 @ ep 2 epochs 8 pairs/epoch 203650 759s
+[cons] B_s2_Handwriting ep 0 刷新 152 任务：对抗集预测胜率 0.516 vs 基准率 0.278 12s
+[train] B_s2_Handwriting ep 0 train 0.6171 val 0.6535 acc 0.620 58s
+[cons] B_s2_Handwriting ep 1 刷新 51 任务：对抗集预测胜率 0.777 vs 基准率 0.275 9s
+[train] B_s2_Handwriting ep 1 train 0.5765 val 0.6654 acc 0.614 136s
+[cons] B_s2_Handwriting ep 2 刷新 51 任务：对抗集预测胜率 0.830 vs 基准率 0.283 9s
+[train] B_s2_Handwriting ep 2 train 0.5366 val 0.6849 acc 0.610 181s
+[cons] B_s2_Handwriting ep 3 刷新 50 任务：对抗集预测胜率 0.884 vs 基准率 0.277 4s
+[train] B_s2_Handwriting ep 3 train 0.5059 val 0.6995 acc 0.614 207s
+[cons] B_s2_Handwriting ep 4 刷新 51 任务：对抗集预测胜率 0.931 vs 基准率 0.275 4s
+[train] B_s2_Handwriting ep 4 train 0.4881 val 0.7230 acc 0.607 260s
+[cons] B_s2_Handwriting ep 5 刷新 51 任务：对抗集预测胜率 0.933 vs 基准率 0.283 8s
+[train] B_s2_Handwriting ep 5 train 0.4775 val 0.7560 acc 0.601 333s
+[train] B_s2_Handwriting done best acc 0.6198 @ ep 0 epochs 6 pairs/epoch 214616 336s
+[cons] E_s2_PhonemeSpectra ep 0 刷新 152 任务：对抗集预测胜率 0.492 vs 基准率 0.287 19s
+[train] E_s2_PhonemeSpectra ep 0 train 0.5995 val 0.6156 acc 0.648 83s
+[cons] E_s2_PhonemeSpectra ep 1 刷新 51 任务：对抗集预测胜率 0.816 vs 基准率 0.300 8s
+[train] E_s2_PhonemeSpectra ep 1 train 0.5291 val 0.5953 acc 0.676 197s
+[cons] E_s2_PhonemeSpectra ep 2 刷新 51 任务：对抗集预测胜率 0.808 vs 基准率 0.293 6s
+[train] E_s2_PhonemeSpectra ep 2 train 0.4747 val 0.6004 acc 0.677 263s
+[cons] E_s2_PhonemeSpectra ep 3 刷新 50 任务：对抗集预测胜率 0.848 vs 基准率 0.268 8s
+[train] E_s2_PhonemeSpectra ep 3 train 0.4508 val 0.6425 acc 0.649 378s
+[cons] E_s2_PhonemeSpectra ep 4 刷新 51 任务：对抗集预测胜率 0.897 vs 基准率 0.300 6s
+[train] E_s2_PhonemeSpectra ep 4 train 0.4299 val 0.6508 acc 0.651 438s
+[cons] E_s2_PhonemeSpectra ep 5 刷新 51 任务：对抗集预测胜率 0.890 vs 基准率 0.293 10s
+[train] E_s2_PhonemeSpectra ep 5 train 0.4088 val 0.6823 acc 0.645 557s
+[cons] E_s2_PhonemeSpectra ep 6 刷新 50 任务：对抗集预测胜率 0.912 vs 基准率 0.268 10s
+[train] E_s2_PhonemeSpectra ep 6 train 0.4030 val 0.6581 acc 0.665 626s
+[cons] E_s2_PhonemeSpectra ep 7 刷新 51 任务：对抗集预测胜率 0.935 vs 基准率 0.300 5s
+[train] E_s2_PhonemeSpectra ep 7 train 0.4018 val 0.6888 acc 0.649 742s
+[train] E_s2_PhonemeSpectra done best acc 0.6775 @ ep 2 epochs 8 pairs/epoch 218674 757s
+[cons] B_s2_UWaveGestureLibrary ep 0 刷新 152 任务：对抗集预测胜率 0.516 vs 基准率 0.278 14s
+[train] B_s2_UWaveGestureLibrary ep 0 train 0.6074 val 0.6347 acc 0.640 35s
+[cons] B_s2_UWaveGestureLibrary ep 1 刷新 51 任务：对抗集预测胜率 0.789 vs 基准率 0.291 4s
+[train] B_s2_UWaveGestureLibrary ep 1 train 0.5628 val 0.6467 acc 0.631 61s
+[cons] B_s2_UWaveGestureLibrary ep 2 刷新 51 任务：对抗集预测胜率 0.846 vs 基准率 0.286 8s
+[train] B_s2_UWaveGestureLibrary ep 2 train 0.5206 val 0.6759 acc 0.635 135s
+[cons] B_s2_UWaveGestureLibrary ep 3 刷新 50 任务：对抗集预测胜率 0.889 vs 基准率 0.255 8s
+[train] B_s2_UWaveGestureLibrary ep 3 train 0.4907 val 0.6856 acc 0.631 201s
+[cons] B_s2_UWaveGestureLibrary ep 4 刷新 51 任务：对抗集预测胜率 0.922 vs 基准率 0.291 5s
+[train] B_s2_UWaveGestureLibrary ep 4 train 0.4681 val 0.7288 acc 0.622 230s
+[cons] B_s2_UWaveGestureLibrary ep 5 刷新 51 任务：对抗集预测胜率 0.955 vs 基准率 0.286 4s
+[train] B_s2_UWaveGestureLibrary ep 5 train 0.4569 val 0.7550 acc 0.612 261s
+[train] B_s2_UWaveGestureLibrary done best acc 0.6397 @ ep 0 epochs 6 pairs/epoch 215000 264s
+[cons] E_s2_Cricket ep 0 刷新 152 任务：对抗集预测胜率 0.492 vs 基准率 0.286 28s
+[train] E_s2_Cricket ep 0 train 0.5957 val 0.6144 acc 0.644 198s
+[cons] E_s2_Cricket ep 1 刷新 51 任务：对抗集预测胜率 0.793 vs 基准率 0.301 12s
+[train] E_s2_Cricket ep 1 train 0.5278 val 0.6003 acc 0.668 443s
+[cons] E_s2_Cricket ep 2 刷新 51 任务：对抗集预测胜率 0.815 vs 基准率 0.294 19s
+[train] E_s2_Cricket ep 2 train 0.4705 val 0.5988 acc 0.684 656s
+[cons] E_s2_Cricket ep 3 刷新 50 任务：对抗集预测胜率 0.873 vs 基准率 0.262 18s
+[train] E_s2_Cricket ep 3 train 0.4405 val 0.6304 acc 0.674 903s
+[cons] E_s2_Cricket ep 4 刷新 51 任务：对抗集预测胜率 0.908 vs 基准率 0.301 13s
+[train] E_s2_Cricket ep 4 train 0.4163 val 0.6291 acc 0.673 1066s
+[cons] E_s2_Cricket ep 5 刷新 51 任务：对抗集预测胜率 0.913 vs 基准率 0.294 8s
+[train] E_s2_Cricket ep 5 train 0.4030 val 0.6416 acc 0.671 1147s
+[cons] E_s2_Cricket ep 6 刷新 50 任务：对抗集预测胜率 0.885 vs 基准率 0.262 4s
+[train] E_s2_Cricket ep 6 train 0.3957 val 0.6423 acc 0.675 1244s
+[cons] E_s2_Cricket ep 7 刷新 51 任务：对抗集预测胜率 0.883 vs 基准率 0.301 9s
+[train] E_s2_Cricket ep 7 train 0.3844 val 0.6861 acc 0.674 1337s
+[train] E_s2_Cricket done best acc 0.6836 @ ep 2 epochs 8 pairs/epoch 219004 1340s
+[cons] B_s2_Cricket ep 0 刷新 152 任务：对抗集预测胜率 0.516 vs 基准率 0.286 10s
+[train] B_s2_Cricket ep 0 train 0.6184 val 0.6501 acc 0.620 56s
+[cons] B_s2_Cricket ep 1 刷新 51 任务：对抗集预测胜率 0.765 vs 基准率 0.301 8s
+[train] B_s2_Cricket ep 1 train 0.5833 val 0.6576 acc 0.621 126s
+[cons] B_s2_Cricket ep 2 刷新 51 任务：对抗集预测胜率 0.826 vs 基准率 0.294 8s
+[train] B_s2_Cricket ep 2 train 0.5506 val 0.6548 acc 0.626 166s
+[cons] B_s2_Cricket ep 3 刷新 50 任务：对抗集预测胜率 0.875 vs 基准率 0.262 4s
+[train] B_s2_Cricket ep 3 train 0.5313 val 0.6714 acc 0.619 189s
+[cons] B_s2_Cricket ep 4 刷新 51 任务：对抗集预测胜率 0.884 vs 基准率 0.301 4s
+[train] B_s2_Cricket ep 4 train 0.5142 val 0.6977 acc 0.611 223s
+[cons] B_s2_Cricket ep 5 刷新 51 任务：对抗集预测胜率 0.928 vs 基准率 0.294 8s
+[train] B_s2_Cricket ep 5 train 0.5038 val 0.7153 acc 0.599 292s
+[cons] B_s2_Cricket ep 6 刷新 50 任务：对抗集预测胜率 0.920 vs 基准率 0.262 8s
+[train] B_s2_Cricket ep 6 train 0.4933 val 0.6991 acc 0.610 346s
+[cons] B_s2_Cricket ep 7 刷新 51 任务：对抗集预测胜率 0.936 vs 基准率 0.301 5s
+[train] B_s2_Cricket ep 7 train 0.4866 val 0.6978 acc 0.620 371s
+[train] B_s2_Cricket done best acc 0.6258 @ ep 2 epochs 8 pairs/epoch 219004 371s
+[cons] E_s2_EthanolConcentration ep 0 刷新 152 任务：对抗集预测胜率 0.492 vs 基准率 0.288 13s
+[train] E_s2_EthanolConcentration ep 0 train 0.6093 val 0.6257 acc 0.645 125s
+[cons] E_s2_EthanolConcentration ep 1 刷新 51 任务：对抗集预测胜率 0.778 vs 基准率 0.286 9s
+[train] E_s2_EthanolConcentration ep 1 train 0.5575 val 0.6014 acc 0.669 195s
+[cons] E_s2_EthanolConcentration ep 2 刷新 51 任务：对抗集预测胜率 0.819 vs 基准率 0.280 4s
+[train] E_s2_EthanolConcentration ep 2 train 0.5064 val 0.6075 acc 0.664 296s
+[cons] E_s2_EthanolConcentration ep 3 刷新 50 任务：对抗集预测胜率 0.849 vs 基准率 0.300 8s
+[train] E_s2_EthanolConcentration ep 3 train 0.4779 val 0.6095 acc 0.666 373s
+[cons] E_s2_EthanolConcentration ep 4 刷新 51 任务：对抗集预测胜率 0.873 vs 基准率 0.286 4s
+[train] E_s2_EthanolConcentration ep 4 train 0.4649 val 0.6312 acc 0.646 462s
+[cons] E_s2_EthanolConcentration ep 5 刷新 51 任务：对抗集预测胜率 0.879 vs 基准率 0.280 8s
+[train] E_s2_EthanolConcentration ep 5 train 0.4501 val 0.6282 acc 0.653 554s
+[cons] E_s2_EthanolConcentration ep 6 刷新 50 任务：对抗集预测胜率 0.871 vs 基准率 0.300 4s
+[train] E_s2_EthanolConcentration ep 6 train 0.4430 val 0.6473 acc 0.643 638s
+[train] E_s2_EthanolConcentration done best acc 0.6686 @ ep 1 epochs 7 pairs/epoch 218702 652s
+[cons] B_s2_SelfRegulationSCP1 ep 0 刷新 144 任务：对抗集预测胜率 0.516 vs 基准率 0.280 22s
+[train] B_s2_SelfRegulationSCP1 ep 0 train 0.6020 val 0.6370 acc 0.639 68s
+[cons] B_s2_SelfRegulationSCP1 ep 1 刷新 48 任务：对抗集预测胜率 0.784 vs 基准率 0.282 5s
+[train] B_s2_SelfRegulationSCP1 ep 1 train 0.5525 val 0.6480 acc 0.634 93s
+[cons] B_s2_SelfRegulationSCP1 ep 2 刷新 48 任务：对抗集预测胜率 0.852 vs 基准率 0.280 4s
+[train] B_s2_SelfRegulationSCP1 ep 2 train 0.5110 val 0.6613 acc 0.639 115s
+[cons] B_s2_SelfRegulationSCP1 ep 3 刷新 48 任务：对抗集预测胜率 0.898 vs 基准率 0.278 4s
+[train] B_s2_SelfRegulationSCP1 ep 3 train 0.4839 val 0.7001 acc 0.628 172s
+[cons] B_s2_SelfRegulationSCP1 ep 4 刷新 48 任务：对抗集预测胜率 0.936 vs 基准率 0.282 7s
+[train] B_s2_SelfRegulationSCP1 ep 4 train 0.4671 val 0.7294 acc 0.610 237s
+[cons] B_s2_SelfRegulationSCP1 ep 5 刷新 48 任务：对抗集预测胜率 0.948 vs 基准率 0.280 7s
+[train] B_s2_SelfRegulationSCP1 ep 5 train 0.4552 val 0.7371 acc 0.609 269s
+[train] B_s2_SelfRegulationSCP1 done best acc 0.6391 @ ep 0 epochs 6 pairs/epoch 203650 269s

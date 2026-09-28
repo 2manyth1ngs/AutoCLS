@@ -1,0 +1,22 @@
+[ACTS-s1pp] 计划 12 格，已有 0，待跑 12
+[data] Handwriting: X=(1000, 152, 3) classes=26
+[data] Handwriting_whole_val: val D_train=(118, 152, 3) D_val=(32, 152, 3)
+[ACTS-s1pp 1/12] Handwriting_whole_val/random/6b52228a s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.250 0.250 0.344] (20.6s+0.1s)
+[ACTS-s1pp 2/12] Handwriting_whole_val/random/1e5aab54 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.312 0.281 0.281] (13.0s+0.0s)
+[ACTS-s1pp 3/12] Handwriting_whole_val/random/c0565d9f s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.344 0.469 0.344] (13.1s+0.0s)
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_val: val D_train=(96, 315, 3) D_val=(24, 315, 3)
+[ACTS-s1pp 4/12] UWaveGestureLibrary_whole_val/random/3596da13 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.792 0.792 0.917] (11.3s+0.7s)
+[ACTS-s1pp 5/12] UWaveGestureLibrary_whole_val/random/f4a91a3a s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.875 0.875 0.875] (7.8s+0.6s)
+[ACTS-s1pp 6/12] UWaveGestureLibrary_whole_val/random/aaf510f9 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.875 0.875 0.875] (7.7s+0.6s)
+[data] Handwriting: X=(1000, 152, 3) classes=26
+[data] Handwriting_whole_val: val D_train=(118, 152, 3) D_val=(32, 152, 3)
+[ACTS-s1pp 7/12] Handwriting_whole_val/random/c213bdb2 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.312 0.344 0.344] (11.3s+0.0s)
+[ACTS-s1pp 8/12] Handwriting_whole_val/random/158f6925 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.375 0.375 0.344] (10.6s+0.0s)
+[ACTS-s1pp 9/12] Handwriting_whole_val/random/a16ba384 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.406 0.406 0.438] (11.2s+0.0s)
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_val: val D_train=(96, 315, 3) D_val=(24, 315, 3)
+[ACTS-s1pp 10/12] UWaveGestureLibrary_whole_val/random/03357830 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.875 0.917 0.833] (10.4s+0.6s)
+[ACTS-s1pp 11/12] UWaveGestureLibrary_whole_val/random/31f0a23a s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.708 0.792 0.792] (9.5s+0.6s)
+[ACTS-s1pp 12/12] UWaveGestureLibrary_whole_val/random/c0c0623c s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.792 0.917 0.958] (8.4s+0.6s)
+[ACTS-s1pp] 收官

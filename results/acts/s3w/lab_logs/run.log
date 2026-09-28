@@ -1,0 +1,31 @@
+== HEAD 30b898d
+== E_pt 176 / 176
+== S3-R′ 模型 36 / 36
+== S3-C-D 靶端 E 6 / 6
+23 passed in 34.19s
+== GPU 0 free 8406 MiB → 2 槽
+== GPU 4 free 9873 MiB → 2 槽
+== GPU 2 free 4841 MiB → 1 槽
+== GPU 6 free 2073 MiB → 0 槽
+== GPU 1 free 497 MiB → 0 槽
+== GPU 5 free 3304 MiB → 0 槽
+== GPU 3 free 3194 MiB → 0 槽
+== GPU 7 free 2944 MiB → 0 槽
+== 共 5 槽：0 0 4 4 2
+== [12:43:31] 训练 108 次
+== a0.3：E 18 / B 18（各需 18）
+== a1：E 18 / B 18（各需 18）
+== a3：E 18 / B 18（各需 18）
+== [16:31:35] 训练完
+== [16:31:53] 扩充池评估：8 / 8
+[select-alpha] {"E": {"Handwr": 3.0, "Phonem": 3.0, "UWaveG": 0.3, "Cricke": 1.0, "Ethano": 3.0, "SelfRe": 1.0}, "B": {"Handwr": 0.3, "Phonem": 3.0, "UWaveG": 3.0, "Cricke": 0.3, "Ethano": 1.0, "SelfRe": 0.3}}
+108 个训练记录
+== [16:31:54] 搜索 12
+== [16:32:22] 搜索完：12 / 12
+== [16:32:22] D_val 选择格
+[plan val] 臂 ['CONS', 'CONS_B']：36 格
+verify val: plan 36 / done 36 / error 0 → OK
+[select] {"CONS": {"Handwr": "6b52228a", "Phonem": "189cf7c4", "UWaveG": "3596da13", "Cricke": "b1a09bce", "Ethano": "12efa8a8", "SelfRe": "5d0ed39b"}, "CONS_B": {"Handwr": "a16ba384", "Phonem": "5cbded7d", "UWaveG": "c0c0623c", "Cricke": "2b8fb39d", "Ethano": "94df079c", "SelfRe": "586e6c38"}}
+== [16:47:44] 最终格
+[plan final] 臂 ['CONS', 'CONS_B']：96 格
+verify final: plan 96 / done 96 / error 0 → OK

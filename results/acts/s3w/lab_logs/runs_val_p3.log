@@ -1,0 +1,10 @@
+[ACTS-s1pp] 计划 6 格，已有 0，待跑 6
+[data] EthanolConcentration: X=(524, 1751, 3) classes=4
+[data] EthanolConcentration_whole_val: val D_train=(209, 1751, 3) D_val=(52, 1751, 3)
+[ACTS-s1pp 1/6] EthanolConcentration_whole_val/random/548e2873 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.231 0.212 0.173] (201.5s+0.9s)
+[ACTS-s1pp 2/6] EthanolConcentration_whole_val/random/12efa8a8 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.212 0.231 0.288] (241.4s+0.9s)
+[ACTS-s1pp 3/6] EthanolConcentration_whole_val/random/9a2ff5fd s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.192 0.231 0.173] (119.3s+0.8s)
+[ACTS-s1pp 4/6] EthanolConcentration_whole_val/random/9c01d0a5 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.308 0.250 0.269] (96.0s+0.9s)
+[ACTS-s1pp 5/6] EthanolConcentration_whole_val/random/ea7e329b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.231 0.250 0.269] (72.2s+0.8s)
+[ACTS-s1pp 6/6] EthanolConcentration_whole_val/random/94df079c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.346 0.250 0.308] (102.4s+0.9s)
+[ACTS-s1pp] 收官
