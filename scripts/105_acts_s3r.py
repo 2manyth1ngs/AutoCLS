@@ -33,6 +33,7 @@ LR, MAX_EPOCHS, PATIENCE, SUB_WIN = 1e-4, 40, 5, 32
 SEEDS = (0, 1, 2)
 ARMS = ("E", "B")
 OFFS_IN = (1, 2, 3, 4)
+RAW_DIR = ROOT / "results" / "acts" / "s3v" / "raw"
 
 
 # ================================================================ 纯函数
@@ -68,9 +69,20 @@ def pair_table(r, fail, sig, ns, use, gate: float = 0.0):
     return _pairs(r, fail, sig, ns, use[:, None] & use[None, :], gate)
 
 
-def val_pairs(r, fail, sig, ns, held):
+def val_pairs(r, fail, sig, ns, held, allowed=None):
     h = np.zeros(len(r), bool); h[np.asarray(held, int)] = True
-    return _pairs(r, fail, sig, ns, h[:, None] | h[None, :])
+    keep = h[:, None] | h[None, :]
+    if allowed is not None:                                                      # S3-V w/o shared：验证配对也不含 shared
+        a = np.asarray(allowed, bool); keep = keep & a[:, None] & a[None, :]
+    return _pairs(r, fail, sig, ns, keep)
+
+
+def train_use_mask(n_total: int, held, no_shared: bool = False) -> np.ndarray:
+    """训练配置掩码：去掉验证留出；S3-V w/o shared 再去掉前 N_SH 条 shared。"""
+    use = np.ones(int(n_total), bool); use[np.asarray(held, int)] = False
+    if no_shared:
+        use[:N_SH] = False
+    return use
 
 
 def task_batches(by_task: Mapping[int, int], rng: np.random.Generator, *, per_task: int = PER_TASK, tasks_per_batch: int = TPB) -> list:
@@ -135,6 +147,18 @@ def cmd_prep(args) -> None:
     print(f"[prep] {len(tasks)} 任务 → labels.npz；失败占比 {np.mean(nf):.3f}", flush=True)
 
 
+def load_raw_windows(raw_dir: Path, tasks, synthetic: bool = False) -> list:
+    """S3-V w/o TS2Vec：每任务原始窗口 (100, ≤152, C)（108 --prep-raw 产出，与 E_pt 同一批窗口）。"""
+    if synthetic:
+        rng = np.random.default_rng(0)
+        return [rng.normal(size=(20, 16, 2)).astype(np.float16) for _ in tasks]
+    out = []
+    for t in tasks:
+        with np.load(Path(raw_dir) / f"{t}.npz") as z:
+            out.append(z["raw"])
+    return out
+
+
 def load_labels(outdir: Path) -> dict:
     f = Path(outdir) / "labels.npz"
     with np.load(f if f.exists() else OUT / "labels.npz") as z:                # 冒烟目录回退到正式 labels
@@ -142,12 +166,18 @@ def load_labels(outdir: Path) -> dict:
 
 
 # ================================================================ 训练（服务器）
-def _build(arm: str, cls_dim: int, seed: int, device: str):
+def _build(arm: str, cls_dim: int, seed: int, device: str, e_mode: str = "settf", std=None):
     import torch
     from autocls.comparator.tclsc_model import TCLSC
     from autocls.task_embed import TaskSetEncoder
     torch.manual_seed(seed)
-    if arm == "E":                                    # = 89.build_model("A")，只换种子
+    if arm == "E" and e_mode == "mean":              # S3-V w/o Set-Transformer：TS2Vec 表示均值池化（训练任务标准化）
+        from autocls.comparator.mean_pool_encoder import MeanPoolTaskEncoder
+        m = TCLSC(cls_dim, MeanPoolTaskEncoder(256, *(std or (None, None))), task_branch="E+ctx", head="concat")
+    elif arm == "E" and e_mode == "raw":             # S3-V w/o TS2Vec：原始窗口逐时间步 MLP + SetTF
+        from autocls.comparator.raw_mlp_encoder import RawMLPSetEncoder
+        m = TCLSC(cls_dim, RawMLPSetEncoder(nz=256, hidden=64), task_branch="E+ctx", head="concat")
+    elif arm == "E":                                  # = 89.build_model("A")，只换种子
         m = TCLSC(cls_dim, TaskSetEncoder(dim_input=256, nz=256), task_branch="E+ctx", head="concat")
     else:                                             # = 89.build_model("D")
         m = TCLSC(cls_dim, None, task_branch="none", head="concat")
@@ -179,18 +209,26 @@ def cmd_train(args) -> None:
     H = [L[f"{t}/held"] for t in tasks]; SIG = L["sig"]
     for i in range(len(tasks)):
         assert len(R[i]) == len(V[i]), f"{tasks[i]} 标签与配置条数不一致"
-    W = g89.load_windows("A", fold, tasks, S3B, synthetic=args.synthetic) if arm == "E" else None
-    model = _build(arm, V[0].shape[1], seed, dev); sc = g89.Scorer(model, "A" if arm == "E" else "D", dev)
+    e_mode = getattr(args, "e_mode", "settf") or "settf"; no_shared = bool(getattr(args, "no_shared", False))
+    if arm == "E" and e_mode == "raw":
+        W = load_raw_windows(Path(getattr(args, "raw_dir", RAW_DIR)), tasks, synthetic=args.synthetic)
+    else:
+        W = g89.load_windows("A", fold, tasks, S3B, synthetic=args.synthetic) if arm == "E" else None
+    std = None
+    if arm == "E" and e_mode == "mean":
+        from autocls.comparator.mean_pool_encoder import MeanPoolTaskEncoder
+        std = MeanPoolTaskEncoder.fit_standardizer({str(i): W[i] for i in tr}, [str(i) for i in tr])   # 只用训练任务（铁律 6）
+    model = _build(arm, V[0].shape[1], seed, dev, e_mode, std); sc = g89.Scorer(model, "A" if arm == "E" else "D", dev)
     opt = torch.optim.Adam(model.parameters(), lr=LR)
     rng = np.random.default_rng(seed)
     gate = float(getattr(args, "gate", 0.0) or 0.0)
     TP, TPr, VP = {}, {}, {}
     for i in tr:
-        use = np.ones(len(R[i]), bool); use[H[i]] = False
+        use = train_use_mask(len(R[i]), H[i], no_shared)
         TP[i] = pair_table(R[i], F[i], SIG[i], NSd[i], use, gate=gate)                 # 训练表（S3-T 门槛）
         TPr[i] = TP[i] if gate == 0 else pair_table(R[i], F[i], SIG[i], NSd[i], use)  # 样本内读数表（S3-R′ 软权重口径）
         if len(H[i]):
-            VP[i] = val_pairs(R[i], F[i], SIG[i], NSd[i], H[i])
+            VP[i] = val_pairs(R[i], F[i], SIG[i], NSd[i], H[i], allowed=(np.arange(len(R[i])) >= N_SH) if no_shared else None)
     n_pairs = int(sum(len(v[0]) for v in TP.values()))
     Vt = {i: torch.as_tensor(np.asarray(V[i], np.float32), device=dev) for i in set(tr) | set(te)}
 
@@ -255,7 +293,8 @@ def cmd_train(args) -> None:
     model.load_state_dict(best_state); model.eval()
     torch.save(model.state_dict(), outdir / "models" / f"{tag}.pt")
     # ---- 样本内 / 验证（本 E vs 换 E；换 E = 训练源内 cross_maps 偏移 1–4）
-    out = {"hist": json.dumps(hist), "te": np.array(te), "tr": np.array(tr), "n_pairs_epoch": n_pairs, "best_epoch": best_ep, "stop": mode, "gate": gate}
+    out = {"hist": json.dumps(hist), "te": np.array(te), "tr": np.array(tr), "n_pairs_epoch": n_pairs, "best_epoch": best_ep, "stop": mode, "gate": gate,
+           "e_mode": e_mode, "no_shared": no_shared}
     with torch.no_grad():
         Tall = None if arm == "B" else torch.stack([sc.task_vec(W[i], None) for i in range(len(tasks))])
         tr_tasks = [tasks[i] for i in tr]
@@ -492,6 +531,9 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--max-epochs", type=int, default=None)
     ap.add_argument("--stop", choices=("loss", "acc"), default="loss")
     ap.add_argument("--gate", type=float, default=0.0)
+    ap.add_argument("--e-mode", choices=("settf", "mean", "raw"), default="settf")
+    ap.add_argument("--no-shared", action="store_true")
+    ap.add_argument("--raw-dir", default=str(RAW_DIR))
     ap.add_argument("--compare-ref", default=None)
     ap.add_argument("--max-tasks-per-src", type=int, default=None)
     ap.add_argument("--outdir", default=str(OUT))

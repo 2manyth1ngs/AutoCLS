@@ -844,6 +844,31 @@ def whole_arrays_official(X: np.ndarray, y: np.ndarray, *, n_train: int) -> dict
             "majority": majority_rate(yte), "mean": mu, "std": sd}
 
 
+def whole_arrays_val(X: np.ndarray, y: np.ndarray, *, n_train: int, val_frac: float = 0.2, seed: int = 0) -> dict:
+    """S3-V（= AutoCTS++ Algorithm 2 的 D_train / D_val）：只在官方 TRAIN（前 n_train 行）内按类分层切出 val_frac 作 D_val；
+    D_train 拟合按通道标准化后套用到 D_val；TEST 行完全不读。键与 whole_arrays_official 相同（Xte_* = D_val）。"""
+    n_train = int(n_train)
+    ytr_all = np.asarray(y)[:n_train]
+    rng = np.random.default_rng(int(seed))
+    val = []
+    for c in np.unique(ytr_all):
+        idx = np.where(ytr_all == c)[0]
+        nv = int(round(float(val_frac) * len(idx))) if len(idx) >= 2 else 0
+        nv = min(max(nv, 1 if len(idx) >= 2 else 0), len(idx) - 1)
+        val += rng.choice(idx, size=nv, replace=False).tolist()
+    ev = np.array(sorted(val), dtype=np.int64)
+    tr = np.setdiff1d(np.arange(n_train, dtype=np.int64), ev)
+    Xtr_raw = np.asarray(X[tr], dtype=np.float64)
+    flat = Xtr_raw.reshape(-1, Xtr_raw.shape[-1])
+    mu, sd = flat.mean(0), flat.std(0)
+    sd = np.where(sd < 1e-8, 1.0, sd)
+    Xtr = ((Xtr_raw - mu) / sd).astype(np.float32)
+    Xva = ((np.asarray(X[ev], dtype=np.float64) - mu) / sd).astype(np.float32)
+    ytr, yva = np.asarray(y)[tr], np.asarray(y)[ev]
+    return {"Xtr": Xtr, "ytr": ytr, "Xte_train": Xva, "Xte_split": Xva, "yte": yva, "train_idx": tr, "eval_idx": ev,
+            "majority": majority_rate(yva), "mean": mu, "std": sd}
+
+
 def whole_arrays_cv(X: np.ndarray, y: np.ndarray, *, n_folds: int, seed: int) -> dict:
     """整集：按通道在全部样本上标准化 + 固定分层 K 折（= task_arrays_cv 去掉物化）。"""
     raw = np.asarray(X, dtype=np.float64)

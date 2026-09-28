@@ -1096,7 +1096,7 @@ S1P_OUT = ac.OUT_ROOT / "s1p"
 def dispatch_runner(cell: dict, arrays: Mapping, device: str) -> dict:
     """按格的 eval 模式分发执行体：official / holdout → 39.run_trajectory_cell（TRAIN 预训练、eval 出 acc）；cv5 → 整切片预训练 + 5 折 CV。"""
     mode = str(cell.get("eval", "holdout"))
-    if mode in ("official", "holdout"):
+    if mode in ("official", "holdout", "val"):                   # S3-V：val = 官方 TRAIN 内 D_train / D_val
         return _g39.run_trajectory_cell(cell, arrays, device)
     if mode == "cv5":
         return run_trajectory_cell_cv(cell, arrays, device)
@@ -1104,7 +1104,7 @@ def dispatch_runner(cell: dict, arrays: Mapping, device: str) -> dict:
 
 
 def probe_runner_for(mode: str):
-    if mode in ("official", "holdout"):
+    if mode in ("official", "holdout", "val"):
         return run_probe0
     if mode == "cv5":
         return run_probe0_cv
@@ -1130,6 +1130,9 @@ def make_whole_loader(cfg: Mapping, tasks_meta: Mapping[str, Mapping]):
         if m["eval_mode"] == "official":
             arrays = ac.whole_arrays_official(slot["X"], slot["y"], n_train=int(m["n_train_official"]))
             print(f"[data] {task_id}: official train={arrays['Xtr'].shape} test={arrays['Xte_train'].shape}", flush=True)
+        elif m["eval_mode"] == "val":                       # S3-V：只读官方 TRAIN，分层切 D_val
+            arrays = ac.whole_arrays_val(slot["X"], slot["y"], n_train=int(m["n_train_official"]), val_frac=float(m["val_frac"]), seed=int(m["val_seed"]))
+            print(f"[data] {task_id}: val D_train={arrays['Xtr'].shape} D_val={arrays['Xte_train'].shape}", flush=True)
         else:
             arrays = ac.whole_arrays_cv(slot["X"], slot["y"], n_folds=n_folds, seed=ac.cv_fold_seed_for(task_id, fold_key))
             print(f"[data] {task_id}: cv5 X={arrays['X'].shape} folds={n_folds}", flush=True)
