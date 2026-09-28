@@ -1,0 +1,19 @@
+[ACTS-s1pp] 计划 15 格，已有 0，待跑 15
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_val: val D_train=(96, 315, 3) D_val=(24, 315, 3)
+[ACTS-s1pp 1/15] UWaveGestureLibrary_whole_val/random/368214d3 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.750 0.875 0.917] (17.0s+0.7s)
+[ACTS-s1pp 2/15] UWaveGestureLibrary_whole_val/random/ab19704a s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.708 0.792 0.833] (8.7s+0.6s)
+[ACTS-s1pp 3/15] UWaveGestureLibrary_whole_val/random/b86ebd57 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.792 0.875 0.875] (8.2s+0.6s)
+[ACTS-s1pp 4/15] UWaveGestureLibrary_whole_val/random/2dc4a633 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.792 0.917 0.917] (7.7s+0.6s)
+[ACTS-s1pp 5/15] UWaveGestureLibrary_whole_val/random/8b710df6 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.833 0.917 0.875] (6.9s+0.6s)
+[ACTS-s1pp 6/15] UWaveGestureLibrary_whole_val/random/f294d436 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.750 0.750 0.792] (5.7s+0.6s)
+[ACTS-s1pp 7/15] UWaveGestureLibrary_whole_val/random/73e0e047 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.792 0.875 0.917] (7.7s+0.6s)
+[ACTS-s1pp 8/15] UWaveGestureLibrary_whole_val/random/c64346fb s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.667 0.750 0.958] (11.7s+0.6s)
+[ACTS-s1pp 9/15] UWaveGestureLibrary_whole_val/random/be9c727d s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.667 0.667 0.750] (9.7s+0.6s)
+[ACTS-s1pp 10/15] UWaveGestureLibrary_whole_val/random/b78c991e s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.917 0.958 0.917] (7.5s+0.6s)
+[ACTS-s1pp 11/15] UWaveGestureLibrary_whole_val/random/c19b1098 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.875 0.833 0.958] (6.8s+0.6s)
+[ACTS-s1pp 12/15] UWaveGestureLibrary_whole_val/random/db85e127 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.917 0.875 0.875] (6.8s+0.6s)
+[ACTS-s1pp 13/15] UWaveGestureLibrary_whole_val/random/fef82b4c s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.917 0.958 0.958] (6.4s+0.6s)
+[ACTS-s1pp 14/15] UWaveGestureLibrary_whole_val/random/c73ed4fe s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.875 0.958 0.958] (6.0s+0.6s)
+[ACTS-s1pp 15/15] UWaveGestureLibrary_whole_val/random/4f7bb992 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.917 0.958 0.958] (6.4s+0.6s)
+[ACTS-s1pp] 收官

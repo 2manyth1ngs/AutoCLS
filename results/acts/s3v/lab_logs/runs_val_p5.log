@@ -1,0 +1,19 @@
+[ACTS-s1pp] 计划 15 格，已有 0，待跑 15
+[data] Handwriting: X=(1000, 152, 3) classes=26
+[data] Handwriting_whole_val: val D_train=(118, 152, 3) D_val=(32, 152, 3)
+[ACTS-s1pp 1/15] Handwriting_whole_val/random/ed845ec7 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.312 0.375 0.438] (12.9s+0.1s)
+[ACTS-s1pp 2/15] Handwriting_whole_val/random/c5f8b6cf s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.281 0.344 0.344] (7.2s+0.0s)
+[ACTS-s1pp 3/15] Handwriting_whole_val/random/77e215a3 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.344 0.344 0.344] (6.3s+0.0s)
+[ACTS-s1pp 4/15] Handwriting_whole_val/random/d8aae0ac s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.312 0.344 0.375] (7.5s+0.0s)
+[ACTS-s1pp 5/15] Handwriting_whole_val/random/3c6b7e44 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.281 0.312 0.406] (6.3s+0.0s)
+[ACTS-s1pp 6/15] Handwriting_whole_val/random/657e89e5 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.312 0.312 0.312] (6.2s+0.0s)
+[ACTS-s1pp 7/15] Handwriting_whole_val/random/9f9ec03d s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.406 0.438 0.406] (7.8s+0.0s)
+[ACTS-s1pp 8/15] Handwriting_whole_val/random/d9d9e864 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.375 0.406 0.375] (7.2s+0.0s)
+[ACTS-s1pp 9/15] Handwriting_whole_val/random/4ad87b9a s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.375 0.375 0.375] (7.8s+0.0s)
+[ACTS-s1pp 10/15] Handwriting_whole_val/random/d4df12c2 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.312 0.438 0.438] (6.0s+0.0s)
+[ACTS-s1pp 11/15] Handwriting_whole_val/random/5e83a5da s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.406 0.375 0.438] (6.2s+0.0s)
+[ACTS-s1pp 12/15] Handwriting_whole_val/random/16f3b550 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.344 0.406 0.344] (5.7s+0.0s)
+[ACTS-s1pp 13/15] Handwriting_whole_val/random/5d7daf33 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.406 0.375 0.312] (7.5s+0.0s)
+[ACTS-s1pp 14/15] Handwriting_whole_val/random/6c270dc4 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.312 0.344 0.344] (8.2s+0.0s)
+[ACTS-s1pp 15/15] Handwriting_whole_val/random/b8723832 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.344 0.375 0.406] (8.5s+0.0s)
+[ACTS-s1pp] 收官

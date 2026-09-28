@@ -1,0 +1,19 @@
+[ACTS-s1pp] 计划 15 格，已有 0，待跑 15
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_val: val D_train=(214, 896, 6) D_val=(54, 896, 6)
+[ACTS-s1pp 1/15] SelfRegulationSCP1_whole_val/random/d67faffa s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.759 0.852 0.778] (88.8s+0.7s)
+[ACTS-s1pp 2/15] SelfRegulationSCP1_whole_val/random/17e3e4f6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.870 0.796 0.815] (82.1s+0.6s)
+[ACTS-s1pp 3/15] SelfRegulationSCP1_whole_val/random/0c7bbd2d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.852 0.796 0.815] (79.3s+0.6s)
+[ACTS-s1pp 4/15] SelfRegulationSCP1_whole_val/random/4bac790e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.630 0.574 0.667] (74.5s+0.6s)
+[ACTS-s1pp 5/15] SelfRegulationSCP1_whole_val/random/e29379f2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.778 0.778 0.833] (76.8s+0.6s)
+[ACTS-s1pp 6/15] SelfRegulationSCP1_whole_val/random/8773e527 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.574 0.593 0.611] (71.9s+0.6s)
+[ACTS-s1pp 7/15] SelfRegulationSCP1_whole_val/random/b35248fe s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.759 0.815 0.759] (41.1s+0.6s)
+[ACTS-s1pp 8/15] SelfRegulationSCP1_whole_val/random/52e322bc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.778 0.759 0.741] (82.3s+0.6s)
+[ACTS-s1pp 9/15] SelfRegulationSCP1_whole_val/random/5155e091 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.704 0.778 0.759] (36.2s+0.6s)
+[ACTS-s1pp 10/15] SelfRegulationSCP1_whole_val/random/a03faa49 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.833 0.704 0.815] (50.1s+0.6s)
+[ACTS-s1pp 11/15] SelfRegulationSCP1_whole_val/random/36514a29 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.796 0.796 0.815] (45.3s+0.6s)
+[ACTS-s1pp 12/15] SelfRegulationSCP1_whole_val/random/20e85b10 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.796 0.796 0.815] (42.9s+0.6s)
+[ACTS-s1pp 13/15] SelfRegulationSCP1_whole_val/random/a79b8466 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.722 0.741 0.704] (88.7s+0.6s)
+[ACTS-s1pp 14/15] SelfRegulationSCP1_whole_val/random/6437569c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.630 0.778 0.796] (78.7s+0.6s)
+[ACTS-s1pp 15/15] SelfRegulationSCP1_whole_val/random/5402cd29 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.667 0.759 0.815] (81.8s+0.7s)
+[ACTS-s1pp] 收官

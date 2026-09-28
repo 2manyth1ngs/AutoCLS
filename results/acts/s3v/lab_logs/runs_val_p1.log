@@ -1,0 +1,19 @@
+[ACTS-s1pp] 计划 15 格，已有 0，待跑 15
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_val: val D_train=(84, 1197, 6) D_val=(24, 1197, 6)
+[ACTS-s1pp 1/15] Cricket_whole_val/random/1d3edbfc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.917 1.000 1.000] (82.6s+0.7s)
+[ACTS-s1pp 2/15] Cricket_whole_val/random/893e7285 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 1.000 1.000] (101.5s+0.6s)
+[ACTS-s1pp 3/15] Cricket_whole_val/random/9a878a34 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 0.958] (62.5s+0.6s)
+[ACTS-s1pp 4/15] Cricket_whole_val/random/fbe8c86c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.917 0.958 1.000] (75.3s+0.6s)
+[ACTS-s1pp 5/15] Cricket_whole_val/random/53a76391 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.917 0.958 0.875] (81.5s+0.6s)
+[ACTS-s1pp 6/15] Cricket_whole_val/random/3f257344 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.917 0.958 0.958] (83.8s+0.6s)
+[ACTS-s1pp 7/15] Cricket_whole_val/random/f2999072 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 1.000 0.958] (86.2s+0.6s)
+[ACTS-s1pp 8/15] Cricket_whole_val/random/aa518ca6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 0.958 1.000] (70.5s+0.6s)
+[ACTS-s1pp 9/15] Cricket_whole_val/random/62e849f6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (71.5s+0.6s)
+[ACTS-s1pp 10/15] Cricket_whole_val/random/ad20529b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.958 0.917] (54.7s+0.6s)
+[ACTS-s1pp 11/15] Cricket_whole_val/random/a7b4be39 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (42.1s+0.6s)
+[ACTS-s1pp 12/15] Cricket_whole_val/random/e8737245 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (43.2s+0.6s)
+[ACTS-s1pp 13/15] Cricket_whole_val/random/8c758e42 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.958 0.833] (54.9s+0.6s)
+[ACTS-s1pp 14/15] Cricket_whole_val/random/eeff5914 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.917 0.833] (50.9s+0.6s)
+[ACTS-s1pp 15/15] Cricket_whole_val/random/27d87fa2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (53.5s+0.6s)
+[ACTS-s1pp] 收官

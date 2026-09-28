@@ -1,0 +1,19 @@
+[ACTS-s1pp] 计划 15 格，已有 0，待跑 15
+[data] EthanolConcentration: X=(524, 1751, 3) classes=4
+[data] EthanolConcentration_whole_val: val D_train=(209, 1751, 3) D_val=(52, 1751, 3)
+[ACTS-s1pp 1/15] EthanolConcentration_whole_val/random/abe80cbb s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.288 0.231 0.135] (89.6s+0.8s)
+[ACTS-s1pp 2/15] EthanolConcentration_whole_val/random/06e619b2 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.250 0.288 0.192] (85.5s+0.9s)
+[ACTS-s1pp 3/15] EthanolConcentration_whole_val/random/7d6a282b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.231 0.269 0.250] (83.9s+0.7s)
+[ACTS-s1pp 4/15] EthanolConcentration_whole_val/random/95a3cad0 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.173 0.173 0.192] (175.1s+0.9s)
+[ACTS-s1pp 5/15] EthanolConcentration_whole_val/random/47b6c230 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.192 0.212 0.173] (130.3s+0.9s)
+[ACTS-s1pp 6/15] EthanolConcentration_whole_val/random/177c2c88 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.192 0.231 0.212] (178.6s+0.9s)
+[ACTS-s1pp 7/15] EthanolConcentration_whole_val/random/99b2b40b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.327 0.442 0.327] (77.4s+0.9s)
+[ACTS-s1pp 8/15] EthanolConcentration_whole_val/random/b0deca53 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.250 0.192 0.365] (64.3s+0.8s)
+[ACTS-s1pp 9/15] EthanolConcentration_whole_val/random/ba0efd21 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.269 0.269 0.327] (75.3s+0.9s)
+[ACTS-s1pp 10/15] EthanolConcentration_whole_val/random/45fb893c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.327 0.327 0.192] (77.9s+0.7s)
+[ACTS-s1pp 11/15] EthanolConcentration_whole_val/random/a7db2093 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.269 0.327 0.250] (82.5s+0.8s)
+[ACTS-s1pp 12/15] EthanolConcentration_whole_val/random/d522a3ad s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.250 0.212 0.288] (121.8s+1.1s)
+[ACTS-s1pp 13/15] EthanolConcentration_whole_val/random/bc87fd93 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.231 0.231 0.269] (244.6s+0.8s)
+[ACTS-s1pp 14/15] EthanolConcentration_whole_val/random/f3be0a82 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.231 0.269 0.231] (286.2s+0.8s)
+[ACTS-s1pp 15/15] EthanolConcentration_whole_val/random/b2232b65 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.212 0.231 0.308] (347.6s+0.9s)
+[ACTS-s1pp] 收官

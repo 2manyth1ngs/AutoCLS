@@ -1,0 +1,24 @@
+== HEAD a3fee92
+== E_pt 176 / 176
+== S3-R′ 模型 36 / 36
+== S3-C-D 靶端 E 6 / 6
+18 passed in 3.32s
+== GPU 0 free 20685 MiB → 2 槽
+== GPU 4 free 22483 MiB → 2 槽
+== GPU 6 free 18911 MiB → 2 槽
+== GPU 1 free 12327 MiB → 2 槽
+== GPU 5 free 15030 MiB → 2 槽
+== 共 10 槽：0 0 4 4 6 6 1 1 5 5
+== [09:02:01] prep-raw
+[prep-raw] 182 个窗口文件
+== [09:02:13] 训练 54 次
+== [09:39:21] 训练完：raw 18 / mean 18 / noshared 18（各需 18）
+== [09:39:21] 搜索 30
+== [09:40:07] 搜索完：30 / 30
+== [09:40:07] D_val 选择格
+[plan val] 臂 ['FULL', 'WO_SETTF', 'WO_TS2VEC', 'WO_SHARED', 'BLIND']：90 格
+verify val: plan 90 / done 90 / error 0 → OK
+[select] {"FULL": {"Handwr": "ed845ec7", "Phonem": "64af153e", "UWaveG": "368214d3", "Cricke": "1d3edbfc", "Ethano": "7d6a282b", "SelfRe": "17e3e4f6"}, "WO_SETTF": {"Handwr": "3c6b7e44", "Phonem": "1351bcac", "UWaveG": "2dc4a633", "Cricke": "fbe8c86c", "Ethano": "177c2c88", "SelfRe": "e29379f2"}, "WO_TS2VEC": {"Handwr": "9f9ec03d", "Phonem": "62fc963b", "UWaveG": "c64346fb", "Cricke": "aa518ca6", "Ethano": "b0deca53", "SelfRe": "b35248fe"}, "WO_SHARED": {"Handwr": "d4df12c2", "Phonem": "75c9017c", "UWaveG": "c19b1098", "Cricke": "a7b4be39", "Ethano": "d522a3ad", "SelfRe": "a03faa49"}, "BLIND": {"Handwr": "b8723832", "Phonem": "899fc153", "UWaveG": "fef82b4c", "Cricke": "27d87fa2", "Ethano": "b2232b65", "SelfRe": "5402cd29"}}
+== [10:15:42] 最终格
+[plan final] 臂 ['FULL', 'WO_SETTF', 'WO_TS2VEC', 'WO_SHARED', 'BLIND']：240 格
+verify final: plan 240 / done 240 / error 0 → OK

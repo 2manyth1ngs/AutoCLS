@@ -1,0 +1,67 @@
+[train] E_s0_Cricket ep 0 train 0.6001 val 0.6302 acc 0.642 74s
+[train] E_s0_Cricket ep 1 train 0.5425 val 0.6427 acc 0.646 121s
+[train] E_s0_Cricket ep 2 train 0.4995 val 0.6647 acc 0.642 174s
+[train] E_s0_Cricket ep 3 train 0.4504 val 0.6960 acc 0.647 229s
+[train] E_s0_Cricket ep 4 train 0.4195 val 0.7340 acc 0.648 337s
+[train] E_s0_Cricket ep 5 train 0.3978 val 0.7981 acc 0.643 413s
+[train] E_s0_Cricket ep 6 train 0.3851 val 0.7958 acc 0.638 467s
+[train] E_s0_Cricket ep 7 train 0.3859 val 0.8409 acc 0.639 523s
+[train] E_s0_Cricket ep 8 train 0.3755 val 0.8696 acc 0.641 574s
+[train] E_s0_Cricket ep 9 train 0.3713 val 0.8718 acc 0.640 619s
+[train] E_s0_Cricket done best acc 0.6478 @ ep 4 epochs 10 pairs/epoch 219004 623s
+[train] E_s1_Handwriting ep 0 train 0.6039 val 0.6362 acc 0.631 23s
+[train] E_s1_Handwriting ep 1 train 0.5271 val 0.6551 acc 0.644 50s
+[train] E_s1_Handwriting ep 2 train 0.4300 val 0.6852 acc 0.669 77s
+[train] E_s1_Handwriting ep 3 train 0.3726 val 0.7301 acc 0.678 105s
+[train] E_s1_Handwriting ep 4 train 0.3474 val 0.7656 acc 0.679 132s
+[train] E_s1_Handwriting ep 5 train 0.3312 val 0.8001 acc 0.678 159s
+[train] E_s1_Handwriting ep 6 train 0.3196 val 0.8628 acc 0.672 186s
+[train] E_s1_Handwriting ep 7 train 0.3106 val 0.8817 acc 0.673 211s
+[train] E_s1_Handwriting ep 8 train 0.3038 val 0.9283 acc 0.671 233s
+[train] E_s1_Handwriting ep 9 train 0.2960 val 0.9649 acc 0.668 256s
+[train] E_s1_Handwriting done best acc 0.6795 @ ep 4 epochs 10 pairs/epoch 214616 260s
+[train] E_s1_Cricket ep 0 train 0.6928 val 0.6920 acc 0.506 9s
+[train] E_s1_Cricket ep 1 train 0.6853 val 0.6787 acc 0.591 19s
+[train] E_s1_Cricket ep 2 train 0.6412 val 0.6645 acc 0.609 28s
+[train] E_s1_Cricket ep 3 train 0.6004 val 0.6615 acc 0.624 34s
+[train] E_s1_Cricket ep 4 train 0.5637 val 0.6646 acc 0.635 41s
+[train] E_s1_Cricket ep 5 train 0.5181 val 0.6570 acc 0.654 47s
+[train] E_s1_Cricket ep 6 train 0.4650 val 0.6614 acc 0.665 54s
+[train] E_s1_Cricket ep 7 train 0.3975 val 0.6777 acc 0.671 61s
+[train] E_s1_Cricket ep 8 train 0.3380 val 0.7097 acc 0.679 68s
+[train] E_s1_Cricket ep 9 train 0.2898 val 0.7625 acc 0.677 75s
+[train] E_s1_Cricket ep 10 train 0.2490 val 0.8068 acc 0.681 82s
+[train] E_s1_Cricket ep 11 train 0.2152 val 0.8705 acc 0.679 89s
+[train] E_s1_Cricket ep 12 train 0.1814 val 0.9308 acc 0.683 96s
+[train] E_s1_Cricket ep 13 train 0.1538 val 1.0087 acc 0.686 104s
+[train] E_s1_Cricket ep 14 train 0.1277 val 1.0755 acc 0.690 111s
+[train] E_s1_Cricket ep 15 train 0.1027 val 1.1766 acc 0.685 118s
+[train] E_s1_Cricket ep 16 train 0.0831 val 1.2611 acc 0.691 124s
+[train] E_s1_Cricket ep 17 train 0.0668 val 1.3337 acc 0.691 131s
+[train] E_s1_Cricket ep 18 train 0.0521 val 1.4648 acc 0.686 138s
+[train] E_s1_Cricket ep 19 train 0.0414 val 1.5659 acc 0.689 145s
+[train] E_s1_Cricket ep 20 train 0.0317 val 1.7056 acc 0.690 152s
+[train] E_s1_Cricket ep 21 train 0.0251 val 1.7937 acc 0.687 160s
+[train] E_s1_Cricket ep 22 train 0.0194 val 1.9056 acc 0.686 168s
+[train] E_s1_Cricket done best acc 0.6911 @ ep 17 epochs 23 pairs/epoch 23182 173s
+[train] E_s2_PhonemeSpectra ep 0 train 0.5971 val 0.6250 acc 0.647 50s
+[train] E_s2_PhonemeSpectra ep 1 train 0.5381 val 0.6277 acc 0.652 102s
+[train] E_s2_PhonemeSpectra ep 2 train 0.4827 val 0.6501 acc 0.659 157s
+[train] E_s2_PhonemeSpectra ep 3 train 0.4273 val 0.6867 acc 0.664 212s
+[train] E_s2_PhonemeSpectra ep 4 train 0.3996 val 0.6858 acc 0.665 264s
+[train] E_s2_PhonemeSpectra ep 5 train 0.3845 val 0.7410 acc 0.660 304s
+[train] E_s2_PhonemeSpectra ep 6 train 0.3899 val 0.7350 acc 0.656 345s
+[train] E_s2_PhonemeSpectra ep 7 train 0.3840 val 0.7951 acc 0.653 394s
+[train] E_s2_PhonemeSpectra ep 8 train 0.3707 val 0.8084 acc 0.664 451s
+[train] E_s2_PhonemeSpectra ep 9 train 0.3642 val 0.8375 acc 0.661 506s
+[train] E_s2_PhonemeSpectra done best acc 0.6645 @ ep 4 epochs 10 pairs/epoch 218674 512s
+[train] E_s2_EthanolConcentration ep 0 train 0.5862 val 0.6130 acc 0.649 29s
+[train] E_s2_EthanolConcentration ep 1 train 0.5124 val 0.6221 acc 0.658 58s
+[train] E_s2_EthanolConcentration ep 2 train 0.4452 val 0.6448 acc 0.676 86s
+[train] E_s2_EthanolConcentration ep 3 train 0.3818 val 0.6788 acc 0.681 117s
+[train] E_s2_EthanolConcentration ep 4 train 0.3478 val 0.7178 acc 0.680 137s
+[train] E_s2_EthanolConcentration ep 5 train 0.3281 val 0.7850 acc 0.675 157s
+[train] E_s2_EthanolConcentration ep 6 train 0.3147 val 0.8181 acc 0.673 177s
+[train] E_s2_EthanolConcentration ep 7 train 0.3048 val 0.8652 acc 0.667 197s
+[train] E_s2_EthanolConcentration ep 8 train 0.2969 val 0.8830 acc 0.665 217s
+[train] E_s2_EthanolConcentration done best acc 0.6808 @ ep 3 epochs 9 pairs/epoch 218702 222s

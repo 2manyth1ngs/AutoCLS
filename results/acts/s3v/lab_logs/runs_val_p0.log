@@ -1,0 +1,19 @@
+[ACTS-s1pp] 计划 15 格，已有 0，待跑 15
+[data] PhonemeSpectra: X=(6668, 217, 11) classes=39
+[data] PhonemeSpectra_whole_val: val D_train=(2652, 217, 11) D_val=(663, 217, 11)
+[ACTS-s1pp 1/15] PhonemeSpectra_whole_val/random/795e4190 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.220 0.204 0.192] (53.9s+24.8s)
+[ACTS-s1pp 2/15] PhonemeSpectra_whole_val/random/64af153e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.211 0.199 0.204] (57.0s+24.4s)
+[ACTS-s1pp 3/15] PhonemeSpectra_whole_val/random/ac7ebc7d s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.214 0.169 0.146] (45.8s+26.0s)
+[ACTS-s1pp 4/15] PhonemeSpectra_whole_val/random/f1229faa s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.190 0.176 0.146] (46.2s+26.6s)
+[ACTS-s1pp 5/15] PhonemeSpectra_whole_val/random/1351bcac s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.199 0.183 0.172] (49.5s+23.6s)
+[ACTS-s1pp 6/15] PhonemeSpectra_whole_val/random/357a1bff s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.187 0.161 0.130] (52.3s+27.0s)
+[ACTS-s1pp 7/15] PhonemeSpectra_whole_val/random/62fc963b s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.184 0.196 0.181] (55.3s+27.3s)
+[ACTS-s1pp 8/15] PhonemeSpectra_whole_val/random/d384ddbc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.204 0.175 0.161] (53.7s+25.7s)
+[ACTS-s1pp 9/15] PhonemeSpectra_whole_val/random/d765a45c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.166 0.161 0.163] (46.2s+26.1s)
+[ACTS-s1pp 10/15] PhonemeSpectra_whole_val/random/75c9017c s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.211 0.207 0.181] (37.7s+23.9s)
+[ACTS-s1pp 11/15] PhonemeSpectra_whole_val/random/e12d0094 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.214 0.184 0.155] (35.2s+24.8s)
+[ACTS-s1pp 12/15] PhonemeSpectra_whole_val/random/26bec027 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.220 0.207 0.176] (34.9s+25.0s)
+[ACTS-s1pp 13/15] PhonemeSpectra_whole_val/random/899fc153 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.247 0.207 0.223] (58.1s+25.6s)
+[ACTS-s1pp 14/15] PhonemeSpectra_whole_val/random/3e97f2a6 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.264 0.234 0.211] (50.9s+24.7s)
+[ACTS-s1pp 15/15] PhonemeSpectra_whole_val/random/657957e0 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.241 0.234 0.217] (51.9s+25.1s)
+[ACTS-s1pp] 收官
