@@ -1,0 +1,8 @@
+[score] A Handwriting 前 3 ['1a1d2e11', 'c363fec4', 'ae3b6ff0']
+[score] A PhonemeSpectra 前 3 ['8daa980a', '7ce13bf0', 'd55464dc']
+[score] A UWaveGestureLibrary 前 3 ['20232b83', '00636941', '12e3a90f']
+[score] A Cricket 前 3 ['286d635d', 'c79f7a2b', 'abf862cc']
+[score] A EthanolConcentration 前 3 ['edd8ed0c', '85542f73', '25d99069']
+[score] A SelfRegulationSCP1 前 3 ['7b097cb4', 'f8e5fa2f', 'f336d444']
+scripts/110_acts_s3x.py:165: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  m = g89.build_model(a, enc.dim, dev); m.load_state_dict(torch.load(S3C / "models" / f"{a}_{d}.pt", map_location=dev)); m.eval()

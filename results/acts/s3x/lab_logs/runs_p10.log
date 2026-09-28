@@ -1,0 +1,10 @@
+[ACTS-s1pp] 计划 21 格，已有 15，待跑 6
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_val: val D_train=(96, 315, 3) D_val=(24, 315, 3)
+[ACTS-s1pp 1/6] UWaveGestureLibrary_whole_val/random/20232b83 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.917 0.917 0.750] (40.9s+0.7s)
+[ACTS-s1pp 2/6] UWaveGestureLibrary_whole_val/random/00636941 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.875 0.875 0.750] (28.0s+0.6s)
+[ACTS-s1pp 3/6] UWaveGestureLibrary_whole_val/random/12e3a90f s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.792 0.792 0.917] (8.9s+0.6s)
+[ACTS-s1pp 4/6] UWaveGestureLibrary_whole_val/random/1459e184 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.833 0.833 0.875] (21.2s+0.6s)
+[ACTS-s1pp 5/6] UWaveGestureLibrary_whole_val/random/dd229233 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.917 0.875 0.833] (9.2s+0.6s)
+[ACTS-s1pp 6/6] UWaveGestureLibrary_whole_val/random/c3e41467 s0 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.792 0.833 0.833] (28.7s+0.6s)
+[ACTS-s1pp] 收官

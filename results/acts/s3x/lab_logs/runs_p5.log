@@ -1,0 +1,10 @@
+[ACTS-s1pp] 计划 21 格，已有 15，待跑 6
+[data] PhonemeSpectra: X=(6668, 217, 11) classes=39
+[data] PhonemeSpectra_whole_val: val D_train=(2652, 217, 11) D_val=(663, 217, 11)
+[ACTS-s1pp 1/6] PhonemeSpectra_whole_val/random/8daa980a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.229 0.235 0.201] (65.8s+28.5s)
+[ACTS-s1pp 2/6] PhonemeSpectra_whole_val/random/7ce13bf0 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.238 0.210 0.208] (75.3s+29.1s)
+[ACTS-s1pp 3/6] PhonemeSpectra_whole_val/random/d55464dc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.223 0.234 0.234] (60.4s+29.2s)
+[ACTS-s1pp 4/6] PhonemeSpectra_whole_val/random/4ff34700 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.184 0.192 0.163] (78.4s+28.9s)
+[ACTS-s1pp 5/6] PhonemeSpectra_whole_val/random/dce3645e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.186 0.213 0.179] (66.6s+31.0s)
+[ACTS-s1pp 6/6] PhonemeSpectra_whole_val/random/124571f7 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.189 0.183 0.172] (61.3s+30.5s)
+[ACTS-s1pp] 收官

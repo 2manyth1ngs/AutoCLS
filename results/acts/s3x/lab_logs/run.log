@@ -1,0 +1,22 @@
+== [16:42:20] 等 S3-W 收官
+== [17:13:24] S3-W 已结束：== [17:13:19] acts s3w done
+== HEAD 41c0a64
+== S3-R′ 模型 36 / 36
+== s3v/abl_mean 模型 18 / 18
+== s3v/abl_raw 模型 18 / 18
+== s3v/abl_noshared 模型 18 / 18
+== S3-C 模型 A/D 12 / 12；靶端 E 6 / 6；原始窗口 6 / 6
+7 passed in 1.58s
+== GPU 0 free 23825 MiB → 2 槽
+== GPU 4 free 17213 MiB → 2 槽
+== GPU 2 free 14361 MiB → 2 槽
+== GPU 6 free 16313 MiB → 2 槽
+== GPU 1 free 2478 MiB → 0 槽
+== GPU 5 free 15328 MiB → 2 槽
+== GPU 3 free 12281 MiB → 2 槽
+== GPU 7 free 16781 MiB → 2 槽
+== 共 14 槽：0 0 4 4 2 2 6 6 5 5 3 3 7 7
+== [17:13:27] 池内打分 7
+== [17:13:55] 打分完：7 / 7
+== [17:13:55] 跑格
+verify: plan 504 / done 504 / error 0 → OK
