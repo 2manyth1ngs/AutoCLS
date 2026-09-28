@@ -222,6 +222,26 @@ class TCLSC(nn.Module):
             logits = self._score_diff(l_a, l_b, None)
         return torch.sigmoid(logits)                    # ← L169
 
+    def score(self, cls: torch.Tensor, E: Optional[torch.Tensor] = None, ctx: Optional[torch.Tensor] = None) -> torch.Tensor:
+        """S3-Y：反对称头的单配置分数 s(c, E)，满足 forward(a, b) = σ(score(a) − score(b))。concat 头没有这种分数。"""
+        if self.head not in ("diff", "field", "film"):
+            raise ValueError(f"head={self.head!r} 不反对称，没有单配置分数")
+        self._check_ctx(ctx, cls.shape[0])
+        l = self.cls_mlp(cls)
+        t = self._task_vector(E, ctx)
+        if self.head == "diff":
+            s = self.score_mlp(l if t is None else torch.cat([l, t], dim=1))
+        elif self.head == "field":
+            s = self.score_mlp(l)
+            if t is not None:
+                s = s + (cls * self.field_w(t)).sum(dim=1, keepdim=True)
+        else:
+            if t is not None:
+                gamma, beta = self.film(t).chunk(2, dim=1)
+                l = (1.0 + gamma) * l + beta
+            s = self.score_mlp(l)
+        return s.squeeze(1)
+
     def _task_vector(self, E: Optional[torch.Tensor], ctx: Optional[torch.Tensor]) -> Optional[torch.Tensor]:
         if self.task_branch == "E+ctx":
             if E is None:

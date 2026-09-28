@@ -869,6 +869,35 @@ def whole_arrays_val(X: np.ndarray, y: np.ndarray, *, n_train: int, val_frac: fl
             "majority": majority_rate(yva), "mean": mu, "std": sd}
 
 
+def tcv_folds(y_train: np.ndarray, k: int, seed: int) -> np.ndarray:
+    """S3-Y：官方 TRAIN 内按类分层的固定 K 折编号（每类打乱后轮流分配）。"""
+    y_train = np.asarray(y_train)
+    rng = np.random.default_rng(int(seed))
+    fid = np.empty(len(y_train), dtype=np.int64)
+    for c in np.unique(y_train):
+        idx = rng.permutation(np.where(y_train == c)[0])
+        fid[idx] = (np.arange(len(idx)) + int(rng.integers(k))) % int(k)
+    return fid
+
+
+def whole_arrays_tcv(X: np.ndarray, y: np.ndarray, *, n_train: int, k: int, fold: int, seed: int) -> dict:
+    """S3-Y：目标官方 TRAIN（前 n_train 行）内分层 K 折的第 fold 折作验证、其余作训练；训练部分拟合按通道标准化；TEST 行完全不读。
+    键与 whole_arrays_val 相同（Xte_* = 验证折）。"""
+    n_train = int(n_train)
+    fid = tcv_folds(np.asarray(y)[:n_train], int(k), int(seed))
+    ev = np.where(fid == int(fold))[0].astype(np.int64)
+    tr = np.where(fid != int(fold))[0].astype(np.int64)
+    Xtr_raw = np.asarray(X[tr], dtype=np.float64)
+    flat = Xtr_raw.reshape(-1, Xtr_raw.shape[-1])
+    mu, sd = flat.mean(0), flat.std(0)
+    sd = np.where(sd < 1e-8, 1.0, sd)
+    Xtr = ((Xtr_raw - mu) / sd).astype(np.float32)
+    Xva = ((np.asarray(X[ev], dtype=np.float64) - mu) / sd).astype(np.float32)
+    ytr, yva = np.asarray(y)[tr], np.asarray(y)[ev]
+    return {"Xtr": Xtr, "ytr": ytr, "Xte_train": Xva, "Xte_split": Xva, "yte": yva, "train_idx": tr, "eval_idx": ev,
+            "majority": majority_rate(yva), "mean": mu, "std": sd}
+
+
 def whole_arrays_cv(X: np.ndarray, y: np.ndarray, *, n_folds: int, seed: int) -> dict:
     """整集：按通道在全部样本上标准化 + 固定分层 K 折（= task_arrays_cv 去掉物化）。"""
     raw = np.asarray(X, dtype=np.float64)

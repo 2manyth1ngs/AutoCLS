@@ -146,6 +146,30 @@ def cons_schedule(tr: Sequence[int], epoch: int, period: int, seed: int = 0) -> 
     return [tr[j] for j in sorted(perm[g::int(period)])]
 
 
+def top_weights(r: np.ndarray, fail: np.ndarray, use: np.ndarray, a: np.ndarray, b: np.ndarray) -> np.ndarray:
+    """S3-Y LambdaRank 式静态权重：|G_a − G_b| · |D(pos_a) − D(pos_b)| / IDCG。
+    G = max(z, 0)（z = use 内可用配置的标准化标签，失败 G = 0）；D(pos) = 1 / log2(1 + pos)，pos = use 内按标签降序的名次（1 起）。"""
+    r = np.asarray(r, float); fail = np.asarray(fail, bool); use = np.asarray(use, bool)
+    ok = use & ~fail
+    G = np.zeros(len(r))
+    if ok.sum() >= 2:
+        mu, sd = r[ok].mean(), r[ok].std()
+        G[ok] = np.maximum((r[ok] - mu) / (sd if sd > 1e-12 else 1.0), 0.0)
+    idx = np.where(use)[0]
+    order = idx[np.argsort(-r[idx], kind="stable")]
+    pos = np.full(len(r), len(r) + 1, dtype=float); pos[order] = np.arange(1, len(order) + 1)
+    D = 1.0 / np.log2(1.0 + pos)
+    Gs = np.sort(G[use])[::-1]; idcg = float(np.sum(Gs / np.log2(2.0 + np.arange(len(Gs)))))
+    a, b = np.asarray(a, int), np.asarray(b, int)
+    return np.abs(G[a] - G[b]) * np.abs(D[a] - D[b]) / (idcg if idcg > 1e-12 else 1.0)
+
+
+def apply_top(w: np.ndarray, lam: np.ndarray) -> np.ndarray:
+    """配对权重乘顶部权重后按任务把总和归一回原值；顶部权重全零时原样返回。"""
+    w = np.asarray(w, float); w2 = w * np.asarray(lam, float)
+    return w if w2.sum() <= 1e-12 else w2 * (w.sum() / w2.sum())
+
+
 def verdict_gate(d: float, p: float, npos: int) -> str:
     """S3-T 主门：S3-R′ E 臂 − 本档 E 臂的 regret@3 差。"""
     if d >= 0.003 and p < 0.05 and npos >= 4:
@@ -199,21 +223,21 @@ def load_labels(outdir: Path) -> dict:
 
 
 # ================================================================ 训练（服务器）
-def _build(arm: str, cls_dim: int, seed: int, device: str, e_mode: str = "settf", std=None):
+def _build(arm: str, cls_dim: int, seed: int, device: str, e_mode: str = "settf", std=None, head: str = "concat"):
     import torch
     from autocls.comparator.tclsc_model import TCLSC
     from autocls.task_embed import TaskSetEncoder
     torch.manual_seed(seed)
     if arm == "E" and e_mode == "mean":              # S3-V w/o Set-Transformer：TS2Vec 表示均值池化（训练任务标准化）
         from autocls.comparator.mean_pool_encoder import MeanPoolTaskEncoder
-        m = TCLSC(cls_dim, MeanPoolTaskEncoder(256, *(std or (None, None))), task_branch="E+ctx", head="concat")
+        m = TCLSC(cls_dim, MeanPoolTaskEncoder(256, *(std or (None, None))), task_branch="E+ctx", head=head)
     elif arm == "E" and e_mode == "raw":             # S3-V w/o TS2Vec：原始窗口逐时间步 MLP + SetTF
         from autocls.comparator.raw_mlp_encoder import RawMLPSetEncoder
-        m = TCLSC(cls_dim, RawMLPSetEncoder(nz=256, hidden=64), task_branch="E+ctx", head="concat")
+        m = TCLSC(cls_dim, RawMLPSetEncoder(nz=256, hidden=64), task_branch="E+ctx", head=head)
     elif arm == "E":                                  # = 89.build_model("A")，只换种子
-        m = TCLSC(cls_dim, TaskSetEncoder(dim_input=256, nz=256), task_branch="E+ctx", head="concat")
+        m = TCLSC(cls_dim, TaskSetEncoder(dim_input=256, nz=256), task_branch="E+ctx", head=head)
     else:                                             # = 89.build_model("D")
-        m = TCLSC(cls_dim, None, task_branch="none", head="concat")
+        m = TCLSC(cls_dim, None, task_branch="none", head=head)
     return m.to(device)
 
 
@@ -287,7 +311,8 @@ def cmd_train(args) -> None:
     if arm == "E" and e_mode == "mean":
         from autocls.comparator.mean_pool_encoder import MeanPoolTaskEncoder
         std = MeanPoolTaskEncoder.fit_standardizer({str(i): W[i] for i in tr}, [str(i) for i in tr])   # 只用训练任务（铁律 6）
-    model = _build(arm, V[0].shape[1], seed, dev, e_mode, std); sc = g89.Scorer(model, "A" if arm == "E" else "D", dev)
+    head = getattr(args, "head", "concat") or "concat"; loss_mode = getattr(args, "loss", "bce") or "bce"
+    model = _build(arm, V[0].shape[1], seed, dev, e_mode, std, head); sc = g89.Scorer(model, "A" if arm == "E" else "D", dev)
     opt = torch.optim.Adam(model.parameters(), lr=LR)
     rng = np.random.default_rng(seed)
     gate = float(getattr(args, "gate", 0.0) or 0.0)
@@ -296,8 +321,12 @@ def cmd_train(args) -> None:
         use = train_use_mask(len(R[i]), H[i], no_shared)
         TP[i] = pair_table(R[i], F[i], SIG[i], NSd[i], use, gate=gate)                 # 训练表（S3-T 门槛）
         TPr[i] = TP[i] if gate == 0 else pair_table(R[i], F[i], SIG[i], NSd[i], use)  # 样本内读数表（S3-R′ 软权重口径）
+        if loss_mode == "lambda":                                                     # S3-Y：训练表乘顶部排序权重（读数表不变）
+            a_, b_, y_, w_, k_ = TP[i]; TP[i] = (a_, b_, y_, apply_top(w_, top_weights(R[i], F[i], use, a_, b_)), k_)
         if len(H[i]):
             VP[i] = val_pairs(R[i], F[i], SIG[i], NSd[i], H[i], allowed=(np.arange(len(R[i])) >= N_SH) if no_shared else None)
+            if loss_mode == "lambda":                                                 # S3-Y：验证（早停）也按顶部加权
+                a_, b_, y_, w_, k_ = VP[i]; VP[i] = (a_, b_, y_, apply_top(w_, top_weights(R[i], F[i], np.ones(len(R[i]), bool), a_, b_)), k_)
     n_pairs = int(sum(len(v[0]) for v in TP.values()))
     Vt = {i: torch.as_tensor(np.asarray(V[i], np.float32), device=dev) for i in set(tr) | set(te)}
 
@@ -401,7 +430,8 @@ def cmd_train(args) -> None:
     # ---- 样本内 / 验证（本 E vs 换 E；换 E = 训练源内 cross_maps 偏移 1–4）
     out = {"hist": json.dumps(hist), "te": np.array(te), "tr": np.array(tr), "n_pairs_epoch": n_pairs, "best_epoch": best_ep, "stop": mode, "gate": gate,
            "e_mode": e_mode, "no_shared": no_shared, "cons": cons, "cons_hist": json.dumps(cons_hist),
-           "cons_cfg": json.dumps({"ks": cons_ks, "gens": cons_gens, "top": cons_top, "ref": cons_ref, "period": cons_period})}
+           "cons_cfg": json.dumps({"ks": cons_ks, "gens": cons_gens, "top": cons_top, "ref": cons_ref, "period": cons_period}),
+           "head": head, "loss": loss_mode}
     with torch.no_grad():
         Tall = None if arm == "B" else torch.stack([sc.task_vec(W[i], None) for i in range(len(tasks))])
         tr_tasks = [tasks[i] for i in tr]
@@ -642,6 +672,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--no-shared", action="store_true")
     ap.add_argument("--raw-dir", default=str(RAW_DIR))
     ap.add_argument("--cons", type=float, default=0.0)                  # S3-W 保守项权重 α（0 = S3-R′）
+    ap.add_argument("--head", choices=("concat", "field", "diff"), default="concat")   # S3-Y
+    ap.add_argument("--loss", choices=("bce", "lambda"), default="bce")                 # S3-Y 顶部排序权重
     ap.add_argument("--cons-ks", type=int, default=2000)
     ap.add_argument("--cons-gens", type=int, default=3)
     ap.add_argument("--cons-top", type=int, default=5)
