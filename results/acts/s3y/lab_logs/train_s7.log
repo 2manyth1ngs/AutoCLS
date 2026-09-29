@@ -1,0 +1,40 @@
+[train] B_s0_Cricket ep 0 train 0.5102 val 0.5503 acc 0.729 12s
+[train] B_s0_Cricket ep 1 train 0.3870 val 0.5388 acc 0.743 22s
+[train] B_s0_Cricket ep 2 train 0.3236 val 0.5488 acc 0.742 32s
+[train] B_s0_Cricket ep 3 train 0.2826 val 0.5526 acc 0.755 40s
+[train] B_s0_Cricket ep 4 train 0.2590 val 0.5703 acc 0.753 50s
+[train] B_s0_Cricket ep 5 train 0.2460 val 0.5863 acc 0.754 59s
+[train] B_s0_Cricket ep 6 train 0.2384 val 0.6251 acc 0.738 68s
+[train] B_s0_Cricket ep 7 train 0.2306 val 0.6290 acc 0.734 101s
+[train] B_s0_Cricket ep 8 train 0.2289 val 0.6433 acc 0.742 134s
+[train] B_s0_Cricket done best acc 0.7546 @ ep 3 epochs 9 pairs/epoch 219004 136s
+[train] B_s1_EthanolConcentration ep 0 train 0.5060 val 0.5345 acc 0.728 29s
+[train] B_s1_EthanolConcentration ep 1 train 0.3788 val 0.5264 acc 0.741 41s
+[train] B_s1_EthanolConcentration ep 2 train 0.3209 val 0.5257 acc 0.752 50s
+[train] B_s1_EthanolConcentration ep 3 train 0.2804 val 0.5371 acc 0.748 59s
+[train] B_s1_EthanolConcentration ep 4 train 0.2594 val 0.5485 acc 0.755 68s
+[train] B_s1_EthanolConcentration ep 5 train 0.2449 val 0.5709 acc 0.748 76s
+[train] B_s1_EthanolConcentration ep 6 train 0.2364 val 0.5899 acc 0.746 86s
+[train] B_s1_EthanolConcentration ep 7 train 0.2293 val 0.6244 acc 0.742 96s
+[train] B_s1_EthanolConcentration ep 8 train 0.2266 val 0.6390 acc 0.748 128s
+[train] B_s1_EthanolConcentration ep 9 train 0.2232 val 0.6474 acc 0.740 162s
+[train] B_s1_EthanolConcentration done best acc 0.7550 @ ep 4 epochs 10 pairs/epoch 218702 164s
+[train] B_s2_SelfRegulationSCP1 ep 0 train 0.4959 val 0.5326 acc 0.739 29s
+[train] B_s2_SelfRegulationSCP1 ep 1 train 0.3641 val 0.5228 acc 0.750 41s
+[train] B_s2_SelfRegulationSCP1 ep 2 train 0.3018 val 0.5308 acc 0.765 50s
+[train] B_s2_SelfRegulationSCP1 ep 3 train 0.2627 val 0.5610 acc 0.758 59s
+[train] B_s2_SelfRegulationSCP1 ep 4 train 0.2427 val 0.6030 acc 0.764 67s
+[train] B_s2_SelfRegulationSCP1 ep 5 train 0.2305 val 0.6040 acc 0.754 76s
+[train] B_s2_SelfRegulationSCP1 ep 6 train 0.2224 val 0.6329 acc 0.751 84s
+[train] B_s2_SelfRegulationSCP1 ep 7 train 0.2158 val 0.6457 acc 0.756 93s
+[train] B_s2_SelfRegulationSCP1 done best acc 0.7648 @ ep 2 epochs 8 pairs/epoch 203650 94s
+[train] B_s4_Handwriting ep 0 train 0.5238 val 0.5534 acc 0.727 36s
+[train] B_s4_Handwriting ep 1 train 0.4045 val 0.5360 acc 0.741 69s
+[train] B_s4_Handwriting ep 2 train 0.3387 val 0.5318 acc 0.751 100s
+[train] B_s4_Handwriting ep 3 train 0.2969 val 0.5525 acc 0.760 111s
+[train] B_s4_Handwriting ep 4 train 0.2722 val 0.5710 acc 0.754 122s
+[train] B_s4_Handwriting ep 5 train 0.2573 val 0.5890 acc 0.745 130s
+[train] B_s4_Handwriting ep 6 train 0.2497 val 0.6015 acc 0.752 139s
+[train] B_s4_Handwriting ep 7 train 0.2424 val 0.6203 acc 0.753 149s
+[train] B_s4_Handwriting ep 8 train 0.2383 val 0.6293 acc 0.747 157s
+[train] B_s4_Handwriting done best acc 0.7603 @ ep 3 epochs 9 pairs/epoch 214616 158s

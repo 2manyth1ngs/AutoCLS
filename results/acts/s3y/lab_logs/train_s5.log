@@ -1,0 +1,42 @@
+[train] B_s0_UWaveGestureLibrary ep 0 train 0.5161 val 0.5437 acc 0.732 16s
+[train] B_s0_UWaveGestureLibrary ep 1 train 0.3918 val 0.5224 acc 0.750 31s
+[train] B_s0_UWaveGestureLibrary ep 2 train 0.3286 val 0.5211 acc 0.751 46s
+[train] B_s0_UWaveGestureLibrary ep 3 train 0.2840 val 0.5329 acc 0.758 63s
+[train] B_s0_UWaveGestureLibrary ep 4 train 0.2617 val 0.5449 acc 0.757 84s
+[train] B_s0_UWaveGestureLibrary ep 5 train 0.2481 val 0.5683 acc 0.756 103s
+[train] B_s0_UWaveGestureLibrary ep 6 train 0.2409 val 0.5926 acc 0.755 123s
+[train] B_s0_UWaveGestureLibrary ep 7 train 0.2353 val 0.6138 acc 0.742 138s
+[train] B_s0_UWaveGestureLibrary ep 8 train 0.2291 val 0.6336 acc 0.746 148s
+[train] B_s0_UWaveGestureLibrary done best acc 0.7580 @ ep 3 epochs 9 pairs/epoch 215000 149s
+[train] B_s1_Cricket ep 0 train 0.5131 val 0.5380 acc 0.734 11s
+[train] B_s1_Cricket ep 1 train 0.3888 val 0.5202 acc 0.744 21s
+[train] B_s1_Cricket ep 2 train 0.3291 val 0.5263 acc 0.751 31s
+[train] B_s1_Cricket ep 3 train 0.2865 val 0.5248 acc 0.763 41s
+[train] B_s1_Cricket ep 4 train 0.2624 val 0.5603 acc 0.762 55s
+[train] B_s1_Cricket ep 5 train 0.2486 val 0.5767 acc 0.753 68s
+[train] B_s1_Cricket ep 6 train 0.2378 val 0.6068 acc 0.750 82s
+[train] B_s1_Cricket ep 7 train 0.2331 val 0.6190 acc 0.750 96s
+[train] B_s1_Cricket ep 8 train 0.2263 val 0.6607 acc 0.745 111s
+[train] B_s1_Cricket done best acc 0.7626 @ ep 3 epochs 9 pairs/epoch 219004 112s
+[train] B_s2_EthanolConcentration ep 0 train 0.4978 val 0.5365 acc 0.735 14s
+[train] B_s2_EthanolConcentration ep 1 train 0.3762 val 0.5221 acc 0.756 29s
+[train] B_s2_EthanolConcentration ep 2 train 0.3176 val 0.5243 acc 0.765 43s
+[train] B_s2_EthanolConcentration ep 3 train 0.2807 val 0.5393 acc 0.763 57s
+[train] B_s2_EthanolConcentration ep 4 train 0.2590 val 0.5609 acc 0.766 70s
+[train] B_s2_EthanolConcentration ep 5 train 0.2427 val 0.5924 acc 0.767 84s
+[train] B_s2_EthanolConcentration ep 6 train 0.2344 val 0.6262 acc 0.758 98s
+[train] B_s2_EthanolConcentration ep 7 train 0.2305 val 0.6281 acc 0.759 110s
+[train] B_s2_EthanolConcentration ep 8 train 0.2266 val 0.6305 acc 0.761 124s
+[train] B_s2_EthanolConcentration ep 9 train 0.2225 val 0.6566 acc 0.756 138s
+[train] B_s2_EthanolConcentration ep 10 train 0.2196 val 0.6589 acc 0.758 151s
+[train] B_s2_EthanolConcentration done best acc 0.7673 @ ep 5 epochs 11 pairs/epoch 218702 152s
+[train] B_s3_SelfRegulationSCP1 ep 0 train 0.4973 val 0.5389 acc 0.729 13s
+[train] B_s3_SelfRegulationSCP1 ep 1 train 0.3760 val 0.5357 acc 0.734 26s
+[train] B_s3_SelfRegulationSCP1 ep 2 train 0.3179 val 0.5311 acc 0.753 39s
+[train] B_s3_SelfRegulationSCP1 ep 3 train 0.2759 val 0.5407 acc 0.754 53s
+[train] B_s3_SelfRegulationSCP1 ep 4 train 0.2500 val 0.5601 acc 0.740 65s
+[train] B_s3_SelfRegulationSCP1 ep 5 train 0.2350 val 0.6100 acc 0.744 78s
+[train] B_s3_SelfRegulationSCP1 ep 6 train 0.2263 val 0.6174 acc 0.741 91s
+[train] B_s3_SelfRegulationSCP1 ep 7 train 0.2194 val 0.6404 acc 0.737 104s
+[train] B_s3_SelfRegulationSCP1 ep 8 train 0.2140 val 0.6629 acc 0.734 121s
+[train] B_s3_SelfRegulationSCP1 done best acc 0.7538 @ ep 3 epochs 9 pairs/epoch 203650 123s

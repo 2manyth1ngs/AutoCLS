@@ -1,0 +1,12 @@
+[ACTS-s1pp] 计划 32 格，已有 24，待跑 8
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_official: official train=(268, 896, 6) test=(293, 896, 6)
+[ACTS-s1pp 1/8] SelfRegulationSCP1_whole_official/random/5b593ba9 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.874 0.894 0.925] (90.1s+0.9s)
+[ACTS-s1pp 2/8] SelfRegulationSCP1_whole_official/random/5b593ba9 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.887 0.901 0.812] (89.7s+0.7s)
+[ACTS-s1pp 3/8] SelfRegulationSCP1_whole_official/random/4c0d89e1 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.747 0.703 0.638] (24.2s+0.9s)
+[ACTS-s1pp 4/8] SelfRegulationSCP1_whole_official/random/4c0d89e1 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.737 0.662 0.601] (21.3s+0.9s)
+[ACTS-s1pp 5/8] SelfRegulationSCP1_whole_official/random/54b0afcc s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.863 0.843 0.843] (64.8s+0.9s)
+[ACTS-s1pp 6/8] SelfRegulationSCP1_whole_official/random/54b0afcc s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.785 0.857 0.846] (66.3s+0.8s)
+[ACTS-s1pp 7/8] SelfRegulationSCP1_whole_official/random/9132b068 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.894 0.894 0.874] (103.1s+0.7s)
+[ACTS-s1pp 8/8] SelfRegulationSCP1_whole_official/random/9132b068 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.898 0.891 0.881] (95.0s+0.8s)
+[ACTS-s1pp] 收官

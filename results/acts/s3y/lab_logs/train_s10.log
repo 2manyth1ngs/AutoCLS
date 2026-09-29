@@ -1,0 +1,49 @@
+[train] E_s0_SelfRegulationSCP1 ep 0 train 0.3911 val 0.5158 acc 0.780 69s
+[train] E_s0_SelfRegulationSCP1 ep 1 train 0.2081 val 0.4478 acc 0.821 142s
+[train] E_s0_SelfRegulationSCP1 ep 2 train 0.1246 val 0.5050 acc 0.834 225s
+[train] E_s0_SelfRegulationSCP1 ep 3 train 0.0947 val 0.5214 acc 0.842 285s
+[train] E_s0_SelfRegulationSCP1 ep 4 train 0.0668 val 0.6200 acc 0.836 371s
+[train] E_s0_SelfRegulationSCP1 ep 5 train 0.0557 val 0.6299 acc 0.840 454s
+[train] E_s0_SelfRegulationSCP1 ep 6 train 0.0437 val 0.7417 acc 0.831 509s
+[train] E_s0_SelfRegulationSCP1 ep 7 train 0.0329 val 0.6692 acc 0.852 596s
+[train] E_s0_SelfRegulationSCP1 ep 8 train 0.0693 val 0.7069 acc 0.826 667s
+[train] E_s0_SelfRegulationSCP1 ep 9 train 0.0290 val 0.7893 acc 0.829 725s
+[train] E_s0_SelfRegulationSCP1 ep 10 train 0.0214 val 0.8138 acc 0.837 804s
+[train] E_s0_SelfRegulationSCP1 ep 11 train 0.0366 val 0.7825 acc 0.837 866s
+[train] E_s0_SelfRegulationSCP1 ep 12 train 0.0189 val 0.8754 acc 0.835 922s
+[train] E_s0_SelfRegulationSCP1 done best acc 0.8518 @ ep 7 epochs 13 pairs/epoch 203650 932s
+[train] E_s2_Handwriting ep 0 train 0.4372 val 0.5287 acc 0.749 88s
+[train] E_s2_Handwriting ep 1 train 0.2304 val 0.4674 acc 0.812 145s
+[train] E_s2_Handwriting ep 2 train 0.1306 val 0.4133 acc 0.847 223s
+[train] E_s2_Handwriting ep 3 train 0.0940 val 0.4220 acc 0.857 309s
+[train] E_s2_Handwriting ep 4 train 0.0677 val 0.4696 acc 0.852 365s
+[train] E_s2_Handwriting ep 5 train 0.0545 val 0.4867 acc 0.862 443s
+[train] E_s2_Handwriting ep 6 train 0.0539 val 0.4888 acc 0.860 511s
+[train] E_s2_Handwriting ep 7 train 0.0468 val 0.5721 acc 0.856 572s
+[train] E_s2_Handwriting ep 8 train 0.0275 val 0.6115 acc 0.861 658s
+[train] E_s2_Handwriting ep 9 train 0.0462 val 0.5971 acc 0.842 723s
+[train] E_s2_Handwriting ep 10 train 0.0332 val 0.5822 acc 0.857 785s
+[train] E_s2_Handwriting done best acc 0.8616 @ ep 5 epochs 11 pairs/epoch 214616 804s
+[train] E_s3_PhonemeSpectra ep 0 train 0.4257 val 0.4907 acc 0.772 73s
+[train] E_s3_PhonemeSpectra ep 1 train 0.2259 val 0.4753 acc 0.811 121s
+[train] E_s3_PhonemeSpectra ep 2 train 0.1300 val 0.5218 acc 0.812 194s
+[train] E_s3_PhonemeSpectra ep 3 train 0.0822 val 0.5414 acc 0.842 281s
+[train] E_s3_PhonemeSpectra ep 4 train 0.0708 val 0.5670 acc 0.841 337s
+[train] E_s3_PhonemeSpectra ep 5 train 0.0518 val 0.5459 acc 0.854 424s
+[train] E_s3_PhonemeSpectra ep 6 train 0.0509 val 0.5370 acc 0.854 502s
+[train] E_s3_PhonemeSpectra ep 7 train 0.0324 val 0.5972 acc 0.853 554s
+[train] E_s3_PhonemeSpectra ep 8 train 0.0504 val 0.5940 acc 0.849 639s
+[train] E_s3_PhonemeSpectra ep 9 train 0.0249 val 0.6310 acc 0.850 712s
+[train] E_s3_PhonemeSpectra ep 10 train 0.0421 val 0.5973 acc 0.848 779s
+[train] E_s3_PhonemeSpectra done best acc 0.8543 @ ep 5 epochs 11 pairs/epoch 218674 795s
+[train] E_s4_UWaveGestureLibrary ep 0 train 0.4229 val 0.5275 acc 0.760 84s
+[train] E_s4_UWaveGestureLibrary ep 1 train 0.2156 val 0.4283 acc 0.821 139s
+[train] E_s4_UWaveGestureLibrary ep 2 train 0.1147 val 0.4507 acc 0.846 214s
+[train] E_s4_UWaveGestureLibrary ep 3 train 0.0697 val 0.4627 acc 0.851 283s
+[train] E_s4_UWaveGestureLibrary ep 4 train 0.0563 val 0.4974 acc 0.851 342s
+[train] E_s4_UWaveGestureLibrary ep 5 train 0.0445 val 0.5728 acc 0.845 433s
+[train] E_s4_UWaveGestureLibrary ep 6 train 0.0378 val 0.6497 acc 0.830 499s
+[train] E_s4_UWaveGestureLibrary ep 7 train 0.0476 val 0.5681 acc 0.841 573s
+[train] E_s4_UWaveGestureLibrary ep 8 train 0.0210 val 0.6737 acc 0.842 649s
+[train] E_s4_UWaveGestureLibrary ep 9 train 0.0745 val 0.6636 acc 0.827 702s
+[train] E_s4_UWaveGestureLibrary done best acc 0.8513 @ ep 4 epochs 10 pairs/epoch 215000 705s

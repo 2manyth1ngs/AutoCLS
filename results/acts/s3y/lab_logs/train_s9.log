@@ -1,0 +1,42 @@
+[train] B_s0_EthanolConcentration ep 0 train 0.5052 val 0.5445 acc 0.725 10s
+[train] B_s0_EthanolConcentration ep 1 train 0.3861 val 0.5371 acc 0.748 24s
+[train] B_s0_EthanolConcentration ep 2 train 0.3250 val 0.5410 acc 0.748 37s
+[train] B_s0_EthanolConcentration ep 3 train 0.2818 val 0.5713 acc 0.750 49s
+[train] B_s0_EthanolConcentration ep 4 train 0.2578 val 0.5781 acc 0.754 62s
+[train] B_s0_EthanolConcentration ep 5 train 0.2447 val 0.6050 acc 0.744 102s
+[train] B_s0_EthanolConcentration ep 6 train 0.2361 val 0.6271 acc 0.745 156s
+[train] B_s0_EthanolConcentration ep 7 train 0.2285 val 0.6561 acc 0.741 198s
+[train] B_s0_EthanolConcentration ep 8 train 0.2255 val 0.6698 acc 0.732 215s
+[train] B_s0_EthanolConcentration ep 9 train 0.2224 val 0.6885 acc 0.741 228s
+[train] B_s0_EthanolConcentration done best acc 0.7539 @ ep 4 epochs 10 pairs/epoch 218702 229s
+[train] B_s1_SelfRegulationSCP1 ep 0 train 0.4965 val 0.5267 acc 0.741 13s
+[train] B_s1_SelfRegulationSCP1 ep 1 train 0.3703 val 0.5264 acc 0.742 25s
+[train] B_s1_SelfRegulationSCP1 ep 2 train 0.3123 val 0.5166 acc 0.762 56s
+[train] B_s1_SelfRegulationSCP1 ep 3 train 0.2720 val 0.5397 acc 0.764 105s
+[train] B_s1_SelfRegulationSCP1 ep 4 train 0.2484 val 0.5526 acc 0.758 158s
+[train] B_s1_SelfRegulationSCP1 ep 5 train 0.2333 val 0.5740 acc 0.756 178s
+[train] B_s1_SelfRegulationSCP1 ep 6 train 0.2254 val 0.5997 acc 0.755 186s
+[train] B_s1_SelfRegulationSCP1 ep 7 train 0.2186 val 0.6172 acc 0.758 195s
+[train] B_s1_SelfRegulationSCP1 ep 8 train 0.2139 val 0.6516 acc 0.744 204s
+[train] B_s1_SelfRegulationSCP1 done best acc 0.7640 @ ep 3 epochs 9 pairs/epoch 203650 204s
+[train] B_s3_Handwriting ep 0 train 0.5232 val 0.5669 acc 0.716 10s
+[train] B_s3_Handwriting ep 1 train 0.4075 val 0.5657 acc 0.723 19s
+[train] B_s3_Handwriting ep 2 train 0.3457 val 0.5665 acc 0.732 51s
+[train] B_s3_Handwriting ep 3 train 0.3035 val 0.5879 acc 0.733 88s
+[train] B_s3_Handwriting ep 4 train 0.2759 val 0.5973 acc 0.726 128s
+[train] B_s3_Handwriting ep 5 train 0.2609 val 0.6186 acc 0.739 147s
+[train] B_s3_Handwriting ep 6 train 0.2501 val 0.6345 acc 0.732 160s
+[train] B_s3_Handwriting ep 7 train 0.2411 val 0.6578 acc 0.722 173s
+[train] B_s3_Handwriting ep 8 train 0.2359 val 0.6731 acc 0.730 186s
+[train] B_s3_Handwriting ep 9 train 0.2347 val 0.6925 acc 0.733 199s
+[train] B_s3_Handwriting ep 10 train 0.2287 val 0.6942 acc 0.726 244s
+[train] B_s3_Handwriting done best acc 0.7395 @ ep 5 epochs 11 pairs/epoch 214616 248s
+[train] B_s4_PhonemeSpectra ep 0 train 0.5172 val 0.5381 acc 0.734 52s
+[train] B_s4_PhonemeSpectra ep 1 train 0.3934 val 0.5406 acc 0.741 84s
+[train] B_s4_PhonemeSpectra ep 2 train 0.3300 val 0.5479 acc 0.748 99s
+[train] B_s4_PhonemeSpectra ep 3 train 0.2871 val 0.5871 acc 0.747 112s
+[train] B_s4_PhonemeSpectra ep 4 train 0.2642 val 0.5977 acc 0.736 124s
+[train] B_s4_PhonemeSpectra ep 5 train 0.2499 val 0.6466 acc 0.731 138s
+[train] B_s4_PhonemeSpectra ep 6 train 0.2410 val 0.6863 acc 0.733 171s
+[train] B_s4_PhonemeSpectra ep 7 train 0.2343 val 0.7097 acc 0.726 224s
+[train] B_s4_PhonemeSpectra done best acc 0.7478 @ ep 2 epochs 8 pairs/epoch 218674 229s

@@ -1,0 +1,12 @@
+[ACTS-s1pp] 计划 32 格，已有 24，待跑 8
+[data] PhonemeSpectra: X=(6668, 217, 11) classes=39
+[data] PhonemeSpectra_whole_official: official train=(3315, 217, 11) test=(3353, 217, 11)
+[ACTS-s1pp 1/8] PhonemeSpectra_whole_official/random/9295f7c3 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.244 0.242 0.239] (60.9s+46.9s)
+[ACTS-s1pp 2/8] PhonemeSpectra_whole_official/random/9295f7c3 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.232 0.225 0.231] (58.5s+43.6s)
+[ACTS-s1pp 3/8] PhonemeSpectra_whole_official/random/b1660240 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.182 0.172 0.167] (86.9s+44.6s)
+[ACTS-s1pp 4/8] PhonemeSpectra_whole_official/random/b1660240 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.178 0.172 0.168] (70.9s+44.0s)
+[ACTS-s1pp 5/8] PhonemeSpectra_whole_official/random/24654dcc s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.171 0.159 0.154] (88.6s+45.7s)
+[ACTS-s1pp 6/8] PhonemeSpectra_whole_official/random/24654dcc s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.180 0.175 0.152] (86.2s+45.5s)
+[ACTS-s1pp 7/8] PhonemeSpectra_whole_official/random/7ad9ae4c s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.231 0.227 0.213] (129.2s+45.8s)
+[ACTS-s1pp 8/8] PhonemeSpectra_whole_official/random/7ad9ae4c s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.218 0.227 0.223] (108.2s+45.6s)
+[ACTS-s1pp] 收官

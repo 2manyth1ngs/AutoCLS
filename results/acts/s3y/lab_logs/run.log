@@ -1,0 +1,37 @@
+== HEAD 0e5f52f
+== E_pt 176 / 176
+== S3-C-D 靶端 E 6 / 6
+21 passed in 38.14s
+== GPU 0 free 18715 MiB → 2 槽
+== GPU 1 free 2478 MiB → 0 槽
+== GPU 2 free 14361 MiB → 2 槽
+== GPU 3 free 14762 MiB → 2 槽
+== GPU 4 free 18281 MiB → 2 槽
+== GPU 5 free 14992 MiB → 2 槽
+== GPU 6 free 14041 MiB → 2 槽
+== GPU 7 free 16803 MiB → 2 槽
+== 共 14 槽：0 0 2 2 3 3 4 4 5 5 6 6 7 7
+== [19:33:05] 训练 60
+== [21:10:00] 训练完：E 30 / B 30（各需 30）
+60 个训练记录；最优 epoch 中位 4.0
+== [21:10:00] 搜索 12
+== [21:10:30] 搜索完：12 / 12
+[search] NEW_B_Cricket：|U| = 12，COMP-ONLY d9cf95e8，5s
+[search] NEW_B_EthanolConcentration：|U| = 12，COMP-ONLY db3e0782，6s
+[search] NEW_B_Handwriting：|U| = 12，COMP-ONLY 1fb6ca71，6s
+[search] NEW_B_PhonemeSpectra：|U| = 12，COMP-ONLY 24654dcc，5s
+[search] NEW_B_SelfRegulationSCP1：|U| = 12，COMP-ONLY 54b0afcc，6s
+[search] NEW_B_UWaveGestureLibrary：|U| = 12，COMP-ONLY b9bb30a5，5s
+[search] NEW_Cricket：|U| = 12，COMP-ONLY 9a387148，5s
+[search] NEW_EthanolConcentration：|U| = 12，COMP-ONLY b0bf272d，6s
+[search] NEW_Handwriting：|U| = 12，COMP-ONLY b3af3cc6，5s
+[search] NEW_PhonemeSpectra：|U| = 12，COMP-ONLY b1660240，5s
+[search] NEW_SelfRegulationSCP1：|U| = 12，COMP-ONLY 4c0d89e1，5s
+[search] NEW_UWaveGestureLibrary：|U| = 12，COMP-ONLY 140343f8，5s
+== [21:10:30] CV 格
+[plan cv] 臂 ['NEW', 'NEW_B']：576 格
+verify cv: plan 576 / done 576 / error 0 → OK
+[select] {"NEW": {"Handwr": "a721b9ee", "Phonem": "9295f7c3", "UWaveG": "065c1129", "Cricke": "2a29073d", "Ethano": "6206e140", "SelfRe": "5b593ba9"}, "NEW_B": {"Handwr": "b128e2eb", "Phonem": "7ad9ae4c", "UWaveG": "732133c5", "Cricke": "57d025cf", "Ethano": "aff487a6", "SelfRe": "9132b068"}}
+== [23:04:20] 最终格
+[plan final] 臂 ['NEW', 'NEW_B']：624 格
+verify final: plan 624 / done 624 / error 0 → OK
