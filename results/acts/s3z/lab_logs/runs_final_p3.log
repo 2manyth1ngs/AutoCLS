@@ -1,0 +1,8 @@
+[ACTS-s1pp] 计划 52 格，已有 48，待跑 4
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_official: official train=(268, 896, 6) test=(293, 896, 6)
+[ACTS-s1pp 1/4] SelfRegulationSCP1_whole_official/random/7a13ff36 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.778 0.696 0.621] (66.9s+1.3s)
+[ACTS-s1pp 2/4] SelfRegulationSCP1_whole_official/random/7a13ff36 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.679 0.741 0.614] (54.9s+1.2s)
+[ACTS-s1pp 3/4] SelfRegulationSCP1_whole_official/random/bde52833 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.846 0.768 0.761] (403.7s+1.1s)
+[ACTS-s1pp 4/4] SelfRegulationSCP1_whole_official/random/bde52833 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.751 0.771 0.741] (374.1s+1.0s)
+[ACTS-s1pp] 收官

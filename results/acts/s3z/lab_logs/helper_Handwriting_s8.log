@@ -1,0 +1,13 @@
+[train] E_s8_Handwriting ep 0 train 0.4328 val 0.5152 acc 0.776 77s
+[train] E_s8_Handwriting ep 1 train 0.2332 val 0.4522 acc 0.815 134s
+[train] E_s8_Handwriting ep 2 train 0.1448 val 0.4860 acc 0.827 210s
+[train] E_s8_Handwriting ep 3 train 0.1008 val 0.4439 acc 0.845 297s
+[train] E_s8_Handwriting ep 4 train 0.0759 val 0.4770 acc 0.850 396s
+[train] E_s8_Handwriting ep 5 train 0.0556 val 0.5674 acc 0.853 486s
+[train] E_s8_Handwriting ep 6 train 0.0715 val 0.4662 acc 0.857 589s
+[train] E_s8_Handwriting ep 7 train 0.0357 val 0.5660 acc 0.854 698s
+[train] E_s8_Handwriting ep 8 train 0.0355 val 0.6447 acc 0.842 800s
+[train] E_s8_Handwriting ep 9 train 0.0408 val 0.6442 acc 0.841 880s
+[train] E_s8_Handwriting ep 10 train 0.0347 val 0.6484 acc 0.855 980s
+[train] E_s8_Handwriting ep 11 train 0.0221 val 0.6714 acc 0.853 1084s
+[train] E_s8_Handwriting done best acc 0.8573 @ ep 6 epochs 12 pairs/epoch 214616 1098s

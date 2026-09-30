@@ -1,0 +1,6 @@
+[ACTS-s1pp] 计划 1104 格，已有 1102，待跑 2
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_official: official train=(120, 315, 3) test=(320, 315, 3)
+[ACTS-s1pp 1/2] UWaveGestureLibrary_whole_official/random/299e1d18 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.897 0.906 0.875] (51.2s+0.7s)
+[ACTS-s1pp 2/2] UWaveGestureLibrary_whole_official/random/299e1d18 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.900 0.891 0.887] (42.1s+0.6s)
+[ACTS-s1pp] 收官

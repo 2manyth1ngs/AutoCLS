@@ -1,0 +1,103 @@
+[train] B_s5_UWaveGestureLibrary ep 0 train 0.5130 val 0.5416 acc 0.731 15s
+[train] B_s5_UWaveGestureLibrary ep 1 train 0.3902 val 0.5180 acc 0.756 26s
+[train] B_s5_UWaveGestureLibrary ep 2 train 0.3300 val 0.5177 acc 0.767 37s
+[train] B_s5_UWaveGestureLibrary ep 3 train 0.2862 val 0.5371 acc 0.765 48s
+[train] B_s5_UWaveGestureLibrary ep 4 train 0.2643 val 0.5675 acc 0.757 60s
+[train] B_s5_UWaveGestureLibrary ep 5 train 0.2507 val 0.5796 acc 0.764 71s
+[train] B_s5_UWaveGestureLibrary ep 6 train 0.2427 val 0.6066 acc 0.757 83s
+[train] B_s5_UWaveGestureLibrary ep 7 train 0.2349 val 0.6310 acc 0.753 96s
+[train] B_s5_UWaveGestureLibrary done best acc 0.7666 @ ep 2 epochs 8 pairs/epoch 215000 97s
+[train] B_s5_SelfRegulationSCP1 ep 0 train 0.4952 val 0.5258 acc 0.738 14s
+[train] B_s5_SelfRegulationSCP1 ep 1 train 0.3707 val 0.5148 acc 0.752 28s
+[train] B_s5_SelfRegulationSCP1 ep 2 train 0.3113 val 0.5024 acc 0.768 42s
+[train] B_s5_SelfRegulationSCP1 ep 3 train 0.2697 val 0.5199 acc 0.764 55s
+[train] B_s5_SelfRegulationSCP1 ep 4 train 0.2451 val 0.5598 acc 0.764 69s
+[train] B_s5_SelfRegulationSCP1 ep 5 train 0.2318 val 0.5877 acc 0.765 82s
+[train] B_s5_SelfRegulationSCP1 ep 6 train 0.2246 val 0.5949 acc 0.761 96s
+[train] B_s5_SelfRegulationSCP1 ep 7 train 0.2190 val 0.6258 acc 0.750 110s
+[train] B_s5_SelfRegulationSCP1 done best acc 0.7685 @ ep 2 epochs 8 pairs/epoch 203650 111s
+[train] B_s6_UWaveGestureLibrary ep 0 train 0.5128 val 0.5485 acc 0.719 15s
+[train] B_s6_UWaveGestureLibrary ep 1 train 0.4013 val 0.5368 acc 0.740 30s
+[train] B_s6_UWaveGestureLibrary ep 2 train 0.3454 val 0.5259 acc 0.751 44s
+[train] B_s6_UWaveGestureLibrary ep 3 train 0.3018 val 0.5266 acc 0.746 59s
+[train] B_s6_UWaveGestureLibrary ep 4 train 0.2737 val 0.5348 acc 0.756 73s
+[train] B_s6_UWaveGestureLibrary ep 5 train 0.2607 val 0.5617 acc 0.751 88s
+[train] B_s6_UWaveGestureLibrary ep 6 train 0.2492 val 0.5713 acc 0.749 102s
+[train] B_s6_UWaveGestureLibrary ep 7 train 0.2396 val 0.6029 acc 0.733 117s
+[train] B_s6_UWaveGestureLibrary ep 8 train 0.2342 val 0.6201 acc 0.737 132s
+[train] B_s6_UWaveGestureLibrary ep 9 train 0.2300 val 0.6217 acc 0.738 147s
+[train] B_s6_UWaveGestureLibrary done best acc 0.7557 @ ep 4 epochs 10 pairs/epoch 215000 148s
+[train] B_s6_SelfRegulationSCP1 ep 0 train 0.4954 val 0.5477 acc 0.724 14s
+[train] B_s6_SelfRegulationSCP1 ep 1 train 0.3814 val 0.5424 acc 0.738 28s
+[train] B_s6_SelfRegulationSCP1 ep 2 train 0.3268 val 0.5363 acc 0.749 42s
+[train] B_s6_SelfRegulationSCP1 ep 3 train 0.2836 val 0.5451 acc 0.762 56s
+[train] B_s6_SelfRegulationSCP1 ep 4 train 0.2560 val 0.5588 acc 0.755 70s
+[train] B_s6_SelfRegulationSCP1 ep 5 train 0.2406 val 0.5829 acc 0.750 83s
+[train] B_s6_SelfRegulationSCP1 ep 6 train 0.2305 val 0.5854 acc 0.754 97s
+[train] B_s6_SelfRegulationSCP1 ep 7 train 0.2240 val 0.6193 acc 0.737 111s
+[train] B_s6_SelfRegulationSCP1 ep 8 train 0.2209 val 0.6141 acc 0.747 125s
+[train] B_s6_SelfRegulationSCP1 done best acc 0.7618 @ ep 3 epochs 9 pairs/epoch 203650 126s
+[train] B_s7_UWaveGestureLibrary ep 0 train 0.5201 val 0.5450 acc 0.724 15s
+[train] B_s7_UWaveGestureLibrary ep 1 train 0.3973 val 0.5446 acc 0.729 30s
+[train] B_s7_UWaveGestureLibrary ep 2 train 0.3368 val 0.5163 acc 0.748 45s
+[train] B_s7_UWaveGestureLibrary ep 3 train 0.2952 val 0.5156 acc 0.756 60s
+[train] B_s7_UWaveGestureLibrary ep 4 train 0.2703 val 0.5538 acc 0.756 75s
+[train] B_s7_UWaveGestureLibrary ep 5 train 0.2545 val 0.5633 acc 0.759 90s
+[train] B_s7_UWaveGestureLibrary ep 6 train 0.2438 val 0.5872 acc 0.755 105s
+[train] B_s7_UWaveGestureLibrary ep 7 train 0.2377 val 0.6109 acc 0.752 119s
+[train] B_s7_UWaveGestureLibrary ep 8 train 0.2310 val 0.6381 acc 0.747 134s
+[train] B_s7_UWaveGestureLibrary ep 9 train 0.2276 val 0.6536 acc 0.746 149s
+[train] B_s7_UWaveGestureLibrary ep 10 train 0.2246 val 0.6721 acc 0.745 163s
+[train] B_s7_UWaveGestureLibrary done best acc 0.7585 @ ep 5 epochs 11 pairs/epoch 215000 164s
+[train] B_s7_SelfRegulationSCP1 ep 0 train 0.4973 val 0.5359 acc 0.735 15s
+[train] B_s7_SelfRegulationSCP1 ep 1 train 0.3738 val 0.5343 acc 0.745 30s
+[train] B_s7_SelfRegulationSCP1 ep 2 train 0.3162 val 0.5183 acc 0.760 44s
+[train] B_s7_SelfRegulationSCP1 ep 3 train 0.2776 val 0.5184 acc 0.769 58s
+[train] B_s7_SelfRegulationSCP1 ep 4 train 0.2529 val 0.5366 acc 0.763 72s
+[train] B_s7_SelfRegulationSCP1 ep 5 train 0.2379 val 0.5571 acc 0.761 86s
+[train] B_s7_SelfRegulationSCP1 ep 6 train 0.2281 val 0.5507 acc 0.769 101s
+[train] B_s7_SelfRegulationSCP1 ep 7 train 0.2209 val 0.5927 acc 0.763 115s
+[train] B_s7_SelfRegulationSCP1 ep 8 train 0.2147 val 0.5987 acc 0.748 129s
+[train] B_s7_SelfRegulationSCP1 ep 9 train 0.2114 val 0.6164 acc 0.762 146s
+[train] B_s7_SelfRegulationSCP1 ep 10 train 0.2086 val 0.6249 acc 0.758 167s
+[train] B_s7_SelfRegulationSCP1 ep 11 train 0.2066 val 0.6362 acc 0.760 186s
+[train] B_s7_SelfRegulationSCP1 done best acc 0.7688 @ ep 6 epochs 12 pairs/epoch 203650 187s
+[train] B_s8_UWaveGestureLibrary ep 0 train 0.5138 val 0.5247 acc 0.738 14s
+[train] B_s8_UWaveGestureLibrary ep 1 train 0.3900 val 0.5201 acc 0.747 30s
+[train] B_s8_UWaveGestureLibrary ep 2 train 0.3282 val 0.5209 acc 0.759 45s
+[train] B_s8_UWaveGestureLibrary ep 3 train 0.2855 val 0.5435 acc 0.762 60s
+[train] B_s8_UWaveGestureLibrary ep 4 train 0.2659 val 0.5777 acc 0.753 75s
+[train] B_s8_UWaveGestureLibrary ep 5 train 0.2499 val 0.5858 acc 0.753 91s
+[train] B_s8_UWaveGestureLibrary ep 6 train 0.2419 val 0.6185 acc 0.753 106s
+[train] B_s8_UWaveGestureLibrary ep 7 train 0.2355 val 0.6404 acc 0.742 121s
+[train] B_s8_UWaveGestureLibrary ep 8 train 0.2310 val 0.6523 acc 0.745 136s
+[train] B_s8_UWaveGestureLibrary done best acc 0.7618 @ ep 3 epochs 9 pairs/epoch 215000 137s
+[train] B_s8_SelfRegulationSCP1 ep 0 train 0.4935 val 0.5184 acc 0.747 14s
+[train] B_s8_SelfRegulationSCP1 ep 1 train 0.3701 val 0.5113 acc 0.747 28s
+[train] B_s8_SelfRegulationSCP1 ep 2 train 0.3103 val 0.5059 acc 0.766 42s
+[train] B_s8_SelfRegulationSCP1 ep 3 train 0.2681 val 0.5074 acc 0.774 55s
+[train] B_s8_SelfRegulationSCP1 ep 4 train 0.2470 val 0.5342 acc 0.769 69s
+[train] B_s8_SelfRegulationSCP1 ep 5 train 0.2324 val 0.5628 acc 0.761 83s
+[train] B_s8_SelfRegulationSCP1 ep 6 train 0.2236 val 0.5968 acc 0.755 97s
+[train] B_s8_SelfRegulationSCP1 ep 7 train 0.2187 val 0.6158 acc 0.758 111s
+[train] B_s8_SelfRegulationSCP1 ep 8 train 0.2134 val 0.6281 acc 0.757 125s
+[train] B_s8_SelfRegulationSCP1 done best acc 0.7744 @ ep 3 epochs 9 pairs/epoch 203650 126s
+[train] B_s9_UWaveGestureLibrary ep 0 train 0.5145 val 0.5444 acc 0.733 16s
+[train] B_s9_UWaveGestureLibrary ep 1 train 0.3925 val 0.5391 acc 0.739 31s
+[train] B_s9_UWaveGestureLibrary ep 2 train 0.3244 val 0.5310 acc 0.756 46s
+[train] B_s9_UWaveGestureLibrary ep 3 train 0.2796 val 0.5652 acc 0.757 61s
+[train] B_s9_UWaveGestureLibrary ep 4 train 0.2591 val 0.5941 acc 0.755 76s
+[train] B_s9_UWaveGestureLibrary ep 5 train 0.2458 val 0.6104 acc 0.754 91s
+[train] B_s9_UWaveGestureLibrary ep 6 train 0.2392 val 0.6313 acc 0.749 106s
+[train] B_s9_UWaveGestureLibrary ep 7 train 0.2312 val 0.6609 acc 0.734 121s
+[train] B_s9_UWaveGestureLibrary ep 8 train 0.2294 val 0.6749 acc 0.743 136s
+[train] B_s9_UWaveGestureLibrary done best acc 0.7568 @ ep 3 epochs 9 pairs/epoch 215000 137s
+[train] B_s9_SelfRegulationSCP1 ep 0 train 0.4950 val 0.5256 acc 0.748 15s
+[train] B_s9_SelfRegulationSCP1 ep 1 train 0.3681 val 0.5176 acc 0.760 29s
+[train] B_s9_SelfRegulationSCP1 ep 2 train 0.2998 val 0.5157 acc 0.766 42s
+[train] B_s9_SelfRegulationSCP1 ep 3 train 0.2599 val 0.5539 acc 0.761 57s
+[train] B_s9_SelfRegulationSCP1 ep 4 train 0.2397 val 0.5741 acc 0.755 71s
+[train] B_s9_SelfRegulationSCP1 ep 5 train 0.2281 val 0.6145 acc 0.750 84s
+[train] B_s9_SelfRegulationSCP1 ep 6 train 0.2189 val 0.6329 acc 0.754 98s
+[train] B_s9_SelfRegulationSCP1 ep 7 train 0.2151 val 0.6455 acc 0.744 112s
+[train] B_s9_SelfRegulationSCP1 done best acc 0.7663 @ ep 2 epochs 8 pairs/epoch 203650 113s

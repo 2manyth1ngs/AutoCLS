@@ -1,0 +1,15 @@
+[train] E_s9_Cricket ep 0 train 0.3988 val 0.4884 acc 0.781 67s
+[train] E_s9_Cricket ep 1 train 0.2048 val 0.4645 acc 0.811 146s
+[train] E_s9_Cricket ep 2 train 0.1265 val 0.5039 acc 0.836 238s
+[train] E_s9_Cricket ep 3 train 0.0887 val 0.5166 acc 0.846 307s
+[train] E_s9_Cricket ep 4 train 0.0633 val 0.5853 acc 0.847 392s
+[train] E_s9_Cricket ep 5 train 0.0583 val 0.5875 acc 0.847 463s
+[train] E_s9_Cricket ep 6 train 0.0477 val 0.6335 acc 0.841 535s
+[train] E_s9_Cricket ep 7 train 0.0461 val 0.7750 acc 0.807 619s
+[train] E_s9_Cricket ep 8 train 0.0516 val 0.5739 acc 0.851 686s
+[train] E_s9_Cricket ep 9 train 0.0401 val 0.7320 acc 0.819 764s
+[train] E_s9_Cricket ep 10 train 0.0239 val 0.8147 acc 0.834 848s
+[train] E_s9_Cricket ep 11 train 0.0535 val 0.7001 acc 0.837 910s
+[train] E_s9_Cricket ep 12 train 0.0174 val 0.8140 acc 0.839 993s
+[train] E_s9_Cricket ep 13 train 0.0192 val 0.8684 acc 0.840 1076s
+[train] E_s9_Cricket done best acc 0.8508 @ ep 8 epochs 14 pairs/epoch 219004 1086s

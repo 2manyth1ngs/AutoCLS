@@ -1,0 +1,110 @@
+[train] B_s5_PhonemeSpectra ep 0 train 0.5126 val 0.5388 acc 0.737 50s
+[train] B_s5_PhonemeSpectra ep 1 train 0.3893 val 0.5198 acc 0.750 82s
+[train] B_s5_PhonemeSpectra ep 2 train 0.3267 val 0.5094 acc 0.768 117s
+[train] B_s5_PhonemeSpectra ep 3 train 0.2861 val 0.5215 acc 0.774 177s
+[train] B_s5_PhonemeSpectra ep 4 train 0.2634 val 0.5328 acc 0.769 236s
+[train] B_s5_PhonemeSpectra ep 5 train 0.2501 val 0.5713 acc 0.754 314s
+[train] B_s5_PhonemeSpectra ep 6 train 0.2412 val 0.5865 acc 0.765 358s
+[train] B_s5_PhonemeSpectra ep 7 train 0.2362 val 0.6081 acc 0.761 424s
+[train] B_s5_PhonemeSpectra ep 8 train 0.2298 val 0.6206 acc 0.755 520s
+[train] B_s5_PhonemeSpectra done best acc 0.7742 @ ep 3 epochs 9 pairs/epoch 218674 528s
+[train] B_s5_EthanolConcentration ep 0 train 0.4985 val 0.5245 acc 0.739 61s
+[train] B_s5_EthanolConcentration ep 1 train 0.3824 val 0.5113 acc 0.756 108s
+[train] B_s5_EthanolConcentration ep 2 train 0.3253 val 0.5045 acc 0.775 194s
+[train] B_s5_EthanolConcentration ep 3 train 0.2861 val 0.5115 acc 0.777 262s
+[train] B_s5_EthanolConcentration ep 4 train 0.2609 val 0.5297 acc 0.772 305s
+[train] B_s5_EthanolConcentration ep 5 train 0.2463 val 0.5505 acc 0.767 363s
+[train] B_s5_EthanolConcentration ep 6 train 0.2378 val 0.5750 acc 0.761 460s
+[train] B_s5_EthanolConcentration ep 7 train 0.2301 val 0.5919 acc 0.765 533s
+[train] B_s5_EthanolConcentration ep 8 train 0.2254 val 0.6075 acc 0.761 573s
+[train] B_s5_EthanolConcentration done best acc 0.7773 @ ep 3 epochs 9 pairs/epoch 218702 575s
+[train] B_s6_PhonemeSpectra ep 0 train 0.5145 val 0.5500 acc 0.731 74s
+[train] B_s6_PhonemeSpectra ep 1 train 0.3995 val 0.5514 acc 0.741 115s
+[train] B_s6_PhonemeSpectra ep 2 train 0.3401 val 0.5427 acc 0.748 188s
+[train] B_s6_PhonemeSpectra ep 3 train 0.2956 val 0.5519 acc 0.737 231s
+[train] B_s6_PhonemeSpectra ep 4 train 0.2711 val 0.5681 acc 0.748 288s
+[train] B_s6_PhonemeSpectra ep 5 train 0.2569 val 0.5954 acc 0.746 385s
+[train] B_s6_PhonemeSpectra ep 6 train 0.2452 val 0.6229 acc 0.742 461s
+[train] B_s6_PhonemeSpectra ep 7 train 0.2391 val 0.6371 acc 0.744 491s
+[train] B_s6_PhonemeSpectra done best acc 0.7478 @ ep 2 epochs 8 pairs/epoch 218674 493s
+[train] B_s6_EthanolConcentration ep 0 train 0.4995 val 0.5480 acc 0.727 97s
+[train] B_s6_EthanolConcentration ep 1 train 0.3896 val 0.5400 acc 0.740 162s
+[train] B_s6_EthanolConcentration ep 2 train 0.3373 val 0.5316 acc 0.753 207s
+[train] B_s6_EthanolConcentration ep 3 train 0.2958 val 0.5154 acc 0.758 283s
+[train] B_s6_EthanolConcentration ep 4 train 0.2681 val 0.5545 acc 0.757 380s
+[train] B_s6_EthanolConcentration ep 5 train 0.2524 val 0.5746 acc 0.762 438s
+[train] B_s6_EthanolConcentration ep 6 train 0.2436 val 0.5999 acc 0.759 499s
+[train] B_s6_EthanolConcentration ep 7 train 0.2359 val 0.6074 acc 0.755 595s
+[train] B_s6_EthanolConcentration ep 8 train 0.2301 val 0.6174 acc 0.754 638s
+[train] B_s6_EthanolConcentration ep 9 train 0.2254 val 0.6385 acc 0.747 676s
+[train] B_s6_EthanolConcentration ep 10 train 0.2210 val 0.6609 acc 0.751 751s
+[train] B_s6_EthanolConcentration done best acc 0.7619 @ ep 5 epochs 11 pairs/epoch 218702 759s
+[train] B_s7_PhonemeSpectra ep 0 train 0.5182 val 0.5513 acc 0.724 96s
+[train] B_s7_PhonemeSpectra ep 1 train 0.3975 val 0.5378 acc 0.732 147s
+[train] B_s7_PhonemeSpectra ep 2 train 0.3347 val 0.5210 acc 0.746 201s
+[train] B_s7_PhonemeSpectra ep 3 train 0.2933 val 0.5347 acc 0.743 297s
+[train] B_s7_PhonemeSpectra ep 4 train 0.2676 val 0.5646 acc 0.749 357s
+[train] B_s7_PhonemeSpectra ep 5 train 0.2526 val 0.5814 acc 0.756 372s
+[train] B_s7_PhonemeSpectra ep 6 train 0.2433 val 0.5993 acc 0.748 392s
+[train] B_s7_PhonemeSpectra ep 7 train 0.2358 val 0.6264 acc 0.752 465s
+[train] B_s7_PhonemeSpectra ep 8 train 0.2297 val 0.6318 acc 0.740 560s
+[train] B_s7_PhonemeSpectra ep 9 train 0.2266 val 0.6662 acc 0.748 623s
+[train] B_s7_PhonemeSpectra ep 10 train 0.2220 val 0.6881 acc 0.734 681s
+[train] B_s7_PhonemeSpectra done best acc 0.7558 @ ep 5 epochs 11 pairs/epoch 218674 690s
+[train] B_s7_EthanolConcentration ep 0 train 0.5036 val 0.5454 acc 0.721 98s
+[train] B_s7_EthanolConcentration ep 1 train 0.3856 val 0.5316 acc 0.733 164s
+[train] B_s7_EthanolConcentration ep 2 train 0.3315 val 0.5104 acc 0.758 177s
+[train] B_s7_EthanolConcentration ep 3 train 0.2932 val 0.5055 acc 0.764 189s
+[train] B_s7_EthanolConcentration ep 4 train 0.2680 val 0.5095 acc 0.765 249s
+[train] B_s7_EthanolConcentration ep 5 train 0.2518 val 0.5359 acc 0.762 346s
+[train] B_s7_EthanolConcentration ep 6 train 0.2424 val 0.5593 acc 0.762 409s
+[train] B_s7_EthanolConcentration ep 7 train 0.2348 val 0.5654 acc 0.759 468s
+[train] B_s7_EthanolConcentration ep 8 train 0.2286 val 0.5851 acc 0.761 565s
+[train] B_s7_EthanolConcentration ep 9 train 0.2236 val 0.6011 acc 0.767 642s
+[train] B_s7_EthanolConcentration ep 10 train 0.2211 val 0.6095 acc 0.758 684s
+[train] B_s7_EthanolConcentration ep 11 train 0.2175 val 0.6156 acc 0.761 758s
+[train] B_s7_EthanolConcentration ep 12 train 0.2172 val 0.6351 acc 0.756 847s
+[train] B_s7_EthanolConcentration ep 13 train 0.2146 val 0.6367 acc 0.755 887s
+[train] B_s7_EthanolConcentration ep 14 train 0.2116 val 0.6619 acc 0.752 969s
+[train] B_s7_EthanolConcentration done best acc 0.7666 @ ep 9 epochs 15 pairs/epoch 218702 977s
+[train] B_s8_PhonemeSpectra ep 0 train 0.5130 val 0.5344 acc 0.731 97s
+[train] B_s8_PhonemeSpectra ep 1 train 0.3909 val 0.5335 acc 0.740 141s
+[train] B_s8_PhonemeSpectra ep 2 train 0.3291 val 0.5294 acc 0.749 206s
+[train] B_s8_PhonemeSpectra ep 3 train 0.2868 val 0.5542 acc 0.755 273s
+[train] B_s8_PhonemeSpectra ep 4 train 0.2628 val 0.5783 acc 0.755 344s
+[train] B_s8_PhonemeSpectra ep 5 train 0.2482 val 0.5908 acc 0.755 383s
+[train] B_s8_PhonemeSpectra ep 6 train 0.2399 val 0.6159 acc 0.745 479s
+[train] B_s8_PhonemeSpectra ep 7 train 0.2343 val 0.6293 acc 0.749 570s
+[train] B_s8_PhonemeSpectra ep 8 train 0.2308 val 0.6403 acc 0.748 609s
+[train] B_s8_PhonemeSpectra ep 9 train 0.2278 val 0.6659 acc 0.742 680s
+[train] B_s8_PhonemeSpectra done best acc 0.7550 @ ep 4 epochs 10 pairs/epoch 218674 688s
+[train] B_s8_EthanolConcentration ep 0 train 0.4989 val 0.5230 acc 0.742 63s
+[train] B_s8_EthanolConcentration ep 1 train 0.3808 val 0.5193 acc 0.752 125s
+[train] B_s8_EthanolConcentration ep 2 train 0.3246 val 0.5104 acc 0.763 178s
+[train] B_s8_EthanolConcentration ep 3 train 0.2845 val 0.5114 acc 0.775 275s
+[train] B_s8_EthanolConcentration ep 4 train 0.2605 val 0.5434 acc 0.759 354s
+[train] B_s8_EthanolConcentration ep 5 train 0.2456 val 0.5685 acc 0.762 389s
+[train] B_s8_EthanolConcentration ep 6 train 0.2373 val 0.5787 acc 0.760 483s
+[train] B_s8_EthanolConcentration ep 7 train 0.2305 val 0.6088 acc 0.756 559s
+[train] B_s8_EthanolConcentration ep 8 train 0.2246 val 0.6247 acc 0.751 583s
+[train] B_s8_EthanolConcentration done best acc 0.7746 @ ep 3 epochs 9 pairs/epoch 218702 585s
+[train] B_s9_PhonemeSpectra ep 0 train 0.5185 val 0.5448 acc 0.729 40s
+[train] B_s9_PhonemeSpectra ep 1 train 0.3905 val 0.5375 acc 0.740 137s
+[train] B_s9_PhonemeSpectra ep 2 train 0.3188 val 0.5532 acc 0.741 227s
+[train] B_s9_PhonemeSpectra ep 3 train 0.2769 val 0.5865 acc 0.750 268s
+[train] B_s9_PhonemeSpectra ep 4 train 0.2568 val 0.6192 acc 0.747 338s
+[train] B_s9_PhonemeSpectra ep 5 train 0.2443 val 0.6529 acc 0.745 434s
+[train] B_s9_PhonemeSpectra ep 6 train 0.2369 val 0.6776 acc 0.743 486s
+[train] B_s9_PhonemeSpectra ep 7 train 0.2309 val 0.6841 acc 0.746 502s
+[train] B_s9_PhonemeSpectra ep 8 train 0.2276 val 0.6983 acc 0.742 515s
+[train] B_s9_PhonemeSpectra done best acc 0.7503 @ ep 3 epochs 9 pairs/epoch 218674 516s
+[train] B_s9_EthanolConcentration ep 0 train 0.5058 val 0.5366 acc 0.730 52s
+[train] B_s9_EthanolConcentration ep 1 train 0.3791 val 0.5407 acc 0.748 152s
+[train] B_s9_EthanolConcentration ep 2 train 0.3147 val 0.5468 acc 0.748 232s
+[train] B_s9_EthanolConcentration ep 3 train 0.2760 val 0.5700 acc 0.761 271s
+[train] B_s9_EthanolConcentration ep 4 train 0.2553 val 0.5886 acc 0.755 305s
+[train] B_s9_EthanolConcentration ep 5 train 0.2428 val 0.6178 acc 0.750 351s
+[train] B_s9_EthanolConcentration ep 6 train 0.2348 val 0.6446 acc 0.746 389s
+[train] B_s9_EthanolConcentration ep 7 train 0.2283 val 0.6638 acc 0.748 427s
+[train] B_s9_EthanolConcentration ep 8 train 0.2250 val 0.6705 acc 0.739 496s
+[train] B_s9_EthanolConcentration done best acc 0.7607 @ ep 3 epochs 9 pairs/epoch 218702 500s

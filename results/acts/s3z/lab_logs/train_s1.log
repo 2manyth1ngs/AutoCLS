@@ -1,0 +1,116 @@
+[train] B_s5_Handwriting ep 0 train 0.5210 val 0.5528 acc 0.720 38s
+[train] B_s5_Handwriting ep 1 train 0.4011 val 0.5435 acc 0.734 101s
+[train] B_s5_Handwriting ep 2 train 0.3382 val 0.5441 acc 0.751 145s
+[train] B_s5_Handwriting ep 3 train 0.2974 val 0.5586 acc 0.758 189s
+[train] B_s5_Handwriting ep 4 train 0.2717 val 0.5752 acc 0.746 217s
+[train] B_s5_Handwriting ep 5 train 0.2586 val 0.6072 acc 0.750 243s
+[train] B_s5_Handwriting ep 6 train 0.2482 val 0.6386 acc 0.742 288s
+[train] B_s5_Handwriting ep 7 train 0.2404 val 0.6663 acc 0.739 342s
+[train] B_s5_Handwriting ep 8 train 0.2365 val 0.6715 acc 0.736 385s
+[train] B_s5_Handwriting done best acc 0.7580 @ ep 3 epochs 9 pairs/epoch 214616 387s
+[train] B_s5_Cricket ep 0 train 0.5082 val 0.5392 acc 0.739 26s
+[train] B_s5_Cricket ep 1 train 0.3867 val 0.5223 acc 0.751 58s
+[train] B_s5_Cricket ep 2 train 0.3259 val 0.5105 acc 0.770 120s
+[train] B_s5_Cricket ep 3 train 0.2834 val 0.5135 acc 0.763 189s
+[train] B_s5_Cricket ep 4 train 0.2615 val 0.5434 acc 0.754 220s
+[train] B_s5_Cricket ep 5 train 0.2466 val 0.5727 acc 0.762 247s
+[train] B_s5_Cricket ep 6 train 0.2374 val 0.5872 acc 0.760 306s
+[train] B_s5_Cricket ep 7 train 0.2321 val 0.6121 acc 0.757 353s
+[train] B_s5_Cricket done best acc 0.7697 @ ep 2 epochs 8 pairs/epoch 219004 356s
+[train] B_s6_Handwriting ep 0 train 0.5240 val 0.5678 acc 0.713 38s
+[train] B_s6_Handwriting ep 1 train 0.4138 val 0.5811 acc 0.712 64s
+[train] B_s6_Handwriting ep 2 train 0.3556 val 0.5652 acc 0.730 105s
+[train] B_s6_Handwriting ep 3 train 0.3120 val 0.5689 acc 0.733 164s
+[train] B_s6_Handwriting ep 4 train 0.2842 val 0.5800 acc 0.740 227s
+[train] B_s6_Handwriting ep 5 train 0.2680 val 0.6000 acc 0.732 256s
+[train] B_s6_Handwriting ep 6 train 0.2572 val 0.6246 acc 0.733 282s
+[train] B_s6_Handwriting ep 7 train 0.2478 val 0.6394 acc 0.743 331s
+[train] B_s6_Handwriting ep 8 train 0.2406 val 0.6580 acc 0.743 369s
+[train] B_s6_Handwriting ep 9 train 0.2375 val 0.6864 acc 0.740 412s
+[train] B_s6_Handwriting ep 10 train 0.2338 val 0.6925 acc 0.744 447s
+[train] B_s6_Handwriting ep 11 train 0.2305 val 0.7115 acc 0.735 472s
+[train] B_s6_Handwriting ep 12 train 0.2284 val 0.7353 acc 0.730 511s
+[train] B_s6_Handwriting ep 13 train 0.2264 val 0.7571 acc 0.738 579s
+[train] B_s6_Handwriting ep 14 train 0.2251 val 0.7518 acc 0.730 635s
+[train] B_s6_Handwriting ep 15 train 0.2238 val 0.7654 acc 0.736 663s
+[train] B_s6_Handwriting done best acc 0.7437 @ ep 10 epochs 16 pairs/epoch 214616 665s
+[train] B_s6_Cricket ep 0 train 0.5067 val 0.5530 acc 0.725 27s
+[train] B_s6_Cricket ep 1 train 0.3955 val 0.5582 acc 0.728 86s
+[train] B_s6_Cricket ep 2 train 0.3395 val 0.5432 acc 0.743 134s
+[train] B_s6_Cricket ep 3 train 0.2960 val 0.5666 acc 0.746 170s
+[train] B_s6_Cricket ep 4 train 0.2694 val 0.5896 acc 0.743 196s
+[train] B_s6_Cricket ep 5 train 0.2525 val 0.6267 acc 0.740 256s
+[train] B_s6_Cricket ep 6 train 0.2429 val 0.6469 acc 0.741 327s
+[train] B_s6_Cricket ep 7 train 0.2349 val 0.6680 acc 0.742 365s
+[train] B_s6_Cricket ep 8 train 0.2308 val 0.6946 acc 0.732 390s
+[train] B_s6_Cricket done best acc 0.7456 @ ep 3 epochs 9 pairs/epoch 219004 392s
+[train] B_s7_Handwriting ep 0 train 0.5274 val 0.5590 acc 0.716 59s
+[train] B_s7_Handwriting ep 1 train 0.4041 val 0.5620 acc 0.730 105s
+[train] B_s7_Handwriting ep 2 train 0.3425 val 0.5463 acc 0.744 146s
+[train] B_s7_Handwriting ep 3 train 0.3022 val 0.5400 acc 0.744 171s
+[train] B_s7_Handwriting ep 4 train 0.2768 val 0.5532 acc 0.744 215s
+[train] B_s7_Handwriting ep 5 train 0.2611 val 0.5786 acc 0.745 284s
+[train] B_s7_Handwriting ep 6 train 0.2520 val 0.5886 acc 0.743 339s
+[train] B_s7_Handwriting ep 7 train 0.2433 val 0.6088 acc 0.745 365s
+[train] B_s7_Handwriting ep 8 train 0.2389 val 0.6259 acc 0.739 406s
+[train] B_s7_Handwriting ep 9 train 0.2340 val 0.6446 acc 0.745 474s
+[train] B_s7_Handwriting ep 10 train 0.2314 val 0.6530 acc 0.744 506s
+[train] B_s7_Handwriting ep 11 train 0.2282 val 0.6737 acc 0.746 532s
+[train] B_s7_Handwriting ep 12 train 0.2262 val 0.6876 acc 0.742 557s
+[train] B_s7_Handwriting ep 13 train 0.2257 val 0.6875 acc 0.753 613s
+[train] B_s7_Handwriting ep 14 train 0.2232 val 0.7157 acc 0.742 682s
+[train] B_s7_Handwriting ep 15 train 0.2216 val 0.7024 acc 0.744 725s
+[train] B_s7_Handwriting ep 16 train 0.2206 val 0.7228 acc 0.743 752s
+[train] B_s7_Handwriting ep 17 train 0.2195 val 0.7521 acc 0.740 803s
+[train] B_s7_Handwriting ep 18 train 0.2189 val 0.7354 acc 0.740 872s
+[train] B_s7_Handwriting done best acc 0.7526 @ ep 13 epochs 19 pairs/epoch 214616 877s
+[train] B_s7_Cricket ep 0 train 0.5103 val 0.5517 acc 0.720 19s
+[train] B_s7_Cricket ep 1 train 0.3927 val 0.5355 acc 0.738 39s
+[train] B_s7_Cricket ep 2 train 0.3322 val 0.5269 acc 0.749 65s
+[train] B_s7_Cricket ep 3 train 0.2907 val 0.5316 acc 0.750 122s
+[train] B_s7_Cricket ep 4 train 0.2663 val 0.5555 acc 0.748 192s
+[train] B_s7_Cricket ep 5 train 0.2501 val 0.5906 acc 0.746 233s
+[train] B_s7_Cricket ep 6 train 0.2409 val 0.6081 acc 0.746 258s
+[train] B_s7_Cricket ep 7 train 0.2325 val 0.6489 acc 0.741 312s
+[train] B_s7_Cricket ep 8 train 0.2288 val 0.6585 acc 0.747 381s
+[train] B_s7_Cricket done best acc 0.7503 @ ep 3 epochs 9 pairs/epoch 219004 387s
+[train] B_s8_Handwriting ep 0 train 0.5194 val 0.5449 acc 0.724 20s
+[train] B_s8_Handwriting ep 1 train 0.4008 val 0.5342 acc 0.732 31s
+[train] B_s8_Handwriting ep 2 train 0.3375 val 0.5402 acc 0.747 54s
+[train] B_s8_Handwriting ep 3 train 0.2948 val 0.5359 acc 0.765 80s
+[train] B_s8_Handwriting ep 4 train 0.2721 val 0.5653 acc 0.763 149s
+[train] B_s8_Handwriting ep 5 train 0.2588 val 0.5711 acc 0.756 213s
+[train] B_s8_Handwriting ep 6 train 0.2475 val 0.6067 acc 0.758 243s
+[train] B_s8_Handwriting ep 7 train 0.2424 val 0.6310 acc 0.748 269s
+[train] B_s8_Handwriting ep 8 train 0.2375 val 0.6473 acc 0.749 336s
+[train] B_s8_Handwriting done best acc 0.7655 @ ep 3 epochs 9 pairs/epoch 214616 342s
+[train] B_s8_Cricket ep 0 train 0.5056 val 0.5306 acc 0.739 60s
+[train] B_s8_Cricket ep 1 train 0.3865 val 0.5191 acc 0.758 74s
+[train] B_s8_Cricket ep 2 train 0.3256 val 0.5179 acc 0.767 85s
+[train] B_s8_Cricket ep 3 train 0.2838 val 0.5459 acc 0.757 108s
+[train] B_s8_Cricket ep 4 train 0.2608 val 0.5678 acc 0.767 162s
+[train] B_s8_Cricket ep 5 train 0.2485 val 0.5818 acc 0.754 232s
+[train] B_s8_Cricket ep 6 train 0.2377 val 0.6007 acc 0.759 277s
+[train] B_s8_Cricket ep 7 train 0.2308 val 0.6298 acc 0.755 304s
+[train] B_s8_Cricket done best acc 0.7673 @ ep 2 epochs 8 pairs/epoch 219004 305s
+[train] B_s9_Handwriting ep 0 train 0.5220 val 0.5640 acc 0.716 68s
+[train] B_s9_Handwriting ep 1 train 0.4005 val 0.5480 acc 0.732 136s
+[train] B_s9_Handwriting ep 2 train 0.3302 val 0.5592 acc 0.732 158s
+[train] B_s9_Handwriting ep 3 train 0.2877 val 0.5893 acc 0.732 168s
+[train] B_s9_Handwriting ep 4 train 0.2651 val 0.6237 acc 0.735 178s
+[train] B_s9_Handwriting ep 5 train 0.2539 val 0.6622 acc 0.732 201s
+[train] B_s9_Handwriting ep 6 train 0.2448 val 0.6784 acc 0.734 269s
+[train] B_s9_Handwriting ep 7 train 0.2390 val 0.6902 acc 0.735 337s
+[train] B_s9_Handwriting ep 8 train 0.2340 val 0.7228 acc 0.735 370s
+[train] B_s9_Handwriting ep 9 train 0.2323 val 0.7420 acc 0.731 395s
+[train] B_s9_Handwriting done best acc 0.7352 @ ep 4 epochs 10 pairs/epoch 214616 397s
+[train] B_s9_Cricket ep 0 train 0.5089 val 0.5535 acc 0.722 70s
+[train] B_s9_Cricket ep 1 train 0.3859 val 0.5400 acc 0.741 136s
+[train] B_s9_Cricket ep 2 train 0.3174 val 0.5554 acc 0.748 158s
+[train] B_s9_Cricket ep 3 train 0.2753 val 0.6007 acc 0.750 169s
+[train] B_s9_Cricket ep 4 train 0.2542 val 0.6243 acc 0.742 179s
+[train] B_s9_Cricket ep 5 train 0.2428 val 0.6734 acc 0.734 217s
+[train] B_s9_Cricket ep 6 train 0.2359 val 0.6684 acc 0.734 287s
+[train] B_s9_Cricket ep 7 train 0.2291 val 0.6915 acc 0.741 344s
+[train] B_s9_Cricket ep 8 train 0.2257 val 0.7057 acc 0.745 371s
+[train] B_s9_Cricket done best acc 0.7505 @ ep 3 epochs 9 pairs/epoch 219004 372s
