@@ -1,0 +1,11 @@
+[ACTS-s1pp] 计划 432 格，已有 428，待跑 4
+[data] EthanolConcentration: X=(524, 1751, 3) classes=4
+[data] EthanolConcentration_whole_tcv2_r1: tcv fold 2/3 train=(174, 1751, 3) eval=(87, 1751, 3)
+[ACTS-s1pp 1/4] EthanolConcentration_whole_tcv2_r1/random/c9099913 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.356 0.322 0.299] (267.7s+1.0s)
+[data] EthanolConcentration_whole_tcv2_r2: tcv fold 2/3 train=(174, 1751, 3) eval=(87, 1751, 3)
+[ACTS-s1pp 2/4] EthanolConcentration_whole_tcv2_r2/random/c9099913 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.322 0.253 0.276] (295.0s+1.1s)
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_tcv2_r1: tcv fold 2/3 train=(178, 896, 6) eval=(90, 896, 6)
+[ACTS-s1pp 3/4] SelfRegulationSCP1_whole_tcv2_r1/random/b48c0adf s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.756 0.744 0.756] (288.7s+0.9s)
+[ACTS-s1pp 4/4] SelfRegulationSCP1_whole_tcv2_r1/random/ef1e02d2 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.744 0.711 0.700] (143.8s+0.7s)
+[ACTS-s1pp] 收官

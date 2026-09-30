@@ -1,0 +1,50 @@
+[ACTS-s1pp] 计划 32 格，已有 0，待跑 32
+[data] PhonemeSpectra: X=(6668, 217, 11) classes=39
+[data] PhonemeSpectra_whole_tcv0_r2: tcv fold 0/3 train=(2212, 217, 11) eval=(1103, 217, 11)
+[ACTS-s1pp 1/32] PhonemeSpectra_whole_tcv0_r2/random/f0f04062 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.222 0.210 0.201] (120.6s+19.4s)
+[ACTS-s1pp 2/32] PhonemeSpectra_whole_tcv0_r2/random/80f140fd s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.218 0.222 0.229] (236.7s+18.8s)
+[ACTS-s1pp 3/32] PhonemeSpectra_whole_tcv0_r2/random/9295f7c3 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.218 0.217 0.204] (50.8s+20.4s)
+[ACTS-s1pp 4/32] PhonemeSpectra_whole_tcv0_r2/random/6b5779cd s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.209 0.222 0.225] (111.1s+21.0s)
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_tcv0_r2: tcv fold 0/3 train=(72, 1197, 6) eval=(36, 1197, 6)
+[ACTS-s1pp 5/32] Cricket_whole_tcv0_r2/random/91fc721a s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 1.000 1.000] (269.2s+0.7s)
+[ACTS-s1pp 6/32] Cricket_whole_tcv0_r2/random/37354a6f s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 0.944 0.944] (114.8s+0.6s)
+[ACTS-s1pp 7/32] Cricket_whole_tcv0_r2/random/cbfe2174 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 1.000 1.000] (61.9s+0.6s)
+[ACTS-s1pp 8/32] Cricket_whole_tcv0_r2/random/f8173a85 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 0.972 1.000] (177.6s+0.6s)
+[data] EthanolConcentration: X=(524, 1751, 3) classes=4
+[data] EthanolConcentration_whole_tcv1_r1: tcv fold 1/3 train=(174, 1751, 3) eval=(87, 1751, 3)
+[ACTS-s1pp 9/32] EthanolConcentration_whole_tcv1_r1/random/6206e140 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.299 0.356 0.345] (186.4s+0.9s)
+[ACTS-s1pp 10/32] EthanolConcentration_whole_tcv1_r1/random/56b799f3 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.322 0.322 0.276] (132.1s+0.9s)
+[ACTS-s1pp 11/32] EthanolConcentration_whole_tcv1_r1/random/cfee7f95 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.287 0.310 0.253] (220.1s+0.9s)
+[ACTS-s1pp 12/32] EthanolConcentration_whole_tcv1_r1/random/c9e99415 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.299 0.276 0.345] (131.1s+0.9s)
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_tcv0_r1: tcv fold 0/3 train=(179, 896, 6) eval=(89, 896, 6)
+[ACTS-s1pp 13/32] SelfRegulationSCP1_whole_tcv0_r1/random/5b593ba9 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.820 0.854 0.787] (226.6s+0.7s)
+[ACTS-s1pp 14/32] SelfRegulationSCP1_whole_tcv0_r1/random/6ce63587 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.764 0.753 0.798] (60.2s+0.7s)
+[ACTS-s1pp 15/32] SelfRegulationSCP1_whole_tcv0_r1/random/dc5a349b s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.685 0.719 0.697] (114.1s+0.9s)
+[ACTS-s1pp 16/32] SelfRegulationSCP1_whole_tcv0_r1/random/dd5ee11f s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.798 0.775 0.753] (52.5s+0.8s)
+[data] PhonemeSpectra: X=(6668, 217, 11) classes=39
+[data] PhonemeSpectra_whole_tcv0_r2: tcv fold 0/3 train=(2212, 217, 11) eval=(1103, 217, 11)
+[ACTS-s1pp 17/32] PhonemeSpectra_whole_tcv0_r2/random/7ad9ae4c s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.198 0.187 0.192] (167.2s+21.1s)
+[ACTS-s1pp 18/32] PhonemeSpectra_whole_tcv0_r2/random/79063aba s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.192 0.187 0.202] (253.4s+21.4s)
+[ACTS-s1pp 19/32] PhonemeSpectra_whole_tcv0_r2/random/fb5b75ac s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.209 0.212 0.212] (181.0s+19.7s)
+[ACTS-s1pp 20/32] PhonemeSpectra_whole_tcv0_r2/random/f263f8b3 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.199 0.200 0.209] (253.3s+21.5s)
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_tcv0_r2: tcv fold 0/3 train=(72, 1197, 6) eval=(36, 1197, 6)
+[ACTS-s1pp 21/32] Cricket_whole_tcv0_r2/random/20c3844f s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (107.5s+0.6s)
+[ACTS-s1pp 22/32] Cricket_whole_tcv0_r2/random/0e8c76e6 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (307.3s+0.6s)
+[ACTS-s1pp 23/32] Cricket_whole_tcv0_r2/random/8f1a6a44 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 1.000 0.972] (87.9s+0.6s)
+[ACTS-s1pp 24/32] Cricket_whole_tcv0_r2/random/57d025cf s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.972] (268.3s+0.6s)
+[data] EthanolConcentration: X=(524, 1751, 3) classes=4
+[data] EthanolConcentration_whole_tcv1_r1: tcv fold 1/3 train=(174, 1751, 3) eval=(87, 1751, 3)
+[ACTS-s1pp 25/32] EthanolConcentration_whole_tcv1_r1/random/f0f9cc91 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.356 0.310 0.276] (206.2s+0.9s)
+[ACTS-s1pp 26/32] EthanolConcentration_whole_tcv1_r1/random/c9099913 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.299 0.322 0.287] (414.0s+0.9s)
+[ACTS-s1pp 27/32] EthanolConcentration_whole_tcv1_r1/random/aff487a6 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.299 0.368 0.333] (222.9s+0.8s)
+[ACTS-s1pp 28/32] EthanolConcentration_whole_tcv1_r1/random/161701de s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.310 0.276 0.310] (361.4s+0.8s)
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_tcv0_r1: tcv fold 0/3 train=(179, 896, 6) eval=(89, 896, 6)
+[ACTS-s1pp 29/32] SelfRegulationSCP1_whole_tcv0_r1/random/9132b068 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.854 0.888 0.854] (299.0s+0.8s)
+[ACTS-s1pp 30/32] SelfRegulationSCP1_whole_tcv0_r1/random/b48c0adf s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.764 0.809 0.865] (513.9s+0.6s)
+[ACTS-s1pp 31/32] SelfRegulationSCP1_whole_tcv0_r1/random/ef1e02d2 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.809 0.753 0.820] (236.0s+0.7s)
+[ACTS-s1pp 32/32] SelfRegulationSCP1_whole_tcv0_r1/random/b532f2cf s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.809 0.753 0.831] (181.2s+0.7s)
+[ACTS-s1pp] 收官

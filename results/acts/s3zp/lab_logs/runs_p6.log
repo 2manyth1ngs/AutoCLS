@@ -1,0 +1,50 @@
+[ACTS-s1pp] 计划 32 格，已有 0，待跑 32
+[data] PhonemeSpectra: X=(6668, 217, 11) classes=39
+[data] PhonemeSpectra_whole_tcv1_r1: tcv fold 1/3 train=(2213, 217, 11) eval=(1102, 217, 11)
+[ACTS-s1pp 1/32] PhonemeSpectra_whole_tcv1_r1/random/f0f04062 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.216 0.227 0.220] (165.3s+21.2s)
+[ACTS-s1pp 2/32] PhonemeSpectra_whole_tcv1_r1/random/80f140fd s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.220 0.221 0.239] (269.0s+19.3s)
+[ACTS-s1pp 3/32] PhonemeSpectra_whole_tcv1_r1/random/9295f7c3 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.224 0.216 0.201] (48.8s+19.8s)
+[ACTS-s1pp 4/32] PhonemeSpectra_whole_tcv1_r1/random/6b5779cd s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.201 0.216 0.214] (199.7s+20.7s)
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_tcv2_r1: tcv fold 2/3 train=(72, 1197, 6) eval=(36, 1197, 6)
+[ACTS-s1pp 5/32] Cricket_whole_tcv2_r1/random/91fc721a s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 1.000 1.000] (268.1s+0.6s)
+[ACTS-s1pp 6/32] Cricket_whole_tcv2_r1/random/37354a6f s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (222.5s+0.6s)
+[ACTS-s1pp 7/32] Cricket_whole_tcv2_r1/random/cbfe2174 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 1.000 1.000] (62.2s+0.6s)
+[ACTS-s1pp 8/32] Cricket_whole_tcv2_r1/random/f8173a85 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 1.000 1.000] (180.0s+0.6s)
+[data] EthanolConcentration: X=(524, 1751, 3) classes=4
+[data] EthanolConcentration_whole_tcv2_r1: tcv fold 2/3 train=(174, 1751, 3) eval=(87, 1751, 3)
+[ACTS-s1pp 9/32] EthanolConcentration_whole_tcv2_r1/random/6206e140 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.264 0.310 0.149] (308.5s+0.9s)
+[ACTS-s1pp 10/32] EthanolConcentration_whole_tcv2_r1/random/56b799f3 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.356 0.310 0.333] (145.2s+0.9s)
+[ACTS-s1pp 11/32] EthanolConcentration_whole_tcv2_r1/random/cfee7f95 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.310 0.253 0.345] (286.7s+0.9s)
+[ACTS-s1pp 12/32] EthanolConcentration_whole_tcv2_r1/random/c9e99415 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.322 0.333 0.310] (137.7s+0.9s)
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_tcv1_r1: tcv fold 1/3 train=(179, 896, 6) eval=(89, 896, 6)
+[ACTS-s1pp 13/32] SelfRegulationSCP1_whole_tcv1_r1/random/5b593ba9 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.787 0.775 0.820] (388.6s+0.9s)
+[ACTS-s1pp 14/32] SelfRegulationSCP1_whole_tcv1_r1/random/6ce63587 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.787 0.764 0.787] (63.2s+0.7s)
+[ACTS-s1pp 15/32] SelfRegulationSCP1_whole_tcv1_r1/random/dc5a349b s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.730 0.719 0.753] (113.2s+0.7s)
+[ACTS-s1pp 16/32] SelfRegulationSCP1_whole_tcv1_r1/random/dd5ee11f s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.798 0.775 0.787] (52.3s+0.8s)
+[data] PhonemeSpectra: X=(6668, 217, 11) classes=39
+[data] PhonemeSpectra_whole_tcv1_r1: tcv fold 1/3 train=(2213, 217, 11) eval=(1102, 217, 11)
+[ACTS-s1pp 17/32] PhonemeSpectra_whole_tcv1_r1/random/7ad9ae4c s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.201 0.207 0.204] (250.4s+19.8s)
+[ACTS-s1pp 18/32] PhonemeSpectra_whole_tcv1_r1/random/79063aba s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.191 0.203 0.204] (287.4s+19.5s)
+[ACTS-s1pp 19/32] PhonemeSpectra_whole_tcv1_r1/random/fb5b75ac s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.196 0.219 0.202] (266.8s+20.4s)
+[ACTS-s1pp 20/32] PhonemeSpectra_whole_tcv1_r1/random/f263f8b3 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.188 0.191 0.202] (269.1s+20.8s)
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_tcv2_r1: tcv fold 2/3 train=(72, 1197, 6) eval=(36, 1197, 6)
+[ACTS-s1pp 21/32] Cricket_whole_tcv2_r1/random/20c3844f s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 1.000 1.000] (164.7s+0.6s)
+[ACTS-s1pp 22/32] Cricket_whole_tcv2_r1/random/0e8c76e6 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 0.972 0.972] (383.5s+0.6s)
+[ACTS-s1pp 23/32] Cricket_whole_tcv2_r1/random/8f1a6a44 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.944 0.944] (104.5s+0.6s)
+[ACTS-s1pp 24/32] Cricket_whole_tcv2_r1/random/57d025cf s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (293.4s+0.6s)
+[data] EthanolConcentration: X=(524, 1751, 3) classes=4
+[data] EthanolConcentration_whole_tcv2_r1: tcv fold 2/3 train=(174, 1751, 3) eval=(87, 1751, 3)
+[ACTS-s1pp 25/32] EthanolConcentration_whole_tcv2_r1/random/f0f9cc91 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.333 0.345 0.310] (258.4s+0.9s)
+[ACTS-s1pp 26/32] ⚠️ OOM EthanolConcentration_whole_tcv2_r1/random/c9099913 s1 iters=600 ckpt=[150, 300, 600] → 不写缓存：OutOfMemoryError: CUDA out of memory. Tried to allocate 22.00 MiB. GPU 0 has a total capacity of 23.53 GiB of which 11.44 MiB is free. Process 1948705 has 7.85 GiB memory in use. Process 3265752 has 11.42 GiB memory in use. Including non-PyTorch memory, this process has 4.21 GiB memory in use. Of the allocated memory 3.67 GiB is allocated by PyTorch, and 78.88 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[ACTS-s1pp 27/32] EthanolConcentration_whole_tcv2_r1/random/aff487a6 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.276 0.310 0.276] (316.8s+0.9s)
+[ACTS-s1pp 28/32] EthanolConcentration_whole_tcv2_r1/random/161701de s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.356 0.333 0.322] (443.8s+0.9s)
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_tcv1_r1: tcv fold 1/3 train=(179, 896, 6) eval=(89, 896, 6)
+[ACTS-s1pp 29/32] SelfRegulationSCP1_whole_tcv1_r1/random/9132b068 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.809 0.809 0.854] (403.5s+0.9s)
+[ACTS-s1pp 30/32] SelfRegulationSCP1_whole_tcv1_r1/random/b48c0adf s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.798 0.820 0.787] (655.6s+0.8s)
+[ACTS-s1pp 31/32] SelfRegulationSCP1_whole_tcv1_r1/random/ef1e02d2 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.764 0.764 0.787] (355.2s+0.9s)
+[ACTS-s1pp 32/32] SelfRegulationSCP1_whole_tcv1_r1/random/b532f2cf s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.764 0.764 0.775] (350.6s+0.8s)
+[ACTS-s1pp] 收官
