@@ -3,7 +3,7 @@
 #   解包 → 核对输入（含 S3-Z NEW_B 10 成员 × 6 折模型）→ symlink → pytest → 分槽 →
 #   ① score-src（10 成员 × 6 折对 160 个源任务已标配置打分 + 靶 E_pt 均值）② prep-ea（靶官方 TRAIN 的 E_A）③ fit（内层留一源选超参 + 源专家）→
 #   ④ 按分数搜索 ME / UNI × 6 集（11 个搜索者并集）→ ⑤ U 每条 3 折 CV + 官方种子 0 → select → 选中者与纯比较器第 1 名的官方种子 1 / 2 → verify → 打包。
-#   GPUS="0 1 2 3" setsid -f bash .../scripts/pa_pod/acts_lab_run_s3md.sh > /tmp/acts_s3md_out/logs/run.log 2>&1 < /dev/null
+#   GPUS="1 5 3 6" FORCE_PER_GPU=1 RETRIES=30 setsid -f bash .../scripts/pa_pod/acts_lab_run_s3md.sh > /tmp/acts_s3md_out/logs/run.log 2>&1 < /dev/null
 set -uo pipefail
 REPO="/home/b311/data/wangwenjie/kejunyu/AutoCLS"; T="/tmp/acts_s3md_out"; LOG="$T/logs"; UP="$REPO/upload"; OUT="results/acts/s3md"
 MODELS="/tmp/acts_s3z_out/models"
@@ -31,6 +31,7 @@ SLOTS=()
 for g in $GPUS; do
   free=$(nvidia-smi --query-gpu=memory.total,memory.used --format=csv,noheader,nounits -i $g | awk -F', ' '{print $1-$2}')
   n=$(( (free - 1500) / SLOT_MB )); [ $n -gt 2 ] && n=2; [ $n -lt 0 ] && n=0
+  [ -n "${FORCE_PER_GPU:-}" ] && n=$FORCE_PER_GPU                          # 他人占卡时按用户指定的卡数固定槽数（OOM 由 retry + --resume 自愈）
   for ((k=0; k<n; k++)); do SLOTS+=($g); done
   echo "== GPU $g free ${free} MiB → $n 槽"
 done
