@@ -1,0 +1,12 @@
+[ACTS-s1pp] 计划 52 格，已有 44，待跑 8
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_official: official train=(120, 315, 3) test=(320, 315, 3)
+[ACTS-s1pp 1/8] UWaveGestureLibrary_whole_official/random/0467c9bc s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.881 0.903 0.903] (177.2s+0.8s)
+[ACTS-s1pp 2/8] UWaveGestureLibrary_whole_official/random/0467c9bc s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.912 0.903 0.912] (148.4s+0.7s)
+[ACTS-s1pp 3/8] UWaveGestureLibrary_whole_official/random/18871f0f s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.900 0.887 0.891] (182.7s+0.7s)
+[ACTS-s1pp 4/8] UWaveGestureLibrary_whole_official/random/18871f0f s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.925 0.925 0.912] (180.8s+0.8s)
+[ACTS-s1pp 5/8] UWaveGestureLibrary_whole_official/random/44966bb0 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.928 0.916 0.916] (181.1s+0.7s)
+[ACTS-s1pp 6/8] UWaveGestureLibrary_whole_official/random/44966bb0 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.922 0.919 0.909] (171.0s+0.6s)
+[ACTS-s1pp 7/8] UWaveGestureLibrary_whole_official/random/db6923fb s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.897 0.894 0.891] (156.5s+0.6s)
+[ACTS-s1pp 8/8] UWaveGestureLibrary_whole_official/random/db6923fb s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.912 0.916 0.894] (175.2s+0.7s)
+[ACTS-s1pp] 收官

@@ -1,0 +1,26 @@
+[ACTS-s1pp] 计划 103 格，已有 87，待跑 16
+[data] Handwriting: X=(1000, 152, 3) classes=26
+[data] Handwriting_whole_official: official train=(150, 152, 3) test=(850, 152, 3)
+[ACTS-s1pp 1/16] Handwriting_whole_official/random/fc11bede s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.418 0.526 0.558] (18.3s+1.0s)
+[ACTS-s1pp 2/16] Handwriting_whole_official/random/fc11bede s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.389 0.536 0.551] (18.8s+0.9s)
+[ACTS-s1pp 3/16] Handwriting_whole_official/random/504b5e49 s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.362 0.409 0.481] (27.5s+1.0s)
+[ACTS-s1pp 4/16] Handwriting_whole_official/random/504b5e49 s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.346 0.386 0.441] (26.0s+0.8s)
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_official: official train=(268, 896, 6) test=(293, 896, 6)
+[ACTS-s1pp 5/16] SelfRegulationSCP1_whole_official/random/326e05bc s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.765 0.747 0.741] (69.1s+0.9s)
+[ACTS-s1pp 6/16] SelfRegulationSCP1_whole_official/random/326e05bc s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.778 0.758 0.717] (65.7s+0.9s)
+[ACTS-s1pp 7/16] SelfRegulationSCP1_whole_official/random/76d2f89c s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.840 0.860 0.867] (48.2s+0.9s)
+[ACTS-s1pp 8/16] SelfRegulationSCP1_whole_official/random/76d2f89c s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.860 0.853 0.826] (50.5s+0.9s)
+[data] Handwriting: X=(1000, 152, 3) classes=26
+[data] Handwriting_whole_official: official train=(150, 152, 3) test=(850, 152, 3)
+[ACTS-s1pp 9/16] Handwriting_whole_official/random/05ea3296 s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.412 0.442 0.461] (19.4s+0.9s)
+[ACTS-s1pp 10/16] Handwriting_whole_official/random/05ea3296 s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.413 0.419 0.439] (17.3s+0.9s)
+[ACTS-s1pp 11/16] Handwriting_whole_official/random/ca630957 s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.369 0.451 0.500] (14.6s+0.9s)
+[ACTS-s1pp 12/16] Handwriting_whole_official/random/ca630957 s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.338 0.409 0.473] (14.0s+0.9s)
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_official: official train=(268, 896, 6) test=(293, 896, 6)
+[ACTS-s1pp 13/16] SelfRegulationSCP1_whole_official/random/4fe31792 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.747 0.812 0.853] (104.4s+0.8s)
+[ACTS-s1pp 14/16] SelfRegulationSCP1_whole_official/random/4fe31792 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.816 0.785 0.857] (112.1s+0.9s)
+[ACTS-s1pp 15/16] SelfRegulationSCP1_whole_official/random/dd2cea5e s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.751 0.747 0.741] (80.3s+0.9s)
+[ACTS-s1pp 16/16] SelfRegulationSCP1_whole_official/random/dd2cea5e s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.778 0.741 0.758] (77.0s+0.8s)
+[ACTS-s1pp] 收官

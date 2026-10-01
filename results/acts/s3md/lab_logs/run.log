@@ -1,0 +1,40 @@
+== HEAD 24e67a3
+== S3-C-D 靶端 E 6 / 6
+== S3-Z NEW_B 模型 60 / 60
+== 预置 runs 1236 行
+21 passed in 27.65s
+== GPU 1 free 3772 MiB → 1 槽
+== GPU 5 free 3160 MiB → 1 槽
+== GPU 3 free 2569 MiB → 1 槽
+== GPU 6 free 2281 MiB → 1 槽
+== 共 4 槽：1 5 3 6
+== [01:15:32] score-src + prep-ea
+== [01:16:03] fit
+[fit] Handwriting ME：α_w 1 τ 0.5 γ 0.75；π 前 3 PTB-XL 0.18，FordA 0.17，SleepEDF 0.13
+[fit] Handwriting UNI：α_w 1 τ 1 γ 0.75；π 前 3 UniMiB-SHAR 0.06，PhonemeSpectra 0.06，UWaveGestureLibrary 0.06
+[fit] PhonemeSpectra ME：α_w 1 τ 1 γ 0.75；π 前 3 PTB-XL 0.10，FordA 0.09，SleepEDF 0.09
+[fit] PhonemeSpectra UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.06，UniMiB-SHAR 0.06，UWaveGestureLibrary 0.06
+[fit] UWaveGestureLibrary ME：α_w 1 τ 1 γ 0.75；π 前 3 ShapesAll 0.13，NonInvasiveFetalECGThorax1 0.10，SelfRegulationSCP1 0.08
+[fit] UWaveGestureLibrary UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.06，UniMiB-SHAR 0.06，PhonemeSpectra 0.06
+[fit] Cricket ME：α_w 1 τ 0.5 γ 0.75；π 前 3 SleepEDF 0.13，FordA 0.11，UniMiB-SHAR 0.09
+[fit] Cricket UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.06，UniMiB-SHAR 0.06，PhonemeSpectra 0.06
+[fit] EthanolConcentration ME：α_w 1 τ 0.5 γ 0.75；π 前 3 ShapesAll 0.13，UWaveGestureLibrary 0.11，NonInvasiveFetalECGThorax1 0.10
+[fit] EthanolConcentration UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.06，UniMiB-SHAR 0.06，PhonemeSpectra 0.06
+[fit] SelfRegulationSCP1 ME：α_w 1 τ 1 γ 0.75；π 前 3 Cricket 0.09，UWaveGestureLibrary 0.07，EthanolConcentration 0.07
+[fit] SelfRegulationSCP1 UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.06，UniMiB-SHAR 0.06，PhonemeSpectra 0.06
+== [01:16:54] 搜索 12
+== [01:18:27] 搜索完：12 / 12
+[search] ME_Cricket：|U| = 22，γ 0.75，COMP-ONLY 8467e2e4，27s
+[search] ME_EthanolConcentration：|U| = 22，γ 0.75，COMP-ONLY 5a0623dc，7s
+[search] ME_Handwriting：|U| = 22，γ 0.75，COMP-ONLY 504b5e49，7s
+[search] ME_PhonemeSpectra：|U| = 22，γ 0.75，COMP-ONLY 398c2ce4，13s
+[search] ME_SelfRegulationSCP1：|U| = 22，γ 0.75，COMP-ONLY 326e05bc，12s
+[search] ME_UWaveGestureLibrary：|U| = 22，γ 0.75，COMP-ONLY 18871f0f，13s
+[search] UNI_Cricket：|U| = 22，γ 0.75，COMP-ONLY b553f234，16s
+[search] UNI_EthanolConcentration：|U| = 22，γ 0.75，COMP-ONLY 9640e864，15s
+[search] UNI_Handwriting：|U| = 22，γ 0.75，COMP-ONLY ca630957，14s
+[search] UNI_PhonemeSpectra：|U| = 21，γ 0.75，COMP-ONLY 1c495e74，27s
+[search] UNI_SelfRegulationSCP1：|U| = 22，γ 0.75，COMP-ONLY dd2cea5e，27s
+[search] UNI_UWaveGestureLibrary：|U| = 22，γ 0.75，COMP-ONLY db6923fb，7s
+== [01:18:27] CV 格
+[plan cv] 臂 ['ME', 'UNI']：1024 格

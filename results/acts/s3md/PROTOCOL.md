@@ -83,3 +83,8 @@
   - 7；8。
 
 ## §6 执行台账（跑后填写）
+- 2026-10-01 01:13 UTC：实现 68bc31d（tests 6 例绿；本地冒烟 Cricket × 2 个随机初始化成员 × ks 400 四阶段通过；γ = 0 时搜索与 111 NEW_B 逐位相同）；服务器脚本 24e67a3 加 `FORCE_PER_GPU`（8 卡均被他人占用 20–24 GB，按原规则 0 槽）。
+- 01:15 起跑（GPU 1/5/3/6，每卡 1 槽 = 用户指定四卡并行）：score-src / prep-ea / fit / 12 个搜索 3 min 内完成（γ 6/6 折 0.75、α_w 1、ME τ 0.5–1）；CV 计划 1,024 格，与 S3-Z 预置格重合 0。
+- 09:43：CV 875 / 1024，约 100 格因他人占卡 OOM 被跳过（83 不落盘 OOM、且剔除 OOM ≥ 2 次的格）→ **操作偏离**：停主流水父进程（原分片 2 / 3 照跑），起接管脚本 `scripts/pa_pod/acts_lab_s3md_cont.sh`（每轮清空 oom_failures.jsonl、未完成任务分到空闲显存最多的卡、在跑进程 ≤ 4；select / plan final 同主流水）。
+- 12:27 CV verify 1024 / 1024 OK（接管两轮，0 OOM）→ select → final 1070 / 1070 OK → 13:10 打包；墙钟 11.9 h，0 error。
+- 读数（REPORT.md）：**S3MD-BEATS-TS2VEC+E**，ME 0.6334 / UNI 0.6154 / BLIND 0.6377 / TS2Vec 0.6243 / InfoTS_s 0.6468；预测 2/6。

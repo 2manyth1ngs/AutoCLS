@@ -1,0 +1,24 @@
+[ACTS-s1pp] 计划 100 格，已有 86，待跑 14
+[data] PhonemeSpectra: X=(6668, 217, 11) classes=39
+[data] PhonemeSpectra_whole_official: official train=(3315, 217, 11) test=(3353, 217, 11)
+[ACTS-s1pp 1/14] PhonemeSpectra_whole_official/random/398c2ce4 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.175 0.180 0.187] (220.1s+47.1s)
+[ACTS-s1pp 2/14] PhonemeSpectra_whole_official/random/398c2ce4 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.172 0.177 0.191] (248.1s+48.8s)
+[ACTS-s1pp 3/14] PhonemeSpectra_whole_official/random/ee1a0a3f s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.263 0.260 0.255] (55.9s+45.1s)
+[ACTS-s1pp 4/14] PhonemeSpectra_whole_official/random/ee1a0a3f s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.256 0.254 0.249] (53.7s+44.8s)
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_official: official train=(108, 1197, 6) test=(72, 1197, 6)
+[ACTS-s1pp 5/14] Cricket_whole_official/random/8467e2e4 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 1.000 0.972] (142.9s+0.6s)
+[ACTS-s1pp 6/14] Cricket_whole_official/random/8467e2e4 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.972 0.958] (147.2s+0.6s)
+[data] PhonemeSpectra: X=(6668, 217, 11) classes=39
+[data] PhonemeSpectra_whole_official: official train=(3315, 217, 11) test=(3353, 217, 11)
+[ACTS-s1pp 7/14] PhonemeSpectra_whole_official/random/be6d7207 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.219 0.228 0.232] (124.6s+44.9s)
+[ACTS-s1pp 8/14] PhonemeSpectra_whole_official/random/be6d7207 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.211 0.225 0.232] (130.2s+46.5s)
+[ACTS-s1pp 9/14] PhonemeSpectra_whole_official/random/1c495e74 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.171 0.150 0.140] (210.4s+49.4s)
+[ACTS-s1pp 10/14] PhonemeSpectra_whole_official/random/1c495e74 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.156 0.146 0.136] (235.1s+49.2s)
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_official: official train=(108, 1197, 6) test=(72, 1197, 6)
+[ACTS-s1pp 11/14] Cricket_whole_official/random/3db56566 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.972] (199.7s+0.6s)
+[ACTS-s1pp 12/14] Cricket_whole_official/random/3db56566 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.958 1.000] (224.1s+0.6s)
+[ACTS-s1pp 13/14] Cricket_whole_official/random/b553f234 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.958] (181.8s+0.6s)
+[ACTS-s1pp 14/14] Cricket_whole_official/random/b553f234 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 1.000 1.000] (205.1s+0.6s)
+[ACTS-s1pp] 收官

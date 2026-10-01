@@ -1,0 +1,9 @@
+== [09:46:59] 接管开始
+== [09:47:03] cv 轮 1：未完成 41 格 / 3 任务；原分片在跑: 2 3；接管卡 3 7
+== [11:27:36] cv 轮 2：未完成 59 格 / 5 任务；原分片在跑: 无；接管卡 6 7 3 0
+verify cv: plan 1024 / done 1024 / error 0 → OK
+[select] {"ME": {"Handwr": "fc11bede", "Phonem": "ee1a0a3f", "UWaveG": "0467c9bc", "Cricke": "8467e2e4", "Ethano": "071afb46", "SelfRe": "76d2f89c"}, "UNI": {"Handwr": "05ea3296", "Phonem": "be6d7207", "UWaveG": "44966bb0", "Cricke": "3db56566", "Ethano": "0e89c635", "SelfRe": "4fe31792"}}
+== [12:27:30] 最终格
+[plan final] 臂 ['ME', 'UNI']：1070 格
+== [12:27:36] final 轮 1：未完成 46 格 / 6 任务；原分片在跑: 无；接管卡 6 2 7 3
+verify final: plan 1070 / done 1070 / error 0 → OK

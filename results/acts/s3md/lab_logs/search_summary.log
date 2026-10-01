@@ -1,0 +1,12 @@
+[search] ME_Cricket：|U| = 22，γ 0.75，COMP-ONLY 8467e2e4，27s
+[search] ME_EthanolConcentration：|U| = 22，γ 0.75，COMP-ONLY 5a0623dc，7s
+[search] ME_Handwriting：|U| = 22，γ 0.75，COMP-ONLY 504b5e49，7s
+[search] ME_PhonemeSpectra：|U| = 22，γ 0.75，COMP-ONLY 398c2ce4，13s
+[search] ME_SelfRegulationSCP1：|U| = 22，γ 0.75，COMP-ONLY 326e05bc，12s
+[search] ME_UWaveGestureLibrary：|U| = 22，γ 0.75，COMP-ONLY 18871f0f，13s
+[search] UNI_Cricket：|U| = 22，γ 0.75，COMP-ONLY b553f234，16s
+[search] UNI_EthanolConcentration：|U| = 22，γ 0.75，COMP-ONLY 9640e864，15s
+[search] UNI_Handwriting：|U| = 22，γ 0.75，COMP-ONLY ca630957，14s
+[search] UNI_PhonemeSpectra：|U| = 21，γ 0.75，COMP-ONLY 1c495e74，27s
+[search] UNI_SelfRegulationSCP1：|U| = 22，γ 0.75，COMP-ONLY dd2cea5e，27s
+[search] UNI_UWaveGestureLibrary：|U| = 22，γ 0.75，COMP-ONLY db6923fb，7s

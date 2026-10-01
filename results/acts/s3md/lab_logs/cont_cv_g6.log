@@ -1,0 +1,25 @@
+[ACTS-s1pp] 计划 82 格，已有 63，待跑 19
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_tcv0: tcv fold 0/3 train=(72, 1197, 6) eval=(36, 1197, 6)
+[ACTS-s1pp 1/19] Cricket_whole_tcv0/random/8467e2e4 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 1.000 1.000] (92.8s+0.6s)
+[ACTS-s1pp 2/19] Cricket_whole_tcv0/random/394eae7a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.917 0.944 0.917] (137.4s+0.6s)
+[ACTS-s1pp 3/19] Cricket_whole_tcv0/random/167eff53 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 0.972 0.972] (87.2s+0.6s)
+[ACTS-s1pp 4/19] Cricket_whole_tcv0/random/ea0a8b99 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (137.2s+0.6s)
+[ACTS-s1pp 5/19] Cricket_whole_tcv0/random/f65f40fd s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.861] (206.5s+0.6s)
+[ACTS-s1pp 6/19] Cricket_whole_tcv0/random/789aa746 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.833 0.833 0.806] (56.5s+0.6s)
+[ACTS-s1pp 7/19] Cricket_whole_tcv0/random/6dd693b3 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.833 0.917 0.861] (140.0s+0.6s)
+[ACTS-s1pp 8/19] Cricket_whole_tcv0/random/aaf7beda s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.889 0.889 0.889] (74.7s+0.6s)
+[ACTS-s1pp 9/19] Cricket_whole_tcv0/random/b2dd7172 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.889 0.889] (98.4s+0.6s)
+[ACTS-s1pp 10/19] Cricket_whole_tcv0/random/18402687 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (126.2s+0.6s)
+[ACTS-s1pp 11/19] Cricket_whole_tcv0/random/a6619073 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 1.000 1.000] (113.0s+0.6s)
+[ACTS-s1pp 12/19] Cricket_whole_tcv0/random/60ce151a s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (96.0s+0.6s)
+[ACTS-s1pp 13/19] Cricket_whole_tcv0/random/050f894e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.944 0.972] (109.5s+0.6s)
+[ACTS-s1pp 14/19] Cricket_whole_tcv0/random/a3a8ba50 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.944] (141.1s+0.6s)
+[ACTS-s1pp 15/19] Cricket_whole_tcv0/random/11bfc698 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.972] (106.2s+0.6s)
+[ACTS-s1pp 16/19] Cricket_whole_tcv0/random/cbbcdfec s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[1.000 1.000 1.000] (113.0s+0.6s)
+[data] EthanolConcentration: X=(524, 1751, 3) classes=4
+[data] EthanolConcentration_whole_tcv2: tcv fold 2/3 train=(175, 1751, 3) eval=(86, 1751, 3)
+[ACTS-s1pp 17/19] EthanolConcentration_whole_tcv2/random/5a0623dc s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.360 0.221 0.279] (154.6s+0.8s)
+[ACTS-s1pp 18/19] EthanolConcentration_whole_tcv2/random/19d28e1e s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.384 0.267 0.279] (163.3s+0.9s)
+[ACTS-s1pp 19/19] EthanolConcentration_whole_tcv2/random/5e3cefd1 s0 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.360 0.337 0.302] (225.5s+0.9s)
+[ACTS-s1pp] 收官
