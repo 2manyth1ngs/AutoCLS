@@ -27,3 +27,10 @@ source_pool:
   - {name: Adiac,                      source: npz, domain: Image,   n_channels: 1, n_classes: 37, l_enc: 176,  crop_len: null, n_classes_range: [37, 37], planned_tasks: 16, tested: false}
   - {name: FiftyWords,                 source: npz, domain: Image,   n_channels: 1, n_classes: 50, l_enc: 270,  crop_len: null, n_classes_range: [50, 50], planned_tasks: 16, tested: false}
   - {name: FordA,                      source: npz, domain: Sensor,  n_channels: 1, n_classes: 2,  l_enc: 500,  crop_len: null, n_classes_range: [2, 2],   planned_tasks: 16, tested: false}
+  # --- XS（results/acts/xs/PROTOCOL.md §1.1，2026-10-01）：UEA 可行集 6 源，source: uea（data/uea_cache/<name>/<name>_merged.npz 直读）---
+  - {name: ArticularyWordRecognition, source: uea, domain: Motion,  n_channels: 9,   n_classes: 25, l_enc: 144, crop_len: null, n_classes_range: [25, 25], planned_tasks: 8, tested: false}
+  - {name: ERing,                     source: uea, domain: HAR,     n_channels: 4,   n_classes: 6,  l_enc: 65,  crop_len: null, n_classes_range: [6, 6],   planned_tasks: 8, tested: false}
+  - {name: FingerMovements,           source: uea, domain: EEG/MEG, n_channels: 28,  n_classes: 2,  l_enc: 50,  crop_len: null, n_classes_range: [2, 2],   planned_tasks: 8, tested: false}
+  - {name: Heartbeat,                 source: uea, domain: Audio,   n_channels: 61,  n_classes: 2,  l_enc: 405, crop_len: null, n_classes_range: [2, 2],   planned_tasks: 8, tested: false}
+  - {name: NATOPS,                    source: uea, domain: HAR,     n_channels: 24,  n_classes: 6,  l_enc: 51,  crop_len: null, n_classes_range: [6, 6],   planned_tasks: 8, tested: false}
+  - {name: PEMS-SF,                   source: uea, domain: Traffic, n_channels: 963, n_classes: 7,  l_enc: 144, crop_len: null, n_classes_range: [7, 7],   planned_tasks: 8, tested: false}

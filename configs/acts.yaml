@@ -253,3 +253,19 @@ profiles:
       n_tasks: 8
     whole_eval: null
     smoke: {dataset: Adiac}
+
+  # =====================================================================
+  # --- XS profiles（PROTOCOL results/acts/xs/PROTOCOL.md；用户 2026-10-01 拍板“进行扩源”）---
+  # xsadm：UEA 可行集 6 源准入（= UCR-ADM 尺子，行 1/7/3/5 × shared-30 × 2 种子）；源走 configs/acts_sources.yaml（source: uea）。
+  # xs：阶段 B 补全（= S2 正向源口径，8 行 shared × 2 + random-20）；sources.probation 由 116 --prep-s 按 selected.json 注入（8 行 G-P 门）。
+  # =====================================================================
+  xsadm:
+    extends: ucradm
+    admission:
+      candidates: [ArticularyWordRecognition, ERing, FingerMovements, Heartbeat, NATOPS, PEMS-SF]
+    smoke: {dataset: ERing}
+  xs:
+    extends: s2
+    sources: {positive: [], reverse: [], probation: []}
+    seed_caches: [xsadm]
+    smoke: {dataset: ERing}
