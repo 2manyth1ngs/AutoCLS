@@ -1,0 +1,8 @@
+[pt] ArticularyWordRecognition_a00 X=(203, 56, 1) iters=200 fit 11s enc 0s
+[pt] ArticularyWordRecognition_a04 X=(280, 94, 1) iters=200 fit 9s enc 0s
+[pt] ERing_a00 X=(95, 53, 1) iters=200 fit 7s enc 0s
+[pt] ERing_a04 X=(112, 57, 1) iters=200 fit 8s enc 0s
+[pt] NATOPS_a00 X=(105, 50, 5) iters=200 fit 7s enc 0s
+[pt] NATOPS_a04 X=(149, 50, 4) iters=200 fit 7s enc 0s
+[pt] PEMS-SF_a00 X=(94, 63, 7) iters=200 fit 8s enc 0s
+[pt] PEMS-SF_a04 X=(123, 81, 67) iters=600 fit 26s enc 1s

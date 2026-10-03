@@ -1,0 +1,284 @@
+{
+ "verdict": "XS-BEATS-TS2VEC+E",
+ "ME_old": 0.6334,
+ "UNI_old": 0.6154,
+ "BLIND": 0.6377,
+ "admitted": [
+  "ArticularyWordRecognition",
+  "ERing",
+  "NATOPS",
+  "PEMS-SF"
+ ],
+ "selected": [
+  "ArticularyWordRecognition",
+  "ERing",
+  "NATOPS",
+  "PEMS-SF"
+ ],
+ "kept": [
+  "ArticularyWordRecognition",
+  "ERing",
+  "NATOPS",
+  "PEMS-SF"
+ ],
+ "pi": {
+  "ME/Handwriting": {
+   "new_share": 0.10348791316312846,
+   "max": 0.16192738658413516,
+   "top3": [
+    [
+     "PTB-XL",
+     0.16192738658413516
+    ],
+    [
+     "FordA",
+     0.1490151117157745
+    ],
+    [
+     "SleepEDF",
+     0.1200622789502035
+    ]
+   ],
+   "uniform": 0.05
+  },
+  "UNI/Handwriting": {
+   "new_share": 0.2,
+   "max": 0.05,
+   "top3": [
+    [
+     "UniMiB-SHAR",
+     0.05
+    ],
+    [
+     "PhonemeSpectra",
+     0.05
+    ],
+    [
+     "UWaveGestureLibrary",
+     0.05
+    ]
+   ],
+   "uniform": 0.05
+  },
+  "ME/PhonemeSpectra": {
+   "new_share": 0.1117290301912855,
+   "max": 0.12928347519916014,
+   "top3": [
+    [
+     "PTB-XL",
+     0.12928347519916014
+    ],
+    [
+     "FordA",
+     0.10500269712690044
+    ],
+    [
+     "SleepEDF",
+     0.10041923777441014
+    ]
+   ],
+   "uniform": 0.05
+  },
+  "UNI/PhonemeSpectra": {
+   "new_share": 0.2,
+   "max": 0.05,
+   "top3": [
+    [
+     "Handwriting",
+     0.05
+    ],
+    [
+     "UniMiB-SHAR",
+     0.05
+    ],
+    [
+     "UWaveGestureLibrary",
+     0.05
+    ]
+   ],
+   "uniform": 0.05
+  },
+  "ME/UWaveGestureLibrary": {
+   "new_share": 0.26738591323621447,
+   "max": 0.16641979560112402,
+   "top3": [
+    [
+     "ShapesAll",
+     0.16641979560112402
+    ],
+    [
+     "ArticularyWordRecognition",
+     0.12684385676734186
+    ],
+    [
+     "NonInvasiveFetalECGThorax1",
+     0.10824975031101679
+    ]
+   ],
+   "uniform": 0.05
+  },
+  "UNI/UWaveGestureLibrary": {
+   "new_share": 0.2,
+   "max": 0.05,
+   "top3": [
+    [
+     "Handwriting",
+     0.05
+    ],
+    [
+     "UniMiB-SHAR",
+     0.05
+    ],
+    [
+     "PhonemeSpectra",
+     0.05
+    ]
+   ],
+   "uniform": 0.05
+  },
+  "ME/Cricket": {
+   "new_share": 0.13672596857034744,
+   "max": 0.11974179778612942,
+   "top3": [
+    [
+     "SleepEDF",
+     0.11974179778612942
+    ],
+    [
+     "FordA",
+     0.09682770726840315
+    ],
+    [
+     "UniMiB-SHAR",
+     0.08343060545483977
+    ]
+   ],
+   "uniform": 0.05
+  },
+  "UNI/Cricket": {
+   "new_share": 0.2,
+   "max": 0.05,
+   "top3": [
+    [
+     "Handwriting",
+     0.05
+    ],
+    [
+     "UniMiB-SHAR",
+     0.05
+    ],
+    [
+     "PhonemeSpectra",
+     0.05
+    ]
+   ],
+   "uniform": 0.05
+  },
+  "ME/EthanolConcentration": {
+   "new_share": 0.2513598958755717,
+   "max": 0.09572647884300182,
+   "top3": [
+    [
+     "ShapesAll",
+     0.09572647884300182
+    ],
+    [
+     "PEMS-SF",
+     0.08905390498646246
+    ],
+    [
+     "UWaveGestureLibrary",
+     0.08264398269191724
+    ]
+   ],
+   "uniform": 0.05
+  },
+  "UNI/EthanolConcentration": {
+   "new_share": 0.2,
+   "max": 0.05,
+   "top3": [
+    [
+     "Handwriting",
+     0.05
+    ],
+    [
+     "UniMiB-SHAR",
+     0.05
+    ],
+    [
+     "PhonemeSpectra",
+     0.05
+    ]
+   ],
+   "uniform": 0.05
+  },
+  "ME/SelfRegulationSCP1": {
+   "new_share": 0.15078262327916964,
+   "max": 0.11354846066859867,
+   "top3": [
+    [
+     "Cricket",
+     0.11354846066859867
+    ],
+    [
+     "SleepEDF",
+     0.06825263299825546
+    ],
+    [
+     "UWaveGestureLibrary",
+     0.06729706603660171
+    ]
+   ],
+   "uniform": 0.05
+  },
+  "UNI/SelfRegulationSCP1": {
+   "new_share": 0.2,
+   "max": 0.05,
+   "top3": [
+    [
+     "Handwriting",
+     0.05
+    ],
+    [
+     "UniMiB-SHAR",
+     0.05
+    ],
+    [
+     "PhonemeSpectra",
+     0.05
+    ]
+   ],
+   "uniform": 0.05
+  }
+ },
+ "residual_std": {
+  "old": 1.151945170048302,
+  "new": 1.2991384279096654
+ },
+ "per_dataset_old": {
+  "ME": {
+   "Handwriting": 0.5549019607843138,
+   "PhonemeSpectra": 0.2469430360870862,
+   "UWaveGestureLibrary": 0.9104166666666668,
+   "Cricket": 0.976851851851852,
+   "EthanolConcentration": 0.27376425855513303,
+   "SelfRegulationSCP1": 0.8373151308304893
+  },
+  "UNI": {
+   "Handwriting": 0.4552941176470588,
+   "PhonemeSpectra": 0.23133512277562382,
+   "UWaveGestureLibrary": 0.9135416666666667,
+   "Cricket": 0.9768518518518517,
+   "EthanolConcentration": 0.26869455006337134,
+   "SelfRegulationSCP1": 0.8464163822525598
+  }
+ },
+ "predictions": {
+  "P1": true,
+  "P2": false,
+  "P3": false,
+  "P4": true,
+  "P5": false,
+  "P6": false
+ }
+}

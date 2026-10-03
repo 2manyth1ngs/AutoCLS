@@ -1,0 +1,64 @@
+== HEAD 4323832
+== S3-Z NEW_B 模型 60 / 60
+18 passed in 2.52s
+== [20:33:23] A：切片 + plan_M
+[plan M] 1440 格（已有 0、新 1440；eval cv5），24 任务、探针 72；新格估时 4090 30.4 h；shared-30 C0 OK
+C0 plan_M 键集：服务器 1440 c8a9eeab / 本地 1440 c8a9eeab → OK
+== [20:33:36] adm 轮 1：未完成 1440 格 / 24 任务；卡 3 6 0 7
+verify adm: plan 1440 / done 1440 / error 0 → OK
+[probe0] PEMS-SF_a05 s2 acc=0.733 maj=0.157 (0.6s)
+准入 4/6：['ArticularyWordRecognition', 'ERing', 'NATOPS', 'PEMS-SF']；参照池（S1″ v3′）11 源
+| ArticularyWordRecognition | 4 | 0.79 0.74 0.88 0.86 | 4/4 | 0.858 0.918 0.908 0.877 | 4/4 | 0.27 | 0.16 | 0.54 | 1.7 | 0.44 | 18 | 0.71 | 准入 |
+| ERing | 4 | 0.70 0.64 0.43 0.60 | 3/4 | 0.792 0.777 0.768 0.700 | 4/4 | 0.03 | -0.10 | 0.10 | 1.4 | 0.28 | 19 | 0.19 | 准入 |
+[select] 准入 4 ['ArticularyWordRecognition', 'ERing', 'NATOPS', 'PEMS-SF'] → 选中 ['ArticularyWordRecognition', 'ERing', 'NATOPS', 'PEMS-SF']（参照 11 个非靶源）
+== [01:20:42] B：prep-s
+[plan S] 2560 格（shared 1920 + random 640；已有 960、新 1600；eval cv5），32 任务、探针 96；random 目录 {'new': 32}；新格估时 4090 32.6 h（模型对争用环境低估 4–5×）
+== [01:20:54] xs 轮 1：未完成 1600 格 / 32 任务；卡 3 2 0 6
+verify xs: plan 2560 / done 2560 / error 0 → OK
+[probe0] PEMS-SF_a06 s2 acc=0.616 maj=0.165 (0.3s)
+[gate] ArticularyWordRecognition: v3′ 8/8、护栏 8 → 保留
+[gate] ERing: v3′ 7/8、护栏 8 → 保留
+[gate] NATOPS: v3′ 6/8、护栏 8 → 保留
+[gate] PEMS-SF: v3′ 8/8、护栏 8 → 保留
+[gate] 保留 ['ArticularyWordRecognition', 'ERing', 'NATOPS', 'PEMS-SF']
+== [06:45:39] labels / E_pt / E_A / score-new / merge / fit
+[labels] 32 任务（['ArticularyWordRecognition', 'ERing', 'NATOPS', 'PEMS-SF']）；失败占比 0.455
+[pack] /home/b311/data/wangwenjie/kejunyu/AutoCLS/results/acts/xs/E_pt 32
+[ea] 32 任务
+  m.load_state_dict(torch.load(Path(args.models) / f"B_s{s}_{d}.pt", map_location=args.device)); m.eval()
+[merge] s0src 任务 192（旧 160），键 66
+[fit] Handwriting ME：α_w 1 τ 0.5 γ 0.75；π 前 3 PTB-XL 0.16，FordA 0.15，SleepEDF 0.12
+[fit] Handwriting UNI：α_w 1 τ 1 γ 0.75；π 前 3 UniMiB-SHAR 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] PhonemeSpectra ME：α_w 1 τ 0.5 γ 0.75；π 前 3 PTB-XL 0.13，FordA 0.11，SleepEDF 0.10
+[fit] PhonemeSpectra UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] UWaveGestureLibrary ME：α_w 1 τ 0.5 γ 0.75；π 前 3 ShapesAll 0.17，ArticularyWordRecognition 0.13，NonInvasiveFetalECGThorax1 0.11
+[fit] UWaveGestureLibrary UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] Cricket ME：α_w 1 τ 0.5 γ 0.75；π 前 3 SleepEDF 0.12，FordA 0.10，UniMiB-SHAR 0.08
+[fit] Cricket UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] EthanolConcentration ME：α_w 1 τ 0.5 γ 0.75；π 前 3 ShapesAll 0.10，PEMS-SF 0.09，UWaveGestureLibrary 0.08
+[fit] EthanolConcentration UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] SelfRegulationSCP1 ME：α_w 1 τ 0.5 γ 0.75；π 前 3 Cricket 0.11，SleepEDF 0.07，UWaveGestureLibrary 0.07
+[fit] SelfRegulationSCP1 UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+== [06:52:10] 搜索 12
+[search] ME_Cricket：|U| = 22，γ 0.75，COMP-ONLY d54b5cad，9s
+[search] ME_EthanolConcentration：|U| = 22，γ 0.75，COMP-ONLY ed28a1e1，7s
+[search] ME_Handwriting：|U| = 22，γ 0.75，COMP-ONLY 6bb35ee0，7s
+[search] ME_PhonemeSpectra：|U| = 22，γ 0.75，COMP-ONLY 725034da，6s
+[search] ME_SelfRegulationSCP1：|U| = 22，γ 0.75，COMP-ONLY 1ebc47b3，6s
+[search] ME_UWaveGestureLibrary：|U| = 22，γ 0.75，COMP-ONLY 6969848d，7s
+[search] UNI_Cricket：|U| = 22，γ 0.75，COMP-ONLY 1aa4c3f8，6s
+[search] UNI_EthanolConcentration：|U| = 22，γ 0.75，COMP-ONLY 58883e80，6s
+[search] UNI_Handwriting：|U| = 22，γ 0.75，COMP-ONLY 7c2b7a1d，6s
+[search] UNI_PhonemeSpectra：|U| = 22，γ 0.75，COMP-ONLY 8372c6be，7s
+[search] UNI_SelfRegulationSCP1：|U| = 22，γ 0.75，COMP-ONLY 9261e8d4，8s
+[search] UNI_UWaveGestureLibrary：|U| = 22，γ 0.75，COMP-ONLY 2be4e039，8s
+== 搜索完：12 / 12
+== [06:52:41] CV 格
+[plan cv] 臂 ['ME', 'UNI']：1044 格
+== [06:52:46] cv 轮 1：未完成 1004 格 / 24 任务；卡 3 1 2 6
+verify cv: plan 1044 / done 1044 / error 0 → OK
+[select] {"ME": {"Handwr": "fc11bede", "Phonem": "3e2841a9", "UWaveG": "f24741c4", "Cricke": "14f22481", "Ethano": "ed28a1e1", "SelfRe": "d9568ea3"}, "UNI": {"Handwr": "cb596c1e", "Phonem": "3f7dc5df", "UWaveG": "2be4e039", "Cricke": "eb2db4f9", "Ethano": "071afb46", "SelfRe": "4fe31792"}}
+== [12:41:41] 最终格
+[plan final] 臂 ['ME', 'UNI']：1088 格
+== [12:41:46] final 轮 1：未完成 38 格 / 6 任务；卡 3 1 0 2
+verify final: plan 1088 / done 1088 / error 0 → OK

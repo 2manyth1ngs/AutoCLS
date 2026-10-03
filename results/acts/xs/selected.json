@@ -1,0 +1,67 @@
+{
+ "admitted": [
+  "ArticularyWordRecognition",
+  "ERing",
+  "NATOPS",
+  "PEMS-SF"
+ ],
+ "with_profile": [
+  "ArticularyWordRecognition",
+  "ERing",
+  "NATOPS",
+  "PEMS-SF"
+ ],
+ "selected": [
+  "ArticularyWordRecognition",
+  "ERing",
+  "NATOPS",
+  "PEMS-SF"
+ ],
+ "ref_sources": [
+  "Adiac",
+  "CinCECGTorso",
+  "FordA",
+  "LargeKitchenAppliances",
+  "NonInvasiveFetalECGThorax1",
+  "PAMAP2",
+  "PTB-XL",
+  "SemgHandMovementCh2",
+  "ShapesAll",
+  "SleepEDF",
+  "UniMiB-SHAR"
+ ],
+ "residual_spearman": {
+  "names": [
+   "ArticularyWordRecognition",
+   "ERing",
+   "NATOPS",
+   "PEMS-SF"
+  ],
+  "C": [
+   [
+    1.0,
+    0.521,
+    0.245,
+    0.152
+   ],
+   [
+    0.521,
+    1.0,
+    0.291,
+    0.259
+   ],
+   [
+    0.245,
+    0.291,
+    1.0,
+    -0.101
+   ],
+   [
+    0.152,
+    0.259,
+    -0.101,
+    1.0
+   ]
+  ]
+ }
+}

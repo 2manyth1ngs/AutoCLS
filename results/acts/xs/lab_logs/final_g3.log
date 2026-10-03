@@ -1,0 +1,24 @@
+[ACTS-s1pp] 计划 101 格，已有 87，待跑 14
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_official: official train=(120, 315, 3) test=(320, 315, 3)
+[ACTS-s1pp 1/14] UWaveGestureLibrary_whole_official/random/6969848d s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.891 0.912 0.878] (78.0s+0.7s)
+[ACTS-s1pp 2/14] UWaveGestureLibrary_whole_official/random/6969848d s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.922 0.906 0.897] (91.8s+0.6s)
+[ACTS-s1pp 3/14] UWaveGestureLibrary_whole_official/random/f24741c4 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.897 0.897 0.903] (42.5s+0.6s)
+[ACTS-s1pp 4/14] UWaveGestureLibrary_whole_official/random/f24741c4 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.919 0.919 0.909] (55.7s+0.6s)
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_official: official train=(108, 1197, 6) test=(72, 1197, 6)
+[ACTS-s1pp 5/14] Cricket_whole_official/random/d54b5cad s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 0.958 0.931] (89.1s+0.6s)
+[ACTS-s1pp 6/14] Cricket_whole_official/random/d54b5cad s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 0.972 0.958] (87.6s+0.6s)
+[ACTS-s1pp 7/14] Cricket_whole_official/random/14f22481 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.972 0.958] (134.4s+0.6s)
+[ACTS-s1pp 8/14] Cricket_whole_official/random/14f22481 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.958 0.986] (111.4s+0.6s)
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_official: official train=(120, 315, 3) test=(320, 315, 3)
+[ACTS-s1pp 9/14] UWaveGestureLibrary_whole_official/random/2be4e039 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.878 0.887 0.887] (48.5s+0.6s)
+[ACTS-s1pp 10/14] UWaveGestureLibrary_whole_official/random/2be4e039 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.906 0.891 0.887] (47.4s+0.6s)
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_official: official train=(108, 1197, 6) test=(72, 1197, 6)
+[ACTS-s1pp 11/14] Cricket_whole_official/random/1aa4c3f8 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 0.944 0.972] (88.1s+0.6s)
+[ACTS-s1pp 12/14] Cricket_whole_official/random/1aa4c3f8 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.958 0.972] (96.7s+0.6s)
+[ACTS-s1pp 13/14] Cricket_whole_official/random/eb2db4f9 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.944 0.958 0.958] (91.6s+0.6s)
+[ACTS-s1pp 14/14] Cricket_whole_official/random/eb2db4f9 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.986 0.986 0.986] (92.1s+0.6s)
+[ACTS-s1pp] 收官

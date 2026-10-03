@@ -1,0 +1,35 @@
+[slice] ArticularyWordRecognition_a00 c0w0n0 C=1/9 win=(71, 127) T=56/144 n=203/575 k=25 maj=0.054 iters=200
+[slice] ArticularyWordRecognition_a01 c1w2n3 C=4/9 win=(18, 132) T=114/144 n=555/575 k=25 maj=0.041 iters=600
+[slice] ArticularyWordRecognition_a02 c2w3n1 C=6/9 win=(14, 136) T=122/144 n=284/575 k=25 maj=0.070 iters=600
+[slice] ArticularyWordRecognition_a03 c3w1n2 C=9/9 win=(39, 135) T=96/144 n=366/575 k=25 maj=0.063 iters=600
+[slice] ArticularyWordRecognition_a04 c0w1n1 C=1/9 win=(14, 108) T=94/144 n=280/575 k=25 maj=0.057 iters=200
+[slice] ArticularyWordRecognition_a05 c1w3n2 C=3/9 win=(9, 143) T=134/144 n=403/575 k=25 maj=0.047 iters=600
+[slice] ArticularyWordRecognition_a06 c2w2n0 C=6/9 win=(16, 130) T=114/144 n=192/575 k=25 maj=0.120 iters=600
+[slice] ArticularyWordRecognition_a07 c3w0n3 C=8/9 win=(50, 114) T=64/144 n=459/575 k=25 maj=0.050 iters=600
+[slice] ERing_a00 c0w0n0 C=1/4 win=(3, 56) T=53/65 n=95/300 k=6 maj=0.211 iters=200
+[slice] ERing_a01 c1w2n3 C=2/4 win=(1, 62) T=61/65 n=259/300 k=6 maj=0.170 iters=200
+[slice] ERing_a02 c2w3n1 C=3/4 win=(3, 65) T=62/65 n=129/300 k=6 maj=0.186 iters=200
+[slice] ERing_a03 c3w1n2 C=4/4 win=(7, 64) T=57/65 n=179/300 k=6 maj=0.190 iters=200
+[slice] ERing_a04 c0w1n1 C=1/4 win=(5, 62) T=57/65 n=112/300 k=6 maj=0.196 iters=200
+[slice] ERing_a05 c1w3n2 C=2/4 win=(0, 64) T=64/65 n=190/300 k=6 maj=0.184 iters=200
+[slice] ERing_a06 c2w2n0 C=3/4 win=(6, 64) T=58/65 n=109/300 k=6 maj=0.174 iters=200
+[slice] ERing_a07 c3w0n3 C=4/4 win=(12, 62) T=50/65 n=227/300 k=6 maj=0.185 iters=200
+[slice] NATOPS_a00 c0w0n0 C=5/24 win=(1, 51) T=50/51 n=105/360 k=6 maj=0.190 iters=200
+[slice] NATOPS_a01 c1w2n3 C=7/24 win=(0, 51) T=51/51 n=352/360 k=6 maj=0.170 iters=600
+[slice] NATOPS_a02 c2w3n1 C=16/24 win=(0, 51) T=51/51 n=149/360 k=6 maj=0.195 iters=600
+[slice] NATOPS_a03 c3w1n2 C=22/24 win=(0, 50) T=50/51 n=177/360 k=6 maj=0.181 iters=600
+[slice] NATOPS_a04 c0w1n1 C=4/24 win=(1, 51) T=50/51 n=149/360 k=6 maj=0.195 iters=200
+[slice] NATOPS_a05 c1w3n2 C=7/24 win=(0, 51) T=51/51 n=241/360 k=6 maj=0.170 iters=200
+[slice] NATOPS_a06 c2w2n0 C=13/24 win=(0, 51) T=51/51 n=115/360 k=6 maj=0.174 iters=200
+[slice] NATOPS_a07 c3w0n3 C=19/24 win=(0, 50) T=50/51 n=309/360 k=6 maj=0.175 iters=600
+[slice] PEMS-SF_a00 c0w0n0 C=7/963 win=(7, 70) T=63/144 n=94/440 k=7 maj=0.181 iters=200
+[slice] PEMS-SF_a01 c1w2n3 C=290/963 win=(7, 124) T=117/144 n=368/440 k=7 maj=0.149 iters=600
+[slice] PEMS-SF_a02 c2w3n1 C=631/963 win=(13, 137) T=124/144 n=126/440 k=7 maj=0.159 iters=600
+[slice] PEMS-SF_a03 c3w1n2 C=875/963 win=(39, 131) T=92/144 n=233/440 k=7 maj=0.159 iters=600
+[slice] PEMS-SF_a04 c0w1n1 C=67/963 win=(38, 119) T=81/144 n=123/440 k=7 maj=0.154 iters=600
+[slice] PEMS-SF_a05 c1w3n2 C=462/963 win=(1, 135) T=134/144 n=281/440 k=7 maj=0.157 iters=600
+[slice] PEMS-SF_a06 c2w2n0 C=657/963 win=(21, 139) T=118/144 n=91/440 k=7 maj=0.165 iters=600
+[slice] PEMS-SF_a07 c3w0n3 C=946/963 win=(67, 132) T=65/144 n=367/440 k=7 maj=0.147 iters=600
+[slice] 32 任务 → /home/b311/data/wangwenjie/kejunyu/AutoCLS/results/acts/xs/tasks.json；16 任务前缀自检 OK
+[merge-seeds] runs 1440 / probe0 72 ← ['xsadm']
+[plan S] 2560 格（shared 1920 + random 640；已有 960、新 1600；eval cv5），32 任务、探针 96；random 目录 {'new': 32}；新格估时 4090 32.6 h（模型对争用环境低估 4–5×）

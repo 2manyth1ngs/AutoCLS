@@ -1,0 +1,134 @@
+{
+ "Handwriting": {
+  "partners": [
+   [
+    "UniMiB-SHAR",
+    0.5848720800889877,
+    5
+   ],
+   [
+    "Adiac",
+    0.5572858731924359,
+    13
+   ],
+   [
+    "UWaveGestureLibrary",
+    0.4487208008898776,
+    19
+   ]
+  ],
+  "pi_top3_partners": 0.11140056468129553,
+  "uniform3": 0.15,
+  "rho_pi_pref": -0.18646616541353384
+ },
+ "PhonemeSpectra": {
+  "partners": [
+   [
+    "FordA",
+    0.703670745272525,
+    2
+   ],
+   [
+    "SleepEDF",
+    0.5506117908787541,
+    3
+   ],
+   [
+    "NATOPS",
+    0.5119021134593993,
+    15
+   ]
+  ],
+  "pi_top3_partners": 0.2291928305715042,
+  "uniform3": 0.15,
+  "rho_pi_pref": 0.27669172932330827
+ },
+ "UWaveGestureLibrary": {
+  "partners": [
+   [
+    "ArticularyWordRecognition",
+    0.5332591768631813,
+    2
+   ],
+   [
+    "Handwriting",
+    0.4487208008898776,
+    18
+   ],
+   [
+    "SelfRegulationSCP1",
+    0.36774193548387096,
+    4
+   ]
+  ],
+  "pi_top3_partners": 0.2092221085548595,
+  "uniform3": 0.15,
+  "rho_pi_pref": 0.35037593984962395
+ },
+ "Cricket": {
+  "partners": [
+   [
+    "PAMAP2",
+    0.3543937708565072,
+    19
+   ],
+   [
+    "PTB-XL",
+    0.31123470522803115,
+    4
+   ],
+   [
+    "UWaveGestureLibrary",
+    0.25739710789766407,
+    10
+   ]
+  ],
+  "pi_top3_partners": 0.1493912081882805,
+  "uniform3": 0.15,
+  "rho_pi_pref": -0.04962406015037594
+ },
+ "EthanolConcentration": {
+  "partners": [
+   [
+    "PEMS-SF",
+    0.6387096774193549,
+    2
+   ],
+   [
+    "CinCECGTorso",
+    0.5430478309232479,
+    11
+   ],
+   [
+    "ERing",
+    0.539043381535039,
+    9
+   ]
+  ],
+  "pi_top3_partners": 0.18201588526532012,
+  "uniform3": 0.15,
+  "rho_pi_pref": 0.35939849624060144
+ },
+ "SelfRegulationSCP1": {
+  "partners": [
+   [
+    "CinCECGTorso",
+    0.5870967741935484,
+    14
+   ],
+   [
+    "SemgHandMovementCh2",
+    0.5546162402669632,
+    10
+   ],
+   [
+    "ERing",
+    0.49855394883203563,
+    19
+   ]
+  ],
+  "pi_top3_partners": 0.11674584412649366,
+  "uniform3": 0.15,
+  "rho_pi_pref": -0.045112781954887216
+ }
+}

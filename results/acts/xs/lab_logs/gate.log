@@ -1,0 +1,5 @@
+[gate] ArticularyWordRecognition: v3′ 8/8、护栏 8 → 保留
+[gate] ERing: v3′ 7/8、护栏 8 → 保留
+[gate] NATOPS: v3′ 6/8、护栏 8 → 保留
+[gate] PEMS-SF: v3′ 8/8、护栏 8 → 保留
+[gate] 保留 ['ArticularyWordRecognition', 'ERing', 'NATOPS', 'PEMS-SF']
