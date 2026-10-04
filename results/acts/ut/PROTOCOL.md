@@ -114,3 +114,6 @@
 - 2026-10-04 实现：`scripts/118_acts_ut.py` + `acts_common.load_target_full` + 83 整集 loader 的 `deploy_target` 分支 + 39 的评估超时环境变量覆盖（默认 480 s 不变，UT 流水设 1800 s）；tests 8 例绿。`--prep`：§2 规则复算 = 协议 11 靶；TS2Vec 与 `configs/uea30.yaml` 对账 10/11 一致。
 - 本地冒烟（BasicMotions、2 个随机初始化成员、ks 300 / 1 代）：E_pt / E_A / s0 / fit / 三臂搜索 / plan cv 44 格 / select / final 54 格 / analyze 全通；本机 Windows 有 3 格 EvalTimeout（loky），analyze 改为对 error 行记 NaN 并报缺格数。
 - 2026-10-04 02:14 UTC 起跑（实验室 8k-4090，MAXP = 4，HEAD 4496d7b，评估超时 1800 s）：输入核对 / pytest 20 例通过；靶 E_pt 11 / 11 第一轮完成（单靶 15–80 s，无切段）。
+- 10-04 02:31 起 CV 第 1 轮（2,872 格）。**负载不均**：fill 按（未完成数降序, 任务名）轮流分配，44 个任务未完成数相同 → 按名字序，j mod 4 = 0 的全是 `*_whole_official`（每靶最重的完整 TRAIN 任务）落到同一进程（GPU 7）；其余 3 个进程 ~20 h 跑完后空等。23:12 UTC 时该进程还剩 137 格（FaceDetection 官方每格约 6.5 min）。
+- **操作偏离**：23:13 只停该进程（PID 2918539，丢 1 个在跑格、无行写入），fill 自动进入第 2 轮，剩余 136 格 / 8 任务重新分到 4 卡。结果不变，只改执行顺序。
+- **StandWalkJump tcv0 全部 error**：该折训练只有 7 个样本，< batch 8，`cl_trainer` 在 drop_last 下按设计报错（ValueError 写 error 行）；tcv1 / tcv2 正常 → 该靶 CV 只用 2 折。官方 TRAIN 12 ≥ 8，最终 TEST 不受影响。另有 MotorImagery tcv0 2 格 OOM，在第 2 轮补跑。
