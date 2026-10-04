@@ -62,3 +62,11 @@ def test_whole_loader_uses_target_path(monkeypatch):
 def test_cli():
     u = _u()
     assert u.build_parser().parse_args(["--search", "--arm", "BLIND", "--dataset", "Epilepsy"]).arm == "BLIND"
+
+
+def test_eval_timeout_env_override(monkeypatch):
+    g39 = importlib.import_module("scripts.39_sh_deploy")
+    monkeypatch.setenv("AUTOCLS_EVAL_TIMEOUT_S", "1800")
+    assert importlib.reload(g39).EVAL_TIMEOUT_S == 1800
+    monkeypatch.delenv("AUTOCLS_EVAL_TIMEOUT_S")
+    assert importlib.reload(g39).EVAL_TIMEOUT_S == 480            # 默认不变

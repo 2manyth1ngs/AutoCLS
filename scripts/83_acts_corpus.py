@@ -1123,7 +1123,7 @@ def make_whole_loader(cfg: Mapping, tasks_meta: Mapping[str, Mapping]):
         m = tasks_meta[task_id]
         name = m["dataset"]
         if slot.get("dataset") != name:
-            X, y = ac.load_dataset_full(name)
+            X, y = ac.load_target_full(name) if m.get("deploy_target") else ac.load_dataset_full(name)   # WP17 UT：部署靶直读（旧任务无此键，行为不变）
             slot.clear()
             slot.update({"dataset": name, "X": X, "y": y})
             print(f"[data] {name}: X={X.shape} classes={len(np.unique(y))}", flush=True)

@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import os
 import signal
 import statistics
 import sys
@@ -149,7 +150,7 @@ def verdict_code_har(g: Mapping[str, dict]) -> str:
     return "HAR-WIN" if g["H3"]["pass"] else "HAR-PARITY"
 # 单个截点评估的墙钟上限：官方 SVM 网格的 C=∞ 在退化特征（破坏性 CLS，如 20be4f74 × PhonemeSpectra
 # 39 类 OvO）上可达数十分钟不收敛；超时整格记 error 行跳过（这类格都在排名垫底，不进任何名单）。
-EVAL_TIMEOUT_S = 480
+EVAL_TIMEOUT_S = int(os.environ.get("AUTOCLS_EVAL_TIMEOUT_S", "480"))   # WP17 UT：环境变量可放宽（大 n 靶如 FaceDetection），默认不变
 
 
 class EvalTimeout(Exception):

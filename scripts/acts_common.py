@@ -419,6 +419,13 @@ def load_dataset_full(name: str) -> tuple[np.ndarray, np.ndarray]:
     return load_source_dataset(name, reg, crop_len=None)
 
 
+def load_target_full(name: str) -> tuple[np.ndarray, np.ndarray]:
+    """部署靶（WP17 UT）：UEA TRAIN+TEST 合并、原生长度 = load_uea_merged(crop_len=None)，与 load_dataset_full 对 uea 源读出的数组逐位相同；
+    不经源注册表（目标池 / 未登记的 UEA 靶也能读）。只供部署评估与靶 E（官方 TRAIN），绝不进训练（铁律 6）。"""
+    from autocls.data.uea import load_uea_merged
+    return load_uea_merged(name, crop_len=None)
+
+
 def acts_sources_registry(path: str | Path = ACTS_SOURCES_YAML):
     """configs/acts_sources.yaml（UCR-ADM 扩池源，schema 同 source_pool.yaml）。"""
     from autocls.data.source_pool import load_registry
