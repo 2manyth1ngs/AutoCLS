@@ -1,0 +1,8 @@
+[ACTS-s1pp] 计划 52 格，已有 48，待跑 4
+[data] Handwriting: X=(1000, 152, 3) classes=26
+[data] Handwriting_whole_official: official train=(150, 152, 3) test=(850, 152, 3)
+[ACTS-s1pp 1/4] Handwriting_whole_official/random/03bd3819 s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.400 0.413 0.419] (42.6s+1.0s)
+[ACTS-s1pp 2/4] Handwriting_whole_official/random/03bd3819 s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.396 0.406 0.406] (34.6s+0.9s)
+[ACTS-s1pp 3/4] Handwriting_whole_official/random/aab5c0b8 s1 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.491 0.500 0.480] (15.2s+0.8s)
+[ACTS-s1pp 4/4] Handwriting_whole_official/random/aab5c0b8 s2 iters=200 ckpt=[50, 100, 200] acc@ckpt=[0.461 0.513 0.481] (13.0s+1.0s)
+[ACTS-s1pp] 收官

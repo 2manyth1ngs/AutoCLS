@@ -108,3 +108,5 @@ P3–P6 只在 XE-SWAP 时判。
 - 2026-10-03 实现（tests 5 例绿）；本地冒烟 `results/acts/xe/smoke/`：E_T 只算 1 个新任务 + HW 靶（iters 50），其余 36 个缺失走插补 → select / prep-md（强制 pt+A+T）/ fit（Cricket 折、成员 0 1）/ search 全通。
 - **§0 补充声明（冒烟暴露）**：冒烟的 select 表里，不依赖 E_T 的三种形式是真实全量读数——M_R pt +0.095 / A +0.200 / pt+A +0.108（近亲命中@3 0.27 / 0.33 / 0.27）；含 T 的四种形式因新源与靶的 E_T 多为插补值、不作数。选择规则（§2）在看到之前已锁定，不改。
 - 2026-10-03 16:23 UTC 起跑（实验室 8k-4090，MAXP = 4，HEAD 7848593）：输入核对 / pytest 17 例通过；E_T 4 路，4.5 min 完成 28 / 38（新源切片任务 8–46 s / 个）。
+- 16:47 UTC：E_T 38 / 38 → select **XE-SWAP-A+T**（M_R +0.260 vs pt+A +0.108）→ prep-md / fit（γ 0.75，τ 0.5 ×3 / 1 ×3）→ 搜索 ME × 6 → CV 1,044 格（新 500）→ 20:58 select → 最终 1,090 格（新 24）→ 21:23 打包；墙钟 5.0 h，0 error。
+- 读数（REPORT.md）：**XE-BEATS-TS2VEC+E**（无 +SWAP / +BLIND）：ME_X 0.6257 / ME_new 0.6302 / UNI_new 0.6189 / BLIND 0.6377；预测 2/6。事后诊断 `diag_target_E.json`：非靶查询上选出的形式在 6 靶上不领先（A+T 0.103 vs pt+A 0.113），与靶 E 的整集 / 切片口径无关。

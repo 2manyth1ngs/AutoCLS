@@ -1,0 +1,14 @@
+[ACTS-s1pp] 计划 102 格，已有 94，待跑 8
+[data] UWaveGestureLibrary: X=(440, 315, 3) classes=8
+[data] UWaveGestureLibrary_whole_official: official train=(120, 315, 3) test=(320, 315, 3)
+[ACTS-s1pp 1/8] UWaveGestureLibrary_whole_official/random/a0efa988 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.887 0.891 0.906] (38.6s+0.7s)
+[ACTS-s1pp 2/8] UWaveGestureLibrary_whole_official/random/a0efa988 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.909 0.922 0.916] (32.8s+0.6s)
+[ACTS-s1pp 3/8] UWaveGestureLibrary_whole_official/random/5e7a8ce0 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.916 0.897 0.906] (39.3s+0.6s)
+[ACTS-s1pp 4/8] UWaveGestureLibrary_whole_official/random/5e7a8ce0 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.894 0.916 0.906] (37.3s+0.6s)
+[data] EthanolConcentration: X=(524, 1751, 3) classes=4
+[data] EthanolConcentration_whole_official: official train=(261, 1751, 3) test=(263, 1751, 3)
+[ACTS-s1pp 5/8] EthanolConcentration_whole_official/random/8971dab0 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.262 0.247 0.240] (85.2s+0.9s)
+[ACTS-s1pp 6/8] EthanolConcentration_whole_official/random/8971dab0 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.247 0.236 0.259] (85.7s+0.9s)
+[ACTS-s1pp 7/8] EthanolConcentration_whole_official/random/378388ac s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.262 0.247 0.259] (117.8s+0.9s)
+[ACTS-s1pp 8/8] EthanolConcentration_whole_official/random/378388ac s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.240 0.247 0.217] (115.1s+0.9s)
+[ACTS-s1pp] 收官

@@ -1,0 +1,12 @@
+[fit] Handwriting ME：α_w 1 τ 0.5 γ 0.75；π 前 3 FordA 0.15，PTB-XL 0.13，UniMiB-SHAR 0.10
+[fit] Handwriting UNI：α_w 1 τ 1 γ 0.75；π 前 3 UniMiB-SHAR 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] PhonemeSpectra ME：α_w 1 τ 1 γ 0.75；π 前 3 EthanolConcentration 0.09，PTB-XL 0.09，SleepEDF 0.08
+[fit] PhonemeSpectra UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] UWaveGestureLibrary ME：α_w 1 τ 1 γ 0.75；π 前 3 ShapesAll 0.09，ArticularyWordRecognition 0.09，ERing 0.08
+[fit] UWaveGestureLibrary UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] Cricket ME：α_w 1 τ 1 γ 0.75；π 前 3 ArticularyWordRecognition 0.08，ShapesAll 0.08，PEMS-SF 0.08
+[fit] Cricket UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] EthanolConcentration ME：α_w 1 τ 0.5 γ 0.75；π 前 3 PhonemeSpectra 0.15，SleepEDF 0.11，PTB-XL 0.08
+[fit] EthanolConcentration UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] SelfRegulationSCP1 ME：α_w 1 τ 0.5 γ 0.75；π 前 3 PAMAP2 0.10，UWaveGestureLibrary 0.10，Cricket 0.08
+[fit] SelfRegulationSCP1 UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05

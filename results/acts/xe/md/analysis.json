@@ -1,0 +1,696 @@
+{
+ "per_arm": {
+  "ME": {
+   "Handwriting": {
+    "pick": "aab5c0b89fb1",
+    "test": 0.4772549019607843,
+    "comp_test": 0.4066666666666667,
+    "U_n": 22,
+    "U_best_s0": 0.52,
+    "U_mean_s0": 0.39962566844919784,
+    "sel_loss_s0": 0.04941176470588238,
+    "origins": [
+     "m7"
+    ]
+   },
+   "PhonemeSpectra": {
+    "pick": "ffc2b716dc74",
+    "test": 0.2524107764191271,
+    "comp_test": 0.18898498856745205,
+    "U_n": 21,
+    "U_best_s0": 0.24634655532359082,
+    "U_mean_s0": 0.19621376734409843,
+    "sel_loss_s0": 0.0,
+    "origins": [
+     "m5"
+    ]
+   },
+   "UWaveGestureLibrary": {
+    "pick": "a0efa988370b",
+    "test": 0.9093749999999999,
+    "comp_test": 0.8989583333333333,
+    "U_n": 22,
+    "U_best_s0": 0.91875,
+    "U_mean_s0": 0.8785511363636362,
+    "sel_loss_s0": 0.012499999999999956,
+    "origins": [
+     "m6"
+    ]
+   },
+   "Cricket": {
+    "pick": "bcdd58ec507f",
+    "test": 0.9907407407407408,
+    "comp_test": 0.9398148148148148,
+    "U_n": 22,
+    "U_best_s0": 0.9861111111111112,
+    "U_mean_s0": 0.9564393939393937,
+    "sel_loss_s0": 0.0,
+    "origins": [
+     "m4"
+    ]
+   },
+   "EthanolConcentration": {
+    "pick": "378388aca2c1",
+    "test": 0.23700887198986056,
+    "comp_test": 0.2509505703422053,
+    "U_n": 22,
+    "U_best_s0": 0.34220532319391633,
+    "U_mean_s0": 0.26806083650190116,
+    "sel_loss_s0": 0.10646387832699619,
+    "origins": [
+     "m9"
+    ]
+   },
+   "SelfRegulationSCP1": {
+    "pick": "d5901e80c5ad",
+    "test": 0.8873720136518771,
+    "comp_test": 0.6427758816837316,
+    "U_n": 22,
+    "U_best_s0": 0.8907849829351536,
+    "U_mean_s0": 0.7935153583617747,
+    "sel_loss_s0": 0.0068259385665528916,
+    "origins": [
+     "m1"
+    ]
+   }
+  },
+  "UNI": {
+   "Handwriting": {
+    "pick": "cb596c1eb2ad",
+    "test": 0.49647058823529416,
+    "comp_test": 0.36509803921568623,
+    "U_n": 22,
+    "U_best_s0": 0.5141176470588236,
+    "U_mean_s0": 0.3806417112299465,
+    "sel_loss_s0": 0.0,
+    "origins": [
+     "m3"
+    ]
+   },
+   "PhonemeSpectra": {
+    "pick": "3f7dc5df4b1a",
+    "test": 0.22914802664280742,
+    "comp_test": 0.15836564270802264,
+    "U_n": 22,
+    "U_best_s0": 0.23173277661795408,
+    "U_mean_s0": 0.20058021310630914,
+    "sel_loss_s0": 0.0035788845809722747,
+    "origins": [
+     "m7"
+    ]
+   },
+   "UWaveGestureLibrary": {
+    "pick": "2be4e039b384",
+    "test": 0.890625,
+    "comp_test": 0.890625,
+    "U_n": 22,
+    "U_best_s0": 0.93125,
+    "U_mean_s0": 0.8600852272727273,
+    "sel_loss_s0": 0.034375000000000044,
+    "origins": [
+     "ens"
+    ]
+   },
+   "Cricket": {
+    "pick": "eb2db4f9a90f",
+    "test": 0.976851851851852,
+    "comp_test": 0.9675925925925926,
+    "U_n": 22,
+    "U_best_s0": 0.9861111111111112,
+    "U_mean_s0": 0.9633838383838383,
+    "sel_loss_s0": 0.0,
+    "origins": [
+     "m5"
+    ]
+   },
+   "EthanolConcentration": {
+    "pick": "071afb465816",
+    "test": 0.27376425855513303,
+    "comp_test": 0.2522179974651458,
+    "U_n": 22,
+    "U_best_s0": 0.30798479087452474,
+    "U_mean_s0": 0.2684064984445213,
+    "sel_loss_s0": 0.038022813688212975,
+    "origins": [
+     "m7"
+    ]
+   },
+   "SelfRegulationSCP1": {
+    "pick": "4fe317922496",
+    "test": 0.8464163822525598,
+    "comp_test": 0.8031854379977247,
+    "U_n": 22,
+    "U_best_s0": 0.8703071672354948,
+    "U_mean_s0": 0.7877753645671735,
+    "sel_loss_s0": 0.04095563139931735,
+    "origins": [
+     "m6"
+    ]
+   }
+  }
+ },
+ "means": {
+  "ME_test": 0.6256937174603984,
+  "ME_comp_test": 0.5546918759013674,
+  "ME_U_best_s0": 0.650699662093962,
+  "ME_U_mean_s0": 0.5820676934933336,
+  "ME_sel_loss_s0": 0.029200263599905237,
+  "UNI_test": 0.6188793512562745,
+  "UNI_comp_test": 0.5728474516631954,
+  "UNI_U_best_s0": 0.6402505821496515,
+  "UNI_U_mean_s0": 0.5768121421674194,
+  "UNI_sel_loss_s0": 0.01948872161141711
+ },
+ "ref": {
+  "BLIND": 0.6376913555471035,
+  "S3Z_NEW": 0.6279403594740846,
+  "S3Y_NEW": 0.6329699441835578
+ },
+ "fit": {
+  "Handwriting": {
+   "ME": {
+    "alpha_w": 1.0,
+    "tau": 0.5,
+    "gamma": 0.75,
+    "inner_score": 0.4171069289899442,
+    "pi_top3": [
+     [
+      "FordA",
+      0.15431702009732307
+     ],
+     [
+      "PTB-XL",
+      0.1341803562160444
+     ],
+     [
+      "UniMiB-SHAR",
+      0.10210136990713654
+     ]
+    ],
+    "sources": [
+     "UniMiB-SHAR",
+     "PhonemeSpectra",
+     "UWaveGestureLibrary",
+     "Cricket",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "EthanolConcentration",
+     "CinCECGTorso",
+     "SelfRegulationSCP1",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   },
+   "UNI": {
+    "alpha_w": 1.0,
+    "tau": 1.0,
+    "gamma": 0.75,
+    "inner_score": 0.41617237937733914,
+    "pi_top3": [
+     [
+      "UniMiB-SHAR",
+      0.05
+     ],
+     [
+      "ERing",
+      0.05
+     ],
+     [
+      "ArticularyWordRecognition",
+      0.05
+     ]
+    ],
+    "sources": [
+     "UniMiB-SHAR",
+     "PhonemeSpectra",
+     "UWaveGestureLibrary",
+     "Cricket",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "EthanolConcentration",
+     "CinCECGTorso",
+     "SelfRegulationSCP1",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   }
+  },
+  "PhonemeSpectra": {
+   "ME": {
+    "alpha_w": 1.0,
+    "tau": 1.0,
+    "gamma": 0.75,
+    "inner_score": 0.4217678421229895,
+    "pi_top3": [
+     [
+      "EthanolConcentration",
+      0.09381577437244745
+     ],
+     [
+      "PTB-XL",
+      0.09109709887663131
+     ],
+     [
+      "SleepEDF",
+      0.08218281486054599
+     ]
+    ],
+    "sources": [
+     "Handwriting",
+     "UniMiB-SHAR",
+     "UWaveGestureLibrary",
+     "Cricket",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "EthanolConcentration",
+     "CinCECGTorso",
+     "SelfRegulationSCP1",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   },
+   "UNI": {
+    "alpha_w": 1.0,
+    "tau": 1.0,
+    "gamma": 0.75,
+    "inner_score": 0.42109617958632994,
+    "pi_top3": [
+     [
+      "Handwriting",
+      0.05
+     ],
+     [
+      "ERing",
+      0.05
+     ],
+     [
+      "ArticularyWordRecognition",
+      0.05
+     ]
+    ],
+    "sources": [
+     "Handwriting",
+     "UniMiB-SHAR",
+     "UWaveGestureLibrary",
+     "Cricket",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "EthanolConcentration",
+     "CinCECGTorso",
+     "SelfRegulationSCP1",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   }
+  },
+  "UWaveGestureLibrary": {
+   "ME": {
+    "alpha_w": 1.0,
+    "tau": 1.0,
+    "gamma": 0.75,
+    "inner_score": 0.4160260964564932,
+    "pi_top3": [
+     [
+      "ShapesAll",
+      0.09209162673963656
+     ],
+     [
+      "ArticularyWordRecognition",
+      0.08687926339863199
+     ],
+     [
+      "ERing",
+      0.07542798810946903
+     ]
+    ],
+    "sources": [
+     "Handwriting",
+     "UniMiB-SHAR",
+     "PhonemeSpectra",
+     "Cricket",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "EthanolConcentration",
+     "CinCECGTorso",
+     "SelfRegulationSCP1",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   },
+   "UNI": {
+    "alpha_w": 1.0,
+    "tau": 1.0,
+    "gamma": 0.75,
+    "inner_score": 0.41575374002142557,
+    "pi_top3": [
+     [
+      "Handwriting",
+      0.05
+     ],
+     [
+      "ERing",
+      0.05
+     ],
+     [
+      "ArticularyWordRecognition",
+      0.05
+     ]
+    ],
+    "sources": [
+     "Handwriting",
+     "UniMiB-SHAR",
+     "PhonemeSpectra",
+     "Cricket",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "EthanolConcentration",
+     "CinCECGTorso",
+     "SelfRegulationSCP1",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   }
+  },
+  "Cricket": {
+   "ME": {
+    "alpha_w": 1.0,
+    "tau": 1.0,
+    "gamma": 0.75,
+    "inner_score": 0.40649702798679516,
+    "pi_top3": [
+     [
+      "ArticularyWordRecognition",
+      0.0838737892808614
+     ],
+     [
+      "ShapesAll",
+      0.0790792080615156
+     ],
+     [
+      "PEMS-SF",
+      0.07787369533707972
+     ]
+    ],
+    "sources": [
+     "Handwriting",
+     "UniMiB-SHAR",
+     "PhonemeSpectra",
+     "UWaveGestureLibrary",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "EthanolConcentration",
+     "CinCECGTorso",
+     "SelfRegulationSCP1",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   },
+   "UNI": {
+    "alpha_w": 1.0,
+    "tau": 1.0,
+    "gamma": 0.75,
+    "inner_score": 0.4057033925768108,
+    "pi_top3": [
+     [
+      "Handwriting",
+      0.05
+     ],
+     [
+      "ERing",
+      0.05
+     ],
+     [
+      "ArticularyWordRecognition",
+      0.05
+     ]
+    ],
+    "sources": [
+     "Handwriting",
+     "UniMiB-SHAR",
+     "PhonemeSpectra",
+     "UWaveGestureLibrary",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "EthanolConcentration",
+     "CinCECGTorso",
+     "SelfRegulationSCP1",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   }
+  },
+  "EthanolConcentration": {
+   "ME": {
+    "alpha_w": 1.0,
+    "tau": 0.5,
+    "gamma": 0.75,
+    "inner_score": 0.441726271384026,
+    "pi_top3": [
+     [
+      "PhonemeSpectra",
+      0.15355591790359743
+     ],
+     [
+      "SleepEDF",
+      0.11360619588764298
+     ],
+     [
+      "PTB-XL",
+      0.08349487975309085
+     ]
+    ],
+    "sources": [
+     "Handwriting",
+     "UniMiB-SHAR",
+     "PhonemeSpectra",
+     "UWaveGestureLibrary",
+     "Cricket",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "CinCECGTorso",
+     "SelfRegulationSCP1",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   },
+   "UNI": {
+    "alpha_w": 1.0,
+    "tau": 1.0,
+    "gamma": 0.75,
+    "inner_score": 0.43846855906051635,
+    "pi_top3": [
+     [
+      "Handwriting",
+      0.05
+     ],
+     [
+      "ERing",
+      0.05
+     ],
+     [
+      "ArticularyWordRecognition",
+      0.05
+     ]
+    ],
+    "sources": [
+     "Handwriting",
+     "UniMiB-SHAR",
+     "PhonemeSpectra",
+     "UWaveGestureLibrary",
+     "Cricket",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "CinCECGTorso",
+     "SelfRegulationSCP1",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   }
+  },
+  "SelfRegulationSCP1": {
+   "ME": {
+    "alpha_w": 1.0,
+    "tau": 0.5,
+    "gamma": 0.75,
+    "inner_score": 0.4363169855516731,
+    "pi_top3": [
+     [
+      "PAMAP2",
+      0.10408754069253141
+     ],
+     [
+      "UWaveGestureLibrary",
+      0.09969000664231334
+     ],
+     [
+      "Cricket",
+      0.08383043937643256
+     ]
+    ],
+    "sources": [
+     "Handwriting",
+     "UniMiB-SHAR",
+     "PhonemeSpectra",
+     "UWaveGestureLibrary",
+     "Cricket",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "EthanolConcentration",
+     "CinCECGTorso",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   },
+   "UNI": {
+    "alpha_w": 1.0,
+    "tau": 1.0,
+    "gamma": 0.75,
+    "inner_score": 0.4350360605234096,
+    "pi_top3": [
+     [
+      "Handwriting",
+      0.05
+     ],
+     [
+      "ERing",
+      0.05
+     ],
+     [
+      "ArticularyWordRecognition",
+      0.05
+     ]
+    ],
+    "sources": [
+     "Handwriting",
+     "UniMiB-SHAR",
+     "PhonemeSpectra",
+     "UWaveGestureLibrary",
+     "Cricket",
+     "PTB-XL",
+     "SleepEDF",
+     "PAMAP2",
+     "NonInvasiveFetalECGThorax1",
+     "ShapesAll",
+     "LargeKitchenAppliances",
+     "Adiac",
+     "FordA",
+     "SemgHandMovementCh2",
+     "EthanolConcentration",
+     "CinCECGTorso",
+     "ArticularyWordRecognition",
+     "ERing",
+     "NATOPS",
+     "PEMS-SF"
+    ]
+   }
+  }
+ },
+ "verdict": "S3MD-BEATS-TS2VEC+E",
+ "predictions": {
+  "P1": false,
+  "P2": true,
+  "P3": false,
+  "P4": false,
+  "P5": false,
+  "P6": false
+ }
+}

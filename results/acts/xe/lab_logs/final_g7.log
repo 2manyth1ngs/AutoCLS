@@ -1,0 +1,14 @@
+[ACTS-s1pp] 计划 103 格，已有 95，待跑 8
+[data] Cricket: X=(180, 1197, 6) classes=12
+[data] Cricket_whole_official: official train=(108, 1197, 6) test=(72, 1197, 6)
+[ACTS-s1pp 1/8] Cricket_whole_official/random/491a461d s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.958 0.944] (402.2s+0.6s)
+[ACTS-s1pp 2/8] Cricket_whole_official/random/491a461d s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.958 0.972 0.917] (382.9s+0.6s)
+[ACTS-s1pp 3/8] Cricket_whole_official/random/bcdd58ec s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.986 1.000] (217.6s+0.6s)
+[ACTS-s1pp 4/8] Cricket_whole_official/random/bcdd58ec s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.972 0.986 0.986] (204.4s+0.6s)
+[data] SelfRegulationSCP1: X=(561, 896, 6) classes=2
+[data] SelfRegulationSCP1_whole_official: official train=(268, 896, 6) test=(293, 896, 6)
+[ACTS-s1pp 5/8] SelfRegulationSCP1_whole_official/random/d5901e80 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.867 0.884 0.884] (69.7s+1.0s)
+[ACTS-s1pp 6/8] SelfRegulationSCP1_whole_official/random/d5901e80 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.874 0.898 0.894] (64.4s+0.9s)
+[ACTS-s1pp 7/8] SelfRegulationSCP1_whole_official/random/2a77792c s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.659 0.621 0.679] (38.2s+0.9s)
+[ACTS-s1pp 8/8] SelfRegulationSCP1_whole_official/random/2a77792c s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.744 0.642 0.621] (36.9s+0.9s)
+[ACTS-s1pp] 收官

@@ -1,0 +1,9 @@
+[et] ArticularyWordRecognition_a03 X=(366, 96, 9) iters=600 split=0 45.5s
+[et] ArticularyWordRecognition_a07 X=(459, 64, 8) iters=600 split=0 33.1s
+[et] ERing_a03 X=(179, 57, 4) iters=200 split=0 7.8s
+[et] ERing_a07 X=(227, 50, 4) iters=200 split=0 8.6s
+[et] NATOPS_a03 X=(177, 50, 22) iters=600 split=0 25.1s
+[et] NATOPS_a07 X=(309, 50, 19) iters=600 split=0 31.1s
+[et] PEMS-SF_a03 X=(233, 92, 875) iters=600 split=0 429.3s
+[et] PEMS-SF_a07 X=(367, 65, 946) iters=600 split=0 705.8s
+[et] TARGET/Cricket X=(108, 1197, 6) iters=600 split=0 67.2s

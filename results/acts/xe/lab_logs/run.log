@@ -1,0 +1,51 @@
+== HEAD 7848593
+== XS UNI 搜索 6 / 6
+== S3-Z NEW_B 模型 60 / 60
+17 passed in 6.11s
+== [16:23:04] E_T（38 个，4 路）
+[merge-et] 38 个（缺 0）；NaN et50 0 / etF 0
+# XE 第一步：E 形式的近亲检索质量（15 个非靶源互检索，靶盲）
+
+| 形式 | 维 | **M_R**（Spearman 均值） | 最小 | R > 0 的查询 | 近亲命中@3 | 6 靶描述（π 与偏好相似 Spearman 均值） |
+|---|---:|---:|---:|---:|---:|---:|
+| pt | 256 | +0.095 | -0.26 | 9/15 | 0.27 | +0.084 |
+| A | 25 | +0.200 | -0.35 | 11/15 | 0.33 | +0.189 |
+| T | 44 | +0.222 | -0.23 | 10/15 | 0.33 | +0.071 |
+| pt+A（现用） | 281 | +0.108 | -0.21 | 8/15 | 0.27 | +0.113 |
+| pt+T | 300 | +0.120 | -0.24 | 9/15 | 0.27 | +0.095 |
+| A+T | 69 | +0.260 | -0.23 | 12/15 | 0.29 | +0.103 |
+| pt+A+T | 325 | +0.144 | -0.19 | 11/15 | 0.27 | +0.132 |
+
+读数码：**XE-SWAP-A+T**（选中 A+T）
+
+6 靶逐集（描述）：Handwrit -0.18/-0.14；PhonemeS +0.29/+0.34；UWaveGes +0.33/+0.48；Cricket -0.08/+0.07；EthanolC +0.32/-0.18；SelfRegu -0.01/+0.05（pt+A / A+T）
+[prep-md] 形式 A+T：E (192, 69)，靶 E 已换，UNI 搜索 6 个复制
+[fit] Handwriting ME：α_w 1 τ 0.5 γ 0.75；π 前 3 FordA 0.15，PTB-XL 0.13，UniMiB-SHAR 0.10
+[fit] Handwriting UNI：α_w 1 τ 1 γ 0.75；π 前 3 UniMiB-SHAR 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] PhonemeSpectra ME：α_w 1 τ 1 γ 0.75；π 前 3 EthanolConcentration 0.09，PTB-XL 0.09，SleepEDF 0.08
+[fit] PhonemeSpectra UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] UWaveGestureLibrary ME：α_w 1 τ 1 γ 0.75；π 前 3 ShapesAll 0.09，ArticularyWordRecognition 0.09，ERing 0.08
+[fit] UWaveGestureLibrary UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] Cricket ME：α_w 1 τ 1 γ 0.75；π 前 3 ArticularyWordRecognition 0.08，ShapesAll 0.08，PEMS-SF 0.08
+[fit] Cricket UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] EthanolConcentration ME：α_w 1 τ 0.5 γ 0.75；π 前 3 PhonemeSpectra 0.15，SleepEDF 0.11，PTB-XL 0.08
+[fit] EthanolConcentration UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] SelfRegulationSCP1 ME：α_w 1 τ 0.5 γ 0.75；π 前 3 PAMAP2 0.10，UWaveGestureLibrary 0.10，Cricket 0.08
+[fit] SelfRegulationSCP1 UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+== [16:47:10] 搜索 ME × 6
+[search] ME_Cricket：|U| = 22，γ 0.75，COMP-ONLY 491a461d，7s
+[search] ME_EthanolConcentration：|U| = 22，γ 0.75，COMP-ONLY 8971dab0，11s
+[search] ME_Handwriting：|U| = 22，γ 0.75，COMP-ONLY 03bd3819，11s
+[search] ME_PhonemeSpectra：|U| = 21，γ 0.75，COMP-ONLY 27fc0257，7s
+[search] ME_SelfRegulationSCP1：|U| = 22，γ 0.75，COMP-ONLY 2a77792c，10s
+[search] ME_UWaveGestureLibrary：|U| = 22，γ 0.75，COMP-ONLY 5e7a8ce0，16s
+== 搜索完：6 / 6
+== [16:47:43] CV 格
+[plan cv] 臂 ['ME', 'UNI']：1044 格
+== [16:47:49] cv 轮 1：未完成 500 格 / 24 任务；卡 5 7 3 2
+verify cv: plan 1044 / done 1044 / error 0 → OK
+[select] {"ME": {"Handwr": "aab5c0b8", "Phonem": "ffc2b716", "UWaveG": "a0efa988", "Cricke": "bcdd58ec", "Ethano": "378388ac", "SelfRe": "d5901e80"}, "UNI": {"Handwr": "cb596c1e", "Phonem": "3f7dc5df", "UWaveG": "2be4e039", "Cricke": "eb2db4f9", "Ethano": "071afb46", "SelfRe": "4fe31792"}}
+== [20:58:40] 最终格
+[plan final] 臂 ['ME', 'UNI']：1090 格
+== [20:58:46] final 轮 1：未完成 24 格 / 6 任务；卡 7 1 4 3
+verify final: plan 1090 / done 1090 / error 0 → OK

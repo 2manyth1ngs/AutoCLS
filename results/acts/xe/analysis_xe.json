@@ -1,0 +1,65 @@
+{
+ "verdict": "XE-BEATS-TS2VEC+E",
+ "form": "A+T",
+ "tau": {
+  "Handwriting": 0.5,
+  "PhonemeSpectra": 1.0,
+  "UWaveGestureLibrary": 1.0,
+  "Cricket": 1.0,
+  "EthanolConcentration": 0.5,
+  "SelfRegulationSCP1": 0.5
+ },
+ "gamma": {
+  "Handwriting": 0.75,
+  "PhonemeSpectra": 0.75,
+  "UWaveGestureLibrary": 0.75,
+  "Cricket": 0.75,
+  "EthanolConcentration": 0.75,
+  "SelfRegulationSCP1": 0.75
+ },
+ "pi_max": {
+  "Handwriting": 0.15431702009732307,
+  "PhonemeSpectra": 0.09381577437244745,
+  "UWaveGestureLibrary": 0.09209162673963656,
+  "Cricket": 0.0838737892808614,
+  "EthanolConcentration": 0.15355591790359743,
+  "SelfRegulationSCP1": 0.10408754069253141
+ },
+ "pi_pref_rho": {
+  "Handwriting": {
+   "X": -0.04962406015037594,
+   "pt+A": -0.156390977443609
+  },
+  "PhonemeSpectra": {
+   "X": 0.33533834586466166,
+   "pt+A": 0.3383458646616541
+  },
+  "UWaveGestureLibrary": {
+   "X": 0.4766917293233082,
+   "pt+A": 0.29774436090225564
+  },
+  "Cricket": {
+   "X": 0.09774436090225563,
+   "pt+A": -0.14586466165413534
+  },
+  "EthanolConcentration": {
+   "X": -0.23458646616541348,
+   "pt+A": 0.38345864661654133
+  },
+  "SelfRegulationSCP1": {
+   "X": 0.10225563909774435,
+   "pt+A": -0.004511278195488721
+  }
+ },
+ "ME_new": 0.6302,
+ "UNI_new": 0.6189,
+ "BLIND": 0.6377,
+ "predictions": {
+  "P1": true,
+  "P2": true,
+  "P3": false,
+  "P4": false,
+  "P5": false,
+  "P6": false
+ }
+}

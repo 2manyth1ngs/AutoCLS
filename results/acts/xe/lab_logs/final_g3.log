@@ -1,0 +1,8 @@
+[ACTS-s1pp] 计划 50 格，已有 46，待跑 4
+[data] PhonemeSpectra: X=(6668, 217, 11) classes=39
+[data] PhonemeSpectra_whole_official: official train=(3315, 217, 11) test=(3353, 217, 11)
+[ACTS-s1pp 1/4] PhonemeSpectra_whole_official/random/27fc0257 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.194 0.190 0.188] (341.3s+48.8s)
+[ACTS-s1pp 2/4] PhonemeSpectra_whole_official/random/27fc0257 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.175 0.170 0.189] (341.1s+44.3s)
+[ACTS-s1pp 3/4] PhonemeSpectra_whole_official/random/ffc2b716 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.233 0.245 0.256] (184.7s+41.5s)
+[ACTS-s1pp 4/4] PhonemeSpectra_whole_official/random/ffc2b716 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.241 0.245 0.255] (201.1s+42.0s)
+[ACTS-s1pp] 收官

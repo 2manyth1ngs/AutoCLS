@@ -1,0 +1,9 @@
+[et] ArticularyWordRecognition_a02 X=(284, 122, 6) iters=600 split=0 37.6s
+[et] ArticularyWordRecognition_a06 X=(192, 114, 6) iters=600 split=0 25.6s
+[et] ERing_a02 X=(129, 62, 3) iters=200 split=0 8.5s
+[et] ERing_a06 X=(109, 58, 3) iters=200 split=0 8.3s
+[et] NATOPS_a02 X=(149, 51, 16) iters=600 split=0 25.6s
+[et] NATOPS_a06 X=(115, 51, 13) iters=200 split=0 9.7s
+[et] PEMS-SF_a02 X=(126, 124, 631) iters=600 split=0 156.5s
+[et] PEMS-SF_a06 X=(91, 118, 657) iters=600 split=0 126.9s
+[et] TARGET/UWaveGestureLibrary X=(120, 315, 3) iters=600 split=0 33.9s
