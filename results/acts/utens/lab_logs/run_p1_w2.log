@@ -1,0 +1,136 @@
+[run] worker 2/4：10 个作业 ['MotorImagery_s2', 'StandWalkJump_s1', 'DuckDuckGeese_s0', 'SelfRegulationSCP2_s0', 'HandMovementDirection_s0', 'HandMovementDirection_s2', 'AtrialFibrillation_s0', 'AtrialFibrillation_s2', 'FingerMovements_s1', 'Epilepsy_s2']
+[data] MotorImagery: X=(378, 3000, 64) classes=2
+[data] MotorImagery_whole_official: official train=(278, 3000, 64) test=(100, 3000, 64)
+[run] MotorImagery_s2 b0334fc7fb49 单模型 acc 0.500（截点 600）
+[run] MotorImagery_s2 90387a4c9c7b 单模型 acc 0.560（截点 600）
+[run] MotorImagery_s2 e07738858e69 单模型 acc 0.500（截点 600）
+[run] MotorImagery_s2 1f38d402cc1d 单模型 acc 0.500（截点 600）
+[run] MotorImagery_s2 805f5ddd9e6e 单模型 acc 0.490（截点 600）
+[run] MotorImagery_s2 884600cf7495 单模型 acc 0.590（截点 600）
+[run] MotorImagery_s2 cdf0fd5c2c74 单模型 acc 0.470（截点 600）
+[run] MotorImagery_s2 f82bc0bd2756 单模型 acc 0.470（截点 600）
+[run] MotorImagery_s2 59b6a23667d7 单模型 acc 0.500（截点 600）
+[run] MotorImagery_s2 ME 集成 acc 0.51
+[run] MotorImagery_s2 UNI 集成 acc 0.49
+[run] MotorImagery_s2 BLIND 集成 acc 0.48
+[data] StandWalkJump: X=(27, 2500, 4) classes=3
+[data] StandWalkJump_whole_official: official train=(12, 2500, 4) test=(15, 2500, 4)
+[run] StandWalkJump_s1 4504291d7839 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s1 d69fe8f63fec 单模型 acc 0.267（截点 600）
+[run] StandWalkJump_s1 028e581f8590 单模型 acc 0.267（截点 600）
+[run] StandWalkJump_s1 a8e2dc5844c8 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s1 640cd63753e8 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s1 c36717aaba20 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s1 d91e47e96a05 单模型 acc 0.600（截点 600）
+[run] StandWalkJump_s1 de6f5ccd6b1f 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s1 7f1edeec070d 单模型 acc 0.400（截点 600）
+[run] StandWalkJump_s1 ME 集成 acc 0.4
+[run] StandWalkJump_s1 UNI 集成 acc 0.4666666666666667
+[run] StandWalkJump_s1 BLIND 集成 acc 0.5333333333333333
+[data] DuckDuckGeese: X=(100, 270, 1345) classes=5
+[data] DuckDuckGeese_whole_official: official train=(50, 270, 1345) test=(50, 270, 1345)
+[run] DuckDuckGeese_s0 a5066777b713 单模型 acc 0.640（截点 600）
+[run] DuckDuckGeese_s0 654ea8ccdcd0 单模型 acc 0.580（截点 600）
+[run] DuckDuckGeese_s0 2296a0d8b55d 单模型 acc 0.360（截点 600）
+[run] DuckDuckGeese_s0 13bd32c6fc31 单模型 acc 0.500（截点 600）
+[run] DuckDuckGeese_s0 41b7915f713c 单模型 acc 0.620（截点 600）
+[run] DuckDuckGeese_s0 2acf946e13e9 单模型 acc 0.520（截点 600）
+[run] DuckDuckGeese_s0 de710fa35da0 单模型 acc 0.500（截点 600）
+[run] DuckDuckGeese_s0 2a6ac9a75d45 单模型 acc 0.420（截点 600）
+[run] DuckDuckGeese_s0 47e319878dfe 单模型 acc 0.400（截点 600）
+[run] DuckDuckGeese_s0 ME 集成 acc 0.68
+[run] DuckDuckGeese_s0 UNI 集成 acc 0.62
+[run] DuckDuckGeese_s0 BLIND 集成 acc 0.54
+[data] SelfRegulationSCP2: X=(380, 1152, 7) classes=2
+[data] SelfRegulationSCP2_whole_official: official train=(200, 1152, 7) test=(180, 1152, 7)
+[run] SelfRegulationSCP2_s0 7b822eabdd76 单模型 acc 0.506（截点 600）
+[run] SelfRegulationSCP2_s0 7233277c97b4 单模型 acc 0.572（截点 600）
+[run] SelfRegulationSCP2_s0 0e2f171d7f52 单模型 acc 0.506（截点 600）
+[run] SelfRegulationSCP2_s0 ff1e340712b3 单模型 acc 0.639（截点 600）
+[run] SelfRegulationSCP2_s0 3514a7f786b1 单模型 acc 0.572（截点 600）
+[run] SelfRegulationSCP2_s0 48eb8d2a3b16 单模型 acc 0.522（截点 600）
+[run] SelfRegulationSCP2_s0 61a50ee3b7e6 单模型 acc 0.500（截点 600）
+[run] SelfRegulationSCP2_s0 5c46be6bef29 单模型 acc 0.561（截点 600）
+[run] SelfRegulationSCP2_s0 3ef0d278873b 单模型 acc 0.528（截点 600）
+[run] SelfRegulationSCP2_s0 ME 集成 acc 0.55
+[run] SelfRegulationSCP2_s0 UNI 集成 acc 0.6
+[run] SelfRegulationSCP2_s0 BLIND 集成 acc 0.4888888888888889
+[data] HandMovementDirection: X=(234, 400, 10) classes=4
+[data] HandMovementDirection_whole_official: official train=(160, 400, 10) test=(74, 400, 10)
+[run] HandMovementDirection_s0 eb139cee986b 单模型 acc 0.338（截点 600）
+[run] HandMovementDirection_s0 633183d4206e 单模型 acc 0.419（截点 600）
+[run] HandMovementDirection_s0 f58f315f6eb3 单模型 acc 0.311（截点 600）
+[run] HandMovementDirection_s0 c65a7d2d427e 单模型 acc 0.284（截点 600）
+[run] HandMovementDirection_s0 182f02c83a2e 单模型 acc 0.216（截点 600）
+[run] HandMovementDirection_s0 4f24d6ed889b 单模型 acc 0.405（截点 600）
+[run] HandMovementDirection_s0 17010d1228ec 单模型 acc 0.419（截点 600）
+[run] HandMovementDirection_s0 bb7500b04699 单模型 acc 0.351（截点 600）
+[run] HandMovementDirection_s0 97e29ab0d98a 单模型 acc 0.243（截点 600）
+[run] HandMovementDirection_s0 ME 集成 acc 0.44594594594594594
+[run] HandMovementDirection_s0 UNI 集成 acc 0.36486486486486486
+[run] HandMovementDirection_s0 BLIND 集成 acc 0.4189189189189189
+[run] HandMovementDirection_s2 eb139cee986b 单模型 acc 0.473（截点 600）
+[run] HandMovementDirection_s2 633183d4206e 单模型 acc 0.568（截点 600）
+[run] HandMovementDirection_s2 f58f315f6eb3 单模型 acc 0.284（截点 600）
+[run] HandMovementDirection_s2 c65a7d2d427e 单模型 acc 0.351（截点 600）
+[run] HandMovementDirection_s2 182f02c83a2e 单模型 acc 0.351（截点 600）
+[run] HandMovementDirection_s2 4f24d6ed889b 单模型 acc 0.378（截点 600）
+[run] HandMovementDirection_s2 17010d1228ec 单模型 acc 0.324（截点 600）
+[run] HandMovementDirection_s2 bb7500b04699 单模型 acc 0.338（截点 600）
+[run] HandMovementDirection_s2 97e29ab0d98a 单模型 acc 0.324（截点 600）
+[run] HandMovementDirection_s2 ME 集成 acc 0.36486486486486486
+[run] HandMovementDirection_s2 UNI 集成 acc 0.47297297297297297
+[run] HandMovementDirection_s2 BLIND 集成 acc 0.44594594594594594
+[data] AtrialFibrillation: X=(30, 640, 2) classes=3
+[data] AtrialFibrillation_whole_official: official train=(15, 640, 2) test=(15, 640, 2)
+[run] AtrialFibrillation_s0 030002d40766 单模型 acc 0.133（截点 200）
+[run] AtrialFibrillation_s0 cf11abede34f 单模型 acc 0.133（截点 200）
+[run] AtrialFibrillation_s0 2af36766355f 单模型 acc 0.200（截点 200）
+[run] AtrialFibrillation_s0 a5258dea1317 单模型 acc 0.133（截点 200）
+[run] AtrialFibrillation_s0 357087349dda 单模型 acc 0.267（截点 200）
+[run] AtrialFibrillation_s0 b8a9c082ac0e 单模型 acc 0.200（截点 200）
+[run] AtrialFibrillation_s0 2565ad0b1501 单模型 acc 0.200（截点 200）
+[run] AtrialFibrillation_s0 bf827948d157 单模型 acc 0.200（截点 200）
+[run] AtrialFibrillation_s0 065e425ddab7 单模型 acc 0.200（截点 200）
+[run] AtrialFibrillation_s0 ME 集成 acc 0.26666666666666666
+[run] AtrialFibrillation_s0 UNI 集成 acc 0.13333333333333333
+[run] AtrialFibrillation_s0 BLIND 集成 acc 0.2
+[run] AtrialFibrillation_s2 030002d40766 单模型 acc 0.267（截点 200）
+[run] AtrialFibrillation_s2 cf11abede34f 单模型 acc 0.133（截点 200）
+[run] AtrialFibrillation_s2 2af36766355f 单模型 acc 0.267（截点 200）
+[run] AtrialFibrillation_s2 a5258dea1317 单模型 acc 0.133（截点 200）
+[run] AtrialFibrillation_s2 357087349dda 单模型 acc 0.200（截点 200）
+[run] AtrialFibrillation_s2 b8a9c082ac0e 单模型 acc 0.333（截点 200）
+[run] AtrialFibrillation_s2 2565ad0b1501 单模型 acc 0.200（截点 200）
+[run] AtrialFibrillation_s2 bf827948d157 单模型 acc 0.267（截点 200）
+[run] AtrialFibrillation_s2 065e425ddab7 单模型 acc 0.400（截点 200）
+[run] AtrialFibrillation_s2 ME 集成 acc 0.2
+[run] AtrialFibrillation_s2 UNI 集成 acc 0.26666666666666666
+[run] AtrialFibrillation_s2 BLIND 集成 acc 0.2
+[data] FingerMovements: X=(416, 50, 28) classes=2
+[data] FingerMovements_whole_official: official train=(316, 50, 28) test=(100, 50, 28)
+[run] FingerMovements_s1 381ed1ba85da 单模型 acc 0.450（截点 600）
+[run] FingerMovements_s1 6b5f93b9337f 单模型 acc 0.570（截点 600）
+[run] FingerMovements_s1 bb37ced70806 单模型 acc 0.370（截点 600）
+[run] FingerMovements_s1 670cba20e80f 单模型 acc 0.510（截点 600）
+[run] FingerMovements_s1 1888f1b2e449 单模型 acc 0.580（截点 600）
+[run] FingerMovements_s1 5b6eb18eba9a 单模型 acc 0.420（截点 600）
+[run] FingerMovements_s1 b85805957494 单模型 acc 0.550（截点 600）
+[run] FingerMovements_s1 ddb91428e2d0 单模型 acc 0.400（截点 600）
+[run] FingerMovements_s1 a6ba32645642 单模型 acc 0.530（截点 600）
+[run] FingerMovements_s1 ME 集成 acc 0.54
+[run] FingerMovements_s1 UNI 集成 acc 0.53
+[run] FingerMovements_s1 BLIND 集成 acc 0.53
+[data] Epilepsy: X=(275, 206, 3) classes=4
+[data] Epilepsy_whole_official: official train=(137, 206, 3) test=(138, 206, 3)
+[run] Epilepsy_s2 cb364a08d003 单模型 acc 0.964（截点 200）
+[run] Epilepsy_s2 710232c4f5be 单模型 acc 0.978（截点 200）
+[run] Epilepsy_s2 01b50fd789a3 单模型 acc 0.971（截点 200）
+[run] Epilepsy_s2 67abd0a9a438 单模型 acc 0.949（截点 200）
+[run] Epilepsy_s2 55e63b3a365f 单模型 acc 0.942（截点 200）
+[run] Epilepsy_s2 01792449e280 单模型 acc 0.964（截点 200）
+[run] Epilepsy_s2 0e5e8de6d343 单模型 acc 0.942（截点 200）
+[run] Epilepsy_s2 39ec98e6d659 单模型 acc 0.957（截点 200）
+[run] Epilepsy_s2 ME 集成 acc 0.9492753623188406
+[run] Epilepsy_s2 UNI 集成 acc 0.9565217391304348
+[run] Epilepsy_s2 BLIND 集成 acc 0.9420289855072463

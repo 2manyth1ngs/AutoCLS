@@ -1,0 +1,48 @@
+{
+ "dataset": "BasicMotions",
+ "seed": 1,
+ "singles": {
+  "1ffca1223415": 0.975,
+  "cf2fd230aa0e": 0.975,
+  "f8dfeee4a23c": 1.0,
+  "49ec9939900e": 0.975,
+  "b0297f9e5de9": 0.975,
+  "ab4de999dfc9": 0.975,
+  "ce13b40f5f46": 0.975,
+  "5ff478535eff": 0.975,
+  "be066efb3d5c": 1.0
+ },
+ "arms": {
+  "ME": {
+   "keys": [
+    "1ffca1223415",
+    "cf2fd230aa0e",
+    "f8dfeee4a23c"
+   ],
+   "acc": 1.0,
+   "f1": 1.0,
+   "svm_c": 10000000000.0
+  },
+  "UNI": {
+   "keys": [
+    "49ec9939900e",
+    "b0297f9e5de9",
+    "ab4de999dfc9"
+   ],
+   "acc": 1.0,
+   "f1": 1.0,
+   "svm_c": 10000000000.0
+  },
+  "BLIND": {
+   "keys": [
+    "ce13b40f5f46",
+    "5ff478535eff",
+    "be066efb3d5c"
+   ],
+   "acc": 1.0,
+   "f1": 1.0,
+   "svm_c": 10000000000.0
+  }
+ },
+ "seconds": 326.9
+}

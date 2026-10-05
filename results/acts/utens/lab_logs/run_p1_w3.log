@@ -1,0 +1,96 @@
+[run] worker 3/4：7 个作业 ['FaceDetection_s0', 'FaceDetection_s1', 'DuckDuckGeese_s1', 'SelfRegulationSCP2_s2', 'Heartbeat_s2', 'BasicMotions_s2', 'Epilepsy_s0']
+[data] FaceDetection: X=(9414, 62, 144) classes=2
+[data] FaceDetection_whole_official: official train=(5890, 62, 144) test=(3524, 62, 144)
+[run] FaceDetection_s0 7755c3a919e1 单模型 acc 0.564（截点 600）
+[run] FaceDetection_s0 7c646d08906e 单模型 acc 0.579（截点 600）
+[run] FaceDetection_s0 13f1e5d77111 单模型 acc 0.577（截点 600）
+[run] FaceDetection_s0 fa55b2d106a7 单模型 acc 0.569（截点 600）
+[run] FaceDetection_s0 2dc573c49f6a 单模型 acc 0.564（截点 600）
+[run] FaceDetection_s0 9e07bee48230 单模型 acc 0.559（截点 600）
+[run] FaceDetection_s0 a268ecc76d0e 单模型 acc 0.554（截点 600）
+[run] FaceDetection_s0 e18439846472 单模型 acc 0.558（截点 600）
+[run] FaceDetection_s0 61aaba40b93d 单模型 acc 0.565（截点 600）
+[run] FaceDetection_s0 ME 集成 acc 0.6021566401816119
+[run] FaceDetection_s0 UNI 集成 acc 0.5848467650397275
+[run] FaceDetection_s0 BLIND 集成 acc 0.5899545970488081
+[run] FaceDetection_s1 7755c3a919e1 单模型 acc 0.576（截点 600）
+[run] FaceDetection_s1 7c646d08906e 单模型 acc 0.566（截点 600）
+[run] FaceDetection_s1 13f1e5d77111 单模型 acc 0.602（截点 600）
+[run] FaceDetection_s1 fa55b2d106a7 单模型 acc 0.576（截点 600）
+[run] FaceDetection_s1 2dc573c49f6a 单模型 acc 0.568（截点 600）
+[run] FaceDetection_s1 9e07bee48230 单模型 acc 0.543（截点 600）
+[run] FaceDetection_s1 a268ecc76d0e 单模型 acc 0.581（截点 600）
+[run] FaceDetection_s1 e18439846472 单模型 acc 0.571（截点 600）
+[run] FaceDetection_s1 61aaba40b93d 单模型 acc 0.563（截点 600）
+[run] FaceDetection_s1 ME 集成 acc 0.6018728717366629
+[run] FaceDetection_s1 UNI 集成 acc 0.5698070374574348
+[run] FaceDetection_s1 BLIND 集成 acc 0.5961975028376845
+[data] DuckDuckGeese: X=(100, 270, 1345) classes=5
+[data] DuckDuckGeese_whole_official: official train=(50, 270, 1345) test=(50, 270, 1345)
+[run] DuckDuckGeese_s1 a5066777b713 单模型 acc 0.620（截点 600）
+[run] DuckDuckGeese_s1 654ea8ccdcd0 单模型 acc 0.520（截点 600）
+[run] DuckDuckGeese_s1 2296a0d8b55d 单模型 acc 0.600（截点 600）
+[run] DuckDuckGeese_s1 13bd32c6fc31 单模型 acc 0.620（截点 600）
+[run] DuckDuckGeese_s1 41b7915f713c 单模型 acc 0.580（截点 600）
+[run] DuckDuckGeese_s1 2acf946e13e9 单模型 acc 0.620（截点 600）
+[run] DuckDuckGeese_s1 de710fa35da0 单模型 acc 0.540（截点 600）
+[run] DuckDuckGeese_s1 2a6ac9a75d45 单模型 acc 0.400（截点 600）
+[run] DuckDuckGeese_s1 47e319878dfe 单模型 acc 0.360（截点 600）
+[run] DuckDuckGeese_s1 ME 集成 acc 0.64
+[run] DuckDuckGeese_s1 UNI 集成 acc 0.7
+[run] DuckDuckGeese_s1 BLIND 集成 acc 0.46
+[data] SelfRegulationSCP2: X=(380, 1152, 7) classes=2
+[data] SelfRegulationSCP2_whole_official: official train=(200, 1152, 7) test=(180, 1152, 7)
+[run] SelfRegulationSCP2_s2 7b822eabdd76 单模型 acc 0.539（截点 600）
+[run] SelfRegulationSCP2_s2 7233277c97b4 单模型 acc 0.556（截点 600）
+[run] SelfRegulationSCP2_s2 0e2f171d7f52 单模型 acc 0.550（截点 600）
+[run] SelfRegulationSCP2_s2 ff1e340712b3 单模型 acc 0.517（截点 600）
+[run] SelfRegulationSCP2_s2 3514a7f786b1 单模型 acc 0.506（截点 600）
+[run] SelfRegulationSCP2_s2 48eb8d2a3b16 单模型 acc 0.522（截点 600）
+[run] SelfRegulationSCP2_s2 61a50ee3b7e6 单模型 acc 0.450（截点 600）
+[run] SelfRegulationSCP2_s2 5c46be6bef29 单模型 acc 0.506（截点 600）
+[run] SelfRegulationSCP2_s2 3ef0d278873b 单模型 acc 0.544（截点 600）
+[run] SelfRegulationSCP2_s2 ME 集成 acc 0.5277777777777778
+[run] SelfRegulationSCP2_s2 UNI 集成 acc 0.55
+[run] SelfRegulationSCP2_s2 BLIND 集成 acc 0.5555555555555556
+[data] Heartbeat: X=(409, 405, 61) classes=2
+[data] Heartbeat_whole_official: official train=(204, 405, 61) test=(205, 405, 61)
+[run] Heartbeat_s2 bf01684d7a51 单模型 acc 0.741（截点 600）
+[run] Heartbeat_s2 ef7feed41dee 单模型 acc 0.737（截点 600）
+[run] Heartbeat_s2 4e15c67bae84 单模型 acc 0.737（截点 600）
+[run] Heartbeat_s2 3ba6e78426ea 单模型 acc 0.688（截点 600）
+[run] Heartbeat_s2 d7b0bc516f4a 单模型 acc 0.698（截点 600）
+[run] Heartbeat_s2 06dd18674f76 单模型 acc 0.717（截点 600）
+[run] Heartbeat_s2 91393e0af34e 单模型 acc 0.722（截点 600）
+[run] Heartbeat_s2 07ea058ab8dc 单模型 acc 0.737（截点 600）
+[run] Heartbeat_s2 006fd92b2761 单模型 acc 0.722（截点 600）
+[run] Heartbeat_s2 ME 集成 acc 0.7219512195121951
+[run] Heartbeat_s2 UNI 集成 acc 0.7317073170731707
+[run] Heartbeat_s2 BLIND 集成 acc 0.751219512195122
+[data] BasicMotions: X=(80, 100, 6) classes=4
+[data] BasicMotions_whole_official: official train=(40, 100, 6) test=(40, 100, 6)
+[run] BasicMotions_s2 1ffca1223415 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s2 cf2fd230aa0e 单模型 acc 1.000（截点 200）
+[run] BasicMotions_s2 f8dfeee4a23c 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s2 49ec9939900e 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s2 b0297f9e5de9 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s2 ab4de999dfc9 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s2 ce13b40f5f46 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s2 5ff478535eff 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s2 be066efb3d5c 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s2 ME 集成 acc 1.0
+[run] BasicMotions_s2 UNI 集成 acc 0.975
+[run] BasicMotions_s2 BLIND 集成 acc 1.0
+[data] Epilepsy: X=(275, 206, 3) classes=4
+[data] Epilepsy_whole_official: official train=(137, 206, 3) test=(138, 206, 3)
+[run] Epilepsy_s0 cb364a08d003 单模型 acc 0.942（截点 200）
+[run] Epilepsy_s0 710232c4f5be 单模型 acc 0.964（截点 200）
+[run] Epilepsy_s0 01b50fd789a3 单模型 acc 0.957（截点 200）
+[run] Epilepsy_s0 67abd0a9a438 单模型 acc 0.949（截点 200）
+[run] Epilepsy_s0 55e63b3a365f 单模型 acc 0.957（截点 200）
+[run] Epilepsy_s0 01792449e280 单模型 acc 0.935（截点 200）
+[run] Epilepsy_s0 0e5e8de6d343 单模型 acc 0.935（截点 200）
+[run] Epilepsy_s0 39ec98e6d659 单模型 acc 0.964（截点 200）
+[run] Epilepsy_s0 ME 集成 acc 0.9565217391304348
+[run] Epilepsy_s0 UNI 集成 acc 0.9420289855072463
+[run] Epilepsy_s0 BLIND 集成 acc 0.9347826086956522

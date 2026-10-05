@@ -1,0 +1,97 @@
+[run] worker 1/4：7 个作业 ['MotorImagery_s1', 'StandWalkJump_s0', 'StandWalkJump_s2', 'SelfRegulationSCP2_s1', 'Heartbeat_s1', 'BasicMotions_s1', 'FingerMovements_s2']
+[data] MotorImagery: X=(378, 3000, 64) classes=2
+[data] MotorImagery_whole_official: official train=(278, 3000, 64) test=(100, 3000, 64)
+[run] MotorImagery_s1 b0334fc7fb49 单模型 acc 0.500（截点 600）
+[run] MotorImagery_s1 90387a4c9c7b 单模型 acc 0.520（截点 600）
+[run] MotorImagery_s1 e07738858e69 单模型 acc 0.540（截点 600）
+[run] MotorImagery_s1 1f38d402cc1d 单模型 acc 0.480（截点 600）
+[run] MotorImagery_s1 805f5ddd9e6e 单模型 acc 0.470（截点 600）
+[run] MotorImagery_s1 884600cf7495 单模型 acc 0.490（截点 600）
+[run] MotorImagery_s1 cdf0fd5c2c74 单模型 acc 0.610（截点 600）
+[run] MotorImagery_s1 f82bc0bd2756 单模型 acc 0.530（截点 600）
+[run] MotorImagery_s1 59b6a23667d7 单模型 acc 0.480（截点 600）
+[run] MotorImagery_s1 ME 集成 acc 0.52
+[run] MotorImagery_s1 UNI 集成 acc 0.47
+[run] MotorImagery_s1 BLIND 集成 acc 0.47
+[data] StandWalkJump: X=(27, 2500, 4) classes=3
+[data] StandWalkJump_whole_official: official train=(12, 2500, 4) test=(15, 2500, 4)
+[run] StandWalkJump_s0 4504291d7839 单模型 acc 0.400（截点 600）
+[run] StandWalkJump_s0 d69fe8f63fec 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s0 028e581f8590 单模型 acc 0.200（截点 600）
+[run] StandWalkJump_s0 a8e2dc5844c8 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s0 640cd63753e8 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s0 c36717aaba20 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s0 d91e47e96a05 单模型 acc 0.600（截点 600）
+[run] StandWalkJump_s0 de6f5ccd6b1f 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s0 7f1edeec070d 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s0 ME 集成 acc 0.3333333333333333
+[run] StandWalkJump_s0 UNI 集成 acc 0.4
+[run] StandWalkJump_s0 BLIND 集成 acc 0.4666666666666667
+[run] StandWalkJump_s2 4504291d7839 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s2 d69fe8f63fec 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s2 028e581f8590 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s2 a8e2dc5844c8 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s2 640cd63753e8 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s2 c36717aaba20 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s2 d91e47e96a05 单模型 acc 0.533（截点 600）
+[run] StandWalkJump_s2 de6f5ccd6b1f 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s2 7f1edeec070d 单模型 acc 0.333（截点 600）
+[run] StandWalkJump_s2 ME 集成 acc 0.4666666666666667
+[run] StandWalkJump_s2 UNI 集成 acc 0.4
+[run] StandWalkJump_s2 BLIND 集成 acc 0.5333333333333333
+[data] SelfRegulationSCP2: X=(380, 1152, 7) classes=2
+[data] SelfRegulationSCP2_whole_official: official train=(200, 1152, 7) test=(180, 1152, 7)
+[run] SelfRegulationSCP2_s1 7b822eabdd76 单模型 acc 0.528（截点 600）
+[run] SelfRegulationSCP2_s1 7233277c97b4 单模型 acc 0.567（截点 600）
+[run] SelfRegulationSCP2_s1 0e2f171d7f52 单模型 acc 0.522（截点 600）
+[run] SelfRegulationSCP2_s1 ff1e340712b3 单模型 acc 0.461（截点 600）
+[run] SelfRegulationSCP2_s1 3514a7f786b1 单模型 acc 0.589（截点 600）
+[run] SelfRegulationSCP2_s1 48eb8d2a3b16 单模型 acc 0.483（截点 600）
+[run] SelfRegulationSCP2_s1 61a50ee3b7e6 单模型 acc 0.550（截点 600）
+[run] SelfRegulationSCP2_s1 5c46be6bef29 单模型 acc 0.506（截点 600）
+[run] SelfRegulationSCP2_s1 3ef0d278873b 单模型 acc 0.511（截点 600）
+[run] SelfRegulationSCP2_s1 ME 集成 acc 0.5222222222222223
+[run] SelfRegulationSCP2_s1 UNI 集成 acc 0.5111111111111111
+[run] SelfRegulationSCP2_s1 BLIND 集成 acc 0.5777777777777777
+[data] Heartbeat: X=(409, 405, 61) classes=2
+[data] Heartbeat_whole_official: official train=(204, 405, 61) test=(205, 405, 61)
+[run] Heartbeat_s1 bf01684d7a51 单模型 acc 0.741（截点 600）
+[run] Heartbeat_s1 ef7feed41dee 单模型 acc 0.732（截点 600）
+[run] Heartbeat_s1 4e15c67bae84 单模型 acc 0.732（截点 600）
+[run] Heartbeat_s1 3ba6e78426ea 单模型 acc 0.737（截点 600）
+[run] Heartbeat_s1 d7b0bc516f4a 单模型 acc 0.741（截点 600）
+[run] Heartbeat_s1 06dd18674f76 单模型 acc 0.727（截点 600）
+[run] Heartbeat_s1 91393e0af34e 单模型 acc 0.722（截点 600）
+[run] Heartbeat_s1 07ea058ab8dc 单模型 acc 0.751（截点 600）
+[run] Heartbeat_s1 006fd92b2761 单模型 acc 0.761（截点 600）
+[run] Heartbeat_s1 ME 集成 acc 0.7414634146341463
+[run] Heartbeat_s1 UNI 集成 acc 0.751219512195122
+[run] Heartbeat_s1 BLIND 集成 acc 0.7365853658536585
+[data] BasicMotions: X=(80, 100, 6) classes=4
+[data] BasicMotions_whole_official: official train=(40, 100, 6) test=(40, 100, 6)
+[run] BasicMotions_s1 1ffca1223415 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s1 cf2fd230aa0e 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s1 f8dfeee4a23c 单模型 acc 1.000（截点 200）
+[run] BasicMotions_s1 49ec9939900e 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s1 b0297f9e5de9 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s1 ab4de999dfc9 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s1 ce13b40f5f46 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s1 5ff478535eff 单模型 acc 0.975（截点 200）
+[run] BasicMotions_s1 be066efb3d5c 单模型 acc 1.000（截点 200）
+[run] BasicMotions_s1 ME 集成 acc 1.0
+[run] BasicMotions_s1 UNI 集成 acc 1.0
+[run] BasicMotions_s1 BLIND 集成 acc 1.0
+[data] FingerMovements: X=(416, 50, 28) classes=2
+[data] FingerMovements_whole_official: official train=(316, 50, 28) test=(100, 50, 28)
+[run] FingerMovements_s2 381ed1ba85da 单模型 acc 0.520（截点 600）
+[run] FingerMovements_s2 6b5f93b9337f 单模型 acc 0.530（截点 600）
+[run] FingerMovements_s2 bb37ced70806 单模型 acc 0.520（截点 600）
+[run] FingerMovements_s2 670cba20e80f 单模型 acc 0.440（截点 600）
+[run] FingerMovements_s2 1888f1b2e449 单模型 acc 0.550（截点 600）
+[run] FingerMovements_s2 5b6eb18eba9a 单模型 acc 0.420（截点 600）
+[run] FingerMovements_s2 b85805957494 单模型 acc 0.580（截点 600）
+[run] FingerMovements_s2 ddb91428e2d0 单模型 acc 0.550（截点 600）
+[run] FingerMovements_s2 a6ba32645642 单模型 acc 0.600（截点 600）
+[run] FingerMovements_s2 ME 集成 acc 0.46
+[run] FingerMovements_s2 UNI 集成 acc 0.57
+[run] FingerMovements_s2 BLIND 集成 acc 0.53
