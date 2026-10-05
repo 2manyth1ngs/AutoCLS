@@ -22,7 +22,8 @@ import torch
 from torch import nn
 
 from ..space.cls_space import CLS
-from .augmentations import CROP_MODES, augment_two_views
+from .augmentations import (CROP_MODES, _crop_per_row, _crop_with_coords, augment_two_views, sample_crop_coords,
+                            sample_crop_coords_ts2vec)
 from .emb_transform import apply_emb_transform
 from .pair_construction import total_contrastive_loss
 
@@ -45,6 +46,9 @@ def pretrain_encoder(
     on_checkpoint: Optional[Callable[[int, nn.Module], None]] = None,
     drop_last: bool = False,
     crop_mode: str = "fixed",
+    aug_learn: str = "none",
+    y_train: Optional[np.ndarray] = None,
+    aug_info: Optional[dict] = None,
 ) -> list[float]:
     """按 cls_cfg 对 encoder 做对比预训练（就地更新权重），返回每遍数据的平均损失。
 
@@ -55,6 +59,11 @@ def pretrain_encoder(
       N<batch_size 时整遍无可训 batch → ValueError（与既有 <2 样本判据同一出口）。
     - crop_mode="ts2vec"：crop 增强改走官方逐迭代 crop_l~U[2,T] + 逐行偏移
       （augmentations.sample_crop_coords_ts2vec，ts2vec.py:126-132）；"fixed" 为既有口径。
+
+    aug_learn（WP17-ACTS AL，默认 "none" = 既有路径逐位不变，tests/test_learned_aug.py 钉死）："sup" = InfoTS 式学增强
+    （autocls/contrastive/learned_aug.py，忠实于官方代码）：CLS 的 5 个非 crop 增强与 order 不生效，第一视图 = 7 种变换的学习加权混合
+    （每 batch 以 0.2 的概率，否则原样）、第二视图 = 原样，之后接 CLS 的 crop（两视图共享坐标）；每第 2、4… 遍开始前做一遍元学习步
+    （只用 y_train 的标签交叉熵，不计入 max_iters）。y_train 必须给出；aug_info 若给出则回填 meta_steps / weights / weights_init。
 
     恰好执行 max_iters 次 optimizer.step() 后停止；因 <2 样本被跳过的 batch 不计入。
     每完整遍历一遍数据后用同一 generator 重新 randperm 洗牌，故当 max_iters 为
@@ -99,6 +108,10 @@ def pretrain_encoder(
     ckpt_set = set(checkpoints)
     if crop_mode not in CROP_MODES:
         raise ValueError(f"未知 crop_mode={crop_mode!r}（可选 {CROP_MODES}）")
+    if aug_learn not in ("none", "sup"):
+        raise ValueError(f"未知 aug_learn={aug_learn!r}（可选 none / sup）")
+    if aug_learn == "sup" and y_train is None:
+        raise ValueError("aug_learn='sup' 需要 y_train（官方 TRAIN 标签）")
 
     device = device or ("cuda" if torch.cuda.is_available() else "cpu")
     encoder = encoder.to(device)
@@ -114,9 +127,26 @@ def pretrain_encoder(
     N = X.shape[0]
     gen = torch.Generator().manual_seed(seed)  # 增强/打乱共用，保证可复现
 
+    la = None
+    if aug_learn == "sup":                       # 学增强（默认路径不进这里，不消耗任何随机数）
+        from . import learned_aug as la
+        _, y_idx = np.unique(np.asarray(y_train), return_inverse=True)
+        Y = torch.as_tensor(y_idx, dtype=torch.long)
+        aug = la.AutoAug(seed=seed)
+        with torch.no_grad():
+            was = encoder.training; encoder.eval(); D = int(encoder(X[:2].to(device)).shape[-1]); encoder.train(was)
+        head = nn.Linear(D, int(Y.max()) + 1).to(device)
+        meta_opt = torch.optim.AdamW(aug.parameters(), lr=la.META_LR)
+        cls_opt = torch.optim.AdamW(head.parameters(), lr=la.META_LR)
+        w_init = aug.weights(); meta_steps = 0
+
     pass_losses: list[float] = []
     step = 0
+    pass_idx = 0
     while step < max_iters:
+        if la is not None and (pass_idx + 1) % la.META_EVERY == 0:      # 官方 (n_epochs + 1) % meta_epoch == 0 → 本遍开始前 meta_fit
+            meta_steps += la.meta_pass(aug, head, encoder, X, Y, batch_size=batch_size, device=device, gen=gen,
+                                       drop_last=drop_last, meta_opt=meta_opt, cls_opt=cls_opt)
         perm = torch.randperm(N, generator=gen)
         batch_losses: list[float] = []
         for start in range(0, N, batch_size):
@@ -128,8 +158,20 @@ def pretrain_encoder(
             if idx.numel() < 2:  # B=1 无负样本实例，损失恒 0，跳过（不计入 step）
                 continue
             x = X[idx]
-            v1, v2, sl1, sl2 = augment_two_views(x, aug_params, order=cls_cfg.order, generator=gen,
-                                                 crop_mode=crop_mode)
+            if la is None:
+                v1, v2, sl1, sl2 = augment_two_views(x, aug_params, order=cls_cfg.order, generator=gen,
+                                                     crop_mode=crop_mode)
+            else:
+                with torch.no_grad():
+                    v1 = aug.view(x, gen)
+                v2 = x
+                if cls_cfg.crop > 0.0:
+                    if crop_mode == "ts2vec":
+                        v1, v2, sl1, sl2 = _crop_per_row(v1, v2, sample_crop_coords_ts2vec(v1.shape[0], v1.shape[1], gen))
+                    else:
+                        v1, v2, sl1, sl2 = _crop_with_coords(v1, v2, sample_crop_coords(v1.shape[1], cls_cfg.crop, gen))
+                else:
+                    sl1 = sl2 = slice(0, v1.shape[1])
 
             z1 = encoder(v1.to(device))[:, sl1]
             z2 = encoder(v2.to(device))[:, sl2]
@@ -158,8 +200,12 @@ def pretrain_encoder(
                 "batch（全部 <2 样本，或 drop_last 下 N<batch_size），无法训练")
         mean_loss = float(np.mean(batch_losses))
         pass_losses.append(mean_loss)
+        pass_idx += 1
         if verbose:
             print(f"[cl_trainer] iter {step}/{max_iters} loss={mean_loss:.4f}")
+    if la is not None and aug_info is not None:
+        aug_info.update({"meta_steps": int(meta_steps), "weights": aug.weights(), "weights_init": w_init,
+                         "transforms": list(la.TRANSFORM_NAMES)})
     if swa_model is not None:
         # swa_model.module 即被 update_parameters 就地平均的 deepcopy，其 state_dict
         # 不含 AveragedModel 自身的 n_averaged buffer，可直接拷回（encoder 无 buffer）。

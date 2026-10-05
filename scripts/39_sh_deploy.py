@@ -537,7 +537,8 @@ def run_trajectory_cell(cell: dict, arrays: dict, device: str) -> dict:
         losses = pretrain_encoder(
             enc, cls, Xtr_fit, max_iters=iters, batch_size=opts["batch_size"], lr=opts["lr"],
             device=device, seed=seed, use_swa=opts["swa"], drop_last=opts["drop_last"],
-            crop_mode=opts["crop_mode"], checkpoints=tuple(cell["checkpoints"]), on_checkpoint=on_ckpt)
+            crop_mode=opts["crop_mode"], checkpoints=tuple(cell["checkpoints"]), on_checkpoint=on_ckpt,
+            **({"aug_learn": opts["aug_learn"], "y_train": ytr} if opts.get("aug_learn", "none") != "none" else {}))   # WP17 AL：旧格不传，调用逐字节不变
     except Exception as e:  # noqa: BLE001
         if is_oom_error(e):
             try:

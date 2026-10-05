@@ -87,3 +87,6 @@
   - 7；8。
 
 ## §6 执行台账（跑后填写）
+- 2026-10-05 实现：`autocls/contrastive/learned_aug.py` + `cl_trainer.pretrain_encoder(aug_learn / y_train / aug_info)` + 35 OPTION_KEYS 增 `aug_learn`（cache_key 只哈希 options 中实际存在的键）+ 39 / 119 仅在 aug_learn ≠ none 时传参 + `scripts/120_acts_al.py`。tests：`test_learned_aug.py` 6 例绿；涉及 35 / 39 / cl_trainer 的旧测试 17 个文件 532 例全过（P5 工程门 ✓）。
+- 本地冒烟（Epilepsy，`results/acts/al/smoke/`）：3 条前 3 配置开学增强（每条元学习 102 批）+ 参照开 / 关全通，作业 60 s；混合权重从 1/7 移到 0.13–0.16。
+- 服务器流水的 pytest 检查改为“有 passed 且无 failed”（UT-ENS 那次 1 failed 被放过）。

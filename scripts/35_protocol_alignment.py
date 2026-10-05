@@ -131,7 +131,9 @@ LADDER: tuple[tuple[str, dict], ...] = (
     ("ladder_all", {"crop_mode": "ts2vec", "input_mask": "binomial", "repr_dropout": 0.1}),
 )
 OPTION_KEYS = ("batch_size", "lr", "drop_last", "swa", "crop_mode", "scaler", "svm_grid",
-               "input_mask", "repr_dropout", "engine")
+               "input_mask", "repr_dropout", "engine", "aug_learn")
+# WP17-ACTS AL：aug_learn 只在 overrides 显式给出时出现在 options 里（run_options 不设默认），cache_key 只哈希
+# options 中实际存在的 OPTION_KEYS → 所有旧格的键逐字节不变（tests/test_learned_aug.py 钉死）。
 _SPACE = CLSSpace.from_yaml()            # 铁律 1：合法性只问 space.yaml
 ENGINES = ("cl_trainer", "ts2vec_wrapper")
 STAGES = ("eval_audit", "reproduce", "bs_scan", "official", "ladder", "targets", "catalog")
@@ -210,7 +212,7 @@ def cache_key(dataset: str, protocol: str, cls_key_: str, seed: int, options: di
     复现对照（GPU 非确定性量级可直接读出）。"""
     payload = json.dumps({"dataset": dataset, "protocol": protocol, "cls_key": cls_key_,
                           "seed": int(seed), "iters": int(iters), "arm": str(arm),
-                          "options": {k: options[k] for k in OPTION_KEYS}},
+                          "options": {k: options[k] for k in OPTION_KEYS if k in options}},
                          sort_keys=True)
     return hashlib.sha1(payload.encode()).hexdigest()[:16]
 

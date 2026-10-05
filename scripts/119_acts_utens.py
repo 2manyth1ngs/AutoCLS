@@ -113,7 +113,7 @@ def cmd_plan(args) -> None:
 
 
 # ================================================================ 执行（服务器）
-def capture(cell: dict, arrays: Mapping, device: str) -> tuple:
+def capture(cell: dict, arrays: Mapping, device: str, aug_info: Optional[dict] = None) -> tuple:
     """= 39.run_trajectory_cell 的训练与逐截点编码（同顺序，保证轨迹一致），只保留最后截点的表示；返回 (ftr, fte, 单模型结果)。"""
     g39 = _g("39_sh_deploy")
     import torch
@@ -138,7 +138,8 @@ def capture(cell: dict, arrays: Mapping, device: str) -> tuple:
     enc = g39.build_encoder(input_dims=Xtr.shape[-1], overrides=ov or None)
     g39.pretrain_encoder(enc, cls, Xtr_fit, max_iters=iters, batch_size=opts["batch_size"], lr=opts["lr"], device=device, seed=seed,
                          use_swa=opts["swa"], drop_last=opts["drop_last"], crop_mode=opts["crop_mode"],
-                         checkpoints=tuple(cell["checkpoints"]), on_checkpoint=on_ckpt)
+                         checkpoints=tuple(cell["checkpoints"]), on_checkpoint=on_ckpt,
+                         **({"aug_learn": opts["aug_learn"], "y_train": ytr, "aug_info": aug_info} if opts.get("aug_learn", "none") != "none" else {}))
     single = g39.eval_with_timeout(lambda: g39._g35._svm_variants(box["ftr"], ytr, {opts["scaler"]: box["fte"]}, yte, (grid,), seed)[f"{opts['scaler']}/{grid}"],
                                    g39.EVAL_TIMEOUT_S)
     return np.asarray(box["ftr"], np.float32), np.asarray(box["fte"], np.float32), single, box["step"]

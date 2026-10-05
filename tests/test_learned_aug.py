@@ -80,3 +80,9 @@ def test_cache_key_backward_compatible():
     assert m.cache_key("D", "ts2vec_official", "abc", 0, opts, 200, arm="a") == hashlib.sha1(payload.encode()).hexdigest()[:16]
     on = m.run_options(p, {"aug_learn": "sup"})
     assert "aug_learn" in m.OPTION_KEYS and m.cache_key("D", "ts2vec_official", "abc", 0, on, 200, arm="a") != m.cache_key("D", "ts2vec_official", "abc", 0, opts, 200, arm="a")
+
+
+def test_probe_verdict_and_jobs():
+    a = importlib.import_module("scripts.120_acts_al")
+    assert a.verdict_al(0.025) == "AL-HEADROOM" and a.verdict_al(0.015) == "AL-WEAK" and a.verdict_al(0.004) == "AL-FLAT"
+    assert len(a.job_list()) == 11 and a.REF_KEY
