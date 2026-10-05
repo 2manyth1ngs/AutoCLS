@@ -90,3 +90,6 @@
 - 2026-10-05 实现：`autocls/contrastive/learned_aug.py` + `cl_trainer.pretrain_encoder(aug_learn / y_train / aug_info)` + 35 OPTION_KEYS 增 `aug_learn`（cache_key 只哈希 options 中实际存在的键）+ 39 / 119 仅在 aug_learn ≠ none 时传参 + `scripts/120_acts_al.py`。tests：`test_learned_aug.py` 6 例绿；涉及 35 / 39 / cl_trainer 的旧测试 17 个文件 532 例全过（P5 工程门 ✓）。
 - 本地冒烟（Epilepsy，`results/acts/al/smoke/`）：3 条前 3 配置开学增强（每条元学习 102 批）+ 参照开 / 关全通，作业 60 s；混合权重从 1/7 移到 0.13–0.16。
 - 服务器流水的 pytest 检查改为“有 passed 且无 failed”（UT-ENS 那次 1 failed 被放过）。
+- 18:57 UTC 起跑（HEAD 779f44a，服务器 pytest 11 例全过）→ 19:46 打包；11 / 11 作业一轮完成。FaceDetection 元学习步 0（600 次迭代不满一遍数据）。
+- 读数（REPORT.md）：**AL-FLAT**（集成 ME 开 − 关 −0.005；单模型 +0.0007；TS2Vec 等价 +0.005；学到的权重 0.131–0.149 ≈ 均匀）；预测 2/4 + P5 ✓。事后核对：InfoTS 官方仓库未公开 UEA 分类脚本 / 配置，公开预测配置 aug_p1 0.7、iters 4000、meta_beta 0.1。
+- 工程备注：本轮服务器流水由 UT-ENS 脚本 sed 生成，symlink 目录名残留为 `/tmp/acts_al_out/utens`（结果与打包均正确）。

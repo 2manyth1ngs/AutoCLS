@@ -1,0 +1,7 @@
+[run] worker 0/4：['MotorImagery']
+[data] MotorImagery: X=(378, 3000, 64) classes=2
+[data] MotorImagery_whole_official: official train=(278, 3000, 64) test=(100, 3000, 64)
+[run] MotorImagery b0334fc7fb49 学增强单模型 acc 0.500（元学习步 306）
+[run] MotorImagery 90387a4c9c7b 学增强单模型 acc 0.440（元学习步 306）
+[run] MotorImagery e07738858e69 学增强单模型 acc 0.470（元学习步 306）
+[run] MotorImagery 集成（开）0.600；TS2Vec 等价 关 0.500 / 开 0.500

@@ -1,0 +1,7 @@
+[run] worker 1/4：['FaceDetection']
+[data] FaceDetection: X=(9414, 62, 144) classes=2
+[data] FaceDetection_whole_official: official train=(5890, 62, 144) test=(3524, 62, 144)
+[run] FaceDetection 7755c3a919e1 学增强单模型 acc 0.547（元学习步 0）
+[run] FaceDetection 7c646d08906e 学增强单模型 acc 0.546（元学习步 0）
+[run] FaceDetection 13f1e5d77111 学增强单模型 acc 0.543（元学习步 0）
+[run] FaceDetection 集成（开）0.553；TS2Vec 等价 关 0.509 / 开 0.517

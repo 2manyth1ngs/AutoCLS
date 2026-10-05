@@ -1,0 +1,126 @@
+{
+ "per": {
+  "AtrialFibrillation": {
+   "ens_on": 0.2,
+   "ens_off": 0.26666666666666666,
+   "single_on": 0.22222222222222224,
+   "single_off": 0.15555555555555556,
+   "ref_on": 0.26666666666666666,
+   "ref_off": 0.2
+  },
+  "BasicMotions": {
+   "ens_on": 1.0,
+   "ens_off": 1.0,
+   "single_on": 0.9916666666666667,
+   "single_off": 0.9833333333333334,
+   "ref_on": 0.975,
+   "ref_off": 1.0
+  },
+  "DuckDuckGeese": {
+   "ens_on": 0.64,
+   "ens_off": 0.68,
+   "single_on": 0.5266666666666667,
+   "single_off": 0.5266666666666667,
+   "ref_on": 0.62,
+   "ref_off": 0.58
+  },
+  "Epilepsy": {
+   "ens_on": 0.9492753623188406,
+   "ens_off": 0.9565217391304348,
+   "single_on": 0.9347826086956522,
+   "single_off": 0.9541062801932366,
+   "ref_on": 0.9492753623188406,
+   "ref_off": 0.9637681159420289
+  },
+  "FaceDetection": {
+   "ens_on": 0.5533484676503972,
+   "ens_off": 0.6021566401816119,
+   "single_on": 0.545024593265229,
+   "single_off": 0.5734960272417707,
+   "ref_on": 0.5173098751418842,
+   "ref_off": 0.5093643586833144
+  },
+  "FingerMovements": {
+   "ens_on": 0.52,
+   "ens_off": 0.55,
+   "single_on": 0.5133333333333333,
+   "single_off": 0.5133333333333333,
+   "ref_on": 0.49,
+   "ref_off": 0.46
+  },
+  "HandMovementDirection": {
+   "ens_on": 0.40540540540540543,
+   "ens_off": 0.44594594594594594,
+   "single_on": 0.32432432432432434,
+   "single_off": 0.35585585585585583,
+   "ref_on": 0.3108108108108108,
+   "ref_off": 0.21621621621621623
+  },
+  "Heartbeat": {
+   "ens_on": 0.7609756097560976,
+   "ens_off": 0.6292682926829268,
+   "single_on": 0.7577235772357724,
+   "single_off": 0.7170731707317074,
+   "ref_on": 0.7414634146341463,
+   "ref_off": 0.6878048780487804
+  },
+  "MotorImagery": {
+   "ens_on": 0.6,
+   "ens_off": 0.49,
+   "single_on": 0.47,
+   "single_off": 0.49333333333333335,
+   "ref_on": 0.5,
+   "ref_off": 0.5
+  },
+  "SelfRegulationSCP2": {
+   "ens_on": 0.4888888888888889,
+   "ens_off": 0.55,
+   "single_on": 0.5444444444444444,
+   "single_off": 0.5277777777777778,
+   "ref_on": 0.5055555555555555,
+   "ref_off": 0.5666666666666667
+  },
+  "StandWalkJump": {
+   "ens_on": 0.3333333333333333,
+   "ens_off": 0.3333333333333333,
+   "single_on": 0.2888888888888889,
+   "single_off": 0.3111111111111111,
+   "ref_on": 0.3333333333333333,
+   "ref_off": 0.4666666666666667
+  }
+ },
+ "means": {
+  "ens_on": 0.5864751879411784,
+  "ens_off": 0.5912629652673562,
+  "single_on": 0.5562797568857455,
+  "single_off": 0.5556038586485165,
+  "ref_on": 0.564492274405567,
+  "ref_off": 0.5591351729294248
+ },
+ "delta_ens": -0.0047877773261778556,
+ "delta_single": 0.0006758982372290223,
+ "delta_ref": 0.005357101476142212,
+ "verdict": "AL-FLAT",
+ "single_wins_on": 10,
+ "single_ties": 9,
+ "n_single": 33,
+ "weights_mean": {
+  "subsequence": 0.148,
+  "cutout": 0.143,
+  "jitter": 0.131,
+  "scaling": 0.136,
+  "time_warp": 0.149,
+  "window_slice": 0.145,
+  "window_warp": 0.148
+ },
+ "baselines": {
+  "TS2Vec": 0.5796363636363636,
+  "InfoTS_s": 0.6308181818181818
+ },
+ "predictions": {
+  "P1": false,
+  "P2": true,
+  "P3": true,
+  "P4": false
+ }
+}

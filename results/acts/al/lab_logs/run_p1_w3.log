@@ -1,0 +1,31 @@
+[run] worker 3/4：['DuckDuckGeese', 'SelfRegulationSCP2', 'Heartbeat', 'BasicMotions', 'FingerMovements']
+[data] DuckDuckGeese: X=(100, 270, 1345) classes=5
+[data] DuckDuckGeese_whole_official: official train=(50, 270, 1345) test=(50, 270, 1345)
+[run] DuckDuckGeese a5066777b713 学增强单模型 acc 0.640（元学习步 300）
+[run] DuckDuckGeese 654ea8ccdcd0 学增强单模型 acc 0.440（元学习步 300）
+[run] DuckDuckGeese 2296a0d8b55d 学增强单模型 acc 0.500（元学习步 300）
+[run] DuckDuckGeese 集成（开）0.640；TS2Vec 等价 关 0.580 / 开 0.620
+[data] SelfRegulationSCP2: X=(380, 1152, 7) classes=2
+[data] SelfRegulationSCP2_whole_official: official train=(200, 1152, 7) test=(180, 1152, 7)
+[run] SelfRegulationSCP2 7b822eabdd76 学增强单模型 acc 0.589（元学习步 300）
+[run] SelfRegulationSCP2 7233277c97b4 学增强单模型 acc 0.500（元学习步 300）
+[run] SelfRegulationSCP2 0e2f171d7f52 学增强单模型 acc 0.544（元学习步 300）
+[run] SelfRegulationSCP2 集成（开）0.489；TS2Vec 等价 关 0.567 / 开 0.506
+[data] Heartbeat: X=(409, 405, 61) classes=2
+[data] Heartbeat_whole_official: official train=(204, 405, 61) test=(205, 405, 61)
+[run] Heartbeat bf01684d7a51 学增强单模型 acc 0.780（元学习步 300）
+[run] Heartbeat ef7feed41dee 学增强单模型 acc 0.746（元学习步 300）
+[run] Heartbeat 4e15c67bae84 学增强单模型 acc 0.746（元学习步 300）
+[run] Heartbeat 集成（开）0.761；TS2Vec 等价 关 0.688 / 开 0.741
+[data] BasicMotions: X=(80, 100, 6) classes=4
+[data] BasicMotions_whole_official: official train=(40, 100, 6) test=(40, 100, 6)
+[run] BasicMotions 1ffca1223415 学增强单模型 acc 1.000（元学习步 100）
+[run] BasicMotions cf2fd230aa0e 学增强单模型 acc 0.975（元学习步 100）
+[run] BasicMotions f8dfeee4a23c 学增强单模型 acc 1.000（元学习步 100）
+[run] BasicMotions 集成（开）1.000；TS2Vec 等价 关 1.000 / 开 0.975
+[data] FingerMovements: X=(416, 50, 28) classes=2
+[data] FingerMovements_whole_official: official train=(316, 50, 28) test=(100, 50, 28)
+[run] FingerMovements 381ed1ba85da 学增强单模型 acc 0.540（元学习步 312）
+[run] FingerMovements 6b5f93b9337f 学增强单模型 acc 0.480（元学习步 312）
+[run] FingerMovements bb37ced70806 学增强单模型 acc 0.520（元学习步 312）
+[run] FingerMovements 集成（开）0.520；TS2Vec 等价 关 0.460 / 开 0.490

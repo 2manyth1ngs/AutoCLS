@@ -1,0 +1,25 @@
+[run] worker 2/4：['StandWalkJump', 'HandMovementDirection', 'AtrialFibrillation', 'Epilepsy']
+[data] StandWalkJump: X=(27, 2500, 4) classes=3
+[data] StandWalkJump_whole_official: official train=(12, 2500, 4) test=(15, 2500, 4)
+[run] StandWalkJump 4504291d7839 学增强单模型 acc 0.400（元学习步 300）
+[run] StandWalkJump d69fe8f63fec 学增强单模型 acc 0.067（元学习步 300）
+[run] StandWalkJump 028e581f8590 学增强单模型 acc 0.400（元学习步 300）
+[run] StandWalkJump 集成（开）0.333；TS2Vec 等价 关 0.467 / 开 0.333
+[data] HandMovementDirection: X=(234, 400, 10) classes=4
+[data] HandMovementDirection_whole_official: official train=(160, 400, 10) test=(74, 400, 10)
+[run] HandMovementDirection eb139cee986b 学增强单模型 acc 0.257（元学习步 300）
+[run] HandMovementDirection 633183d4206e 学增强单模型 acc 0.419（元学习步 300）
+[run] HandMovementDirection f58f315f6eb3 学增强单模型 acc 0.297（元学习步 300）
+[run] HandMovementDirection 集成（开）0.405；TS2Vec 等价 关 0.216 / 开 0.311
+[data] AtrialFibrillation: X=(30, 640, 2) classes=3
+[data] AtrialFibrillation_whole_official: official train=(15, 640, 2) test=(15, 640, 2)
+[run] AtrialFibrillation 030002d40766 学增强单模型 acc 0.333（元学习步 100）
+[run] AtrialFibrillation cf11abede34f 学增强单模型 acc 0.133（元学习步 100）
+[run] AtrialFibrillation 2af36766355f 学增强单模型 acc 0.200（元学习步 100）
+[run] AtrialFibrillation 集成（开）0.200；TS2Vec 等价 关 0.200 / 开 0.267
+[data] Epilepsy: X=(275, 206, 3) classes=4
+[data] Epilepsy_whole_official: official train=(137, 206, 3) test=(138, 206, 3)
+[run] Epilepsy cb364a08d003 学增强单模型 acc 0.928（元学习步 102）
+[run] Epilepsy 710232c4f5be 学增强单模型 acc 0.957（元学习步 102）
+[run] Epilepsy 01b50fd789a3 学增强单模型 acc 0.920（元学习步 102）
+[run] Epilepsy 集成（开）0.949；TS2Vec 等价 关 0.964 / 开 0.949
