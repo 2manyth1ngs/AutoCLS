@@ -31,7 +31,7 @@ def test_concat_l2():
 
 def test_lpt_assign():
     e = _e()
-    costs = {f"h{i}": 10.0 for i in range(4)} | {f"l{i}": 1.0 for i in range(4)}
+    costs = {**{f"h{i}": 10.0 for i in range(4)}, **{f"l{i}": 1.0 for i in range(4)}}   # py3.8（服务器）无 dict |
     parts = e.lpt_assign(costs, 4)
     assert len(parts) == 4 and sorted(j for p in parts for j in p) == sorted(costs)
     assert all(sum(j.startswith("h") for j in p) == 1 for p in parts)  # 重作业不扎堆

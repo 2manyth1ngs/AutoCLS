@@ -69,3 +69,4 @@
 ## §5 执行台账（跑后填写）
 - 2026-10-05 实现 `scripts/119_acts_utens.py`（tests 5 例绿）；`--plan`：33 个作业，每靶三臂前 3 并集 8–9 条，三臂第 1 名均等于 UT 选中者；估计 11.5 GPU-h。
 - 本地冒烟（Epilepsy 种子 0，`results/acts/utens/smoke/`）：8 条单模型 + 三臂集成全通；**C0：8 条中 7 条与 UT 格逐位相同、1 条差 1 个样本（0.007，本机 4060 vs 服务器 4090 的 GPU 非确定性）**；SVM 用 threading 后端（= 83 --run）。
+- 07:21 UTC 起跑（MAXP = 4，HEAD 40d3eb1）：33 个作业 LPT 分配（9 / 7 / 10 / 7，MotorImagery 三种子与 FaceDetection 三种子分散到不同进程）。服务器 pytest 13 例中 `test_lpt_assign` 失败——测试本身用了 py3.9 的 dict `|`（服务器 py3.8），实现不受影响；已改为兼容写法（本提交）。
