@@ -1,0 +1,3 @@
+[embed] AtrialFibrillation Xtr=(15, 640, 2) iters=200 split=0 25s
+[embed] FaceDetection Xtr=(5890, 62, 144) iters=600 split=0 33s
+[embed] MotorImagery Xtr=(278, 3000, 64) iters=600 split=0 168s

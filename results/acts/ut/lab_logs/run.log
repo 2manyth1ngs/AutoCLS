@@ -1,0 +1,76 @@
+== HEAD 4496d7b
+== S3-Z NEW_B 模型 60 / 60
+20 passed in 3.33s
+== [02:14:51] 靶 E_pt（11 个，4 路）
+== E_pt 第 1 轮后 11 / 11
+[prep-ea] SelfRegulationSCP2 1s
+[prep-ea] StandWalkJump 0s
+[s0] 11 靶 × 10 成员（成员 q = 折 F[q mod 6] 种子 q），任务 192
+[models] 11 靶 × 10 → /home/b311/data/wangwenjie/kejunyu/AutoCLS/results/acts/ut/models
+[fit] AtrialFibrillation ME：α_w 1 τ 0.5 γ 0.75；π 前 3 PTB-XL 0.14，Handwriting 0.11，PhonemeSpectra 0.08
+[fit] AtrialFibrillation UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] BasicMotions ME：α_w 1 τ 0.5 γ 0.75；π 前 3 Handwriting 0.14，PTB-XL 0.12，FordA 0.11
+[fit] BasicMotions UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] DuckDuckGeese ME：α_w 1 τ 0.5 γ 0.75；π 前 3 LargeKitchenAppliances 0.12，SemgHandMovementCh2 0.10，PhonemeSpectra 0.07
+[fit] DuckDuckGeese UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] Epilepsy ME：α_w 1 τ 0.5 γ 0.75；π 前 3 UniMiB-SHAR 0.10，FordA 0.07，PTB-XL 0.07
+[fit] Epilepsy UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] FaceDetection ME：α_w 1 τ 0.5 γ 0.75；π 前 3 FordA 0.09，Handwriting 0.08，PhonemeSpectra 0.08
+[fit] FaceDetection UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] FingerMovements ME：α_w 1 τ 0.5 γ 0.75；π 前 3 PAMAP2 0.08，NonInvasiveFetalECGThorax1 0.08，SelfRegulationSCP1 0.08
+[fit] FingerMovements UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] HandMovementDirection ME：α_w 1 τ 0.5 γ 0.75；π 前 3 FordA 0.15，SleepEDF 0.13，PTB-XL 0.12
+[fit] HandMovementDirection UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] Heartbeat ME：α_w 1 τ 0.5 γ 0.75；π 前 3 LargeKitchenAppliances 0.14，SemgHandMovementCh2 0.09，PTB-XL 0.09
+[fit] Heartbeat UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] MotorImagery ME：α_w 1 τ 0.5 γ 0.75；π 前 3 SleepEDF 0.14，FordA 0.10，Cricket 0.10
+[fit] MotorImagery UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] SelfRegulationSCP2 ME：α_w 1 τ 0.5 γ 0.75；π 前 3 FordA 0.11，SleepEDF 0.11，Cricket 0.08
+[fit] SelfRegulationSCP2 UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+[fit] StandWalkJump ME：α_w 1 τ 0.5 γ 0.75；π 前 3 SleepEDF 0.10，PTB-XL 0.10，FordA 0.08
+[fit] StandWalkJump UNI：α_w 1 τ 1 γ 0.75；π 前 3 Handwriting 0.05，ERing 0.05，ArticularyWordRecognition 0.05
+== [02:29:21] 搜索 33
+[search] BLIND_AtrialFibrillation：|U| = 22，γ 0，COMP-ONLY 2565ad0b，7s
+[search] BLIND_BasicMotions：|U| = 22，γ 0，COMP-ONLY 79f56aba，8s
+[search] BLIND_DuckDuckGeese：|U| = 22，γ 0，COMP-ONLY d40d2797，8s
+[search] BLIND_Epilepsy：|U| = 22，γ 0，COMP-ONLY 225353be，8s
+[search] BLIND_FaceDetection：|U| = 22，γ 0，COMP-ONLY 0178f166，9s
+[search] BLIND_FingerMovements：|U| = 22，γ 0，COMP-ONLY ac69ad46，8s
+[search] BLIND_HandMovementDirection：|U| = 22，γ 0，COMP-ONLY 97e29ab0，7s
+[search] BLIND_Heartbeat：|U| = 22，γ 0，COMP-ONLY 83a6a799，8s
+[search] BLIND_MotorImagery：|U| = 22，γ 0，COMP-ONLY 96d0d627，7s
+[search] BLIND_SelfRegulationSCP2：|U| = 22，γ 0，COMP-ONLY dbebba9c，9s
+[search] BLIND_StandWalkJump：|U| = 22，γ 0，COMP-ONLY 7f1edeec，6s
+[search] ME_AtrialFibrillation：|U| = 22，γ 0.75，COMP-ONLY cf11abed，7s
+[search] ME_BasicMotions：|U| = 22，γ 0.75，COMP-ONLY 6fcb90a8，8s
+[search] ME_DuckDuckGeese：|U| = 22，γ 0.75，COMP-ONLY 116b7225，7s
+[search] ME_Epilepsy：|U| = 22，γ 0.75，COMP-ONLY dc682a28，7s
+[search] ME_FaceDetection：|U| = 22，γ 0.75，COMP-ONLY 5c8a703f，9s
+[search] ME_FingerMovements：|U| = 22，γ 0.75，COMP-ONLY d28bddf3，10s
+[search] ME_HandMovementDirection：|U| = 22，γ 0.75，COMP-ONLY c65a7d2d，8s
+[search] ME_Heartbeat：|U| = 22，γ 0.75，COMP-ONLY ef7feed4，10s
+[search] ME_MotorImagery：|U| = 22，γ 0.75，COMP-ONLY 0de33d4f，9s
+[search] ME_SelfRegulationSCP2：|U| = 22，γ 0.75，COMP-ONLY f2a0fcbb，9s
+[search] ME_StandWalkJump：|U| = 22，γ 0.75，COMP-ONLY 4045d47d，9s
+[search] UNI_AtrialFibrillation：|U| = 22，γ 0.75，COMP-ONLY 90ce21be，9s
+[search] UNI_BasicMotions：|U| = 22，γ 0.75，COMP-ONLY 10966bd3，8s
+[search] UNI_DuckDuckGeese：|U| = 22，γ 0.75，COMP-ONLY 2acf946e，10s
+[search] UNI_Epilepsy：|U| = 22，γ 0.75，COMP-ONLY 76a63c32，8s
+[search] UNI_FaceDetection：|U| = 22，γ 0.75，COMP-ONLY d7c9dea2，9s
+[search] UNI_FingerMovements：|U| = 22，γ 0.75，COMP-ONLY a23d1df9，8s
+[search] UNI_HandMovementDirection：|U| = 22，γ 0.75，COMP-ONLY c65a7d2d，9s
+[search] UNI_Heartbeat：|U| = 22，γ 0.75，COMP-ONLY 3ba6e784，8s
+[search] UNI_MotorImagery：|U| = 22，γ 0.75，COMP-ONLY 1006e38e，8s
+[search] UNI_SelfRegulationSCP2：|U| = 22，γ 0.75，COMP-ONLY 82fe1572，7s
+[search] UNI_StandWalkJump：|U| = 22，γ 0.75，COMP-ONLY 2d6a97c9，8s
+== 搜索完：33 / 33
+== [02:31:05] CV 格
+[plan cv] 臂 ['ME', 'UNI', 'BLIND']：2872 格
+== [02:31:12] cv 轮 1：未完成 2872 格 / 44 任务；卡 7 0 6 3
+== [23:14:09] cv 轮 2：未完成 136 格 / 8 任务；卡 6 7 0 3
+verify cv: plan 2872 / done 2872 / error 65 → OK
+[select] {"ME": {"Atrial": "030002d4", "BasicM": "1ffca122", "DuckDu": "a5066777", "Epilep": "cb364a08", "FaceDe": "7755c3a9", "Finger": "381ed1ba", "HandMo": "eb139cee", "Heartb": "bf01684d", "MotorI": "b0334fc7", "SelfRe": "7b822eab", "StandW": "4504291d"}, "UNI": {"Atrial": "a5258dea", "BasicM": "49ec9939", "DuckDu": "13bd32c6", "Epilep": "67abd0a9", "FaceDe": "fa55b2d1", "Finger": "670cba20", "HandMo": "c65a7d2d", "Heartb": "3ba6e784", "MotorI": "1f38d402", "SelfRe": "ff1e3407", "StandW": "a8e2dc58"}, "BLIND": {"Atrial": "2565ad0b", "BasicM": "ce13b40f", "DuckDu": "de710fa3", "Epilep": "01792449", "FaceDe": "a268ecc7", "Finger": "b8580595", "HandMo": "17010d12", "Heartb": "91393e0a", "MotorI": "cdf0fd5c", "SelfRe": "61a50ee3", "StandW": "d91e47e9"}}
+== [02:54:30] 最终格
+[plan final] 臂 ['ME', 'UNI', 'BLIND']：2996 格
+== [02:54:35] final 轮 1：未完成 124 格 / 11 任务；卡 7 2 3 6
+verify final: plan 2996 / done 2996 / error 65 → OK

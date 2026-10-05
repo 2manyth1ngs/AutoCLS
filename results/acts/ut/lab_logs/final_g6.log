@@ -1,0 +1,38 @@
+[ACTS-s1pp] 计划 154 格，已有 130，待跑 24
+[data] FaceDetection: X=(9414, 62, 144) classes=2
+[data] FaceDetection_whole_official: official train=(5890, 62, 144) test=(3524, 62, 144)
+[ACTS-s1pp 1/24] FaceDetection_whole_official/random/5c8a703f s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.513 0.536 0.552] (151.4s+173.0s)
+[ACTS-s1pp 2/24] FaceDetection_whole_official/random/5c8a703f s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.535 0.551 0.536] (164.9s+171.8s)
+[ACTS-s1pp 3/24] FaceDetection_whole_official/random/7755c3a9 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.540 0.561 0.575] (195.5s+159.8s)
+[ACTS-s1pp 4/24] FaceDetection_whole_official/random/7755c3a9 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.562 0.568 0.578] (162.8s+154.9s)
+[data] StandWalkJump: X=(27, 2500, 4) classes=3
+[data] StandWalkJump_whole_official: official train=(12, 2500, 4) test=(15, 2500, 4)
+[ACTS-s1pp 5/24] StandWalkJump_whole_official/random/4504291d s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.400 0.333 0.333] (61.1s+0.0s)
+[ACTS-s1pp 6/24] StandWalkJump_whole_official/random/4504291d s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.333 0.333 0.333] (81.5s+0.0s)
+[ACTS-s1pp 7/24] StandWalkJump_whole_official/random/4045d47d s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.333 0.333 0.267] (197.9s+0.0s)
+[ACTS-s1pp 8/24] StandWalkJump_whole_official/random/4045d47d s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.333 0.333 0.200] (202.5s+0.0s)
+[data] FaceDetection: X=(9414, 62, 144) classes=2
+[data] FaceDetection_whole_official: official train=(5890, 62, 144) test=(3524, 62, 144)
+[ACTS-s1pp 9/24] FaceDetection_whole_official/random/d7c9dea2 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.531 0.524 0.503] (142.8s+154.9s)
+[ACTS-s1pp 10/24] FaceDetection_whole_official/random/d7c9dea2 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.513 0.510 0.524] (126.2s+150.8s)
+[ACTS-s1pp 11/24] FaceDetection_whole_official/random/fa55b2d1 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.579 0.568 0.577] (187.6s+140.3s)
+[ACTS-s1pp 12/24] FaceDetection_whole_official/random/fa55b2d1 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.563 0.575 0.589] (202.8s+143.2s)
+[data] StandWalkJump: X=(27, 2500, 4) classes=3
+[data] StandWalkJump_whole_official: official train=(12, 2500, 4) test=(15, 2500, 4)
+[ACTS-s1pp 13/24] StandWalkJump_whole_official/random/2d6a97c9 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.333 0.333 0.333] (297.7s+0.0s)
+[ACTS-s1pp 14/24] StandWalkJump_whole_official/random/2d6a97c9 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.333 0.333 0.333] (248.5s+0.0s)
+[ACTS-s1pp 15/24] StandWalkJump_whole_official/random/a8e2dc58 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.333 0.333 0.333] (82.8s+0.0s)
+[ACTS-s1pp 16/24] StandWalkJump_whole_official/random/a8e2dc58 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.333 0.333 0.333] (80.3s+0.0s)
+[data] FaceDetection: X=(9414, 62, 144) classes=2
+[data] FaceDetection_whole_official: official train=(5890, 62, 144) test=(3524, 62, 144)
+[ACTS-s1pp 17/24] FaceDetection_whole_official/random/0178f166 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.530 0.525 0.521] (128.0s+159.1s)
+[ACTS-s1pp 18/24] FaceDetection_whole_official/random/0178f166 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.537 0.528 0.536] (125.8s+155.0s)
+[ACTS-s1pp 19/24] FaceDetection_whole_official/random/a268ecc7 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.567 0.564 0.575] (132.4s+160.2s)
+[ACTS-s1pp 20/24] FaceDetection_whole_official/random/a268ecc7 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.558 0.560 0.562] (133.7s+162.5s)
+[data] StandWalkJump: X=(27, 2500, 4) classes=3
+[data] StandWalkJump_whole_official: official train=(12, 2500, 4) test=(15, 2500, 4)
+[ACTS-s1pp 21/24] StandWalkJump_whole_official/random/d91e47e9 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.533 0.667 0.600] (71.4s+0.0s)
+[ACTS-s1pp 22/24] StandWalkJump_whole_official/random/d91e47e9 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.467 0.533 0.533] (72.8s+0.0s)
+[ACTS-s1pp 23/24] StandWalkJump_whole_official/random/7f1edeec s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.400 0.400 0.400] (143.4s+0.0s)
+[ACTS-s1pp 24/24] StandWalkJump_whole_official/random/7f1edeec s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.400 0.400 0.333] (142.3s+0.0s)
+[ACTS-s1pp] 收官

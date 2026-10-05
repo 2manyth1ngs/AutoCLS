@@ -1,0 +1,3 @@
+[embed] BasicMotions Xtr=(40, 100, 6) iters=200 split=0 15s
+[embed] FingerMovements Xtr=(316, 50, 28) iters=600 split=0 23s
+[embed] SelfRegulationSCP2 Xtr=(200, 1152, 7) iters=600 split=0 59s

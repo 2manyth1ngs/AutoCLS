@@ -117,3 +117,5 @@
 - 10-04 02:31 起 CV 第 1 轮（2,872 格）。**负载不均**：fill 按（未完成数降序, 任务名）轮流分配，44 个任务未完成数相同 → 按名字序，j mod 4 = 0 的全是 `*_whole_official`（每靶最重的完整 TRAIN 任务）落到同一进程（GPU 7）；其余 3 个进程 ~20 h 跑完后空等。23:12 UTC 时该进程还剩 137 格（FaceDetection 官方每格约 6.5 min）。
 - **操作偏离**：23:13 只停该进程（PID 2918539，丢 1 个在跑格、无行写入），fill 自动进入第 2 轮，剩余 136 格 / 8 任务重新分到 4 卡。结果不变，只改执行顺序。
 - **StandWalkJump tcv0 全部 error**：该折训练只有 7 个样本，< batch 8，`cl_trainer` 在 drop_last 下按设计报错（ValueError 写 error 行）；tcv1 / tcv2 正常 → 该靶 CV 只用 2 折。官方 TRAIN 12 ≥ 8，最终 TEST 不受影响。另有 MotorImagery tcv0 2 格 OOM，在第 2 轮补跑。
+- 10-05 02:54 UTC：CV verify 2,872 / 2,872 OK（error 65 = SWJ tcv0）→ select → 最终 124 格 → 05:18 打包。
+- 读数（REPORT.md）：**UT-BEATS-TS2VEC+E**（无 +EXP / +TA）：ME 0.5826 / UNI 0.5559 / BLIND 0.5914 / TS2Vec 0.5796 / InfoTS_s 0.6308；预测 2/6。

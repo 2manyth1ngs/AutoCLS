@@ -1,0 +1,54 @@
+[ACTS-s1pp] 计划 231 格，已有 197，待跑 34
+[data] DuckDuckGeese: X=(100, 270, 1345) classes=5
+[data] DuckDuckGeese_whole_official: official train=(50, 270, 1345) test=(50, 270, 1345)
+[ACTS-s1pp 1/34] DuckDuckGeese_whole_official/random/116b7225 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.620 0.640 0.580] (148.5s+0.7s)
+[ACTS-s1pp 2/34] DuckDuckGeese_whole_official/random/116b7225 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.540 0.580 0.560] (140.3s+0.7s)
+[ACTS-s1pp 3/34] DuckDuckGeese_whole_official/random/a5066777 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.540 0.580 0.620] (129.4s+0.7s)
+[ACTS-s1pp 4/34] DuckDuckGeese_whole_official/random/a5066777 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.640 0.540 0.560] (129.8s+0.7s)
+[data] Heartbeat: X=(409, 405, 61) classes=2
+[data] Heartbeat_whole_official: official train=(204, 405, 61) test=(205, 405, 61)
+[ACTS-s1pp 5/34] Heartbeat_whole_official/random/ef7feed4 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.717 0.688 0.732] (113.1s+0.8s)
+[ACTS-s1pp 6/34] Heartbeat_whole_official/random/ef7feed4 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.712 0.624 0.737] (109.8s+0.7s)
+[ACTS-s1pp 7/34] Heartbeat_whole_official/random/bf01684d s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.727 0.741 0.741] (259.8s+0.6s)
+[ACTS-s1pp 8/34] Heartbeat_whole_official/random/bf01684d s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.732 0.737 0.741] (252.4s+0.6s)
+[data] MotorImagery: X=(378, 3000, 64) classes=2
+[data] MotorImagery_whole_official: official train=(278, 3000, 64) test=(100, 3000, 64)
+[ACTS-s1pp 9/34] MotorImagery_whole_official/random/b0334fc7 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.500 0.500 0.500] (197.8s+1.4s)
+[ACTS-s1pp 10/34] MotorImagery_whole_official/random/b0334fc7 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.500 0.500 0.500] (207.4s+1.3s)
+[ACTS-s1pp 11/34] MotorImagery_whole_official/random/0de33d4f s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.500 0.460 0.440] (821.0s+1.4s)
+[ACTS-s1pp 12/34] MotorImagery_whole_official/random/0de33d4f s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.530 0.470 0.490] (819.0s+1.4s)
+[data] DuckDuckGeese: X=(100, 270, 1345) classes=5
+[data] DuckDuckGeese_whole_official: official train=(50, 270, 1345) test=(50, 270, 1345)
+[ACTS-s1pp 13/34] DuckDuckGeese_whole_official/random/13bd32c6 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.560 0.620 0.620] (127.9s+0.7s)
+[ACTS-s1pp 14/34] DuckDuckGeese_whole_official/random/13bd32c6 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.540 0.540 0.620] (123.0s+0.8s)
+[ACTS-s1pp 15/34] DuckDuckGeese_whole_official/random/2acf946e s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.560 0.660 0.620] (181.5s+0.7s)
+[ACTS-s1pp 16/34] DuckDuckGeese_whole_official/random/2acf946e s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.560 0.580 0.400] (176.8s+0.6s)
+[data] Heartbeat: X=(409, 405, 61) classes=2
+[data] Heartbeat_whole_official: official train=(204, 405, 61) test=(205, 405, 61)
+[ACTS-s1pp 17/34] Heartbeat_whole_official/random/3ba6e784 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.727 0.722 0.741] (98.6s+0.6s)
+[ACTS-s1pp 18/34] Heartbeat_whole_official/random/3ba6e784 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.737 0.732 0.688] (97.3s+0.6s)
+[data] MotorImagery: X=(378, 3000, 64) classes=2
+[data] MotorImagery_whole_official: official train=(278, 3000, 64) test=(100, 3000, 64)
+[ACTS-s1pp 19/34] MotorImagery_whole_official/random/1f38d402 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.490 0.540 0.520] (218.8s+1.5s)
+[ACTS-s1pp 20/34] MotorImagery_whole_official/random/1f38d402 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.490 0.490 0.480] (215.7s+1.5s)
+[ACTS-s1pp 21/34] MotorImagery_whole_official/random/1006e38e s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.530 0.520 0.610] (392.1s+1.2s)
+[ACTS-s1pp 22/34] MotorImagery_whole_official/random/1006e38e s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.500 0.500 0.460] (393.6s+1.3s)
+[data] DuckDuckGeese: X=(100, 270, 1345) classes=5
+[data] DuckDuckGeese_whole_official: official train=(50, 270, 1345) test=(50, 270, 1345)
+[ACTS-s1pp 23/34] DuckDuckGeese_whole_official/random/d40d2797 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.400 0.340 0.380] (117.3s+0.6s)
+[ACTS-s1pp 24/34] DuckDuckGeese_whole_official/random/d40d2797 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.400 0.380 0.360] (111.4s+0.6s)
+[ACTS-s1pp 25/34] DuckDuckGeese_whole_official/random/de710fa3 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.640 0.600 0.540] (161.8s+0.6s)
+[ACTS-s1pp 26/34] DuckDuckGeese_whole_official/random/de710fa3 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.560 0.540 0.540] (154.9s+0.6s)
+[data] Heartbeat: X=(409, 405, 61) classes=2
+[data] Heartbeat_whole_official: official train=(204, 405, 61) test=(205, 405, 61)
+[ACTS-s1pp 27/34] Heartbeat_whole_official/random/83a6a799 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.722 0.732 0.751] (117.5s+0.7s)
+[ACTS-s1pp 28/34] Heartbeat_whole_official/random/83a6a799 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.722 0.722 0.751] (112.0s+0.6s)
+[ACTS-s1pp 29/34] Heartbeat_whole_official/random/91393e0a s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.615 0.693 0.722] (76.1s+0.7s)
+[ACTS-s1pp 30/34] Heartbeat_whole_official/random/91393e0a s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.751 0.741 0.722] (73.4s+0.6s)
+[data] MotorImagery: X=(378, 3000, 64) classes=2
+[data] MotorImagery_whole_official: official train=(278, 3000, 64) test=(100, 3000, 64)
+[ACTS-s1pp 31/34] MotorImagery_whole_official/random/96d0d627 s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.480 0.490 0.480] (367.6s+1.3s)
+[ACTS-s1pp 32/34] MotorImagery_whole_official/random/96d0d627 s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.480 0.500 0.500] (370.6s+1.3s)
+[ACTS-s1pp 33/34] MotorImagery_whole_official/random/cdf0fd5c s1 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.530 0.510 0.600] (796.1s+1.2s)
+[ACTS-s1pp 34/34] MotorImagery_whole_official/random/cdf0fd5c s2 iters=600 ckpt=[150, 300, 600] acc@ckpt=[0.440 0.480 0.500] (778.4s+1.3s)
+[ACTS-s1pp] 收官
