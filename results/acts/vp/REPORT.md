@@ -35,6 +35,6 @@
 | P5 | maxavg 对 max 均值 > 0 | 50% | ✗（−0.006） |
 
 ## 3 读法与偏离
-- 视图轴给出了 AutoCL 空间缺的东西：**数据集级、方向相反、量级 0.04–0.14** 的偏好（AutoCL 字段的数据集级偏好历来 ≤ 0.03）——这正是 E 能显形的对象；但能抬精度的数据集只有少数（UWave、PS、Ethanol、Heartbeat）。
+- 视图轴给出了 AutoCL 空间缺的东西：**数据集级、方向相反、量级 0.04–0.14** 的偏好（AutoCL 字段的数据集级偏好历来 ≤ 0.03）——这正是 E 能显形的对象；能抬精度的数据集约三分之一（UWave、PS、ERing、Ethanol、Epilepsy、DDG、Heartbeat）；其中 Epilepsy / DDG / Heartbeat 是未见靶（CV 读数，TEST 未读），E_V 地标在 Epilepsy（psd / spec +0.6）、Heartbeat（+0.35 / +0.42）上同向。
 - 按协议 VP-GO → 视图升级为扩展轴（`configs/wp18.yaml`），补源标签、重训比较器、全流程部署（`results/acts/wp18/PROTOCOL.md`）。如实记：源侧新标签在 334/344 格时（当时的中间读数码是 VP-WEAK）已开跑；最后 10 格（ERing / NATOPS / BasicMotions / Epilepsy / DDG 的部分格）把读数码推到 GO，决定未因此改变。
 - 视图地标 E_V（TRAIN 上 1-NN 类别保持）对 psd / spec 的方向多数对（UWave、Ethanol、SCP1），对 diff 不可靠（UWave 地标 −0.11、实测 +0.05）。

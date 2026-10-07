@@ -60,7 +60,8 @@ ARMS = {"ME": {"uniform": False, "legacy": False}, "UNI": {"uniform": True, "leg
 MEMBERS = tuple(range(10))
 KS, KP, GENS, P_CROSS, P_MUT, TOP_PER = 20000, 10, 10, 0.8, 0.2, 2
 N_MEMBER_SEARCHERS = 5          # 搜索者 = 集成 + 前 5 个成员（S3-Z 11 个搜索者 → 候选上限升但 CV 噪声抵消；成本减半）
-K_TCV, TOPK_ENS, FINAL_SEEDS = 3, 3, (0, 1, 2)
+K_TCV, TOPK_ENS, FINAL_SEEDS = 3, 5, (0, 1, 2)      # 终点跑 CV 前 5；集成大小 k ∈ ENS_KS 在 dev 上定
+ENS_KS = (1, 3, 5)
 MIN_FOLD_EVAL = 10
 
 
@@ -268,12 +269,11 @@ def cmd_fit(args) -> None:
     w, cp, g115 = _g("wp18_data"), _g("wp18_comp"), _g("115_acts_s3md")
     dev = args.device
     xs = xspace(); D = w.assemble(xs)
-    p = OUT / "experts.npz"
-    res = dict(np.load(p, allow_pickle=True)) if p.exists() else {}
-    fit = _r(OUT / "fit.json") if (OUT / "fit.json").exists() else {}
     Eb_all = source_E_blocks(D)
     targets = scope_targets(args)
     for fold in sorted({fold_of(d) for d in targets}):
+        p = OUT / "experts" / f"{fold}.npz"; p.parent.mkdir(parents=True, exist_ok=True)
+        res, fit = {}, {}
         g = D["groups"]
         idx = [i for i in range(len(g)) if g[i] != fold]
         sidx = set(idx)
@@ -314,7 +314,7 @@ def cmd_fit(args) -> None:
                 fit.setdefault("pi", {}).setdefault(d, {})[arm] = [[sources[j], float(pi[j])] for j in top]
             print(f"[fit] {d} π(ME) 前 3: {fit['pi'][d]['ME']}", flush=True)
         np.savez_compressed(p, **res)
-        _w(OUT / "fit.json", fit)
+        _w(OUT / "experts" / f"{fold}.json", fit)
 
 
 def cmd_prep_ve(args) -> None:
@@ -356,9 +356,9 @@ def cmd_search(args) -> None:
     from autocls.labeling import run_seed_for
     dev = args.device
     xs_full = xspace()
-    ex = np.load(OUT / "experts.npz", allow_pickle=True)
     for d in scope_targets(args):
         fold = fold_of(d)
+        ex = np.load(OUT / "experts" / f"{fold}.npz", allow_pickle=True)
         models = load_members(xs_full, dev, fold)
         for arm in args.arms or list(ARMS):
             op = OUT / "search" / f"{arm}_{d}.json"
@@ -534,34 +534,43 @@ def cmd_ensemble(args) -> None:
     runs = r.load_runs(OUT / "tgt_runs"); sel = _r(OUT / "select.json"); out = {}
     for arm, per in sel.items():
         for d, s in per.items():
-            singles, ens = [], []
-            for sd in FINAL_SEEDS:
-                keys = [f"{d}|official|{k}|s{sd}" for k in s["top"]]
-                if not all(k in runs for k in keys):
-                    continue
-                singles.append(runs[keys[0]]["acc"])
-                reps = []
-                for k in keys:
-                    with np.load(OUT / "reps" / f"{k}.npz") as z:
-                        reps.append({kk: z[kk] for kk in z.files})
-                ens.append(ensemble_acc(reps))
-            if ens:
-                out.setdefault(arm, {})[d] = {"single": float(np.mean(singles)), "ens": float(np.mean(ens)), "ens_seeds": ens, "single_seeds": singles}
-                print(f"[ensemble] {arm} {d}: single {np.mean(singles):.3f} ens {np.mean(ens):.3f}", flush=True)
+            res = {}
+            for k in ENS_KS:
+                accs = []
+                for sd in FINAL_SEEDS:
+                    keys = [f"{d}|official|{x}|s{sd}" for x in s["top"][:k]]
+                    if len(keys) < k or not all(x in runs for x in keys):
+                        continue
+                    if k == 1:
+                        accs.append(runs[keys[0]]["acc"]); continue
+                    reps = []
+                    for x in keys:
+                        with np.load(OUT / "reps" / f"{x}.npz") as z:
+                            reps.append({kk: z[kk] for kk in z.files})
+                    accs.append(ensemble_acc(reps))
+                if len(accs) == len(FINAL_SEEDS):
+                    res[f"k{k}"] = float(np.mean(accs)); res[f"k{k}_seeds"] = accs
+            if res:
+                out.setdefault(arm, {})[d] = res
+                print(f"[ensemble] {arm} {d}: " + " ".join(f"k{k} {res.get(f'k{k}', float('nan')):.3f}" for k in ENS_KS), flush=True)
     _w(OUT / "final.json", out)
 
 
 def cmd_analyze(args) -> None:
     F = _r(OUT / "final.json")
-    ds = [d for d in scope_targets(args) if all(d in F.get(a, {}) for a in F)]
-    lines = ["# WP18 部署读数（官方 TEST，3 种子均值；ens = CV 前 3 拼接集成，single = CV 第 1）", "",
-             "| 数据集 | " + " | ".join(f"{a} ens | {a} single" for a in F) + " | TS2Vec | InfoTS_s |", "|---|" + "---:|" * (2 * len(F) + 2)]
-    for d in ds:
-        lines.append(f"| {d} | " + " | ".join(f"{F[a][d]['ens']:.3f} | {F[a][d]['single']:.3f}" for a in F) + f" | {TS2VEC[d]:.3f} | {INFOTS_S[d]:.3f} |")
-    lines.append("| **均值** | " + " | ".join(f"{np.mean([F[a][d]['ens'] for d in ds]):.4f} | {np.mean([F[a][d]['single'] for d in ds]):.4f}" for a in F)
-                 + f" | {np.mean([TS2VEC[d] for d in ds]):.4f} | {np.mean([INFOTS_S[d] for d in ds]):.4f} |")
-    (OUT / "tables.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print("\n".join(lines))
+    arms = [a for a in ARMS if a in F]
+    ds = [d for d in scope_targets(args) if all(d in F[a] for a in arms)]
+    lines = [f"# WP18 部署读数（{args.scope}；官方 TEST，3 种子均值；k = CV 前 k 拼接集成，k1 = CV 第 1 单模型）", ""]
+    for k in ENS_KS:
+        lines += [f"## k = {k}", "", "| 数据集 | " + " | ".join(arms) + " | TS2Vec | InfoTS_s |", "|---|" + "---:|" * (len(arms) + 2)]
+        for d in ds:
+            lines.append(f"| {d} | " + " | ".join(f"{F[a][d].get(f'k{k}', float('nan')):.3f}" for a in arms) + f" | {TS2VEC[d]:.3f} | {INFOTS_S[d]:.3f} |")
+        lines.append("| **均值** | " + " | ".join(f"{np.mean([F[a][d].get(f'k{k}', np.nan) for d in ds]):.4f}" for a in arms)
+                     + f" | {np.mean([TS2VEC[d] for d in ds]):.4f} | {np.mean([INFOTS_S[d] for d in ds]):.4f} |")
+        lines.append("")
+    text = chr(10).join(lines) + chr(10)
+    (OUT / f"tables_{args.scope}.md").write_text(text, encoding="utf-8")
+    print(text)
 
 
 def main(argv=None) -> int:
