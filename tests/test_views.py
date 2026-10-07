@@ -84,3 +84,17 @@ def test_standardize_with_train_stats():
     np.testing.assert_allclose(flat.mean(0), 0, atol=1e-5)
     np.testing.assert_allclose(flat.std(0), 1, atol=1e-4)
     assert b.shape == te.shape
+
+
+def test_view_profile_prefers_psd_for_frequency_classes():
+    rng = np.random.default_rng(0)
+    t = np.arange(128)
+    X, y = [], []
+    for i in range(30):                               # 类别 = 频带（频率、相位随机）+ 强噪声 → 时域 1-NN 弱、频域 1-NN 强
+        f = rng.uniform(5, 8) if i % 2 == 0 else rng.uniform(20, 26)
+        ph = rng.uniform(0, 2 * np.pi)
+        X.append(np.sin(2 * np.pi * f * t / 128 + ph)[:, None] + 1.0 * rng.standard_normal((128, 1)))
+        y.append(i % 2)
+    p = V.view_profile(np.array(X, np.float32), np.array(y))
+    assert set(p) == set(V.VIEW_PROFILE_COLS)
+    assert p["vinfo_psd"] > p["vinfo_raw"] + 0.3 and p["vgain_psd"] > 0.3

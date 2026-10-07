@@ -92,3 +92,33 @@ def standardize_train(Xtr: np.ndarray, *others: np.ndarray):
     sd = np.where(sd < 1e-8, 1.0, sd)
     out = [((np.asarray(a, dtype=np.float64) - mu) / sd).astype(np.float32) for a in (Xtr,) + others]
     return tuple(out)
+
+
+# ---------------------------------------------------------------- 视图地标（E 的一部分：每个视图在 TRAIN 上保住多少类别信息）
+VIEW_PROFILE_COLS = tuple(f"vinfo_{v}" for v in VIEWS) + tuple(f"vgain_{v}" for v in VIEWS if v != "raw")
+
+
+def view_profile(X: np.ndarray, y: np.ndarray, *, max_n: int = 2000, max_dim: int = 1024, seed: int = 0) -> dict:
+    """每个视图：变换 → TRAIN 统计量逐通道标准化 → 展平（> max_dim 维时高斯随机投影）→ LOO-1NN 精度按 chance 归一（info_loo）。
+    vgain_v = vinfo_v − vinfo_raw。只用传入的（TRAIN）样本与标签；样本 > max_n 时按类分层子采样。"""
+    from .mech_features import info_loo
+    X = np.asarray(X, np.float32); y = np.asarray(y)
+    rng = np.random.default_rng(seed)
+    if len(y) > max_n:
+        keep = []
+        for c in np.unique(y):
+            idx = np.where(y == c)[0]
+            keep += rng.choice(idx, size=max(1, int(round(max_n * len(idx) / len(y)))), replace=False).tolist()
+        keep = np.sort(np.array(keep)); X, y = X[keep], y[keep]
+    out = {}
+    for v in VIEWS:
+        F = standardize_train(np.concatenate([apply_view(X[i:i + 256], v) for i in range(0, len(X), 256)], axis=0))[0]
+        F = F.reshape(len(F), -1).astype(np.float32)
+        if F.shape[1] > max_dim:
+            P = np.random.default_rng(seed + 1).standard_normal((F.shape[1], max_dim)).astype(np.float32) / np.sqrt(max_dim)
+            F = F @ P
+        out[f"vinfo_{v}"] = float(info_loo(F, y))
+    for v in VIEWS:
+        if v != "raw":
+            out[f"vgain_{v}"] = out[f"vinfo_{v}"] - out["vinfo_raw"]
+    return out

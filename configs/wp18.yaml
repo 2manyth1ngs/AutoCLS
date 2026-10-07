@@ -1,0 +1,14 @@
+# =====================================================================
+# WP18 扩展轴唯一真源（不进 space.yaml / CLS dataclass：旧缓存键、旧采样流、旧 116 维编码不动）。
+# 扩展配置 = (CLS, ext)；键 = cls_key(CLS) [+ "|轴=值"]；编码 = 旧 binned ⊕ 各轴 one-hot（顺序 = 本文件顺序）。
+# 轴的取舍由 results/acts/vp（输入视图上限探针）决定。
+# =====================================================================
+axes:
+  - name: view            # 对比在哪个域上做（autocls/data/views.py）
+    choices: [raw, diff, psd, spec]
+    default: raw
+
+src_labels:               # 源侧新轴标签（122 --plan-src）
+  n_shared: 4             # 每任务：先验前 n_shared 条 shared × 每个非默认视图
+  n_rand: 4               # 每任务：已标 random 中随机 n_rand 条 × 随机非默认视图
+  shared_order: prior     # prior = S2 全池 z 均值排序；catalog = 目录顺序
