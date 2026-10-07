@@ -1,0 +1,15 @@
+[run] part 16/24 device cuda: 14/14 待跑
+[run] 1/14 FaceDetection|tcv1|ts2v|psd|s0 721.0s err=None best=0.5017829852266938
+[run] 2/14 MotorImagery|tcv1|ts2v|raw|s0 280.3s err=None best=0.5543478260869565
+[run] 3/14 SelfRegulationSCP2|tcv0|ts2v|raw|s0 153.1s err=None best=0.5606060606060606
+[run] 4/14 MotorImagery|tcv1|ts2v|psd|s0 135.6s err=None best=0.5434782608695652
+[run] 5/14 Heartbeat|tcv0|ts2v|raw|s0 125.9s err=None best=0.7205882352941176
+[run] 6/14 HandMovementDirection|tcv0|ts2v|raw|s0 116.2s err=None best=0.37735849056603776
+[run] 7/14 SelfRegulationSCP2|tcv2|ts2v|psd|s0 108.9s err=None best=0.5588235294117647
+[run] 8/14 ArticularyWordRecognition|official|ts2v|raw|s0 143.3s err=None best=0.9866666666666667
+[run] 9/14 Heartbeat|tcv1|ts2v|psd|s0 131.1s err=None best=0.7205882352941176
+[run] 10/14 DuckDuckGeese|tcv0|ts2v|psd|s0 139.2s err=None best=0.5625
+[run] 11/14 Epilepsy|tcv0|ts2v|raw|s0 44.5s err=None best=0.9574468085106383
+[run] 12/14 AtrialFibrillation|tcv1|ts2v|psd|s0 41.1s err=None best=0.75
+[run] 13/14 FingerMovements|tcv2|ts2v|psd|s0 90.7s err=None best=0.5471698113207547
+[run] 14/14 Handwriting|official|ts2v|psd|s0 38.0s err=None best=0.17176470588235293

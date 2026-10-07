@@ -1,0 +1,14 @@
+[run] part 0/24 device cuda: 13/14 待跑
+[run] 1/13 StandWalkJump|tcv0|ts2v|raw|s0 96.4s err=None best=0.25
+[run] 2/13 EthanolConcentration|official|ts2v|raw|s0 373.4s err=None best=0.30038022813688214
+[run] 3/13 StandWalkJump|tcv0|ts2v|psd|s0 63.9s err=None best=0.0
+[run] 4/13 StandWalkJump|tcv2|ts2v|psd|s0 50.9s err=None best=0.0
+[run] 5/13 SelfRegulationSCP2|tcv1|ts2v|psd|s0 171.9s err=None best=0.5757575757575758
+[run] 6/13 DuckDuckGeese|tcv2|ts2v|raw|s0 126.1s err=None best=0.6111111111111112
+[run] 7/13 Heartbeat|tcv0|ts2v|psd|s0 110.1s err=None best=0.75
+[run] 8/13 UWaveGestureLibrary|official|ts2v|psd|s0 110.1s err=None best=0.546875
+[run] 9/13 FingerMovements|tcv1|ts2v|raw|s0 95.5s err=None best=0.6
+[run] 10/13 PEMS-SF|official|ts2v|psd|s0 103.4s err=None best=0.6994219653179191
+[run] 11/13 FingerMovements|tcv0|ts2v|psd|s0 84.1s err=None best=0.5428571428571428
+[run] 12/13 Epilepsy|tcv0|ts2v|psd|s0 30.4s err=None best=0.9574468085106383
+[run] 13/13 BasicMotions|tcv0|ts2v|psd|s0 30.9s err=None best=1.0

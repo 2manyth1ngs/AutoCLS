@@ -1,0 +1,16 @@
+[run] part 13/24 device cuda: 15/15 待跑
+[run] 1/15 FaceDetection|tcv0|ts2v|spec|s0 722.9s err=None best=0.4908350305498982
+[run] 2/15 MotorImagery|tcv0|ts2v|diff|s0 310.8s err=None best=0.5760869565217391
+[run] 3/15 Cricket|official|ts2v|diff|s0 166.6s err=None best=0.9861111111111112
+[run] 4/15 SelfRegulationSCP1|official|ts2v|diff|s0 133.4s err=None best=0.8293515358361775
+[run] 5/15 Heartbeat|tcv2|ts2v|diff|s0 117.3s err=None best=0.7205882352941176
+[run] 6/15 HandMovementDirection|tcv2|ts2v|diff|s0 108.8s err=None best=0.2962962962962963
+[run] 7/15 SelfRegulationSCP1|official|ts2v|spec|s0 77.4s err=None best=0.6723549488054608
+[run] 8/15 AtrialFibrillation|tcv1|ts2v|diff|s0 49.3s err=None best=0.75
+[run] 9/15 HandMovementDirection|tcv0|ts2v|spec|s0 95.3s err=None best=0.2641509433962264
+[run] 10/15 DuckDuckGeese|tcv1|ts2v|spec|s0 97.2s err=None best=0.5625
+[run] 11/15 Epilepsy|tcv1|ts2v|diff|s0 47.3s err=None best=0.9555555555555556
+[run] 12/15 AtrialFibrillation|tcv2|ts2v|spec|s0 35.1s err=None best=0.6
+[run] 13/15 BasicMotions|tcv0|ts2v|diff|s0 42.4s err=None best=1.0
+[run] 14/15 Epilepsy|tcv2|ts2v|spec|s0 30.9s err=None best=1.0
+[run] 15/15 BasicMotions|tcv2|ts2v|spec|s0 30.2s err=None best=1.0

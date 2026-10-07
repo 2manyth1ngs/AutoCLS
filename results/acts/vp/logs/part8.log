@@ -1,0 +1,14 @@
+[run] part 8/24 device cuda: 13/14 待跑
+[run] 1/13 StandWalkJump|tcv2|ts2v|raw|s0 100.8s err=None best=0.5
+[run] 2/13 PhonemeSpectra|official|ts2v|psd|s0 464.2s err=None best=0.24425887265135698
+[run] 3/13 SelfRegulationSCP2|tcv2|ts2v|raw|s0 256.6s err=None best=0.5882352941176471
+[run] 4/13 EthanolConcentration|official|ts2v|psd|s0 127.3s err=None best=0.311787072243346
+[run] 5/13 Cricket|official|ts2v|psd|s0 112.5s err=None best=0.9027777777777778
+[run] 6/13 DuckDuckGeese|tcv0|ts2v|raw|s0 163.0s err=None best=0.75
+[run] 7/13 AtrialFibrillation|tcv2|ts2v|raw|s0 49.8s err=None best=0.6
+[run] 8/13 HandMovementDirection|tcv1|ts2v|psd|s0 126.4s err=None best=0.33962264150943394
+[run] 9/13 FingerMovements|tcv0|ts2v|raw|s0 102.6s err=None best=0.5904761904761905
+[run] 10/13 ArticularyWordRecognition|official|ts2v|psd|s0 89.7s err=None best=0.8133333333333334
+[run] 11/13 Handwriting|official|ts2v|raw|s0 34.0s err=None best=0.5988235294117648
+[run] 12/13 BasicMotions|tcv2|ts2v|raw|s0 35.2s err=None best=1.0
+[run] 13/13 ERing|official|ts2v|raw|s0 38.5s err=None best=0.8888888888888888

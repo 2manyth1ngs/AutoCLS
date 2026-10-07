@@ -1,0 +1,26 @@
+[run] part 10/24 device cuda: 13/14 待跑
+[run] 1/13 StandWalkJump|tcv2|ggs|raw|s0 110.1s err=None best=0.25
+[run] 2/13 PhonemeSpectra|official|ggs|psd|s0 413.1s err=None best=0.1759618252311363
+[run] 3/13 SelfRegulationSCP2|tcv2|ggs|raw|s0 229.2s err=None best=0.5882352941176471
+[run] 4/13 EthanolConcentration|official|ggs|psd|s0 86.5s err=None best=0.28517110266159695
+[run] 5/13 Cricket|official|ggs|psd|s0 75.4s err=None best=0.9027777777777778
+[run] 6/13 DuckDuckGeese|tcv0|ggs|raw|s0 120.4s err=None best=0.8125
+[run] 7/13 AtrialFibrillation|tcv2|ggs|raw|s0 32.7s err=None best=0.6
+[run] 8/13 HandMovementDirection|tcv1|ggs|psd|s0 76.1s err=None best=0.3018867924528302
+[run] 9/13 FingerMovements|tcv0|ggs|raw|s0 70.2s err=None best=0.5904761904761905
+[run] 10/13 ArticularyWordRecognition|official|ggs|psd|s0 66.4s err=None best=0.7133333333333334
+[run] 11/13 Handwriting|official|ggs|raw|s0 22.0s err=None best=0.5505882352941176
+[run] 12/13 BasicMotions|tcv2|ggs|raw|s0 26.3s err=None best=1.0
+[run] 13/13 ERing|official|ggs|raw|s0 25.8s err=None best=0.8296296296296296
+/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/sklearn/model_selection/_split.py:737: UserWarning: The least populated class in y has only 2 members, which is less than n_splits=5.
+  warnings.warn(
+/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/sklearn/model_selection/_split.py:737: UserWarning: The least populated class in y has only 2 members, which is less than n_splits=5.
+  warnings.warn(
+/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/sklearn/model_selection/_split.py:737: UserWarning: The least populated class in y has only 2 members, which is less than n_splits=5.
+  warnings.warn(
+/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/sklearn/model_selection/_split.py:737: UserWarning: The least populated class in y has only 2 members, which is less than n_splits=5.
+  warnings.warn(
+/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/sklearn/model_selection/_split.py:737: UserWarning: The least populated class in y has only 2 members, which is less than n_splits=5.
+  warnings.warn(
+/home/b311/data/wangwenjie/miniconda3/envs/pytorch/lib/python3.8/site-packages/sklearn/model_selection/_split.py:737: UserWarning: The least populated class in y has only 2 members, which is less than n_splits=5.
+  warnings.warn(

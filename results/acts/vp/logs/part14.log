@@ -1,0 +1,14 @@
+[run] part 14/24 device cuda: 13/15 待跑
+[run] 1/13 Cricket|official|ggs|raw|s0 255.3s err=None best=1.0
+[run] 2/13 SelfRegulationSCP1|official|ggs|raw|s0 226.8s err=None best=0.8054607508532423
+[run] 3/13 Heartbeat|tcv2|ggs|raw|s0 107.6s err=None best=0.7205882352941176
+[run] 4/13 HandMovementDirection|tcv2|ggs|raw|s0 118.8s err=None best=0.3333333333333333
+[run] 5/13 SelfRegulationSCP1|official|ggs|psd|s0 88.9s err=None best=0.7167235494880546
+[run] 6/13 AtrialFibrillation|tcv1|ggs|raw|s0 37.0s err=None best=0.75
+[run] 7/13 HandMovementDirection|tcv0|ggs|psd|s0 94.4s err=None best=0.2641509433962264
+[run] 8/13 DuckDuckGeese|tcv1|ggs|psd|s0 120.4s err=None best=0.5
+[run] 9/13 Epilepsy|tcv1|ggs|raw|s0 23.6s err=None best=0.9333333333333333
+[run] 10/13 AtrialFibrillation|tcv2|ggs|psd|s0 23.7s err=None best=0.8
+[run] 11/13 BasicMotions|tcv0|ggs|raw|s0 25.0s err=None best=1.0
+[run] 12/13 Epilepsy|tcv2|ggs|psd|s0 22.5s err=None best=0.9333333333333333
+[run] 13/13 BasicMotions|tcv2|ggs|psd|s0 21.6s err=None best=1.0

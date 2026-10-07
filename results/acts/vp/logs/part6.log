@@ -1,0 +1,14 @@
+[run] part 6/24 device cuda: 13/14 待跑
+[run] 1/13 StandWalkJump|tcv1|ggs|raw|s0 92.8s err=None best=0.25
+[run] 2/13 PhonemeSpectra|official|ggs|raw|s0 426.0s err=None best=0.22189084402028034
+[run] 3/13 MotorImagery|tcv0|ggs|psd|s0 163.4s err=None best=0.5543478260869565
+[run] 4/13 StandWalkJump|tcv1|ggs|psd|s0 35.4s err=None best=0.25
+[run] 5/13 SelfRegulationSCP2|tcv0|ggs|psd|s0 69.7s err=None best=0.5303030303030303
+[run] 6/13 DuckDuckGeese|tcv1|ggs|raw|s0 117.6s err=None best=0.3125
+[run] 7/13 PEMS-SF|official|ggs|raw|s0 86.0s err=None best=0.6647398843930635
+[run] 8/13 HandMovementDirection|tcv2|ggs|psd|s0 64.8s err=None best=0.2777777777777778
+[run] 9/13 FingerMovements|tcv2|ggs|raw|s0 66.4s err=None best=0.5660377358490566
+[run] 10/13 AtrialFibrillation|tcv0|ggs|psd|s0 23.3s err=None best=0.5
+[run] 11/13 FingerMovements|tcv1|ggs|psd|s0 62.1s err=None best=0.5714285714285714
+[run] 12/13 Epilepsy|tcv1|ggs|psd|s0 23.4s err=None best=0.9333333333333333
+[run] 13/13 BasicMotions|tcv1|ggs|psd|s0 21.4s err=None best=1.0

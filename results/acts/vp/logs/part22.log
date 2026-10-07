@@ -1,0 +1,16 @@
+[run] part 22/24 device cuda: 15/15 待跑
+[run] 1/15 FaceDetection|tcv2|ggs|psd|s0 703.5s err=None best=0.4977075904228222
+[run] 2/15 MotorImagery|tcv2|ggs|raw|s0 247.5s err=None best=0.5638297872340425
+[run] 3/15 SelfRegulationSCP2|tcv1|ggs|raw|s0 156.3s err=None best=0.6363636363636364
+[run] 4/15 MotorImagery|tcv2|ggs|psd|s0 107.6s err=None best=0.5957446808510638
+[run] 5/15 Heartbeat|tcv1|ggs|raw|s0 69.0s err=None best=0.7205882352941176
+[run] 6/15 HandMovementDirection|tcv1|ggs|raw|s0 75.4s err=None best=0.39622641509433965
+[run] 7/15 UWaveGestureLibrary|official|ggs|raw|s0 77.3s err=None best=0.884375
+[run] 8/15 AtrialFibrillation|tcv0|ggs|raw|s0 30.2s err=None best=0.5
+[run] 9/15 Heartbeat|tcv2|ggs|psd|s0 74.1s err=None best=0.7647058823529411
+[run] 10/15 DuckDuckGeese|tcv2|ggs|psd|s0 97.6s err=None best=0.6666666666666666
+[run] 11/15 Epilepsy|tcv2|ggs|raw|s0 22.9s err=None best=0.9333333333333333
+[run] 12/15 NATOPS|official|ggs|raw|s0 78.6s err=None best=0.8222222222222222
+[run] 13/15 BasicMotions|tcv1|ggs|raw|s0 31.1s err=None best=1.0
+[run] 14/15 NATOPS|official|ggs|psd|s0 92.2s err=None best=0.5611111111111111
+[run] 15/15 ERing|official|ggs|psd|s0 31.6s err=None best=0.4111111111111111
