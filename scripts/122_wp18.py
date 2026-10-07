@@ -54,10 +54,14 @@ def fold_of(d: str) -> str:
 
 
 ARMS = {"ME": {"uniform": False, "legacy": False}, "UNI": {"uniform": True, "legacy": False},
-        "BLIND": {"uniform": True, "legacy": False, "gamma0": True}, "LEG": {"uniform": False, "legacy": True}}
+        "BLIND": {"uniform": True, "legacy": False, "gamma0": True}, "LEG": {"uniform": False, "legacy": True},
+        "FV": {"uniform": True, "legacy": False, "gamma0": True, "fv": True},       # 只有 轴 × E_V 交互项
+        "MEFV": {"uniform": False, "legacy": False, "fv": True}}                    # 源专家（E 选源）+ 轴 × E_V
 MEMBERS = tuple(range(10))
 KS, KP, GENS, P_CROSS, P_MUT, TOP_PER = 20000, 10, 10, 0.8, 0.2, 2
+N_MEMBER_SEARCHERS = 5          # 搜索者 = 集成 + 前 5 个成员（S3-Z 11 个搜索者 → 候选上限升但 CV 噪声抵消；成本减半）
 K_TCV, TOPK_ENS, FINAL_SEEDS = 3, 3, (0, 1, 2)
+MIN_FOLD_EVAL = 10
 
 
 def _g(name):
@@ -290,7 +294,18 @@ def cmd_fit(args) -> None:
                               "inner_gamma0": max(v for kk, v in means.items() if kk[2] == 0)}
             print(f"[fit] {fold} {arm}: α_w {k[0]} τ {k[1]} γ {k[2]} inner {means[k]:.4f}（γ=0 最好 {fit[fold][arm]['inner_gamma0']:.4f}）", flush=True)
         res[f"{fold}/sources"] = np.array(sources)
+        # ---- 轴 × E_V 交互项（FV）：E_V 在训练任务上逐维标准化
+        sl = cp.axis_slice(xs, "view") if "view" in xs.axes else None
+        if sl is not None:
+            ev_mu, ev_sd = Eb_all["V"][idx].mean(0), Eb_all["V"][idx].std(0) + 1e-9
+            Ev = (Eb_all["V"] - ev_mu) / ev_sd
+            kf, mf = cp.fit_fv_inner(D, Z, S0e, Ev, sources, idx, sl)
+            res[f"{fold}/FV/B"] = cp.fit_fv(D["X"], Z, S0e, Ev, idx, sl, kf[0]); res[f"{fold}/FV/gamma"] = np.array(kf[1])
+            fit[fold]["FV"] = {"alpha": kf[0], "gamma": kf[1], "inner": mf[kf], "inner_gamma0": max(v for kk, v in mf.items() if kk[1] == 0)}
+            print(f"[fit] {fold} FV: α {kf[0]} γ {kf[1]} inner {mf[kf]:.4f}（γ=0 {fit[fold]['FV']['inner_gamma0']:.4f}）", flush=True)
         for d in [d for d in targets if fold_of(d) == fold]:
+            if sl is not None:
+                res[f"{fold}/FV/ev/{d}"] = (np.asarray(target_E_blocks(d)["V"], float) - ev_mu) / ev_sd
             e_t = est(target_E_blocks(d))
             for arm in ("ME", "UNI"):
                 pi = g115.target_pi(e_t, Es[idx], g[idx], sources, float(res[f"{fold}/{arm}/tau"]), ARMS[arm]["uniform"])
@@ -352,7 +367,7 @@ def cmd_search(args) -> None:
             t0 = time.time()
             A = ARMS[arm]
             xs = xspace(legacy_only=A["legacy"])
-            src = "ME" if arm in ("ME", "LEG") else "UNI"
+            src = "ME" if arm in ("ME", "LEG", "MEFV") else "UNI"
             W, cw, pi = ex[f"{fold}/{src}/W"], ex[f"{fold}/{src}/c"], ex[f"{fold}/{src}/pi/{d}"]
             gam = 0.0 if A.get("gamma0") else float(ex[f"{fold}/{src}/gamma"])
             cands = xs.sample_unique(np.random.default_rng(run_seed_for(d, "wp18_ks")), KS)
@@ -360,12 +375,20 @@ def cmd_search(args) -> None:
             raw = lambda V: np.stack([cp.score(m, V, dev) for m in models])   # noqa: E731
             S = raw(Vc); st = [(float(s.mean()), float(s.std() + 1e-12)) for s in S]
 
+            fv = None
+            if A.get("fv") and f"{fold}/FV/B" in ex.files:
+                sl = cp.axis_slice(xs_full, "view")
+                fv = (float(ex[f"{fold}/FV/gamma"]), ex[f"{fold}/FV/B"], ex[f"{fold}/FV/ev/{d}"], sl)
+
             def total(V):
                 R = raw(V)
-                return np.stack([g115.member_score((R[q] - st[q][0]) / st[q][1], V, W[q], cw[q], pi, gam) for q in range(len(models))])
+                T = np.stack([g115.member_score((R[q] - st[q][0]) / st[q][1], V, W[q], cw[q], pi, gam) for q in range(len(models))])
+                if fv is not None and fv[0] > 0:
+                    T = T + fv[0] * cp.fv_term(V, fv[2], fv[1], fv[3])[None, :]
+                return T
             Tc = total(Vc)
             searchers = [("ens", lambda V: total(V).mean(0), Tc.mean(0))] + \
-                        [(f"m{q}", (lambda q: (lambda V: total(V)[q]))(q), Tc[q]) for q in range(len(models))]
+                        [(f"m{q}", (lambda q: (lambda V: total(V)[q]))(q), Tc[q]) for q in range(min(len(models), N_MEMBER_SEARCHERS))]
             picks, byk = {}, {}
             for name, fn, f0 in searchers:
                 init = [cands[j] for j in np.argsort(-f0, kind="stable")[:KP]]
@@ -417,7 +440,7 @@ def cmd_plan_cv(args) -> None:
     for arm in args.arms or list(ARMS):
         for d in scope_targets(args):
             p = OUT / "search" / f"{arm}_{d}.json"
-            if not p.exists():
+            if not p.exists() or tm[d]["n_train"] < 3 * MIN_FOLD_EVAL:     # 小 TRAIN：不跑 CV（选择按比较器分数）
                 continue
             for e in _r(p)["union"]:
                 for i in range(K_TCV):
@@ -449,8 +472,12 @@ def cmd_select(args) -> None:
                 continue
             S = _r(p); U = [e["key"] for e in S["union"]]; ens = {e["key"]: e["ens"] for e in S["union"]}
             cv = cv_scores(runs, d, U)
-            ranked = sorted(cv, key=lambda k: (-round(cv[k], 12), -ens.get(k, -np.inf), U.index(k)))
-            sel.setdefault(arm, {})[d] = {"top": ranked[:TOPK_ENS], "cv": cv, "n_union": len(U), "n_cv": len(cv)}
+            small = targets_meta([d])[d]["n_train"] < 3 * MIN_FOLD_EVAL      # 小 TRAIN 规则：验证折 < 10 个样本 → CV 无分辨率，按比较器分数
+            if small:
+                ranked = sorted(U, key=lambda k: (-ens.get(k, -np.inf), U.index(k)))
+            else:
+                ranked = sorted(cv, key=lambda k: (-round(cv[k], 12), -ens.get(k, -np.inf), U.index(k)))
+            sel.setdefault(arm, {})[d] = {"top": ranked[:TOPK_ENS], "cv": cv, "n_union": len(U), "n_cv": len(cv), "rule": "comp" if small else "cv"}
     _w(OUT / "select.json", sel)
     print(f"[select] {sum(len(v) for v in sel.values())} 个（臂, 靶）", flush=True)
 

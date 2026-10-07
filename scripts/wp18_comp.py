@@ -142,3 +142,54 @@ def fit_inner(D: Mapping, Z: Sequence, S0e: Sequence, Ecat: np.ndarray, sources:
                         sc[(a, t, gm)].append(spearmanr(g115.member_score(zs, D["X"][i], *ex[a], pi, gm), Z[i]).correlation)
     means = {k: float(np.nanmean(v)) for k, v in sc.items()}
     return m114.select_grid(means), means
+
+
+# ================================================================ 轴 × E 交互项（FV：新轴 one-hot ⊗ 视图地标，岭回归在源残差上拟合）
+def axis_slice(xs, axis: str = "view") -> slice:
+    start = xs.enc.dim
+    for n, a in xs.axes.items():
+        w = len(a["choices"])
+        if n == axis:
+            return slice(start, start + w)
+        start += w
+    raise KeyError(axis)
+
+
+def fv_design(X: np.ndarray, e: np.ndarray, sl: slice) -> np.ndarray:
+    """(n, d) 配置 × (k,) 任务描述 → (n, w·(k+1))：轴 one-hot 与 [1, e] 的外积（含轴主效应）。"""
+    oh = np.asarray(X, float)[:, sl]
+    ee = np.concatenate([[1.0], np.asarray(e, float)])
+    return (oh[:, :, None] * ee[None, None, :]).reshape(len(oh), -1)
+
+
+def fit_fv(X: Sequence, Z: Sequence, S0e: Sequence, Ev: np.ndarray, idx: Sequence[int], sl: slice, alpha: float):
+    """残差（任务内 z − 任务内标准化 s₀）对 fv_design 岭回归（无截距，主效应在设计里）→ 系数 B。"""
+    g115 = _g("115_acts_s3md")
+    A = np.vstack([fv_design(X[i], Ev[i], sl) for i in idx])
+    y = np.concatenate([np.asarray(Z[i], float) - g115.task_z(S0e[i]) for i in idx])
+    return np.linalg.solve(A.T @ A + alpha * np.eye(A.shape[1]), A.T @ y)
+
+
+def fv_term(X: np.ndarray, e: np.ndarray, B: np.ndarray, sl: slice) -> np.ndarray:
+    return fv_design(X, e, sl) @ B
+
+
+def fit_fv_inner(D: Mapping, Z: Sequence, S0e: Sequence, Ev: np.ndarray, sources: Sequence[str], idx: Sequence[int], sl: slice,
+                 alphas=(1.0, 10.0, 100.0, 1000.0), gammas=(0.0, 0.25, 0.5, 0.75, 1.0, 1.5)):
+    """内层留一源：(α, γ) 使留出源任务上 Spearman(task_z(s₀) + γ·FV, z) 均值最大；平局取较小 γ、较大 α。"""
+    from scipy.stats import spearmanr
+    g115 = _g("115_acts_s3md")
+    g = D["groups"]
+    sc = {(a, gm): [] for a in alphas for gm in gammas}
+    for ih in sources:
+        tr = [i for i in idx if g[i] != ih]
+        te = [i for i in idx if g[i] == ih]
+        for a in alphas:
+            B = fit_fv(D["X"], Z, S0e, Ev, tr, sl, a)
+            for i in te:
+                zs, t = g115.task_z(S0e[i]), fv_term(D["X"][i], Ev[i], B, sl)
+                for gm in gammas:
+                    sc[(a, gm)].append(spearmanr(zs + gm * t, Z[i]).correlation)
+    means = {k: float(np.nanmean(v)) for k, v in sc.items()}
+    best = max(means, key=lambda k: (round(means[k], 12), -k[1], k[0]))
+    return best, means
